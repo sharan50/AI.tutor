@@ -19,7 +19,8 @@
 <tbody>
 <tr><td>item_id</td><td>yes</td><td>Stable reference for traceability from any session</td></tr>
 <tr><td>objective_ref</td><td>yes</td><td>The published subject-content statement this serves. DfE reference, not a board paper reference</td></tr>
-<tr><td>board_context</td><td>yes</td><td>Which specification this was written against. A label, never a source</td></tr>
+<tr><td>exam_board</td><td>yes</td><td>AQA, Pearson Edexcel or another supported board. A label for alignment, never a source of copied material</td></tr>
+<tr><td>specification_version</td><td>yes</td><td>Board qualification and version the item was mapped to; changed versions trigger revalidation</td></tr>
 <tr><td>tier / level</td><td>yes</td><td>Foundation or higher; GCSE or A-level</td></tr>
 <tr><td>author</td><td>yes</td><td>Named person. No anonymous items</td></tr>
 <tr><td>source_basis</td><td>yes</td><td>One of: original, DfE subject content, licensed. No fourth value exists</td></tr>
@@ -48,6 +49,32 @@
 <li><strong>retired</strong>: superseded. Kept, because a session that used it must remain traceable.</li>
 </ul>
 
+<h2>Original paper and mark-scheme generation</h2>
+
+<p>A generated paper is a constrained assembly of original live items, not a text-generation prompt and not a reconstruction of a board paper. The paper builder requires an explicit exam-board selection—such as AQA or Pearson Edexcel—plus qualification, specification version, tier, time budget, total marks, objective coverage and difficulty mix. It can select only items whose board, version, validation and calibration records match every one of those constraints. The output carries a blueprint and a versioned paper_id so the same paper can be audited, retired or recalibrated later.</p>
+
+<p>The mark scheme is assembled from each selected item's validated expected_response, mark allocation and acceptable-answer notes. A generated mark point is therefore no freer than the item it belongs to. Where a paper-level instruction or sequencing decision needs wording, that wording is authored and examiner-validated before the paper can enter the reusable library.</p>
+
+<table>
+<thead><tr><th>Paper control</th><th>Rule</th><th>Failure behaviour</th></tr></thead>
+<tbody>
+<tr><td>Board and specification</td><td>Every item and paper blueprint name the selected board, qualification, tier and active version</td><td>Reject mixed-board assembly; quarantine the paper when that board's specification changes</td></tr>
+<tr><td>Originality</td><td>Only original or explicitly licensed items can be selected</td><td>Reject assembly if a source_basis is absent or disallowed</td></tr>
+<tr><td>Mark scheme</td><td>Every mark point maps to a validated item response</td><td>Do not publish or score the paper</td></tr>
+<tr><td>Difficulty</td><td>Use observed calibration when sufficient; never infer it from the model's confidence</td><td>Label as uncalibrated practice, with no grade estimate</td></tr>
+<tr><td>Reuse</td><td>Retain blueprint, item IDs and calibration version</td><td>Make the paper non-repeatable until its record is complete</td></tr>
+</tbody>
+</table>
+
+<h2>Estimated grade boundaries</h2>
+
+<p>Actual grade boundaries are set after an examination series and belong to the awarding organisation. The product can instead estimate a grade range for a particular generated-paper blueprint for its selected board, qualification, tier and specification version. It must be based on a versioned, board-specific calibration sample, observed item difficulty and a stated uncertainty band; it is never described as a board boundary, a predicted result or a guarantee.</p>
+
+<div class="claim">
+  <p>The grade-range feature is gated per board and specification version. Before there is enough calibrated response data for that exact combination, the result screen may report marks and objective-level strengths and gaps, but it must not translate them into grades. Once the threshold is defined, the page shows the selected board, sample window, specification version, paper calibration version and the range rather than a single grade. A specification change invalidates that board's calibration until it is rebuilt.</p>
+  <span class="tag decided">Position<span class="src">Prevents false precision while making the estimate inspectable</span></span>
+</div>
+
 <h2>Worked examples of the record</h2>
 
 <p>Two items on the objective used in the transcripts in document 01, showing the record rather than describing it.</p>
@@ -56,6 +83,8 @@
 <thead><tr><th>Field</th><th>Item A</th><th>Item B</th></tr></thead>
 <tbody>
 <tr><td>objective_ref</td><td>Current in series and parallel circuits</td><td>Current in series and parallel circuits</td></tr>
+<tr><td>exam_board</td><td>To be selected at launch</td><td>To be selected at launch</td></tr>
+<tr><td>specification_version</td><td>To be selected at launch</td><td>To be selected at launch</td></tr>
 <tr><td>tier</td><td>GCSE, foundation and higher</td><td>GCSE, higher</td></tr>
 <tr><td>source_basis</td><td>original</td><td>original</td></tr>
 <tr><td>prompt</td><td>Three identical bulbs in series. An ammeter after the third reads 0.2 A. State the reading of an ammeter placed between the first and second bulbs.</td><td>A student writes that the second bulb in a series circuit is dimmer because current has been used up. Explain what is wrong with this, and what is actually transferred.</td></tr>
@@ -90,4 +119,6 @@
   <p>One board, one subject, one tier. The choice belongs to the owner, and the recommendation is to choose on where examiner capacity is easiest to hire rather than on market size, because the validator is the constraint and not the audience. How many items receive validation at launch, and the cost per validated item, are the two inputs document 10 is blocked on.</p>
   <span class="tag open">Open<span class="src">Owner's decision. Blocks documents 10 and 11</span></span>
 </div>
+
+<p>The launch choice also sets the assessment-calibration plan: the number of original items required for a usable paper blueprint, the examiner time to validate item-level mark points, and the minimum response sample before an estimated grade range is allowed. None of those numbers should be invented before the first scope is chosen.</p>
 

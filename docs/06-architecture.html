@@ -42,10 +42,22 @@
 <tr><td>Reasoning model</td><td>Hosted frontier model, provider-abstracted at the message level</td><td>Capability per pound is falling; owning weights buys nothing here and forecloses upgrades</td><td>Per-session cost is someone else's pricing decision</td></tr>
 <tr><td>Style</td><td>Structured object, rendered to a style card in the system prompt</td><td>Revocable in seconds, auditable, gains the exemplar field without rework</td><td>Lower fidelity ceiling than fine-tuning</td></tr>
 <tr><td>Content</td><td>Retrieval over the provenanced item bank; nothing ungrounded reaches a learner</td><td>Traceability is the product claim and the legal defence at once</td><td>Coverage is limited by bank size, so launch scope stays narrow</td></tr>
+<tr><td>Assessment</td><td>Board-specific paper blueprint assembler over live items; mark points and grade estimates versioned separately</td><td>Fresh practice can be audited without copying a board paper or overstating a grade</td><td>Needs board-specific calibrated items and a comparison sample before it can estimate a range</td></tr>
 <tr><td>Safety</td><td>Separate layer, evaluated before and after generation, unreachable from the style object</td><td>A creator's persona must never be implicated in handling a child in distress</td><td>Adds latency to every turn</td></tr>
 <tr><td>Child data</td><td>Controller-shaped under both routes, per document 05</td><td>Keeps the route choice cheap to reverse</td><td>Heavier than Route B strictly needs</td></tr>
 </tbody>
 </table>
+
+<h2>Paper assembly and calibration</h2>
+
+<p>The assessment service receives a blueprint rather than an open-ended request: selected exam board (for example AQA or Pearson Edexcel), qualification, specification version, tier, objectives, marks, time and target difficulty mix. It rejects any item that is not validated and calibrated for that exact board-version-tier combination, then emits the paper alongside the item-level validated mark scheme and stores the exact item IDs and versions used. A paper is therefore reproducible even after its items are retired.</p>
+
+<p>A separate calibration record connects observed learner performance to item and paper difficulty for one board-version-tier combination. The grade-range service reads only that record and refuses to run when the board match, sample, blueprint match or specification version is inadequate. It returns a range with the calibration version and evidence date, never a single grade or a label that resembles an awarding organisation's boundary.</p>
+
+<div class="claim">
+  <p>The important separation is between generation and estimation. The model may help present feedback, but it cannot decide a mark scheme, difficulty or grade range from its own confidence. Those claims are grounded in validated item records and observed performance, with an explicit no-estimate state when the evidence is thin.</p>
+  <span class="tag decided">Architecture position<span class="src">Implements the assessment controls in document 03</span></span>
+</div>
 
 <h2>The turn</h2>
 
@@ -98,7 +110,7 @@
 </ul>
 
 <div class="claim">
-  <p>Still unwritten: the data model in detail, the retrieval strategy, cost per session, and the latency budget. Cost per session is the one that matters commercially, and it is blocked on the same launch-scope decision as documents 10 and 11, because average items retrieved per turn depends on bank density.</p>
+  <p>Still unwritten: the data model in detail, the retrieval strategy, assessment-calibration thresholds, cost per session, and the latency budget. Cost per session is the one that matters commercially, and it is blocked on the same launch-scope decision as documents 10 and 11, because average items retrieved per turn and the assessment-calibration workload both depend on bank density.</p>
   <span class="tag open">Open<span class="src">Blocked on the scope decision in document 03</span></span>
 </div>
 <footer class="pagefoot">
