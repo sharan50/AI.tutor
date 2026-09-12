@@ -1,0 +1,9 @@
+[build]
+  publish = "docs"
+  command = "python3 src/build.py"
+
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+

@@ -1,0 +1,73 @@
+<h1>Architecture</h1>
+<p class="standfirst">Buy the model. Own the item bank, the style objects and the verification layer. The moat is validated content and outcome evidence, not weights.</p>
+
+<h2>Shape</h2>
+
+<p>A hosted frontier model behind an abstraction thin enough to swap providers, with retrieval over the item bank, a style-card layer generated from the style object, and a safety layer that sits outside both and cannot be reached by either.</p>
+
+<table>
+<thead><tr><th>Layer</th><th>Choice</th><th>Why</th><th>What it makes harder</th></tr></thead>
+<tbody>
+<tr><td>Reasoning model</td><td>Hosted frontier model, provider-abstracted at the message level</td><td>Capability per pound is falling; owning weights buys nothing here and forecloses upgrades</td><td>Per-session cost is someone else's pricing decision</td></tr>
+<tr><td>Style</td><td>Structured object, rendered to a style card in the system prompt</td><td>Revocable in seconds, auditable, gains the exemplar field without rework</td><td>Lower fidelity ceiling than fine-tuning</td></tr>
+<tr><td>Content</td><td>Retrieval over the provenanced item bank; nothing ungrounded reaches a learner</td><td>Traceability is the product claim and the legal defence at once</td><td>Coverage is limited by bank size, so launch scope stays narrow</td></tr>
+<tr><td>Safety</td><td>Separate layer, evaluated before and after generation, unreachable from the style object</td><td>A creator's persona must never be implicated in handling a child in distress</td><td>Adds latency to every turn</td></tr>
+<tr><td>Child data</td><td>Controller-shaped under both routes, per document 05</td><td>Keeps the route choice cheap to reverse</td><td>Heavier than Route B strictly needs</td></tr>
+</tbody>
+</table>
+
+<h2>The turn</h2>
+
+<p>What happens between a student sending a message and seeing a reply. Stated as a sequence because the ordering carries the guarantees.</p>
+
+<ul>
+<li><strong>Safety pre-check</strong> on the student's message, against the student's age band. Outside academic scope routes to the escalation path in document 05 and the turn ends here. The style object is not loaded and cannot influence this.</li>
+<li><strong>Objective resolution</strong>: the message plus session state resolves to one objective_ref. Unresolvable means asking, not guessing.</li>
+<li><strong>Retrieval</strong> of live items on that objective. Items not in state live are invisible to retrieval, which is where the provenance rule is actually enforced.</li>
+<li><strong>Style card render</strong> from the style object currently in force, including any student dial adjustments.</li>
+<li><strong>Generation</strong>, conditioned on retrieved items and the style card, with the item ids carried through so the reply is traceable.</li>
+<li><strong>Safety post-check</strong> on the output, again with no reference to the style object.</li>
+<li><strong>Log</strong>: turn, objective, item ids used, style object version, conformance observables. This log is what makes both the accuracy claim and the style claim checkable after the fact.</li>
+</ul>
+
+<div class="claim">
+  <p>The isolation of the safety layer from the style object is a hard architectural boundary, not a convention, and it is tested rather than asserted. The test: run the full safety evaluation set under all five archetypes and every live named preset, and require identical outcomes. A divergence is a release blocker.</p>
+  <span class="tag decided">Position<span class="src">Follows from document 05. Non-negotiable</span></span>
+</div>
+
+<h2>Kill switch</h2>
+
+<p>Because no creator material is ingested and no weights carry style, revoking a preset is a record update rather than a retraining job. The 60 minutes promised in document 04 decomposes as follows, which is what makes the number checkable rather than aspirational.</p>
+
+<table>
+<thead><tr><th>Step</th><th>What has to happen</th><th>Budget</th></tr></thead>
+<tbody>
+<tr><td>Mark revoked</td><td>Preset record state set to revoked; retrieval and render paths exclude it on next read</td><td>Immediate</td></tr>
+<tr><td>New sessions</td><td>Preset absent from the catalogue; students on it default to the nearest archetype</td><td>Immediate</td></tr>
+<tr><td>Sessions in progress</td><td>Style card re-rendered at the next turn; the session continues under the archetype and the student is told the style changed</td><td>One turn</td></tr>
+<tr><td>Cached style cards</td><td>Invalidate by preset key</td><td>Cache TTL, which sets the ceiling</td></tr>
+<tr><td>Generated artefacts</td><td>Any saved summary or export attributing the preset is relabelled to the archetype</td><td>Batch, within the window</td></tr>
+<tr><td>Confirmation</td><td>Written confirmation to the creator with the revocation timestamp</td><td>Same day</td></tr>
+</tbody>
+</table>
+
+<div class="claim">
+  <p>The binding constraint is the style-card cache TTL, which is therefore set below the promise rather than tuned for cost. The 60-minute figure is still a design target and not a measurement; it becomes measurable the moment the caching layer exists, and it should be measured before the promise is made to any creator in writing.</p>
+  <span class="tag assumed">Assumed<span class="src">Decomposed and bounded, not yet measured</span></span>
+</div>
+
+<h2>Evaluation harness</h2>
+
+<p>Three suites, run on every release, reported together.</p>
+
+<ul>
+<li><strong>Accuracy</strong> against live items, human-scored on a sample per document 03.</li>
+<li><strong>Style conformance</strong> against the style object in force, on the observables in document 02, with the transcripts in document 01 as reference behaviour.</li>
+<li><strong>Safety isolation</strong>, requiring identical safety outcomes across all styles.</li>
+</ul>
+
+<div class="claim">
+  <p>Still unwritten: the data model in detail, the retrieval strategy, cost per session, and the latency budget. Cost per session is the one that matters commercially, and it is blocked on the same launch-scope decision as documents 10 and 11, because average items retrieved per turn depends on bank density.</p>
+  <span class="tag open">Open<span class="src">Blocked on the scope decision in document 03</span></span>
+</div>
+

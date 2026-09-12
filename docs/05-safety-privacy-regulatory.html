@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safety, privacy, regulatory, AI.tutor design vault</title>
+<meta name="description" content="Age assurance, the child data model, Children's code, OSA scoping.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="sheet">
+<header class="masthead">
+  <span class="doc-no">05</span>
+  <span class="repo">AI.tutor design vault, revised September 2026</span>
+  <a href="index.html">Contents</a>
+</header>
+<h1>Safety, privacy, regulatory</h1>
+<p class="standfirst">Every user of this product is a child. That is not an edge case to be handled, it is the operating condition, and 2026 is the year the UK regulator chose to make an example of companies that treated it otherwise.</p>
+
+<h2>The enforcement climate, stated plainly</h2>
+
+<div class="claim">
+  <p>The Information Commissioner's Office fined Reddit &pound;14.47m on 24 February 2026 for unlawfully processing children's personal data, specifically for inadequate age assurance and for profiling children without a lawful basis. MediaLab was fined earlier the same month. Earlier actions in the same programme: TikTok &pound;12.7m, Snap &pound;1.95m.</p>
+  <span class="tag verified">Verified<span class="src">ICO enforcement, Feb 2026</span></span>
+</div>
+
+<div class="claim">
+  <p>On 12 March 2026 the ICO wrote to online platforms stating that self-declared age is no longer adequate where a service is likely to be accessed by children, and that platforms should use modern age assurance technologies. The ICO has separately said it will audit edtech providers.</p>
+  <span class="tag verified">Verified<span class="src">ICO open letter, 12 Mar 2026</span></span>
+</div>
+
+<div class="note danger">
+  <h3>What this rules out</h3>
+  <p>A date-of-birth field at signup is not a compliance position. It is the specific thing two companies were fined for in the month before this document was written.</p>
+</div>
+
+<h2>The one advantage the UK has over India here</h2>
+
+<div class="claim">
+  <p>The UK has no categorical prohibition on profiling children. Under the Children's code, profiling is permissible where there is a lawful basis and the design is right: high privacy by default, profiling off unless justified, the best interests of the child as the primary consideration. India's Digital Personal Data Protection Act prohibits tracking and behavioural monitoring of under-eighteens outright, and parental consent cannot waive it.</p>
+  <span class="tag verified">Verified<span class="src">ICO Children's code; DPDP Act s.9(3)</span></span>
+</div>
+
+<p>This is the reason the adaptive engine survives in the UK and would not have survived in India as a direct-to-consumer product. It is also the reason the justification for every inference has to be written down before it is built, not after.</p>
+
+<h2>Age assurance</h2>
+
+<p>The requirement is unusual: this service is not trying to keep children out, it is built for them. What it needs to establish is which band a user is in, so that defaults, content and data handling can differ, and so that the consent route is correct.</p>
+
+<div class="claim">
+  <p>Proposed position, requiring counsel sign-off: age assurance at account creation through a third-party provider, with the parent as account holder and payer for under-16s, and the assurance signal retained rather than the underlying identity evidence. Cost per assured account is a material line in document 10 and is currently unestimated.</p>
+  <span class="tag open">Open<span class="src">Question 5 in document 13. Blocks pricing</span></span>
+</div>
+
+<h2>What is held about a child</h2>
+
+<p>The line that goes on the marketing site, and which everything below has to actually be true for:</p>
+
+<blockquote>
+  <p>We keep what your child has worked on and how they did. We do not build a behavioural profile, we do not advertise to them, and you can see and delete everything we hold from your account at any time.</p>
+</blockquote>
+
+<table>
+<thead><tr><th>Held</th><th>Basis</th><th>Retention</th></tr></thead>
+<tbody>
+<tr><td>Account, age band, assurance signal</td><td>Contract</td><td>Life of account, then 30 days</td></tr>
+<tr><td>Topics attempted, items answered, correctness</td><td>Contract, necessary to deliver tutoring</td><td>Life of account, exportable, deletable</td></tr>
+<tr><td>Session transcripts</td><td>Contract, with a stated window</td><td>90 days, then deleted unless the parent has opted to keep them</td></tr>
+<tr><td>Style object and dial positions</td><td>Contract</td><td>Life of account</td></tr>
+<tr><td>Inferred mastery estimates</td><td>Legitimate interests, assessment pending</td><td>Life of account, visible to the parent in plain language</td></tr>
+<tr><td>Anything used for model training</td><td>Not held. No child data is used for training</td><td>N/A</td></tr>
+</tbody>
+</table>
+
+<div class="claim">
+  <p>The mastery estimate is the only row that is genuinely contestable, because it is an inference about a child rather than a record of what they did. It needs a data protection impact assessment and a written justification tied to the best interests of the child before it is built, and it should be the first thing dropped if the assessment is uncomfortable.</p>
+  <span class="tag open">Open<span class="src">DPIA not started</span></span>
+</div>
+
+<h2>Online Safety Act scoping</h2>
+
+<div class="claim">
+  <p>Ofcom has confirmed that a service is user-to-user where users can share chatbot-generated content with other users, or where users can create chatbots that are made available to others. The trigger for Ofcom's intervention in this area was users building virtual clones of real people.</p>
+  <span class="tag verified">Verified<span class="src">Ofcom open letter, 8 Nov 2024</span></span>
+</div>
+
+<div class="claim">
+  <p>Working position: a private one-to-one tutor with no sharing between users sits outside the user-to-user duties. This is reasoned from Ofcom's published examples and has not been confirmed by counsel.</p>
+  <span class="tag assumed">Assumed<span class="src">Question 4 in document 13</span></span>
+</div>
+
+<div class="note danger">
+  <h3>The trigger that changes this</h3>
+  <p>Any feature that lets a user create a persona available to other users, or share a session, converts this service into a regulated user-to-user platform with illegal content duties, children's safety duties, risk assessments and reporting mechanisms attached. Penalties reach the higher of &pound;18m or 10% of qualifying worldwide revenue.</p>
+  <p>The original 2025 submission had user-created personas at months 12 to 18 as a roadmap line. It is removed as a roadmap line and becomes a dated, costed decision with a compliance programme attached.</p>
+</div>
+
+<h2>Content safety inside a tutoring session</h2>
+
+<p>A tutor that a child talks to alone at eleven at night will eventually be told something that is not about physics. Three requirements, none of which are optional.</p>
+
+<ul>
+<li>The tutor does not counsel. It responds with warmth, does not pretend to be a friend or a person, and routes to a named source of help appropriate to the UK.</li>
+<li>Defined escalation: what is surfaced to the parent account, what is not, and where the line sits, written down and visible to the parent before they buy.</li>
+<li>A persona never changes this behaviour. Style governs how mathematics is taught and nothing else. The style object cannot reach safety behaviour, and that isolation is tested.</li>
+</ul>
+
+<div class="claim">
+  <p>The isolation requirement is the single most important constraint the architecture places on the style engine, and it is a hard boundary rather than a preference. A style card that could influence a safety response would mean a creator's licensed persona was implicated in the handling of a child in distress.</p>
+  <span class="tag decided">Position<span class="src">Non-negotiable. Tested in 06</span></span>
+</div>
+
+<h2>Where the owner's risk ranking is not followed</h2>
+
+<p>The owner ranked a child being harmed or their data leaking fourth of four, below a rights suit, below teaching something wrong, and below nobody paying. As a ranking of what is existential and outside his control, that order is defensible.</p>
+
+<p>It is not the order in which this is built. Child safety and data minimisation are built to the top standard regardless of position on that list, because they are cheap to design in and ruinous to retrofit, and because in the chosen market the regulator with an active enforcement programme pointed at this sector is the one that governs exactly this. Document 12 records the ranking as given and this exception alongside it.</p>
+<footer class="pagefoot">
+  <a href="04-rights-dossier.html">Rights dossier</a>
+  <span class="stamp">Built 11 September 2026</span>
+  <a href="06-architecture.html">Architecture</a>
+</footer>
+</main>
+</body>
+</html>
+

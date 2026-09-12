@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thesis, AI.tutor design vault</title>
+<meta name="description" content="What changed since the 2025 submission, and what the venture is for now.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="sheet">
+<header class="masthead">
+  <span class="doc-no">00</span>
+  <span class="repo">AI.tutor design vault, revised September 2026</span>
+  <a href="index.html">Contents</a>
+</header>
+<h1>Thesis</h1>
+<p class="standfirst">The problem in the 2025 submission got more real. The solution in it got given away free by three companies. What is left is narrower, harder to build and more defensible.</p>
+
+<h2>What survived</h2>
+
+<div class="claim">
+  <p>One-to-one tutoring works, and the evidence for AI delivering some of it strengthened rather than weakened. A purpose-built AI tutor at Harvard produced median learning gains more than double those of an active-learning classroom group. Established intelligent tutoring systems sit lower but are solidly positive: ASSISTments at 0.18 to 0.29 standard deviations across two large randomised trials, Carnegie Learning's MATHia at 0.21 to 0.38 across more than 18,000 students in 147 schools.</p>
+  <span class="tag verified">Verified<span class="src">Kestin et al., Scientific Reports, 3 Jun 2025; ESSA Tier 1 evidence</span></span>
+</div>
+
+<div class="claim">
+  <p>The demand is real and it is growing. Twenty-nine per cent of secondary pupils in England and Wales have had private tutoring, up from 18% twenty years ago and 27% in 2019. It peaks hard at Year 11, where a quarter of pupils are tutored, and it concentrates in London at 45% against 27% for the rest of England.</p>
+  <span class="tag verified">Verified<span class="src">Sutton Trust, Private Tutoring 2026, Feb 2026</span></span>
+</div>
+
+<div class="claim">
+  <p>And the channel that used to absorb some of that demand is closing. School-organised tutoring fell to 20% of pupils from 22% in 2023, and 58% of schools reported cutting their tutoring offer year on year. Families are being handed the problem.</p>
+  <span class="tag verified">Verified<span class="src">Sutton Trust, Private Tutoring 2026</span></span>
+</div>
+
+<h2>What did not survive</h2>
+
+<div class="claim">
+  <p>The 2025 submission's differentiation was a large language model that teaches Socratically with generated diagrams and adaptive feedback. In July and August 2025, OpenAI shipped Study Mode, Google shipped Guided Learning built on LearnLM, and Anthropic shipped a learning mode. All free. Gemini's version already produces scaffolded output with images, diagrams, videos and interactive quizzes, and generates flashcards and study guides.</p>
+  <span class="tag verified">Verified<span class="src">OpenAI 29 Jul 2025; Google 6 Aug 2025</span></span>
+</div>
+
+<p>Sections 4.1 and 5.1 of the original submission therefore describe a product that three consumer applications now give away. The architecture in it is also stale: a 70-billion-parameter base model, LoRA adapters per persona, Tacotron text-to-speech and a fine-tuned diffusion model for diagrams is a 2023 build plan. None of it is carried forward.</p>
+
+<div class="note danger">
+  <h3>The question this venture has to answer</h3>
+  <p>Why does a parent pay when Gemini is free, and Google is handing students a free year of its paid tier in five countries?</p>
+</div>
+
+<h2>The answer, and how much weight it carries</h2>
+
+<p>The free tools are general-purpose. They are excellent at explaining a concept and indifferent to three things that determine whether a British sixteen-year-old passes in June.</p>
+
+<p><strong>They do not know the specification.</strong> They will teach you photosynthesis. They will not reliably teach you the photosynthesis that AQA GCSE Biology asks for, at the depth it asks for, using the terms the mark scheme rewards. That gap is invisible to a student and expensive in August.</p>
+
+<p><strong>They do not know how this student wants to be taught.</strong> A student cannot articulate a pedagogy. They can name someone. Naming a creator whose videos they already watch is the only handle on teaching style that a fifteen-year-old actually has, and it is a handle the general tools do not offer.</p>
+
+<p><strong>They are not accountable for being wrong.</strong> No free tutor states an accuracy floor, publishes what it does below that floor, or traces an explanation to a validated source. A parent buying exam preparation is buying a guarantee, not a chat interface.</p>
+
+<div class="claim">
+  <p>Honest assessment of the strength of that answer: the second point is the only one a competitor cannot copy in a quarter. Specification alignment is a content problem that Google could fund tomorrow; accountability is a policy choice any of them could adopt. The named-educator handle requires signed relationships with individual people, which is slow for everyone including us, and is therefore the only part of this that compounds.</p>
+  <span class="tag assumed">Assumed<span class="src">Judgement, not evidence. Tested by the D14 instrumentation in 11</span></span>
+</div>
+
+<h2>Where the venture is built and where it sells</h2>
+
+<div class="claim">
+  <p>Built in Bengaluru, sold in the UK. The reasoning for the UK is willingness to pay and willingness to experiment, and that Indian edtech is crowded. The reasoning against India is stronger than that: Indian law prohibits tracking and behavioural monitoring of anyone under eighteen, the prohibition cannot be waived by parental consent, and the exemption that would rescue an adaptive tutor belongs to educational institutions rather than to direct-to-consumer platforms.</p>
+  <span class="tag verified">Verified<span class="src">DPDP Act s.9(3); DPDP Rules 2025, Fourth Schedule</span></span>
+</div>
+
+<div class="claim">
+  <p>The distance between the build and the market is the largest execution risk in this plan, and it is not legal or technical. The hardest problem here is fidelity to a mark scheme, and that knowledge lives in UK classrooms. No document in this vault currently resolves how that gap is closed.</p>
+  <span class="tag open">Open<span class="src">No owner, no plan, no budget line</span></span>
+</div>
+
+<h2>Who else is in the room</h2>
+
+<p>In the UK: Third Space Learning's Skye does voice-based conversational maths tutoring; Century Tech does adaptive pathways; Oak National Academy's Aila is state-backed, free, and aimed at teachers rather than students, reportedly saving them three to four hours a week on lesson planning.</p>
+
+<div class="claim">
+  <p>The most instructive competitor is not in this market. PhysicsWallah said in June 2026 that it would ship an AI tutor that year, and that its edge over OpenAI, Google and Anthropic is access to millions of Indian students and the behavioural data they generate. That is a coherent strategy and it is the one this venture cannot run, because the data it rests on is the data Indian law restricts and UK regulators are currently fining people over.</p>
+  <span class="tag verified">Verified<span class="src">Business Today interview, 1 Jun 2026</span></span>
+</div>
+<footer class="pagefoot">
+  <a href="index.html">Contents</a>
+  <span class="stamp">Built 11 September 2026</span>
+  <a href="01-product.html">Product</a>
+</footer>
+</main>
+</body>
+</html>
+

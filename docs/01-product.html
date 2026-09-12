@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product, AI.tutor design vault</title>
+<meta name="description" content="The learner, the session, what is promised and what is not.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="sheet">
+<header class="masthead">
+  <span class="doc-no">01</span>
+  <span class="repo">AI.tutor design vault, revised September 2026</span>
+  <a href="index.html">Contents</a>
+</header>
+<h1>Product</h1>
+<p class="standfirst">A tutor a fifteen-year-old opens at half past nine the night before a mock, and a thing a parent can see the point of without being taught how to use it.</p>
+
+<h2>The learner</h2>
+
+<p>Primary: a Year 11 pupil in an urban area, sitting GCSEs in June, already watching revision videos on YouTube, already told by a teacher that they need to practise more. Not failing. Stuck at a grade boundary and unsure which of the things they do not understand is the one costing them marks.</p>
+
+<p>Secondary: the parent, who is paying, who is not confident enough in the subject to help, and who currently faces a choice between &pound;25 to &pound;45 an hour for a human tutor and doing nothing.</p>
+
+<h2>The session</h2>
+
+<p>A session is scoped to one specification objective, not to a subject and not to a mood. The student says what they are stuck on, or picks up what their last session left unfinished. The tutor teaches it in the style currently selected, asks them to attempt something, reads the attempt, and either moves on or goes back.</p>
+
+<p>The style selection is visible and changeable mid-session. If the student is not following, the first thing offered is not a simpler explanation, it is a different one.</p>
+
+<h2>The same objective, taught two ways</h2>
+
+<p>This is the claim the whole venture rests on, so it is shown rather than asserted. Below is one objective, current in a series circuit, taught under two style objects. The student is the same, the misconception is the same, the target is the same. Nothing about the tone differs meaningfully. What differs is the structure.</p>
+
+<p>The topic is illustrative. It appears on every board's specification, and using it here does not pre-empt the launch scope decision in document 03.</p>
+
+<h3>Style A: Ground Up</h3>
+
+<p>Entry from a concrete situation, formalism withheld until derived, errors met by prediction then falsification, one running example, visual-first, slow abstraction.</p>
+
+<blockquote>
+<p><strong>Student:</strong> i don't get why current is the same everywhere in a series circuit</p>
+<p><strong>Tutor:</strong> Before we touch that, tell me what you think a bulb does to the current going through it. Not what you have been told, what you actually picture.</p>
+<p><strong>Student:</strong> it uses some of it up so theres less after</p>
+<p><strong>Tutor:</strong> Good. That is a real, specific picture, and it is worth testing rather than me just telling you it is wrong. Here is a circuit with a cell and two identical bulbs in a line, and an ammeter I can move. If your picture is right, what should the ammeter read after the first bulb compared with before it?</p>
+<p><strong>Student:</strong> less. maybe half</p>
+<p><strong>Tutor:</strong> So predict both readings for me. Say the reading before the first bulb is 0.3 A. What is the reading between the bulbs, and what is the reading after the second one?</p>
+<p><strong>Student:</strong> 0.15 then 0</p>
+<p><strong>Tutor:</strong> That is a clean prediction, and it makes a testable claim: the second bulb has nothing left going through it. Look at the circuit. Are the two bulbs equally bright?</p>
+<p><strong>Student:</strong> yeah they look the same</p>
+<p><strong>Tutor:</strong> So the second bulb, which on your picture has zero current, is as bright as the first. Something in the picture has to give. What would you change?</p>
+<p><strong>Student:</strong> maybe it doesn't get used up then. but something must get used up</p>
+<p><strong>Tutor:</strong> That instinct is right, and it is the whole idea. Something is used up; it is just not the current. Charge goes round the loop and comes back, so the same amount passes every point each second. What the bulbs take is energy from that charge. Now put that as a sentence about the ammeter readings.</p>
+<p><strong>Student:</strong> all three readings are 0.3</p>
+<p><strong>Tutor:</strong> Yes. And now the symbols are worth having, because you already know what they mean: in series, I is the same at every point. Try this one before I say anything else. Three bulbs in series, ammeter after the third reads 0.2 A. What does an ammeter between the first and second read?</p>
+</blockquote>
+
+<h3>Style B: Straight Line</h3>
+
+<p>Entry from the formal statement, formalism immediate, errors met by direct correction, many varied examples, verbal, fast abstraction.</p>
+
+<blockquote>
+<p><strong>Student:</strong> i don't get why current is the same everywhere in a series circuit</p>
+<p><strong>Tutor:</strong> In a series circuit there is one path, so the current is identical at every point: I is the same everywhere. Current is charge flow per second, and charge is conserved, so it cannot accumulate or disappear. What the components take is energy, which shows up as potential difference dropping across each one. Current shared, voltage split.</p>
+<p><strong>Student:</strong> so the bulb doesn't use up current?</p>
+<p><strong>Tutor:</strong> No, and that is the single most common error on this topic. A bulb drops potential difference; it does not consume current. If you write that current is used up, you lose the mark even when the rest of the answer is right. Four quick ones. Two bulbs in series, ammeter before the first reads 0.4 A. Reading after the second?</p>
+<p><strong>Student:</strong> 0.4</p>
+<p><strong>Tutor:</strong> Correct. Three resistors in series, 6 V supply, readings 2 V and 3 V across the first two. Across the third?</p>
+<p><strong>Student:</strong> 1 V</p>
+<p><strong>Tutor:</strong> Correct, because the potential differences sum to the supply. Now a parallel branch, because examiners pair these deliberately to see whether you have learned the rule or the situation.</p>
+</blockquote>
+
+<div class="claim">
+  <p>What to look at in those two. Style A spends six turns before notation appears and reaches one practice question; Style B reaches four in the same space. Style A treats the wrong answer as the material to teach with; Style B names it as a mark-losing error and moves on. Neither is better. Style A suits a student whose model is wrong, Style B suits a student whose model is sound and whose recall is slow, and a student in April is usually the second even if they were the first in November.</p>
+  <span class="tag decided">The product claim<span class="src">This difference is what the style object buys</span></span>
+</div>
+
+<div class="claim">
+  <p>These transcripts are written by hand to specify the target behaviour. They are not model output, and no system has been built that produces them. They function as the acceptance test for the style engine: a session generated under Ground Up that reads like Style B is a conformance failure, and the harness in document 02 exists to catch exactly that.</p>
+  <span class="tag open">Open<span class="src">Specification, not evidence. No implementation exists</span></span>
+</div>
+
+<h2>What is promised</h2>
+
+<ul>
+<li>Everything taught is traceable to an item in the bank, which is written to the published specification and validated by someone who has examined it.</li>
+<li>The student can choose how they are taught, starting from a named educator they already know, and adjust from there.</li>
+<li>The parent can see what was covered and how it went, in plain language, and delete all of it whenever they want.</li>
+</ul>
+
+<h2>What is not promised, and should be said out loud</h2>
+
+<ul>
+<li>Not a grade guarantee. Nobody can honestly offer one, and the ones who imply it are the reason this sector is distrusted.</li>
+<li>Not a marking service for coursework, and not a route to having work done. The tutor declines and says why.</li>
+<li>Not a companion. It does not pretend to be a person or a friend, and it does not simulate a relationship. See document 05.</li>
+<li>Not exam board endorsed. It prepares a student for a specification; it is not approved by anyone.</li>
+</ul>
+<footer class="pagefoot">
+  <a href="00-thesis.html">Thesis</a>
+  <span class="stamp">Built 11 September 2026</span>
+  <a href="02-style-engine.html">Style engine</a>
+</footer>
+</main>
+</body>
+</html>
+

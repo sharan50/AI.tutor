@@ -1,0 +1,141 @@
+<h1>Style engine</h1>
+<p class="standfirst">The riskiest component in the build. Get it wrong in one direction and the personas are catchphrases and a voice filter. Get it wrong in the other and every creator relationship becomes a content licence negotiation.</p>
+
+<h2>What a teaching style actually is</h2>
+
+<p>Style is not tone. Tone is the part that is easy to imitate and contributes least to whether a student understands. The part that teaches is structural: where an explanation enters from, what is withheld and for how long, what happens when the student is wrong.</p>
+
+<p>So style is represented as a structured object over dimensions that are observable in a recorded lesson and owned by nobody. A written style card is generated from that object and given to the model, because models follow prose more naturally than they follow a schema.</p>
+
+<h2>The dimensions</h2>
+
+<p>First cut. Each has a defined range and an observable signature, meaning a thing you could point at in a transcript to score it.</p>
+
+<table>
+<thead><tr><th>Dimension</th><th>Range</th><th>Observable signature</th></tr></thead>
+<tbody>
+<tr><td>Point of entry</td><td>Concrete situation &rarr; formal statement</td><td>What appears in the first 60 seconds: an object and a question, or a definition</td></tr>
+<tr><td>Lateness of formalism</td><td>Immediate &rarr; withheld until derived</td><td>Position in the session at which notation first appears</td></tr>
+<tr><td>Example strategy</td><td>One running example &rarr; many varied</td><td>Count of distinct scenarios per concept</td></tr>
+<tr><td>Error response</td><td>Direct correction &rarr; predict then falsify</td><td>Whether a wrong answer is corrected or used to set up a prediction that fails visibly</td></tr>
+<tr><td>Digression tolerance</td><td>Strict &rarr; discursive</td><td>Proportion of turns not on the target objective</td></tr>
+<tr><td>Visual density</td><td>Verbal &rarr; visual-first</td><td>Diagrams per concept; whether the diagram leads or illustrates</td></tr>
+<tr><td>Pace of abstraction</td><td>Slow generalisation &rarr; fast</td><td>Number of instances before the general case is stated</td></tr>
+</tbody>
+</table>
+
+<div class="claim">
+  <p>These seven are a starting proposal and should be treated as wrong until a working GCSE teacher has been through them. The most likely errors are that error response and pace of abstraction are correlated rather than independent, and that at least one dimension that matters to exam performance, probably something about how mark-scheme language is modelled, is missing entirely.</p>
+  <span class="tag open">Open<span class="src">No teacher review yet. Blocks 03 and the conformance harness</span></span>
+</div>
+
+<h2>Presets, and the student's dial</h2>
+
+<p>A named educator is a preset: a point in the space, derived by watching their published teaching and scoring each dimension. Nothing of theirs is ingested, stored or reproduced. The artefact is a scored vector and a description written in our own words.</p>
+
+<p>Selecting a preset sets all seven dimensions. The student may then move any of them individually. This is the point of the whole design: the name gives them a handle they can actually reach for, and the dials let them discover that what they liked was the slow abstraction rather than the person.</p>
+
+<div class="claim">
+  <p>This is also the mechanism by which the venture learns something nobody else has. If enough students start from a preset and move a dimension in a consistent direction, that is evidence about how teaching should work, and it belongs to us rather than to the creator.</p>
+  <span class="tag assumed">Assumed<span class="src">Depends on volume we do not have. Not a launch claim</span></span>
+</div>
+
+
+<h2>The archetype set, which is what proves zero-persona operation</h2>
+
+<p>Decision D11 says the product runs with no signed creators. That is only true if a full set of usable styles exists before any creator is approached, so here it is. Each archetype is a named point in the seven-dimension space, written by us, owned by us, and shippable on day one.</p>
+
+<table>
+<thead><tr><th>Archetype</th><th>Position</th><th>Who it is for</th></tr></thead>
+<tbody>
+<tr><td>Ground Up</td><td>Concrete entry, formalism withheld, predict-then-falsify, one running example, visual-first, slow abstraction</td><td>A student whose mental model is wrong and does not know it</td></tr>
+<tr><td>Straight Line</td><td>Formal entry, formalism immediate, direct correction, many varied examples, verbal, fast abstraction</td><td>A student whose model is sound and whose recall is slow. The April student</td></tr>
+<tr><td>Worked Through</td><td>Formal entry, formalism immediate, direct correction, one running example, visual, slow abstraction</td><td>A student who can follow a method but cannot start one</td></tr>
+<tr><td>Long Way Round</td><td>Concrete entry, formalism late, predict-then-falsify, many varied, visual-first, slow abstraction, high digression tolerance</td><td>A student who is interested and not under time pressure</td></tr>
+<tr><td>Exam Room</td><td>Formal entry, immediate, direct correction, many varied, verbal, fast abstraction, zero digression</td><td>A student with three weeks left</td></tr>
+</tbody>
+</table>
+
+<div class="claim">
+  <p>A named preset is therefore never a new capability. It is a label on a point in a space that already covers the useful ground, plus a scored vector that may sit between two archetypes. This is what makes the kill switch cheap: removing a creator reverts the preset to its nearest archetype, and the student loses a name rather than a way of being taught.</p>
+  <span class="tag decided">Proof of D11<span class="src">Five archetypes, no creator required</span></span>
+</div>
+
+<div class="claim">
+  <p>Honest limit on that proof. The archetypes make the product operable without creators; they do not make it marketable without them. Document 07 records that creator acquisition remains the single point of failure for Route A distribution.</p>
+  <span class="tag assumed">Assumed<span class="src">Distribution, not capability</span></span>
+</div>
+
+<h2>Conformance, made concrete</h2>
+
+<h3>Verification, because an unverifiable style is a claim</h3>
+
+<p>The two hand-written transcripts in document 01 are the reference behaviour. The harness scores a generated session on the same observables and compares it with the style object that was in force.</p>
+
+<table>
+<thead><tr><th>Observable</th><th>How it is scored</th><th>Failure</th></tr></thead>
+<tbody>
+<tr><td>Turn index of first notation</td><td>Count of tutor turns before symbols appear</td><td>Notation in turn 1 under a withheld-formalism style</td></tr>
+<tr><td>Wrong-answer handling</td><td>Whether the next turn corrects or elicits a prediction</td><td>Direct correction under a predict-then-falsify style</td></tr>
+<tr><td>Distinct scenarios per objective</td><td>Count of separate contexts introduced</td><td>Four scenarios under a one-running-example style</td></tr>
+<tr><td>Off-objective turns</td><td>Proportion not advancing the stated objective</td><td>Any, under Exam Room</td></tr>
+<tr><td>Diagram position</td><td>Whether a visual leads or follows the explanation</td><td>Visual after the fact under a visual-first style</td></tr>
+</tbody>
+</table>
+
+<p>Conformance rate is reported, not aspired to. It is also the evidence a creator will want before signing, and the evidence a regulator would want if anyone ever asked what the system was doing.</p>
+
+<h2>What is deliberately not being built</h2>
+
+<div class="claim">
+  <p>No LoRA adapters, no fine-tuned weights carrying a creator's style. Weights cannot be cleanly revoked; you cannot un-train them, and a kill switch that requires retraining and redeployment is not a kill switch. Retrieval and prompting can be withdrawn in the time it takes to update a record.</p>
+  <span class="tag decided">Decision D8<span class="src">Drives the whole revocation story in 04</span></span>
+</div>
+
+<p>What this costs: the fidelity ceiling is lower than fine-tuning would give. If weight-level style is ever genuinely needed, that is a new decision with new legal advice attached, not a configuration change.</p>
+
+<h2>The fallback boundary</h2>
+
+<p>Launch personas pass a student usefulness test. The contingency, if market feedback says they are recognisably not the person, is exemplar conditioning on licensed creator material. That path has to be designed now or it becomes a rewrite later, so the boundary is defined here.</p>
+
+<h3>The interface</h3>
+
+<p>The style object gains one optional field: a set of exemplar references, scoped to a single creator, held separately from the item bank, and independently revocable. Nothing else changes. The style card generator reads the field if present and includes exemplars in the conditioning context; the conformance harness scores the same seven dimensions either way.</p>
+
+<h3>What changes when it is switched on</h3>
+
+<ul>
+<li>The creator agreement becomes a content licence rather than a name and likeness licence, which is a negotiation rather than a signature.</li>
+<li>Termination becomes an operation: exemplars must be purgeable per creator, with the purge provable.</li>
+<li>Exam board material can never enter this path, since the exemplars are the creator's own teaching and nothing else.</li>
+<li>The system starts generating explanations in a creator's manner on topics they never covered, which is the specific thing that makes educators hesitate. The agreement needs a review right for that.</li>
+</ul>
+
+<h3>What does not change</h3>
+
+<p>Zero-persona operation, the dimension set, the conformance harness, the student's dials, and the kill-switch path. That is the point of putting style in an object rather than in a prompt or in weights.</p>
+
+<h2>The trigger, which is narrower than "it underperformed"</h2>
+
+<p>Two failures will feel identical and have opposite fixes. Named presets ship alongside unnamed archetypes from day one, and the instrument is return rate rather than satisfaction score.</p>
+
+<table>
+<thead><tr><th>Observation</th><th>Diagnosis</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td>Named presets do not beat unnamed archetypes on repeat sessions</td><td>The wedge is weak</td><td>Do not licence material. Higher fidelity cannot rescue a handle nobody wants</td></tr>
+<tr><td>Named presets beat archetypes, but feedback says it does not sound like him</td><td>Fidelity gap</td><td>Trigger the exemplar path for that creator</td></tr>
+</tbody>
+</table>
+
+<div class="claim">
+  <p>Proposed threshold: exemplar conditioning goes live only when named presets show a clear retention advantage <em>and</em> qualitative feedback attributes the shortfall to fidelity rather than relevance. The number behind "clear" is not set, because it depends on a cohort size we cannot estimate yet.</p>
+  <span class="tag open">Open<span class="src">Needs a number before launch. Owner's decision, not ours</span></span>
+</div>
+
+<h2>Voice</h2>
+
+<div class="claim">
+  <p>Voice cloning is off the launch path entirely and becomes a separate opt-in limb of the creator licence. It is the highest-risk signal on both sides of the design, and it is the specific thing Ofcom named when it warned service providers about users building virtual clones of real people.</p>
+  <span class="tag verified">Verified<span class="src">Ofcom open letter to service providers, 8 Nov 2024</span></span>
+</div>
+

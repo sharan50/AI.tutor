@@ -1,0 +1,338 @@
+/* AI.tutor venture design vault
+   Visual system: the student's side of the British exam paper.
+   Paper, biro ink, teacher's marking pen. Board colours are deliberately
+   avoided so that nothing implies endorsement by an awarding organisation. */
+
+:root {
+  --paper:        #F6F7F4;
+  --paper-deep:   #ECEEE8;
+  --ink:          #16243B;
+  --ink-soft:     #4A5769;
+  --ink-faint:    #7D8899;
+  --rule:         #C3D3E0;
+  --rule-faint:   #DFE6EC;
+  --mark-red:     #C0342B;
+  --mark-green:   #2F6B4F;
+  --mark-amber:   #9A6B1E;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", "URW Palladio L", Georgia, serif;
+  --grot: "Helvetica Neue", Helvetica, "Segoe UI", system-ui, Arial, sans-serif;
+
+  --measure: 34rem;
+  --margin-col: 9.5rem;
+  --gap: 2rem;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  font-size: 17px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  line-height: 1.62;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- page frame ---------- */
+
+.sheet {
+  max-width: calc(var(--measure) + var(--margin-col) + var(--gap) + 6rem);
+  margin: 0 auto;
+  padding: 0 3rem 6rem;
+}
+
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.4rem 0 1.1rem;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 2.6rem;
+  font-family: var(--grot);
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+}
+
+.masthead a { color: var(--ink); text-decoration: none; }
+.masthead a:hover { text-decoration: underline; }
+
+.masthead .doc-no {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.masthead .repo { color: var(--ink-faint); }
+
+/* ---------- typography ---------- */
+
+h1 {
+  font-family: var(--grot);
+  font-weight: 700;
+  font-size: 2.1rem;
+  line-height: 1.12;
+  letter-spacing: -0.021em;
+  margin: 0 0 0.5rem;
+  max-width: 22ch;
+}
+
+.standfirst {
+  font-size: 1.14rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin: 0 0 2.8rem;
+}
+
+h2 {
+  font-family: var(--grot);
+  font-weight: 700;
+  font-size: 1.16rem;
+  letter-spacing: -0.008em;
+  line-height: 1.28;
+  margin: 3.2rem 0 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+  max-width: none;
+}
+
+h2 > span.h2t { display: block; max-width: 30ch; }
+
+h3 {
+  font-family: var(--grot);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: 2rem 0 0.5rem;
+  color: var(--ink);
+}
+
+p, li { max-width: var(--measure); }
+p { margin: 0 0 1.05rem; }
+
+ul, ol { padding-left: 1.15rem; margin: 0 0 1.2rem; }
+li { margin-bottom: 0.5rem; }
+
+strong { font-weight: 700; }
+
+a { color: var(--ink); text-underline-offset: 2px; text-decoration-color: var(--rule); }
+a:hover { text-decoration-color: var(--ink); }
+
+code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  background: var(--paper-deep);
+  padding: 0.08em 0.3em;
+}
+
+blockquote {
+  margin: 1.4rem 0;
+  padding: 0.1rem 0 0.1rem 1.2rem;
+  border-left: 3px solid var(--ink);
+  max-width: var(--measure);
+  font-style: normal;
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ---------- the provenance margin: the one loud device ---------- */
+
+.claim {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--margin-col);
+  gap: var(--gap);
+  align-items: start;
+  margin: 0 0 1.05rem;
+}
+
+.claim > :first-child { margin-bottom: 0; }
+
+.tag {
+  font-family: var(--grot);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.35;
+  padding-top: 0.36rem;
+  border-top: 2px solid currentColor;
+  display: block;
+}
+
+.tag .src {
+  display: block;
+  font-weight: 400;
+  color: var(--ink-faint);
+  margin-top: 0.2rem;
+  font-size: 0.66rem;
+}
+
+.tag.verified { color: var(--mark-green); }
+.tag.assumed  { color: var(--mark-amber); }
+.tag.open     { color: var(--mark-red); }
+.tag.decided  { color: var(--ink); }
+
+/* ---------- tables ---------- */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.4rem 0 1.8rem;
+  font-size: 0.92rem;
+  font-family: var(--grot);
+}
+
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.6rem 0.8rem 0.6rem 0;
+  border-bottom: 1px solid var(--rule-faint);
+  line-height: 1.45;
+}
+
+thead th {
+  border-bottom: 1.5px solid var(--ink);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+tbody tr:last-child td { border-bottom: 1px solid var(--rule); }
+
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------- contents ---------- */
+
+.contents { margin: 0; padding: 0; list-style: none; max-width: none; }
+
+.contents li {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr) 7rem;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.72rem 0;
+  border-bottom: 1px solid var(--rule-faint);
+  max-width: none;
+  margin: 0;
+}
+
+.contents .n {
+  font-family: var(--grot);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+}
+
+.contents .t { font-size: 1rem; }
+.contents .t a { text-decoration: none; }
+.contents .t a:hover { text-decoration: underline; }
+.contents .t span { display: block; color: var(--ink-soft); font-size: 0.86rem; line-height: 1.4; }
+
+.contents .s {
+  font-family: var(--grot);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-align: right;
+}
+.contents .s.done    { color: var(--mark-green); }
+.contents .s.partial { color: var(--mark-amber); }
+.contents .s.todo    { color: var(--mark-red); }
+
+/* ---------- hero (index only) ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--margin-col);
+  gap: var(--gap);
+  align-items: start;
+  margin: 1rem 0 3.4rem;
+}
+
+.hero .claim-text {
+  font-family: var(--grot);
+  font-weight: 700;
+  font-size: 1.85rem;
+  line-height: 1.2;
+  letter-spacing: -0.019em;
+  margin: 0;
+  max-width: 26ch;
+}
+
+.hero .sub {
+  font-size: 1.02rem;
+  color: var(--ink-soft);
+  max-width: 44ch;
+  margin: 1.1rem 0 0;
+}
+
+/* ---------- callouts ---------- */
+
+.note {
+  border: 1.5px solid var(--ink);
+  padding: 1.1rem 1.3rem;
+  margin: 1.8rem 0;
+  max-width: var(--measure);
+}
+.note p:last-child { margin-bottom: 0; }
+.note h3 { margin-top: 0; }
+
+.note.danger { border-color: var(--mark-red); }
+.note.danger h3 { color: var(--mark-red); }
+
+/* ---------- foot ---------- */
+
+.pagefoot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 4.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--ink);
+  font-family: var(--grot);
+  font-size: 0.8rem;
+}
+.pagefoot a { text-decoration: none; }
+.pagefoot a:hover { text-decoration: underline; }
+.pagefoot .stamp { color: var(--ink-faint); }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 46rem) {
+  html { font-size: 16px; }
+  .sheet { padding: 0 1.25rem 4rem; }
+  .claim, .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.45rem;
+  }
+  .claim > :first-child { margin-bottom: 0.35rem; }
+  .tag {
+    border-top: none;
+    border-left: 2px solid currentColor;
+    padding: 0 0 0 0.55rem;
+    margin-bottom: 1.1rem;
+  }
+  .tag .src { display: inline; margin-left: 0.35rem; }
+  .hero .claim-text { font-size: 1.5rem; }
+  h1 { font-size: 1.7rem; }
+  .contents li { grid-template-columns: 2rem minmax(0, 1fr); }
+  .contents .s { grid-column: 2; text-align: left; }
+  table { font-size: 0.85rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+:focus-visible {
+  outline: 2px solid var(--mark-red);
+  outline-offset: 3px;
+}
+
+@media print {
+  body { background: #fff; }
+  .masthead, .pagefoot { border-color: #000; }
+}
+
