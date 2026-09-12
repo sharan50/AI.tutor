@@ -19,7 +19,7 @@ who you are. A lawyer wants 04 and 13. An investor wants 00 and 09. A creator wa
 Every claim carries a tag in the right margin.
 
 - **Verified**: checked against a named source on a named date. Sources in `evidence/sources.html`.
-- **Assumed**: reasoned, not confirmed. Listed in `docs/13-open-items.html`.
+- **Assumed**: reasoned, not confirmed. Listed in `docs/14-open-items.html`.
 - **Open**: unresolved, and something depends on it.
 - **Decision**: a choice made deliberately. Recorded in `docs/decision-ledger.html`.
 

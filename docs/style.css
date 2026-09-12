@@ -335,7 +335,7 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .system-flow .step.safety b { color: var(--mark-green); }
 .system-flow .step:not(:last-child)::after { content: "→"; position: absolute; right: -0.5rem; top: 50%; z-index: 1; color: var(--ink-faint); transform: translate(50%, -50%); }
 
-.status-strip { display: grid; grid-template-columns: 9fr 4fr 2fr; height: 0.8rem; margin: 0.9rem 0 0.45rem; overflow: hidden; }
+.status-strip { display: grid; grid-template-columns: 10fr 4fr 2fr; height: 0.8rem; margin: 0.9rem 0 0.45rem; overflow: hidden; }
 .status-strip span:nth-child(1) { background: var(--mark-green); }
 .status-strip span:nth-child(2) { background: var(--mark-amber); }
 .status-strip span:nth-child(3) { background: var(--mark-red); }
