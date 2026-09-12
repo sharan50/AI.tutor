@@ -21,6 +21,21 @@
 
 <p>A hosted frontier model behind an abstraction thin enough to swap providers, with retrieval over the item bank, a style-card layer generated from the style object, and a safety layer that sits outside both and cannot be reached by either.</p>
 
+<section class="visual" aria-labelledby="turn-map-title">
+  <h3 id="turn-map-title">One learner turn, with the hard boundary visible</h3>
+  <p class="lede">Safety appears before and after generation. The style object cannot enter either safety check.</p>
+  <div class="system-flow" role="img" aria-label="Student message flows through safety check, objective resolution, retrieval, style card, generation, second safety check and logging.">
+    <div class="step safety"><b>01 Safety</b>Screen the message before any academic or style layer loads.</div>
+    <div class="step"><b>02 Objective</b>Resolve one teachable objective, or ask rather than guess.</div>
+    <div class="step"><b>03 Retrieval</b>Use only live, provenanced items for that objective.</div>
+    <div class="step"><b>04 Style card</b>Render the active, revocable teaching-style object.</div>
+    <div class="step"><b>05 Generate</b>Produce a response carrying the retrieved item IDs.</div>
+    <div class="step safety"><b>06 Safety</b>Screen the response with no reference to the style object.</div>
+    <div class="step"><b>07 Log</b>Record the turn, items, style version and evaluation observables.</div>
+  </div>
+  <p class="visual-caption">Green marks the layer that must remain isolated from style. Each other stage exists to make accuracy and withdrawal auditable.</p>
+</section>
+
 <table>
 <thead><tr><th>Layer</th><th>Choice</th><th>Why</th><th>What it makes harder</th></tr></thead>
 <tbody>
@@ -88,7 +103,7 @@
 </div>
 <footer class="pagefoot">
   <a href="05-safety-privacy-regulatory.html">Safety, privacy, regulatory</a>
-  <span class="stamp">Built 11 September 2026</span>
+  <span class="stamp">Built 12 September 2026</span>
   <a href="07-route-a-direct-to-parents.html">Route A: direct to parents</a>
 </footer>
 </main>
