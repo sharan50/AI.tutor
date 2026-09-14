@@ -1,44 +1,314 @@
 # Creator licence: heads of terms
 
-One page by design. A mid-tier UK GCSE creator should be able to read and sign this
-without a lawyer. The exemplar-conditioning upgrade (decision D6) is a separate
-schedule that attaches later, if and only if the evidence in document 11 justifies it.
+**CINE · style preset licence**
+Version 1.0, 14 September 2026
+Counterpart plain-English summary: `creator-licence-term-sheet.md`
 
-**Parties.** [Creator] and [Company].
+> **Status.** These are heads of terms and drafting instructions. They are not an
+> agreement, not a draft agreement, and **not legal advice**. No lawyer has
+> reviewed this document. Section 12 lists the questions that must be answered
+> before drafting begins; several of them determine the shape of clauses above.
+>
+> **Design source.** `docs/04-rights-dossier.html` sets out the rights analysis
+> this instrument sits on. `docs/02-style-engine.html` defines the parameter
+> object and rating protocol referred to throughout. Where this document and
+> those disagree, those govern and this is the error.
 
-**What is licensed.** The Creator's name and likeness, for the sole purpose of
-labelling a teaching-style preset inside the Company's tutoring product.
+---
 
-**What is not licensed.** Voice. Any video, audio, text, diagram or other material
-authored by the Creator. Merchandising. Use in paid advertising, which requires
-separate written consent per campaign.
+## 1. Parties and recitals
 
-**What the Company actually holds.** A numeric score across seven published teaching
-dimensions, and a description written by the Company in its own words. No material
-authored by the Creator is ingested, stored, reproduced or used for training.
+**Licensor:** the named educator.
+**Licensee:** the CINE contracting entity.
 
-**Labelling.** Every session run under the preset carries a persistent on-screen
-statement that this is an AI tutor teaching in a style modelled on the Creator, and
-that the Creator has neither written nor reviewed the content.
+> **Drafting note.** The contracting entity is **not settled**. It is open item
+> OI-7 and it carries consequences for governing law, consumer jurisdiction, UK
+> representative obligations under UK GDPR Article 27, VAT, and the international
+> transfer position where processing occurs in India. Do not draft party clauses
+> before OI-7 is answered.
 
-**Term.** 12 months, rolling. Either party may terminate on 30 days' notice without
-cause.
+Recitals should record, because they do work later in construction:
 
-**Exclusivity.** None.
+1. The Licensee operates an AI tutoring service for UK secondary students.
+2. The Licensee's tutoring content is authored independently and validated by
+   qualified examiners, and is **not derived from the Licensor**.
+3. The licence is of **name and likeness only**. No work of the Licensor is
+   licensed, reproduced, adapted, ingested, indexed or processed.
+4. The Licensor does not author, review, approve or endorse any tutoring content.
 
-**Review right.** The Creator may at any time request a sample of sessions run under
-the preset, and may require a specific behaviour to be removed within 14 days.
+## 2. Grant
 
-**Kill switch.** On request the preset is removed from all surfaces, reverting to its
-unnamed archetype. Target time to effect: 60 minutes from request to full propagation,
-including sessions in progress.
+Non-exclusive, non-transferable, non-sublicensable (save to group companies and
+hosting subcontractors strictly for operating the service) licence to use the
+Licensor's **name** and **image** solely to:
 
-**On termination.** The preset reverts to its unnamed archetype within the kill-switch
-window. The dimension scores survive as Company work product, describing no property of
-the Creator. Any voice model, if that limb was ever exercised, is destroyed and the
-destruction certified in writing.
+a. identify and label one Style Preset within the Service; and
+b. market the availability of that Style Preset.
 
-**Payment.** [To be set. Not yet modelled; see document 10.]
+**Expressly excluded from the grant**, and to be stated as exclusions rather
+than left to implication:
 
-**Governing law.** [Open; see question 7, document 13.]
+- Any copyright work of the Licensor, including video, audio, transcripts,
+  written materials, worked examples and teaching materials.
+- Any performance or performer's rights.
+- The Licensor's voice, and any synthesised, cloned or imitative reproduction of
+  it (see Schedule 3).
+- Any right to train, fine-tune, adapt or otherwise create a machine-learning
+  artefact embodying the Licensor's style (see clause 8).
+- Any right to state or imply endorsement, authorship, review or approval.
+- **Merchandising** of any kind.
+- **Use in paid advertising**, which requires separate written consent from the
+  Licensor per campaign. Organic description of the Style Preset's availability
+  inside the Service is permitted under clause 2(b); a paid campaign built around
+  the Licensor's name is not.
 
+## 3. The Style Preset, and how it is derived
+
+The Style Preset is a **parameter object**: twelve integers on defined
+dimensions, plus a register note, from which a written style card is generated by
+a deterministic versioned renderer.
+
+Derivation, which should be a warranty by the Licensee rather than a description:
+
+1. Three independent qualified raters score the Licensor's **publicly available**
+   teaching against the published rubric.
+2. Raters **observe** material. The Licensee warrants that no material of the
+   Licensor is downloaded, transcribed, stored, embedded, indexed, or provided to
+   any model.
+3. The per-dimension result is the median of three scores, subject to an
+   inter-rater agreement threshold. Dimensions failing the threshold are set to a
+   default and flagged as unfitted rather than estimated.
+4. The provenance record stores rater identities, date, material URLs and
+   timestamps, scores and agreement statistics, the aggregated vector, renderer
+   version, and the Licensor's approval. **It stores no content of the Licensor.**
+
+> **Drafting note.** Clause 3.2 is the single most important warranty in the
+> instrument from the Licensor's perspective and should be drafted as an
+> unqualified warranty with an audit right, not as a description of process.
+
+## 4. Approval right
+
+The Licensor must be provided with the twelve dimension values and the rendered
+style card **before first publication**, and may object to any value or to the
+card as a whole. Repeatable once per Term.
+
+An unresolved objection entitles the Licensor to terminate under clause 7 with
+the clause 9 consequences.
+
+## 4A. Continuing review right
+
+The Licensor may **at any time** request a representative sample of sessions run
+under the Style Preset, and may require any specific behaviour to be removed.
+Removal within **14 days** of the request.
+
+> **Drafting note.** This is a continuing right, distinct from the one-off
+> pre-publication approval in clause 4, and it is the provision that makes the
+> arrangement supervisable by the Licensor rather than merely revocable. It costs
+> the Licensee a sampling mechanism and a change path that does not require a
+> release. Both are cheap; the alternative is a creator whose only instrument is
+> termination, which makes termination more likely rather than less.
+
+## 5. Labelling
+
+Mandatory, persistent, on screen in every session, in the form:
+
+> AI tutor. Style preset licensed from [Name]. [Name] does not write or check
+> these answers.
+
+Where a learner has adjusted any dimension away from the licensed values, the
+label must instead read "Style preset: [Name], adjusted by you."
+
+The wording is a term of the agreement and **may not be varied without the
+Licensor's written consent**.
+
+> **Drafting note.** The labelling clause is the principal mitigation for
+> passing off by false endorsement, following *Irvine v Talksport*. It should
+> therefore sit with the non-endorsement warranty in clause 6 and should survive
+> as a condition rather than a warranty, so that breach gives a right to
+> terminate.
+
+## 6. Non-endorsement
+
+Express mutual acknowledgement that the Licensor does not author, review,
+approve or endorse any tutoring content, and that the Licensee will not state or
+imply otherwise in any medium.
+
+## 7. Term and termination
+
+- **Term:** twelve months from the effective date, automatically renewing for
+  successive twelve-month periods.
+- **Renewal notice:** either party, thirty days before the end of a period.
+- **Termination at will:** **either party may terminate at any time, for any
+  reason or for no reason, effective on notice. No cure period. No notice
+  period. No requirement to give reasons.**
+- Notice to be given to a published address maintained for the purpose.
+
+> **Drafting note.** Resist any attempt to add a cure period or a minimum
+> commitment. The commercial logic of the whole instrument (decision D5) is that
+> a creator who cannot leave instantly is a creator with a grievance and an
+> audience, and the reputational exposure of that materially exceeds the value of
+> a locked term.
+
+## 8. No machine-learning artefact
+
+The Licensee shall not train, fine-tune, or create any adapter, LoRA, embedding
+or other model artefact that embodies or is derived from the Licensor's style,
+identity, voice or materials.
+
+> **Drafting note.** This is decision D8 and it is what makes clause 9
+> deliverable. Weights cannot be cleanly revoked; a deletion obligation over a
+> trained artefact is unenforceable in practice. If this clause is ever
+> negotiated away, clause 9 must be renegotiated with it and the times to effect
+> will lengthen by orders of magnitude.
+
+## 9. Consequences of termination: service levels
+
+Measured from **receipt** of valid notice, not from acknowledgement.
+
+| Time | Obligation |
+|---|---|
+| **15 minutes** | Style Preset disabled for all new sessions. |
+| **16 minutes** | In-flight sessions fall back to an unnamed archetype at the next turn. |
+| **24 hours** | Name and image removed from catalogue, marketing site, app store listing metadata, and CDN caches. |
+| **7 days** | Parameter object, style card, name and likeness assets deleted from primary stores. |
+| **35 days** | Backups aged out. |
+
+**Carve-out, to be stated expressly rather than relied on:** learner session
+transcripts are retained for the benefit of the learner and are not deleted.
+They are amended to carry a neutral preset identifier with no reference to the
+Licensor.
+
+**Survival:** clauses 6 (non-endorsement), 8 (no ML artefact), 9, 10 and 11.
+
+> **Drafting note: a position that was considered and rejected.** An earlier draft
+> of this instrument provided that the twelve dimension scores would *survive
+> termination as Company work product, describing no property of the Creator*.
+> That position is legally arguable, and it follows from the same reasoning that
+> makes the parameter object legally inert in the first place: twelve integers
+> describing pedagogy are not anybody's property.
+>
+> It is rejected on commercial and reputational grounds rather than legal ones.
+> Retaining the fitted vector means continuing to teach in a departed creator's
+> style indefinitely under an archetype name. That is the fact pattern a
+> journalist writes up, it is what a creator's adviser will look for, and it makes
+> the fifteen-minute kill switch in clause 9 read as theatre. The fitting cost it
+> protects is three raters and two hours of material, which is cheap to redo.
+>
+> **Accordingly the fitted vector is deleted under clause 9.** Archetypes are
+> unaffected, because they are authored rather than fitted and exist independently
+> of any creator.
+
+> **Drafting note on remedy.** Whether these service levels should carry
+> liquidated damages, a specific-performance style remedy, or stand as ordinary
+> contractual obligations is **a question for counsel** and is not resolved here.
+> The operational commitment is rehearsed quarterly on the Licensee's side
+> (decision D29) and the rehearsal record should be made available to the
+> Licensor on request.
+
+## 10. Data protection
+
+The Licensor's name and likeness are their personal data.
+
+- Lawful basis for processing: performance of this contract.
+- The Licensee is controller in respect of that data.
+- Deletion obligations in clause 9 operate in addition to, and do not limit,
+  the Licensor's rights under UK GDPR.
+
+## 11. Consideration
+
+**Not settled, deliberately.** Two structures are to be drafted in the
+alternative:
+
+- **(A) Flat fee per Term**, paid in advance, non-refundable on termination by
+  either party.
+- **(B) Revenue share** on sessions using the Style Preset, with a defined
+  attribution method, reporting frequency and audit right.
+
+> **Drafting note.** Structure B requires a definition of an attributable session
+> and must handle the case where a learner adjusts dimensions away from the
+> licensed values. The product's own position (clause 5) is that an adjusted
+> preset is no longer the Licensor's; the fee structure should be consistent with
+> that or the labelling clause becomes commercially awkward.
+
+## 12. Questions that must be answered before drafting
+
+| # | Question | Blocks |
+|---|---|---|
+| OI-6 | What is the minimum viable licence for name and likeness only? | The whole instrument. |
+| OI-7 | Which entity contracts, and what follows for jurisdiction, UK representative obligations and VAT? | Clause 1, governing law, Schedule 2. |
+| OA-4 | Is the passing-off / trade mark / performers' rights / data protection framing correct, there being no statutory UK personality right? | Clauses 5 and 6. |
+| OA-9 | Are target creators US-resident, bringing state right-of-publicity law into scope? | Whether a US-law limb is needed at all. |
+| new | Should clause 9 carry a liquidated remedy? | Clause 9. |
+| new | Governing law and forum, noting that Indian personality-rights jurisprudence is currently the most aggressive on AI likeness and the operating base is in that jurisdiction. | Boilerplate, and the risk analysis behind it. |
+
+---
+
+# Schedule 1: Style dimensions and rubric
+
+Incorporates by reference the twelve dimensions, their ranges and their
+observable signatures as set out in `docs/02-style-engine.html`, at the schema
+version stated in the provenance record.
+
+> **Drafting note.** Incorporate by reference to a **versioned** schema, and
+> provide that a change of schema version requires the Licensor's approval under
+> clause 4. Otherwise the Licensee can redefine what "your style" means
+> unilaterally.
+
+---
+
+# Schedule 2: Exemplar conditioning (D6)
+
+**Drafted. Not exercised. Not offered to any creator at launch.**
+
+This schedule is prepared now because the design requires the boundary to exist
+before it is needed (decision D6), not because it is intended to be used.
+
+If exercised, it would grant, **in addition to and separately from clause 2**:
+
+1. A licence to reproduce, adapt and machine-process **specified** material of
+   the Licensor, identified by item, for the purpose of conditioning the style of
+   generated output only.
+2. **Not** a licence to use that material as a source of tutoring content. The
+   Licensee's verifier is specified to reject any curricular claim supported
+   solely by an exemplar (decision D18), and that restriction should be a term.
+3. A defined corpus retention period tied to the licence term, enforced by the
+   storage system rather than by process.
+4. A maximum verbatim reproduction threshold, with an automated leakage test
+   (T-STY-04) and a contractual notification obligation on failure.
+
+**Consequential changes to clause 9 if this schedule is exercised:**
+
+| Time | Additional obligation |
+|---|---|
+| 15 minutes | Cached prompt fragments derived from exemplars invalidated. |
+| 7 days | Licensed corpus and all derived indexes deleted. |
+
+Clause 8 (no machine-learning artefact) **continues to apply unchanged**.
+
+> **Drafting note.** The labelling wording in clause 5 becomes harder to sustain
+> under this schedule, because "does not write these answers" sits uncomfortably
+> with the creator's own material conditioning them. Revised wording is open item
+> OI-6 and must be settled before this schedule is offered to anyone.
+
+---
+
+# Schedule 3: Voice (D9)
+
+**Drafted. Not exercised. Off the launch path entirely.**
+
+Separate opt-in limb, separate consideration, separate term, separate deletion
+service level. To be capable of termination independently of the main agreement,
+in either direction.
+
+Any voice model, if this limb is ever exercised, is **destroyed on termination and
+the destruction certified in writing** to the Licensor. Clause 8 means there is no
+trained artefact embodying the Licensor's style to chase alongside it; if clause 8
+is ever negotiated away, this certification becomes unverifiable and the limb
+should not be offered at all.
+
+> **Drafting note.** Voice is the highest-risk limb on both the rights and the
+> regulatory side. Virtual clones of real people were among the trigger incidents
+> in Ofcom's open letter of 8 November 2024, and Indian courts have restrained AI
+> voice cloning directly (*Arijit Singh*, Bombay High Court, 2024). If this
+> schedule is ever exercised, the Online Safety Act scoping decision in
+> `docs/05-safety-privacy-regulatory.html` must be re-run before, not after.

@@ -1,84 +1,164 @@
 <h1>Route comparison</h1>
-<p class="standfirst">Two routes, planned in parallel so the choice is made on evidence. This document exists to be usable in both directions: to choose, and to defend that choice to an investor who prefers the other one.</p>
+<p class="standfirst">The document to decide with. Route A is recommended, on three conditions that are stated as falsifiable tests rather than as judgements, and the strongest case for Route B is put here rather than in a footnote, because an investor who prefers Route B is not making a mistake.</p>
+<dl class="meta">
+<dt>Document</dt><dd>09 of 14</dd>
+<dt>Status</dt><dd>A recommendation, with conditions. No condition has been tested.</dd>
+<dt>Written</dt><dd>14 September 2026</dd>
+<dt>Recommendation</dt><dd><b>Route A</b>, conditional on three tests, all of which can be run before anything is built.</dd>
+<dt>Reversal cost</dt><dd>Months, not a rewrite, because of D3. The shared core is roughly 80% of the design.</dd>
+</dl>
 
-<h2>The two</h2>
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#rec">The recommendation, and what would overturn it</a></li>
+<li><a href="#side">Side by side</a></li>
+<li><a href="#forecloses">What each route forecloses</a></li>
+<li><a href="#mind">What it costs to change your mind</a></li>
+<li><a href="#caseb">The strongest case for Route B</a></li>
+<li><a href="#defend">Defending the choice to an investor who prefers Route B</a></li>
+</ol>
+</details>
 
-<p><strong>Route A, direct to parents.</strong> A parent buys a subscription. The company is an independent data controller. Distribution runs through creators and search.</p>
+<h2 id="rec">The recommendation, and what would overturn it</h2>
 
-<p><strong>Route B, through schools.</strong> A school or trust buys per pupil per year. The school is the controller and the company processes on its instructions. Distribution runs through a sales team and procurement cycles.</p>
+<p class="lede"><b>Route A, direct to parents.</b> The verified demand data points that way and the verified school data points away from Route B. But the recommendation holds only if three conditions are met, all three are testable before anything is built, and failing any one of them should flip the decision rather than start an argument about it.</p>
 
-<h2>Side by side</h2>
+<div class="claim">
+<p>Private tutoring demand is <b>rising and concentrated</b>: 29% of secondary pupils have had it, up from 18% twenty years ago; Year 11 peaks at 25%; London 45%; urban 33%. Over the same period the school channel is <b>contracting</b>: school-organised tutoring fell to 20% from 22% in 2023, and <b>58% of schools reduced their tutoring offer year on year</b>.</p>
+<p>Household demand is growing and institutional demand is shrinking. That is the strongest single argument in this repository for going direct, and it is a fact rather than a preference.</p>
+<span class="tag verified">Verified<span class="src">Why the evidence favours Route A, verified, Sutton Trust, February 2026</span></span>
+</div>
 
-<section class="visual" aria-labelledby="route-chart-title">
-  <h3 id="route-chart-title">Time to the first commercial signal</h3>
-  <p class="lede">The routes share a product core, but not a learning cycle. The scale is a range from the first few weeks to eighteen months.</p>
-  <div class="route-chart" role="img" aria-label="Parents route reaches first revenue in weeks. Schools route reaches first revenue in nine to eighteen months.">
-    <div class="route-row"><div class="route-label"><strong>Route A: parents</strong><span>First revenue in weeks</span></div><div class="timeline"><span class="range parents">weeks</span></div></div>
-    <div class="route-row"><div class="route-label"><strong>Route B: schools</strong><span>First revenue in 9–18 months</span></div><div class="timeline"><span class="range schools">9–18 months</span></div></div>
-  </div>
-  <p class="visual-caption">This is not a forecast of scale. It shows when each route can first tell the team whether its sales hypothesis is wrong.</p>
-</section>
+<h3>The three conditions</h3>
 
+<div class="tw">
 <table>
-<thead><tr><th></th><th>Route A: parents</th><th>Route B: schools</th></tr></thead>
+<thead><tr><th class="id">#</th><th>Condition</th><th>Test</th><th>If it fails</th></tr></thead>
 <tbody>
-<tr><td>Time to first revenue</td><td>Weeks. A parent decides alone</td><td>9 to 18 months through procurement, typically aligned to the academic year</td></tr>
-<tr><td>Who has budget</td><td>Families already spending &pound;25 to &pound;45 an hour on tutoring</td><td>Schools that are cutting: 58% reduced their tutoring offer year on year</td></tr>
-<tr><td>Cost to run</td><td>Inference plus age assurance per account plus payment fees plus support</td><td>Inference plus a field sales team plus safeguarding and procurement compliance</td></tr>
-<tr><td>What breaks first</td><td>Churn the week after the last exam</td><td>A single reference site going quiet kills a regional pipeline</td></tr>
-<tr><td>How you find out</td><td>Immediately, in the cohort retention curve</td><td>Slowly, in a renewal conversation nine months later</td></tr>
-<tr><td>Data position</td><td>Independent controller. Full Children's code burden, own age assurance, own lawful basis for every inference</td><td>Processor on the school's instructions. Lighter own-account burden, heavier contractual and safeguarding scrutiny</td></tr>
-<tr><td>Persona wedge</td><td>Works. The student chooses, and the choice is the reason they came</td><td>Weakened. A school buying a tool does not want pupils selecting a YouTuber</td></tr>
-<tr><td>Evidence required to sell</td><td>A parent's judgement after a free trial</td><td>Efficacy evidence, safeguarding documentation, a DPIA, a reference school</td></tr>
-<tr><td>Cost to change your mind</td><td>Low. The core is shared; adding schools later means adding a contract and a sales motion</td><td>High. Building school-shaped from the start means building admin, rostering and reporting nobody has asked for yet</td></tr>
-<tr><td>What it forecloses</td><td>Little, provided the data model is built controller-first</td><td>The persona wedge, in practice if not in principle</td></tr>
+<tr><td class="id">C1</td><td>Parents anchor the price against <b>tutoring</b> (£25 to £45 an hour, verified) rather than against software or against free.</td><td>Landing-page price testing before any product exists. M5 in <a href="11-roadmap.html">11 Roadmap</a>.</td><td>Route A's revenue per household collapses to a level that cannot carry acquisition. <b>Go to Route B.</b></td></tr>
+<tr><td class="id">C2</td><td>Age verification cost per verified adult is a <b>small fraction</b> of first-cycle contribution, not a large one.</td><td>Ask three certified providers for a quote. Doable this quarter, requires nothing to be built.</td><td>Route A fails at the front door, and it fails for a reason no amount of product work fixes. <b>Go to Route B</b>, where age assurance largely dissolves.</td></tr>
+<tr><td class="id">C3</td><td>Non-creator acquisition cost is affordable, so that D11's zero-persona independence is commercial as well as technical.</td><td>Split CAC by channel from the first cohort. M4.</td><td>The business is creator-dependent even though the product is not. That is survivable, but it must be <b>stated to investors</b> rather than hidden in a blended CAC.</td></tr>
 </tbody>
 </table>
-
-<h2>Recommendation</h2>
-
-<div class="claim">
-  <p>Route A, and the condition under which that holds is that the persona wedge is real. If named presets do not outperform unnamed archetypes on repeat use, Route A loses its distinguishing feature and becomes a thinner version of a free product, at which point Route B's higher evidence burden is worth paying because the buyer is buying outcomes rather than appeal.</p>
-  <span class="tag decided">Recommendation<span class="src">Conditional. Test in document 11</span></span>
 </div>
 
-<p>The evidence for Route A is that the money moved to families: tutoring uptake is at 29% and rising, concentrated in Year 11 at 25% and London at 45%, while the school-organised channel fell to 20% of pupils and most schools cut their offer. Selling to the buyer who is withdrawing from the category is the harder path.</p>
+<p>C2 is the one to run first. It is a phone call, it costs nothing, it can be answered this quarter, and it can kill the recommended route on its own. Running it after building is the most expensive available ordering.</p>
 
-<p>The second argument is feedback latency. Route A tells you within one cohort whether the wedge works. Route B tells you at renewal, by which time a year of build has been committed to a hypothesis.</p>
+<h2 id="side">Side by side</h2>
 
-<h2>The strongest case for Route B</h2>
-
-<p>Stated properly, because an investor may well prefer it and the case is not weak.</p>
-
-<p><strong>The regulatory position is materially better.</strong> As a processor acting on a school's instructions, the company is not the one answering the ICO for age assurance and lawful basis for profiling a child. In a year when the regulator fined two companies in one month for exactly that, moving the controller relationship to an institution that already has a lawful basis for processing pupil data is a real reduction in the risk the owner ranks as most likely to arrive without warning.</p>
-
-<p><strong>Retention is structural rather than earned.</strong> A school contract renews annually against a budget line. A parent cancels in July. If the product's weakness turns out to be seasonal churn, Route B solves it and Route A does not.</p>
-
-<p><strong>The evidence burden is an asset once paid.</strong> Efficacy evidence, a DPIA and a reference school are expensive to produce and expensive for a competitor to reproduce. Consumer traction is not.</p>
-
-<p><strong>It is the only route to the outcome data.</strong> Actual exam results, attached to actual usage, only exist inside institutions. Without them the accuracy and efficacy claims in documents 03 and 00 stay unproven indefinitely.</p>
-
-<div class="claim">
-  <p>The honest counter to the recommendation: Route A can demonstrate that people will pay, and Route B can demonstrate that it works. Those are different questions, and only the second one is the business in ten years.</p>
-  <span class="tag assumed">Assumed<span class="src">Judgement. The strongest argument against the recommendation</span></span>
+<div class="tw">
+<table>
+<caption>Every cell carries what it rests on. <span class="mark verified">Verified</span> means a source in <a href="../evidence/sources.html">the evidence register</a>; <span class="mark assumed">Assumption</span> means reasoned; <span class="mark unknown">Unknown</span> means the plan needs the number and does not have it.</caption>
+<thead><tr><th>Dimension</th><th>Route A, direct to parents</th><th>Route B, through schools</th></tr></thead>
+<tbody>
+<tr>
+<th>Cost to run</th>
+<td>Consumer marketing spend, which begins immediately and never stops. Age verification per account <span class="mark unknown">Unknown</span>. Payment processing on a small ticket. Our own safeguarding reviewer. Support at household volume.</td>
+<td>Field sales salaries before any revenue. Per-customer procurement and security review. DPA administration per school or trust. Sales cycle <span class="mark unknown">Unknown</span>. No age verification cost.</td>
+</tr>
+<tr>
+<th>Time to first revenue</th>
+<td>Shortest. A parent can buy the day the product exists. Demand is already there and already paying <span class="mark verified">Verified</span>.</td>
+<td>Longest. Pilot, then evidence, then a purchasing decision on an annual clock. <span class="mark assumed">Assumption</span> a missed summer decision is a twelve-month delay.</td>
+</tr>
+<tr>
+<th>What breaks first</th>
+<td>The price anchor (C1), then age verification cost (C2), then retained months against the June cliff <span class="mark verified">Verified</span> Year 11 at 25%.</td>
+<td>The sales cycle outrunning the runway. Then the 58% of schools cutting their tutoring offer <span class="mark verified">Verified</span> turning out to mean the budget line is closing rather than seeking cheaper supply.</td>
+</tr>
+<tr>
+<th>How you find out</th>
+<td>Fast and cheaply. A landing page tests C1 with no product. Three phone calls test C2. Cohort contribution shows the June cliff within one cycle.</td>
+<td>Slowly and expensively. The answer to whether schools will buy arrives roughly a year after you start asking, and after the sales cost has been incurred.</td>
+</tr>
+<tr>
+<th>Compliance burden</th>
+<td><b>Heaviest.</b> We are controller. Age assurance is ours (OI-5), lawful basis is contested (OI-10), safeguarding has no designated lead to escalate to, and <span class="mark verified">Verified</span> the ICO fined Reddit £14.47m for precisely the two failures this route is exposed to.</td>
+<td><b>Lightest.</b> Processor, not controller. Age assurance largely dissolves. Safeguarding routes to the school's designated lead. Children's code still applies to our design.</td>
+</tr>
+<tr>
+<th>Evidence generation</th>
+<td>Weak. No comparison group, no common assessment, no institutional partner with an interest in measuring honestly.</td>
+<td><b>Strong, and this is the underrated advantage.</b> <span class="mark verified">Verified</span> The efficacy evidence that carries weight in education (ASSISTments 0.18 to 0.29 SD, ESSA Tier 1; MATHia 0.21 to 0.38 SD across 18,000+ students) is all school-based.</td>
+</tr>
+<tr>
+<th>Unit economics shape</th>
+<td>CAC per household, against retained months capped by the examination calendar. Higher revenue per learner, worse denominator.</td>
+<td>CAC amortised across a cohort, annual contract, renewal rather than monthly churn. Lower revenue per learner, better denominator.</td>
+</tr>
+<tr>
+<th>Competitive pressure</th>
+<td><span class="mark verified">Verified</span> Free general tools (Study Mode, Guided Learning, Learning Mode) sit directly in front of the same parent, and Google has committed $1bn over three years and given away twelve-month subscriptions at national scale.</td>
+<td><span class="mark verified">Verified</span> Oak National Academy's Aila is state-backed and free; Century Tech and Skye are established. Aila occupies attention without consuming budget, which is harder to compete with than a paid rival.</td>
+</tr>
+</tbody>
+</table>
 </div>
 
-<h2>What is shared regardless</h2>
+<h2 id="forecloses">What each route forecloses</h2>
 
-<p>The style engine, the item bank and its verification, the rights machinery, the safety architecture and the kill switch are identical under both routes. Roughly eighty per cent of the design does not care who pays, which is why both are planned and only four documents diverge.</p>
-
-<div class="claim">
-  <p>One thing must be built Route-A-shaped from the start even if Route B is chosen: the data model has to assume the company is a controller. Retrofitting controller obligations onto a processor-shaped system is expensive; the reverse is not.</p>
-  <span class="tag decided">Position<span class="src">Keeps the choice cheap to reverse</span></span>
+<div class="split">
+<div>
+<h4>Choosing Route A forecloses</h4>
+<ul class="tight">
+<li>Little, structurally. The shared core (D3) is unchanged and a school motion can be added later.</li>
+<li>Time, which is the real cost: outcome evidence accumulates slowly or not at all in a consumer cohort, and outcome evidence is what <a href="00-thesis.html#shelf">00</a> identifies as the only durable moat.</li>
+<li>Some school credibility. A product known as a consumer app enters school procurement differently, though not fatally.</li>
+</ul>
+</div>
+<div>
+<h4>Choosing Route B forecloses</h4>
+<ul class="tight">
+<li><b>Part of the product roadmap.</b> Class-level features are natural in schools and several sit on the Online Safety Act trigger list in <a href="05-safety-privacy-regulatory.html#trigger">05</a>. Route B's obvious roadmap collides with the scoping decision that keeps the whole company out of user-to-user duties.</li>
+<li>Consumer brand-building during the years the sales cycle consumes.</li>
+<li>Cash flexibility. A field sales motion is a fixed cost that cannot be turned down quickly when funding tightens.</li>
+</ul>
+</div>
 </div>
 
-<h2>What would have to be true</h2>
+<h2 id="mind">What it costs to change your mind</h2>
 
-<p>Neither route is choosable on what is currently known. Three things are missing and all three are cheap to obtain.</p>
+<p class="lede">Months, not a rewrite, in either direction. This is the return on decision D3, and it is the reason the parallel planning was worth doing rather than an indulgence.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Switch</th><th>What has to be built</th><th>What carries over unchanged</th></tr></thead>
+<tbody>
+<tr><td><b>A to B</b></td><td>Field sales motion, DPA and procurement apparatus, school identity integration, teacher-facing reporting, security review readiness. The age assurance investment is written off.</td><td>Item bank, verifier, style engine, architecture, safety design, accuracy harness. Roughly 80% (D3).</td></tr>
+<tr><td><b>B to A</b></td><td>Age assurance procurement and integration, consumer billing, consumer support at volume, our own safeguarding reviewer, consumer marketing capability from zero.</td><td>The same 80%, plus the outcome evidence generated in schools, which is an asset in the consumer pitch rather than a sunk cost.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Note the asymmetry, because it is the strongest argument in this document and it is easy to miss: <b>B to A carries the evidence over; A to B does not carry anything comparable back.</b> Starting in schools and moving to parents arrives at the consumer market with the efficacy evidence already in hand. Starting with parents and moving to schools arrives with a consumer brand and no evidence, facing a buyer who wants evidence.</p>
+
+<p>That asymmetry is a real argument for Route B, it cuts against the recommendation above, and it is the single point on which a reasonable person most often flips. It is not decisive here only because the evidence advantage is realised on a timescale of years and the runway question is settled in months.</p>
+
+<h2 id="caseb">The strongest case for Route B</h2>
+
+<p class="lede">Stated as well as it can be made, because a recommendation that has not met the best version of the alternative is not worth much.</p>
+
+<ol>
+<li><b>Route B solves, at zero cost, the problem most likely to kill Route A.</b> Age assurance is an unpriced compliance obligation on a consumer service whose entire user base is children, and it is the exact failure the ICO fined Reddit £14.47m for in February 2026 <span class="mark verified">Verified</span>. In Route B the school already knows who its pupils are. That is not an incremental advantage; it removes a whole category of risk and an unknown cost.</li>
+<li><b>Route B generates the only durable moat.</b> <a href="00-thesis.html#shelf">00</a> concedes that a validated item bank is copyable by anyone with capital, and that what is actually protective is outcome evidence. Every efficacy comparator that carries weight in education is school-based <span class="mark verified">Verified</span>. Route A may never produce a number anyone respects.</li>
+<li><b>Route B fixes the safeguarding gap honestly.</b> <a href="05-safety-privacy-regulatory.html#content">05</a> admits that Route A's human review is next business day and that this is not adequate for an acute disclosure. In Route B it routes to a designated safeguarding lead under a policy that already exists. A serious person reading only that admission could reasonably decline to build Route A.</li>
+<li><b>Route B's denominator is better.</b> CAC amortises across a cohort, contracts are annual, and renewal is a negotiation rather than a monthly cancellation decision taken by a tired parent in May.</li>
+<li><b>The consumer market is where the free tools are.</b> <span class="mark verified">Verified</span> Study Mode, Guided Learning and Learning Mode sit in front of exactly the parent Route A must convert, and Google is giving twelve-month subscriptions away at national scale. Schools buy on procurement criteria, evidence and support, which are criteria a free consumer tool does not compete on at all.</li>
+</ol>
+
+<h2 id="defend">Defending the choice to an investor who prefers Route B</h2>
+
+<p>The honest defence is not that Route B is wrong. It is that Route B is a better business which this venture cannot currently reach, and that Route A is the only route on which the questions get answered while there is still money to act on the answers.</p>
 
 <ul>
-<li>The cost per assured account, which sets the floor under Route A pricing and is currently unestimated.</li>
-<li>Whether a school will contract at all for a tool whose distinguishing feature is pupil-selected personas. Six conversations would settle it.</li>
-<li>Whether named presets outperform unnamed archetypes, which is the condition on the recommendation and cannot be known before launch.</li>
+<li><b>On timing.</b> Route B's answer arrives in about a year and costs a field sales motion to obtain. Route A's first two conditions, C1 and C2, are answerable this quarter for almost nothing. A venture at this stage should buy information in the cheapest available order, and that ordering is not a preference about end-state markets.</li>
+<li><b>On the evidence moat.</b> Conceded. It is the best argument against the recommendation, and the reversal asymmetry above makes it sharper. The answer is sequencing rather than disagreement: Route A first to establish that anyone pays, school pilots second to generate the evidence, once there is revenue to fund a second motion. What is being rejected is running both from the start on seed funding, not the value of the evidence.</li>
+<li><b>On the demand data.</b> This is where Route B's case is weakest and it should be pressed. The only verified figures available say household tutoring demand is rising and school tutoring provision is falling, with 58% of schools cutting their offer in a single year <span class="mark verified">Verified</span>. A plan to sell into the shrinking side of that picture needs an argument for why the cut means "seeking cheaper supply" rather than "closing the line", and <a href="08-route-b-through-schools.html#shrinking">08</a> states plainly that we do not have that argument, only an unevidenced hope.</li>
+<li><b>On compliance.</b> Conceded again, and it is why C2 is a hard condition rather than a soft one. If the age verification quote comes back large, the investor who prefers Route B has won the argument on the facts, and the recommendation flips without anyone having to lose face.</li>
 </ul>
 
+<div class="claim">
+<p>Route A is recommended on the strength of one genuinely good piece of evidence, the Sutton Trust demand and school-provision figures, against a route whose central objection, the 58% cut, has two readings and we do not know which holds. Both of those are resolvable by asking questions rather than by building. The recommendation should be treated as the current best reading of thin evidence, with three pre-committed tests attached, rather than as a settled strategy.</p>
+<span class="tag assumed">Assumed<span class="src">The honest summary of the recommendation's status</span></span>
+</div>

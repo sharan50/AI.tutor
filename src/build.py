@@ -16,35 +16,35 @@ REVISED = "September 2026"
 # (slug, number, title, one-line contents description, status)
 PAGES = [
     ("00-thesis", "00", "Thesis",
-     "What changed since the 2025 submission, and what the venture is for now.", "done"),
+     "What the 2025 differentiation lost, and why a parent pays when Gemini is free.", "done"),
     ("01-product", "01", "Product",
-     "The learner, the session, what is promised and what is not.", "done"),
+     "The learner, the session, the four promises, and one topic taught twice.", "done"),
     ("02-style-engine", "02", "Style engine",
-     "How teaching style is represented, chosen, adjusted and verified.", "done"),
+     "Twelve dimensions, the rating protocol, conformance tests, the D6 seam.", "done"),
     ("03-curriculum-and-content", "03", "Curriculum and content",
-     "Clean-room item bank, examiner validation, the accuracy floor.", "done"),
+     "Clean-room item bank, examiner validation, the accuracy floor as a number.", "done"),
     ("04-rights-dossier", "04", "Rights dossier",
-     "Exam boards, creators, the licence, and the enforcement war-game.", "done"),
-    ("05-safety-privacy-regulatory", "05", "Safety, privacy, regulatory",
-     "Age assurance, the child data model, Children's code, OSA scoping.", "done"),
+     "Exam boards, the creator licence, the kill switch, the enforcement war-game.", "done"),
+    ("05-safety-privacy-regulatory", "05", "Safety, privacy and regulatory",
+     "Age assurance, the child data model, Children's code, the OSA trigger list.", "done"),
     ("06-architecture", "06", "Architecture",
-     "Models, retrieval, data model, kill switch, evaluation harness.", "partial"),
+     "The turn pipeline, the verifier, kill switch mechanics, cost per session.", "done"),
     ("07-route-a-direct-to-parents", "07", "Route A: direct to parents",
-     "Pricing, consent model, distribution, compliance posture.", "partial"),
+     "Pricing, consent, distribution, compliance, and the June cliff.", "done"),
     ("08-route-b-through-schools", "08", "Route B: through schools",
-     "Pricing, consent model, distribution, compliance posture.", "partial"),
+     "The same four, into a market that cut its tutoring offer last year.", "done"),
     ("09-route-comparison", "09", "Route comparison",
      "The document used to choose, with the case for the route not recommended.", "done"),
     ("10-economics", "10", "Economics",
-     "Cost per session, price points, the dominant sensitivity.", "todo"),
+     "Cost from the architecture, and the dominant variable derived not assumed.", "done"),
     ("11-roadmap", "11", "Roadmap",
-     "Milestones defined by evidence obtained, not features shipped.", "todo"),
+     "Milestones defined by evidence obtained, plus the D14 and D6 decision rules.", "done"),
     ("12-risk-register", "12", "Risk register",
-     "Ordered by the owner's ranking, with the one place it is not followed.", "partial"),
+     "The owner's ranking, and why engineering priority runs close to its reverse.", "done"),
     ("13-primer-gateway", "13", "Primer gateway",
      "A gated path from trusted exam practice to safe, independent inquiry.", "done"),
     ("14-open-items", "14", "Open items",
-     "Unverified assumptions and questions for counsel, with what each unblocks.", "done"),
+     "Ten counsel questions and eighteen assumptions, with what each unblocks.", "done"),
     ("decision-ledger", "", "Decision ledger",
      "Every decision: what was chosen, what was rejected, what it forecloses.", "done"),
 ]
@@ -65,6 +65,19 @@ SHELL = """<!doctype html>
   <span class="repo">AI.tutor design vault, revised {revised}</span>
   <a href="index.html">Contents</a>
 </header>
+<details class="legend">
+<summary>How claims are marked</summary>
+<div class="legend-body">
+<p>Nothing factual in this vault is unmarked. Markers sit in the right margin, or inline where a single sentence carries one.</p>
+<ul>
+<li><span class="mark verified">Verified</span> Checked September 2026 against the named source, registered in <a href="../evidence/sources.html">the evidence register</a>.</li>
+<li><span class="mark assumed">Assumed</span> Reasoned, not checked. Shapes the plan and could be wrong.</li>
+<li><span class="mark open">Open</span> A question for a lawyer, deliberately unanswered here.</li>
+<li><span class="mark decided">Decision</span> A choice taken here, recorded in the <a href="decision-ledger.html">decision ledger</a>.</li>
+<li><span class="mark unknown">Unknown</span> A number the plan needs and does not have. Never filled with a plausible substitute.</li>
+</ul>
+</div>
+</details>
 {body}
 <footer class="pagefoot">
   <a href="{prev_href}">{prev_label}</a>
@@ -109,7 +122,7 @@ def build():
             f'<span class="s {status}">{label}</span></li>'
         )
     index_html = SHELL.format(
-        title="Contents", desc="AI.tutor venture design vault", number="\u2014",
+        title="Contents", desc="AI.tutor venture design vault", number="\u00b7",
         revised=REVISED,
         body=index_frag.read_text(encoding="utf-8").replace("<!--CONTENTS-->", "\n".join(rows)).strip(),
         built=built,
@@ -118,6 +131,28 @@ def build():
     )
     (DOCS / "index.html").write_text(index_html, encoding="utf-8")
     print("  built index.html")
+
+    # The evidence register lives in /evidence, a sibling of /docs, so it needs
+    # the same shell with relative paths rewritten one level across.
+    src_frag = CONTENT / "sources.html"
+    if src_frag.exists():
+        html = SHELL.format(
+            title="Evidence register", number="\u00b7",
+            desc="Every external claim, with its source and the date it was checked.",
+            revised=REVISED, body=src_frag.read_text(encoding="utf-8").strip(),
+            built=built,
+            prev_href="../docs/decision-ledger.html", prev_label="Decision ledger",
+            next_href="../docs/index.html", next_label="Contents",
+        )
+        html = (html
+                .replace('href="style.css"', 'href="../docs/style.css"')
+                .replace('href="index.html"', 'href="../docs/index.html"')
+                .replace('href="../evidence/sources.html"', 'href="sources.html"')
+                .replace('href="decision-ledger.html"', 'href="../docs/decision-ledger.html"'))
+        out = ROOT / "evidence"
+        out.mkdir(exist_ok=True)
+        (out / "sources.html").write_text(html, encoding="utf-8")
+        print("  built ../evidence/sources.html")
 
 
 if __name__ == "__main__":

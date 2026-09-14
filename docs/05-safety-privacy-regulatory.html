@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Safety, privacy, regulatory, AI.tutor design vault</title>
-<meta name="description" content="Age assurance, the child data model, Children's code, OSA scoping.">
+<title>Safety, privacy and regulatory, AI.tutor design vault</title>
+<meta name="description" content="Age assurance, the child data model, Children's code, the OSA trigger list.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,113 +14,381 @@
   <span class="repo">AI.tutor design vault, revised September 2026</span>
   <a href="index.html">Contents</a>
 </header>
-<h1>Safety, privacy, regulatory</h1>
-<p class="standfirst">Every user of this product is a child. That is not an edge case to be handled, it is the operating condition, and 2026 is the year the UK regulator chose to make an example of companies that treated it otherwise.</p>
+<details class="legend">
+<summary>How claims are marked</summary>
+<div class="legend-body">
+<p>Nothing factual in this vault is unmarked. Markers sit in the right margin, or inline where a single sentence carries one.</p>
+<ul>
+<li><span class="mark verified">Verified</span> Checked September 2026 against the named source, registered in <a href="../evidence/sources.html">the evidence register</a>.</li>
+<li><span class="mark assumed">Assumed</span> Reasoned, not checked. Shapes the plan and could be wrong.</li>
+<li><span class="mark open">Open</span> A question for a lawyer, deliberately unanswered here.</li>
+<li><span class="mark decided">Decision</span> A choice taken here, recorded in the <a href="decision-ledger.html">decision ledger</a>.</li>
+<li><span class="mark unknown">Unknown</span> A number the plan needs and does not have. Never filled with a plausible substitute.</li>
+</ul>
+</div>
+</details>
+<h1>Safety, privacy and regulatory</h1>
+<p class="standfirst">We never ask a child how old they are. We verify an adult and let them enrol a learner, and every learner account is treated as a child's account whatever anyone has typed. This document sets out the age assurance design, what is held about a child and for how long, the Online Safety Act scoping decision and the trigger that reverses it, and the one line about a child's data that is meant to go on the marketing site unedited.</p>
+<dl class="meta">
+<dt>Document</dt><dd>05 of 14</dd>
+<dt>Status</dt><dd>Specification. Not legal advice. No DPIA has been written; that is a named gap below.</dd>
+<dt>Written</dt><dd>14 September 2026</dd>
+<dt>Regulators in scope</dt><dd>ICO (UK GDPR, Children's code), Ofcom (Online Safety Act 2023)</dd>
+<dt>Reverses</dt><dd>Nothing here is optional. The OSA trigger list is a change-control gate.</dd>
+</dl>
 
-<h2>The enforcement climate, stated plainly</h2>
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#posture">The regulatory posture in one paragraph</a></li>
+<li><a href="#age">Age assurance</a></li>
+<li><a href="#data">The data model for a child user</a></li>
+<li><a href="#basis">Lawful basis, and what is deliberately not inferred</a></li>
+<li><a href="#line">The line that goes on the marketing site</a></li>
+<li><a href="#code">Children's code, mapped point by point</a></li>
+<li><a href="#osa">The Online Safety Act scoping decision</a></li>
+<li><a href="#trigger">The trigger that reverses it</a></li>
+<li><a href="#content">Content safety and escalation</a></li>
+<li><a href="#gaps">Named gaps</a></li>
+</ol>
+</details>
+
+<h2 id="posture">The regulatory posture in one paragraph</h2>
+
+<p class="lede">Our entire user base is children, which inverts the usual problem. We are not trying to keep children out of an adult service; we are running a service in which every single user is a child, and therefore the Children's code is not an edge case to handle but the specification we build to. The risk is not that a child gets in. It is that we process a child's data without a basis we can defend, profile them in a way we cannot justify, or build something that keeps them on the app.</p>
 
 <div class="claim">
-  <p>The Information Commissioner's Office fined Reddit &pound;14.47m on 24 February 2026 for unlawfully processing children's personal data, specifically for inadequate age assurance and for profiling children without a lawful basis. MediaLab was fined earlier the same month. Earlier actions in the same programme: TikTok &pound;12.7m, Snap &pound;1.95m.</p>
-  <span class="tag verified">Verified<span class="src">ICO enforcement, Feb 2026</span></span>
+<ul class="tight">
+<li>The ICO fined <b>Reddit £14.47m on 24 February 2026</b> for unlawfully processing children's personal data, specifically <b>inadequate age assurance</b> and <b>profiling children without a lawful basis</b>. MediaLab was fined earlier the same month. Prior actions: TikTok £12.7m, Snap £1.95m.</li>
+<li><b>ICO open letter, 12 March 2026:</b> self-declared age is no longer adequate where a service is likely to be accessed by children; platforms should use modern age assurance technologies.</li>
+<li>The ICO has stated it <b>will audit edtech providers</b>, and publishes Children's code guidance with a sector-specific edtech FAQ. A joint ICO/Ofcom statement on age assurance was published in March 2026.</li>
+<li>Unlike India, the UK has <b>no categorical ban</b> on profiling children. Profiling is permissible with a lawful basis and Children's code compliant design: high privacy by default, profiling off unless justified, best interests of the child.</li>
+<li>ICO fines run to the higher of <b>£17.5m or 4% of global annual turnover</b>.</li>
+</ul>
+<span class="tag verified">Verified<span class="src">September 2026</span></span>
+</div>
+
+<p>Both limbs of the Reddit finding apply to us directly. Age assurance is addressed next. Profiling with a lawful basis is addressed in <a href="#basis">lawful basis</a>, and it is the harder of the two, because adaptive tutoring <i>is</i> profiling and there is no version of this product that avoids it.</p>
+
+<h2 id="age">Age assurance</h2>
+
+<p class="lede"><b>There is no date-of-birth field anywhere in the product.</b> A child is never asked their age, because a child's answer would be the weakest possible signal and asking for it would create a record we would then have to justify holding.</p>
+
+<h3>Route A, direct to parents</h3>
+
+<ol>
+<li><b>The account holder must be a verified adult.</b> Verification is performed by a third-party age assurance provider certified to a recognised standard, before any learner profile can be created.</li>
+<li><b>The provider returns a result, not a document.</b> We receive a boolean, a method identifier, a provider reference and a timestamp. <b>We never receive or store an identity document, a facial image, or a biometric template.</b> The provider's own retention is bounded contractually.</li>
+<li><b>Methods offered</b>, so that a parent without one route has another: facial age estimation, a digital identity wallet, open-banking based verification, or a credit-reference lookup on the account holder.</li>
+<li><b>A payment card alone is not sufficient.</b> It is recorded as a corroborating signal only. Card possession is a weak proxy for adulthood and treating it as assurance is close to the mistake the ICO has been fining.</li>
+<li><b>The child never self-declares.</b> The learner profile is created by the verified adult inside their verified account. The adult states the learner's school year, which is needed for curriculum placement, not for age gating.</li>
+<li><b>Every learner account is a child account by default,</b> with the highest-privacy settings, regardless of what year group was entered. An incorrect or inflated entry cannot downgrade a protection.</li>
+<li><b>Re-verification</b> on change of payment instrument, on material account change, and at least annually.</li>
+</ol>
+
+<p>The design property that matters: there is no path through the product by which an unverified person creates a learner profile, and no field anywhere in which a child's self-asserted age is relied on for anything.</p>
+
+<h3>Route B, through schools</h3>
+
+<p>The school is the gateway. Staff authenticate through the school's own identity provider, pupils are enrolled by the school under its existing duties, and the school already knows who its pupils are. Age assurance largely dissolves as a problem, which is one of the genuine advantages of Route B and is scored as such in <a href="09-route-comparison.html">09</a>.</p>
+
+<div class="claim">
+<p>What age assurance method would satisfy the ICO for a service whose entire user base is children, at a cost compatible with a consumer price point? <b>We have specified a mechanism above; we have not established that it is sufficient, and we are not going to guess.</b> <b>Unblocks:</b> the Route A launch, and the unit economics, because the per-verified-adult cost is a variable the consumer price has to carry. <b>Cost of getting it wrong:</b> the Reddit outcome, which was £14.47m and was specifically about inadequate age assurance.</p>
+<span class="tag open">For counsel<span class="src">open item OI-5</span></span>
 </div>
 
 <div class="claim">
-  <p>On 12 March 2026 the ICO wrote to online platforms stating that self-declared age is no longer adequate where a service is likely to be accessed by children, and that platforms should use modern age assurance technologies. The ICO has separately said it will audit edtech providers.</p>
-  <span class="tag verified">Verified<span class="src">ICO open letter, 12 Mar 2026</span></span>
+<p><b>Cost per verified adult.</b> Not known, not in the verified findings, and not invented here. It is a direct charge against first-month contribution in <a href="10-economics.html">10</a>, and if it exceeds the first month's contribution margin, Route A's economics fail at the front door and Route B becomes the default. That is written as an explicit condition on the recommendation in <a href="09-route-comparison.html">09</a> rather than left as a footnote.</p>
+<span class="tag unknown">Unknown<span class="src">required input, and it can break Route A on its own</span></span>
 </div>
 
-<div class="note danger">
-  <h3>What this rules out</h3>
-  <p>A date-of-birth field at signup is not a compliance position. It is the specific thing two companies were fined for in the month before this document was written.</p>
-</div>
+<h2 id="data">The data model for a child user</h2>
 
-<h2>The one advantage the UK has over India here</h2>
-
-<div class="claim">
-  <p>The UK has no categorical prohibition on profiling children. Under the Children's code, profiling is permissible where there is a lawful basis and the design is right: high privacy by default, profiling off unless justified, the best interests of the child as the primary consideration. India's Digital Personal Data Protection Act prohibits tracking and behavioural monitoring of under-eighteens outright, and parental consent cannot waive it.</p>
-  <span class="tag verified">Verified<span class="src">ICO Children's code; DPDP Act s.9(3)</span></span>
-</div>
-
-<p>This is the reason the adaptive engine survives in the UK and would not have survived in India as a direct-to-consumer product. It is also the reason the justification for every inference has to be written down before it is built, not after.</p>
-
-<h2>Age assurance</h2>
-
-<p>The requirement is unusual: this service is not trying to keep children out, it is built for them. What it needs to establish is which band a user is in, so that defaults, content and data handling can differ, and so that the consent route is correct.</p>
-
-<div class="claim">
-  <p>Proposed position, requiring counsel sign-off: age assurance at account creation through a third-party provider, with the parent as account holder and payer for under-16s, and the assurance signal retained rather than the underlying identity evidence. Cost per assured account is a material line in document 10 and is currently unestimated.</p>
-  <span class="tag open">Open<span class="src">Question 5 in document 14. Blocks pricing</span></span>
-</div>
-
-<h2>What is held about a child</h2>
-
-<p>The line that goes on the marketing site, and which everything below has to actually be true for:</p>
-
-<blockquote>
-  <p>We keep what your child has worked on and how they did. We do not build a behavioural profile, we do not advertise to them, and you can see and delete everything we hold from your account at any time.</p>
-</blockquote>
-
+<div class="tw">
 <table>
-<thead><tr><th>Held</th><th>Basis</th><th>Retention</th></tr></thead>
+<caption>What is held about a learner, for how long, and who can see it. Retention periods are decisions taken here, not requirements read off a statute, except where marked.</caption>
+<thead><tr><th>Held</th><th>Why it is necessary</th><th>Retention</th><th>Who can see it</th></tr></thead>
 <tbody>
-<tr><td>Account, age band, assurance signal</td><td>Contract</td><td>Life of account, then 30 days</td></tr>
-<tr><td>Topics attempted, items answered, correctness</td><td>Contract, necessary to deliver tutoring</td><td>Life of account, exportable, deletable</td></tr>
-<tr><td>Session transcripts</td><td>Contract, with a stated window</td><td>90 days, then deleted unless the parent has opted to keep them</td></tr>
-<tr><td>Style object and dial positions</td><td>Contract</td><td>Life of account</td></tr>
-<tr><td>Inferred mastery estimates</td><td>Legitimate interests, assessment pending</td><td>Life of account, visible to the parent in plain language</td></tr>
-<tr><td>Anything used for model training</td><td>Not held. No child data is used for training</td><td>N/A</td></tr>
+<tr><td>Session transcripts: what the learner typed and what the tutor replied.</td><td>The tutor cannot teach without the conversation. Also the evidence base for accuracy adjudication.</td><td><b>12 months rolling</b>, then deleted. One exam cycle plus a margin.</td><td>The learner. CINE staff only under the three conditions below. <b>Not the parent by default</b> (D16).</td></tr>
+<tr><td>Objective-level mastery: which objectives attempted, which passed the unaided check, on which date.</td><td>This is the adaptive model. It is the service.</td><td>Life of the account plus 12 months.</td><td>The learner and the parent.</td></tr>
+<tr><td>Provisional grade range, and the item results it was computed from.</td><td>A promised feature of the service. Derived from nothing but performance on validated items in the enrolled subject.</td><td>Recomputed on each session; history kept 12 months with transcripts.</td><td>The learner and the parent. Not gated on by any system (D35).</td></tr>
+<tr><td>Style preset and any student adjustments.</td><td>D10. Delivers the chosen teaching style.</td><td>Life of the account.</td><td>The learner only. Never shared, never publishable (see <a href="#trigger">the OSA trigger list</a>).</td></tr>
+<tr><td>Account and billing details of the <b>adult</b>.</td><td>Contract and payment.</td><td>As required by tax law. <span class="mark assumed">Assumption</span> six years in the UK; standard position, not re-verified.</td><td>The account holder, finance staff.</td></tr>
+<tr><td>Age verification outcome: boolean, method, provider reference, timestamp.</td><td>Demonstrating age assurance to a regulator.</td><td>Life of the account.</td><td>Compliance staff. <b>No document, image or biometric is ever held.</b></td></tr>
+<tr><td>Safety escalation records.</td><td>Safeguarding, and the record of what we did.</td><td>Longer than transcripts, set by the safeguarding policy, and stated in it.</td><td>Named safeguarding role only.</td></tr>
+<tr><td>Operational telemetry: timestamps, error events, device class for rendering.</td><td>Running the service.</td><td>90 days.</td><td>Engineering, aggregated.</td></tr>
 </tbody>
 </table>
+</div>
+
+<h3>Staff access to transcripts</h3>
+
+<p>Transcripts are not browsable by anyone. Access requires one of exactly three conditions, is role-limited, and every access is logged with a reason:</p>
+
+<ol class="tight">
+<li>A safety escalation has fired on that session.</li>
+<li>That turn has been drawn in the T-GND-01 accuracy sample and requires human adjudication.</li>
+<li>The account holder has raised a support request about that session.</li>
+</ol>
+
+<h3>The model vendor</h3>
 
 <div class="claim">
-  <p>The mastery estimate is the only row that is genuinely contestable, because it is an inference about a child rather than a record of what they did. It needs a data protection impact assessment and a written justification tied to the best interests of the child before it is built, and it should be the first thing dropped if the assessment is uncomfortable.</p>
-  <span class="tag open">Open<span class="src">DPIA not started</span></span>
+<p>No model vendor is used unless the contract provides <b>zero retention of prompts and outputs, and no use of our data for training</b>. This is not a preference. The marketing line below says "we do not use it to train anyone's AI model", and that clause is only true if the vendor contract makes it true. A vendor that cannot offer it is disqualified regardless of model quality, and the term is checked at procurement and at every renewal.</p>
+<span class="tag decided">Decision D24<span class="src">14 September 2026, and it is a procurement gate</span></span>
 </div>
 
-<h2>Online Safety Act scoping</h2>
+<h3>Deletion</h3>
+
+<p>On request: inaccessible in the product immediately, purged from primary stores within <b>7 days</b>, aged out of backups within <b>35 days</b>. The backup figure is stated on the marketing site rather than hidden, because a deletion promise with a silent exception is the kind of thing an ICO audit finds.</p>
+
+<h2 id="basis">Lawful basis, and what is deliberately not inferred</h2>
+
+<p><b>Adaptive tutoring is profiling.</b> Automated processing to evaluate a person's performance in education is profiling on any reading, and there is no version of this product that avoids it. <span class="mark verified">Verified</span> The UK has no categorical ban; profiling is permissible with a lawful basis and Children's code compliant design. So the work is to have a basis we can defend and a design that justifies it.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Processing</th><th>Proposed basis</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td>Core tutoring, including the adaptive model.</td><td>Article 6(1)(b), contract.</td><td>The adaptivity <b>is</b> the service the parent bought, not an add-on to it. The awkwardness is that the contract is with the parent while the data subject is the child; see the counsel item below.</td></tr>
+<tr><td>Safety classification and escalation.</td><td>Article 6(1)(f), legitimate interests, with a documented assessment weighted to the child's interests.</td><td>Also arguably vital interests in an acute case.</td></tr>
+<tr><td>Accuracy adjudication on sampled turns.</td><td>Article 6(1)(f), legitimate interests.</td><td>Minimised: sampled, not bulk; adjudicators see the turn, not the learner.</td></tr>
+<tr><td>Product improvement.</td><td>Article 6(1)(f), on <b>aggregated and de-identified</b> data only.</td><td>Never on identifiable transcripts.</td></tr>
+<tr><td>Anything optional, such as notifications.</td><td>Consent, separately and revocably.</td><td>Off by default, per the Children's code default settings standard.</td></tr>
+<tr><td>Special category data.</td><td><b>None processed.</b></td><td>And the system is designed so that none can be inferred as a by-product; see below.</td></tr>
+</tbody>
+</table>
+</div>
 
 <div class="claim">
-  <p>Ofcom has confirmed that a service is user-to-user where users can share chatbot-generated content with other users, or where users can create chatbots that are made available to others. The trigger for Ofcom's intervention in this area was users building virtual clones of real people.</p>
-  <span class="tag verified">Verified<span class="src">Ofcom open letter, 8 Nov 2024</span></span>
+<p>Whether Article 6(1)(b) is the correct basis for processing a child's data under a contract held by their parent, or whether legitimate interests with a documented assessment is the sounder position; and how that interacts with the UK GDPR Article 8 age threshold for information society services offered directly to a child. <b>Unblocks:</b> the privacy notice, the DPIA, and the consent architecture. <b>Cost of getting it wrong:</b> the second limb of the Reddit finding, which was profiling children without a lawful basis.</p>
+<span class="tag open">For counsel<span class="src">open item OI-10</span></span>
 </div>
 
-<div class="claim">
-  <p>Working position: a private one-to-one tutor with no sharing between users sits outside the user-to-user duties. This is reasoned from Ofcom's published examples and has not been confirmed by counsel.</p>
-  <span class="tag assumed">Assumed<span class="src">Question 4 in document 14</span></span>
-</div>
+<h3>What is deliberately not inferred</h3>
 
-<div class="note danger">
-  <h3>The trigger that changes this</h3>
-  <p>Any feature that lets a user create a persona available to other users, or share a session, converts this service into a regulated user-to-user platform with illegal content duties, children's safety duties, risk assessments and reporting mechanisms attached. Penalties reach the higher of &pound;18m or 10% of qualifying worldwide revenue.</p>
-  <p>The original 2025 submission had user-created personas at months 12 to 18 as a roadmap line. It is removed as a roadmap line and becomes a dated, costed decision with a compliance programme attached.</p>
-</div>
+<p>The Children's code expects profiling to be off unless justified. Our justification covers academic performance in the enrolled subject and nothing else. The following are not inferred, not stored, and the system is designed so that they cannot be produced as a by-product:</p>
 
-<h2>Content safety inside a tutoring session</h2>
-
-<p>A tutor that a child talks to alone at eleven at night will eventually be told something that is not about physics. Three requirements, none of which are optional.</p>
-
-<ul>
-<li>The tutor does not counsel. It responds with warmth, does not pretend to be a friend or a person, and routes to a named source of help appropriate to the UK.</li>
-<li>Defined escalation: what is surfaced to the parent account, what is not, and where the line sits, written down and visible to the parent before they buy.</li>
-<li>A persona never changes this behaviour. Style governs how mathematics is taught and nothing else. The style object cannot reach safety behaviour, and that isolation is tested.</li>
+<ul class="tight">
+<li>Special educational needs or disability status.</li>
+<li>Health, mental health, mood or affective state.</li>
+<li>Household income or socioeconomic status.</li>
+<li>Ethnicity, religion, nationality, or sexual orientation.</li>
+<li>Any characteristic of the learner beyond performance on validated items in the enrolled subject. The provisional grade range described below is inside that boundary and is derived from nothing else.</li>
+<li>Any behavioural profile used for marketing, pricing, or engagement optimisation.</li>
 </ul>
 
 <div class="claim">
-  <p>The isolation requirement is the single most important constraint the architecture places on the style engine, and it is a hard boundary rather than a preference. A style card that could influence a safety response would mean a creator's licensed persona was implicated in the handling of a child in distress.</p>
-  <span class="tag decided">Position<span class="src">Non-negotiable. Tested in 06</span></span>
+<p>Nothing in the product optimises for time on app, session count, streaks, or return frequency <b>as an objective</b>. Return rate is measured (D14 requires it) and is never optimised against. No notification is sent to bring a learner back. No streak, no badge, no loss-aversion mechanic.</p>
+<p>This is the Children's code nudge-techniques standard taken seriously, and it costs something real: every consumer subscription growth playbook runs on exactly the mechanics excluded here, and retention will be worse for it. It is written as a decision rather than a value so that the first growth hire cannot treat it as an oversight. <b>What it makes harder:</b> Route A retention, which is already the weakest number in <a href="10-economics.html">10</a>.</p>
+<span class="tag decided">Decision D25<span class="src">14 September 2026: no engagement objective anywhere in the system</span></span>
 </div>
 
-<h2>Where the owner's risk ranking is not followed</h2>
+<h3 id="graderange">Provisional grade ranges, and why Article 22 is not engaged</h3>
 
-<p>The owner ranked a child being harmed or their data leaking fourth of four, below a rights suit, below teaching something wrong, and below nobody paying. As a ranking of what is existential and outside his control, that order is defensible.</p>
+<p>The product shows a <b>provisional grade range</b>. That is a profiling output about a child and it has to be argued for rather than assumed, so the argument is set out here in full.</p>
 
-<p>It is not the order in which this is built. Child safety and data minimisation are built to the top standard regardless of position on that list, because they are cheap to design in and ruinous to retrofit, and because in the chosen market the regulator with an active enforcement programme pointed at this sector is the one that governs exactly this. Document 12 records the ranking as given and this exception alongside it.</p>
+<p><b>What it is.</b> A band, derived solely from performance on unaided checks against validated items in the enrolled subject, shown alongside the evidence it rests on: how many items, over what period, covering what proportion of the specification.</p>
+
+<p><b>What it is not.</b> It is not a forecast of the examination result. At launch there is no calibration data, so what the product states is a <i>current performance band on our own validated items</i>, and it says so in those words. It becomes a forecast only once T-CAL-01 has coverage data, and not before. The distinction is not pedantry; it is the difference between a measurement we can support and a prediction we cannot.</p>
+
+<p><b>Why Article 22 is not engaged.</b> Article 22 bites on a decision based solely on automated processing which produces legal effects concerning the data subject or similarly significantly affects them. The design fails the first limb, and would fail the third as well.</p>
+
+<ol>
+<li><b>There is no decision.</b> The range is information given to the learner and their parent. Nothing is decided about the learner on the strength of it.</li>
+<li><b>Nothing is gated on it.</b> See the decision below. No feature, price, tier, route or restriction depends on the range.</li>
+<li><b>No significant effect follows.</b> It does not touch the learner's schooling, their entry tier, or anything a school or an awarding body does.</li>
+</ol>
+
+<div class="claim">
+<p><b>No feature, content path, price, tier or restriction may be gated on the provisional grade range.</b> It is an output to the learner and their parent and never an input to anything the product does.</p>
+<p>This is the constraint that keeps Article 22 out, and it is written as a decision because the obvious next product idea, routing a struggling learner down a different path automatically, would flip the analysis without anybody noticing that it had. Adaptive sequencing continues to run on objective-level mastery, which is a different and much narrower signal.</p>
+<span class="tag decided">Decision D35<span class="src">14 September 2026</span></span>
+</div>
+
+<div class="claim">
+<p>If the range is ever put in front of a teacher in a form that informs a <b>Foundation or Higher tier entry decision</b>, the analysis above changes and Article 22 becomes live, because tier entry caps the grade a child can be awarded and is about as close to a legal effect on a fifteen-year-old as a school decision gets.</p>
+<p>That is a Route B feature request waiting to happen, and it is therefore listed as a change-control trigger alongside the Online Safety Act triggers rather than left to be remembered. Before any teacher-facing view of the range ships, the Article 22 assessment is re-run and counsel is asked.</p>
+<span class="tag open">Trigger<span class="src">Route B, teacher-facing views</span></span>
+</div>
+
+<h4>Detrimental use, which is the Children's code question rather than the Article 22 one</h4>
+
+<p>A grade range that discourages a child is a foreseeable harm, and the code's detrimental-use standard is the one that actually bites here. Five safeguards, each of which costs something:</p>
+
+<ul>
+<li><b>Always a range, never a point.</b> A point estimate invites reliance it cannot support.</li>
+<li><b>Never presented as a ceiling.</b> The range is always shown with the objectives that would move it, so it reads as a position rather than a verdict.</li>
+<li><b>Suppressed below a minimum evidence threshold.</b> No range is shown off a handful of items. <span class="mark unknown">Unknown</span> The threshold, which needs the calibration data from T-CAL-01 to set properly; until then it is set conservatively high and that is stated in the product.</li>
+<li><b>Never comparative.</b> The learner is never shown their position against other learners.</li>
+<li><b>The learner can hide it from their own view,</b> and is told plainly that the parent's report still shows it. Hiding a number from a child while showing it to their parent without saying so would be worse than showing it.</li>
+</ul>
+
+<div class="claim">
+<p>A grade range is a statistical claim, so it gets a test like any other claim in this vault. <b>T-CAL-01:</b> of learners shown a range, what proportion of actual examination outcomes fall inside it. Target coverage is set before the first cohort sits an examination, and until that data exists the product does not use the word prediction anywhere.</p>
+<p><b>Status: specified, not run, and it cannot be run until a cohort has sat an examination.</b> That is roughly a year after launch, which means the honest position for the whole of the first year is that the range is uncalibrated and labelled as such.</p>
+<span class="tag unknown">T-CAL-01<span class="src">uncalibrated until a cohort sits an examination</span></span>
+</div>
+
+<h2 id="line">The line that goes on the marketing site</h2>
+
+<div class="claim">
+<p style="font-size:1.0625em"><b>We keep what your child types to the tutor, what they got right and wrong, and the account details you gave us. We do not sell it. We do not use it to train anyone's AI model. We do not use it to advertise to your child. We do not build any picture of your child beyond how they are doing in the subject they are studying. You can delete all of it at any time: it leaves our systems within seven days and our backups within thirty-five.</b></p>
+<span class="tag decided">Decision<span class="src">This is the line. It is meant to be used unedited.</span></span>
+</div>
+
+<p>Every clause in that paragraph is load-bearing and traceable to a commitment in this repository. That is the test of whether it can be published.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Clause</th><th>What makes it true</th></tr></thead>
+<tbody>
+<tr><td>"what your child types, what they got right and wrong, and the account details"</td><td>The data table above. It is a complete list, not a summary, which is why the account details are named rather than glossed.</td></tr>
+<tr><td>"We do not sell it"</td><td>No data sale, no data sharing for consideration, no third-party analytics SDK in the learner surface.</td></tr>
+<tr><td>"not to train anyone's AI model"</td><td>Decision D24: zero-retention, no-training vendor terms as a procurement gate. This clause is false without that contract, which is why it is a gate and not a preference.</td></tr>
+<tr><td>"not to advertise to your child"</td><td>No advertising in the product and no ad-tech in the stack.</td></tr>
+<tr><td>"no picture beyond how they are doing in the subject"</td><td>The not-inferred list above, plus D25.</td></tr>
+<tr><td>"seven days, thirty-five days"</td><td>The deletion SLA. The backup figure is stated rather than omitted, because that is the clause an auditor checks.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="code">Children's code, mapped point by point</h2>
+
+<div class="claim">
+<p>The standard names below are reproduced from the ICO Children's code <b>as understood at the time of writing and have not been re-verified against the published text in this pass</b>. The mapping is the work product; the enumeration must be checked against the published code before this document is relied on by anyone. Checking it is an hour of reading and it is a task at M1 in <a href="11-roadmap.html">11 Roadmap</a>.</p>
+<span class="tag assumed">Assumed<span class="src">Read this before relying on the table</span></span>
+</div>
+
+<div class="tw">
+<table>
+<thead><tr><th>Standard</th><th>How this design meets it</th></tr></thead>
+<tbody>
+<tr><td>1. Best interests of the child</td><td>The primary consideration in the three decisions where it conflicts with commercial interest: no parental transcript access by default (D16), no engagement optimisation (D25), and an unaided check that reports honestly rather than flatteringly (D15).</td></tr>
+<tr><td>2. Data protection impact assessments</td><td><b>Required and not yet written.</b> Named as a gap below, with a trigger.</td></tr>
+<tr><td>3. Age appropriate application</td><td>Single audience, single age band. Every learner account is a child account by default whatever was entered.</td></tr>
+<tr><td>4. Transparency</td><td>The marketing-site line above, plus a learner-facing explanation written for a fifteen-year-old, not a parent-facing notice with a child-facing summary bolted on.</td></tr>
+<tr><td>5. Detrimental use of data</td><td>The not-inferred list, no engagement optimisation, no pricing or marketing use. The provisional grade range is the one output capable of discouraging a child, and it carries five specific safeguards set out <a href="#graderange">above</a>.</td></tr>
+<tr><td>6. Policies and community standards</td><td>The content safety policy below, and we uphold our own published terms rather than reserving discretion.</td></tr>
+<tr><td>7. Default settings</td><td>High privacy by default. Notifications off. Parental transcript access off. Nothing optional is pre-enabled.</td></tr>
+<tr><td>8. Data minimisation</td><td>The held list is short and each row has a necessity justification. No date of birth is collected at all.</td></tr>
+<tr><td>9. Data sharing</td><td>None, other than the age assurance provider (which receives the adult's data, not the child's) and the model vendor under D24 terms.</td></tr>
+<tr><td>10. Geolocation</td><td>Not collected. Not inferred. Not used.</td></tr>
+<tr><td>11. Parental controls</td><td>Parental controls exist and, where they would be visible to the child, <b>the child is told</b>. The default transcript position in D16 is itself a parental-control decision taken in the child's favour.</td></tr>
+<tr><td>12. Profiling</td><td>On, because it is the service, with a lawful basis proposed above and scoped to academic performance in the enrolled subject. The scope limit is the justification.</td></tr>
+<tr><td>13. Nudge techniques</td><td>D25. No streaks, no badges, no loss aversion, no return notifications, no engagement objective.</td></tr>
+<tr><td>14. Connected toys and devices</td><td>Not applicable. No connected device, and no voice at launch (D9).</td></tr>
+<tr><td>15. Online tools</td><td>Deletion, access and objection routes are in the product, in plain language, reachable by the child as well as the adult.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="osa">The Online Safety Act scoping decision</h2>
+
+<div class="claim">
+<p>Ofcom's <b>open letter of 8 November 2024</b> confirmed the Online Safety Act reaches generative AI. A service is <b>user-to-user</b> where users can share chatbot-generated content with other users, or where users can create chatbots made available to others. The trigger incidents included users building <b>virtual clones of real people</b>. Penalties are the higher of <b>£18m or 10% of qualifying worldwide revenue</b>, and Ofcom may seek court-ordered business disruption including ISP blocking, app store removal and payment providers ceasing to process.</p>
+<span class="tag verified">Verified<span class="src">September 2026</span></span>
+</div>
+
+<div class="claim">
+<p><b>At launch, CINE is not a user-to-user service.</b> There is no path by which any user encounters content generated by, uploaded by, or attributable to another user. Sessions are one to one with the tutor. Style adjustments are private to the learner who made them. There is no messaging, no sharing, no gallery, no group session and no user-created persona.</p>
+<span class="tag decided">The decision<span class="src">written down, 14 September 2026</span></span>
+</div>
+
+<div class="claim">
+<p>That a private one-to-one tutor with no sharing between users sits outside the OSA's user-to-user duties. This is <b>reasoned from Ofcom's published examples and needs counsel</b>. It is open item OI-4. The decision above is recorded as our position with its basis, which is what a regulator asks for; it is not a conclusion that the question is settled.</p>
+<span class="tag assumed">Assumption<span class="src">not verified, and this is the one to take to counsel first</span></span>
+</div>
+
+<p>Note also the two things the decision does not claim. It does not claim the OSA is irrelevant to us: Ofcom has confirmed the Act reaches generative AI, and other duties can attach by other routes. And it does not claim that being built in India helps: <span class="mark verified">Verified</span> the Act reaches providers with links to the UK regardless of where they are established, and Ofcom has already penalised nine companies that were not UK-based or did not state their jurisdiction. The analysis of that is in <a href="04-rights-dossier.html#d13">04</a>.</p>
+
+<p>D9 belongs here as well as in the rights dossier. Voice cloning is off the launch path partly because virtual clones of real people were among the incidents that prompted Ofcom's letter. Shipping a cloned voice of a named educator would be volunteering for the category.</p>
+
+<h2 id="trigger">The trigger that reverses it</h2>
+
+<p class="lede">Any one of the following converts the service into a user-to-user service, or makes the question genuinely arguable. <b>None of them ships without a completed Online Safety Act duties assessment signed off before the work starts</b>, and this list is a change-control gate in the engineering process, not a note in a design document.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th class="id">#</th><th>Feature that flips the analysis</th></tr></thead>
+<tbody>
+<tr><td class="id">T1</td><td>Any way for a user to share tutor-generated content with another user inside the service.</td></tr>
+<tr><td class="id">T2</td><td>Any way for a user to <b>create, name, customise or publish a persona</b> that another user can access. This is the trigger Ofcom named directly.</td></tr>
+<tr><td class="id">T3</td><td>Group or class sessions in which learners can see each other's contributions.</td></tr>
+<tr><td class="id">T4</td><td>A gallery, feed, leaderboard or showcase that surfaces one user's work or identity to another.</td></tr>
+<tr><td class="id">T5</td><td>Messaging, comments, or any direct channel between users, including between a learner and a tutor who is a user.</td></tr>
+<tr><td class="id">T6</td><td>A referral or social mechanic that surfaces one user's content or identity to another.</td></tr>
+<tr><td class="id">T7</td><td>Search across other users' material.</td></tr>
+<tr><td class="id">T8</td><td>Any third-party integration that republishes session content to a platform where other users see it.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>T2 deserves particular attention because it is the feature most likely to be proposed on product merit. "Let students build their own tutor" is an obvious growth feature, it would be popular, and it would convert the service into precisely the category Ofcom described when it warned about virtual clones. The architectural invariant in <a href="02-style-engine.html#adjust">02</a>, that an adjusted style is visible only to the student who made it and cannot be named, published or shared, exists to hold this line in code rather than in policy.</p>
+
+<h2 id="content">Content safety and escalation</h2>
+
+<h3>What the tutor does when a student raises something outside academic scope</h3>
+
+<p>Three moves, in this order, always. The tutor does not counsel, does not explore, and does not ask follow-up questions about the disclosure.</p>
+
+<ol>
+<li><b>Acknowledge briefly and without alarm.</b> One sentence. Not a wall of text, not a clinical script.</li>
+<li><b>Signpost to a named service that is actually staffed.</b> In the UK: Childline on 0800 1111, and Samaritans on 116 123. Named, specific, and immediate, because these are available 24 hours and we are not.</li>
+<li><b>Escalate, and say so.</b> The session is flagged to the named safeguarding role. The learner is told that a person will look at it, because telling a child you are passing something on is part of doing it properly.</li>
+</ol>
+
+<h3>Route B</h3>
+
+<p>Escalation routes to the school's designated safeguarding lead, under the school's own policy, which already exists and is better than anything we would invent. This is a genuine advantage of Route B and it is scored in <a href="09-route-comparison.html">09</a>.</p>
+
+<h3>Route A, where the problem is hard</h3>
+
+<div class="claim">
+<p><b>A safeguarding disclosure is not automatically reported to the parent.</b> Automatic parental notification is unsafe in precisely the cases that matter most, because the parent is sometimes the risk. Disclosures route to a trained human reviewer who decides, against a written policy, whether and whom to inform.</p>
+<span class="tag decided">Decision D26<span class="src">14 September 2026</span></span>
+</div>
+
+<p>And here is the honest limit, which belongs in this document rather than in a footnote to a policy nobody reads:</p>
+
+<div class="claim">
+<p>At launch we <b>cannot</b> staff 24-hour human safeguarding review. The review commitment is next business day, and next business day is <b>not adequate for an acute disclosure</b>. That is why immediate signposting to 24-hour services is the primary response and human escalation is the secondary one, rather than the other way round.</p>
+<p>It follows that the product must not present itself as a place to disclose, and the parent-facing terms must say plainly that this is a tutoring service and not a safeguarding service. Designing a product that invites disclosure and then cannot answer it would be worse than the current position, and the temptation to add a sympathetic "you can tell me anything" affordance should be read as a proposal to take on a duty we cannot discharge.</p>
+<span class="tag unknown">What we cannot do at launch<span class="src">stated plainly</span></span>
+</div>
+
+<h3>Anti-companionship design</h3>
+
+<p>Four constraints, each of which does safety work, Online Safety Act positioning work and rights work at the same time:</p>
+
+<ul class="tight">
+<li>The tutor does not claim feelings, preferences, or a life outside the session.</li>
+<li>It never initiates contact. There are no notifications bringing a learner back (D25).</li>
+<li>It holds no social memory of the learner beyond academic state. It does not remember that their dog died; it remembers that they cannot yet factorise.</li>
+<li>Session length is capped, and the cap is not extendable by the learner.</li>
+</ul>
+
+<p>A tutor that becomes a friend is a different product with a different risk profile, a different regulatory posture and a different relationship to Ofcom's virtual-clone warning. The persona wedge makes this a live temptation rather than a theoretical one, which is exactly why it is written as a constraint.</p>
+
+<h2 id="gaps">Named gaps</h2>
+
+<p>Three, each with what it blocks and when it must be closed. None is a matter of opinion; all three are work that has not been done.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Gap</th><th>Status</th><th>Must be closed by</th></tr></thead>
+<tbody>
+<tr><td><b>Data protection impact assessment.</b> Mandatory here: large-scale processing of children's data combined with profiling.</td><td>Not written. Not started.</td><td>Before the first live child user. It is a precondition of launch, not a launch task.</td></tr>
+<tr><td><b>International transfers.</b> <span class="mark assumed">Assumption</span> If the Indian operating company processes UK children's data, that is a restricted transfer requiring an IDTA or the UK Addendum to SCCs plus a transfer risk assessment. Standard position, not confirmed for this fact pattern.</td><td>Identified, not resolved.</td><td>Before any UK child data is processed in India. Interacts with OI-7, which entity contracts with the parent.</td></tr>
+<tr><td><b>UK representative.</b> <span class="mark assumed">Assumption</span> That UK GDPR Article 3(2) and the Article 27 UK representative requirement apply to an India-established controller serving UK children. Standard position, unconfirmed for this fact pattern.</td><td>Identified, not resolved.</td><td>Before launch. Cheap to fix, embarrassing to be caught without.</td></tr>
+</tbody>
+</table>
+</div>
 <footer class="pagefoot">
   <a href="04-rights-dossier.html">Rights dossier</a>
-  <span class="stamp">Built 12 September 2026</span>
+  <span class="stamp">Built 14 September 2026</span>
   <a href="06-architecture.html">Architecture</a>
 </footer>
 </main>
 </body>
 </html>
-

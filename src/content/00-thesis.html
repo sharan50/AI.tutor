@@ -1,81 +1,160 @@
 <h1>Thesis</h1>
-<p class="standfirst">The problem in the 2025 submission got more real. The solution in it got given away free by three companies. What is left is narrower, harder to build and more defensible.</p>
+<p class="standfirst">The differentiation in the 2025 submission no longer exists. Three consumer products now give it away for free. What is left that is worth building is narrower, harder and more defensible than what was originally proposed, and this document says what it is.</p>
+<dl class="meta">
+<dt>Document</dt><dd>00 of 14, plus the decision ledger</dd>
+<dt>Status</dt><dd>Specification. Nothing here has been built; no test here has been run.</dd>
+<dt>Written</dt><dd>14 September 2026</dd>
+<dt>Supersedes</dt><dd>"Breaking Academic Barriers with Multi-Modal AI Tutoring", IIM-A, 2025</dd>
+<dt>Read next</dt><dd><a href="01-product.html">01 Product</a></dd>
+</dl>
 
-<h2>What survived</h2>
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#claim">The claim, in four sentences</a></li>
+<li><a href="#dead">What died between 2025 and now</a></li>
+<li><a href="#pay">Why a parent pays when Gemini is free</a></li>
+<li><a href="#hold">Where that argument does not hold</a></li>
+<li><a href="#evidence">What the evidence actually supports</a></li>
+<li><a href="#market">The market this is aimed at</a></li>
+<li><a href="#for">What the venture is for</a></li>
+<li><a href="#shelf">The shelf life of the answer</a></li>
+</ol>
+</details>
 
-<div class="claim">
-  <p>One-to-one tutoring works, and the evidence for AI delivering some of it strengthened rather than weakened. A purpose-built AI tutor at Harvard produced median learning gains more than double those of an active-learning classroom group. Established intelligent tutoring systems sit lower but are solidly positive: ASSISTments at 0.18 to 0.29 standard deviations across two large randomised trials, Carnegie Learning's MATHia at 0.21 to 0.38 across more than 18,000 students in 147 schools.</p>
-  <span class="tag verified">Verified<span class="src">Kestin et al., Scientific Reports, 3 Jun 2025; ESSA Tier 1 evidence</span></span>
-</div>
+<h2 id="claim">The claim, in four sentences</h2>
 
-<div class="claim">
-  <p>The demand is real and it is growing. Twenty-nine per cent of secondary pupils in England and Wales have had private tutoring, up from 18% twenty years ago and 27% in 2019. It peaks hard at Year 11, where a quarter of pupils are tutored, and it concentrates in London at 45% against 27% for the rest of England.</p>
-  <span class="tag verified">Verified<span class="src">Sutton Trust, Private Tutoring 2026, Feb 2026</span></span>
-</div>
+<p class="lede">CINE sells a warranted answer, not a clever one. A student picks a named educator whose teaching they already recognise, and gets taught in that style from an item bank written to the published specification and checked by a working examiner, where every substantive statement the tutor makes is traceable to a validated item and blocked if it is not. The free tools are better general reasoners than anything we will build and we do not intend to compete with them on that. We compete on being accountable for correctness in a narrow, examined, high-stakes domain, and on letting a fifteen-year-old change how they are taught by naming someone rather than by writing a prompt.</p>
 
-<div class="claim">
-  <p>And the channel that used to absorb some of that demand is closing. School-organised tutoring fell to 20% of pupils from 22% in 2023, and 58% of schools reported cutting their tutoring offer year on year. Families are being handed the problem.</p>
-  <span class="tag verified">Verified<span class="src">Sutton Trust, Private Tutoring 2026</span></span>
-</div>
+<h2 id="dead">What died between 2025 and now</h2>
 
-<h2>What did not survive</h2>
-
-<div class="claim">
-  <p>The 2025 submission's differentiation was a large language model that teaches Socratically with generated diagrams and adaptive feedback. In July and August 2025, OpenAI shipped Study Mode, Google shipped Guided Learning built on LearnLM, and Anthropic shipped a learning mode. All free. Gemini's version already produces scaffolded output with images, diagrams, videos and interactive quizzes, and generates flashcards and study guides.</p>
-  <span class="tag verified">Verified<span class="src">OpenAI 29 Jul 2025; Google 6 Aug 2025</span></span>
-</div>
-
-<p>Sections 4.1 and 5.1 of the original submission therefore describe a product that three consumer applications now give away. The architecture in it is also stale: a 70-billion-parameter base model, LoRA adapters per persona, Tacotron text-to-speech and a fine-tuned diffusion model for diagrams is a 2023 build plan. None of it is carried forward.</p>
-
-<div class="note danger">
-  <h3>The question this venture has to answer</h3>
-  <p>Why does a parent pay when Gemini is free, and Google is handing students a free year of its paid tier in five countries?</p>
-</div>
-
-<h2>The answer, and how much weight it carries</h2>
-
-<p>The free tools are general-purpose. They are excellent at explaining a concept and indifferent to three things that determine whether a British sixteen-year-old passes in June.</p>
-
-<p><strong>They do not know the specification.</strong> They will teach you photosynthesis. They will not reliably teach you the photosynthesis that AQA GCSE Biology asks for, at the depth it asks for, using the terms the mark scheme rewards. That gap is invisible to a student and expensive in August.</p>
-
-<p><strong>They do not know how this student wants to be taught.</strong> A student cannot articulate a pedagogy. They can name someone. Naming a creator whose videos they already watch is the only handle on teaching style that a fifteen-year-old actually has, and it is a handle the general tools do not offer.</p>
-
-<p><strong>They are not accountable for being wrong.</strong> No free tutor states an accuracy floor, publishes what it does below that floor, or traces an explanation to a validated source. A parent buying exam preparation is buying a guarantee, not a chat interface.</p>
-
-<section class="visual" aria-labelledby="defence-title">
-  <h3 id="defence-title">The defensibility stack</h3>
-  <p class="lede">Not all differentiation has the same half-life. The venture should invest in the part competitors cannot reproduce quickly.</p>
-  <div class="defence-grid" role="img" aria-label="Three tiers of defensibility: general explanation is easy to copy, specification alignment is harder, named educator relationships compound over time">
-    <div class="defence"><b>Easy to copy</b><span>General explanations, diagrams and adaptive prompting are now free features from larger platforms.</span></div>
-    <div class="defence"><b>Buildable by others</b><span>Specification alignment and accountability matter, but a funded competitor could choose to build them.</span></div>
-    <div class="defence"><b>Compounds slowly</b><span>Signed, revocable relationships with named educators give students a handle they already understand.</span></div>
-  </div>
-  <p class="visual-caption">The green tier is the strategic wedge; the other two are the evidence and safety floor beneath it.</p>
-</section>
+<p>Sections 4.1 and 5.1 of the 2025 submission described a product that teaches Socratically, adapts to the learner and produces diagrams on demand. Every one of those features is now a free toggle in a product with hundreds of millions of users.</p>
 
 <div class="claim">
-  <p>Honest assessment of the strength of that answer: the second point is the only one a competitor cannot copy in a quarter. Specification alignment is a content problem that Google could fund tomorrow; accountability is a policy choice any of them could adopt. The named-educator handle requires signed relationships with individual people, which is slow for everyone including us, and is therefore the only part of this that compounds.</p>
-  <span class="tag assumed">Assumed<span class="src">Judgement, not evidence. Tested by the D14 instrumentation in 11</span></span>
+<ul class="tight">
+<li>OpenAI launched <b>Study Mode</b> in ChatGPT on 29 July 2025. Google launched <b>Guided Learning</b> in Gemini roughly a week later, built on LearnLM. Claude has an equivalent Learning Mode. All are free toggles.</li>
+<li>Gemini's Guided Learning already produces scaffolded multimodal output including images, diagrams, videos and interactive quizzes, and generates flashcards and study guides.</li>
+<li>Google offered students in the US, Japan, Indonesia, Korea and Brazil a free twelve-month AI Pro subscription, and committed $1bn over three years to AI education in the US.</li>
+<li>Khanmigo is free to all US teachers; a consumer price point of $4/month has been reported.</li>
+</ul>
+<span class="tag verified">Verified<span class="src">September 2026</span></span>
 </div>
 
-<h2>Where the venture is built and where it sells</h2>
+<p>This is not a competitive setback to be worked around. It is the removal of the product's reason to exist as originally described, and pretending otherwise would waste the next two years. An LLM that teaches Socratically with diagrams is not a product in September 2026. It is a feature of three things a parent already has on their phone, two of which are free and one of which is being given to students for a year at a time at national scale.</p>
+
+<p>The correct response is not to add features until the difference returns. It is to accept that general tutoring capability is now infrastructure, and to ask what is left that a well-capitalised general assistant is structurally unwilling to do.</p>
+
+<h2 id="pay">Why a parent pays when Gemini is free</h2>
+
+<p>Three answers. The first is the only one with a durable technical basis; the second is the bet the venture is making; the third is the commercial frame that makes the first two sellable.</p>
+
+<h3>1. Accountability for correctness, which a general assistant will not offer</h3>
+
+<p>A general assistant is contractually and commercially prevented from telling a parent that its answer to a GCSE question is right. Its terms disclaim exactly that. It cannot warrant curriculum coverage, it cannot tell you which specification it is answering against, and when it is wrong it is wrong silently and fluently.</p>
+
+<p>CINE can make the opposite commitment because it is built to a narrower job. Every substantive curricular statement that reaches a learner cites a node in an item bank that a qualified examiner has validated, and a verification layer blocks the turn if the statement is not supported by the cited node. The commitment is specified as a number with a test behind it and a defined behaviour when the number is missed, in <a href="03-curriculum-and-content.html">03 Curriculum and content</a> and <a href="06-architecture.html">06 Architecture</a>.</p>
+
+<p>This is a real difference and it is the moat, because it is expensive in exactly the way that model capability is not. The item bank and the examiner validation are a content and process cost that does not fall when the next model ships. Buy the model; own the bank and the verification layer.</p>
 
 <div class="claim">
-  <p>Built in Bengaluru, sold in the UK. The reasoning for the UK is willingness to pay and willingness to experiment, and that Indian edtech is crowded. The reasoning against India is stronger than that: Indian law prohibits tracking and behavioural monitoring of anyone under eighteen, the prohibition cannot be waived by parental consent, and the exemption that would rescue an adaptive tutor belongs to educational institutions rather than to direct-to-consumer platforms.</p>
-  <span class="tag verified">Verified<span class="src">DPDP Act s.9(3); DPDP Rules 2025, Fourth Schedule</span></span>
+<p>That parents of examination candidates will pay for a correctness warranty they cannot themselves evaluate, and that they can tell the difference between a warranted answer and a confident one. Both are plausible and neither is established. This is the single most important untested premise in the venture and the roadmap tests it before the content cost is fully incurred; see <a href="11-roadmap.html">11 Roadmap</a>, milestone M5.</p>
+<span class="tag assumed">Assumption<span class="src">not verified</span></span>
 </div>
+
+<h3>2. A student can name a teacher but cannot specify a pedagogy</h3>
+
+<p>You can make a general assistant teach almost any way you like, if you can describe the way you like. A fifteen-year-old cannot. They cannot say "enter from a concrete instance, delay the formal statement until after three worked cases, and respond to my errors by asking me to predict rather than by correcting me". They can say the name of someone who teaches the way they like.</p>
+
+<p>That is the whole of decision D4. The name is the handle; the style is the substance. The product turns a name into a point in a parameter space, gives the student the handle, and then lets them turn it, which is D10. The mechanism is specified in <a href="02-style-engine.html">02 Style engine</a>.</p>
+
+<p>The honest position is that this is a bet, not a finding. It is why the product ships named presets and unnamed archetypes simultaneously from day one and instruments return rate rather than satisfaction (D14), so that "the wedge is weak" and "the fidelity is short" can be told apart, because they have opposite fixes.</p>
+
+<h3>3. Substituting a purchase the household is already making</h3>
+
+<p>The comparator is not a free chatbot. It is a private tutor at prevailing rates.</p>
 
 <div class="claim">
-  <p>The distance between the build and the market is the largest execution risk in this plan, and it is not legal or technical. The hardest problem here is fidelity to a mark scheme, and that knowledge lives in UK classrooms. No document in this vault currently resolves how that gap is closed.</p>
-  <span class="tag open">Open<span class="src">No owner, no plan, no budget line</span></span>
+<p>29% of secondary pupils in England and Wales have had private tutoring at some point, up from 18% twenty years ago and 27% in 2019. Year 11 is the peak year at 25%. Prevailing 2026 rates are roughly £25 to £45 per hour at GCSE and £35 to £65 at A-level. An earlier Sutton Trust estimate put the UK private tuition market at up to £2bn.</p>
+<span class="tag verified">Verified<span class="src">Sutton Trust, Private Tutoring 2026, published February 2026</span></span>
 </div>
 
-<h2>Who else is in the room</h2>
+<p>A household already spending on tutoring is not choosing between CINE and a free chatbot. It is choosing between CINE and an hour of a human, and the arithmetic of that substitution is the pricing section of <a href="10-economics.html">10 Economics</a>. The free tools are a reason the market may not grow as fast as it otherwise would. They are not what the money is currently going to.</p>
 
-<p>In the UK: Third Space Learning's Skye does voice-based conversational maths tutoring; Century Tech does adaptive pathways; Oak National Academy's Aila is state-backed, free, and aimed at teachers rather than students, reportedly saving them three to four hours a week on lesson planning.</p>
+<h2 id="hold">Where that argument does not hold</h2>
+
+<p>Three places. Stating them is the point of this section.</p>
+
+<p><b>The specification-knowledge limb is weak on its own.</b> "The free tools do not know your specification" is not durable, because a parent can paste the specification into Gemini and a competitor can ship specification alignment in a quarter. Knowledge of the specification is not the asset. Validated items, recorded provenance per item, and a gate that refuses to speak beyond them are the asset, because those are a rate-limited human process rather than a prompt. Any version of the pitch that rests on "we know the syllabus" should be treated as a sign that the real argument has been lost.</p>
+
+<p><b>The persona wedge is unproven and the evidence to date is our own intuition.</b> No data in this repository supports D4. It was retained against advice. If the D14 instrumentation shows named presets performing no better than unnamed archetypes on return rate, the wedge is dead and the venture is a correctness-warranted subject tutor with a style control, which is a smaller and more crowded business. The roadmap treats that as a live outcome rather than a tail risk.</p>
+
+<p><b>Willingness to pay for correctness is untested in this market.</b> There is good evidence that AI tutoring <i>works</i> and none in this repository that parents will pay for a warranty on it. Those are different claims and the second is the one the business depends on.</p>
+
+<h2 id="evidence">What the evidence actually supports</h2>
+
+<p>The case for AI tutoring as a mechanism strengthened over the same period that the case for our particular differentiation collapsed. These are the findings that survive.</p>
 
 <div class="claim">
-  <p>The most instructive competitor is not in this market. PhysicsWallah said in June 2026 that it would ship an AI tutor that year, and that its edge over OpenAI, Google and Anthropic is access to millions of Indian students and the behavioural data they generate. That is a coherent strategy and it is the one this venture cannot run, because the data it rests on is the data Indian law restricts and UK regulators are currently fining people over.</p>
-  <span class="tag verified">Verified<span class="src">Business Today interview, 1 Jun 2026</span></span>
+<ul class="tight">
+<li>Kestin, Miller, Klales et al., <i>Scientific Reports</i>, published 3 June 2025: a purpose-built AI tutor at Harvard produced median learning gains more than double those of an active-learning classroom group. The AI supplemented human teaching rather than replacing it; the correct comparison is AI-supported instruction against conventional instruction, not against a teacher.</li>
+<li>ASSISTments: effect sizes of 0.18 to 0.29 SD across two large randomised controlled trials, ESSA Tier 1 evidence rating, at under £100 per student.</li>
+<li>Carnegie Learning MATHia: 0.21 to 0.38 SD across more than 18,000 students in 147 schools.</li>
+<li>Reported caveats: accuracy gaps at subject edges; students who default to the AI rather than working a problem can develop surface fluency that does not hold under examination conditions.</li>
+</ul>
+<span class="tag verified">Verified<span class="src">September 2026</span></span>
 </div>
 
+<p>Two things follow, and both constrain the design rather than decorating it.</p>
+
+<p>The Harvard result is a result about <i>supplementation</i>. It is not evidence that an AI tutor replaces teaching, and the product must not be sold as though it were, both because that claim is unsupported and because it is the claim that makes schools hostile in Route B.</p>
+
+<p>The second caveat is a design requirement, not a footnote. A tutor that answers is a tutor that produces surface fluency. The instrumentation in <a href="11-roadmap.html">11 Roadmap</a> measures unaided performance on held-out items, not in-session success, precisely because in-session success is the metric that a surface-fluency failure would flatter.</p>
+
+<h2 id="market">The market this is aimed at</h2>
+
+<p>The demand is concentrated, and the concentration is the strategy.</p>
+
+<div class="claim">
+<ul class="tight">
+<li>Year 11 is the peak year at 25%, followed by Year 10 at 10%.</li>
+<li>London 45%, rest of England 27%, Wales 24%. Urban 33%, rural 19%.</li>
+<li>Worst-off households 23%, best-off 30%.</li>
+<li>By ethnicity: Black pupils 64%, Asian 50%, White 20%; in deprived areas, 65%, 43% and 10% respectively.</li>
+<li>20% of pupils received one-to-one or small-group tutoring organised by their school, down from 22% in 2023; separate 2025 polling found 58% of schools had reduced their tutoring offer year on year.</li>
+</ul>
+<span class="tag verified">Verified<span class="src">Sutton Trust, Private Tutoring 2026, February 2026</span></span>
+</div>
+
+<p>Read together: the paying demand is in Year 11, in London, in urban households, and it is strikingly concentrated by ethnicity in a way that should inform where the first thousand customers come from. The school-funded channel is shrinking at the same time. That is the strongest single argument for going direct to parents rather than through schools, and it is stated as such in <a href="09-route-comparison.html">09 Route comparison</a> rather than being left implicit.</p>
+
+<p>It is also the source of the business's worst structural feature. A Year 11 concentration means an annual cliff in June. <a href="07-route-a-direct-to-parents.html">07 Route A</a> confronts that directly instead of modelling it away.</p>
+
+<h3>Who is already here</h3>
+
+<div class="claim">
+<p>UK competitors already in market: Third Space Learning's <b>Skye</b> (voice-based conversational maths tutoring), <b>Century Tech</b> (adaptive pathways), and Oak National Academy's <b>Aila</b> (a teacher lesson-planning assistant, reported to save teachers three to four hours per week, state-backed and free).</p>
+<span class="tag verified">Verified<span class="src">September 2026</span></span>
+</div>
+
+<p>Aila matters more than it looks. A state-backed free tool aimed at teachers is the thing that makes Route B harder to sell, because it occupies the budget-free part of a school's attention. Skye matters because it validates conversational maths tutoring as a category in the UK, and because it is the closest competitor to the launch scope chosen in <a href="03-curriculum-and-content.html">03 Curriculum and content</a>.</p>
+
+<h2 id="for">What the venture is for</h2>
+
+<p>An AI tutor for UK secondary students at GCSE and A-level, built from Bengaluru, sold into the UK, whose distinguishing feature is that the student chooses how they are taught by naming an educator whose style they already know, and whose distinguishing commitment is that nothing reaches the student that cannot be traced to a validated item.</p>
+
+<p>Two things it is deliberately not:</p>
+
+<ul>
+<li><b>Not a general study assistant.</b> It refuses questions outside its declared scope rather than answering them worse than the free tools would. The scope is named in 03 and it is narrow at launch.</li>
+<li><b>Not a companion.</b> It does not claim feelings, does not initiate contact, and holds no social memory of the student beyond their academic state. That is a safety decision, an Online Safety Act positioning decision and a rights decision at the same time; see <a href="05-safety-privacy-regulatory.html">05 Safety, privacy and regulatory</a>.</li>
+</ul>
+
+<h2 id="shelf">The shelf life of the answer</h2>
+
+<p>The argument in this document has an expiry date and the plan should say so out loud.</p>
+
+<p>The defensible claim rests on a validated item bank and a refusal to speak beyond it. Nothing stops a well-capitalised general assistant from buying the same examiner hours. <span class="mark verified">Verified</span> Google has committed $1bn over three years to AI education in the US and has given twelve-month subscriptions away at national scale in five countries, so the capital to do it plainly exists.</p>
+
+<p>What is actually protective is narrower than "we have content": it is the combination of validated content, the outcome evidence that accumulates from using it, and the fact that neither is worth building for a general assistant whose product strategy is breadth. A specification-specific, examiner-validated, warranted tutor is a bad fit for a product that must work for every subject in every country at once.</p>
+
+<p>The honest formulation, which belongs in front of an investor rather than only in a repository: this is a bet that the correctness warranty is defensible for long enough to accumulate outcome evidence, and that the outcome evidence is what a parent eventually buys. <span class="mark unknown">Unknown</span> How long that window is. It cannot be estimated from anything in this repository, and it should be treated as a live strategic question reviewed at each milestone in <a href="11-roadmap.html">11 Roadmap</a> rather than as a number someone invents now.</p>
