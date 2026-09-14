@@ -129,7 +129,13 @@ ctx = system_fixed + style_card + k_nodes + window     ALL BOUNDED (D30)</code><
 <div class="claim">
 <p>The ceiling is linear in <code>m</code>. <span class="mark verified">Verified</span> Year 11 is the peak tutoring year at 25% and Year 10 follows at 10%, and the examination calendar gives a Year 10 household roughly twice the retained months of a Year 11 household acquired at the same point in the year.</p>
 <p>So the maximum affordable acquisition cost for a Year 10 household is <b>approximately double</b> that for a Year 11 household, at the same price and variable cost. The two cohorts have different economics and <b>must never be averaged into a single blended CAC target</b>, which is exactly what a conventional consumer subscription dashboard would do by default.</p>
-<p>This holds without knowing a single unknown, because it depends only on the ratio of retained months, and that ratio comes from the calendar.</p>
+<p>This holds without knowing a single unknown, because it depends only on the <i>ratio</i> of retained months, and that ratio comes from the calendar.</p>
+
+<div class="claim">
+<p><b>What it does assume, and this is not from the calendar.</b> That a Year 10 household actually pays across roughly twice the span, including through a summer with no examination in it. A household that stops in July and returns in September has a retained-month figure much closer to a Year 11 household's, and the factor collapses toward one.</p>
+<p>So the shape of the result is safe and its magnitude is not. The operational instruction that follows, <b>report the two cohorts separately and never blend them</b>, is sound either way, because it is precisely the measurement that would reveal the factor to be smaller than the calendar suggests.</p>
+<span class="tag assumed">Assumed<span class="src">continuous payment across the summer, OA-21</span></span>
+</div>
 <span class="tag decided">Decision<span class="src">Derived result: you can afford roughly twice as much to acquire a Year 10 household</span></span>
 </div>
 
@@ -187,7 +193,7 @@ households needed to cover it = launch content cost / C</code></pre>
 <thead><tr><th class="id">#</th><th>Quantity</th><th>How</th><th>Cost to obtain</th><th>Milestone</th></tr></thead>
 <tbody>
 <tr><td class="id">1</td><td><code>V</code>, verification cost per adult</td><td>Three quotes from certified providers.</td><td>Three phone calls.</td><td>Now</td></tr>
-<tr><td class="id">2</td><td><code>p</code>, and the anchor it sits against</td><td>Landing-page price testing, no product.</td><td>Days, small spend.</td><td>M5</td></tr>
+<tr><td class="id">2</td><td><code>p</code>, and the anchor it sits against</td><td>Landing-page price testing, no product.</td><td>Days, small spend.</td><td>M1</td></tr>
 <tr><td class="id">3</td><td><code>minutes_per_item</code>, <code>examiner_rate</code></td><td>Timed pilot: two examiners, the same 20 items. Rate check against the contract market.</td><td>A few hundred pounds.</td><td>M2</td></tr>
 <tr><td class="id">4</td><td><code>c</code>, and the gate-fire rate</td><td>Frozen battery against candidate models.</td><td>Requires the item bank to exist.</td><td>M2</td></tr>
 <tr><td class="id">5</td><td><code>m</code>, retained months, split by year group</td><td>First cohort, measured over one examination cycle.</td><td>A year, and a live product.</td><td>M5 onward</td></tr>

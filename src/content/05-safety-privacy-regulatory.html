@@ -69,7 +69,7 @@
 </div>
 
 <div class="claim">
-<p><b>Cost per verified adult.</b> Not known, not in the verified findings, and not invented here. It is a direct charge against first-month contribution in <a href="10-economics.html">10</a>, and if it exceeds the first month's contribution margin, Route A's economics fail at the front door and Route B becomes the default. That is written as an explicit condition on the recommendation in <a href="09-route-comparison.html">09</a> rather than left as a footnote.</p>
+<p><b>Cost per verified adult.</b> Not known, not in the verified findings, and not invented here. It is a one-off charge against the contribution of a whole acquisition, not of a month: <a href="10-economics.html#dominant">10</a> shows it subtracting directly from <code>(p - c) x m</code> over the examination cycle. If it consumes a large share of that, Route A's economics fail at the front door and Route B becomes the default. That is written as an explicit condition on the recommendation in <a href="09-route-comparison.html">09</a> rather than left as a footnote.</p>
 <span class="tag unknown">Unknown<span class="src">required input, and it can break Route A on its own</span></span>
 </div>
 
@@ -86,7 +86,7 @@
 <tr><td>Style preset and any student adjustments.</td><td>D10. Delivers the chosen teaching style.</td><td>Life of the account.</td><td>The learner only. Never shared, never publishable (see <a href="#trigger">the OSA trigger list</a>).</td></tr>
 <tr><td>Account and billing details of the <b>adult</b>.</td><td>Contract and payment.</td><td>As required by tax law. <span class="mark assumed">Assumption</span> six years in the UK; standard position, not re-verified.</td><td>The account holder, finance staff.</td></tr>
 <tr><td>Age verification outcome: boolean, method, provider reference, timestamp.</td><td>Demonstrating age assurance to a regulator.</td><td>Life of the account.</td><td>Compliance staff. <b>No document, image or biometric is ever held.</b></td></tr>
-<tr><td>Safety escalation records.</td><td>Safeguarding, and the record of what we did.</td><td>Longer than transcripts, set by the safeguarding policy, and stated in it.</td><td>Named safeguarding role only.</td></tr>
+<tr><td>Safety escalation records.</td><td>Safeguarding, and the record of what we did.</td><td><span class="mark unknown">Unknown</span> Longer than transcripts, and <b>not yet set</b>, because the safeguarding policy that would set it does not exist. It is a named gap below, and until it is written this row is a commitment with no number behind it.</td><td>Named safeguarding role only.</td></tr>
 <tr><td>Operational telemetry: timestamps, error events, device class for rendering.</td><td>Running the service.</td><td>90 days.</td><td>Engineering, aggregated.</td></tr>
 </tbody>
 </table>
@@ -163,7 +163,7 @@
 
 <p><b>What it is not.</b> It is not a forecast of the examination result. At launch there is no calibration data, so what the product states is a <i>current performance band on our own validated items</i>, and it says so in those words. It becomes a forecast only once T-CAL-01 has coverage data, and not before. The distinction is not pedantry; it is the difference between a measurement we can support and a prediction we cannot.</p>
 
-<p><b>Why Article 22 is not engaged.</b> Article 22 bites on a decision based solely on automated processing which produces legal effects concerning the data subject or similarly significantly affects them. The design fails the first limb, and would fail the third as well.</p>
+<p><b>Why Article 22 is not engaged.</b> Article 22 bites on a decision, based solely on automated processing, which produces legal effects concerning the data subject or similarly significantly affects them. The design does not reach the first element, there being no decision; and even if it did, it would not reach the last, there being no significant effect. The middle point below is not an element of the test but the design constraint that keeps the first one true.</p>
 
 <ol>
 <li><b>There is no decision.</b> The range is information given to the learner and their parent. Nothing is decided about the learner on the strength of it.</li>
@@ -173,15 +173,34 @@
 
 <div class="claim">
 <p><b>No feature, content path, price, tier or restriction may be gated on the provisional grade range.</b> It is an output to the learner and their parent and never an input to anything the product does.</p>
-<p>This is the constraint that keeps Article 22 out, and it is written as a decision because the obvious next product idea, routing a struggling learner down a different path automatically, would flip the analysis without anybody noticing that it had. Adaptive sequencing continues to run on objective-level mastery, which is a different and much narrower signal.</p>
+<p>This is the constraint that keeps Article 22 out, and it is written as a decision because the obvious next product idea, routing a struggling learner down a different path automatically, would flip the analysis without anybody noticing that it had. Adaptive sequencing continues to run on objective-level mastery, which is a different and much narrower signal: it decides which objective comes next, it has never seen the band, and it would behave identically if the band were deleted.</p>
+
+<p><b>A policy is not enough, and this vault says so elsewhere.</b> D11 is proved by T-ZERO-01 rather than asserted; provenance is "a field and not a policy". The same standard applies here.</p>
+
+<p><b>T-GATE-01:</b> a blocking release check asserting that no component outside the learner-facing and parent-facing reporting surface reads <code>GradeRange</code>. The band is write-only to everything else. A build in which the scheduler, the composer, the pricing path or any experiment can read it does not ship. <b>Status: specified, not run.</b></p>
 <span class="tag decided">Decision D35<span class="src">14 September 2026</span></span>
 </div>
 
 <div class="claim">
 <p>If the range is ever put in front of a teacher in a form that informs a <b>Foundation or Higher tier entry decision</b>, the analysis above changes and Article 22 becomes live, because tier entry caps the grade a child can be awarded and is about as close to a legal effect on a fifteen-year-old as a school decision gets.</p>
 <p>That is a Route B feature request waiting to happen, and it is therefore listed as a change-control trigger alongside the Online Safety Act triggers rather than left to be remembered. Before any teacher-facing view of the range ships, the Article 22 assessment is re-run and counsel is asked.</p>
+
+<p><b>The teacher is not the only route, and probably not the likeliest one.</b> The parent has the band from day one, and a parent who takes it into a tier-entry conversation with a school has put our output into that decision without any feature of ours changing. We cannot design that away. What we can do, and what the range's framing above is for, is make it hard to mistake the band for a forecast in exactly that conversation. OI-11 is therefore written to cover the output reaching a tier decision by <i>any</i> route, not merely a teacher-facing view.</p>
 <span class="tag open">Trigger<span class="src">Route B, teacher-facing views</span></span>
 </div>
+
+<h4>Article 22 is not the only question, and it is not the hardest one</h4>
+
+<p>Article 22 asks whether a <i>decision</i> was taken. <b>Article 5(1)(d) asks whether the data is accurate</b>, and it applies to inferred personal data as much as to data a person gave us. A grade band is personal data we generated, we know it is uncalibrated, and we show it to the data subject and their parent. "There is no decision" is no answer at all to that.</p>
+
+<p>Four things respond to it, and the fourth is the only strong one:</p>
+
+<ol class="tight">
+<li>It is described as what it is: a current performance band on our own validated items, not a forecast. Accuracy is judged against what the data purports to represent.</li>
+<li>It is a range, and it is recomputed every session rather than standing as a stored verdict.</li>
+<li>Article 16 rectification is available: the learner or parent can challenge the band, and a challenge is answered by showing the item results behind it.</li>
+<li><b>It is not shown at all below the evidence threshold.</b> Withholding an estimate we cannot support is the only mitigation here that is about accuracy rather than about presentation, which is why the threshold is set conservatively high while <span class="mark unknown">Unknown</span>.</li>
+</ol>
 
 <h4>Detrimental use, which is the Children's code question rather than the Article 22 one</h4>
 
@@ -196,7 +215,11 @@
 </ul>
 
 <div class="claim">
-<p>A grade range is a statistical claim, so it gets a test like any other claim in this vault. <b>T-CAL-01:</b> of learners shown a range, what proportion of actual examination outcomes fall inside it. Target coverage is set before the first cohort sits an examination, and until that data exists the product does not use the word prediction anywhere.</p>
+<p>A grade range is a statistical claim, so it gets a test like any other claim in this vault. <b>T-CAL-01:</b> of learners shown a range, what proportion of actual examination outcomes fall inside it.</p>
+
+<p><b>Pass condition:</b> the band carries a declared nominal coverage, the declaration is made <b>before</b> the cohort sits, and the test passes when observed coverage is at or above that figure. Declaring the target afterwards would let any result be called a pass, which is the standard failure of a calibration claim. The nominal figure itself is <span class="mark unknown">Unknown</span> and is not invented here; what is fixed now is that it is chosen in advance and published with the band.</p>
+
+<p>Until it passes, the product does not use the word prediction anywhere, and the band is labelled as a current performance measure.</p>
 <p><b>Status: specified, not run, and it cannot be run until a cohort has sat an examination.</b> That is roughly a year after launch, which means the honest position for the whole of the first year is that the range is uncalibrated and labelled as such.</p>
 <span class="tag unknown">T-CAL-01<span class="src">uncalibrated until a cohort sits an examination</span></span>
 </div>
@@ -204,7 +227,10 @@
 <h2 id="line">The line that goes on the marketing site</h2>
 
 <div class="claim">
-<p class="bigline"><b>We keep what your child types to the tutor, what they got right and wrong, and the account details you gave us. We do not sell it. We do not use it to train anyone's AI model. We do not use it to advertise to your child. We do not build any picture of your child beyond how they are doing in the subject they are studying. You can delete all of it at any time: it leaves our systems within seven days and our backups within thirty-five.</b></p>
+<p class="bigline"><b>We keep what your child types to the tutor and what the tutor says back, which topics they got right and wrong, the progress estimate we show you, the account and billing details you gave us, and a record that we checked you are an adult. If your child tells the tutor something that worries us, we keep a record of that too, and a trained person reads it.</b></p>
+<p class="bigline"><b>We do not sell any of it. We do not use it to train anyone's AI model. We do not use it to advertise to your child. We do not work anything out about your child beyond how they are doing in the subject they are studying.</b></p>
+<p class="bigline"><b>Our team is in India and in the UK, and your child's data is handled in both.</b></p>
+<p class="bigline"><b>You can delete it whenever you want. It goes from the product straight away, from our systems within seven days and from our backups within thirty-five. Two things we cannot delete: billing records, which we are required to keep for six years, and any safeguarding record, because deleting one could put a child at risk.</b></p>
 <span class="tag decided">Decision<span class="src">This is the line. It is meant to be used unedited.</span></span>
 </div>
 
@@ -214,11 +240,13 @@
 <table>
 <thead><tr><th>Clause</th><th>What makes it true</th></tr></thead>
 <tbody>
-<tr><td>"what your child types, what they got right and wrong, and the account details"</td><td>The data table above. It is a complete list, not a summary, which is why the account details are named rather than glossed.</td></tr>
+<tr><td>The list of what is kept</td><td>Every row of the data table above, including the tutor's own replies, the progress estimate, the age check record and safeguarding records. An earlier version of this line named three of eight rows and called itself complete; that was the single most misleading sentence in this vault and it is why the line is now four sentences rather than one.</td></tr>
+<tr><td>"handled in India and in the UK"</td><td>D1: the build base is Bengaluru and the market is the UK. A parent asks where their child's data goes before they ask anything else, and the transfer mechanism is still an unresolved gap below. Saying it plainly is the minimum; it is not a substitute for resolving it.</td></tr>
+<tr><td>"Two things we cannot delete"</td><td>Billing retention (OA-13) and safeguarding records. Both are real exceptions to a deletion promise and both now sit <b>in the same breath as the promise</b> rather than in a table further down.</td></tr>
 <tr><td>"We do not sell it"</td><td>No data sale, no data sharing for consideration, no third-party analytics SDK in the learner surface.</td></tr>
 <tr><td>"not to train anyone's AI model"</td><td>Decision D24: zero-retention, no-training vendor terms as a procurement gate. This clause is false without that contract, which is why it is a gate and not a preference.</td></tr>
 <tr><td>"not to advertise to your child"</td><td>No advertising in the product and no ad-tech in the stack.</td></tr>
-<tr><td>"no picture beyond how they are doing in the subject"</td><td>The not-inferred list above, plus D25.</td></tr>
+<tr><td>"nothing beyond how they are doing in the subject"</td><td>The not-inferred list above, plus D25. The progress estimate sits inside this boundary because it is computed from performance on validated items in the enrolled subject and from nothing else; that is exactly why it is named in the first sentence rather than relied on to be covered by silence.</td></tr>
 <tr><td>"seven days, thirty-five days"</td><td>The deletion SLA. The backup figure is stated rather than omitted, because that is the clause an auditor checks.</td></tr>
 </tbody>
 </table>
@@ -311,7 +339,13 @@
 
 <h3>Route B</h3>
 
-<p>Escalation routes to the school's designated safeguarding lead, under the school's own policy, which already exists and is better than anything we would invent. This is a genuine advantage of Route B and it is scored in <a href="09-route-comparison.html">09</a>.</p>
+<p>Escalation routes to the school's <b>designated safeguarding lead</b>, under the school's own policy, which already exists and is better than anything we would invent. This is a genuine advantage of Route B and it is scored in <a href="09-route-comparison.html">09</a>.</p>
+
+<div class="claim">
+<p>A school will assess this product against <b>Keeping Children Safe in Education</b> and against its own filtering, monitoring and supplier due-diligence expectations, not against the analysis in this document. Neither KCSIE nor any DfE supplier standard has been read against this design.</p>
+<p><b>That is a gap, not a position.</b> It is the most likely single reason a Route B pilot conversation ends early, it is resolvable by reading, and it sits at M1 alongside the other reading tasks.</p>
+<span class="tag assumed">Gap<span class="src">OA-20, statutory school frame not yet read against</span></span>
+</div>
 
 <h3>Route A, where the problem is hard</h3>
 
@@ -324,6 +358,8 @@
 
 <div class="claim">
 <p>At launch we <b>cannot</b> staff 24-hour human safeguarding review. The review commitment is next business day, and next business day is <b>not adequate for an acute disclosure</b>. That is why immediate signposting to 24-hour services is the primary response and human escalation is the secondary one, rather than the other way round.</p>
+
+<p>Put the two halves of this vault together and the gap is starker than that paragraph admits. <a href="01-product.html#learner">01</a> describes the learner as working <i>"between four in the afternoon and eleven at night"</i>. Next business day means <b>there is no human on duty at any hour the product is actually used.</b> A designated safeguarding lead will notice that before they notice anything else in this document, and they will be right to.</p>
 <p>It follows that the product must not present itself as a place to disclose, and the parent-facing terms must say plainly that this is a tutoring service and not a safeguarding service. Designing a product that invites disclosure and then cannot answer it would be worse than the current position, and the temptation to add a sympathetic "you can tell me anything" affordance should be read as a proposal to take on a duty we cannot discharge.</p>
 <span class="tag unknown">What we cannot do at launch<span class="src">stated plainly</span></span>
 </div>
@@ -350,6 +386,7 @@
 <thead><tr><th>Gap</th><th>Status</th><th>Must be closed by</th></tr></thead>
 <tbody>
 <tr><td><b>Data protection impact assessment.</b> Mandatory here: large-scale processing of children's data combined with profiling.</td><td>Not written. Not started.</td><td>Before the first live child user. It is a precondition of launch, not a launch task.</td></tr>
+<tr><td><b>The safeguarding policy itself.</b> D26 routes disclosures to "a written policy" that decides whether and whom to inform. Retention of escalation records depends on it too.</td><td><b>Referenced throughout this document. Not written. Not started.</b></td><td>Before the first live child user, alongside the DPIA. A disclosure route with no written decision policy behind it is an escalation into a vacuum, and it is worse than the signposting it sits on top of.</td></tr>
 <tr><td><b>International transfers.</b> <span class="mark assumed">Assumption</span> If the Indian operating company processes UK children's data, that is a restricted transfer requiring an IDTA or the UK Addendum to SCCs plus a transfer risk assessment. Standard position, not confirmed for this fact pattern.</td><td>Identified, not resolved.</td><td>Before any UK child data is processed in India. Interacts with OI-7, which entity contracts with the parent.</td></tr>
 <tr><td><b>UK representative.</b> <span class="mark assumed">Assumption</span> That UK GDPR Article 3(2) and the Article 27 UK representative requirement apply to an India-established controller serving UK children. Standard position, unconfirmed for this fact pattern.</td><td>Identified, not resolved.</td><td>Before launch. Cheap to fix, embarrassing to be caught without.</td></tr>
 </tbody>

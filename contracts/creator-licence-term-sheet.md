@@ -116,8 +116,9 @@ refuse without affecting this one:
 
 1. **Using your actual material** to make the style closer to yours. That is a
    content licence, it is a different negotiation, and the fifteen-minute
-   deletion promise above gets slower if we ever do it. We would tell you exactly
-   how much slower before asking.
+   deletion promise above gets slower and more complicated if we ever do it, though
+   the fifteen-minute switch-off does not change. We would tell you exactly how much
+   slower before asking.
 2. **Your voice.** Separate agreement, separate payment, and we are not asking.
 
 ## Questions you should ask us

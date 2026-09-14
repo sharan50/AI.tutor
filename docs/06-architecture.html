@@ -150,7 +150,7 @@
 
 <h2 id="derived">Papers and grade ranges: deterministic, no model call</h2>
 
-<p class="lede">Both features main's plan calls for are computed, not generated. Neither involves a model call, and that single property is what lets them inherit the item bank's validation instead of needing a verification story of their own.</p>
+<p class="lede">Practice papers and the provisional grade range are computed, not generated. Neither involves a model call, and that single property is what lets them inherit the item bank's validation instead of needing a verification story of their own.</p>
 
 <div class="tw">
 <table>
@@ -194,7 +194,7 @@ Account          id, verification{bool, method, provider_ref, timestamp}, billin
 
 <ul>
 <li><code>Preset.enabled</code> is the entire kill switch. One boolean, read per request.</li>
-<li><code>Session.preset_snapshot</code> records the style object as it was at session start, so a transcript can be explained after a preset changes or is deleted. It stores the vector, never the creator's name, so it survives the deletion in <a href="04-rights-dossier.html#killswitch">04</a>.</li>
+<li><code>Session.preset_snapshot</code> records the style object as it was at session start, so a transcript can be explained after a preset changes. <b>For a licensed preset it is purged on the same seven-day line as the object itself</b>, and the transcript thereafter carries only the neutral preset identifier. An earlier draft had the snapshot surviving termination as company work product; that is the exact retention the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a> rejects, and a snapshot that outlived the licence would have made the deletion promise false while appearing to keep it.</li>
 <li><code>Turn.style_signatures</code> is written at logging time, which is what makes T-STY-01 a measurement over live traffic rather than a separate test harness.</li>
 <li><code>Account.verification</code> holds a boolean and a reference. There is no date of birth field in this schema, anywhere, by design.</li>
 </ul>
@@ -211,7 +211,7 @@ Account          id, verification{bool, method, provider_ref, timestamp}, billin
 <tr><td>Application cache of the preset.</td><td>60 seconds.</td><td>Hard TTL, set in one place, asserted by a test.</td></tr>
 <tr><td>In-flight session, already holding a rendered card.</td><td>Next turn, ceiling 16 minutes.</td><td>The flag is re-read at every turn, not at session start. Falls back to <code>fallback_archetype_id</code>.</td></tr>
 <tr><td>CDN, catalogue, marketing, app store metadata.</td><td>24 hours.</td><td>Scripted purge, rehearsed rather than assembled on the day.</td></tr>
-<tr><td>Primary stores: style object, card, name, likeness assets.</td><td>7 days.</td><td>Deleting the object provably removes every card, because the renderer is the only path by which a card exists.</td></tr>
+<tr><td>Primary stores: style object, card, name, likeness assets, <b>and every <code>preset_snapshot</code> referencing the preset</b>.</td><td>7 days.</td><td>The renderer is the only path by which a card is <i>produced</i>, and the snapshot is the only place a produced vector is <i>retained</i>. Both are deleted, or the promise is not kept.</td></tr>
 <tr><td>Backups.</td><td>35 days.</td><td>Retention cycle. Stated in the licence rather than omitted.</td></tr>
 <tr><td><b>Model weights.</b></td><td><b>Not applicable.</b></td><td><b>D8.</b> No LoRAs, no fine-tunes, no adapters carrying persona style. There is nothing to retrain, which is the only reason any of the above is credible.</td></tr>
 </tbody>
@@ -301,7 +301,7 @@ where, per turn:
 <tr><td>Pinned models, blocking regression (D22).</td><td>Vendor drift during exam term.</td><td>We run behind the frontier and pay to qualify every upgrade, while competitors get improvements free.</td></tr>
 <tr><td>No fine-tuning, no adapters (D8).</td><td>Revocability, the kill switch.</td><td>Style fidelity is capped at what prompting achieves. If T-STY-02 fails and the diagnosis is fidelity, D8 forecloses the obvious fix and D6 exemplar conditioning is the only route left.</td></tr>
 <tr><td>Zero-retention vendor terms (D24).</td><td>The marketing-site line in <a href="05-safety-privacy-regulatory.html#line">05</a>.</td><td>Narrows the vendor set, possibly to more expensive tiers, and forecloses vendor-side caching optimisations that would have cut cost.</td></tr>
-<tr><td>Papers and grade ranges are computed, never generated (D35, D36).</td><td>Verifiability and cost.</td><td>Item metadata (mark, command word, difficulty) must be right at authoring time, so a metadata error is now a paper defect rather than a cosmetic one. And a structural specification has to be written per board and per paper, which is the work that repeats if a second board is added.</td></tr>
+<tr><td>Papers and grade ranges are computed, never generated (D28's principle, applied; D35 keeps the range ungated).</td><td>Verifiability and cost.</td><td>Item metadata (mark, command word, difficulty) must be right at authoring time, so a metadata error is now a paper defect rather than a cosmetic one. And a structural specification has to be written per board and per paper, which is the work that repeats if a second board is added.</td></tr>
 <tr><td>No persona-dependent code paths (D11, T-ZERO-01).</td><td>Zero-persona operation.</td><td>Every persona feature must degrade gracefully to an archetype, which is a constraint on every future style feature, not a one-time check.</td></tr>
 </tbody>
 </table>

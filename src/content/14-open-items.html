@@ -1,16 +1,16 @@
 <h1>Open items</h1>
-<p class="standfirst">Everything this design rests on that has not been established. Eleven questions for counsel, one of which we are proceeding ahead of, and eighteen assumptions that shape the plan and could each be wrong. Each carries the decision it unblocks and the cost of getting it wrong.</p>
+<p class="standfirst">Everything this design rests on that has not been established. Twelve questions for counsel, one of which we are proceeding ahead of, and twenty-one assumptions that shape the plan and could each be wrong. Each carries the decision it unblocks and the cost of getting it wrong.</p>
 <dl class="meta">
 <dt>Document</dt><dd>14 of 14</dd>
 <dt>Status</dt><dd>Open. Nothing on this page has been resolved.</dd>
 <dt>Written</dt><dd>14 September 2026</dd>
-<dt>Counsel items</dt><dd>10, none answered. Answering them is milestone M1.</dd>
-<dt>Open assumptions</dt><dd>18, none verified.</dd>
+<dt>Counsel items</dt><dd>12, none answered. Answering them is milestone M1, except OI-3 which we are proceeding ahead of under D34.</dd>
+<dt>Open assumptions</dt><dd>21, none verified.</dd>
 </dl>
 
-<h2 id="counsel">For counsel: ten questions, deliberately unanswered</h2>
+<h2 id="counsel">For counsel: twelve questions, eleven of them deliberately unanswered</h2>
 
-<p class="lede">No answer, no likely answer, and no range is offered for any of these. Supplying one would be worse than leaving the question open, because a plausible guess in a repository like this one gets quoted later as though it were advice. Seven come from the brief; three (OI-8, OI-9, OI-10) were raised while writing this design and are new.</p>
+<p class="lede">No answer, no likely answer, and no range is offered for any of these. Ten are also unacted on; the exception is OI-3, where D34 proceeds under a fixed convention because waiting would mean a product that cannot describe itself. Supplying one would be worse than leaving the question open, because a plausible guess in a repository like this one gets quoted later as though it were advice. Seven come from the brief; five (OI-8 to OI-12) were raised while writing this design and are new. One, OI-3, we are proceeding ahead of under D34, and the row says so.</p>
 
 <div class="tw">
 <table>
@@ -25,6 +25,7 @@
 <tr><td class="id">OI-7</td><td>Which entity contracts with the parent, and what does that do to consumer jurisdiction, UK representative obligations and VAT?</td><td>Incorporation, the payment stack, the terms of business, and the international transfer position.</td><td>A consumer contract unenforceable in the market it was written for, and a tax position discovered late.</td></tr>
 <tr><td class="id">OI-8</td><td><b>New.</b> Is the default of no parental transcript access (D16) defensible where the learner is under 13, and does the answer differ between Route A and Route B?</td><td>The parent reporting surface and the parent-facing terms.</td><td>A Children's code finding against the product's central reporting feature, and a rebuild of the parent surface.</td></tr>
 <tr><td class="id">OI-9</td><td><b>New.</b> Under what licence may the DfE-published subject content be used as the source for commercial item authoring, and does that use carry conditions?</td><td>The entire item bank. The clean room depends on there being a lawful source to write <i>from</i>.</td><td>The clean-room policy has no permitted source, and every item in the bank inherits the defect.</td></tr>
+<tr><td class="id">OI-12</td><td><b>New.</b> What exposure do consumer protection law and the advertising standards regime create for education marketing that names an examination board, and how does that interact with the trade mark analysis in OI-3? The rights dossier analyses the naming decision <b>only</b> as trade mark, and a complaint to an advertising regulator is cheaper and faster for a complainant than anything in the enforcement war-game.</td><td>The wording convention in D34, which is already in use.</td><td>The fastest and cheapest route for a board, or a competitor, to act against us is the one we have not analysed. Should go to counsel <b>with</b> OI-3, not after it.</td></tr>
 <tr><td class="id">OI-11</td><td><b>New.</b> If a provisional grade range is shown to a teacher in a form that could inform a Foundation or Higher tier entry decision, does Article 22 become engaged, and what is then required?</td><td>Any teacher-facing view of the range, which is a predictable Route B feature request.</td><td>Automated decision-making with a significant effect on a child, in a product sold to the school that makes the decision. Tier entry caps the grade a child can be awarded.</td></tr>
 <tr><td class="id">OI-10</td><td><b>New.</b> Is Article 6(1)(b) the correct basis for processing a child's data under a contract held by their parent, or is legitimate interests sounder? How does the Article 8 threshold interact?</td><td>The privacy notice, the DPIA, and the consent architecture.</td><td>The second limb of the Reddit finding: profiling children without a lawful basis.</td></tr>
 </tbody>
@@ -33,7 +34,7 @@
 
 <h2 id="assumptions">Open assumptions: reasoned, not verified</h2>
 
-<p class="lede">Every one of these shapes the plan and none has been confirmed. Nine are carried from the brief; nine were introduced by this design and are marked new. They are grouped by what they would break.</p>
+<p class="lede">Every one of these shapes the plan and none has been confirmed. Nine are carried from the brief; twelve were introduced by this design and are marked new. They are grouped by what they would break.</p>
 
 <h3>Rights and content</h3>
 
@@ -62,6 +63,7 @@
 <tr><td class="id">OA-8</td><td>That the proportion-of-screen and proportion-of-audio requirements for synthetic content labelling under the Indian rules appeared in the October 2025 draft; <b>the final notified text has not been checked</b>.</td><td>The specific display parameters of the on-screen label.</td><td>Non-compliant labelling under G.S.R. 120(E). Resolvable by reading the notified text.</td></tr>
 <tr><td class="id">OA-13</td><td><b>New.</b> That UK tax law requires six-year retention of billing records.</td><td>The retention table in <a href="05-safety-privacy-regulatory.html#data">05</a>.</td><td>Over-retention, which is itself a data protection failure. Trivially checkable.</td></tr>
 <tr><td class="id">OA-16</td><td><b>New.</b> That the fifteen Children's code standards are enumerated as set out in <a href="05-safety-privacy-regulatory.html#code">05</a>. <b>Reproduced from understanding, not re-verified against the published text.</b></td><td>The compliance mapping.</td><td>A mapping with a gap in it. <b>One hour of reading at M1.</b></td></tr>
+<tr><td class="id">OA-20</td><td><b>New.</b> That this design meets what a school will actually assess it against: Keeping Children Safe in Education, the school's filtering and monitoring expectations, and any DfE supplier standard. <b>None has been read against this design.</b></td><td>Every Route B conversation. It is the most likely reason a pilot discussion ends early.</td><td>A pilot lost at the first safeguarding question, after the cost of reaching it. Resolvable by reading, which is why it sits at M1.</td></tr>
 <tr><td class="id">OA-14</td><td><b>New.</b> That processing UK pupil data in India will be raised as an objection in school due diligence, independently of whether the transfer mechanism is legally sound.</td><td>Route B feasibility and the corporate structure.</td><td>Sales lost late in the cycle, after the cost of winning them was incurred.</td></tr>
 </tbody>
 </table>
@@ -74,6 +76,7 @@
 <thead><tr><th class="id">#</th><th>Assumption</th><th>Unblocks / shapes</th><th>Cost of being wrong</th></tr></thead>
 <tbody>
 <tr><td class="id">OA-11</td><td><b>New.</b> That a recognisable educator's teaching is stable enough across topics to be a <i>point</i> in the style space rather than a cloud.</td><td>The entire preset representation.</td><td>The schema needs a difficulty conditioning term, complicating the student controls and the licence review. <b>Cheap to test at M3, which is why it sits there.</b></td></tr>
+<tr><td class="id">OA-21</td><td><b>New.</b> That a Year 10 household pays across roughly twice the span of a Year 11 one, including through a summer with no examination. The doubling result in <a href="10-economics.html#ceiling">10</a> depends on it, and it is a behavioural claim, not a fact about the calendar.</td><td>The acquisition ceiling by year group, and whether the two cohorts have genuinely different economics.</td><td>The factor collapses toward one and the Year 10 acquisition strategy loses its main justification. Revealed by the cohort split that <a href="10-economics.html">10</a> already requires.</td></tr>
 <tr><td class="id">OA-19</td><td><b>New.</b> That performance on our validated items maps onto examination grades closely enough for a provisional range to be useful before it is calibrated. Nothing supports this at launch; T-CAL-01 cannot run until a cohort has sat an examination.</td><td>A feature shown to every learner and every parent from day one.</td><td>A year of learners shown a band that turns out not to track outcomes. The mitigations reduce the harm; they do not make the band right.</td></tr>
 <tr><td class="id">OA-18</td><td><b>New.</b> That the structural differences between presets shown in <a href="01-product.html#worked">01</a> are perceptible to a fifteen-year-old and matter to them. The transcripts were written to illustrate a specification, not produced by a system, and not by a teenager.</td><td>D4, the wedge, and therefore the venture's differentiation.</td><td>A style engine that is real on paper and invisible in use. Tested by T-STY-02 at M3.</td></tr>
 </tbody>
@@ -96,6 +99,6 @@
 
 <h2 id="pattern">The pattern in this list</h2>
 
-<p>Worth noticing, because it shapes what M1 should be: <b>seven of the eighteen assumptions are resolvable by reading or by asking, not by building or by advice.</b> OA-2 is a few hours with three published policies. OA-5 is reading five sets of terms. OA-8 is one notified text. OA-13 is a tax reference. OA-16 is an hour with the Children's code. OA-17 is thirty phone calls. OA-10 is a landing page.</p>
+<p>Worth noticing, because it shapes what M1 should be: <b>eight of the twenty-one assumptions are resolvable by reading or by asking, not by building or by advice.</b> OA-2 is a few hours with three published policies. OA-5 is reading five sets of terms. OA-8 is one notified text. OA-13 is a tax reference. OA-16 is an hour with the Children's code. OA-17 is thirty phone calls. OA-10 is a landing page. OA-20 is Keeping Children Safe in Education and whatever supplier standard a school applies.</p>
 
-<p>Those seven include the most load-bearing assumption in the repository and the one that decides whether Route B has a market. None of them requires a lawyer, an engineer or a product. They are in M1 for that reason, and a plan that starts by building instead is choosing to pay the highest available price for the same information.</p>
+<p>Those eight include the most load-bearing assumption in the repository, the one that decides whether Route B has a market, and the one most likely to end a school conversation in its first ten minutes. None of them requires a lawyer, an engineer or a product. They are in M1 for that reason, and a plan that starts by building instead is choosing to pay the highest available price for the same information.</p>

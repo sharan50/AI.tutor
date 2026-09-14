@@ -106,7 +106,7 @@
 <p><b>Why waiting is not the neutral option.</b> You cannot sell examination preparation without saying which examination. A product that will not name the board it prepares a student for is not a cautious version of this product; it is an unsellable one, because the parent's entire question is "is this the right one for my child's exam". Silence has a cost here, and it is not a smaller cost than the risk.</p>
 
 <div class="claim">
-<p><b>The basis we are proceeding on.</b> Naming an exam board to describe what a product prepares a student for may be honest descriptive use under <b>section 11(2) of the Trade Marks Act 1994</b>, provided endorsement is not implied. That is counsel's likely starting point, <b>not settled advice</b>, and OI-3 remains open.</p>
+<p><b>The basis we are proceeding on.</b> Naming an exam board to describe what a product prepares a student for may be honest use under <b>section 11(2) of the Trade Marks Act 1994</b>, provided endorsement is not implied. That is counsel's likely starting point, <b>not settled advice</b>, and OI-3 remains open. <b>Which limb of section 11(2) applies is itself part of the question</b>, and nothing here should be read as settling it; the section has been amended and the choice between the descriptive limb and the limb covering use necessary to indicate intended purpose is exactly the sort of thing a guess would get wrong.</p>
 <span class="tag assumed">Assumed<span class="src">counsel's likely starting point, OI-3 still open</span></span>
 </div>
 
@@ -130,14 +130,27 @@
 <p>Per <a href="#wargame">the war-game</a>, a board's fastest move is not a claim form; it is a trade mark complaint to an app store, which acts on a complaint rather than on the merits and can remove a product in days. So the mitigation is operational, not argumentative:</p>
 
 <ul>
-<li><b>Every board-naming string is centralised in one place</b> in the codebase and in the marketing site, so that all of them can be changed globally in a single edit. This is an engineering requirement, not a content guideline, and it is what makes the rollback below achievable in hours rather than in a week of hunting through pages.</li>
-<li><b>Rollback trigger:</b> on receipt of any objection from any board, all board naming reverts to DfE-subject-content wording <b>within 24 hours</b>, before any substantive reply is sent. Argue afterwards, from a compliant position.</li>
+<li><b>Every board-naming string is centralised in one place</b> in the codebase and in the marketing site, so all of them change in a single edit. This is an engineering requirement, not a content guideline.</li>
+<li><b>Rollback trigger:</b> on receipt of any objection from any board, board naming reverts to DfE-subject-content wording <b>within 24 hours</b> everywhere we control, before any substantive reply is sent. Argue afterwards, from a compliant position.</li>
+<li><b>Notice has to arrive somewhere.</b> The same published address that receives creator kill-switch notices receives board objections, it is monitored on the same basis, and the 24 hours runs from receipt. A rollback trigger with no address and no monitoring duty is not a trigger; the kill switch is careful about this and so is this.</li>
 <li>The counter-notice pack in <a href="#wargame">the war-game</a> covers this case as well as the copyright case.</li>
 </ul>
 
 <div class="claim">
+<p><b>What the 24 hours does not reach, stated because "a single edit" is not true of all of it.</b> App store listing copy sits in a third-party review queue on somebody else's timetable, which is the same point <a href="#wargame">the war-game</a> makes about removals. Served ad creative, cached and archived pages, affiliate and press copy, and a creator's own video about the product are all outside our control entirely.</p>
+<p>And the rollback changes the <i>label</i>, not the <i>thing</i>: <code>board_alignment</code> in item metadata and the per-board paper structural specification in <a href="03-curriculum-and-content.html#papers">03</a> are unaffected by any wording change. An objection that reaches the product rather than the copy is a content question, not a naming one, and it is not contained by this.</p>
+<span class="tag assumed">Limits of the containment<span class="src">the honest version of "revert in 24 hours"</span></span>
+</div>
+
+<div class="claim">
+<p><b>The exposure is analysed here only as trade mark, and that is a gap.</b> Consumer protection law and the advertising standards regime both bite on consumer education copy that names an examination board, and a complaint to an advertising regulator is cheaper and faster for a complainant than anything in <a href="#wargame">the war-game</a>.</p>
+<p><span class="mark unknown">Unknown</span> Neither regime has been analysed, neither is in the verified findings, and their current enforcement powers are not stated here because they would have to be written from memory. This is open item <b>OI-12</b>, and it should go to counsel with OI-3 rather than after it.</p>
+<span class="tag unknown">Unanalysed<span class="src">OI-12, consumer protection and advertising standards</span></span>
+</div>
+
+<div class="claim">
 <p><b>Proceed with board naming under the convention above, ahead of counsel's answer on OI-3</b>, accepting the risk on the basis that the exposure is a takedown rather than damages, that the rollback is 24 hours, and that the alternative is a product that cannot describe itself.</p>
-<p><b>Rejected:</b> waiting for OI-3. It would have cost the ability to market the product at all, for an unknown number of months, to remove a risk that is contained rather than eliminated by waiting. <b>What it makes harder:</b> if counsel comes back against the convention, marketing copy, app store listings and the product's own course naming all change at once, and any paid acquisition running at that moment is wasted. OI-3 stays open and stays first in the counsel instruction.</p>
+<p><b>Note on the fallback:</b> reverting to "DfE subject content" wording assumes that wording is itself available, which depends on <b>OI-9</b>, also unanswered. The rollback is to a less exposed position, not to a proven one. <b>Rejected:</b> waiting for OI-3. It would have cost the ability to market the product at all, for an unknown number of months, to remove a risk that is contained rather than eliminated by waiting. <b>What it makes harder:</b> if counsel comes back against the convention, marketing copy, app store listings and the product's own course naming all change at once, and any paid acquisition running at that moment is wasted. OI-3 stays open and stays first in the counsel instruction.</p>
 <span class="tag decided">Decision D34<span class="src">14 September 2026, taken ahead of counsel</span></span>
 </div>
 
@@ -207,7 +220,7 @@
 <tr><td><b>T + 15 minutes</b></td><td>The preset is disabled for all new sessions.</td><td>A single flag in the persona registry, read per request, with a maximum cache lifetime of 60 seconds. No deployment, no rebuild, no model change.</td></tr>
 <tr><td><b>T + 16 minutes</b></td><td>Hard ceiling for in-flight sessions. Any session still running falls back to the nearest unnamed archetype at its next turn, with an on-screen notice to the student.</td><td>The 60-second cache lifetime bounds this. The archetype fallback exists because of D11.</td></tr>
 <tr><td><b>T + 24 hours</b></td><td>The creator's name and image are gone from the catalogue, the marketing site, app store listing metadata and any CDN caches.</td><td>Purge is scripted and rehearsed, not assembled on the day.</td></tr>
-<tr><td><b>T + 7 days</b></td><td>The parameter object, the rendered style card, the name and the likeness assets are deleted from primary stores. Transcripts are retained for the learner's benefit but carry a neutral preset identifier with no creator reference.</td><td>The object is the only path by which a card can exist, so deleting it provably removes every card derivable from it.</td></tr>
+<tr><td><b>T + 7 days</b></td><td>The parameter object, the rendered style card, every stored session snapshot of that preset, the name and the likeness assets are deleted from primary stores. Transcripts are retained for the learner's benefit but carry a neutral preset identifier with no creator reference.</td><td>The object is the only path by which a card can exist, so deleting it provably removes every card derivable from it.</td></tr>
 <tr><td><b>T + 35 days</b></td><td>Backups have aged out.</td><td>Backup retention cycle. This is the honest caveat and it is stated in the licence rather than omitted.</td></tr>
 </tbody>
 </table>

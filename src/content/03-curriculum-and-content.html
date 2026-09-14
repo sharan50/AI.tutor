@@ -74,7 +74,7 @@
 
 <div class="tw">
 <table>
-<caption>What may and may not enter the item bank. There is no third category and no discretion at the boundary.</caption>
+<caption>What may and may not enter the item bank. There is one boundary case, named below the table rather than left for a reader to find.</caption>
 <thead><tr><th>May enter</th><th>May not enter, under any circumstances</th></tr></thead>
 <tbody>
 <tr><td>Original items written by CINE writers working from the DfE-published subject content.</td><td>Exam board specification text, in whole, in part, or paraphrased.</td></tr>
@@ -86,6 +86,12 @@
 </table>
 </div>
 
+<div class="claim">
+<p><b>The boundary case, stated plainly because an earlier draft said there was none.</b> Command words, mark tariffs, paper structure and time allowances are <i>observed</i> from board papers we may not reproduce, and they enter the system as the paper specification and as item metadata. No board text is copied, and facts about a paper's shape are not copyrightable expression, so the copyright position is unaffected.</p>
+<p>But it is not accurate to say nothing derived from a board paper enters the system. What is true, and what the clean room actually delivers, is narrower: <b>the clean room defends the copyright position and does nothing at all for the naming and misleading-description risk</b>, which is handled separately and less comfortably in <a href="04-rights-dossier.html#naming">04</a>. Conflating the two would let a strong copyright story stand in for a weak marketing one.</p>
+<span class="tag assumed">Boundary case<span class="src">observed structure, not reproduced text</span></span>
+</div>
+
 <h3>The rule that matters most</h3>
 
 <div class="claim">
@@ -95,6 +101,12 @@
 </div>
 
 <p>What follows in practice: validators work from our item and the DfE content reference. They are not asked "is this like a real exam question", because that question invites exactly the recall we have excluded. They are asked whether the item is mathematically correct, correctly placed in the specification, appropriate to the tier, and conventional in its notation and answer format.</p>
+
+<div class="claim">
+<p><b>The last of those five checks sits uncomfortably next to D20 and the discomfort should be admitted.</b> Asking a current examiner whether notation and answer conventions conform to UK GCSE norms is asking them to draw on professional knowledge that they acquired, in part, from material they may not bring into this work. There is no bright line between "knows the conventions of the subject" and "remembers the papers".</p>
+<p>What separates them in practice is the direction of the question. A validator may say <i>this notation is wrong for GCSE</i>. A validator may not say <i>this resembles a question I have marked</i>, and is instructed not to volunteer it. That is a thinner protection than the rest of the clean room and it depends on the validator's professionalism rather than on a control, which is why it is written here rather than assumed.</p>
+<span class="tag assumed">Thin point<span class="src">professional knowledge against recall, D20</span></span>
+</div>
 
 <h3>Screening</h3>
 
@@ -114,11 +126,14 @@
   "objective_id":   "OBJ-MAT-ALG-INEQ-02",
   "kind":           "explanation",        // explanation | misconception | practice | check
   "marks":          3,                    // paper assembly: mark tariff
-  "command_word":   "Solve",              // paper assembly: our wording, not a board's
+  "command_word":   "Solve",              // a standard instruction word, not anyone's property;
+                                          // see structure_basis for how it was set
   "difficulty":     "standard",           // paper assembly: distribution control
   "written_by":     "writer:0xx",
   "written_on":     "2026-11-xx",
   "derived_from":   "DfE:GCSE-Maths-subject-content:A22",   // or "original"
+  "structure_basis":"observed-paper-shape",   // how marks/command_word were set:
+                                              // "observed-paper-shape" | "authored"
   "board_alignment":"pearson-edexcel",
   "tier":           "higher",
   "attestation":    "no awarding-body material consulted",
@@ -130,7 +145,7 @@
   "status":         "draft"               // draft | validated | live | withdrawn
 }</code></pre>
 
-<p>Three fields are doing real work. <code>derived_from</code> must be either a DfE content reference or the literal string <code>original</code>; there is no free-text option, because a free-text option is where "adapted from" would eventually appear. <code>attestation</code> is per item, not per writer, so it cannot be given once and forgotten. <code>status</code> is the only gate: nothing serves from the bank unless it reads <code>live</code>.</p>
+<p>Four fields are doing real work. <code>derived_from</code> must be either a DfE content reference or the literal string <code>original</code>; there is no free-text option, because a free-text option is where "adapted from" would eventually appear. <code>structure_basis</code> exists because <code>derived_from</code> could not express the boundary case above, which meant the provenance record, the centrepiece of the counter-notice pack, could not record where a mark tariff or a command word came from. A record that cannot describe its own hardest case is not a record. <code>attestation</code> is per item, not per writer, so it cannot be given once and forgotten. <code>status</code> is the only gate: nothing serves from the bank unless it reads <code>live</code>.</p>
 
 <h2 id="validation">Examiner validation, and who performs it</h2>
 
@@ -161,7 +176,7 @@
 <tbody>
 <tr><td class="id">ACC-1</td><td><b>100%</b> of live items carry a complete validation record by a named validator.</td><td>Census of the live bank, every release.</td><td class="id">T-VAL-01</td><td>Specified, not run</td></tr>
 <tr><td class="id">ACC-2</td><td><b>99.5%</b> of tutor turns make no substantive curricular assertion that is unsupported by a cited live item.</td><td>Weekly sample of turns.</td><td class="id">T-GND-01</td><td>Specified, not run</td></tr>
-<tr><td class="id">ACC-3</td><td><b>99.0%</b> of generated worked steps are mathematically correct.</td><td>All symbolically checkable steps, plus a sample of the rest.</td><td class="id">T-MTH-01</td><td>Specified, not run</td></tr>
+<tr><td class="id">ACC-3</td><td><b>99.0%</b> of generated worked steps are mathematically correct.</td><td>All symbolically checkable steps, plus a sample of the rest. <span class="mark unknown">Unknown</span> What proportion of Higher algebra steps a computer algebra system can actually adjudicate is not known, and it sets how much of this floor rests on sampling rather than on a check. Measured at M2.</td><td class="id">T-MTH-01</td><td>Specified, not run</td></tr>
 <tr><td class="id">ACC-5</td><td><b>100%</b> of assembled practice papers meet their structural specification: mark total, topic coverage, command-word mix and difficulty distribution, all within declared tolerance.</td><td>Census of every paper at assembly time.</td><td class="id">T-PAP-01</td><td>Specified, not run</td></tr>
 <tr><td class="id">ACC-4</td><td><b>99.5%</b> of tutor turns stay inside the declared specification scope.</td><td>Weekly sample of turns.</td><td class="id">T-SCP-01</td><td>Specified, not run</td></tr>
 </tbody>
@@ -179,7 +194,20 @@
 <p>A 99.5% per-turn floor sounds strong. Per session it is not, and the honest number is the one a parent experiences.</p>
 
 <div class="claim">
-<p>At a 99.5% per-turn floor, a 20-turn session has a <b>9.5%</b> chance of containing at least one unsupported assertion. Roughly one session in ten. At 99.9% per turn the same session figure is <b>2.0%</b>, roughly one in fifty.</p>
+<p>Per-session risk is <code>1 - (1 - p)^n</code>, where <code>p</code> is the per-turn floor and <code>n</code> is the number of tutor turns in a session. <span class="mark unknown">Unknown</span> <code>n</code> is not known; it is measured at M2 and is marked unknown in <a href="06-architecture.html#cost">06</a> and <a href="10-economics.html#cost">10</a> as well. So the honest presentation is the relationship, not a single number.</p>
+
+<div class="tw">
+<table>
+<caption>Chance that a session contains at least one unsupported assertion. Arithmetic, not measurement: every cell is <code>1 - (1 - p)^n</code>. The column to read is whichever turns out to be the real session length.</caption>
+<thead><tr><th>Per-turn floor</th><th class="num">n = 10 turns</th><th class="num">n = 20 turns</th><th class="num">n = 30 turns</th></tr></thead>
+<tbody>
+<tr><td><b>99.5%</b>, the launch floor</td><td class="num">4.9%</td><td class="num">9.5%</td><td class="num">14.0%</td></tr>
+<tr><td><b>99.9%</b>, the D21 threshold</td><td class="num">1.0%</td><td class="num">2.0%</td><td class="num">3.0%</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>At the launch floor, somewhere between one session in twenty and one in seven contains an unsupported assertion, depending on a session length nobody has measured. That is the range to hold in mind, and it is wide because the input is unknown rather than because the arithmetic is uncertain.</p>
 <span class="tag unknown">Derived from ACC-2<span class="src">and it is not comfortable</span></span>
 </div>
 

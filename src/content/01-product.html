@@ -46,15 +46,15 @@
 <caption>The four promises and their tests. Status is the same for all of them and will stay that way until M2 in <a href="11-roadmap.html">11 Roadmap</a>.</caption>
 <thead><tr><th>#</th><th>Promise, as a parent would read it</th><th>The claim underneath it</th><th class="id">Test</th><th>Status</th></tr></thead>
 <tbody>
-<tr><td class="id">P1</td><td>Everything it teaches you is checked by a real examiner.</td><td>Every item in the live bank carries a recorded validation by a named, qualified validator. Target: 100%, census not sample.</td><td class="id">T-VAL-01</td><td>Specified, not run</td></tr>
-<tr><td class="id">P2</td><td>It does not make things up.</td><td>Every substantive curricular assertion in tutor output cites a live item-bank node and is entailed by it. Floor: 99.5% of sampled turns.</td><td class="id">T-GND-01</td><td>Specified, not run</td></tr>
+<tr><td class="id">P1</td><td>Everything it teaches you is checked by someone who examines or has taught the subject at this level.</td><td>Every item in the live bank carries a recorded validation by a named validator who is a current or recent examiner, or a teacher with at least five years at this tier and documented examining experience (<a href="03-curriculum-and-content.html#validation">03</a>). Target: 100%, census not sample.</td><td class="id">T-VAL-01</td><td>Specified, not run</td></tr>
+<tr><td class="id">P2</td><td>It only tells you things it can show you the source for, and says so when it cannot.</td><td>Every substantive curricular assertion in tutor output cites a live item-bank node and is entailed by it. Floor: 99.5% of sampled turns.</td><td class="id">T-GND-01</td><td>Specified, not run</td></tr>
 <tr><td class="id">P3</td><td>The working is right.</td><td>Generated worked steps are mathematically correct. Floor: 99.0% of sampled steps.</td><td class="id">T-MTH-01</td><td>Specified, not run</td></tr>
 <tr><td class="id">P4</td><td>It teaches the way you chose.</td><td>Two presets produce measurably different teaching on the same item, and a blind grader can tell them apart above chance.</td><td class="id">T-STY-01, T-STY-02</td><td>Specified, not run</td></tr>
 </tbody>
 </table>
 </div>
 
-<p>P2 is the promise that carries the business. Its below-floor behaviour is not a statistical tolerance; it is a hard runtime gate, and what the learner sees when the gate fires is shown <a href="#blocked">below</a>.</p>
+<p>P2 is worded carefully and the wording is a commitment, not a style choice. <b>"It does not make things up" is the claim D21 forbids</b> until groundedness is measured at 99.9% per turn, so it is not the promise made here, however much better it reads. P2 is the promise that carries the business. Its below-floor behaviour is not a statistical tolerance; it is a hard runtime gate, and what the learner sees when the gate fires is shown <a href="#blocked">below</a>.</p>
 
 <h2 id="session">The shape of a session</h2>
 
@@ -247,7 +247,13 @@
 <li><b>Transcripts are not what the parent actually wants.</b> They want to know it is working. Objective-level progress against an unaided check answers that better than a wall of chat.</li>
 </ul>
 
-<p>The parent retains, unconditionally: the right to see the full record on request through a subject access route, the right to delete everything, and the right to be told immediately if a safeguarding escalation occurs under the policy in <a href="05-safety-privacy-regulatory.html">05</a>. "By default" is doing real work in this decision and the exceptions are not buried.</p>
+<p>The parent retains, unconditionally: the right to see the full record on request through a subject access route, and the right to delete everything. "By default" is doing real work in this decision and the exceptions are not buried.</p>
+
+<div class="claim">
+<p><b>Safeguarding is the one place where the parent's rights are not unconditional, and it has to be said here rather than only in the safety document.</b> If the tutor escalates a concern, a trained reviewer decides whether and whom to inform, against a written policy. The parent is not automatically told.</p>
+<p>That is deliberate: automatic parental notification is unsafe in precisely the cases that matter most, because the parent is sometimes the risk. It is D26, the reasoning is in <a href="05-safety-privacy-regulatory.html#content">05</a>, and it is a term a parent should meet in the product's own description rather than discover during an incident.</p>
+<span class="tag decided">Decision D26<span class="src">the exception to parental rights</span></span>
+</div>
 
 <div class="claim">
 <p>Whether the default position above is defensible where the learner is under 13, given that parental responsibility and the UK GDPR Article 8 age threshold for information society services sit differently, and whether the answer changes between Route A and Route B where the school is the controller. <b>Unblocks:</b> the reporting design and the parent-facing terms. <b>Cost of getting it wrong:</b> a Children's code finding against the product's central reporting feature, and a rebuild of the parent surface.</p>

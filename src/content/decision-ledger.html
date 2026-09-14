@@ -1,7 +1,7 @@
 <h1>Decision ledger</h1>
-<p class="standfirst">Thirty-six decisions: fourteen carried from the brief and settled, nineteen taken while writing this design, and three that reverse earlier positions on the owner's instruction. Each records what was chosen, what forced it, what was rejected and what that would have cost, and what it makes harder later. This is the document that lets someone reconstruct the reasoning in six months, including the reasoning they disagree with.</p>
+<p class="standfirst">Thirty-seven decisions: fourteen carried from the brief and settled, twenty taken while writing this design, and three taken on the owner's instruction, two of which reverse earlier positions. Each records what was chosen, what forced it, what was rejected and what that would have cost, and what it makes harder later. This is the document that lets someone reconstruct the reasoning in six months, including the reasoning they disagree with.</p>
 <dl class="meta">
-<dt>Document</dt><dd>Decision ledger. Not numbered; it spans all thirteen.</dd>
+<dt>Document</dt><dd>Decision ledger. Not numbered; it spans all fourteen.</dd>
 <dt>Status</dt><dd>Live. Any new decision is appended here, not recorded only in the document it affects.</dd>
 <dt>Written</dt><dd>14 September 2026</dd>
 <dt>Settled</dt><dd>D1 to D14 are not to be re-opened. If a document contradicts one, the document is wrong.</dd>
@@ -11,6 +11,12 @@
 <h2 id="settled">D1 to D14: settled in the brief, not to be re-opened</h2>
 
 <p class="lede">These were decided deliberately before this design was written. If anything in this repository contradicts one of them, the repository is wrong and not the decision. They are recorded terse because the brief already carries their reasoning; the nineteen below are recorded at length because their consequences are what a future reader will need.</p>
+
+<div class="claim">
+<p><b>"Not to be re-opened" means not re-opened on preference. It does not mean unfalsifiable.</b> D4, the wedge, has a pre-registered test (T-STY-02 at M3) and a pre-registered decision rule (M4 in <a href="11-roadmap.html#d6">11</a>) whose fourth outcome is that D4 is wrong. That is not a contradiction of the rule; it is the difference between a decision that may not be relitigated because someone has changed their mind, and one that is revised because the evidence it predicted arrived and pointed the other way.</p>
+<p>Any settled decision may be re-opened by evidence obtained through a route written down in advance. None may be re-opened by argument alone.</p>
+<span class="tag decided">Reading of the rule<span class="src">added after an audit found the blanket wording unsustainable</span></span>
+</div>
 
 <div class="tw">
 <table>
@@ -29,7 +35,7 @@
 <tr><td class="id">D11</td><td>Zero-persona operation is a hard requirement. The product launches and runs with no signed creators.</td><td>No single unsigned contract can block launch.</td><td>Every persona feature must degrade to an archetype. And, as <a href="07-route-a-direct-to-parents.html#tension">07</a> notes, it is a product guarantee, not a commercial one.</td></tr>
 <tr><td class="id">D12</td><td>Clean-room content. Original items written to the published specification, examiner-validated. No exam board material enters the system.</td><td><span class="mark verified">Verified</span> AQA has published a policy that forbids it.</td><td>Content is slow and expensive to produce, and the validator engagement has to exclude the people best placed to help (D20).</td></tr>
 <tr><td class="id">D13</td><td>No offshore litigation-evasion strategy. The Indian company is retained for ordinary tax and capital reasons.</td><td>The theory runs the opposite way to how it was first read. See <a href="04-rights-dossier.html#d13">04</a>.</td><td>Nothing. It removes a false comfort rather than a capability.</td></tr>
-<tr><td class="id">D14</td><td>Ship named presets and unnamed archetypes simultaneously from day one; instrument return rate, not satisfaction.</td><td>Distinguishes "the wedge is weak" from "the fidelity is short", which have opposite fixes.</td><td>Requires a signed creator at launch, so it depends on M1 counsel answers. Design in <a href="11-roadmap.html#d14">11</a>.</td></tr>
+<tr><td class="id">D14</td><td>Ship named presets and unnamed archetypes simultaneously from day one; instrument return rate, not satisfaction.</td><td>Distinguishes "the wedge is weak" from "the fidelity is short", which have opposite fixes.</td><td>The <b>experiment</b> requires at least one signed creator to have a named arm at all, so running it depends on M1's counsel answers. That is not in tension with D11: the product launches and runs with zero creators, and what a missing creator delays is the wedge test, not the launch. Design in <a href="11-roadmap.html#d14">11</a>.</td></tr>
 </tbody>
 </table>
 </div>
@@ -68,7 +74,7 @@
 <dd><b>Driven by:</b> the people best qualified to validate are current examiners, who hold exactly the material the clean room excludes, under confidentiality obligations of their own. <b>Rejected:</b> a briefing rather than a contractual term, which would have been friendlier and would have left the validator personally exposed. <b>Makes harder:</b> validators cannot be asked the most natural question, "is this like a real exam question", because it invites the recall we have excluded. <a href="03-curriculum-and-content.html#cleanroom">03</a></dd>
 
 <dt>D21. Groundedness is reported per session, not per turn; and no "it does not make things up" claim until the per-turn floor reaches 99.9%.</dt>
-<dd><b>Driven by:</b> a 99.5% per-turn floor means roughly one session in ten contains an unsupported assertion. The per-turn number flatters the product by a factor of about twenty. <b>Rejected:</b> reporting the per-turn figure, which is the number a competitor would quote and which sounds far stronger than it is. <b>Makes harder:</b> the launch marketing claim is narrower and less quotable than the one the product could plausibly have got away with. <a href="03-curriculum-and-content.html#uncomfortable">03</a></dd>
+<dd><b>Driven by:</b> a 99.5% per-turn floor means between one session in twenty and one in seven contains an unsupported assertion, depending on session length, which is unmeasured. The per-turn number flatters the product by roughly an order of magnitude. <b>Rejected:</b> reporting the per-turn figure, which is the number a competitor would quote and which sounds far stronger than it is. <b>Makes harder:</b> the launch marketing claim is narrower and less quotable than the one the product could plausibly have got away with. <a href="03-curriculum-and-content.html#uncomfortable">03</a></dd>
 
 <dt>D22. Model versions are pinned; a vendor update must pass the blocking regression battery before reaching a learner.</dt>
 <dd><b>Driven by:</b> we buy the model, so someone else can move every accuracy number without telling us, potentially mid-exam-term. <b>Rejected:</b> tracking the latest version automatically, which would have given free capability improvements. <b>Makes harder:</b> we run behind the frontier and pay to qualify every upgrade, while <span class="mark verified">Verified</span> free competitors improve continuously at no cost to the user. <a href="03-curriculum-and-content.html#harness">03</a></dd>
@@ -123,7 +129,7 @@
 <dd><b>Driven by:</b> a learner chooses their preset, so randomising choice would remove the thing being tested. <b>Rejected:</b> comparing learners who chose a named preset against those who chose an archetype, which is selection-biased; it will be the more tempting number because it is larger and easier to compute, and it does not answer the question. <b>Makes harder:</b> needs two cohorts and a pre-registered analysis, and the baseline return rate must be observed before the sample size can be set. <a href="11-roadmap.html#d14">11</a></dd>
 </dl>
 
-<h2 id="reversals">D34 to D36: two positions reversed on the owner's instruction</h2>
+<h2 id="reversals">D34 to D36: three decisions reversing two earlier positions</h2>
 
 <p class="lede">All three dated 14 September 2026. They are recorded as <b>reversals</b>, with the position they replaced, because a ledger that shows only the surviving view is worth very little six months later when someone asks why the obvious cautious option was not taken.</p>
 
@@ -142,6 +148,13 @@
 <p>Both reversals move the product toward what a parent visibly wants and away from the most cautious available position. That is a legitimate trade and it was the owner's to make. What it changes is the <b>posture</b> of the vault: D34 in particular means the repository can no longer say that it has waited for counsel on everything, and the honest statement is now that it has waited on ten of eleven questions and proceeded on one, with the reason and the containment written down.</p>
 <span class="tag decided">Posture<span class="src">recorded so it is not discovered later</span></span>
 </div>
+
+<h2 id="thresholds">D37: thresholds, so the route conditions are not judgement calls</h2>
+
+<dl class="defs">
+<dt>D37. Condition C2 fails if quoted age verification cost exceeds one month of gross contribution at the lowest price point tested.</dt>
+<dd><b>Driven by:</b> an audit of <a href="09-route-comparison.html#rec">09</a> observing that conditions written as "a small fraction, not a large one" leave the pre-committed flip to somebody's judgement on the day, which is the exact failure the conditions exist to prevent. <b>Why this threshold:</b> verification is a one-off; if it costs more than the first month earns, every acquisition begins underwater and the entire return depends on a duration the examination calendar caps. <b>Rejected:</b> a percentage-of-lifetime-value rule, which needs three numbers nobody has; this needs one quote and one price. <b>Makes harder:</b> it can fail Route A on a single quote, which is the point, and it will feel harsh if the quote lands just above the line. C1 and C3 are given comparative rules in the same pass so that none of the three depends on a number invented here. <a href="09-route-comparison.html#rec">09</a></dd>
+</dl>
 
 <h2 id="unresolved">Decisions deliberately not taken</h2>
 

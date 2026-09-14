@@ -44,7 +44,7 @@ PAGES = [
     ("13-primer-gateway", "13", "Primer gateway",
      "A gated path from trusted exam practice to safe, independent inquiry.", "done"),
     ("14-open-items", "14", "Open items",
-     "Ten counsel questions and eighteen assumptions, with what each unblocks.", "done"),
+     "Twelve counsel questions and twenty-one assumptions, with what each unblocks.", "done"),
     ("decision-ledger", "", "Decision ledger",
      "Every decision: what was chosen, what was rejected, what it forecloses.", "done"),
 ]

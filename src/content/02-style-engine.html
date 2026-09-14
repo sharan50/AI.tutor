@@ -101,6 +101,7 @@
     "worked_completeness":     45
   },
   "register_note": "plain, unhurried, second person",
+  "constraints": [],                // never-do list; the creator's 14-day right writes here
   "exemplars": null,                // D6 seam. Always null at launch. See below.
   "renderer": "cine.card/1.0.0",
   "provenance": { "source": "authored", "date": "2026-09-14" }
@@ -136,7 +137,7 @@
 
 <p>The model never sees the object. It sees a <b>style card</b>, a block of text generated from the object by a deterministic, versioned renderer.</p>
 
-<p>Determinism matters for three reasons that are not obvious: a card can be regenerated exactly from a stored object, so audit is possible; a card can be diffed when a preset changes; and when a licence ends, deleting the object provably removes every card that could be produced from it, because there is no other path by which a card comes into existence.</p>
+<p>Determinism matters for three reasons that are not obvious: a card can be regenerated exactly from a stored object, so audit is possible; a card can be diffed when a preset changes; and when a licence ends, deleting the object removes every card that could be <i>produced</i> from it, because the renderer is the only path by which one comes into existence. That is a statement about production, not about retention: a rendered card and a fitted vector are also held in <code>Session.preset_snapshot</code>, which is why <a href="06-architecture.html#killswitch">06</a> deletes the snapshot on the same line.</p>
 
 <pre><code>render(object, renderer_version) -> style_card_text
 </code></pre>
@@ -203,6 +204,18 @@
 <li><b>Privacy and the Online Safety Act.</b> An adjusted style is visible only to the student who made it. It cannot be named, published, shared or sent to another user. This is not a product preference; it is the architectural invariant that keeps the service outside user-to-user territory, and the trigger analysis is in <a href="05-safety-privacy-regulatory.html">05</a>.</li>
 <li><b>Attribution.</b> Once a student has moved an axis, the on-screen label changes from "Style preset licensed from [Name]" to "Style preset: [Name], adjusted by you". A creator should not be shown as the author of a configuration the student invented. This is a rights point as much as an honesty point.</li>
 </ul>
+
+<h3>Acting on a creator objection within 14 days</h3>
+
+<p>The licence gives the creator a continuing right to require a specific behaviour to be removed within 14 days. That right needs a mechanism, or it is a promise with nothing behind it. There are exactly three, in escalating order, and <b>none requires a release</b>:</p>
+
+<ol class="tight">
+<li><b>Move a dimension.</b> If the objection is to a teaching behaviour the vector produces, change the value.</li>
+<li><b>Add a constraint.</b> The <code>constraints</code> field carries a never-do list that the renderer emits verbatim into the card. This is where "do not do X" lives when no dimension expresses X.</li>
+<li><b>Withdraw the preset.</b> The kill switch, on the creator's word rather than ours.</li>
+</ol>
+
+<p>All three are configuration changes to one record, which is what makes 14 days comfortable rather than tight. The constraint list is also the honest answer to a question the parameter set otherwise cannot handle: a creator may object to something that is not a point in the twelve-dimensional space at all.</p>
 
 <h3>Clamps</h3>
 
@@ -276,7 +289,7 @@
 <tbody>
 <tr><td>Licence</td><td>Name and likeness is no longer sufficient. A content licence is required, covering reproduction, adaptation and machine processing of specified material, for a defined term. This is Schedule 2 of the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a> and it is drafted but unexercised.</td></tr>
 <tr><td>Storage</td><td>A licensed corpus store appears, holding creator material with per-segment provenance, licence identifier and an expiry that is enforced by the store rather than by a person remembering.</td></tr>
-<tr><td>Kill switch</td><td>Gains two steps: invalidation of cached prompt fragments, and deletion of the corpus and every derived index. The stated time to effect changes, and the new figures are in <a href="04-rights-dossier.html">04</a>. This is the single largest operational cost of D6.</td></tr>
+<tr><td>Kill switch</td><td>Gains two steps: invalidation of cached prompt fragments, and deletion of the corpus and every derived index. <b>The 15-minute disable is unaffected; what slows and complicates is the deletion behind it</b>, and the figures are in <a href="04-rights-dossier.html">04</a>. This is the single largest operational cost of D6.</td></tr>
 <tr><td>Evaluation</td><td>T-STY-04 becomes live and blocking. A leakage failure is treated as a rights incident, not a quality bug.</td></tr>
 <tr><td>Labelling</td><td>The on-screen line changes, because "does not write these answers" is harder to sustain when the creator's material is conditioning them. The revised wording is a counsel question, listed as OI-6 in <a href="14-open-items.html">14</a>.</td></tr>
 <tr><td>Rating protocol</td><td>Extended, not replaced. The twelve dimensions are still fitted by human raters; exemplars are additional, not a substitute.</td></tr>
