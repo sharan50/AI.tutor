@@ -672,3 +672,7 @@ ul.tight li, ol.tight li { margin-bottom: 0.15rem; }
   .tag { border-top: none; border-left: 2px solid currentColor; padding: 0 0 0 0.5rem; }
   .tag .src { display: inline; margin-left: 0.3rem; }
 }
+
+/* The marketing-site line in 05. Set slightly larger because it is meant to be
+   read as the published sentence, not as body copy about a published sentence. */
+.bigline { font-size: 1.0625em; }
