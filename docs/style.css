@@ -403,3 +403,276 @@ td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
   .masthead, .pagefoot { border-color: #000; }
 }
 
+
+/* ==========================================================================
+   Additions for the full design record.
+   Everything above this line is the original visual system and is unchanged.
+   Below: the fifth claim marker, an inline marker for use in running prose,
+   and the components the longer documents need (meta blocks, contents,
+   scrollable tables, session transcripts, definition entries), plus a real
+   print stylesheet, because these pages get printed and sent to lawyers.
+   ========================================================================== */
+
+/* ---------- fifth claim marker ----------
+   .open is a question for counsel. .unknown is a number the plan needs and
+   does not have. Collapsing the two loses the distinction the open-items
+   register is built on, so they get separate colours. */
+
+.tag.unknown { color: var(--violet); }
+
+/* ---------- inline marker ----------
+   .tag is a block element living in the margin column. Running prose needs a
+   marker that sits inside a sentence without breaking the line box. */
+
+.mark {
+  font-family: var(--grot);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.1em 0.42em;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  white-space: nowrap;
+  vertical-align: 0.1em;
+}
+.mark.verified { color: var(--mark-green); }
+.mark.assumed  { color: var(--mark-amber); }
+.mark.open     { color: var(--mark-red); }
+.mark.decided  { color: var(--ink-soft); }
+.mark.unknown  { color: var(--violet); }
+
+/* ---------- document meta ---------- */
+
+dl.meta {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.25rem 1.1rem;
+  margin: 0 0 2.4rem;
+  padding: 1rem 0 0;
+  border-top: 1px solid var(--rule-faint);
+  font-family: var(--grot);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+dl.meta dt { color: var(--ink-faint); }
+dl.meta dd { margin: 0; color: var(--ink-soft); }
+
+/* ---------- contents and legend disclosures ---------- */
+
+details.toc, details.legend {
+  margin: 0 0 2.2rem;
+  border: 1px solid var(--rule-faint);
+  border-radius: 5px;
+  background: var(--paper-deep);
+  font-family: var(--grot);
+  font-size: 0.82rem;
+}
+details.toc > summary, details.legend > summary {
+  cursor: pointer;
+  padding: 0.7rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  list-style: none;
+}
+details summary::-webkit-details-marker { display: none; }
+details.toc > summary::before,
+details.legend > summary::before { content: "\25B8\00a0\00a0"; color: var(--rule); }
+details.toc[open] > summary::before,
+details.legend[open] > summary::before { content: "\25BE\00a0\00a0"; }
+details.toc ol { margin: 0; padding: 0 1rem 0.9rem 2.4rem; }
+details.toc li { margin-bottom: 0.25rem; }
+details.toc a { color: var(--ink-soft); text-decoration: none; }
+details.toc a:hover { color: var(--sky); text-decoration: underline; }
+
+.legend-body { padding: 0 1rem 1rem; }
+.legend-body p { font-size: 0.8rem; color: var(--ink-soft); margin: 0 0 0.6rem; }
+.legend-body ul { list-style: none; padding: 0; margin: 0; font-size: 0.78rem; }
+.legend-body li { margin-bottom: 0.35rem; }
+
+/* ---------- tables that must survive a phone ----------
+   Wide comparison tables are the one thing allowed to scroll sideways. The
+   page body must never do so. */
+
+.tw {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.4rem 0 1.8rem;
+  border: 1px solid var(--rule-faint);
+  border-radius: 5px;
+}
+.tw table { margin: 0; }
+caption {
+  caption-side: top;
+  text-align: left;
+  font-family: var(--grot);
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+  padding: 0.75rem 0.85rem 0.55rem;
+  line-height: 1.45;
+}
+td.id, th.id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+/* ---------- code ---------- */
+
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.76rem;
+  line-height: 1.55;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-faint);
+  border-radius: 5px;
+  padding: 0.95rem 1.05rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.3rem 0;
+}
+pre code { background: none; padding: 0; font-size: inherit; color: var(--ink-soft); }
+
+/* ---------- session transcripts ---------- */
+
+.transcript {
+  margin: 1.4rem 0;
+  border: 1px solid var(--rule-faint);
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--paper-deep);
+}
+.transcript .tr-head {
+  padding: 0.65rem 0.95rem;
+  border-bottom: 1px solid var(--rule-faint);
+  font-family: var(--grot);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.transcript .turn {
+  padding: 0.75rem 0.95rem;
+  border-bottom: 1px solid var(--rule-faint);
+  font-size: 0.95rem;
+}
+.transcript .turn:last-child { border-bottom: 0; }
+.transcript .turn.student { background: rgba(124, 212, 255, 0.05); }
+.transcript .who {
+  display: block;
+  font-family: var(--grot);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.28rem;
+}
+.transcript .turn.student .who { color: var(--sky); }
+.transcript p { margin: 0 0 0.5rem; }
+.transcript p:last-child { margin-bottom: 0; }
+
+.cite {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  color: var(--ink-faint);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.05em 0.3em;
+  white-space: nowrap;
+}
+
+.annot {
+  font-family: var(--grot);
+  font-size: 0.74rem;
+  line-height: 1.45;
+  color: var(--ink-faint);
+  border-top: 1px dashed var(--rule);
+  margin-top: 0.5rem;
+  padding-top: 0.42rem;
+}
+.annot b { color: var(--ink-soft); }
+
+/* ---------- side by side ---------- */
+
+.split { display: grid; gap: 0.9rem; margin: 1.4rem 0 1.8rem; }
+@media (min-width: 52rem) { .split { grid-template-columns: 1fr 1fr; } }
+.split > div {
+  padding: 0.95rem 1.05rem;
+  border: 1px solid var(--rule-faint);
+  border-radius: 5px;
+  background: var(--paper-deep);
+  font-size: 0.95rem;
+}
+.split > div > :last-child { margin-bottom: 0; }
+
+/* ---------- definition entries (decision ledger) ---------- */
+
+dl.defs { margin: 0 0 1.2rem; }
+dl.defs dt {
+  font-family: var(--grot);
+  font-weight: 700;
+  font-size: 0.92rem;
+  margin-top: 1.5rem;
+  color: var(--ink);
+}
+dl.defs dd { margin: 0.25rem 0 0; color: var(--ink-soft); }
+
+h4 {
+  font-family: var(--grot);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 1.5rem 0 0.45rem;
+}
+
+ul.tight li, ol.tight li { margin-bottom: 0.15rem; }
+
+/* ---------- print ----------
+   The screen design is deliberately dark. Printed dark is unreadable and
+   these documents are meant to be sent to a lawyer, so print gets a full
+   light treatment rather than a background override. */
+
+@media print {
+  :root {
+    --paper: #fff; --paper-deep: #f6f6f4; --ink: #000;
+    --ink-soft: #1a1a1a; --ink-faint: #555;
+    --rule: #999; --rule-faint: #c6c6c6;
+    --mark-green: #14633f; --mark-amber: #7a4d00;
+    --mark-red: #8f2b28; --violet: #553a8b; --sky: #0b4a72;
+  }
+  body { background: #fff !important; color: #000; font-size: 10.5pt; line-height: 1.45; }
+  .sheet { max-width: none; padding: 0; }
+  .pagefoot { display: none; }
+  a { color: #000; text-decoration: underline; }
+  a[href^="http"]::after {
+    content: " <" attr(href) ">";
+    font-size: 8pt; color: #555; word-break: break-all;
+  }
+  details.toc a::after, .contents a::after { content: none; }
+  h1 { font-size: 19pt; }
+  h2 { font-size: 13pt; break-after: avoid; }
+  h3, h4 { break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
+  .claim, .tw, .transcript, .split, pre, table, .visual, details { break-inside: avoid; }
+  .tw, pre { overflow: visible; }
+  table { font-size: 8.5pt; }
+  /* disclosures must print open, or a printed copy loses its contents list */
+  details { display: block; }
+  details > summary { list-style: none; }
+  details:not([open]) > *:not(summary) { display: revert; }
+  /* margin tags read better inline on paper */
+  .claim { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; }
+  .tag { border-top: none; border-left: 2px solid currentColor; padding: 0 0 0 0.5rem; }
+  .tag .src { display: inline; margin-left: 0.3rem; }
+}
+
+/* The marketing-site line in 05. Set slightly larger because it is meant to be
+   read as the published sentence, not as body copy about a published sentence. */
+.bigline { font-size: 1.0625em; }

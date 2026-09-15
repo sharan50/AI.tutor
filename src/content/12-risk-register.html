@@ -1,27 +1,139 @@
 <h1>Risk register</h1>
-<p class="standfirst">Ordered by the owner's own ranking of what would hurt most, with the one place that ordering is deliberately not followed.</p>
+<p class="standfirst">Ordered as the owner ranks them: a creator or board suing first, teaching something wrong before an exam second, nobody paying third, child harm or data breach fourth. The engineering standard deliberately does not follow that order, and the reason is set out rather than left implicit.</p>
+<dl class="meta">
+<dt>Document</dt><dd>12 of 14</dd>
+<dt>Status</dt><dd>Register. Likelihood ratings are judgements and are marked as such; none is computed from data.</dd>
+<dt>Written</dt><dd>14 September 2026</dd>
+<dt>Ordering</dt><dd>The owner's ranking of threats to the venture. See the note on engineering priority.</dd>
+</dl>
 
-<table>
-<thead><tr><th></th><th>Risk</th><th>Where it is addressed</th><th>State</th></tr></thead>
-<tbody>
-<tr><td class="num">1</td><td>A creator or an exam board sues over likeness or content</td><td>Document 04 in full: clean room, name-and-likeness-only licence, no weights carrying style, 60-minute kill switch</td><td>Mitigated in design, unverified in law</td></tr>
-<tr><td class="num">2</td><td>It teaches something wrong before an exam</td><td>Document 03: provenanced item bank, examiner validation, accuracy floor with defined below-floor behaviour</td><td>Design set, numbers unset</td></tr>
-<tr><td class="num">3</td><td>It is built and nobody pays</td><td>Documents 07 and 09: Route A tests this within one cohort</td><td>Unresolved by design; only launch answers it</td></tr>
-<tr><td class="num">4</td><td>A child is harmed or their data leaks</td><td>Document 05 in full</td><td>Built to top standard regardless of rank</td></tr>
-</tbody>
-</table>
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#r1">R1: a creator or board sues</a></li>
+<li><a href="#r2">R2: teaching something wrong before an exam</a></li>
+<li><a href="#r3">R3: nobody pays</a></li>
+<li><a href="#r4">R4: child harm or data breach</a></li>
+<li><a href="#ordering">Why engineering does not follow this ordering</a></li>
+<li><a href="#second">Second tier</a></li>
+<li><a href="#first">Which one actually breaks first</a></li>
+</ol>
+</details>
+
+<h2 id="r1">R1: a creator or board sues</h2>
+
+<p><b>Ranked first by the owner.</b> The analysis in <a href="04-rights-dossier.html#wargame">04</a> says the ranking is right about the severity and wrong about the mechanism, and the correction matters more than the ranking.</p>
 
 <div class="claim">
-  <p>The ordering is recorded as the owner gave it, and it is defensible as a ranking of what is existential and outside his control: rights are negotiations with counterparties who can refuse, whereas data protection is a discipline that can be executed. The engineering standard does not follow that ordering. Item 4 is built to the top standard because it is cheap to design in, ruinous to retrofit, and because in the chosen market the regulator with an active enforcement programme aimed at this sector governs exactly it.</p>
-  <span class="tag decided">Exception<span class="src">Recorded deliberately, not an oversight</span></span>
+<p><b>You are very unlikely to be sued and quite likely to be switched off.</b> An app store removes on a credible intellectual property complaint in days, sometimes hours, with limited process and no adjudication of the merits. A payment processor freezes on brand risk, often triggered by press rather than by a complainant. Neither reads the clean-room policy. Neither weighs the licence.</p>
+<p>So the mitigation for R1 is not a stronger legal position. It is a <b>prepared counter-notice pack, a second payment processor, and a web-first product that survives app store removal.</b> All three are cheap, all three are at M1, and none of them is a legal argument.</p>
+<span class="tag decided">The reframing<span class="src">and it changes what the mitigation is</span></span>
 </div>
 
-<h2>Risks not in the owner's ranking that belong here</h2>
+<div class="tw">
+<table>
+<thead><tr><th>Sub-risk</th><th>Leading indicator</th><th>Mitigation in the design</th></tr></thead>
+<tbody>
+<tr><td>A board asserts copyright over item content.</td><td>A letter. Or an app store complaint, which arrives faster.</td><td>Clean room (D12), per-item provenance, two-person rule, per-item attestation, validator engagement terms (D20). <b>The clean room is only a defence if it was documented at the time</b>, which is why provenance is a required field rather than a policy.</td></tr>
+<tr><td>A board objects to being named in marketing.</td><td>Correspondence, or a trade mark complaint to an app store, which is faster.</td><td><b>A known, accepted, contained risk</b> rather than an unresolved one. D34 proceeds ahead of counsel under the naming convention in <a href="04-rights-dossier.html#naming">04</a>; every board-naming string is centralised so all of it reverts within 24 hours of any objection. OI-3 remains open and is first in the counsel instruction.</td></tr>
+<tr><td>A licensed creator becomes unhappy.</td><td>A post to their audience, not a claim form. Hours, not months.</td><td>The fifteen-minute kill switch (<a href="04-rights-dossier.html#killswitch">04</a>), exercised before responding. Termination at any time for any reason. The rehearsal in D29 is what makes this real.</td></tr>
+<tr><td>An unlicensed person claims their persona is being used.</td><td>Public complaint.</td><td>Archetypes carry no creator reference at all. The rating protocol stores no creator material. <span class="mark verified">Verified</span> Indian courts have restrained identity misuse through AI chatbots (<i>Sonakshi Sinha</i>, Delhi HC, March 2026) and our operating base is in that jurisdiction; see <a href="04-rights-dossier.html#india">04</a>.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><b>What would make it worse:</b> exercising D6 (a content licence creates a much larger surface), exercising D9 (voice is the highest-risk signal on both the rights and regulatory side), or any drift toward fine-tuning, which would destroy the kill switch that makes the creator relationship safe.</p>
+
+<h2 id="r2">R2: teaching something wrong before an exam</h2>
+
+<p><b>Ranked second, and it is the risk the architecture is mostly built around.</b> A wrong answer three weeks before a GCSE is not a bug report; it is a harm to a specific child at the one moment the product exists to serve.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Layer</th><th>What it catches</th><th>Reference</th></tr></thead>
+<tbody>
+<tr><td>Examiner validation, census, 100%.</td><td>Wrong items in the bank.</td><td>T-VAL-01, <a href="03-curriculum-and-content.html#validation">03</a></td></tr>
+<tr><td>Deterministic retrieval before generation.</td><td>The model grounding itself in something nobody validated.</td><td><a href="06-architecture.html#turn">06</a></td></tr>
+<tr><td>Runtime gate: citation, entailment, scope, CAS.</td><td>Unsupported assertions and wrong algebra, per turn, blocking.</td><td><a href="06-architecture.html#verifier">06</a></td></tr>
+<tr><td>Separate verifier model (D27).</td><td>Correlated failure, where a generator passes its own check.</td><td><a href="06-architecture.html#verifier">06</a></td></tr>
+<tr><td>Fleet gate: weekly, 24-hour withdrawal, validated-item-only mode.</td><td>Systematic drift in a topic.</td><td><a href="03-curriculum-and-content.html#below">03</a></td></tr>
+<tr><td>Pinned models, blocking regression (D22).</td><td>A vendor update moving the numbers mid-term.</td><td><a href="06-architecture.html#model">06</a></td></tr>
+</tbody>
+</table>
+</div>
+
+<p><b>The residual, stated honestly:</b> at the launch floor of 99.5% per turn, somewhere between <b>one session in twenty and one in seven</b> contains at least one unsupported assertion, the spread being a session length nobody has measured (<a href="03-curriculum-and-content.html#uncomfortable">03</a>). That is the number to hold in mind, not the per-turn figure. D21 commits to reporting the per-session number and to withholding the "it does not make things up" claim until the per-turn floor reaches 99.9%.</p>
+
+<p><b>Leading indicator:</b> the weekly per-session groundedness figure, and the adjudication queue's composition. A rising share of failures concentrated in one topic is a content defect; a rising share spread evenly is a model or prompt regression.</p>
+
+<p><b>What would make it worse:</b> widening scope faster than validation capacity, which is the standard commercial pressure; or relaxing the gate to reduce refusals, which is the standard product pressure. Both are foreseeable and both would be rational in the moment.</p>
+
+<h2 id="r3">R3: nobody pays</h2>
+
+<p><b>Ranked third.</b> The most likely of the four to actually happen, and the cheapest to test.</p>
 
 <ul>
-<li><strong>Distance.</strong> Built in Bengaluru, sold into UK exam boards, with no plan yet for how mark-scheme knowledge reaches the team. Currently unowned.</li>
-<li><strong>Creator concentration.</strong> Creators are simultaneously the distinguishing feature and the distribution channel, so a slow start on signing damages both at once.</li>
-<li><strong>Free substitutes improving.</strong> If Google funds specification alignment for England, two of the three answers in document 00 disappear within a quarter.</li>
-<li><strong>Seasonality.</strong> Route A revenue collapses after the last paper in June, and no tested answer exists.</li>
+<li><b>The specific failure mode:</b> parents anchor an AI tutoring subscription against software prices or against free, rather than against the verified £25 to £45 hourly tutoring rate. OA-10.</li>
+<li><b>Leading indicator:</b> landing-page conversion collapsing above a low price point. Detectable at M1, before anything is built.</li>
+<li><b>Structural aggravator:</b> the examination calendar caps retained months, so the denominator of the payback ratio has a ceiling nobody can lift (<a href="10-economics.html#dominant">10</a>). Price is anchored, cost is bounded, duration is capped. There is less room here than in a normal consumer subscription.</li>
+<li><b>Second aggravator, self-inflicted and accepted:</b> D25 forbids streaks, badges and return notifications, which are the mechanics every consumer subscription uses to defend retention. This decision costs real money and is made anyway.</li>
+<li><b>Mitigation:</b> test C1 and C2 at M1 for almost nothing; acquire Year 10 deliberately, where the affordable acquisition cost is roughly double; split CAC by channel so a creator-dependent business is visible rather than blended away.</li>
 </ul>
 
+<h2 id="r4">R4: child harm or data breach</h2>
+
+<p><b>Ranked fourth by the owner, and the ranking is about threat to the venture rather than about severity.</b> Read <a href="#ordering">the next section</a> before using this ranking for anything.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Sub-risk</th><th>Exposure</th><th>Mitigation</th></tr></thead>
+<tbody>
+<tr><td>Unlawful processing of children's data.</td><td><span class="mark verified">Verified</span> ICO fined Reddit <b>£14.47m</b> on 24 February 2026 for inadequate age assurance and profiling children without a lawful basis. Fines run to the higher of £17.5m or 4% of global turnover, and the ICO has said it will audit edtech.</td><td>No date-of-birth field anywhere; verified adult enrols the learner; every learner account is a child account by default; lawful basis analysis and the not-inferred list in <a href="05-safety-privacy-regulatory.html#basis">05</a>. <b>The DPIA is not written and is a named gap.</b></td></tr>
+<tr><td>Online Safety Act scope changing under a feature.</td><td><span class="mark verified">Verified</span> Penalties to the higher of £18m or 10% of qualifying worldwide revenue, plus business disruption: ISP blocking, app store removal, payment providers ceasing to process.</td><td>The eight-item trigger list in <a href="05-safety-privacy-regulatory.html#trigger">05</a>, operated as a change-control gate rather than a design note.</td></tr>
+<tr><td>A child discloses harm and we do not respond adequately.</td><td>Harm to a child, and reputational destruction.</td><td>Immediate signposting to 24-hour services; escalation to a named role; D26 (no automatic parental notification, because the parent is sometimes the risk). <b>Honest limit: next-business-day human review is not adequate for an acute disclosure</b>, which is why the product must not invite disclosure.</td></tr>
+<tr><td>Breach of transcripts.</td><td>Children's conversations, including anything they volunteered.</td><td>Minimisation, 12-month rolling deletion, three-condition access control with logging, no ad-tech or third-party analytics in the learner surface, zero-retention vendor terms (D24).</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="ordering">Why engineering does not follow this ordering</h2>
+
+<div class="claim">
+<p>The owner's ranking is a ranking of <b>threats to the venture</b>, and as such it is defensible. The engineering priority is <b>R4, then R2, then R1, then R3</b>, which is close to the reverse. Where the two orderings conflict inside a sprint, <b>the engineering ordering wins.</b></p>
+<span class="tag decided">Decision<span class="src">Stated as a decision so it cannot be treated as an oversight, 14 September 2026</span></span>
+</div>
+
+<p>Three reasons, and the first is the one that settles it.</p>
+
+<ol>
+<li><b>The harm in R4 is borne by someone who did not choose the risk and cannot recover from it.</b> R1 and R3 cost the founders money and the investors a return. Both are voluntary participants in a risk they chose. A fifteen-year-old who discloses something to a tutor, or whose transcripts are breached, chose none of it and cannot be made whole afterwards. That asymmetry is not a commercial consideration and does not belong on the same scale as the others.</li>
+<li><b>R4's regulatory consequences are the only genuinely existential ones.</b> <span class="mark verified">Verified</span> ICO to 4% of global turnover, Ofcom to 10% of qualifying worldwide revenue plus court-ordered business disruption reaching ISPs, app stores and payment providers. A creator dispute costs a preset and a bad week; an Ofcom disruption order costs the company. The owner's first-ranked risk is survivable and the fourth-ranked one is not.</li>
+<li><b>R4 failures are silent and compound; R1 and R3 failures announce themselves.</b> Nobody sends a letter when a lawful basis is wrong. You find out at audit, years of processing later, with every day of it in scope. R3 announces itself in a conversion dashboard within a week.</li>
+</ol>
+
+<p>The practical consequence: safety and data work is not scheduled after the features that address R1 and R3, and the DPIA is a precondition of launch rather than a launch task. If those two sentences ever stop being true in practice, this register has become decorative.</p>
+
+<h2 id="second">Second tier</h2>
+
+<div class="tw">
+<table>
+<thead><tr><th class="id">#</th><th>Risk</th><th>Leading indicator</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td class="id">R5</td><td><b>Platform interruption</b> by an app store or payment processor.</td><td>A complaint, or press.</td><td>Per <a href="04-rights-dossier.html#wargame">04</a>, the single most likely way the venture is interrupted. It is the mechanism by which R1 actually materialises.</td></tr>
+<tr><td class="id">R11</td><td><b>An uncalibrated grade range is relied on</b> by a parent or a learner as though it were a forecast.</td><td>Support contact mentioning the range; any marketing copy using the word prediction.</td><td>Range not point, evidence shown, suppressed below a minimum evidence threshold, and the word prediction not used until T-CAL-01 has data (<a href="05-safety-privacy-regulatory.html#graderange">05</a>). <b>The residual is real:</b> for roughly the first year the range is uncalibrated, and a confident-looking band is exactly the kind of thing a worried parent over-reads.</td></tr>
+<tr><td class="id">R6</td><td><b>Vendor model drift</b> moving the accuracy numbers.</td><td>T-REG-01 failing on a version change.</td><td>D22 pins versions and blocks on regression. The cost is running behind the frontier while <span class="mark verified">Verified</span> free competitors improve continuously.</td></tr>
+<tr><td class="id">R7</td><td><b>Examiner supply</b>, and the cost per item, making the content moat unaffordable beyond one strand.</td><td><code>minutes_per_item</code> from the M2 timed pilot.</td><td>If large, the defensibility argument in <a href="00-thesis.html#shelf">00</a> does not survive. This is a strategic risk wearing the clothes of a line item.</td></tr>
+<tr><td class="id">R8</td><td><b>D4 is wrong</b> and the wedge has no substance.</td><td>T-STY-02 at chance (M3), or no retention advantage at M4.</td><td>Already conceded as a live outcome in <a href="00-thesis.html#hold">00</a>. The D6 trigger table in <a href="11-roadmap.html#d6">11</a> keeps it from being misdiagnosed as a fidelity problem.</td></tr>
+<tr><td class="id">R9</td><td><b>A free tool ships validated, board-specific, warranted content.</b></td><td>Any competitor making a correctness claim with a test behind it.</td><td><span class="mark verified">Verified</span> Google has committed $1bn over three years to AI education in the US and given twelve-month subscriptions away at national scale. The capital plainly exists; only the product-strategy fit is missing.</td></tr>
+<tr><td class="id">R10</td><td><b>Runway against the clock</b>: seasonality in Route A, the annual procurement cycle in Route B.</td><td>Cohort contribution; pipeline age.</td><td>Route B's version is the more dangerous, because the answer arrives a year after the spending starts.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="first">Which one actually breaks first</h2>
+
+<p class="lede"><b>R3, and specifically the price anchor.</b> It is the most likely to be true, it is the cheapest to discover, and it is discoverable before a single item is written.</p>
+
+<p>The reasoning is not a probability estimate; it is about what is already known. R1, R2 and R4 are all managed by designs that exist in this repository and that have never been tested, so their real status is unknown rather than low. R3 is different: it rests on a single assumption, OA-10, that parents anchor against tutoring rates rather than software prices, and that assumption has no evidence behind it at all. <span class="mark verified">Verified</span> The competing anchor is free, in three products already on the parent's phone.</p>
+
+<p><b>How it would be noticed:</b> a landing-page conversion rate that falls off sharply above a low monthly price, at M1, in days, for a small spend. If it happens, the correct response is not to discount. It is to re-read <a href="09-route-comparison.html#caseb">the Route B case</a>, because a parent market that will not pay tutoring-anchored prices is the strongest single argument for selling to institutions instead.</p>

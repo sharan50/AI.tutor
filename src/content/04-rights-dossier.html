@@ -1,112 +1,319 @@
 <h1>Rights dossier</h1>
-<p class="standfirst">The owner ranks a suit by a creator or an exam board as the failure most likely to end the company. This chapter exists to be handed to a UK media lawyer and to a prospective creator on the same day, and for both to be able to act on it.</p>
+<p class="standfirst">Two readers, one document. A UK media lawyer needs the copyright line, the licence architecture and the enforcement analysis. A creator needs to know what they are giving, what they are not, and how fast they can take it back. Both are here, and the creator's answer is that they can take it back in fifteen minutes, for any reason, with no notice period.</p>
+<dl class="meta">
+<dt>Document</dt><dd>04 of 14</dd>
+<dt>Status</dt><dd>Specification and analysis. Not legal advice. No lawyer has reviewed this document.</dd>
+<dt>Written</dt><dd>14 September 2026</dd>
+<dt>Companion contracts</dt><dd><a href="../contracts/creator-licence-term-sheet.md">Term sheet</a> (creator-facing), <a href="../contracts/creator-licence-heads-of-terms.md">Heads of terms</a> (counsel-facing)</dd>
+<dt>Governs</dt><dd>D5, D6, D8, D9, D11, D12, D13</dd>
+</dl>
 
-<h2>The exam boards have already published the policy</h2>
+<div class="split">
+<div>
+<h4>If you are a lawyer, start here</h4>
+<p><a href="#boards">The exam board position</a>, then <a href="#line">the copyright line</a>, then <a href="#persona">the persona rights model</a>, then <a href="#wargame">the enforcement war-game</a>. The open questions we are deliberately not answering are marked <span class="mark open">Counsel</span> throughout and collected in <a href="14-open-items.html">14</a>. Drafting sits in the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a>.</p>
+</div>
+<div>
+<h4>If you are a creator, start here</h4>
+<p><a href="#creator">What you are giving and what you are not</a>, then <a href="#killswitch">how fast you can end it</a>. The short version: your name and your face, for twelve months, non-exclusive, nothing of what you have made, no voice, and you can end it at any moment for any reason without telling us why. The one-page version is the <a href="../contracts/creator-licence-term-sheet.md">term sheet</a>.</p>
+</div>
+</div>
+
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#boards">The exam boards</a></li>
+<li><a href="#line">The copyright line</a></li>
+<li><a href="#naming">Naming a board: the convention</a></li>
+<li><a href="#persona">What a UK persona right actually consists of</a></li>
+<li><a href="#creator">The creator licence</a></li>
+<li><a href="#killswitch">The kill switch, with a time to effect</a></li>
+<li><a href="#india">The exposure that comes from building in India</a></li>
+<li><a href="#wargame">The enforcement war-game</a></li>
+<li><a href="#d13">Why the offshore strategy was considered and dropped</a></li>
+<li><a href="#zero">Zero-persona operation, proved rather than asserted</a></li>
+</ol>
+</details>
+
+<h2 id="boards">The exam boards</h2>
+
+<p class="lede">The hardest constraint in the venture, and the one that dictates the content strategy in <a href="03-curriculum-and-content.html">03</a>. Read the AQA wording carefully: on its face the second limb is broader than a training prohibition.</p>
+
+<h3>AQA</h3>
 
 <div class="claim">
-  <p>AQA's copyright and intellectual property policy states that AQA does not permit the use of any AQA material, in any manner or for any purpose, in connection with the training of artificial intelligence powered tools or technologies. It further states that AQA will not allow the use of any AQA material in or on any edition of a third-party work where any part of that work is generated or produced using AI.</p>
-  <span class="tag verified">Verified<span class="src">aqa.org.uk copyright and IP policy, read Sep 2026</span></span>
+<p>AQA's published policy states that AQA <b>does not permit the use of any AQA material, in any manner or for any purpose, in connection with the training of AI-powered tools or technologies</b>; and that it <b>will not allow the use of any AQA material in or on any edition of a third-party work where any part of that work is generated or produced using AI</b>.</p>
+<span class="tag verified">Verified<span class="src">AQA published copyright and intellectual property policy, checked September 2026</span></span>
 </div>
 
-<p>The second limb is the broader one. Read plainly it bars an AI tutoring product from containing AQA material at all, not merely from training on it. This is not a risk to be managed. It is a published position that predates us.</p>
+<p>Read plainly, the second limb bars an AI tutoring product from <i>containing</i> AQA material at all, not merely from training on it. That is a wider prohibition than the AI-training clauses most publishers have adopted, and it is the reason the clean-room policy is absolute rather than a training-time restriction.</p>
 
 <div class="claim">
-  <p>Pearson permits approved examination centres to reproduce past papers and mark schemes for practice, revision or teaching within the centre, on condition that students are not charged for them. A paid consumer product falls outside that permission by construction.</p>
-  <span class="tag verified">Verified<span class="src">Pearson copyright policy, qualifications.pearson.com</span></span>
+<p>Does AQA's clause reach runtime retrieval, that is retrieval-grounded use at inference, as well as training? The wording is broad enough to cover both and this has not been tested. <b>Unblocks:</b> whether any board-derived material could ever sit in a retrieval index, and therefore whether the clean room is a strategy or merely the current one. <b>Cost of getting it wrong:</b> a product built on a retrieval index that has to be destroyed, and a claim we would struggle to defend.</p>
+<span class="tag open">For counsel<span class="src">open item OI-1</span></span>
 </div>
 
-<h2>What the boards can and cannot stop</h2>
-
-<div class="note">
-  <h3>The line</h3>
-  <p>Copyright protects expression, not facts and not curricula. Nobody owns the requirement that a student know Newton's second law, and GCSE and A-level subject content is set and published by the Department for Education. Teaching <em>to</em> a published specification, using wholly original items and explanations, is not an act a board has standing to stop. Reproducing its papers, its mark schemes, or the text of its specification document is.</p>
-</div>
-
-<p>That makes the exposure narrower than it first appears, and it makes the clean-room policy in document 03 the central defensive asset rather than a compliance chore. Every item in the bank carries its provenance. Nothing sourced from a board ever enters the system, including in testing, including internally, including for benchmarking.</p>
+<h3>Pearson Edexcel</h3>
 
 <div class="claim">
-  <p>Naming a board in order to describe what a course prepares a student for is capable of being honest descriptive use under section 11(2) of the Trade Marks Act 1994, provided endorsement is not implied. This is stated as counsel's likely starting point, not as advice, and the exact permitted wording has to come from counsel before any marketing copy is written.</p>
-  <span class="tag assumed">Assumed<span class="src">Not confirmed. Question 3 in document 14</span></span>
+<p>Pearson/Edexcel permits approved examination centres to reproduce past papers and mark schemes for practice, revision or teaching <b>within the centre</b>, on condition that <b>students are not charged</b>. A paid consumer product is outside that permission by construction.</p>
+<span class="tag verified">Verified<span class="src">checked September 2026</span></span>
 </div>
+
+<p>Note what this does and does not tell us. It is a permission granted to centres, not a general licence, and the no-charge condition excludes Route A by its own terms. It says nothing directly about AI. It is nonetheless a narrower and more legible constraint than AQA's, which is the basis of the provisional alignment decision D19 in <a href="03-curriculum-and-content.html#scope">03</a>.</p>
+
+<h3>OCR, WJEC and Eduqas</h3>
 
 <div class="claim">
-  <p>An entire UK sector appears to operate on this basis already, selling board-aligned commercial revision material without licensing past papers: Save My Exams, Physics &amp; Maths Tutor, Seneca, Cognito, Twinkl. Establishing precisely where each of them draws the line, and on what advice, is a named research task and not yet a finding. It is inference from their existence, not from their terms.</p>
-  <span class="tag open">Open<span class="src">Research task. Cheapest available de-risking of the whole plan</span></span>
+<p>Whether OCR, WJEC and Eduqas take the same position as AQA <b>has not been checked</b>. It is assumed for planning that at least one of them has an AI clause of similar breadth, because AQA's is unlikely to be unique. That assumption has no evidential basis. Checking three published policies is a few hours of work and it is listed as a research task at M1 in <a href="11-roadmap.html">11 Roadmap</a>, not as a counsel question, because it requires reading rather than advice.</p>
+<span class="tag assumed">Assumption<span class="src">not verified, and it is a gap</span></span>
 </div>
 
-<h2>Creators</h2>
+<p>Both boards assert copyright over specifications, schemes of work, past papers and mark schemes. <span class="mark verified">Verified</span></p>
 
-<p>The launch licence covers name and likeness only. No creator material is ingested, stored, or reproduced anywhere in the system. What exists is a scored vector across the seven dimensions in document 02 and a description written in our own words.</p>
+<h2 id="line">The copyright line</h2>
 
-<h3>Heads of terms</h3>
+<p class="lede">Copyright protects expression, not facts and not curricula. Nobody owns the requirement that a student know Newton's second law, and GCSE and A-level subject content is set and published by the DfE. <span class="mark verified">Verified</span> Teaching <i>to</i> a published specification with wholly original items and explanations is not an act a board has standing to stop. Reproducing its papers, its mark schemes or its specification text is.</p>
 
+<p>That line is the whole content strategy, so it is written as an operational rule rather than as a principle. The rule lives in <a href="03-curriculum-and-content.html#cleanroom">03</a> and is enforced by the provenance record on every item, the two-person rule, the per-item attestation, and the validator engagement terms that forbid a current examiner bringing board material into the work.</p>
+
+<div class="tw">
 <table>
-<thead><tr><th>Term</th><th>Launch position</th></tr></thead>
+<caption>Where the line falls in practice. The middle column is the only one that ever gets argued about.</caption>
+<thead><tr><th>Clearly permitted</th><th>Where the argument would be</th><th>Clearly not permitted</th></tr></thead>
 <tbody>
-<tr><td>Scope</td><td>Name and likeness, for the purpose of labelling a teaching-style preset within the product. No voice. No material. No merchandising. No use in paid advertising without separate written consent per campaign.</td></tr>
-<tr><td>Term</td><td>12 months, rolling, either party may terminate on 30 days' notice without cause.</td></tr>
-<tr><td>Exclusivity</td><td>None at launch. Revisit only once there is evidence the preset drives retention.</td></tr>
-<tr><td>On termination</td><td>The preset is renamed to its unnamed archetype within the stated kill-switch window. The scored vector survives, because it is our work product and describes nobody's property. Any voice model, if the voice limb was ever exercised, is destroyed and the destruction certified.</td></tr>
-<tr><td>Labelling</td><td>Every session under a named preset carries a persistent on-screen statement that this is an AI tutor teaching in a style modelled on the named educator, who has not written or reviewed the content.</td></tr>
-<tr><td>Review right</td><td>The creator may at any time request a sample of sessions run under their preset, and may require a specific behaviour to be removed within a stated period.</td></tr>
-<tr><td>Kill switch</td><td>A single operation that removes the named preset from all surfaces. Target time to effect: 60 minutes from request to full propagation, including cached sessions in progress.</td></tr>
+<tr><td>Writing an original question that tests a DfE content point.</td><td>An original question so close in structure to a known past paper question that it reads as a reconstruction. Managed by similarity screening, not by judgement.</td><td>Reproducing a past paper question, in whole or in part.</td></tr>
+<tr><td>Explaining a standard mathematical result in our own words.</td><td>Describing answer conventions and command words in our own words, where those descriptions are derived from observing papers we may not reproduce.</td><td>Reproducing or paraphrasing specification text or a mark scheme.</td></tr>
+<tr><td>Saying which DfE subject content a course covers, and which board's assessment it prepares a student for, within the convention <a href="#naming">below</a>.</td><td>Any wording that drifts from description toward association. The convention exists because that drift is gradual and is usually committed by a marketing page, not a lawyer.</td><td>Implying board endorsement, approval or partnership. Board logos or trade dress, in any context.</td></tr>
 </tbody>
 </table>
-
-<div class="claim">
-  <p>Sixty minutes is a design target chosen to sit comfortably inside the tightest takedown regime the venture may ever face, which is the three-hour window in the Indian IT Rules amendment in force since 20 February 2026. It has not been validated against an architecture that does not yet exist.</p>
-  <span class="tag assumed">Assumed<span class="src">Target, not a measurement. Verify in 06</span></span>
 </div>
 
-<h3>Why the licence is short</h3>
+<div class="claim">
+<p>What exact wording may be used to state which specification a course follows, without implying endorsement? <b>The starting point, and it is only that:</b> <span class="mark assumed">Assumption</span> naming an exam board to describe what a product prepares a student for may be honest descriptive use under section 11(2) of the Trade Marks Act 1994, provided endorsement is not implied. That is stated as counsel's likely starting point, not as settled advice, and no wording has been cleared. <b>Unblocks:</b> every piece of marketing copy and the product's own course naming. <b>Cost of getting it wrong:</b> a trade mark complaint that removes the product from app stores faster than it could be defended, per <a href="#wargame">the war-game</a>.</p>
+<span class="tag open">For counsel<span class="src">open item OI-3</span></span>
+</div>
 
-<p>A one-page agreement that a mid-tier UK GCSE creator can read and sign without a lawyer is worth more than a comprehensive one they take three months over. The upgrade to exemplar conditioning, described in document 02, is a separate schedule that attaches later if the evidence justifies it.</p>
+<div class="claim">
+<p>That Save My Exams, Physics &amp; Maths Tutor, Seneca, Cognito and Twinkl sell board-aligned commercial revision material without licensing past papers. <b>This is inference from their existence, not from their terms.</b> It is tempting to treat their survival as proof the line is safe. Establishing exactly where each of them draws the line is a named research task at M1, not a finding, and until it is done the comparator argument should not be used with an investor or a lawyer.</p>
+<span class="tag assumed">Assumption<span class="src">not verified, and it should not be leaned on</span></span>
+</div>
 
-<h2>Enforcement war-game</h2>
+<h2 id="naming">Naming a board: the convention, and a decision taken ahead of counsel</h2>
 
-<p>The courts are not the first thing that happens to you, and planning as though they are is the common error.</p>
+<p class="lede">This is the one place in this vault where we act before counsel has answered. It is flagged as such rather than blended in, because the posture is different from everywhere else and a reader is entitled to see that.</p>
 
+<p><b>Why waiting is not the neutral option.</b> You cannot sell examination preparation without saying which examination. A product that will not name the board it prepares a student for is not a cautious version of this product; it is an unsellable one, because the parent's entire question is "is this the right one for my child's exam". Silence has a cost here, and it is not a smaller cost than the risk.</p>
+
+<div class="claim">
+<p><b>The basis we are proceeding on.</b> Naming an exam board to describe what a product prepares a student for may be honest use under <b>section 11(2) of the Trade Marks Act 1994</b>, provided endorsement is not implied. That is counsel's likely starting point, <b>not settled advice</b>, and OI-3 remains open. <b>Which limb of section 11(2) applies is itself part of the question</b>, and nothing here should be read as settling it; the section has been amended and the choice between the descriptive limb and the limb covering use necessary to indicate intended purpose is exactly the sort of thing a guess would get wrong.</p>
+<span class="tag assumed">Assumed<span class="src">counsel's likely starting point, OI-3 still open</span></span>
+</div>
+
+<h3>The convention</h3>
+
+<div class="tw">
 <table>
-<thead><tr><th>Who</th><th>What they can do</th><th>How fast</th></tr></thead>
+<caption>Permitted and forbidden wording. This is the whole of it, and it is not open to interpretation by whoever is writing a landing page that week.</caption>
+<thead><tr><th>Permitted</th><th>Forbidden, in every surface including advertising, app store copy and email</th></tr></thead>
 <tbody>
-<tr><td>Payment processor</td><td>Terminate the account on a credible rights complaint or a regulator letter, under its own acceptable use policy, with no hearing</td><td>Days</td></tr>
-<tr><td>App stores</td><td>Delist on a rights complaint</td><td>Days</td></tr>
-<tr><td>A creator</td><td>Complain publicly. Costs nothing, needs no lawyer, and reaches the exact audience being sold to</td><td>Hours</td></tr>
-<tr><td>An exam board</td><td>Letter before action; interim injunction if reproduction can be shown</td><td>Weeks to months</td></tr>
-<tr><td>ICO</td><td>Investigate, fine to the higher of &pound;17.5m or 4% of global turnover</td><td>Months</td></tr>
-<tr><td>Ofcom</td><td>Fine to the higher of &pound;18m or 10% of qualifying worldwide revenue; apply for business disruption and service restriction orders requiring ISPs to block, app stores to remove, payment providers to stop processing</td><td>Months</td></tr>
+<tr><td>"Prepares students for [Board] GCSE Mathematics"</td><td>"Approved by [Board]", "official", "endorsed", "in partnership with", "accredited"</td></tr>
+<tr><td>"Written to the [Board] specification"</td><td>"[Board]'s own", "from [Board]", "[Board] materials"</td></tr>
+<tr><td>"[Board]-aligned practice papers"</td><td>"[Board] past papers", "real [Board] questions", "[Board] mark schemes"</td></tr>
+<tr><td>"CINE mark scheme" (D36)</td><td>Any board logo, colour scheme, typeface or trade dress, anywhere, ever</td></tr>
 </tbody>
 </table>
-
-<div class="claim">
-  <p>The chokepoint is commercial, not judicial. The realistic end of this venture is a processor closing the account on a Tuesday, not a judgment. Every mitigation in this chapter is therefore aimed at being able to answer a complaint within hours with documentary evidence, rather than at winning an argument eventually.</p>
-  <span class="tag decided">Position<span class="src">Drives the provenance and kill-switch design</span></span>
 </div>
 
-<h2>Why the offshore strategy was considered and dropped</h2>
+<h3>What the risk actually is, and it is not litigation</h3>
 
-<p>The proposition was to sell from India so that any action would have to be fought in Indian courts, on the Uber model of operating through cease-and-desist orders while building market share. It runs the opposite way to how it reads.</p>
+<p>Per <a href="#wargame">the war-game</a>, a board's fastest move is not a claim form; it is a trade mark complaint to an app store, which acts on a complaint rather than on the merits and can remove a product in days. So the mitigation is operational, not argumentative:</p>
+
+<ul>
+<li><b>Every board-naming string is centralised in one place</b> in the codebase and in the marketing site, so all of them change in a single edit. This is an engineering requirement, not a content guideline.</li>
+<li><b>Rollback trigger:</b> on receipt of any objection from any board, board naming reverts to DfE-subject-content wording <b>within 24 hours</b> everywhere we control, before any substantive reply is sent. Argue afterwards, from a compliant position.</li>
+<li><b>Notice has to arrive somewhere.</b> The same published address that receives creator kill-switch notices receives board objections, it is monitored on the same basis, and the 24 hours runs from receipt. A rollback trigger with no address and no monitoring duty is not a trigger; the kill switch is careful about this and so is this.</li>
+<li>The counter-notice pack in <a href="#wargame">the war-game</a> covers this case as well as the copyright case.</li>
+</ul>
 
 <div class="claim">
-  <p>The United Kingdom is a notified reciprocating territory under section 44A of the Code of Civil Procedure 1908, and the English High Courts are notified superior courts. A UK superior court money decree is executable in India as if an Indian District Court had passed it, without a fresh suit, subject only to the section 13 conclusiveness tests. The Delhi High Court has enforced an ex parte English Commercial Court judgment for USD 47m on exactly this basis.</p>
-  <span class="tag verified">Verified<span class="src">Notification F.34-I/52-L, 1 Mar 1953; Delhi HC, 2023</span></span>
+<p><b>What the 24 hours does not reach, stated because "a single edit" is not true of all of it.</b> App store listing copy sits in a third-party review queue on somebody else's timetable, which is the same point <a href="#wargame">the war-game</a> makes about removals. Served ad creative, cached and archived pages, affiliate and press copy, and a creator's own video about the product are all outside our control entirely.</p>
+<p>And the rollback changes the <i>label</i>, not the <i>thing</i>: <code>board_alignment</code> in item metadata and the per-board paper structural specification in <a href="03-curriculum-and-content.html#papers">03</a> are unaffected by any wording change. An objection that reaches the product rather than the copy is a content question, not a naming one, and it is not contained by this.</p>
+<span class="tag assumed">Limits of the containment<span class="src">the honest version of "revert in 24 hours"</span></span>
 </div>
 
 <div class="claim">
-  <p>Ofcom does not need an Indian court at all. Between 1 April 2025 and 30 June 2026 it imposed penalties totalling &pound;6.1m on nine companies that were either not UK-based or did not state their jurisdiction, and it has pursued business disruption measures including a possible UK access block against a non-compliant overseas provider.</p>
-  <span class="tag verified">Verified<span class="src">Ofcom FOI response, 18 Aug 2026</span></span>
+<p><b>The exposure is analysed here only as trade mark, and that is a gap.</b> Consumer protection law and the advertising standards regime both bite on consumer education copy that names an examination board, and a complaint to an advertising regulator is cheaper and faster for a complainant than anything in <a href="#wargame">the war-game</a>.</p>
+<p><span class="mark unknown">Unknown</span> Neither regime has been analysed, neither is in the verified findings, and their current enforcement powers are not stated here because they would have to be written from memory. This is open item <b>OI-12</b>, and it should go to counsel with OI-3 rather than after it.</p>
+<span class="tag unknown">Unanalysed<span class="src">OI-12, consumer protection and advertising standards</span></span>
 </div>
 
 <div class="claim">
-  <p>On likeness specifically, electing India is choosing the least favourable forum available. Indian courts are currently the most aggressive in the world on AI persona misuse, and in March 2026 the Delhi High Court restrained this precise fact pattern, an AI chatbot replicating a real person, in Sonakshi Sinha v. Character Technologies.</p>
-  <span class="tag verified">Verified<span class="src">2026 SCC OnLine Del 1177, 20 Mar 2026</span></span>
+<p><b>Proceed with board naming under the convention above, ahead of counsel's answer on OI-3</b>, accepting the risk on the basis that the exposure is a takedown rather than damages, that the rollback is 24 hours, and that the alternative is a product that cannot describe itself.</p>
+<p><b>Note on the fallback:</b> reverting to "DfE subject content" wording assumes that wording is itself available, which depends on <b>OI-9</b>, also unanswered. The rollback is to a less exposed position, not to a proven one. <b>Rejected:</b> waiting for OI-3. It would have cost the ability to market the product at all, for an unknown number of months, to remove a risk that is contained rather than eliminated by waiting. <b>What it makes harder:</b> if counsel comes back against the convention, marketing copy, app store listings and the product's own course naming all change at once, and any paid acquisition running at that moment is wasted. OI-3 stays open and stays first in the counsel instruction.</p>
+<span class="tag decided">Decision D34<span class="src">14 September 2026, taken ahead of counsel</span></span>
 </div>
 
-<p>The structural point about Uber: it broke a regulatory licensing rule, where no single party owned a property right in what it was taking, the counterparty was diffuse, and the end state was a legislature rewriting the rule under public pressure. Here the counterparties are named private owners of specific property rights. No legislature is going to amend the Copyright, Designs and Patents Act so that a startup may use AQA's question papers. Private rights-holders do not settle into legalisation; they settle into a licence fee, or they obtain an injunction and costs.</p>
+<h2 id="persona">What a UK persona right actually consists of</h2>
 
-<p>The Indian operating company is retained for ordinary tax and capital reasons. The litigation-evasion rationale is dropped.</p>
+<div class="claim">
+<p>There is no statutory personality right in the UK. Protection of a creator's persona runs through: <b>passing off for false endorsement</b> (following <i>Irvine v Talksport</i>), <b>trade marks</b>, <b>copyright in the underlying videos</b>, <b>performers' rights</b>, and <b>data protection</b> insofar as a voice or image is personal data. This framing has not been confirmed by counsel for this fact pattern.</p>
+<span class="tag assumed">Assumption<span class="src">not verified, counsel's likely framing</span></span>
+</div>
 
-<h2>The one genuinely aggressive move available</h2>
+<p>Three consequences for the design, and they are why D5, D8 and D9 are shaped as they are.</p>
 
-<p>Sign the UK GCSE creators first. They are mid-tier, they are reachable, their ad revenue is modest, and the agreement is one page. Speed is the moat that works in this situation. Defiance is the one that ends with a payment processor closing the account.</p>
+<ul>
+<li><b>False endorsement is the live risk, not copying.</b> Under D5 we ingest nothing, so copyright in the underlying videos and performers' rights are largely not engaged. What remains is the risk that a consumer believes the creator endorses, writes or checks the tutoring. That risk is managed by the on-screen label in <a href="01-product.html#label">01</a>, by the attribution change when a student adjusts an axis, and by an express non-endorsement term in the licence.</li>
+<li><b>A licence does not remove the risk, it relocates it.</b> A signed creator cannot easily complain, but a <i>consumer</i> misled about endorsement is a different matter, and so is a creator whose licence has ended. Hence the kill switch SLA and the post-termination deletion terms.</li>
+<li><b>Voice is categorically worse than name and image.</b> Hence D9: voice cloning is off the launch path entirely and becomes a separate opt-in limb. <span class="mark verified">Verified</span> Virtual clones of real people were among the trigger incidents in Ofcom's open letter of 8 November 2024, and <span class="mark verified">Verified</span> Indian courts have restrained AI voice cloning directly (<i>Arijit Singh</i>, Bombay High Court, 2024).</li>
+</ul>
 
+<div class="claim">
+<p>That most creators the venture wants are US-resident, which brings US state right-of-publicity law into scope. If true, the licence needs a US-law limb and the enforcement analysis acquires a forum we have not analysed. Unchecked.</p>
+<span class="tag assumed">Assumption<span class="src">not verified</span></span>
+</div>
+
+<h2 id="creator">The creator licence</h2>
+
+<p class="lede">One page, because there is almost nothing in it. The creator licenses a name and a face to label a teaching style. They license nothing they have made.</p>
+
+<div class="tw">
+<table>
+<caption>Licence architecture at launch. Schedules 2 and 3 are drafted and unexercised; nothing in them is in force for any creator.</caption>
+<thead><tr><th>Term</th><th>Position at launch (D5)</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td><b>Scope</b></td><td>Non-exclusive licence to use the creator's name and image solely to label and market one style preset inside the CINE product. <b>No content licence. No voice. No adaptation right.</b></td><td>D5. Makes it a one-page agreement instead of a content negotiation, and makes a departing creator cost a text file.</td></tr>
+<tr><td><b>What we do not get</b></td><td>No right to their videos, transcripts, notes, worked examples, slides, or any other material. Nothing they have made is ingested, stored, indexed or passed to a model.</td><td>The sentence a creator's own lawyer will look for.</td></tr>
+<tr><td><b>Territory</b></td><td>United Kingdom, plus any territory in which the product is subsequently sold, on notice.</td><td>UK first, D1.</td></tr>
+<tr><td><b>Term</b></td><td>Twelve months, renewing for twelve months unless either party gives notice.</td><td>Short enough that a creator is never locked in, long enough to be worth the fitting cost.</td></tr>
+<tr><td><b>Exclusivity</b></td><td>None, in either direction. The creator may license the same rights to anyone, including a competitor.</td><td>Exclusivity turns a one-page agreement into a negotiation and raises the price. D5's logic taken to its conclusion.</td></tr>
+<tr><td><b>Approval</b></td><td>The creator is shown the twelve dimension values and the rendered style card before launch and may object to any of them. Repeatable once per term.</td><td>A contractual right, not a courtesy. It is what makes "your style" a claim the creator has signed off.</td></tr>
+<tr><td><b>Continuing review right</b></td><td>The creator may at any time request a representative sample of real sessions run under their preset, and require any specific behaviour to be removed within 14 days.</td><td>Makes the arrangement <i>supervisable</i>, not merely revocable. A creator whose only instrument is termination is more likely to use it.</td></tr>
+<tr><td><b>Advertising and merchandising</b></td><td>Paid advertising built around the creator's name requires separate written consent per campaign. No merchandising of any kind.</td><td>Organic description of availability inside the product is one thing; a paid campaign around someone's name is a different ask and should be asked separately.</td></tr>
+<tr><td><b>Non-endorsement</b></td><td>Express term that the creator does not write, review, approve or endorse any tutoring content, and that the on-screen label will say so.</td><td>Directly addresses the false endorsement risk above.</td></tr>
+<tr><td><b>Labelling</b></td><td>The on-screen line is mandatory, specified in the agreement, and cannot be changed without the creator's consent.</td><td>Puts the passing-off mitigation beyond unilateral marketing decisions.</td></tr>
+<tr><td><b>Termination</b></td><td>Either party, at any time, for any reason or none, effective on notice. No cure period. No survival of the licence grant.</td><td>D5 and D11. A creator who cannot leave instantly is a creator with a grievance and a platform.</td></tr>
+<tr><td><b>On termination</b></td><td>The kill switch SLA below. The parameter object and the style card are deleted; there is no residual right; the creator's name is removed everywhere; transcripts keep a neutral preset identifier only.</td><td>See <a href="#killswitch">below</a>.</td></tr>
+<tr><td><b>Fee</b></td><td><span class="mark unknown">Unknown</span> Not a design decision. Either a flat fee per term or a share of revenue on sessions using the preset; both structures are drafted. The choice and the number are commercial and are not invented here.</td><td>Inventing a creator fee would put a plausible number into an investor conversation with nothing behind it.</td></tr>
+<tr><td><b>Schedule 2 (D6)</b></td><td>Exemplar conditioning. A content licence covering reproduction, adaptation and machine processing of specified material for a defined term. <b>Drafted, unexercised.</b></td><td>D6 requires the boundary to exist now so the fallback is not a rewrite under time pressure.</td></tr>
+<tr><td><b>Schedule 3 (D9)</b></td><td>Voice. A separate opt-in limb with its own consideration, its own term and its own deletion SLA. <b>Drafted, unexercised.</b></td><td>D9. Highest-risk signal on both the rights and regulatory side.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p><b>OI-6:</b> What is the minimum viable creator licence for name and likeness only, and what does the exemplar-conditioning upgrade under D6 add to it? <b>Unblocks:</b> the first creator signature, and the D6 contingency. <b>Cost of getting it wrong:</b> either a licence too thin to permit what the product does, or one thick enough to require a negotiation per creator, which destroys the D5 economics.</p>
+<p><b>OI-7:</b> Which entity contracts with the parent, and what does that do to consumer jurisdiction, UK representative obligations and VAT? <b>Unblocks:</b> incorporation, the payment stack, and the terms of business. <b>Cost of getting it wrong:</b> a consumer contract unenforceable in the market it was written for, and a tax position discovered late.</p>
+<span class="tag open">For counsel<span class="src">open items OI-6 and OI-7</span></span>
+</div>
+
+<h2 id="killswitch">The kill switch, with a time to effect</h2>
+
+<p class="lede">Fifteen minutes to disabled, seven days to deleted, thirty-five days to gone from backups. Measured from receipt of a valid notice at a published address, not from when someone reads it.</p>
+
+<div class="tw">
+<table>
+<caption>Kill switch service levels. These are commitments offered in the licence, not observations. None has been tested, because nothing has been built.</caption>
+<thead><tr><th>Time from valid notice</th><th>What has happened</th><th>What makes it achievable</th></tr></thead>
+<tbody>
+<tr><td><b>T + 15 minutes</b></td><td>The preset is disabled for all new sessions.</td><td>A single flag in the persona registry, read per request, with a maximum cache lifetime of 60 seconds. No deployment, no rebuild, no model change.</td></tr>
+<tr><td><b>T + 16 minutes</b></td><td>Hard ceiling for in-flight sessions. Any session still running falls back to the nearest unnamed archetype at its next turn, with an on-screen notice to the student.</td><td>The 60-second cache lifetime bounds this. The archetype fallback exists because of D11.</td></tr>
+<tr><td><b>T + 24 hours</b></td><td>The creator's name and image are gone from the catalogue, the marketing site, app store listing metadata and any CDN caches.</td><td>Purge is scripted and rehearsed, not assembled on the day.</td></tr>
+<tr><td><b>T + 7 days</b></td><td>The parameter object, the rendered style card, every stored session snapshot of that preset, the name and the likeness assets are deleted from primary stores. Transcripts are retained for the learner's benefit but carry a neutral preset identifier with no creator reference.</td><td>The object is the only path by which a card can exist, so deleting it provably removes every card derivable from it.</td></tr>
+<tr><td><b>T + 35 days</b></td><td>Backups have aged out.</td><td>Backup retention cycle. This is the honest caveat and it is stated in the licence rather than omitted.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Why this is a real kill switch and not a promise</h3>
+
+<p><b>Because of D8.</b> No persona LoRAs, no fine-tuned weights, no adapters carrying creator style, ever. Retrieval and prompting only. Weights cannot be cleanly revoked, and a kill switch that requires retraining is not a kill switch; it is a project plan. The fifteen-minute figure is only credible because there is nothing to retrain, and any future proposal to fine-tune on persona data should be read as a proposal to delete this table.</p>
+
+<p><b>Because of D11.</b> The product runs with zero personas. Disabling every preset simultaneously degrades the product; it does not stop it. A kill switch that would take the service down is a switch nobody will pull.</p>
+
+<h3>What changes under D6 and D9</h3>
+
+<ul>
+<li><b>D6, exemplar conditioning:</b> add invalidation of cached prompt fragments by T+15 minutes, and deletion of the licensed corpus and every derived index by T+7 days. The 15-minute disable figure survives; the deletion story becomes materially more complex and is the largest operational cost of D6.</li>
+<li><b>D9, voice:</b> a voice model is deleted on the same seven-day line, and because D8 forbids weights carrying creator style, there is no trained artefact to chase. If that ever ceases to be true, this entire section stops being accurate.</li>
+</ul>
+
+<h2 id="india">The exposure that comes from building in India</h2>
+
+<p class="lede">This runs the opposite way to how it is usually read. Building in India does not put the venture further from a creator's reach; on personality rights it puts it closer, because Indian personality-rights jurisprudence is currently the most aggressive in the world on AI likeness.</p>
+
+<div class="claim">
+<p>Anil Kapoor (Delhi High Court, 2023); Jackie Shroff (2024); Arijit Singh (Bombay High Court, 2024, AI voice cloning); Hrithik Roshan (CS(COMM) 1107/2025, Delhi High Court, 72-hour takedowns and domain suspensions); and <b>Sonakshi Sinha v Character Technologies Inc &amp; Ors</b>, Delhi High Court, 20 March 2026, 2026 SCC OnLine Del 1177, restraining misuse of identity through <b>AI chatbots</b>, deepfakes and voice cloning.</p>
+<span class="tag verified">Verified<span class="src">September 2026</span></span>
+</div>
+
+<p>The <i>Sonakshi Sinha</i> decision is the one to read first: it concerns AI chatbots specifically, and it is recent. An operating company in Bengaluru running a persona-bearing AI tutor is squarely in the fact pattern that court has been willing to restrain, and the Delhi High Court has shown itself willing to order takedowns on 72-hour timelines and to suspend domains.</p>
+
+<p>This does not mean the venture should not be built from India; the reasons for the Indian operating company are ordinary tax and capital reasons, per D13. It means the risk register should record that our own base of operations is a forum in which a well-advised aggrieved creator would be pleased to find us, and that the D5 design, licensing name and likeness only with an instant kill switch, is doing more work than it looks like it is.</p>
+
+<div class="claim">
+<p>The IT (Intermediary Guidelines and Digital Media Ethics Code) Amendment Rules 2026, G.S.R. 120(E), notified 10 February 2026 and in force 20 February 2026, define synthetically generated information, require prominent labelling and permanent provenance metadata that cannot be stripped, and compress takedown for flagged unlawful content to three hours and for non-consensual sexual imagery to two.</p>
+<span class="tag verified">Verified<span class="src">Verified: labelling obligations that follow from building in India</span></span>
+</div>
+
+<p>The on-screen label in <a href="01-product.html#label">01</a> and the provenance metadata requirement in <a href="06-architecture.html">06</a> are therefore not only a passing-off mitigation; they are a compliance obligation arising from where the company is built. <span class="mark assumed">Assumption</span> The proportion-of-screen and proportion-of-audio requirements appeared in the October 2025 draft and <b>the final notified text has not been checked</b>, so the specific display parameters are unconfirmed.</p>
+
+<h2 id="wargame">The enforcement war-game</h2>
+
+<p class="lede">The courts are the slow, unlikely path. Payment processors and app stores are the fast, likely one, and they decide on a complaint rather than on a judgment. Plan for the chokepoint, not for the trial.</p>
+
+<div class="tw">
+<table>
+<caption>Who can do what, how fast, and what actually answers it.</caption>
+<thead><tr><th>Actor</th><th>First realistic move</th><th>Timeline</th><th>What answers it</th></tr></thead>
+<tbody>
+<tr><td><b>An unhappy creator</b></td><td>Not a claim form. A post to their audience saying a company is using their name without permission, or with permission they now regret.</td><td>Hours.</td><td>The kill switch, exercised before responding, and the fact that the licence lets them leave instantly. The legal argument is irrelevant at this speed; the operational answer is everything. Rehearse it.</td></tr>
+<tr><td><b>An exam board</b></td><td>A letter asserting copyright or trade mark, plus, in the worse case, a complaint to app stores.</td><td>Days to weeks for the letter; the app store complaint acts faster.</td><td>Per-item provenance records, the attestation trail, the similarity screening, and the validator engagement terms. The clean room is only a defence if it is documented at the time, which is why provenance is a field and not a policy.</td></tr>
+<tr><td><b>App stores</b></td><td>Removal on a credible intellectual property complaint, with limited process and no adjudication of the merits.</td><td>Days. Sometimes hours.</td><td>A prepared counter-notice pack: provenance export, the clean-room policy, the licence register. Plus the structural answer: the product is web-first, so app store removal is damaging rather than fatal. <b>This is the single most likely way the venture is interrupted.</b></td></tr>
+<tr><td><b>Payment processors</b></td><td>Freeze or termination on brand-risk or category-risk grounds, often triggered by press rather than by a complainant.</td><td>Days, and sometimes without warning.</td><td>More than one processor from the start, a documented compliance posture, and a product that is not classifiable as adult or age-restricted content. Redundancy here is cheap insurance against an outage nobody can appeal.</td></tr>
+<tr><td><b>Ofcom</b></td><td>Information request, then enforcement. <span class="mark verified">Verified</span> Penalties are the higher of £18m or 10% of qualifying worldwide revenue, and where non-compliance continues Ofcom may seek court-ordered business disruption: UK ISPs blocking the service, app stores removing the app, payment providers ceasing to process.</td><td>Months to enforcement; disruption measures follow non-compliance.</td><td>The Online Safety Act scoping decision and its trigger list in <a href="05-safety-privacy-regulatory.html">05</a>, written down in advance with the evidence for it.</td></tr>
+<tr><td><b>ICO</b></td><td>Audit, then enforcement. <span class="mark verified">Verified</span> Fines to the higher of £17.5m or 4% of global annual turnover; the ICO has stated it will audit edtech providers.</td><td>Months.</td><td>The age assurance design, the lawful basis analysis, the DPIA, and the data model in <a href="05-safety-privacy-regulatory.html">05</a>.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The conclusion a lawyer should take from that table, and it is not the one a founder expects: <b>the legal merits of our position have almost no bearing on the events most likely to stop us.</b> An app store does not weigh the clean-room policy. A processor does not read the licence. What they respond to is a complaint and a risk assessment, and what answers them is a pre-assembled evidence pack and a second supplier. Both are cheap and both are listed at M1 in <a href="11-roadmap.html">11 Roadmap</a>.</p>
+
+<h2 id="d13">Why the offshore strategy was considered and dropped</h2>
+
+<p class="lede">Decision D13. The Indian operating company is retained for ordinary tax and capital reasons. The "fight it in India" rationale is dropped, because the theory runs the opposite way to how it was first read.</p>
+
+<p>Three verified findings kill it, and each one is independently sufficient.</p>
+
+<div class="claim">
+<p><b>Section 44A, Code of Civil Procedure 1908.</b> The United Kingdom is a notified reciprocating territory and the English High Courts are notified superior courts (Notification F.34-I/52-L, 1 March 1953). A UK superior court money decree is executable in India as if passed by an Indian District Court, without a fresh suit, subject only to the Section 13 conclusiveness tests. The Delhi High Court has enforced an ex parte English Commercial Court judgment for USD 47m on this basis.</p>
+<span class="tag verified">Verified<span class="src">Verified: a UK judgment reaches you in India without a fresh suit</span></span>
+</div>
+
+<div class="claim">
+<p>The Act reaches providers with links to the UK regardless of where they are established. Between 1 April 2025 and 30 June 2026 Ofcom imposed penalties totalling £6.1m on nine companies that were either not UK-based or did not state their jurisdiction. It has pursued business disruption measures, including a possible UK access block, against a non-compliant overseas provider fined £950,000.</p>
+<span class="tag verified">Verified<span class="src">Verified: the Online Safety Act does not care where you are established</span></span>
+</div>
+
+<p>And third, the point made <a href="#india">above</a>: Indian personality-rights jurisprudence is the most aggressive in the world on AI likeness, and <i>Sonakshi Sinha</i> reached AI chatbots specifically in March 2026. An Indian base is not a refuge from a persona claim; it is a convenient forum for one.</p>
+
+<p>So the offshore theory fails three ways at once. A UK money judgment follows you home under Section 44A. A UK regulator can disrupt the service without ever obtaining one, by reaching the ISPs, app stores and payment providers that the business actually depends on. And the jurisdiction chosen as a shield is the jurisdiction most willing to restrain exactly this product.</p>
+
+<p>What remains true, and is the reason D13 keeps the entity: Bengaluru is a sound place to build from for cost, talent and capital reasons. Those reasons are honest and they are the only ones that should be given to an investor.</p>
+
+<h2 id="zero">Zero-persona operation, proved rather than asserted</h2>
+
+<p class="lede">D11 is a hard requirement, and this is where the proof of it belongs, because it is a rights property before it is a product property. The claim is: <b>no single unsigned contract can block launch, and no signed contract ending can stop the service.</b></p>
+
+<p>What makes it true is structural rather than aspirational.</p>
+
+<ol>
+<li><b>Every preset is an archetype by construction.</b> A licensed preset is an archetype's parameter vector with a name attached and, at most, twelve fitted values. Remove the name and the vector and an archetype remains. The two worked vectors in <a href="02-style-engine.html#set">02</a> are archetypes, not licensed presets, and they are the ones used throughout this repository.</li>
+<li><b>The catalogue ships archetypes on day one regardless.</b> D14 requires named presets and unnamed archetypes to ship simultaneously, so the archetype path is not a fallback that has never been exercised; it is half the launch product and half the experiment.</li>
+<li><b>The fallback target is defined per preset.</b> Every licensed preset names the archetype it degrades to. The kill switch has somewhere to send a live session at T+16 minutes because that target is a required field, not a runtime decision.</li>
+<li><b>No content depends on a persona.</b> The item bank, the verifier and the accuracy floor sit entirely in the content plane. Personas live in the style plane. Every accuracy promise in <a href="01-product.html#promise">01</a> holds with zero personas signed, because none of them references a persona.</li>
+<li><b>The test exists.</b> <span class="mark decided">Decision D23</span> T-ZERO-01: the full regression battery T-REG-01 is run with the persona registry empty, on every release, as a blocking check. If the product cannot pass its own content tests with no personas configured, D11 has quietly stopped being true and the release does not ship. <b>Status: specified, not run.</b></li>
+</ol>
+
+<p>Point 5 is the difference between proving and asserting. Without a blocking test that runs with an empty registry, D11 degrades into a claim that was true on the day it was written, and the first persona-dependent code path added under delivery pressure would falsify it silently.</p>

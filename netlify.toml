@@ -1,9 +1,34 @@
+# AI.tutor design vault
+#
+# publish is the repository root, not docs/, because evidence/ is a sibling of
+# docs/ and every claim carrying a Verified marker links to the evidence
+# register. Publishing docs/ alone makes that register 404, which silently
+# breaks the rule the whole vault rests on. contracts/ is linked from the
+# documents for the same reason.
+
 [build]
-  publish = "docs"
+  publish = "."
   command = "python3 src/build.py"
 
+# Site root serves the contents page.
 [[redirects]]
   from = "/"
-  to = "/index.html"
+  to = "/docs/index.html"
   status = 200
 
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # No JavaScript and no inline styles anywhere in this site, so both can be
+    # shut off entirely rather than loosened with unsafe-inline.
+    Content-Security-Policy = "default-src 'none'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'"
+
+# The contracts are markdown by design. Serve them as text so they open in the
+# browser instead of downloading, since they get sent to a creator to read.
+[[headers]]
+  for = "/contracts/*"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"

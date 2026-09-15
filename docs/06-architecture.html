@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Architecture, AI.tutor design vault</title>
-<meta name="description" content="Models, retrieval, data model, kill switch, evaluation harness.">
+<meta name="description" content="The turn pipeline, the verifier, kill switch mechanics, cost per session.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,111 +14,305 @@
   <span class="repo">AI.tutor design vault, revised September 2026</span>
   <a href="index.html">Contents</a>
 </header>
+<details class="legend">
+<summary>How claims are marked</summary>
+<div class="legend-body">
+<p>Nothing factual in this vault is unmarked. Markers sit in the right margin, or inline where a single sentence carries one.</p>
+<ul>
+<li><span class="mark verified">Verified</span> Checked September 2026 against the named source, registered in <a href="../evidence/sources.html">the evidence register</a>.</li>
+<li><span class="mark assumed">Assumed</span> Reasoned, not checked. Shapes the plan and could be wrong.</li>
+<li><span class="mark open">Open</span> A question for a lawyer, deliberately unanswered here.</li>
+<li><span class="mark decided">Decision</span> A choice taken here, recorded in the <a href="decision-ledger.html">decision ledger</a>.</li>
+<li><span class="mark unknown">Unknown</span> A number the plan needs and does not have. Never filled with a plausible substitute.</li>
+</ul>
+</div>
+</details>
 <h1>Architecture</h1>
-<p class="standfirst">Buy the model. Own the item bank, the style objects and the verification layer. The moat is validated content and outcome evidence, not weights.</p>
+<p class="standfirst">Buy the model. Own the item bank and the verification layer. The single architectural commitment everything else follows from is that the model never chooses what it is grounded in: retrieval happens before generation, deterministically, so the set of permitted sources is known before a word is produced and can be checked against afterwards.</p>
+<dl class="meta">
+<dt>Document</dt><dd>06 of 14</dd>
+<dt>Status</dt><dd>Specification. Nothing described here has been built. No number below has been measured.</dd>
+<dt>Written</dt><dd>14 September 2026</dd>
+<dt>Moat</dt><dd>The examiner-validated item bank and the outcome evidence. Not the model.</dd>
+<dt>Constraint source</dt><dd>Every choice below cites the decision or finding that forced it.</dd>
+</dl>
 
-<h2>Shape</h2>
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#planes">Five planes, and which ones we own</a></li>
+<li><a href="#turn">The turn pipeline</a></li>
+<li><a href="#verifier">The verifier, which is the product</a></li>
+<li><a href="#figures">Figures are rendered, not generated</a></li>
+<li><a href="#derived">Papers and grade ranges: deterministic</a></li>
+<li><a href="#data">Data model</a></li>
+<li><a href="#killswitch">Kill switch mechanics</a></li>
+<li><a href="#model">Model choice and the vendor problem</a></li>
+<li><a href="#cost">Cost per session, built up rather than assumed</a></li>
+<li><a href="#harder">What each choice makes harder later</a></li>
+</ol>
+</details>
 
-<p>A hosted frontier model behind an abstraction thin enough to swap providers, with retrieval over the item bank, a style-card layer generated from the style object, and a safety layer that sits outside both and cannot be reached by either.</p>
+<h2 id="planes">Five planes, and which ones we own</h2>
 
-<section class="visual" aria-labelledby="turn-map-title">
-  <h3 id="turn-map-title">One learner turn, with the hard boundary visible</h3>
-  <p class="lede">Safety appears before and after generation. The style object cannot enter either safety check.</p>
-  <div class="system-flow" role="img" aria-label="Student message flows through safety check, objective resolution, retrieval, style card, generation, second safety check and logging.">
-    <div class="step safety"><b>01 Safety</b>Screen the message before any academic or style layer loads.</div>
-    <div class="step"><b>02 Objective</b>Resolve one teachable objective, or ask rather than guess.</div>
-    <div class="step"><b>03 Retrieval</b>Use only live, provenanced items for that objective.</div>
-    <div class="step"><b>04 Style card</b>Render the active, revocable teaching-style object.</div>
-    <div class="step"><b>05 Generate</b>Produce a response carrying the retrieved item IDs.</div>
-    <div class="step safety"><b>06 Safety</b>Screen the response with no reference to the style object.</div>
-    <div class="step"><b>07 Log</b>Record the turn, items, style version and evaluation observables.</div>
-  </div>
-  <p class="visual-caption">Green marks the layer that must remain isolated from style. Each other stage exists to make accuracy and withdrawal auditable.</p>
-</section>
-
+<div class="tw">
 <table>
-<thead><tr><th>Layer</th><th>Choice</th><th>Why</th><th>What it makes harder</th></tr></thead>
+<thead><tr><th>Plane</th><th>Contents</th><th>Build or buy</th><th>Why</th></tr></thead>
 <tbody>
-<tr><td>Reasoning model</td><td>Hosted frontier model, provider-abstracted at the message level</td><td>Capability per pound is falling; owning weights buys nothing here and forecloses upgrades</td><td>Per-session cost is someone else's pricing decision</td></tr>
-<tr><td>Style</td><td>Structured object, rendered to a style card in the system prompt</td><td>Revocable in seconds, auditable, gains the exemplar field without rework</td><td>Lower fidelity ceiling than fine-tuning</td></tr>
-<tr><td>Content</td><td>Retrieval over the provenanced item bank; nothing ungrounded reaches a learner</td><td>Traceability is the product claim and the legal defence at once</td><td>Coverage is limited by bank size, so launch scope stays narrow</td></tr>
-<tr><td>Assessment</td><td>Board-specific paper blueprint assembler over live items; mark points and grade estimates versioned separately</td><td>Fresh practice can be audited without copying a board paper or overstating a grade</td><td>Needs board-specific calibrated items and a comparison sample before it can estimate a range</td></tr>
-<tr><td>Safety</td><td>Separate layer, evaluated before and after generation, unreachable from the style object</td><td>A creator's persona must never be implicated in handling a child in distress</td><td>Adds latency to every turn</td></tr>
-<tr><td>Child data</td><td>Controller-shaped under both routes, per document 05</td><td>Keeps the route choice cheap to reverse</td><td>Heavier than Route B strictly needs</td></tr>
+<tr><td><b>Content</b></td><td>Item bank, provenance records, validation records, retrieval, the verifier.</td><td><b>Own, entirely.</b></td><td>The moat. It is a rate-limited human process, not a prompt, and it does not get cheaper when the next model ships. <a href="00-thesis.html#pay">00</a></td></tr>
+<tr><td><b>Style</b></td><td>Persona registry, parameter objects, the card renderer, student adjustments.</td><td><b>Own.</b> It is twelve integers and a template.</td><td>D7, D8. Owning it is what makes the kill switch fifteen minutes rather than a retraining project.</td></tr>
+<tr><td><b>Model</b></td><td>The generator, and the entailment checker.</td><td><b>Buy.</b> Pinned versions, behind an abstraction.</td><td>We will not out-train a frontier lab, and trying would convert a content business into a capital-intensive one.</td></tr>
+<tr><td><b>Safety</b></td><td>Input classifiers, escalation routing, session caps.</td><td>Mixed. Classifiers bought, policy and routing owned.</td><td><a href="05-safety-privacy-regulatory.html#content">05</a>. The policy is the part that cannot be outsourced.</td></tr>
+<tr><td><b>Identity</b></td><td>Age assurance, accounts, billing.</td><td><b>Buy</b> age assurance from a certified provider.</td><td><a href="05-safety-privacy-regulatory.html#age">05</a>. We want a boolean, not an identity document sitting in our database.</td></tr>
 </tbody>
 </table>
-
-<h2>Paper assembly and calibration</h2>
-
-<p>The assessment service receives a blueprint rather than an open-ended request: selected exam board (for example AQA or Pearson Edexcel), qualification, specification version, tier, objectives, marks, time and target difficulty mix. It rejects any item that is not validated and calibrated for that exact board-version-tier combination, then emits the paper alongside the item-level validated mark scheme and stores the exact item IDs and versions used. A paper is therefore reproducible even after its items are retired.</p>
-
-<p>A separate calibration record connects observed learner performance to item and paper difficulty for one board-version-tier combination. The grade-range service reads only that record and refuses to run when the board match, sample, blueprint match or specification version is inadequate. It returns a range with the calibration version and evidence date, never a single grade or a label that resembles an awarding organisation's boundary.</p>
-
-<div class="claim">
-  <p>The important separation is between generation and estimation. The model may help present feedback, but it cannot decide a mark scheme, difficulty or grade range from its own confidence. Those claims are grounded in validated item records and observed performance, with an explicit no-estimate state when the evidence is thin.</p>
-  <span class="tag decided">Architecture position<span class="src">Implements the assessment controls in document 03</span></span>
 </div>
 
-<h2>The turn</h2>
+<h2 id="turn">The turn pipeline</h2>
 
-<p>What happens between a student sending a message and seeing a reply. Stated as a sequence because the ordering carries the guarantees.</p>
+<p class="lede">The load-bearing property: <b>the model never retrieves.</b> The composer selects the permitted sources deterministically from the objective before generation begins. The model is given those sources and cannot reach outside them, so the set to check against is known in advance rather than reconstructed from whatever the model decided to look at.</p>
+
+<pre><code>session state
+      |
+      v
+[1] COMPOSER            deterministic, no model call
+      |  selects objective from the learner's mastery model
+      |  retrieves the objective's required item-bank nodes (k bounded)
+      |  renders the style card from the preset object  (cine.card/1.0.0)
+      |  assembles turn plan: objective + permitted sources + card + window
+      v
+[2] GENERATOR           model call, pinned version
+      |  produces a turn with an inline citation on every substantive assertion
+      v
+[3] VERIFIER            four checks, all blocking
+      |  a. citation presence   every substantive assertion cites a permitted node
+      |  b. claim support       the assertion is entailed by the node it cites
+      |  c. scope              nothing outside the declared specification scope
+      |  d. mathematics        every symbolically checkable step, checked by CAS
+      v
+[4] GATE
+      |-- pass --> render to learner --> log turn record
+      |-- fail --> fallback turn (validated item verbatim) --> log + adjudication queue
+      v
+[5] LOGGER              turn record: citations, verdicts, extracted style signatures
+</code></pre>
+
+<p>Three consequences worth making explicit, because each one is a property that would be lost by a more conventional design.</p>
 
 <ul>
-<li><strong>Safety pre-check</strong> on the student's message, against the student's age band. Outside academic scope routes to the escalation path in document 05 and the turn ends here. The style object is not loaded and cannot influence this.</li>
-<li><strong>Objective resolution</strong>: the message plus session state resolves to one objective_ref. Unresolvable means asking, not guessing.</li>
-<li><strong>Retrieval</strong> of live items on that objective. Items not in state live are invisible to retrieval, which is where the provenance rule is actually enforced.</li>
-<li><strong>Style card render</strong> from the style object currently in force, including any student dial adjustments.</li>
-<li><strong>Generation</strong>, conditioned on retrieved items and the style card, with the item ids carried through so the reply is traceable.</li>
-<li><strong>Safety post-check</strong> on the output, again with no reference to the style object.</li>
-<li><strong>Log</strong>: turn, objective, item ids used, style object version, conformance observables. This log is what makes both the accuracy claim and the style claim checkable after the fact.</li>
+<li><b>Grounding is decided before generation, not inferred after it.</b> An architecture where the model calls a search tool cannot tell, afterwards, whether a claim came from a retrieved document or from the model's own weights. Ours can, because the permitted set is fixed at step 1.</li>
+<li><b>The fallback needs no model.</b> Step 4's failure path serves examiner-written material directly from the bank. That is why the item bank is authored as standalone readable material, per <a href="03-curriculum-and-content.html#below">03</a>: validated-item-only mode has to be a usable product, not a stub.</li>
+<li><b>Style cannot reach the content plane.</b> The style card is an input to step 2 only. It is not visible to step 1's retrieval or to step 3's checks. That is what makes T-STY-03, style changes the teaching and never the truth, an architectural property rather than a hope.</li>
 </ul>
 
-<div class="claim">
-  <p>The isolation of the safety layer from the style object is a hard architectural boundary, not a convention, and it is tested rather than asserted. The test: run the full safety evaluation set under all five archetypes and every live named preset, and require identical outcomes. A divergence is a release blocker.</p>
-  <span class="tag decided">Position<span class="src">Follows from document 05. Non-negotiable</span></span>
-</div>
+<h2 id="verifier">The verifier, which is the product</h2>
 
-<h2>Kill switch</h2>
+<p>Promise P2 in <a href="01-product.html#promise">01</a> is the business. The verifier is the thing that keeps it, so it gets specified rather than described.</p>
 
-<p>Because no creator material is ingested and no weights carry style, revoking a preset is a record update rather than a retraining job. The 60 minutes promised in document 04 decomposes as follows, which is what makes the number checkable rather than aspirational.</p>
-
+<div class="tw">
 <table>
-<thead><tr><th>Step</th><th>What has to happen</th><th>Budget</th></tr></thead>
+<thead><tr><th>Check</th><th>Mechanism</th><th>Failure action</th></tr></thead>
 <tbody>
-<tr><td>Mark revoked</td><td>Preset record state set to revoked; retrieval and render paths exclude it on next read</td><td>Immediate</td></tr>
-<tr><td>New sessions</td><td>Preset absent from the catalogue; students on it default to the nearest archetype</td><td>Immediate</td></tr>
-<tr><td>Sessions in progress</td><td>Style card re-rendered at the next turn; the session continues under the archetype and the student is told the style changed</td><td>One turn</td></tr>
-<tr><td>Cached style cards</td><td>Invalidate by preset key</td><td>Cache TTL, which sets the ceiling</td></tr>
-<tr><td>Generated artefacts</td><td>Any saved summary or export attributing the preset is relabelled to the archetype</td><td>Batch, within the window</td></tr>
-<tr><td>Confirmation</td><td>Written confirmation to the creator with the revocation timestamp</td><td>Same day</td></tr>
+<tr><td><b>a. Citation presence</b></td><td>Deterministic parse. Every sentence classified as a substantive curricular assertion must carry a citation to a node in the permitted set.</td><td>Block. This is a format failure and is cheap to detect.</td></tr>
+<tr><td><b>b. Claim support</b></td><td>Entailment check of the assertion against the cited node. A model call, on a pinned cheaper model, with the node and the assertion only.</td><td>Block, and queue for human adjudication. Every automated failure is adjudicated, which is what makes T-GND-01 measurable rather than self-reported.</td></tr>
+<tr><td><b>c. Scope</b></td><td>Classifier against the declared objective set.</td><td>Block. The learner sees the refusal in <a href="01-product.html#blocked">01</a>.</td></tr>
+<tr><td><b>d. Mathematics</b></td><td>Computer algebra system on every symbolically checkable step. Deterministic, local, no model call.</td><td>Block. A CAS disagreement is never overridden by the generator.</td></tr>
 </tbody>
 </table>
-
-<div class="claim">
-  <p>The binding constraint is the style-card cache TTL, which is therefore set below the promise rather than tuned for cost. The 60-minute figure is still a design target and not a measurement; it becomes measurable the moment the caching layer exists, and it should be measured before the promise is made to any creator in writing.</p>
-  <span class="tag assumed">Assumed<span class="src">Decomposed and bounded, not yet measured</span></span>
 </div>
 
-<h2>Evaluation harness</h2>
+<div class="claim">
+<p>The verifier runs on a <b>different pinned model</b> from the generator, and check (d) runs on no model at all. A verifier that shares the generator's weights shares its errors, and the correlated-failure mode is exactly the one that produces a confident wrong answer that passes its own check. <b>What it makes harder:</b> two vendor relationships to qualify instead of one, two regression surfaces under D22, and a second cost line per turn.</p>
+<span class="tag decided">Decision D27<span class="src">14 September 2026</span></span>
+</div>
 
-<p>Three suites, run on every release, reported together.</p>
+<div class="claim">
+<p><b>The gate-fire rate:</b> the proportion of generated turns the verifier blocks. Not known and not guessable. It sets the cost of P2 twice over, once in wasted generation and once in learner experience, since every blocked turn is a question a free chatbot would have answered fluently. It is measured from the first frozen-battery run at M2 in <a href="11-roadmap.html">11 Roadmap</a>, and it is the first number to look at when that run completes.</p>
+<span class="tag unknown">Unknown<span class="src">and it is the number that decides whether P2 is affordable</span></span>
+</div>
 
-<ul>
-<li><strong>Accuracy</strong> against live items, human-scored on a sample per document 03.</li>
-<li><strong>Style conformance</strong> against the style object in force, on the observables in document 02, with the transcripts in document 01 as reference behaviour.</li>
-<li><strong>Safety isolation</strong>, requiring identical safety outcomes across all styles.</li>
+<h2 id="figures">Figures are rendered, not generated</h2>
+
+<div class="claim">
+<p>Diagrams are produced by <b>deterministic rendering from a structured figure specification stored in the item bank</b>, not by an image model. A number line, an axis pair, a labelled triangle and a function plot are all describable as data, and rendering them is a template.</p>
+<span class="tag decided">Decision D28<span class="src">14 September 2026</span></span>
+</div>
+
+<p>Three constraints converge on this and any one of them would be sufficient.</p>
+
+<ul class="tight">
+<li><b>Correctness.</b> A generated image cannot be verified by the verifier. A figure rendered from validated data inherits the validation of the item, so <code>visual_density</code> in <a href="02-style-engine.html">02</a> can be a real style dimension without opening a hole in P2.</li>
+<li><b>Cost.</b> Image generation is the most expensive thing a turn could do. Rendering is effectively free, which is why the <code>visual_density</code> ceiling in <a href="02-style-engine.html#adjust">02</a> is a modest constraint rather than the dominant cost line.</li>
+<li><b>Provenance.</b> <span class="mark verified">Verified</span> The IT Amendment Rules 2026 require prominent labelling and permanent provenance metadata that cannot be stripped for synthetically generated information. A deterministically rendered figure carries its source item identifier in its metadata by construction. See <a href="04-rights-dossier.html#india">04</a>.</li>
 </ul>
 
-<div class="claim">
-  <p>Still unwritten: the data model in detail, the retrieval strategy, assessment-calibration thresholds, cost per session, and the latency budget. Cost per session is the one that matters commercially, and it is blocked on the same launch-scope decision as documents 10 and 11, because average items retrieved per turn and the assessment-calibration workload both depend on bank density.</p>
-  <span class="tag open">Open<span class="src">Blocked on the scope decision in document 03</span></span>
+<p>What this costs: the figure vocabulary is finite, and a topic needing a figure type nobody has built is blocked on engineering rather than on content. The vocabulary needed for the Algebra strand is small, which is a further reason that strand is the launch scope.</p>
+
+<h2 id="derived">Papers and grade ranges: deterministic, no model call</h2>
+
+<p class="lede">Practice papers and the provisional grade range are computed, not generated. Neither involves a model call, and that single property is what lets them inherit the item bank's validation instead of needing a verification story of their own.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Component</th><th>Input</th><th>Method</th><th>Why it is not a model call</th></tr></thead>
+<tbody>
+<tr><td><b>Paper assembler</b></td><td>The paper's structural specification, plus <code>live</code> items with mark, command-word and difficulty metadata.</td><td>Constraint satisfaction over the bank: hit the mark total, the coverage profile, the command-word mix and the difficulty distribution, excluding items the learner has seen recently.</td><td>A generated paper would need every item verified afresh. An assembled paper contains only items that are already validated, so the paper's correctness is a property of the bank. T-PAP-01 checks the assembly, not the content.</td></tr>
+<tr><td><b>Grade range</b></td><td><code>MasteryState</code>: unaided-check results on validated items.</td><td>An arithmetic mapping from performance to a band, with an evidence-sufficiency gate below which nothing is shown.</td><td>Asking a model to estimate a grade would produce a fluent, unfalsifiable number. An arithmetic mapping can be calibrated against real outcomes by T-CAL-01, and can be shown to be wrong.</td></tr>
+</tbody>
+</table>
 </div>
+
+<p>The consequence worth stating: neither feature adds a cost line in <a href="10-economics.html">10</a>, because neither consumes vendor tokens. They are close to free at the margin, which is unusual for the two features most visible to a paying parent.</p>
+
+<h2 id="data">Data model</h2>
+
+<pre><code>Objective        id, strand, dfe_content_ref, tier, prerequisites[], must_warn[]
+Item             id, objective_id, kind, body, worked_solution, figure_spec?,
+                 provenance{...}, status            // 03 defines provenance
+ValidationRecord item_id, validator_id, date, result, notes, revalidate_after
+
+Preset           id, kind(archetype|licensed), display_name, fallback_archetype_id,
+                 enabled                            // <-- the kill switch flag
+StyleObject      preset_id, dimensions{12}, register_note, exemplars(null),
+                 renderer_version, provenance{...}
+CreatorLicence   id, preset_id, term_start, term_end, schedules[], status
+
+Learner          id, account_id, year_group, preset_id, adjustments{}
+MasteryState     learner_id, objective_id, attempts, unaided_pass, last_seen, due
+GradeRange       learner_id, band_low, band_high, computed_at, n_items,
+                 spec_coverage, sufficient(bool), calibrated(bool=false)
+Paper            id, spec_id, item_ids[], mark_total, assembled_at, checks{}
+Session          id, learner_id, objective_id, preset_snapshot, started, ended
+Turn             id, session_id, role, text, citations[], verdicts{a,b,c,d},
+                 gate_result, style_signatures{12}
+Escalation       session_id, category, raised_at, reviewed_by, reviewed_at, action
+
+Account          id, verification{bool, method, provider_ref, timestamp}, billing
+</code></pre>
+
+<p>Four details that are not obvious and are each doing work:</p>
+
+<ul>
+<li><code>Preset.enabled</code> is the entire kill switch. One boolean, read per request.</li>
+<li><code>Session.preset_snapshot</code> records the style object as it was at session start, so a transcript can be explained after a preset changes. <b>For a licensed preset it is purged on the same seven-day line as the object itself</b>, and the transcript thereafter carries only the neutral preset identifier. An earlier draft had the snapshot surviving termination as company work product; that is the exact retention the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a> rejects, and a snapshot that outlived the licence would have made the deletion promise false while appearing to keep it.</li>
+<li><code>Turn.style_signatures</code> is written at logging time, which is what makes T-STY-01 a measurement over live traffic rather than a separate test harness.</li>
+<li><code>Account.verification</code> holds a boolean and a reference. There is no date of birth field in this schema, anywhere, by design.</li>
+</ul>
+
+<h2 id="killswitch">Kill switch mechanics</h2>
+
+<p>The service levels are in <a href="04-rights-dossier.html#killswitch">04</a>. This is what makes them achievable, and the fifteen-minute figure is a consequence of exactly one design choice repeated in several places: <b>nothing derived from a persona is cached for longer than sixty seconds, and nothing derived from a persona is ever baked into an artefact.</b></p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Where persona data could persist</th><th>Bound</th><th>How it is enforced</th></tr></thead>
+<tbody>
+<tr><td>The registry flag itself.</td><td>Immediate.</td><td>Single write. No deployment.</td></tr>
+<tr><td>Application cache of the preset.</td><td>60 seconds.</td><td>Hard TTL, set in one place, asserted by a test.</td></tr>
+<tr><td>In-flight session, already holding a rendered card.</td><td>Next turn, ceiling 16 minutes.</td><td>The flag is re-read at every turn, not at session start. Falls back to <code>fallback_archetype_id</code>.</td></tr>
+<tr><td>CDN, catalogue, marketing, app store metadata.</td><td>24 hours.</td><td>Scripted purge, rehearsed rather than assembled on the day.</td></tr>
+<tr><td>Primary stores: style object, card, name, likeness assets, <b>and every <code>preset_snapshot</code> referencing the preset</b>.</td><td>7 days.</td><td>The renderer is the only path by which a card is <i>produced</i>, and the snapshot is the only place a produced vector is <i>retained</i>. Both are deleted, or the promise is not kept.</td></tr>
+<tr><td>Backups.</td><td>35 days.</td><td>Retention cycle. Stated in the licence rather than omitted.</td></tr>
+<tr><td><b>Model weights.</b></td><td><b>Not applicable.</b></td><td><b>D8.</b> No LoRAs, no fine-tunes, no adapters carrying persona style. There is nothing to retrain, which is the only reason any of the above is credible.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p>The kill switch is <b>rehearsed quarterly against a live archetype</b> and the elapsed time is recorded. An untested switch is a claim, and this one is a contractual commitment to a creator. The rehearsal is cheap because D11 guarantees the product keeps running with the preset disabled.</p>
+<span class="tag decided">Decision D29<span class="src">14 September 2026</span></span>
+</div>
+
+<h2 id="model">Model choice and the vendor problem</h2>
+
+<p><b>Bought, pinned, abstracted, and qualified before use.</b> No specific vendor is named in this document, for a reason that is not evasion.</p>
+
+<div class="claim">
+<p>Model prices, context limits and capability at the relevant tasks are <b>not in the verified findings</b> and are not stated here from memory. They change frequently enough that a number written today would be wrong before the item bank exists, and a plausible-looking cost per session built on a half-remembered price is exactly the kind of figure this repository is meant not to contain.</p>
+<p><b>What to do instead:</b> the selection procedure below is vendor-neutral and runs at M2, when there is a frozen battery to run it against. That is the point at which prices should be gathered and written into <a href="10-economics.html">10</a>.</p>
+<span class="tag unknown">Unknown<span class="src">and deliberately not filled in</span></span>
+</div>
+
+<h3>Selection procedure</h3>
+
+<ol class="tight">
+<li><b>Gate on contract terms first.</b> D24: zero retention of prompts and outputs, no training on our data. A vendor failing this is disqualified before quality is considered.</li>
+<li>Run the frozen battery T-REG-01 on each candidate and measure ACC-2, ACC-3, ACC-4, the gate-fire rate, and T-STY-01 conformance.</li>
+<li>Measure cost per session on the same battery, which is the only honest way to get the number.</li>
+<li>Pin the winning version. D22: a vendor update is a change that must pass the battery before reaching a learner.</li>
+</ol>
+
+<p>Note the asymmetry the pinning creates, because it is a real cost. We will run behind the frontier, and we pay to qualify every upgrade. <span class="mark verified">Verified</span> The free tools are improving continuously and at no cost to the user, so running behind is a competitive expense as well as an operational one. It is accepted because the alternative is a vendor silently moving ACC-3 in the middle of exam term, which is the failure the entire correctness promise exists to prevent.</p>
+
+<h2 id="cost">Cost per session, built up rather than assumed</h2>
+
+<p>The structure first, then the honest statement of what is missing.</p>
+
+<pre><code>cost_per_session
+  = turns x [ generate(ctx_tokens, out_tokens)          // generator call
+            + verify(node_tokens + assertion_tokens) ]  // entailment call
+  + figures x render_cost                               // ~0, deterministic (D28)
+  + cas_checks x 0                                      // local, no vendor cost
+  + storage + telemetry                                 // negligible per session
+
+where, per turn:
+  ctx_tokens = system_fixed + style_card + k_nodes + window
+                 |             |            |        |
+                 |             |            |        +-- BOUNDED by rolling summary
+                 |             |            +----------- BOUNDED, k fixed per objective
+                 |             +------------------------ BOUNDED, fixed-size card
+                 +--------------------------------------- fixed once written</code></pre>
+
+<div class="claim">
+<p>The conversation window is a <b>rolling summary of bounded size</b>, not the full session history. Every term in <code>ctx_tokens</code> is therefore bounded, which makes cost per turn approximately <b>constant</b> rather than growing with session length.</p>
+<p>This matters more than it looks. With an unbounded window, cost per session grows roughly with the square of the number of turns, and the sessions that cost the most are precisely the long ones with a struggling student, which is the student we most want to keep. A pricing model built on average session cost would then be wrong in the worst direction. <b>What it makes harder:</b> the tutor's recall of early-session detail is lossy, and the summariser becomes a component that can itself be wrong; it sits inside the content plane and its output is not citable evidence.</p>
+<span class="tag decided">Decision D30<span class="src">14 September 2026: bounded context, therefore constant cost per turn</span></span>
+</div>
+
+<h3>What is known and what is not</h3>
+
+<div class="tw">
+<table>
+<thead><tr><th>Term</th><th>Status</th><th>How it gets filled in</th></tr></thead>
+<tbody>
+<tr><td><code>turns</code> per session</td><td><span class="mark unknown">Unknown</span></td><td>Measured from the frozen battery at M2, then from live sessions.</td></tr>
+<tr><td><code>system_fixed</code>, <code>style_card</code>, <code>k_nodes</code>, <code>window</code></td><td><b>Design-controlled.</b> Each is bounded by a decision we make, not by a vendor.</td><td>Countable as soon as the prompts and the card renderer exist. These are the only levers we hold.</td></tr>
+<tr><td><code>generate()</code>, <code>verify()</code> unit prices</td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>Gathered at M2 during model selection. Not written from memory.</td></tr>
+<tr><td>Gate-fire rate, which adds wasted generations</td><td><span class="mark unknown">Unknown</span></td><td>First frozen-battery run.</td></tr>
+<tr><td>Figure, CAS, storage costs</td><td><b>Approximately zero</b> by construction (D28).</td><td>Already settled by the architecture.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>What can be said now without inventing anything: <b>the only cost lever we control is bounded context multiplied by turns</b>, every other term is a price someone else sets, and the architecture is shaped to keep both factors bounded. The arithmetic that follows from this structure, and its consequences for pricing, is in <a href="10-economics.html">10</a>, which identifies the variable that actually dominates and finds that it is not this one.</p>
+
+<h2 id="harder">What each choice makes harder later</h2>
+
+<p>The brief requires this and it is the section a future reader will want most.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Choice</th><th>Forced by</th><th>What it makes harder</th></tr></thead>
+<tbody>
+<tr><td>Deterministic retrieval before generation; the model never searches.</td><td>P2, ACC-2.</td><td>Open-ended questions are structurally hard. A learner asking something adjacent to the objective gets a refusal rather than an answer, and the product cannot grow into a general study assistant without dismantling this.</td></tr>
+<tr><td>Separate verifier model (D27).</td><td>Correlated failure.</td><td>Two vendors, two regression surfaces, a second cost line, and latency added to every turn.</td></tr>
+<tr><td>Figures rendered from specifications (D28).</td><td>Verifiability, cost, provenance.</td><td>A finite figure vocabulary. Subjects needing rich or irregular diagrams, which is most of science, need engineering before they need content. This is a real barrier to the second subject.</td></tr>
+<tr><td>Bounded rolling window (D30).</td><td>Constant cost per turn.</td><td>Lossy recall within a session, and a summariser that can be wrong.</td></tr>
+<tr><td>Pinned models, blocking regression (D22).</td><td>Vendor drift during exam term.</td><td>We run behind the frontier and pay to qualify every upgrade, while competitors get improvements free.</td></tr>
+<tr><td>No fine-tuning, no adapters (D8).</td><td>Revocability, the kill switch.</td><td>Style fidelity is capped at what prompting achieves. If T-STY-02 fails and the diagnosis is fidelity, D8 forecloses the obvious fix and D6 exemplar conditioning is the only route left.</td></tr>
+<tr><td>Zero-retention vendor terms (D24).</td><td>The marketing-site line in <a href="05-safety-privacy-regulatory.html#line">05</a>.</td><td>Narrows the vendor set, possibly to more expensive tiers, and forecloses vendor-side caching optimisations that would have cut cost.</td></tr>
+<tr><td>Papers and grade ranges are computed, never generated (D28's principle, applied; D35 keeps the range ungated).</td><td>Verifiability and cost.</td><td>Item metadata (mark, command word, difficulty) must be right at authoring time, so a metadata error is now a paper defect rather than a cosmetic one. And a structural specification has to be written per board and per paper, which is the work that repeats if a second board is added.</td></tr>
+<tr><td>No persona-dependent code paths (D11, T-ZERO-01).</td><td>Zero-persona operation.</td><td>Every persona feature must degrade gracefully to an archetype, which is a constraint on every future style feature, not a one-time check.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The row to watch is the first one. Deterministic retrieval is what makes the correctness promise enforceable, and it is also the thing that makes the product feel narrow next to a free chatbot that will cheerfully answer anything. That trade is the venture in miniature, it will show up as a retention problem before it shows up anywhere else, and <a href="12-risk-register.html">12</a> treats it accordingly.</p>
 <footer class="pagefoot">
-  <a href="05-safety-privacy-regulatory.html">Safety, privacy, regulatory</a>
-  <span class="stamp">Built 12 September 2026</span>
+  <a href="05-safety-privacy-regulatory.html">Safety, privacy and regulatory</a>
+  <span class="stamp">Built 14 September 2026</span>
   <a href="07-route-a-direct-to-parents.html">Route A: direct to parents</a>
 </footer>
 </main>
 </body>
 </html>
-

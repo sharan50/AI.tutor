@@ -1,10 +1,176 @@
 <h1>Economics</h1>
-<p class="standfirst">Not written.</p>
+<p class="standfirst">No forecast, because a forecast built on invented inputs is worse than none. What is here instead: the cost structure derived from the architecture, the identification of the one variable that dominates (derived, not assumed), and the formula that turns the examination calendar into a hard ceiling on what a customer may cost to acquire.</p>
+<dl class="meta">
+<dt>Document</dt><dd>10 of 14</dd>
+<dt>Status</dt><dd>A model with named inputs. Most inputs are unknown and are marked rather than filled.</dd>
+<dt>Written</dt><dd>14 September 2026</dd>
+<dt>Dominant variable</dt><dd>The payback ratio. Derived in <a href="#dominant">section 3</a>, not assumed.</dd>
+<dt>Rule</dt><dd>Every number below is from the verified findings, a stated design choice, or marked unknown. There is no third kind.</dd>
+</dl>
 
-<div class="claim">
-  <p>This document is blocked rather than skipped. It needs four inputs that do not exist yet: cost per session from document 06, cost per assured account from document 05, examiner validation cost per item and paper blueprint from document 03, and the response volume needed to calibrate estimated grade ranges separately for each board, tier and specification version. Writing it before those exist would produce a model that looks authoritative and is fictional, which is worse than an empty page.</p>
-  <span class="tag open">Open<span class="src">Blocked on 03, 05 and 06</span></span>
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#rule">The rule this document follows</a></li>
+<li><a href="#cost">Cost per session, from the architecture</a></li>
+<li><a href="#dominant">The variable that dominates, derived</a></li>
+<li><a href="#ceiling">The acquisition ceiling, and the Year 10 result</a></li>
+<li><a href="#sensitivity">Sensitivity</a></li>
+<li><a href="#content">Examiner validation as a line item</a></li>
+<li><a href="#price">Price points</a></li>
+<li><a href="#fill">What has to be measured, and in what order</a></li>
+</ol>
+</details>
+
+<h2 id="rule">The rule this document follows</h2>
+
+<p class="lede">A financial model is the easiest place in a venture document to put a number that nobody checks and everybody later repeats. Every quantity below is one of exactly three things: a figure from the verified findings, a design choice made in this repository, or an <span class="mark unknown">Unknown</span> that is named and left empty. There is no fourth category and there are no illustrative figures, because illustrative figures get quoted.</p>
+
+<h2 id="cost">Cost per session, from the architecture</h2>
+
+<p>Built up in <a href="06-architecture.html#cost">06</a> rather than assumed. The structure, restated because the rest of this document depends on it:</p>
+
+<pre><code>cost_per_session = turns x [ generate(ctx, out) + verify(node + assertion) ]
+                 + figures x ~0        (D28: deterministic rendering)
+                 + cas   x  0          (local)
+                 + storage, telemetry  (negligible)
+
+ctx = system_fixed + style_card + k_nodes + window     ALL BOUNDED (D30)</code></pre>
+
+<div class="tw">
+<table>
+<thead><tr><th>Term</th><th>Who controls it</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td><code>system_fixed</code>, <code>style_card</code>, <code>k_nodes</code>, <code>window</code></td><td><b>Us.</b> Each bounded by a design decision.</td><td>Countable as soon as the prompts exist. The only levers we hold.</td></tr>
+<tr><td><code>turns</code> per session</td><td>Partly us, partly the learner.</td><td><span class="mark unknown">Unknown</span>. Measured at M2 from the frozen battery.</td></tr>
+<tr><td>Unit prices for <code>generate</code> and <code>verify</code></td><td><b>The vendor.</b></td><td><span class="mark unknown">Unknown</span>. Gathered at M2 during model selection, per <a href="06-architecture.html#model">06</a>. Deliberately not written from memory.</td></tr>
+<tr><td>Gate-fire rate (wasted generations)</td><td>Emergent.</td><td><span class="mark unknown">Unknown</span>. First frozen-battery run.</td></tr>
+</tbody>
+</table>
 </div>
 
-<p>What it must contain when written: cost per session built up from the architecture rather than assumed; price points set against the &pound;25 to &pound;45 GCSE tutoring rate; examiner validation and board-specific calibration as real line items rather than overhead; and identification of the single variable that dominates the model, which is not yet known and should not be guessed.</p>
+<p>Two structural properties follow from the architecture and hold whatever the vendor prices turn out to be. First, <b>cost per turn is approximately constant</b> rather than growing with session length, because D30 bounds every term in the context. Second, <b>the struggling learner is expensive linearly, not quadratically</b>, which matters because the struggling learner is the one the product exists for and is the one an unbounded-context design would have made uneconomic.</p>
 
+<h2 id="dominant">The variable that dominates, derived</h2>
+
+<p>Contribution per acquired household over one examination cycle:</p>
+
+<pre><code>C = (p - c) x m  -  CAC  -  V
+
+  p   = price per month
+  c   = variable cost per month  (sessions x cost_per_session, plus payment processing)
+  m   = retained months
+  CAC = acquisition cost per acquired household
+  V   = one-off age verification cost per account   (Route A only)</code></pre>
+
+<p>Price and duration enter only through the product <code>(p - c) x m</code>. A one per cent change in <code>m</code> therefore moves contribution by exactly as much as a one per cent change in <code>(p - c)</code>. <b>Neither dominates the other mathematically,</b> and any document claiming that price, or retention, is "the key driver" has skipped this step.</p>
+
+<p>What breaks the symmetry is not the arithmetic. It is that three of the five terms are bounded by facts outside our control and two are not bounded at all.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Term</th><th>Bounded by</th><th>How wide is the uncertainty</th></tr></thead>
+<tbody>
+<tr><td><code>p</code></td><td><b>Externally anchored.</b> <span class="mark verified">Verified</span> £25 to £45 an hour at GCSE above; free general tools below.</td><td>Narrow. A monthly price is confined to a band we can already describe.</td></tr>
+<tr><td><code>c</code></td><td><b>Architecture.</b> D30 bounds context; D28 makes figures free.</td><td>Narrow, and reducible by our own work.</td></tr>
+<tr><td><code>m</code></td><td><b>The examination calendar.</b> <span class="mark verified">Verified</span> Year 11 is the peak year at 25%. The need ends on a known date. A September Year 11 acquisition has at most the academic year; a Year 10 acquisition has roughly twice that.</td><td>Bounded above by a hard ceiling that no amount of product quality can lift.</td></tr>
+<tr><td><code>CAC</code></td><td><b>Nothing.</b></td><td>Unbounded. No anchor anywhere in this repository.</td></tr>
+<tr><td><code>V</code></td><td><b>Nothing.</b> Open item OI-5.</td><td>Unbounded, and charged once against a denominator that is already capped.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p>The dominant quantity is the <b>payback ratio</b></p>
+<pre><code>R = (CAC + V) / ((p - c) x m)          viable iff R &lt; 1</code></pre>
+<p>and it dominates for a structural reason rather than a numerical one: <b>its denominator is capped by external facts while its numerator has no anchor at all.</b> Price is anchored by the verified tutoring rate, variable cost is bounded by the architecture, and retained months are capped by the examination calendar. The whole business therefore reduces to a single question, which is whether acquisition plus verification can be brought in under a ceiling that somebody else has already set.</p>
+<span class="tag decided">The finding<span class="src">14 September 2026</span></span>
+</div>
+
+<p>This is why <a href="09-route-comparison.html#rec">condition C2</a> is a kill condition rather than a cost line. <code>V</code> is a one-off subtracted from a capped denominator, so every pound of verification cost removes a pound from the acquisition budget directly. A large verification quote does not make Route A more expensive; it makes it arithmetically impossible, and no amount of product work recovers it.</p>
+
+<h2 id="ceiling">The acquisition ceiling, and the Year 10 result</h2>
+
+<p>Rearranging the viability condition gives the number the business should actually be run against:</p>
+
+<pre><code>max affordable (CAC + V) = (p - c) x m</code></pre>
+
+<p>It cannot be evaluated yet, because <code>p</code>, <code>c</code> and <code>m</code> are not known. But its <i>structure</i> yields a usable result immediately, from verified facts alone.</p>
+
+<div class="claim">
+<p>The ceiling is linear in <code>m</code>. <span class="mark verified">Verified</span> Year 11 is the peak tutoring year at 25% and Year 10 follows at 10%, and the examination calendar gives a Year 10 household roughly twice the retained months of a Year 11 household acquired at the same point in the year.</p>
+<p>So the maximum affordable acquisition cost for a Year 10 household is <b>approximately double</b> that for a Year 11 household, at the same price and variable cost. The two cohorts have different economics and <b>must never be averaged into a single blended CAC target</b>, which is exactly what a conventional consumer subscription dashboard would do by default.</p>
+<p>This holds without knowing a single unknown, because it depends only on the <i>ratio</i> of retained months, and that ratio comes from the calendar.</p>
+
+<div class="claim">
+<p><b>What it does assume, and this is not from the calendar.</b> That a Year 10 household actually pays across roughly twice the span, including through a summer with no examination in it. A household that stops in July and returns in September has a retained-month figure much closer to a Year 11 household's, and the factor collapses toward one.</p>
+<p>So the shape of the result is safe and its magnitude is not. The operational instruction that follows, <b>report the two cohorts separately and never blend them</b>, is sound either way, because it is precisely the measurement that would reveal the factor to be smaller than the calendar suggests.</p>
+<span class="tag assumed">Assumed<span class="src">continuous payment across the summer, OA-21</span></span>
+</div>
+<span class="tag decided">Decision<span class="src">Derived result: you can afford roughly twice as much to acquire a Year 10 household</span></span>
+</div>
+
+<p>The operational consequence is in <a href="07-route-a-direct-to-parents.html#cliff">07</a>: acquire Year 10 deliberately in the autumn, accept a worse conversion rate for the better denominator, and report the two cohorts separately from the first customer rather than adopting the split later when the blended number becomes misleading.</p>
+
+<h2 id="sensitivity">Sensitivity</h2>
+
+<p>Since <code>R</code> is a ratio of a sum to a product, its sensitivities are simple and worth stating plainly, because they say where effort should go.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Move</th><th>Effect on R</th><th>Practical reading</th></tr></thead>
+<tbody>
+<tr><td>Halve <code>CAC + V</code></td><td>Halves R.</td><td>The highest-leverage action available, and the only one not capped by an external fact.</td></tr>
+<tr><td>Double <code>m</code> (Year 10 rather than Year 11)</td><td>Halves R.</td><td>Equally powerful, and achievable by choosing who to acquire rather than by improving anything.</td></tr>
+<tr><td>Raise <code>p</code> by 20%</td><td>Reduces R by less than 20%, because <code>c</code> does not fall.</td><td>Constrained by the verified price anchor above and by free tools below. Real but narrow.</td></tr>
+<tr><td>Halve <code>c</code></td><td>Small effect unless <code>c</code> is large relative to <code>p</code>.</td><td><b>Engineering cost reduction is probably not where the leverage is.</b> Worth stating, because it is the work an engineering-led team will naturally do first.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p>That <code>c</code> is small relative to <code>p</code>, which is what makes engineering cost reduction low-leverage. This follows from the architecture bounding context per turn, but it <b>has not been measured</b> and depends on vendor prices that are unknown. If <code>c</code> turns out to be a large fraction of <code>p</code>, that row reverses and cost engineering becomes the priority. This is the first thing to check when M2 produces a measured cost per session.</p>
+<span class="tag assumed">Assumption<span class="src">and it is load-bearing for the row above</span></span>
+</div>
+
+<h2 id="content">Examiner validation as a line item</h2>
+
+<p>It is a <b>fixed cost, not a variable one</b>, and putting it in the right place changes what it means. Content cost does not scale with learners; it scales with items, once. So it does not appear in <code>c</code> and does not affect <code>R</code>. It sets the number of households the business must reach before it covers its content base.</p>
+
+<pre><code>launch content cost = items x minutes_per_item x examiner_rate / 60   + writer cost
+                    = ~600 x  UNKNOWN        x  UNKNOWN
+
+households needed to cover it = launch content cost / C</code></pre>
+
+<p>Both unknowns are specified in <a href="03-curriculum-and-content.html#cost">03</a>, along with the timed pilot that resolves them. <b><code>minutes_per_item</code> is the more important of the two</b>, and not because of the launch bill. It is the constant that determines whether the content moat extends to a second strand, a second subject and a second board. If it is small, the moat compounds; if it is large, the content strategy is a one-strand business wearing the language of a platform, and the defensibility argument in <a href="00-thesis.html#shelf">00</a> does not survive contact with a spreadsheet.</p>
+
+<h2 id="price">Price points</h2>
+
+<p>The substitution arithmetic against the verified £25 to £45 GCSE tutoring rate is tabulated in <a href="07-route-a-direct-to-parents.html#pricing">07</a> and is not repeated here, to avoid two copies of the same table drifting apart.</p>
+
+<p>The addition this document makes is the reminder that price is the <b>narrowest</b> of the five terms, bounded above by a verified comparator and below by free tools. Effort spent optimising price is effort spent on the term with the least room in it. The same effort spent on <code>CAC + V</code>, or on shifting acquisition toward Year 10, moves <code>R</code> far more.</p>
+
+<div class="claim">
+<p>That parents anchor against tutoring rates rather than against software prices or against free. If the anchor is software, <code>p</code> collapses, the denominator collapses with it, and the affordable acquisition ceiling falls to something no consumer channel can deliver. This is condition C1 in <a href="09-route-comparison.html#rec">09</a> and it is testable with a landing page before anything is built.</p>
+<span class="tag assumed">Assumption<span class="src">carried over from 07 and repeated because the whole model rests on it</span></span>
+</div>
+
+<h2 id="fill">What has to be measured, and in what order</h2>
+
+<p>Ordered by cost to obtain, cheapest first, which is also roughly the order of how likely each is to end the venture.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th class="id">#</th><th>Quantity</th><th>How</th><th>Cost to obtain</th><th>Milestone</th></tr></thead>
+<tbody>
+<tr><td class="id">1</td><td><code>V</code>, verification cost per adult</td><td>Three quotes from certified providers.</td><td>Three phone calls.</td><td>Now</td></tr>
+<tr><td class="id">2</td><td><code>p</code>, and the anchor it sits against</td><td>Landing-page price testing, no product.</td><td>Days, small spend.</td><td>M1</td></tr>
+<tr><td class="id">3</td><td><code>minutes_per_item</code>, <code>examiner_rate</code></td><td>Timed pilot: two examiners, the same 20 items. Rate check against the contract market.</td><td>A few hundred pounds.</td><td>M2</td></tr>
+<tr><td class="id">4</td><td><code>c</code>, and the gate-fire rate</td><td>Frozen battery against candidate models.</td><td>Requires the item bank to exist.</td><td>M2</td></tr>
+<tr><td class="id">5</td><td><code>m</code>, retained months, split by year group</td><td>First cohort, measured over one examination cycle.</td><td>A year, and a live product.</td><td>M5 onward</td></tr>
+<tr><td class="id">6</td><td><code>CAC</code>, split creator-led and not</td><td>First cohort, split by channel from day one.</td><td>Real marketing spend.</td><td>M4</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Items 1 and 2 cost almost nothing and together decide whether Route A is viable at all. Items 5 and 6 cost a year and a product, and they are the ones a conventional plan would guess at in order to produce a forecast. <b>This document does not produce that forecast.</b> The model is built, the inputs are named, and the two cheap measurements that gate everything else are scheduled first.</p>

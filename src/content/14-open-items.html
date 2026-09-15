@@ -1,33 +1,104 @@
 <h1>Open items</h1>
-<p class="standfirst">Everything that is reasoned rather than verified, and everything that needs counsel. Each carries the decision it unblocks and the cost of getting it wrong.</p>
+<p class="standfirst">Everything this design rests on that has not been established. Twelve questions for counsel, one of which we are proceeding ahead of, and twenty-one assumptions that shape the plan and could each be wrong. Each carries the decision it unblocks and the cost of getting it wrong.</p>
+<dl class="meta">
+<dt>Document</dt><dd>14 of 14</dd>
+<dt>Status</dt><dd>Open. Nothing on this page has been resolved.</dd>
+<dt>Written</dt><dd>14 September 2026</dd>
+<dt>Counsel items</dt><dd>12, none answered. Answering them is milestone M1, except OI-3 which we are proceeding ahead of under D34.</dd>
+<dt>Open assumptions</dt><dd>21, none verified.</dd>
+</dl>
 
-<h2>For counsel</h2>
+<h2 id="counsel">For counsel: twelve questions, eleven of them deliberately unanswered</h2>
 
+<p class="lede">No answer, no likely answer, and no range is offered for any of these. Ten are also unacted on; the exception is OI-3, where D34 proceeds under a fixed convention because waiting would mean a product that cannot describe itself. Supplying one would be worse than leaving the question open, because a plausible guess in a repository like this one gets quoted later as though it were advice. Seven come from the brief; five (OI-8 to OI-12) were raised while writing this design and are new. One, OI-3, we are proceeding ahead of under D34, and the row says so.</p>
+
+<div class="tw">
 <table>
-<thead><tr><th>Question</th><th>Unblocks</th><th>Cost of getting it wrong</th></tr></thead>
+<thead><tr><th class="id">#</th><th>Question</th><th>Unblocks</th><th>Cost of getting it wrong</th></tr></thead>
 <tbody>
-<tr><td>Does AQA's AI clause reach runtime retrieval, or only training?</td><td>Whether the clean-room policy is sufficient or must go further</td><td>The exam-alignment claim, which is most of why a parent pays</td></tr>
-<tr><td>Do OCR, WJEC and Eduqas take the same position, and will any board licence for AI use at any price?</td><td>Which board to launch on</td><td>Launching on the one board that would have said yes, or the one that sues</td></tr>
-<tr><td>What exact wording may state which specification a course follows without implying endorsement?</td><td>All marketing copy and in-product labelling</td><td>A trade mark claim on day one of paid acquisition</td></tr>
-<tr><td>Is a one-to-one tutor with no inter-user sharing outside the OSA user-to-user duties, and precisely which feature changes that?</td><td>Whether a full Ofcom compliance programme is needed before launch</td><td>Penalties to the higher of &pound;18m or 10% of qualifying worldwide revenue</td></tr>
-<tr><td>What age assurance method satisfies the ICO for a service whose entire user base is children, at a cost compatible with a consumer price point?</td><td>Pricing, and document 10 entirely</td><td>The Reddit outcome: &pound;14.47m and a rebuild</td></tr>
-<tr><td>Minimum viable creator licence for name and likeness only, and what the exemplar upgrade adds</td><td>First creator signature</td><td>A licence too heavy to sign, or too light to rely on</td></tr>
-<tr><td>Which entity contracts with the parent, and the effect on consumer jurisdiction, UK representative obligations and VAT</td><td>Company structure</td><td>Retrospective VAT and an unenforceable contract</td></tr>
+<tr><td class="id">OI-1</td><td>Does AQA's AI clause reach runtime retrieval, or only training?</td><td>Whether any board-derived material could ever sit in a retrieval index, and therefore whether the clean room is a strategy or merely the current one.</td><td>A product built on an index that has to be destroyed, and a claim we would struggle to defend.</td></tr>
+<tr><td class="id">OI-2</td><td>Do the other boards' positions differ, and does any board licence for AI use at any price?</td><td>Board alignment (D19), and whether a licensed route exists at all.</td><td>Building the clean room at full cost when a licence was available, or assuming a licence exists when none does.</td></tr>
+<tr><td class="id">OI-3</td><td>What exact wording may be used to state which specification a course follows, without implying endorsement? <b>We are proceeding ahead of this answer</b> under decision D34 and the convention in <a href="04-rights-dossier.html#naming">04</a>, because a product that will not name the examination it prepares for cannot be sold. This is the only question in this register we have not waited for.</td><td>Every piece of marketing copy, and the product's own course naming. <b>Already in use.</b></td><td>A trade mark complaint that removes the product from app stores faster than it could be defended. Contained by centralised naming strings and a 24-hour rollback, not eliminated. <b>First in the counsel instruction.</b></td></tr>
+<tr><td class="id">OI-4</td><td>Is a one-to-one tutor with no inter-user sharing outside the Online Safety Act user-to-user duties, and precisely which feature changes that?</td><td>The whole regulatory posture, and the trigger list in <a href="05-safety-privacy-regulatory.html#trigger">05</a>.</td><td><span class="mark verified">Verified</span> Penalties to the higher of £18m or 10% of qualifying worldwide revenue, plus business disruption reaching ISPs, app stores and payment providers.</td></tr>
+<tr><td class="id">OI-5</td><td>What age assurance method would satisfy the ICO for a service whose entire user base is children, at a cost compatible with a consumer price point?</td><td>The Route A launch, and the unit economics, since verification cost subtracts directly from the acquisition budget.</td><td><span class="mark verified">Verified</span> The Reddit outcome: £14.47m, specifically for inadequate age assurance.</td></tr>
+<tr><td class="id">OI-6</td><td>What is the minimum viable creator licence for name and likeness only, and what does the exemplar-conditioning upgrade under D6 add to it?</td><td>The first creator signature, and the D6 contingency.</td><td>A licence too thin to permit what the product does, or thick enough to require a negotiation per creator, which destroys the D5 economics.</td></tr>
+<tr><td class="id">OI-7</td><td>Which entity contracts with the parent, and what does that do to consumer jurisdiction, UK representative obligations and VAT?</td><td>Incorporation, the payment stack, the terms of business, and the international transfer position.</td><td>A consumer contract unenforceable in the market it was written for, and a tax position discovered late.</td></tr>
+<tr><td class="id">OI-8</td><td><b>New.</b> Is the default of no parental transcript access (D16) defensible where the learner is under 13, and does the answer differ between Route A and Route B?</td><td>The parent reporting surface and the parent-facing terms.</td><td>A Children's code finding against the product's central reporting feature, and a rebuild of the parent surface.</td></tr>
+<tr><td class="id">OI-9</td><td><b>New.</b> Under what licence may the DfE-published subject content be used as the source for commercial item authoring, and does that use carry conditions?</td><td>The entire item bank. The clean room depends on there being a lawful source to write <i>from</i>.</td><td>The clean-room policy has no permitted source, and every item in the bank inherits the defect.</td></tr>
+<tr><td class="id">OI-12</td><td><b>New.</b> What exposure do consumer protection law and the advertising standards regime create for education marketing that names an examination board, and how does that interact with the trade mark analysis in OI-3? The rights dossier analyses the naming decision <b>only</b> as trade mark, and a complaint to an advertising regulator is cheaper and faster for a complainant than anything in the enforcement war-game.</td><td>The wording convention in D34, which is already in use.</td><td>The fastest and cheapest route for a board, or a competitor, to act against us is the one we have not analysed. Should go to counsel <b>with</b> OI-3, not after it.</td></tr>
+<tr><td class="id">OI-11</td><td><b>New.</b> If a provisional grade range is shown to a teacher in a form that could inform a Foundation or Higher tier entry decision, does Article 22 become engaged, and what is then required?</td><td>Any teacher-facing view of the range, which is a predictable Route B feature request.</td><td>Automated decision-making with a significant effect on a child, in a product sold to the school that makes the decision. Tier entry caps the grade a child can be awarded.</td></tr>
+<tr><td class="id">OI-10</td><td><b>New.</b> Is Article 6(1)(b) the correct basis for processing a child's data under a contract held by their parent, or is legitimate interests sounder? How does the Article 8 threshold interact?</td><td>The privacy notice, the DPIA, and the consent architecture.</td><td>The second limb of the Reddit finding: profiling children without a lawful basis.</td></tr>
 </tbody>
 </table>
+</div>
 
-<h2>Reasoned but not verified</h2>
+<h2 id="assumptions">Open assumptions: reasoned, not verified</h2>
 
-<ul>
-<li>That Save My Exams, Physics &amp; Maths Tutor, Seneca, Cognito and Twinkl sell board-aligned material without licensing past papers. Inferred from their existence, not from their terms. This is the cheapest available de-risking of the entire plan and should be done first.</li>
-<li>That UK persona protection runs through passing off for false endorsement, trade marks, copyright in the underlying videos, performers' rights and data protection, there being no statutory UK personality right.</li>
-<li>That UK GDPR Article 3(2) and the Article 27 representative requirement apply to an India-established controller serving UK children.</li>
-<li>That most creators worth signing are US-resident, bringing US state right-of-publicity law into scope.</li>
-<li>That the seven style dimensions in document 02 are independent and complete. No teacher has reviewed them.</li>
-<li>That a 60-minute kill switch is achievable. Promised in document 04, unmeasured in document 06.</li>
-</ul>
+<p class="lede">Every one of these shapes the plan and none has been confirmed. Nine are carried from the brief; twelve were introduced by this design and are marked new. They are grouped by what they would break.</p>
 
-<h2>Unwritten</h2>
+<h3>Rights and content</h3>
 
-<p>Documents 10 and 11 are blocked rather than skipped, each on inputs that do not yet exist. Document 01 lacks the worked session transcript that would demonstrate the product's central claim rather than assert it. Document 06 is a set of constraints rather than a design.</p>
+<div class="tw">
+<table>
+<thead><tr><th class="id">#</th><th>Assumption</th><th>Unblocks / shapes</th><th>Cost of being wrong</th></tr></thead>
+<tbody>
+<tr><td class="id">OA-1</td><td>That AQA's AI clause may bite at inference as well as at training. The wording is broad enough; untested.</td><td>The absoluteness of the clean room.</td><td>If it does bite, any retrieval-time use of board material is foreclosed. Also OI-1.</td></tr>
+<tr><td class="id">OA-2</td><td>That OCR, WJEC and Eduqas take a similar position to AQA. <b>Not checked.</b></td><td>Board alignment, and multi-board expansion.</td><td>Planning around a constraint that does not exist, or walking into one that does. <b>Resolvable by a few hours of reading at M1.</b></td></tr>
+<tr><td class="id">OA-3</td><td>That naming an exam board descriptively may be honest use under section 11(2) of the Trade Marks Act 1994, provided endorsement is not implied. Counsel's likely starting point, not settled advice.</td><td>All marketing copy.</td><td>Trade mark exposure at the app store chokepoint. Also OI-3.</td></tr>
+<tr><td class="id">OA-4</td><td>That UK persona protection runs through passing off for false endorsement (<i>Irvine v Talksport</i>), trade marks, copyright in the underlying videos, performers' rights and data protection, there being no statutory UK personality right.</td><td>The entire licence architecture and the on-screen label.</td><td>The licence protects against the wrong risk.</td></tr>
+<tr><td class="id">OA-5</td><td>That Save My Exams, Physics &amp; Maths Tutor, Seneca, Cognito and Twinkl sell board-aligned commercial revision material without licensing past papers. <b>This is inference from their existence, not from their terms.</b></td><td>Confidence that the clean-room line is commercially survivable.</td><td>A comparator argument that collapses under examination. <b>Must not be used with an investor or a lawyer until researched at M1.</b></td></tr>
+<tr><td class="id">OA-9</td><td>That most creators the venture wants are US-resident, bringing US state right-of-publicity law into scope.</td><td>The licence's governing law and the enforcement analysis.</td><td>An unanalysed forum, and a licence missing a limb.</td></tr>
+</tbody>
+</table>
+</div>
 
+<h3>Regulatory</h3>
+
+<div class="tw">
+<table>
+<thead><tr><th class="id">#</th><th>Assumption</th><th>Unblocks / shapes</th><th>Cost of being wrong</th></tr></thead>
+<tbody>
+<tr><td class="id">OA-6</td><td>That a private one-to-one tutor with no sharing between users sits outside the Online Safety Act user-to-user duties. Reasoned from Ofcom's published examples; needs counsel.</td><td>The scoping decision in <a href="05-safety-privacy-regulatory.html#osa">05</a>.</td><td>Full user-to-user duties, unprepared. Also OI-4.</td></tr>
+<tr><td class="id">OA-7</td><td>That UK GDPR Article 3(2) and the Article 27 UK representative requirement apply to an India-established controller serving UK children. Standard position, unconfirmed for this fact pattern.</td><td>The corporate and compliance structure.</td><td>Cheap to fix, embarrassing to be caught without.</td></tr>
+<tr><td class="id">OA-8</td><td>That the proportion-of-screen and proportion-of-audio requirements for synthetic content labelling under the Indian rules appeared in the October 2025 draft; <b>the final notified text has not been checked</b>.</td><td>The specific display parameters of the on-screen label.</td><td>Non-compliant labelling under G.S.R. 120(E). Resolvable by reading the notified text.</td></tr>
+<tr><td class="id">OA-13</td><td><b>New.</b> That UK tax law requires six-year retention of billing records.</td><td>The retention table in <a href="05-safety-privacy-regulatory.html#data">05</a>.</td><td>Over-retention, which is itself a data protection failure. Trivially checkable.</td></tr>
+<tr><td class="id">OA-16</td><td><b>New.</b> That the fifteen Children's code standards are enumerated as set out in <a href="05-safety-privacy-regulatory.html#code">05</a>. <b>Reproduced from understanding, not re-verified against the published text.</b></td><td>The compliance mapping.</td><td>A mapping with a gap in it. <b>One hour of reading at M1.</b></td></tr>
+<tr><td class="id">OA-20</td><td><b>New.</b> That this design meets what a school will actually assess it against: Keeping Children Safe in Education, the school's filtering and monitoring expectations, and any DfE supplier standard. <b>None has been read against this design.</b></td><td>Every Route B conversation. It is the most likely reason a pilot discussion ends early.</td><td>A pilot lost at the first safeguarding question, after the cost of reaching it. Resolvable by reading, which is why it sits at M1.</td></tr>
+<tr><td class="id">OA-14</td><td><b>New.</b> That processing UK pupil data in India will be raised as an objection in school due diligence, independently of whether the transfer mechanism is legally sound.</td><td>Route B feasibility and the corporate structure.</td><td>Sales lost late in the cycle, after the cost of winning them was incurred.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Product and style</h3>
+
+<div class="tw">
+<table>
+<thead><tr><th class="id">#</th><th>Assumption</th><th>Unblocks / shapes</th><th>Cost of being wrong</th></tr></thead>
+<tbody>
+<tr><td class="id">OA-11</td><td><b>New.</b> That a recognisable educator's teaching is stable enough across topics to be a <i>point</i> in the style space rather than a cloud.</td><td>The entire preset representation.</td><td>The schema needs a difficulty conditioning term, complicating the student controls and the licence review. <b>Cheap to test at M3, which is why it sits there.</b></td></tr>
+<tr><td class="id">OA-21</td><td><b>New.</b> That a Year 10 household pays across roughly twice the span of a Year 11 one, including through a summer with no examination. The doubling result in <a href="10-economics.html#ceiling">10</a> depends on it, and it is a behavioural claim, not a fact about the calendar.</td><td>The acquisition ceiling by year group, and whether the two cohorts have genuinely different economics.</td><td>The factor collapses toward one and the Year 10 acquisition strategy loses its main justification. Revealed by the cohort split that <a href="10-economics.html">10</a> already requires.</td></tr>
+<tr><td class="id">OA-19</td><td><b>New.</b> That performance on our validated items maps onto examination grades closely enough for a provisional range to be useful before it is calibrated. Nothing supports this at launch; T-CAL-01 cannot run until a cohort has sat an examination.</td><td>A feature shown to every learner and every parent from day one.</td><td>A year of learners shown a band that turns out not to track outcomes. The mitigations reduce the harm; they do not make the band right.</td></tr>
+<tr><td class="id">OA-18</td><td><b>New.</b> That the structural differences between presets shown in <a href="01-product.html#worked">01</a> are perceptible to a fifteen-year-old and matter to them. The transcripts were written to illustrate a specification, not produced by a system, and not by a teenager.</td><td>D4, the wedge, and therefore the venture's differentiation.</td><td>A style engine that is real on paper and invisible in use. Tested by T-STY-02 at M3.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Commercial</h3>
+
+<div class="tw">
+<table>
+<thead><tr><th class="id">#</th><th>Assumption</th><th>Unblocks / shapes</th><th>Cost of being wrong</th></tr></thead>
+<tbody>
+<tr><td class="id">OA-10</td><td><b>New, and the most load-bearing assumption in the repository.</b> That parents anchor an AI tutoring subscription against the hourly cost of a human tutor rather than against software prices, or against free.</td><td>Every price point, and the entire Route A case.</td><td>The denominator of the payback ratio collapses and no consumer channel is affordable. <b>Testable with a landing page at M1 for a small spend.</b></td></tr>
+<tr><td class="id">OA-12</td><td><b>New.</b> The school budget-holder analysis in <a href="08-route-b-through-schools.html#budget">08</a>, and that procurement is aligned to the academic year so a missed summer decision is a twelve-month delay. <b>Not one school has been asked.</b></td><td>The entire Route B sales motion and its cash planning.</td><td>Selling to the wrong person on the wrong clock, discovered a year in.</td></tr>
+<tr><td class="id">OA-17</td><td><b>New.</b> That schools cut their tutoring offer because human tutoring is unaffordable at scale, rather than because the budget line is closing. <span class="mark verified">Verified</span> that 58% cut it; <b>entirely unevidenced</b> as to why.</td><td>Whether Route B has a market at all.</td><td>Route B's central premise is false and a field sales motion is funded into a closing budget line. <b>Thirty phone calls at M1.</b></td></tr>
+<tr><td class="id">OA-15</td><td><b>New.</b> That variable cost per month is small relative to price, which is what makes engineering cost reduction low-leverage in <a href="10-economics.html#sensitivity">10</a>.</td><td>Where engineering effort goes.</td><td>The sensitivity table reverses and cost engineering becomes the priority. First thing to check when M2 measures cost per session.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="pattern">The pattern in this list</h2>
+
+<p>Worth noticing, because it shapes what M1 should be: <b>eight of the twenty-one assumptions are resolvable by reading or by asking, not by building or by advice.</b> OA-2 is a few hours with three published policies. OA-5 is reading five sets of terms. OA-8 is one notified text. OA-13 is a tax reference. OA-16 is an hour with the Children's code. OA-17 is thirty phone calls. OA-10 is a landing page. OA-20 is Keeping Children Safe in Education and whatever supplier standard a school applies.</p>
+
+<p>Those eight include the most load-bearing assumption in the repository, the one that decides whether Route B has a market, and the one most likely to end a school conversation in its first ten minutes. None of them requires a lawyer, an engineer or a product. They are in M1 for that reason, and a plan that starts by building instead is choosing to pay the highest available price for the same information.</p>

@@ -1,31 +1,175 @@
 <h1>Decision ledger</h1>
-<p class="standfirst">What was chosen, what was rejected, and what each choice forecloses. This is the document that lets someone reconstruct the reasoning in six months, including the reasoning that turned out to be wrong.</p>
+<p class="standfirst">Thirty-seven decisions: fourteen carried from the brief and settled, twenty taken while writing this design, and three taken on the owner's instruction, two of which reverse earlier positions. Each records what was chosen, what forced it, what was rejected and what that would have cost, and what it makes harder later. This is the document that lets someone reconstruct the reasoning in six months, including the reasoning they disagree with.</p>
+<dl class="meta">
+<dt>Document</dt><dd>Decision ledger. Not numbered; it spans all fourteen.</dd>
+<dt>Status</dt><dd>Live. Any new decision is appended here, not recorded only in the document it affects.</dd>
+<dt>Written</dt><dd>14 September 2026</dd>
+<dt>Settled</dt><dd>D1 to D14 are not to be re-opened. If a document contradicts one, the document is wrong.</dd>
+<dt>Reversible</dt><dd>D19 is explicitly provisional. Every other decision below is reversible only with a recorded reason.</dd>
+</dl>
 
+<h2 id="settled">D1 to D14: settled in the brief, not to be re-opened</h2>
+
+<p class="lede">These were decided deliberately before this design was written. If anything in this repository contradicts one of them, the repository is wrong and not the decision. They are recorded terse because the brief already carries their reasoning; the nineteen below are recorded at length because their consequences are what a future reader will need.</p>
+
+<div class="claim">
+<p><b>"Not to be re-opened" means not re-opened on preference. It does not mean unfalsifiable.</b> D4, the wedge, has a pre-registered test (T-STY-02 at M3) and a pre-registered decision rule (M4 in <a href="11-roadmap.html#d6">11</a>) whose fourth outcome is that D4 is wrong. That is not a contradiction of the rule; it is the difference between a decision that may not be relitigated because someone has changed their mind, and one that is revised because the evidence it predicted arrived and pointed the other way.</p>
+<p>Any settled decision may be re-opened by evidence obtained through a route written down in advance. None may be re-opened by argument alone.</p>
+<span class="tag decided">Reading of the rule<span class="src">added after an audit found the blanket wording unsustainable</span></span>
+</div>
+
+<div class="tw">
 <table>
-<thead><tr><th></th><th>Decision and driver</th><th>Rejected, and its cost</th><th>What it makes harder</th></tr></thead>
+<thead><tr><th class="id">#</th><th>Decision</th><th>Driven by</th><th>What it makes harder</th></tr></thead>
 <tbody>
-<tr><td class="num">D1</td><td><strong>UK market, Bengaluru build.</strong> Higher willingness to pay; India prohibits behavioural monitoring of under-18s without a waiver route</td><td>India first. Cheaper to reach, but the adaptive engine is unlawful direct to consumer</td><td>Mark-scheme knowledge sits 7,000km from the team</td></tr>
-<tr><td class="num">D2</td><td><strong>Both routes planned, choice deferred.</strong> Owner wants to choose on evidence</td><td>Committing to Route A now. Faster, but forecloses the only route to outcome data</td><td>Four documents are written twice</td></tr>
-<tr><td class="num">D4</td><td><strong>Named educators are the wedge,</strong> retained against a recommendation to use institutional teachers. A student cannot articulate a pedagogy but can name someone</td><td>Institutional teachers. Legally simpler, better for Route B, no consumer pull</td><td>Rights exposure becomes the central design constraint</td></tr>
-<tr><td class="num">D5</td><td><strong>Personas pass a usefulness test, not a fan's ear.</strong> Name and likeness licence only</td><td>Content licensing at launch. Higher fidelity, but a negotiation instead of a signature</td><td>A devoted fan may say it is not quite how he would put it</td></tr>
-<tr><td class="num">D6</td><td><strong>Exemplar path designed now, unlocked later.</strong> Owner's instruction, so the fallback is not a rewrite under pressure</td><td>Deferring the design. Cheaper now, a rebuild exactly when speed matters</td><td>The style object carries an unused field until triggered</td></tr>
-<tr><td class="num">D7</td><td><strong>Style is a structured object rendered to a style card.</strong> Prose drifts and captures register while losing structure</td><td>Prose-only styles, free and instant but unverifiable; exemplar conditioning, which is D6</td><td>Seven dimensions must be defended as the right seven</td></tr>
-<tr><td class="num">D8</td><td><strong>No fine-tuned weights carrying creator style.</strong> Weights cannot be revoked, and a kill switch needing retraining is not a kill switch</td><td>Persona LoRAs from the 2025 submission. Higher fidelity, unrevocable</td><td>A lower fidelity ceiling, permanently</td></tr>
-<tr><td class="num">D9</td><td><strong>Voice cloning off the launch path.</strong> The specific thing Ofcom named on virtual clones</td><td>Voice at launch. The most striking demo, the worst risk profile</td><td>The product is less impressive in a thirty-second video</td></tr>
-<tr><td class="num">D11</td><td><strong>Zero-persona operation is a hard requirement.</strong> No unsigned contract can block launch</td><td>Building persona-first. Simpler, hostage to one signature</td><td>Launch-day marketing is weaker with nobody signed</td></tr>
-<tr><td class="num">D12</td><td><strong>Clean room: no board material anywhere.</strong> AQA's published policy; provable beats arguable</td><td>Fair dealing. Cheaper content, an argument rather than a defence</td><td>Every item must be written and validated from scratch</td></tr>
-<tr><td class="num">D13</td><td><strong>Offshore litigation-evasion dropped,</strong> Indian entity retained for tax and capital. A UK decree executes in India under s.44A CPC, and Ofcom can reach payment rails without any court in India</td><td>The Uber playbook. It relies on a diffuse counterparty and a legislature willing to rewrite the rule; here the counterparties are named owners of property rights</td><td>Nothing. This choice has no downside and was based on a factual error</td></tr>
-<tr><td class="num">D14</td><td><strong>Named presets and unnamed archetypes ship together;</strong> instrument return rate, not satisfaction</td><td>Presets only. Simpler, and cannot distinguish a weak wedge from a fidelity gap</td><td>Two experiences to build and support at launch</td></tr>
-<tr><td class="num">D15</td><td><strong>Data model is controller-shaped under both routes.</strong> Keeps the route choice cheap to reverse</td><td>Processor-shaped for Route B. Lighter, expensive to retrofit</td><td>Route B carries obligations it does not strictly need</td></tr>
-<tr><td class="num">D16</td><td><strong>Safety layer is unreachable from the style object.</strong> A creator's persona must never be implicated in handling a child in distress</td><td>Unified prompt layer. Simpler, and a style card could reach a safety response</td><td>Latency on every turn</td></tr>
+<tr><td class="id">D1</td><td>UK first. Bengaluru is the build base; the UK is the market.</td><td>Higher willingness to pay and to experiment; Indian edtech is crowded and Indian child-data law is categorically hostile to adaptive tutoring sold direct.</td><td>Cross-border data transfers, a UK representative question, and school due diligence on data residency (OA-14).</td></tr>
+<tr><td class="id">D2</td><td>Two routes planned in parallel. Route A is the current preference.</td><td>Choosing on evidence rather than on priors.</td><td>Two plans to keep consistent. Mitigated by D3.</td></tr>
+<tr><td class="id">D3</td><td>Shared core written once; divergence confined to pricing, data and consent, distribution and compliance.</td><td>Avoiding two full plans.</td><td>Nothing significant. It is the decision that makes a route reversal cost months rather than a rewrite (<a href="09-route-comparison.html#mind">09</a>).</td></tr>
+<tr><td class="id">D4</td><td>Named-educator personas are the wedge, retained against advice.</td><td>A student cannot articulate a pedagogy but can name someone who teaches the way they like.</td><td>Everything in the rights dossier. The wedge is also the largest untested premise; see R8 and the D6 trigger.</td></tr>
+<tr><td class="id">D5</td><td>Personas pass a student usefulness test, not a fan's ear test. Name and likeness only; no creator material ingested.</td><td>A one-page agreement; a departing creator costs a text file; a genuinely instant kill switch; zero-persona launch becomes real.</td><td>Fidelity is capped at what a rating protocol and prompting can achieve. If that cap binds, D6 is the only route out.</td></tr>
+<tr><td class="id">D6</td><td>The route to high-fidelity personas via exemplar conditioning must be designed now, not bolted on later.</td><td>Owner's instruction. The boundary must exist or the fallback becomes a rewrite under time pressure.</td><td>A seam to maintain that is unused at launch. Specified in <a href="02-style-engine.html#d6">02</a>; triggered by the rule in <a href="11-roadmap.html#d6">11</a>.</td></tr>
+<tr><td class="id">D7</td><td>Style is a structured parameter object, with a written style card generated from it.</td><td>Prose drifts and captures register while losing structure. Parameters are auditable, composable and legally inert.</td><td>A model must follow twelve instructions at once. If T-STY-01 shows drift, the answer is fewer dimensions, not a longer card.</td></tr>
+<tr><td class="id">D8</td><td>No persona LoRAs or fine-tuned weights carrying creator style. Retrieval and prompting only.</td><td>Weights cannot be cleanly revoked. A kill switch requiring retraining is not a kill switch.</td><td>Caps style fidelity permanently. Forecloses the obvious fix if T-STY-02 fails on fidelity grounds.</td></tr>
+<tr><td class="id">D9</td><td>Voice cloning is off the launch path; a separate opt-in limb of the licence.</td><td>Highest-risk signal on both the rights and regulatory side; the thing Ofcom named when warning about virtual clones.</td><td>A recognisable educator without their voice is a weaker persona. Accepted.</td></tr>
+<tr><td class="id">D10</td><td>Student-facing style control: a creator selects a preset, the student may move individual dimensions.</td><td>Preserves the handle and lets them turn it.</td><td>Adjustments must never be shareable, which is an Online Safety Act invariant (<a href="05-safety-privacy-regulatory.html#trigger">05</a>, T2) rather than a preference.</td></tr>
+<tr><td class="id">D11</td><td>Zero-persona operation is a hard requirement. The product launches and runs with no signed creators.</td><td>No single unsigned contract can block launch.</td><td>Every persona feature must degrade to an archetype. And, as <a href="07-route-a-direct-to-parents.html#tension">07</a> notes, it is a product guarantee, not a commercial one.</td></tr>
+<tr><td class="id">D12</td><td>Clean-room content. Original items written to the published specification, examiner-validated. No exam board material enters the system.</td><td><span class="mark verified">Verified</span> AQA has published a policy that forbids it.</td><td>Content is slow and expensive to produce, and the validator engagement has to exclude the people best placed to help (D20).</td></tr>
+<tr><td class="id">D13</td><td>No offshore litigation-evasion strategy. The Indian company is retained for ordinary tax and capital reasons.</td><td>The theory runs the opposite way to how it was first read. See <a href="04-rights-dossier.html#d13">04</a>.</td><td>Nothing. It removes a false comfort rather than a capability.</td></tr>
+<tr><td class="id">D14</td><td>Ship named presets and unnamed archetypes simultaneously from day one; instrument return rate, not satisfaction.</td><td>Distinguishes "the wedge is weak" from "the fidelity is short", which have opposite fixes.</td><td>The <b>experiment</b> requires at least one signed creator to have a named arm at all, so running it depends on M1's counsel answers. That is not in tension with D11: the product launches and runs with zero creators, and what a missing creator delays is the wedge test, not the launch. Design in <a href="11-roadmap.html#d14">11</a>.</td></tr>
 </tbody>
 </table>
+</div>
 
-<h2>Decisions taken against advice, recorded as such</h2>
+<h2 id="taken">D15 to D33: taken while writing this design</h2>
 
-<p><strong>D4 and D5 together.</strong> The recommendation was to substitute institutional teachers for named creators, on the grounds that it converts the largest legal exposure into a distribution asset. The owner overruled it, reasoning that a named creator gives a student a tried and tested handle on how they want to be taught. That reasoning was accepted and became the design principle in document 02: the name is the handle, the style is the substance.</p>
+<p>All dated 14 September 2026. Each is reversible with a recorded reason, except where noted.</p>
 
-<p><strong>The risk ranking.</strong> The owner ranked child harm and data breach fourth of four. Recorded as given in document 12, with the engineering exception stated alongside it.</p>
+<h3>Product</h3>
 
-<p><strong>Route A over Route B.</strong> Recommended in document 09 on the Sutton Trust evidence, conditional on the persona wedge proving real, with the strongest case for Route B stated in full so the choice can be defended either way.</p>
+<dl class="defs">
+<dt>D15. The unaided check is scored on first commit, with no hints available.</dt>
+<dd><b>Driven by:</b> <span class="mark verified">Verified</span> the reported caveat that students who default to the AI develop surface fluency that does not hold under examination conditions. <b>Rejected:</b> allowing hints and scoring leniently, which would have produced better-looking session outcomes and a happier student, and would have made the product's core metric the one a surface-fluency failure flatters. <b>Makes harder:</b> sessions end on a negative note more often, which will show up in retention. <a href="01-product.html#session">01</a></dd>
 
+<dt>D16. The parent does not see session transcripts by default.</dt>
+<dd><b>Driven by:</b> best interests of the child, and the fact that a student who knows every word is reported will not admit confusion. <b>Rejected:</b> full parental visibility, which the payer would prefer and which would have removed a sales objection; it would have cost the willingness to admit confusion, which is the raw material the tutor works with. <b>Makes harder:</b> a real objection from paying parents, and an unresolved question for under-13s (OI-8). <a href="01-product.html#parent">01</a></dd>
+</dl>
+
+<h3>Style</h3>
+
+<dl class="defs">
+<dt>D17. No tone dimension in the weighted style set.</dt>
+<dd><b>Driven by:</b> admission test 2, that a dimension must change what the student is asked to do rather than how it sounds. <b>Rejected:</b> including warmth and register, which are the easiest dimensions to implement and perceive; they would have made presets demo beautifully and teach identically, leaving the D14 instrumentation measuring nothing. <b>Makes harder:</b> presets are less distinct on a single transcript, which raises the risk T-STY-02 fails for a real but uninteresting reason. <a href="02-style-engine.html#set">02</a></dd>
+
+<dt>D18. The exemplar retriever supplies style context only; the verifier rejects any curricular claim supported solely by an exemplar.</dt>
+<dd><b>Driven by:</b> without the second half, D6 quietly reintroduces ungrounded content through the style path and P2 fails silently. <b>Rejected:</b> treating exemplars as a retrieval source, which would have been simpler and would have put a hole in the correctness gate. <b>Makes harder:</b> exemplar conditioning delivers less than it appears to, because it cannot contribute content. <a href="02-style-engine.html#d6">02</a></dd>
+</dl>
+
+<h3>Content</h3>
+
+<dl class="defs">
+<dt>D19. Launch alignment is Pearson Edexcel. <b>Explicitly provisional.</b></dt>
+<dd><b>Driven by:</b> <span class="mark verified">Verified</span> AQA's published AI policy is the broadest, and OI-1 is unanswered. <b>Rejected:</b> AQA, pending OI-1. <b>Trigger to revisit:</b> <span class="mark unknown">Unknown</span> relative board share of GCSE Mathematics entries, which has not been checked; if AQA's share is materially larger this decision is commercially wrong. <b>Makes harder:</b> adding a second board repeats the command-word and convention work. <a href="03-curriculum-and-content.html#scope">03</a></dd>
+
+<dt>D20. Validators are engaged on terms forbidding them from bringing any awarding-body material into the work, with a positive declaration per item.</dt>
+<dd><b>Driven by:</b> the people best qualified to validate are current examiners, who hold exactly the material the clean room excludes, under confidentiality obligations of their own. <b>Rejected:</b> a briefing rather than a contractual term, which would have been friendlier and would have left the validator personally exposed. <b>Makes harder:</b> validators cannot be asked the most natural question, "is this like a real exam question", because it invites the recall we have excluded. <a href="03-curriculum-and-content.html#cleanroom">03</a></dd>
+
+<dt>D21. Groundedness is reported per session, not per turn; and no "it does not make things up" claim until the per-turn floor reaches 99.9%.</dt>
+<dd><b>Driven by:</b> a 99.5% per-turn floor means between one session in twenty and one in seven contains an unsupported assertion, depending on session length, which is unmeasured. The per-turn number flatters the product by roughly an order of magnitude. <b>Rejected:</b> reporting the per-turn figure, which is the number a competitor would quote and which sounds far stronger than it is. <b>Makes harder:</b> the launch marketing claim is narrower and less quotable than the one the product could plausibly have got away with. <a href="03-curriculum-and-content.html#uncomfortable">03</a></dd>
+
+<dt>D22. Model versions are pinned; a vendor update must pass the blocking regression battery before reaching a learner.</dt>
+<dd><b>Driven by:</b> we buy the model, so someone else can move every accuracy number without telling us, potentially mid-exam-term. <b>Rejected:</b> tracking the latest version automatically, which would have given free capability improvements. <b>Makes harder:</b> we run behind the frontier and pay to qualify every upgrade, while <span class="mark verified">Verified</span> free competitors improve continuously at no cost to the user. <a href="03-curriculum-and-content.html#harness">03</a></dd>
+</dl>
+
+<h3>Rights</h3>
+
+<dl class="defs">
+<dt>D23. T-ZERO-01: the full regression battery runs with the persona registry empty, as a blocking check on every release.</dt>
+<dd><b>Driven by:</b> D11 is a hard requirement, and without a test it degrades into a claim that was true the day it was written. <b>Rejected:</b> asserting zero-persona operation in prose, which is what the first persona-dependent code path added under delivery pressure would have silently falsified. <b>Makes harder:</b> every future persona feature must have an archetype degradation path, permanently. <a href="04-rights-dossier.html#zero">04</a></dd>
+</dl>
+
+<h3>Safety and privacy</h3>
+
+<dl class="defs">
+<dt>D24. Zero retention of prompts and outputs, and no training on our data, as a model vendor procurement gate.</dt>
+<dd><b>Driven by:</b> the marketing-site line says "we do not use it to train anyone's AI model", and that clause is false without the contract. <b>Rejected:</b> treating it as a preference to negotiate, which would have widened the vendor set and probably reduced cost. <b>Makes harder:</b> narrows vendors, possibly to more expensive tiers, and forecloses vendor-side caching optimisations. <a href="05-safety-privacy-regulatory.html#data">05</a></dd>
+
+<dt>D25. No engagement objective anywhere in the system. No streaks, badges, loss aversion or return notifications.</dt>
+<dd><b>Driven by:</b> the Children's code nudge-techniques standard, taken seriously rather than gestured at. <b>Rejected:</b> the standard consumer subscription retention toolkit, which every competitor uses and which works. <b>Makes harder:</b> Route A retention, which is already the weakest number in the economics, and it costs most at exactly the June cliff where reversing it would be most tempting. Written as a decision so a future growth hire cannot mistake it for an oversight. <a href="05-safety-privacy-regulatory.html#basis">05</a></dd>
+
+<dt>D26. A safeguarding disclosure is not automatically reported to the parent.</dt>
+<dd><b>Driven by:</b> automatic parental notification is unsafe in precisely the cases that matter most, because the parent is sometimes the risk. <b>Rejected:</b> automatic notification, which is simpler, looks responsible, and would occasionally be dangerous. <b>Makes harder:</b> requires a trained human reviewer and a written decision policy, and <a href="05-safety-privacy-regulatory.html#content">05</a> admits next-business-day review is not adequate for an acute disclosure. <a href="05-safety-privacy-regulatory.html#content">05</a></dd>
+</dl>
+
+<h3>Architecture</h3>
+
+<dl class="defs">
+<dt>D27. The verifier runs on a different pinned model from the generator; the mathematics check runs on no model at all.</dt>
+<dd><b>Driven by:</b> a verifier sharing the generator's weights shares its errors, which is the failure mode that produces a confident wrong answer passing its own check. <b>Rejected:</b> self-verification, which would have been cheaper and lower-latency. <b>Makes harder:</b> two vendor relationships, two regression surfaces, a second cost line, and latency on every turn. <a href="06-architecture.html#verifier">06</a></dd>
+
+<dt>D28. Figures are rendered deterministically from a structured specification, never generated by an image model.</dt>
+<dd><b>Driven by:</b> three constraints at once, any one sufficient: a generated image cannot be verified; image generation is the most expensive thing a turn could do; and <span class="mark verified">Verified</span> the Indian rules require unstrippable provenance metadata on synthetic content. <b>Rejected:</b> image generation, which would have given unlimited visual vocabulary. <b>Makes harder:</b> a finite figure vocabulary, so subjects needing rich diagrams need engineering before content. This is a real barrier to the second subject. <a href="06-architecture.html#figures">06</a></dd>
+
+<dt>D29. The kill switch is rehearsed quarterly against a live archetype, with the elapsed time recorded.</dt>
+<dd><b>Driven by:</b> an untested switch is a claim, and this one is a contractual commitment to a creator. <b>Rejected:</b> testing it when first needed, which is when it will be needed under maximum pressure. <b>Makes harder:</b> nothing material; D11 makes the rehearsal safe. <a href="06-architecture.html#killswitch">06</a></dd>
+
+<dt>D30. The conversation window is a bounded rolling summary, giving approximately constant cost per turn.</dt>
+<dd><b>Driven by:</b> with an unbounded window, cost grows roughly with the square of session length, and the most expensive sessions would be the long ones with a struggling student, who is the student the product exists for. <b>Rejected:</b> full session history, which would have given perfect recall. <b>Makes harder:</b> lossy recall of early-session detail, and a summariser that can itself be wrong and whose output is not citable evidence. <a href="06-architecture.html#cost">06</a></dd>
+</dl>
+
+<h3>Commercial and process</h3>
+
+<dl class="defs">
+<dt>D31. The verified ethnicity figures inform where to test channels by geography only. No advertising is targeted on a protected characteristic.</dt>
+<dd><b>Driven by:</b> the figures describe where tutoring demand already exists; turning them into an audience segment would be unlawful. <b>Rejected:</b> characteristic-based targeting, which the data would superficially support and which should not be built. <b>Makes harder:</b> a blunter acquisition instrument than the data appears to offer. <a href="07-route-a-direct-to-parents.html#distribution">07</a></dd>
+
+<dt>D32. Milestones are ordered by what the information costs to obtain, cheapest first, and the roadmap carries no dates.</dt>
+<dd><b>Driven by:</b> two questions that can end the venture cost less than a week of engineering time to answer. <b>Rejected:</b> a feature-ordered roadmap with dates, which is what an investor expects to see and what a team finds motivating. <b>Makes harder:</b> the first milestone contains almost no building, which is unsatisfying and is the most common reason this ordering is abandoned. <a href="11-roadmap.html#rule">11</a></dd>
+
+<dt>D33. The D14 experiment randomises preset <i>availability</i> at cohort level, not choice.</dt>
+<dd><b>Driven by:</b> a learner chooses their preset, so randomising choice would remove the thing being tested. <b>Rejected:</b> comparing learners who chose a named preset against those who chose an archetype, which is selection-biased; it will be the more tempting number because it is larger and easier to compute, and it does not answer the question. <b>Makes harder:</b> needs two cohorts and a pre-registered analysis, and the baseline return rate must be observed before the sample size can be set. <a href="11-roadmap.html#d14">11</a></dd>
+</dl>
+
+<h2 id="reversals">D34 to D36: three decisions reversing two earlier positions</h2>
+
+<p class="lede">All three dated 14 September 2026. They are recorded as <b>reversals</b>, with the position they replaced, because a ledger that shows only the surviving view is worth very little six months later when someone asks why the obvious cautious option was not taken.</p>
+
+<dl class="defs">
+<dt>D34. Name the board in public copy, under a fixed convention, ahead of counsel's answer on OI-3.</dt>
+<dd><b>Replaces:</b> an earlier drafted position that no board would be named in any public copy until OI-3 was answered. <b>Driven by:</b> the owner's instruction, and the observation that waiting is not the neutral option, because a product that will not name the examination it prepares a student for cannot be described to the parent whose entire question is whether it matches their child's exam. <b>Proceeding on:</b> <span class="mark assumed">Assumed</span> honest descriptive use under section 11(2) of the Trade Marks Act 1994, which is counsel's likely starting point and not settled advice. <b>Contained by:</b> a fixed permitted and forbidden wording table, every board-naming string centralised so it can be changed in one edit, and a 24-hour rollback to DfE-content wording on any objection from any board. <b>Makes harder:</b> if counsel comes back against the convention, marketing, app store listings and course naming all change at once and any paid acquisition running at that moment is wasted. <b>This is the only decision in the vault taken ahead of counsel</b>, and it is flagged as such where it is applied. <a href="04-rights-dossier.html#naming">04</a></dd>
+
+<dt>D35. Ship a provisional grade range, and gate nothing on it.</dt>
+<dd><b>Replaces:</b> an earlier drafted position excluding grade prediction entirely, on the grounds that it was unwarrantable and would bring Article 22 into play. <b>Driven by:</b> the owner's instruction. <b>What makes it defensible:</b> the output is a band rather than a point, derived only from performance on validated items in the enrolled subject, and described as a current performance band rather than a forecast until T-CAL-01 has calibration data. Article 22 is not engaged because there is no decision and nothing is gated on the range. <b>Rejected:</b> a point estimate, which would invite reliance it cannot support; and shipping it as a prediction, which we cannot support for about a year. <b>Makes harder:</b> the constraint that nothing may be gated on the range is the one most likely to be eroded by a reasonable-sounding feature request, and a teacher-facing view of the range in Route B would engage Article 22 outright, which is now open item OI-11. <a href="05-safety-privacy-regulatory.html#graderange">05</a></dd>
+
+<dt>D36. Every mark scheme in the product is named "CINE mark scheme".</dt>
+<dd><b>Driven by:</b> "mark scheme" is a term of art that sounds like it belongs to an awarding body, and a parent skim-reading would reasonably assume it did. Our mark schemes are ours, for our items, validated by our examiners. <b>Rejected:</b> the unqualified phrase, which is shorter, reads more naturally, and is the exact wording a board's complaint would quote. <b>Makes harder:</b> slightly clumsier copy in every surface, permanently. <a href="03-curriculum-and-content.html#papers">03</a></dd>
+</dl>
+
+<div class="claim">
+<p>Both reversals move the product toward what a parent visibly wants and away from the most cautious available position. That is a legitimate trade and it was the owner's to make. What it changes is the <b>posture</b> of the vault: D34 in particular means the repository can no longer say that it has waited for counsel on everything, and the honest statement is now that it has waited on ten of eleven questions and proceeded on one, with the reason and the containment written down.</p>
+<span class="tag decided">Posture<span class="src">recorded so it is not discovered later</span></span>
+</div>
+
+<h2 id="thresholds">D37: thresholds, so the route conditions are not judgement calls</h2>
+
+<dl class="defs">
+<dt>D37. Condition C2 fails if quoted age verification cost exceeds one month of gross contribution at the lowest price point tested.</dt>
+<dd><b>Driven by:</b> an audit of <a href="09-route-comparison.html#rec">09</a> observing that conditions written as "a small fraction, not a large one" leave the pre-committed flip to somebody's judgement on the day, which is the exact failure the conditions exist to prevent. <b>Why this threshold:</b> verification is a one-off; if it costs more than the first month earns, every acquisition begins underwater and the entire return depends on a duration the examination calendar caps. <b>Rejected:</b> a percentage-of-lifetime-value rule, which needs three numbers nobody has; this needs one quote and one price. <b>Makes harder:</b> it can fail Route A on a single quote, which is the point, and it will feel harsh if the quote lands just above the line. C1 and C3 are given comparative rules in the same pass so that none of the three depends on a number invented here. <a href="09-route-comparison.html#rec">09</a></dd>
+</dl>
+
+<h2 id="unresolved">Decisions deliberately not taken</h2>
+
+<p>Recorded here so that their absence is visible rather than looking like an oversight.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Not decided</th><th>Why not</th></tr></thead>
+<tbody>
+<tr><td>Price.</td><td>Untested. OA-10 decides the anchor and is resolvable at M1. Inventing a price would put a number into an investor conversation with nothing behind it.</td></tr>
+<tr><td>Creator fee, and whether it is a flat fee or a revenue share.</td><td>Commercial, and both structures are drafted in the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a>. The number is not a design decision.</td></tr>
+<tr><td>Model vendor.</td><td>The selection procedure is specified in <a href="06-architecture.html#model">06</a> and runs at M2 against a frozen battery. Choosing now would be choosing on memory rather than measurement.</td></tr>
+<tr><td>Which entity contracts with the parent.</td><td>OI-7. A counsel question with tax, jurisdiction and transfer consequences.</td></tr>
+<tr><td>Hiring and funding plans.</td><td>Both depend on the content cost from M2 and the payback ratio from M5. Neither exists.</td></tr>
+<tr><td>Whether to exercise D6 or D9.</td><td>D6 has a decision rule and a trigger (<a href="11-roadmap.html#d6">11</a>). D9 remains off the launch path and no trigger has been written for it, which is itself the decision.</td></tr>
+</tbody>
+</table>
+</div>

@@ -1,36 +1,165 @@
 <h1>Route A: direct to parents</h1>
-<p class="standfirst">The owner's preferred route. A parent buys, a student uses, the company is an independent controller and carries the full weight of that.</p>
+<p class="standfirst">Direct to parents, which is the owner's current preference and the one the evidence favours. It is also a business whose customers have a known leaving date, and this document deals with the June cliff first rather than last.</p>
+<dl class="meta">
+<dt>Document</dt><dd>07 of 14</dd>
+<dt>Status</dt><dd>Specification. No price has been tested. No customer exists.</dd>
+<dt>Written</dt><dd>14 September 2026</dd>
+<dt>Compared against</dt><dd><a href="08-route-b-through-schools.html">08 Route B</a>, decided in <a href="09-route-comparison.html">09</a></dd>
+<dt>Shared core</dt><dd>Roughly 80% of the design does not care who pays (D3). Only the four sections below diverge.</dd>
+</dl>
 
-<h2>Why this route has the evidence behind it</h2>
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#cliff">The June cliff, first</a></li>
+<li><a href="#pricing">Pricing and unit economics</a></li>
+<li><a href="#data">Data and consent model</a></li>
+<li><a href="#distribution">Distribution motion</a></li>
+<li><a href="#tension">The tension between the wedge and D11</a></li>
+<li><a href="#compliance">Compliance posture</a></li>
+<li><a href="#breaks">What breaks first</a></li>
+</ol>
+</details>
+
+<h2 id="cliff">The June cliff, first</h2>
+
+<p class="lede">A Year 11 concentration means the customer's need ends on a date everyone knows in advance. That is not a churn problem to be reduced; it is the structure of the demand, and a plan that models it as reducible churn is lying to itself.</p>
 
 <div class="claim">
-  <p>Tutoring uptake among secondary pupils in England and Wales is 29% and rising, peaking at 25% in Year 11 and 45% in London, while school-organised tutoring fell to 20% of pupils and 58% of schools cut their offer. The category is moving from institutions to families.</p>
-  <span class="tag verified">Verified<span class="src">Sutton Trust, Private Tutoring 2026</span></span>
+<p>Year 11 is the peak tutoring year at <b>25%</b> of pupils. Year 10 is next at <b>10%</b>. The gap between them is the shape of the problem.</p>
+<span class="tag verified">Verified<span class="src">Sutton Trust, Private Tutoring 2026, February 2026</span></span>
 </div>
 
-<h2>Pricing</h2>
+<p>Three consequences, and the third is the one that matters to an investor.</p>
+
+<ol>
+<li><b>Retained months are structurally capped.</b> A household acquired in January has at most five or six months of need. One acquired in September has nine. Nobody has thirty-six. Whatever the dominant variable in <a href="10-economics.html">10</a> turns out to be, it operates against a ceiling set by the examination calendar rather than by product quality.</li>
+<li><b>Revenue is seasonal and the seasonality is not smoothable.</b> Reporting monthly recurring revenue for this business would flatter it from September to May and then expose it. <b>Cohort contribution over an examination cycle is the correct unit of account,</b> and it should be the unit used internally from the first customer, not adopted later when MRR becomes embarrassing.</li>
+<li><b>Acquisition has to refill from below, every year.</b> The Year 10 figure of 10% is the ladder. A household that arrives in Year 10 has a plausible eighteen-month life; one that arrives in Year 11 has months. Acquisition cost per <i>retained month</i> is therefore radically different by year group, and the two should never be averaged together.</li>
+</ol>
+
+<h3>What is actually done about it</h3>
+
+<ul>
+<li><b>Price and sell the examination cycle, not the month.</b> A cycle plan running to the last paper matches what the household is buying. Monthly billing invites a monthly cancellation decision at exactly the point revision gets unpleasant.</li>
+<li><b>Acquire Year 10 in the autumn deliberately,</b> accepting a worse conversion rate for a much better retained-month figure, and measure the two cohorts separately.</li>
+<li><b>Do not fight the June exit.</b> Reactivation of a Year 11 leaver is close to worthless; they have finished. Effort is better spent on the younger sibling, which is a household relationship rather than a learner relationship, and on the A-level continuation for the fraction who go on.</li>
+<li><b>Do not use retention mechanics to soften it.</b> D25 in <a href="05-safety-privacy-regulatory.html#basis">05</a> forbids streaks, badges and return notifications. The June cliff is the moment that decision costs the most, and it is precisely the moment it would be most tempting to quietly reverse.</li>
+</ul>
+
+<h2 id="pricing">Pricing and unit economics</h2>
+
+<p>No price is set here, because no price has been tested and inventing one would put a plausible number into an investor conversation with nothing behind it. What can be done honestly is the substitution arithmetic against the verified comparator.</p>
 
 <div class="claim">
-  <p>The reference point is not Netflix, it is the &pound;25 to &pound;45 an hour a parent currently pays for GCSE tutoring. A monthly subscription that replaces even one hour a month is defensible. The actual number cannot be set until the cost per assured account and the cost per session are known.</p>
-  <span class="tag open">Open<span class="src">Blocked on documents 06 and 10</span></span>
+<p>Prevailing 2026 rates are roughly <b>£25 to £45 per hour at GCSE</b> and £35 to £65 at A-level.</p>
+<span class="tag verified">Verified<span class="src">Sutton Trust, February 2026</span></span>
 </div>
 
-<h2>The seasonality problem</h2>
+<div class="tw">
+<table>
+<caption>Arithmetic, not a forecast. For a monthly price, how many hours of human GCSE tutoring the parent is giving up to pay it. Every figure is division; none is a market estimate.</caption>
+<thead><tr><th class="num">Monthly price</th><th class="num">Hours substituted at £25/hr</th><th class="num">Hours substituted at £45/hr</th></tr></thead>
+<tbody>
+<tr><td class="num">£10</td><td class="num">0.40</td><td class="num">0.22</td></tr>
+<tr><td class="num">£15</td><td class="num">0.60</td><td class="num">0.33</td></tr>
+<tr><td class="num">£20</td><td class="num">0.80</td><td class="num">0.44</td></tr>
+<tr><td class="num">£25</td><td class="num">1.00</td><td class="num">0.56</td></tr>
+<tr><td class="num">£30</td><td class="num">1.20</td><td class="num">0.67</td></tr>
+<tr><td class="num">£40</td><td class="num">1.60</td><td class="num">0.89</td></tr>
+</tbody>
+</table>
+</div>
 
-<p>Demand peaks in Year 11 and collapses the week after the last exam. This is the defining economic feature of the route and it is not solvable by discounting.</p>
-
-<p>Three partial answers, none tested: annual pricing bought in September rather than monthly bought in April; Year 10 as the acquisition year with Year 11 as the retention year; and a materially cheaper out-of-season tier that keeps the account alive rather than closing it.</p>
-
-<h2>Distribution</h2>
-
-<p>The creators are the channel and the product feature at once, which is the strongest structural argument for this route. A creator with a GCSE audience who is also a named preset has a reason to mention it that is not advertising.</p>
+<p>The frame this produces is the one to test: below roughly £25 a month, the product costs a household less than one hour of human tutoring and delivers many hours of contact. That is a strong argument <b>if</b> the parent is doing substitution arithmetic at all.</p>
 
 <div class="claim">
-  <p>This makes creator acquisition the single point of failure for Route A distribution, which sits uncomfortably with the requirement that the product run with zero licensed personas. Both are true and the tension is real: zero-persona operation protects the launch date, it does not protect the growth plan.</p>
-  <span class="tag assumed">Assumed<span class="src">Not modelled. Needs a second channel before launch</span></span>
+<p>That parents anchor an AI tutoring subscription against the hourly cost of a human tutor rather than against the price of software, which is a different and much lower anchor, or against free, which is <span class="mark verified">Verified</span> what Gemini, ChatGPT Study Mode and Claude Learning Mode cost. If the anchor is software rather than tutoring, every row in that table is too expensive and the business is a different one. <b>This is the single most valuable thing to test before building anything</b>, it is testable with a landing page and no product, and it is milestone M1 in <a href="11-roadmap.html">11 Roadmap</a>.</p>
+<span class="tag assumed">Assumption<span class="src">not verified, and the pricing rests on it</span></span>
 </div>
 
-<h2>Compliance posture</h2>
+<h3>Unit economics structure</h3>
 
-<p>Independent controller. Own age assurance, own lawful basis for every inference, own DPIA, own UK representative if the controller is India-established. Full Children's code burden. See document 05, which is written for this route.</p>
+<p>The full model and the identification of the dominant variable are in <a href="10-economics.html">10</a>. What is specific to Route A:</p>
 
+<ul class="tight">
+<li><b>Age verification is a one-off cost at acquisition,</b> charged against the contribution of the whole acquisition rather than of the first month, per the arithmetic in <a href="10-economics.html#dominant">10</a>. <span class="mark unknown">Unknown</span> Its size, per <a href="05-safety-privacy-regulatory.html#age">05</a>. It subtracts from the acquisition budget pound for pound.</li>
+<li><b>Payment processing</b> on a low monthly ticket is a material percentage, not a rounding error.</li>
+<li><b>Variable session cost</b> is bounded per turn by D30, so it scales with usage rather than with session length. A heavy user is expensive linearly, not quadratically.</li>
+<li><b>CAC is entirely ours,</b> unlike Route B where a school contract amortises across a cohort.</li>
+</ul>
+
+<h2 id="data">Data and consent model</h2>
+
+<p>We are the <b>controller</b>. Everything in <a href="05-safety-privacy-regulatory.html">05</a> falls on us directly, with no school to share it with.</p>
+
+<ul class="tight">
+<li>The <b>adult</b> is the account holder, age-verified before any learner profile exists. No date of birth is collected from anyone.</li>
+<li>The <b>child</b> is the data subject for the tutoring data, while the contract is held by the parent. That mismatch is open item OI-10 and it is the sharpest privacy question in this route.</li>
+<li>Parental visibility is objective-level, not transcript-level, by default (D16).</li>
+<li>Safeguarding escalation cannot route to a school because there is not one, so it routes to our own reviewer, with the honest launch limitation stated in <a href="05-safety-privacy-regulatory.html#content">05</a>: next business day, which is not adequate for an acute disclosure.</li>
+</ul>
+
+<p>That last point is the real compliance asymmetry between the routes, and it is worth more weight than it usually gets: in Route A we carry a safeguarding duty we are not staffed to discharge, and the mitigation is to signpost to services that are.</p>
+
+<h2 id="distribution">Distribution motion</h2>
+
+<p>The verified concentration data says where demand already is. It has to be read carefully, because one reading of it is unlawful.</p>
+
+<div class="claim">
+<p>London <b>45%</b>, rest of England 27%, Wales 24%. Urban <b>33%</b>, rural 19%. By ethnicity: Black pupils <b>64%</b>, Asian <b>50%</b>, White 20%; in deprived areas, 65%, 43% and 10% respectively. Worst-off households 23%, best-off 30%.</p>
+<span class="tag verified">Verified<span class="src">Sutton Trust, February 2026</span></span>
+</div>
+
+<div class="claim">
+<p>The ethnicity figures inform <b>where to test channels</b>, by geography and school catchment, and inform nothing else. <b>No advertising is targeted on a protected characteristic.</b> Ethnicity is not collected (<a href="05-safety-privacy-regulatory.html#basis">05</a>), cannot be inferred, and is not an input to targeting, pricing or product.</p>
+<p>The figures are a fact about where tutoring demand already exists. Turning them into an audience segment would be unlawful, and would also be the version of this venture nobody should want to build.</p>
+<span class="tag decided">Decision D31<span class="src">14 September 2026</span></span>
+</div>
+
+<h3>Channels, in order of expected efficiency</h3>
+
+<ol>
+<li><b>Topic-level search intent.</b> The unit of demand is "why does the sign flip", not "maths tutor". Content answering exactly those questions, at the objective granularity the item bank is already organised around, is the lowest-cost channel available and it is a by-product of building the bank.</li>
+<li><b>Geography.</b> London and urban catchments, per the verified figures, without reference to any protected characteristic.</li>
+<li><b>The household, not the learner.</b> A parent with one Year 11 often has a Year 8. The retained-month ceiling in <a href="#cliff">the June cliff</a> is a learner ceiling, not a household one.</li>
+<li><b>A signed creator's own audience.</b> Potentially the cheapest channel of all, and the subject of the next section.</li>
+</ol>
+
+<h2 id="tension">The tension between the wedge and D11</h2>
+
+<div class="claim">
+<p>D11 says the product launches and runs with zero signed creators, and <a href="04-rights-dossier.html#zero">04</a> proves that technically: no content depends on a persona, the archetype path is half the launch product, and T-ZERO-01 blocks any release that breaks it.</p>
+<p><b>That proof is about the product, not the business.</b> An educator with an audience of GCSE students is simultaneously the wedge and the cheapest acquisition channel available. If creator-led acquisition turns out to be the only affordable CAC, then the <i>business</i> depends on signed creators even though the <i>product</i> does not, and D11's independence is technically intact while being commercially hollow.</p>
+<p><b>How this is kept honest:</b> CAC is measured separately for creator-led and non-creator-led acquisition from the first cohort. If non-creator CAC is unaffordable, that is reported as a finding about D11's commercial reality rather than absorbed into a blended average that hides it. This is scheduled with the D14 instrumentation at M4 in <a href="11-roadmap.html">11 Roadmap</a>.</p>
+<span class="tag assumed">Assumed<span class="src">A contradiction worth naming rather than burying</span></span>
+</div>
+
+<h2 id="compliance">Compliance posture</h2>
+
+<div class="tw">
+<table>
+<thead><tr><th>Area</th><th>Route A position</th></tr></thead>
+<tbody>
+<tr><td>Controller status</td><td>Ours, entirely. No school to share responsibility with.</td></tr>
+<tr><td>Age assurance</td><td>Ours to solve and ours to pay for. Open item OI-5. The hardest single compliance cost in this route.</td></tr>
+<tr><td>Lawful basis</td><td>Contract with the parent for the core service; the child-as-data-subject mismatch is OI-10.</td></tr>
+<tr><td>DPIA</td><td>Ours. Not written. A precondition of launch, not a launch task.</td></tr>
+<tr><td>Consumer law</td><td>Distance selling, cancellation rights, subscription auto-renewal rules. Interacts with OI-7, which entity contracts with the parent.</td></tr>
+<tr><td>Online Safety Act</td><td>As scoped in <a href="05-safety-privacy-regulatory.html#osa">05</a>. The trigger list applies identically in both routes.</td></tr>
+<tr><td>Safeguarding</td><td>Ours, with no designated safeguarding lead to escalate to. The weakest point in this route.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="breaks">What breaks first</h2>
+
+<p>In order of likelihood, with how it would be noticed.</p>
+
+<ol>
+<li><b>The price anchor is software, not tutoring.</b> Noticed as a landing-page conversion rate that collapses above about £10 a month. Detectable before any product exists, which is why M5 comes early.</li>
+<li><b>Age verification cost exceeds first-month contribution.</b> Noticed the moment a provider quotes. Detectable this quarter, by asking.</li>
+<li><b>Non-creator CAC is unaffordable</b> and the business quietly becomes creator-dependent. Noticed only if CAC is split by channel from the first cohort, which is why the split is specified above rather than assumed.</li>
+<li><b>Retained months are shorter than the examination calendar suggests,</b> because households buy in March rather than September. Noticed in the first cohort's contribution figures, and it is the variable <a href="10-economics.html">10</a> identifies as dominant.</li>
+<li><b>The refusal behaviour costs retention.</b> A tutor that declines questions a free chatbot answers is a worse experience in the moment. Noticed as a correlation between gate-fire rate and session-two return rate, which is measurable from the first live week and is the reason the gate-fire rate is instrumented in <a href="06-architecture.html#verifier">06</a>.</li>
+</ol>
