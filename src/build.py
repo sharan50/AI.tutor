@@ -7,6 +7,7 @@ root after editing any fragment.
 from pathlib import Path
 import datetime
 import shutil
+import re
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "src" / "content"
@@ -57,38 +58,78 @@ SHELL = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}, AI.tutor design vault</title>
 <meta name="description" content="{desc}">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="{css}">
 </head>
 <body>
-<main class="sheet">
-<header class="masthead">
-  <span class="doc-no">{number}</span>
-  <span class="repo">AI.tutor design vault, revised {revised}</span>
-  <a href="index.html">Contents</a>
+<a class="skip" href="#doc">Skip to the document</a>
+
+<header class="topbar">
+  <a class="brand" href="{home}"><b>AI.tutor</b> <span>design vault</span></a>
+  <details class="switcher">
+    <summary>{numlabel}{title}</summary>
+    <div class="sw-panel">{switcher}</div>
+  </details>
+  <nav class="toplinks">
+    <a href="{status_href}">Status</a>
+    <a href="{evidence_href}">Evidence</a>
+    <a href="{home}">Contents</a>
+  </nav>
 </header>
-<details class="legend">
-<summary>How claims are marked</summary>
-<div class="legend-body">
-<p>Nothing factual in this vault is unmarked. Markers sit in the right margin, or inline where a single sentence carries one.</p>
-<ul>
-<li><span class="mark verified">Verified</span> Checked September 2026 against the named source, registered in <a href="../evidence/sources.html">the evidence register</a>.</li>
-<li><span class="mark assumed">Assumed</span> Reasoned, not checked. Shapes the plan and could be wrong.</li>
-<li><span class="mark open">Open</span> A question for a lawyer, deliberately unanswered here.</li>
-<li><span class="mark decided">Decision</span> A choice taken here, recorded in the <a href="decision-ledger.html">decision ledger</a>.</li>
-<li><span class="mark unknown">Unknown</span> A number the plan needs and does not have. Never filled with a plausible substitute.</li>
-</ul>
-</div>
-</details>
+
+<div class="layout">
+  <aside class="rail">{outline}</aside>
+  <main class="sheet" id="doc">
 {body}
+  </main>
+</div>
+
+<nav class="pager">
+  <a class="prev" href="{prev_href}"><span>Previous</span>{prev_label}</a>
+  <a class="next" href="{next_href}"><span>Next</span>{next_label}</a>
+</nav>
+
 <footer class="pagefoot">
-  <a href="{prev_href}">{prev_label}</a>
-  <span class="stamp">Built {built}</span>
-  <a href="{next_href}">{next_label}</a>
+  <div class="legend-row">
+    <span class="li"><span class="mark verified">Verified</span>checked against a named source</span>
+    <span class="li"><span class="mark assumed">Assumed</span>reasoned, not checked</span>
+    <span class="li"><span class="mark open">Open</span>a question for a lawyer</span>
+    <span class="li"><span class="mark unknown">Unknown</span>a number we do not have</span>
+    <span class="li"><span class="mark decided">Decision</span>a choice taken here</span>
+  </div>
+  <div class="meta-row">
+    <span>AI.tutor design vault, revised {revised}. Nothing here has been built.</span>
+    <span class="stamp">Built {built}</span>
+  </div>
 </footer>
-</main>
 </body>
 </html>
 """
+
+
+def outline_for(fragment):
+    """Section outline for the left rail, built from the fragment's own h2s."""
+    heads = re.findall(r'<h2 id="([^"]+)"[^>]*>(.*?)</h2>', fragment, re.S)
+    if not heads:
+        return ""
+    items = []
+    for hid, label in heads:
+        label = re.sub(r"<[^>]+>", "", label).strip()
+        items.append(f'<li><a href="#{hid}">{label}</a></li>')
+    return ('<div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav">'
+            + "".join(items) + "</ol></div>")
+
+
+def switcher_for(current_slug):
+    """Every document, so any page is one click from any other."""
+    out = []
+    for slug, number, title, _desc, _status in PAGES:
+        here = ' class="here"' if slug == current_slug else ""
+        no = number or ""
+        out.append(f'<a href="{slug}.html"{here}><span class="sw-no">{no}</span>{title}</a>')
+    out.append('<a href="status.html"><span class="sw-no"></span>Status</a>')
+    out.append('<a href="../evidence/sources.html"><span class="sw-no"></span>Evidence register</a>')
+    return "".join(out)
+
 
 
 def build():
@@ -99,14 +140,18 @@ def build():
         if not frag.exists():
             print(f"  missing fragment: {slug}")
             continue
+        body = frag.read_text(encoding="utf-8").strip()
         prev_i, next_i = i - 1, i + 1
         prev_href = "index.html" if prev_i < 0 else PAGES[prev_i][0] + ".html"
         prev_label = "Contents" if prev_i < 0 else PAGES[prev_i][2]
         next_href = "index.html" if next_i >= len(PAGES) else PAGES[next_i][0] + ".html"
         next_label = "Contents" if next_i >= len(PAGES) else PAGES[next_i][2]
         html = SHELL.format(
-            title=title, desc=desc, number=number, revised=REVISED,
-            body=frag.read_text(encoding="utf-8").strip(), built=built,
+            title=title, desc=desc, number=number or "&middot;", numlabel=(f'<span class="sw-no">{number}</span> ' if number else ""), revised=REVISED,
+            css="style.css", home="index.html", status_href="status.html",
+            evidence_href="../evidence/sources.html",
+            switcher=switcher_for(slug), outline=outline_for(body),
+            body=body, built=built,
             prev_href=prev_href, prev_label=prev_label,
             next_href=next_href, next_label=next_label,
         )
@@ -122,40 +167,44 @@ def build():
             f'<span class="t"><a href="{slug}.html">{title}</a><span>{desc}</span></span>'
             f'<span class="s {status}">{label}</span></li>'
         )
+    index_body = index_frag.read_text(encoding="utf-8").replace("<!--CONTENTS-->", "\n".join(rows)).strip()
     index_html = SHELL.format(
-        title="Contents", desc="AI.tutor venture design vault", number="\u00b7",
-        revised=REVISED,
-        body=index_frag.read_text(encoding="utf-8").replace("<!--CONTENTS-->", "\n".join(rows)).strip(),
-        built=built,
-        prev_href="00-thesis.html", prev_label="Thesis",
+        title="Contents", desc="AI.tutor venture design vault", number="&middot;", numlabel="",
+        revised=REVISED, css="style.css", home="index.html", status_href="status.html",
+        evidence_href="../evidence/sources.html",
+        switcher=switcher_for("index"), outline=outline_for(index_body),
+        body=index_body, built=built,
+        prev_href="status.html", prev_label="Status",
         next_href="00-thesis.html", next_label="Thesis",
     )
     (DOCS / "index.html").write_text(index_html, encoding="utf-8")
     print("  built index.html")
 
+    build_status(built)
+
     # The evidence register lives in /evidence, a sibling of /docs, so it needs
     # the same shell with relative paths rewritten one level across.
     src_frag = CONTENT / "sources.html"
     if src_frag.exists():
+        body = src_frag.read_text(encoding="utf-8").strip()
         html = SHELL.format(
-            title="Evidence register", number="\u00b7",
+            title="Evidence register", number="&middot;", numlabel="",
             desc="Every external claim, with its source and the date it was checked.",
-            revised=REVISED, body=src_frag.read_text(encoding="utf-8").strip(),
-            built=built,
+            revised=REVISED, css="../docs/style.css", home="../docs/index.html",
+            status_href="../docs/status.html", evidence_href="sources.html",
+            switcher=switcher_for("sources").replace('href="', 'href="../docs/')
+                                            .replace('href="../docs/../evidence/', 'href="'),
+            outline=outline_for(body), body=body, built=built,
             prev_href="../docs/decision-ledger.html", prev_label="Decision ledger",
             next_href="../docs/index.html", next_label="Contents",
         )
-        html = (html
-                .replace('href="style.css"', 'href="../docs/style.css"')
-                .replace('href="index.html"', 'href="../docs/index.html"')
-                .replace('href="../evidence/sources.html"', 'href="sources.html"')
-                .replace('href="decision-ledger.html"', 'href="../docs/decision-ledger.html"'))
         out = ROOT / "evidence"
         out.mkdir(exist_ok=True)
         (out / "sources.html").write_text(html, encoding="utf-8")
         print("  built ../evidence/sources.html")
 
     assemble_publish_dir()
+
 
 
 # Netlify publishes PUBLISH_DIR, not the repository root. Anything absent from
@@ -178,6 +227,173 @@ def assemble_publish_dir():
             shutil.copytree(src, PUBLISH_DIR / name)
     n = sum(1 for _ in PUBLISH_DIR.rglob("*") if _.is_file())
     print(f"  assembled _site/ for publishing: {n} files from {', '.join(PUBLISHED)}")
+
+
+# ---------------------------------------------------------------- status view
+# Generated from the registers themselves, so it cannot drift from the
+# documents the way a hand-maintained summary would.
+
+def _rows(fragment, prefix):
+    """Table rows whose first cell is an id like OI-3 or ACC-2."""
+    pat = re.compile(
+        r'<tr>\s*<td class="id">(' + prefix + r'-?\d+)</td>(.*?)</tr>', re.S)
+    out = []
+    for ident, rest in pat.findall(fragment):
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", rest, re.S)
+        out.append((ident, cells))
+    return out
+
+
+def _plain(html_str, limit=None):
+    t = re.sub(r"<[^>]+>", "", html_str)
+    t = (t.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
+          .replace("&middot;", "-").replace("&nbsp;", " "))
+    t = re.sub(r"\s+", " ", t).strip()
+    if not limit or len(t) <= limit:
+        return t
+    # cut at the last sentence end inside the budget, else the last word
+    window = t[:limit]
+    cut = max(window.rfind(". "), window.rfind("? "), window.rfind("; "))
+    if cut > limit * 0.45:
+        return window[:cut + 1]
+    cut = window.rfind(" ")
+    return window[:cut].rstrip(" ,;:") + "\u2026"
+
+
+def build_status(built):
+    read = lambda n: (CONTENT / n).read_text(encoding="utf-8")
+    openitems = read("14-open-items.html")
+    ledger = read("decision-ledger.html")
+    curric = read("03-curriculum-and-content.html")
+    routes = read("09-route-comparison.html")
+    risks_f = read("12-risk-register.html")
+    everything = "\n".join((CONTENT / f"{p[0]}.html").read_text(encoding="utf-8")
+                           for p in PAGES if (CONTENT / f"{p[0]}.html").exists())
+
+    oi = _rows(openitems, "OI")
+    oa = _rows(openitems, "OA")
+    acc = _rows(curric, "ACC")
+    risks = _rows(risks_f, "R")
+    conds = _rows(routes, "C")
+    decisions = set(re.findall(r'<td class="id">D(\d+)</td>', ledger)) | \
+                set(re.findall(r"<dt>D(\d+)\.", ledger))
+    tests = sorted(set(re.findall(r"\bT-[A-Z]+-\d+\b", everything)))
+    cheap = re.search(r"<b>(\w+) of the [\w-]+ assumptions are resolvable", openitems)
+    cheap_n = cheap.group(1) if cheap else "several"
+
+    def card(n, label, note):
+        return (f'<div class="stat"><span class="stat-n">{n}</span>'
+                f'<span class="stat-l">{label}</span><span class="stat-note">{note}</span></div>')
+
+    stats = "".join([
+        card(len(PAGES), "documents", "drafted, none built"),
+        card(len(tests), "tests specified", "<b>none run</b>"),
+        card(len(oi), "questions for counsel", "none answered"),
+        card(len(oa), "assumptions", f"{cheap_n} answerable by reading or asking"),
+        card(len(decisions), "decisions", "each with what it forecloses"),
+        card(len(risks), "risks", "ordered by the owner's ranking"),
+    ])
+
+    cond_rows = "".join(
+        f'<tr><td class="id">{i}</td><td>{_plain(c[0], 210)}</td>'
+        f'<td>{_plain(c[1], 190)}</td><td class="pill-cell"><span class="pill wait">untested</span></td></tr>'
+        for i, c in conds)
+
+    oi_rows = "".join(
+        f'<tr><td class="id">{i}</td><td>{_plain(c[0], 250)}</td><td>{_plain(c[1], 130)}</td></tr>'
+        for i, c in oi)
+
+    oa_rows = "".join(
+        f'<tr><td class="id">{i}</td><td>{_plain(c[0], 230)}</td><td>{_plain(c[1], 120)}</td></tr>'
+        for i, c in oa)
+
+    test_rows = "".join(
+        f'<tr><td class="id">{t}</td><td>{_plain(_test_blurb(everything, t), 170)}</td>'
+        f'<td class="pill-cell"><span class="pill stop">not run</span></td></tr>' for t in tests)
+
+    acc_rows = "".join(
+        f'<tr><td class="id">{i}</td><td>{_plain(c[0], 170)}</td>'
+        f'<td class="id">{_plain(c[2]) if len(c) > 2 else ""}</td>'
+        f'<td class="pill-cell"><span class="pill stop">not run</span></td></tr>' for i, c in acc)
+
+    risk_rows = "".join(
+        f'<tr><td class="id">{i}</td><td>{_plain(c[0], 210)}</td><td>{_plain(c[1], 150)}</td></tr>'
+        for i, c in risks)
+
+    body = f"""<h1>Status</h1>
+<p class="standfirst">Everything in this vault that is open, unproven or waiting, on one page.
+Generated from the registers themselves at build time, so it cannot drift from the documents
+the way a hand-maintained summary would.</p>
+
+<div class="stats">{stats}</div>
+
+<div class="claim">
+<p>The single most important line on this page is the second figure: <b>{len(tests)} tests
+specified and none run.</b> There is no product, no pilot and no customer, so every accuracy
+and style claim in this vault is a commitment rather than a measurement. Read everything
+else here in that light.</p>
+<span class="tag open">Unproven<span class="src">no pilot, no users, no revenue</span></span>
+</div>
+
+<h2 id="conditions">The three conditions that decide the route</h2>
+<p><a href="09-route-comparison.html">09</a> recommends Route A on three conditions. Two can be
+tested this quarter for almost nothing, and either can flip the decision on its own.</p>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Condition</th><th>How it is tested</th><th>State</th></tr></thead>
+<tbody>{cond_rows}</tbody></table></div>
+
+<h2 id="counsel">Questions for counsel</h2>
+<p>Deliberately unanswered. One, OI-3, we are proceeding ahead of under D34, and it says so
+where it is applied. Full text in <a href="14-open-items.html">14</a>.</p>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Question</th><th>Unblocks</th></tr></thead>
+<tbody>{oi_rows}</tbody></table></div>
+
+<h2 id="assumptions">Assumptions the plan rests on</h2>
+<p>None verified. {cheap_n.capitalize()} of them resolve by reading a published document or making
+a phone call, rather than by building anything, which is why
+<a href="11-roadmap.html#m1">milestone M1</a> contains almost no engineering.</p>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Assumption</th><th>Shapes</th></tr></thead>
+<tbody>{oa_rows}</tbody></table></div>
+
+<h2 id="floors">Accuracy floors</h2>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Floor</th><th class="id">Test</th><th>State</th></tr></thead>
+<tbody>{acc_rows}</tbody></table></div>
+
+<h2 id="tests">Every test in the vault</h2>
+<div class="tw"><table>
+<thead><tr><th class="id">Test</th><th>What it establishes</th><th>State</th></tr></thead>
+<tbody>{test_rows}</tbody></table></div>
+
+<h2 id="risks">Risks</h2>
+<p>In the owner's ranking. <a href="12-risk-register.html#ordering">12</a> explains why the
+engineering priority runs close to the reverse of it.</p>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Risk</th><th>Leading indicator</th></tr></thead>
+<tbody>{risk_rows}</tbody></table></div>
+"""
+
+    html = SHELL.format(
+        title="Status", desc="Everything open, unproven or waiting, on one page.",
+        number="&middot;", numlabel="", revised=REVISED, css="style.css", home="index.html",
+        status_href="status.html", evidence_href="../evidence/sources.html",
+        switcher=switcher_for("status"), outline=outline_for(body), body=body, built=built,
+        prev_href="index.html", prev_label="Contents",
+        next_href="00-thesis.html", next_label="Thesis",
+    )
+    (DOCS / "status.html").write_text(html, encoding="utf-8")
+    print("  built status.html")
+
+
+def _test_blurb(everything, test_id):
+    """First sentence near a test's definition, for the status table."""
+    m = re.search(re.escape(test_id) + r"[:<][^<]{0,40}</td><td>(.*?)</td>", everything, re.S)
+    if m:
+        return m.group(1)
+    m = re.search(r"<b>" + re.escape(test_id) + r":</b>(.*?)[.<]", everything, re.S)
+    return m.group(1) if m else ""
 
 
 if __name__ == "__main__":
