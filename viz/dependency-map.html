@@ -1,0 +1,1244 @@
+<meta charset="utf-8">
+<title>CINE Impact Surface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#0E1417;
+  --ground-2:#121A1E;
+  --panel:#151D21;
+  --panel-2:#1A2429;
+  --rule:#27343A;
+  --rule-soft:#1E292E;
+  --ink:#E7EEF0;
+  --ink-2:#A8BAC1;
+  --ink-3:#74888F;
+  --accent:#E4622B;
+  --down:#E8B33C;
+  --up:#4FB3A6;
+  --side:#9A86DE;
+  --oblig:#CE5A72;
+  --font:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --panel-w:23.5rem;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--font);font-size:15px;line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  display:grid;grid-template-rows:auto minmax(0,1fr);grid-template-columns:minmax(0,1fr);
+  overflow:hidden;
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---------- command bar ---------- */
+.bar{
+  display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;max-width:100%;
+  padding:.6rem 1rem;padding-top:calc(.6rem + env(safe-area-inset-top,0px));
+  border-bottom:1px solid var(--rule);background:var(--ground-2);
+  position:relative;z-index:6;
+}
+.mark{display:flex;align-items:baseline;gap:.5rem;margin-right:.3rem;flex:none}
+.mark b{font-weight:700;font-stretch:112%;letter-spacing:.055em;font-size:.95rem;text-transform:uppercase}
+.mark span{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);letter-spacing:.04em}
+.mark .back{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);letter-spacing:.04em;text-decoration:none;border-bottom:1px solid var(--rule);margin-left:.35rem}
+.mark .back:hover{color:var(--accent);border-color:var(--accent)}
+.kinds{display:flex;gap:1px;min-width:0;max-width:100%;background:var(--rule-soft);border:1px solid var(--rule);border-radius:2px;overflow-x:auto;scrollbar-width:none}
+.kinds::-webkit-scrollbar{display:none}
+.kinds button{
+  padding:.34rem .6rem;font-size:.74rem;letter-spacing:.045em;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap;background:var(--ground-2);font-weight:600;
+}
+.kinds button:hover{color:var(--ink-2)}
+.kinds button[aria-pressed="true"]{background:var(--accent);color:#120A05}
+.bar .spacer{flex:1 1 auto}
+.viewbtns{display:flex;gap:.4rem}
+.viewbtns button{
+  font-family:var(--mono);font-size:.7rem;color:var(--ink-3);
+  border:1px solid var(--rule);border-radius:2px;padding:.3rem .5rem;
+}
+.viewbtns button:hover{color:var(--ink);border-color:var(--ink-3)}
+.viewbtns button[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
+.kindhint{
+  font-size:.75rem;color:var(--ink-3);flex-basis:100%;
+  font-family:var(--mono);letter-spacing:.01em;
+}
+
+/* ---------- stage ---------- */
+.stage{position:relative;min-height:0;overflow:hidden}
+#viz{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#viz.dragging{cursor:grabbing}
+
+.legend{
+  position:absolute;left:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));
+  z-index:3;display:flex;flex-direction:column;gap:.55rem;
+  pointer-events:none;max-width:15rem;
+}
+.legend .grp{pointer-events:auto;background:rgba(14,20,23,.82);border:1px solid var(--rule-soft);border-radius:2px;padding:.5rem .6rem}
+.legend h4{
+  margin:0 0 .4rem;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;
+}
+.legend .row{display:flex;align-items:center;gap:.45rem;font-size:.75rem;color:var(--ink-2);padding:.09rem 0}
+.swatch{width:.62rem;height:.62rem;border-radius:50%;flex:none}
+.c-origin{background:#E4622B}.c-down{background:#E8B33C}.c-up{background:#4FB3A6}
+.c-side{background:#9A86DE}.c-oblig{background:#CE5A72}
+.s-obligation{background:#CE5A72}.s-surface{background:#D9A441}
+.s-orchestration{background:#E4622B}.s-engine{background:#5FA8C9}
+.s-data{background:#4FB3A6}.s-supply{background:#9A86DE}
+.strata{display:flex;flex-direction:column;gap:1px}
+.strata button{
+  display:flex;align-items:center;gap:.45rem;width:100%;text-align:left;
+  font-size:.75rem;color:var(--ink-2);padding:.11rem .1rem;
+}
+.strata button[aria-pressed="false"]{color:var(--ink-3);opacity:.5;text-decoration:line-through}
+.strata .bar-i{width:1.4rem;height:2px;flex:none;border-radius:1px}
+
+.hoverchip{
+  position:absolute;z-index:4;pointer-events:none;
+  background:var(--panel);border:1px solid var(--rule);border-radius:2px;
+  padding:.3rem .5rem;font-size:.76rem;max-width:15rem;
+  box-shadow:0 6px 22px rgba(0,0,0,.5);opacity:0;transition:opacity .12s;
+}
+.hoverchip b{display:block;font-weight:600}
+.hoverchip i{font-style:normal;font-family:var(--mono);font-size:.68rem;color:var(--ink-3)}
+
+/* ---------- inspector ---------- */
+.panel{
+  position:absolute;top:0;right:0;bottom:0;width:var(--panel-w);z-index:5;
+  background:rgba(21,29,33,.94);border-left:1px solid var(--rule);
+  overflow-y:auto;overscroll-behavior:contain;
+  display:flex;flex-direction:column;
+}
+.phead{padding:.85rem 1rem .75rem;border-bottom:1px solid var(--rule-soft);display:flex;flex-direction:column;gap:.55rem}
+.pickrow{display:flex;gap:.4rem;align-items:center}
+.pickrow label{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+select{
+  flex:1;font:inherit;font-size:.8rem;background:var(--ground-2);color:var(--ink);
+  border:1px solid var(--rule);border-radius:2px;padding:.3rem .4rem;min-width:0;
+}
+.ptitle{font-size:1.28rem;line-height:1.18;font-weight:700;text-wrap:balance;margin:0}
+.chips{display:flex;gap:.35rem;flex-wrap:wrap}
+.chip{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.03em;
+  padding:.13rem .38rem;border-radius:2px;border:1px solid var(--rule);color:var(--ink-2);
+}
+.chip.own{border-color:#3C6E63;color:#7FD0C2}
+.chip.buy{border-color:#6E5C38;color:#D9B166}
+.chip.process{border-color:#4B5E74;color:#93B2D0}
+.chip.policy{border-color:#7A3F4D;color:#E48297}
+.pnote{margin:0;font-size:.85rem;color:var(--ink-2);line-height:1.5}
+
+.readout{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--rule-soft)}
+.readout div{padding:.7rem 1rem;border-top:1px solid var(--rule-soft)}
+.readout div:first-child{border-right:1px solid var(--rule-soft)}
+.readout .n{
+  font-size:2.1rem;font-weight:700;font-stretch:118%;line-height:1;
+  font-variant-numeric:tabular-nums;display:block;
+}
+.readout .k{font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.readout .down .n{color:var(--down)}
+.readout .up .n{color:var(--up)}
+
+.sect{padding:.85rem 1rem;border-bottom:1px solid var(--rule-soft)}
+.sect h3{
+  margin:0 0 .5rem;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;display:flex;align-items:center;gap:.4rem;
+}
+.sect h3 .dot{width:.5rem;height:.5rem;border-radius:50%;flex:none}
+.hit{
+  display:grid;grid-template-columns:auto 1fr;gap:.1rem .5rem;align-items:baseline;
+  width:100%;text-align:left;padding:.24rem .3rem;border-radius:2px;
+}
+.hit:hover{background:var(--panel-2)}
+.hit .hop{font-family:var(--mono);font-size:.64rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.hit .nm{font-size:.82rem;color:var(--ink)}
+.hit .via{grid-column:2;font-family:var(--mono);font-size:.66rem;color:var(--ink-3)}
+.stops{background:var(--panel-2);border-left:2px solid var(--up);padding:.5rem .6rem;margin-top:.4rem;border-radius:0 2px 2px 0}
+.stops p{margin:0 0 .3rem;font-size:.78rem;color:var(--ink-2)}
+.stops p:last-child{margin-bottom:0}
+.stops b{color:var(--up);font-family:var(--mono);font-size:.72rem;font-weight:500}
+.reg{display:flex;flex-direction:column;gap:.4rem}
+.reg a,.reg .item{display:grid;grid-template-columns:4.2rem 1fr;gap:.5rem;align-items:baseline;text-decoration:none}
+.reg code{
+  font-family:var(--mono);font-size:.68rem;color:var(--ink);background:var(--panel-2);
+  border:1px solid var(--rule);border-radius:2px;padding:.08rem .25rem;text-align:center;
+}
+.reg span{font-size:.78rem;color:var(--ink-2);line-height:1.42}
+.reg .t code{border-color:#3C6E63;color:#7FD0C2}
+.reg .o code{border-color:#7A3F4D;color:#E48297}
+.reg .r code{border-color:#6E5C38;color:#D9B166}
+.empty{font-size:.78rem;color:var(--ink-3);font-style:italic}
+.pfoot{padding:.85rem 1rem;color:var(--ink-3);font-size:.72rem;line-height:1.5;margin-top:auto}
+.pfoot b{color:var(--ink-2);font-weight:600}
+
+@media (max-width:62rem){
+  :root{--panel-w:20rem}
+  .legend{max-width:11rem}
+}
+@media (max-width:46rem){
+  body{font-size:14px}
+  .panel{
+    top:auto;left:0;width:auto;height:58%;
+    border-left:none;border-top:1px solid var(--rule);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .legend{display:none}
+  .bar{gap:.55rem;padding:.5rem .7rem;padding-top:calc(.5rem + env(safe-area-inset-top,0px))}
+  .kindhint{display:none}
+  .viewbtns{display:none}
+  .readout .n{font-size:1.7rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+
+<div class="bar">
+  <div class="mark"><b>CINE</b> <span>impact surface</span><a class="back" href="https://aitutor-plan.netlify.app/">design vault</a></div>
+  <div class="kinds" role="group" aria-label="Kind of change">
+    <button type="button" data-kind="interface" aria-pressed="false">Interface</button>
+    <button type="button" data-kind="schema" aria-pressed="true">Schema</button>
+    <button type="button" data-kind="behaviour" aria-pressed="false">Behaviour</button>
+    <button type="button" data-kind="vendor" aria-pressed="false">Vendor</button>
+    <button type="button" data-kind="policy" aria-pressed="false">Obligation</button>
+    <button type="button" data-kind="removal" aria-pressed="false">Withdrawal</button>
+  </div>
+  <div class="spacer"></div>
+  <div class="viewbtns">
+    <button type="button" id="spin" aria-pressed="true">orbit</button>
+    <button type="button" id="reset">reset view</button>
+  </div>
+  <p class="kindhint" id="kindhint"></p>
+</div>
+
+<div class="stage">
+  <canvas id="viz" tabindex="0" aria-label="Three dimensional dependency map. Use the component list in the inspector to select a component, or the arrow keys to rotate the view."></canvas>
+
+  <div class="legend">
+    <div class="grp">
+      <h4>Impact</h4>
+      <div class="row"><i class="swatch c-origin"></i>the change</div>
+      <div class="row"><i class="swatch c-down"></i>downstream, feels it</div>
+      <div class="row"><i class="swatch c-up"></i>upstream, holds it up</div>
+      <div class="row"><i class="swatch c-side"></i>sideways, co-changes</div>
+      <div class="row"><i class="swatch c-oblig"></i>obligation touched</div>
+    </div>
+    <div class="grp strataset">
+      <h4>Strata</h4>
+      <div class="strata" id="strata"></div>
+    </div>
+  </div>
+
+  <div class="hoverchip" id="chip" aria-hidden="true"></div>
+
+  <aside class="panel" id="panel" aria-live="polite"></aside>
+</div>
+
+<script>
+/* ------------------------------------------------------------------
+   CINE impact surface
+   Every component, edge and identifier below is taken from the design
+   vault: document 06 for the planes, the pipeline, the data model and
+   the kill switch; 02 for the style engine; 03 for the content
+   pipeline; 05 for safety and identity; 01 for the surfaces.
+------------------------------------------------------------------- */
+
+const STRATA = [
+  {id:"obligation",  label:"Obligations",   y: 300, tint:"#CE5A72"},
+  {id:"surface",     label:"Surfaces",      y: 180, tint:"#D9A441"},
+  {id:"orchestration",label:"Orchestration",y:  60, tint:"#E4622B"},
+  {id:"engine",      label:"Engines",       y: -60, tint:"#5FA8C9"},
+  {id:"data",        label:"Stores",        y:-180, tint:"#4FB3A6"},
+  {id:"supply",      label:"Bought and supplied", y:-300, tint:"#9A86DE"},
+];
+
+const SECTORS = {
+  content:    {az:   0, label:"Content and curriculum"},
+  pipeline:   {az:  60, label:"Turn pipeline"},
+  style:      {az: 120, label:"Style and persona"},
+  assessment: {az: 180, label:"Assessment and progress"},
+  safety:     {az: 240, label:"Safety and identity"},
+  commerce:   {az: 300, label:"Commerce and distribution"},
+};
+
+const TESTS = {
+  "T-VAL-01":"Every live item carries a recorded validation by a named examiner. Census, not sample.",
+  "T-GND-01":"Every substantive assertion cites a live node and is entailed by it. Floor 99.5 per cent.",
+  "T-MTH-01":"Generated worked steps are mathematically correct. Floor 99.0 per cent.",
+  "T-SCP-01":"Nothing outside the declared specification scope reaches the learner.",
+  "T-STY-01":"Measured style signatures match the parameter vector the tutor was given.",
+  "T-STY-02":"A blind grader tells two presets apart above chance.",
+  "T-STY-03":"Style changes the teaching and never the truth.",
+  "T-STY-04":"No licensed exemplar is reproduced in output.",
+  "T-ZERO-01":"The full regression battery passes with the persona registry empty.",
+  "T-PAP-01":"An assembled paper meets its structural specification as a whole.",
+  "T-CAL-01":"The grade range is calibrated against real examination outcomes.",
+  "T-GATE-01":"The gate-fire rate is measured on the frozen battery.",
+  "T-REG-01":"The frozen regression battery, blocking before any vendor version moves.",
+};
+
+const DECISIONS = {
+  D4:"Named-educator personas are the wedge, retained against advice.",
+  D5:"Personas pass a student usefulness test, not a fan's ear test. Name and likeness only.",
+  D6:"The route to high-fidelity personas via exemplar conditioning is designed now, not built now.",
+  D7:"Style is a structured parameter object, with a written style card generated from it.",
+  D8:"No persona LoRAs or fine-tuned weights carrying creator style. Retrieval and prompting only.",
+  D9:"Voice cloning is off the launch path; a separate opt-in limb of the licence.",
+  D10:"A creator selects a preset; the student may then move individual dimensions.",
+  D11:"Zero-persona operation is a hard requirement. The product runs with no signed creator.",
+  D12:"Clean-room content. Original items written to the published specification, examiner-validated.",
+  D14:"Ship named presets and unnamed archetypes from day one; instrument return rate.",
+  D15:"The unaided check is scored on first commit, with no hints available.",
+  D16:"The parent does not see session transcripts by default.",
+  D17:"No tone dimension in the weighted style set.",
+  D18:"The exemplar retriever supplies style context only; the verifier rejects curricular claims from it.",
+  D19:"Launch alignment is Pearson Edexcel. Explicitly provisional.",
+  D20:"Validators are engaged on terms forbidding them from bringing any awarding-body material.",
+  D21:"Groundedness is reported per session, not per turn, and no “it does not make things up” claim.",
+  D22:"Model versions are pinned; a vendor update must pass the blocking regression battery first.",
+  D23:"The full regression battery runs with the persona registry empty, as a blocking gate.",
+  D24:"Zero retention of prompts and outputs, and no training on our data, as a vendor precondition.",
+  D25:"No engagement objective anywhere in the system. No streaks, badges or return notifications.",
+  D26:"A safeguarding disclosure is not automatically reported to the parent.",
+  D27:"The verifier runs on a different pinned model from the generator; mathematics runs on none.",
+  D28:"Figures are rendered deterministically from a specification, never generated by an image model.",
+  D29:"The kill switch is rehearsed quarterly against a live archetype, with elapsed time recorded.",
+  D30:"The conversation window is a bounded rolling summary, giving near-constant cost per turn.",
+  D34:"Name the board in public copy, under a fixed convention, ahead of counsel on OI-3.",
+  D35:"Ship a provisional grade range, and gate nothing on it.",
+  D36:"Every mark scheme in the product is named a CINE mark scheme.",
+};
+
+const OPEN = {
+  "OI-1":"Does AQA's AI clause reach runtime retrieval, or only training?",
+  "OI-2":"Do the other boards' positions differ, and does any board licence for AI use at any price?",
+  "OI-3":"What wording may state which specification a course follows, without implying endorsement?",
+  "OI-4":"Is a one-to-one tutor with no inter-user sharing outside the Online Safety Act duties?",
+  "OI-5":"What age assurance method satisfies the ICO at a consumer price point?",
+  "OI-6":"What is the minimum viable creator licence for name and likeness only?",
+  "OI-7":"Which entity contracts with the parent, and what does that do to consumer jurisdiction?",
+  "OI-8":"Is no parental transcript access defensible where the learner is under 13?",
+  "OI-9":"Under what licence may DfE subject content be the source for commercial item writing?",
+  "OI-10":"Is Article 6(1)(b) the right basis for a child's data under a contract held by the parent?",
+  "OI-11":"If a grade range could inform a tier entry decision, does Article 22 engage?",
+  "OI-12":"What exposure do consumer protection and advertising rules create for outcome claims?",
+};
+
+const RISKS = {
+  R1:"A creator or board sues.",
+  R2:"Teaching something wrong before an exam.",
+  R3:"Nobody pays.",
+  R4:"Child harm or data breach.",
+  R5:"Platform interruption by an app store or payment processor.",
+  R6:"Vendor model drift moving the accuracy numbers.",
+  R7:"Examiner supply, and the cost per item.",
+  R8:"D4 is wrong and the wedge has no substance.",
+  R9:"A free tool ships validated, board-specific, warranted content.",
+  R11:"An uncalibrated grade range is relied on as though it were a forecast.",
+};
+</script>
+
+<script>
+/* id, label, stratum, sector, ownership, note, tests, decisions, open items, risks, damping */
+const NODES = [
+// ---- obligations -------------------------------------------------
+{id:"gov.floors",st:"obligation",sec:"content",own:"policy",label:"Accuracy floors",
+ note:"P1 at 100 per cent by census, P2 at 99.5, P3 at 99.0. Below a floor the product changes behaviour rather than reporting a worse number.",
+ t:["T-VAL-01","T-GND-01","T-MTH-01"],d:["D21"],r:["R2"]},
+{id:"gov.cleanroom",st:"obligation",sec:"content",own:"policy",label:"Clean-room rule",
+ note:"Original items written from DfE-published content. No board text, no third-party revision material, and a positive declaration on every validation record.",
+ d:["D12","D20"],o:["OI-1","OI-2","OI-9"],r:["R1"]},
+{id:"gov.provenance",st:"obligation",sec:"content",own:"policy",label:"Provenance labelling",
+ note:"The IT Amendment Rules 2026 require prominent labelling and permanent provenance metadata that cannot be stripped from synthetically generated information.",
+ d:["D28"],r:["R1"]},
+{id:"gov.p2",st:"obligation",sec:"pipeline",own:"policy",label:"Promise P2",
+ note:"It only tells you things it can show you the source for, and says so when it cannot. Enforced as a runtime gate, not as a tolerance.",
+ t:["T-GND-01"],d:["D21"],r:["R2"]},
+{id:"gov.pinned",st:"obligation",sec:"pipeline",own:"policy",label:"Pinned versions",
+ note:"A vendor update passes the frozen battery before it reaches a learner. We run behind the frontier and pay to qualify every upgrade.",
+ t:["T-REG-01"],d:["D22"],r:["R6"]},
+{id:"gov.licence",st:"obligation",sec:"style",own:"policy",label:"Licence and kill-switch SLA",
+ note:"Fifteen minutes to disable, sixty seconds of cache, seven days to purge primary stores, thirty-five days for backups. A contractual commitment, not a setting.",
+ d:["D5","D9","D29"],o:["OI-6"],r:["R1"]},
+{id:"gov.childrenscode",st:"obligation",sec:"safety",own:"policy",label:"Children's code and UK GDPR",
+ note:"Data minimisation, defaults off, and a lawful basis for profiling. The ICO has said it will audit edtech providers.",
+ o:["OI-8","OI-10","OI-11"],r:["R4"]},
+{id:"gov.osa",st:"obligation",sec:"safety",own:"policy",label:"Online Safety Act scoping",
+ note:"The scoping decision and the trigger that reverses it. Ofcom penalties reach 10 per cent of qualifying worldwide revenue plus disruption orders.",
+ o:["OI-4"],r:["R4"]},
+{id:"gov.zeroretention",st:"obligation",sec:"safety",own:"policy",label:"Zero-retention terms",
+ note:"No vendor is used unless the contract provides zero retention of prompts and outputs and no training on our data. The marketing line is only true if the contract makes it true.",
+ d:["D24"],r:["R4"]},
+{id:"gov.outcome",st:"obligation",sec:"commerce",own:"policy",label:"Outcome-claim discipline",
+ note:"What may be said to a parent about results, and the advertising and consumer regime that governs saying it.",
+ d:["D21","D34","D36"],o:["OI-3","OI-12"],r:["R11"]},
+
+// ---- surfaces ----------------------------------------------------
+{id:"ui.session",st:"surface",sec:"pipeline",own:"own",label:"Session canvas",
+ note:"One learner, one objective, fifteen to thirty minutes, on a phone held vertically. Diagrams must work at 360 CSS pixels and state must survive a fifteen-minute interruption.",
+ d:["D25"]},
+{id:"ui.refusal",st:"surface",sec:"pipeline",own:"own",label:"Refusal notice",
+ note:"What the learner sees when the gate fires. A free chatbot would have answered the same question fluently, which is the price of P2.",
+ d:["D21"],r:["R3"]},
+{id:"ui.check",st:"surface",sec:"assessment",own:"own",label:"Unaided check",
+ note:"Two or three held-out items, no hints, scored on first commit. Deliberately unpleasant, and the whole anti-surface-fluency mechanism.",
+ d:["D15"]},
+{id:"ui.chooser",st:"surface",sec:"style",own:"own",label:"Educator chooser",
+ note:"Picking a named educator whose teaching the student already recognises. The wedge, on the one screen that has to earn it.",
+ d:["D4","D14"],r:["R8"]},
+{id:"ui.adjust",st:"surface",sec:"style",own:"own",label:"Style controls",
+ note:"Six controls in plain language rather than twelve sliders, each mapping to one or two dimensions, with a one-tap return to the preset as licensed.",
+ d:["D10","D17"]},
+{id:"ui.paper",st:"surface",sec:"assessment",own:"own",label:"Practice paper",
+ note:"Assembled from validated items, and the mark scheme is called a CINE mark scheme everywhere a learner or a parent can see it.",
+ t:["T-PAP-01"],d:["D36"],o:["OI-3"]},
+{id:"ui.grade",st:"surface",sec:"assessment",own:"own",label:"Grade range display",
+ note:"A current performance band, never a prediction, suppressed below an evidence threshold, and hideable by the learner while the parent's report still shows it.",
+ t:["T-CAL-01"],d:["D35"],o:["OI-11"],r:["R11"]},
+{id:"ui.parent",st:"surface",sec:"assessment",own:"own",label:"Parent report",
+ note:"The payer is the parent and the user is the child, and those two want measurably different things. That tension runs through this surface.",
+ d:["D16","D26"],o:["OI-8"]},
+{id:"ui.onboard",st:"surface",sec:"safety",own:"own",label:"Adult verification",
+ note:"We never ask a child how old they are. We verify an adult and let them enrol a learner, and every learner account is treated as a child's account whatever anyone typed.",
+ o:["OI-5"],r:["R4"]},
+{id:"ui.school",st:"surface",sec:"commerce",own:"own",label:"School console",
+ note:"Route B. Staff authenticate through the school's own identity provider and the school enrols its pupils under duties it already has.",
+ d:["D3"]},
+{id:"ui.marketing",st:"surface",sec:"commerce",own:"own",label:"Marketing site",
+ note:"Where the claims are made, where the board is named under a fixed convention, and where the one line about a child's data goes unedited.",
+ d:["D21","D34"],o:["OI-12"],r:["R3"]},
+
+// ---- orchestration ----------------------------------------------
+{id:"svc.composer",st:"orchestration",sec:"pipeline",own:"own",label:"Composer",
+ note:"Deterministic, no model call. Selects the objective, retrieves the permitted nodes, renders the style card and assembles the turn plan. The load-bearing step.",
+ d:["D30"]},
+{id:"svc.generator",st:"orchestration",sec:"pipeline",own:"own",label:"Generator",
+ note:"One model call on a pinned version, given the permitted sources and unable to reach outside them.",
+ d:["D22","D27"],r:["R6"],
+ abs:{kinds:["vendor"],f:0.3,why:"Bought behind an abstraction and pinned, so a vendor change is contained here in shape. Its behaviour still travels."}},
+{id:"svc.verifier",st:"orchestration",sec:"pipeline",own:"own",label:"Verifier",
+ note:"Four checks, all blocking, on a different pinned model from the generator. A verifier that shared the generator's weights would share its errors. This is the product.",
+ t:["T-GND-01","T-SCP-01","T-MTH-01"],d:["D27","D18"],r:["R2"]},
+{id:"svc.gate",st:"orchestration",sec:"pipeline",own:"own",label:"Gate",
+ note:"Pass renders to the learner. Fail serves a validated item verbatim and queues the turn for human adjudication. The gate-fire rate is unknown and decides whether P2 is affordable.",
+ t:["T-GATE-01"],d:["D21"],r:["R2"]},
+{id:"svc.fallback",st:"orchestration",sec:"pipeline",own:"own",label:"Validated-item fallback",
+ note:"Examiner-written material served straight from the bank with no model in the path. It has to be a usable product, not a stub.",
+ abs:{kinds:["removal","vendor"],f:0.15,why:"The failure path needs no model, so the session degrades to validated material rather than stopping."}},
+{id:"svc.logger",st:"orchestration",sec:"pipeline",own:"own",label:"Turn logger",
+ note:"Citations, verdicts, gate result and twelve extracted style signatures, written at logging time rather than in a separate harness.",
+ t:["T-STY-01"]},
+{id:"svc.summariser",st:"orchestration",sec:"pipeline",own:"own",label:"Rolling summariser",
+ note:"A bounded summary rather than full history, which is what keeps cost per turn near constant. It sits inside the content plane and its output is not citable evidence.",
+ d:["D30"]},
+{id:"svc.adjudication",st:"orchestration",sec:"content",own:"process",label:"Adjudication queue",
+ note:"Every automated support failure is adjudicated by a person, which is what makes the groundedness number measurable rather than self-reported.",
+ t:["T-GND-01"],r:["R7"]},
+{id:"svc.escalation",st:"orchestration",sec:"safety",own:"own",label:"Escalation routing",
+ note:"Classifiers are bought; the policy and the routing are not. The policy is the part that cannot be outsourced.",
+ d:["D26"],o:["OI-4"],r:["R4"]},
+{id:"svc.caps",st:"orchestration",sec:"safety",own:"own",label:"Session caps",
+ note:"Listed in the safety plane beside classifiers and escalation routing, and set as a child-safety measure rather than as a cost control.",
+ d:["D25"]},
+{id:"svc.billing",st:"orchestration",sec:"commerce",own:"own",label:"Billing and entitlement",
+ note:"Who has paid for what, and which learner profiles that entitles. Which entity holds the contract is unresolved.",
+ o:["OI-7"],r:["R5"]},
+{id:"svc.reporting",st:"orchestration",sec:"assessment",own:"own",label:"Progress reporting",
+ note:"What the parent and the school are told, on what cadence, from the same mastery record the tutor itself uses.",
+ d:["D16"]},
+
+// ---- engines -----------------------------------------------------
+{id:"eng.retrieval",st:"engine",sec:"content",own:"own",label:"Deterministic retrieval",
+ note:"The permitted set is fixed before generation and the model never searches. This is the single commitment everything else follows from.",
+ t:["T-GND-01"],d:["D18"],r:["R2"]},
+{id:"eng.figure",st:"engine",sec:"content",own:"own",label:"Figure renderer",
+ note:"Diagrams rendered deterministically from a structured specification in the bank. A rendered figure inherits the item's validation and carries its source identifier by construction.",
+ d:["D28"]},
+{id:"eng.cas",st:"engine",sec:"content",own:"own",label:"Computer algebra check",
+ note:"Every symbolically checkable step, checked locally with no model call. A disagreement is never overridden by the generator.",
+ t:["T-MTH-01"],d:["D27"],
+ abs:{kinds:["vendor","behaviour"],f:0.05,why:"Runs on no model at all, so no vendor or model behaviour change reaches it. D27."}},
+{id:"eng.citation",st:"engine",sec:"pipeline",own:"own",label:"Citation presence",
+ note:"A deterministic parse. Every sentence classified as a substantive curricular assertion must cite a node in the permitted set. Cheap to detect, and blocking.",
+ t:["T-GND-01"]},
+{id:"eng.entail",st:"engine",sec:"pipeline",own:"own",label:"Claim support",
+ note:"An entailment check on a pinned cheaper model, given the cited node and the assertion only.",
+ t:["T-GND-01"],d:["D27"],r:["R6"]},
+{id:"eng.scope",st:"engine",sec:"pipeline",own:"own",label:"Scope classifier",
+ note:"A classifier against the declared objective set. A question adjacent to the objective gets a refusal rather than an answer, which is the trade the whole product makes.",
+ t:["T-SCP-01"],r:["R3"]},
+{id:"eng.renderer",st:"engine",sec:"style",own:"own",label:"Style card renderer",
+ note:"Deterministic and versioned, mapping each dimension to a band and emitting the instruction for that band. The only path by which a card comes into existence.",
+ t:["T-STY-03"],d:["D7","D8"]},
+{id:"eng.killswitch",st:"engine",sec:"style",own:"own",label:"Kill-switch read path",
+ note:"One boolean read per request, with a hard sixty-second cache ceiling. The flag is re-read at every turn, not at session start, which is why the bound is a turn and not a session.",
+ t:["T-ZERO-01"],d:["D11","D29"],
+ abs:{kinds:["removal"],f:0.2,why:"Every persona feature degrades to an archetype, so withdrawing a preset stops here. D11, proven by T-ZERO-01."}},
+{id:"eng.signature",st:"engine",sec:"style",own:"own",label:"Signature extraction",
+ note:"Twelve counted signatures per turn. This is what turns a style claim into a measurement over live traffic rather than an assertion.",
+ t:["T-STY-01","T-STY-02"],d:["D7"]},
+{id:"eng.mastery",st:"engine",sec:"assessment",own:"own",label:"Mastery model",
+ note:"Unaided-check results on validated items, and the only input the grade range is allowed to read.",
+ d:["D15"]},
+{id:"eng.paperasm",st:"engine",sec:"assessment",own:"own",label:"Paper assembler",
+ note:"Constraint satisfaction over the bank: mark total, coverage profile, command-word mix and difficulty distribution, excluding items seen recently.",
+ t:["T-PAP-01"],o:["OI-3"]},
+{id:"eng.grademap",st:"engine",sec:"assessment",own:"own",label:"Grade range mapper",
+ note:"An arithmetic mapping from performance to a band, with an evidence-sufficiency gate below which nothing is shown. Falsifiable, which a model estimate would not be.",
+ t:["T-CAL-01"],d:["D35"],o:["OI-11"],r:["R11"]},
+{id:"eng.classifier",st:"engine",sec:"safety",own:"mixed",label:"Safety classification",
+ note:"Classifiers bought, policy and routing owned.",
+ r:["R4"],
+ abs:{kinds:["vendor"],f:0.35,why:"The classifier is bought but the policy is not, so swapping a provider does not move the routing."}},
+
+// ---- stores ------------------------------------------------------
+{id:"db.items",st:"data",sec:"content",own:"own",label:"Item bank",
+ note:"Roughly 60 objectives and roughly 600 items at launch, as a planning figure rather than a count, every one examiner-validated before a learner sees it. The moat.",
+ t:["T-VAL-01"],d:["D12"],r:["R7","R9"]},
+{id:"db.objectives",st:"data",sec:"content",own:"own",label:"Objective graph",
+ note:"Specification reference, tier, prerequisites and must-warn misconceptions. A session teaches one of these, not a topic heading.",
+ o:["OI-9"]},
+{id:"db.validation",st:"data",sec:"content",own:"own",label:"Validation records",
+ note:"Validator identity, date, result, notes and the date the item must be revalidated. The evidence behind P1.",
+ t:["T-VAL-01"],d:["D20"],r:["R7"]},
+{id:"db.presets",st:"data",sec:"style",own:"own",label:"Preset registry",
+ note:"One row per persona, and one boolean in that row is the entire kill switch.",
+ t:["T-ZERO-01"],d:["D11"]},
+{id:"db.styleobj",st:"data",sec:"style",own:"own",label:"Style objects",
+ note:"Twelve integers, a register note, a renderer version and a provenance record. It contains no creator material, which is the property that makes the rights position tractable.",
+ t:["T-STY-04"],d:["D7","D8","D17"],r:["R1"]},
+{id:"db.licences",st:"data",sec:"style",own:"own",label:"Licence register",
+ note:"Term, schedules and status per preset. This is what the kill switch is enforcing.",
+ d:["D9"],o:["OI-6"],r:["R1"]},
+{id:"db.snapshot",st:"data",sec:"style",own:"own",label:"Preset snapshot",
+ note:"The style object as it stood at session start, so a transcript can still be explained after a preset changes. Purged on the same seven-day line as the object itself.",
+ d:["D5"],r:["R1"]},
+{id:"db.turns",st:"data",sec:"pipeline",own:"own",label:"Session and turn log",
+ note:"Citations, verdicts, gate result and style signatures per turn. Not browsable by anyone: access needs one of exactly three conditions and every access is logged with a reason.",
+ d:["D16"],o:["OI-8"]},
+{id:"db.mastery",st:"data",sec:"assessment",own:"own",label:"Mastery state",
+ note:"Attempts, unaided passes, last seen, due. This is profiling, and there is no version of adaptive tutoring that avoids it.",
+ o:["OI-10"],r:["R4"]},
+{id:"db.grade",st:"data",sec:"assessment",own:"own",label:"Grade range record",
+ note:"Band, evidence count, coverage, and two booleans: sufficient, and calibrated, which is false at launch and stays false until a cohort sits a real examination.",
+ t:["T-CAL-01"],d:["D35"],r:["R11"]},
+{id:"db.papers",st:"data",sec:"assessment",own:"own",label:"Paper store",
+ note:"Assembled papers with their checks recorded, and the structural specification each was built to.",
+ t:["T-PAP-01"]},
+{id:"db.learner",st:"data",sec:"assessment",own:"own",label:"Learner profile",
+ note:"Year group, preset and per-subject adjustments. There is no date of birth field in this schema, anywhere, by design.",
+ d:["D10"],o:["OI-10"]},
+{id:"db.accounts",st:"data",sec:"safety",own:"own",label:"Account record",
+ note:"A verification boolean, a method identifier, a provider reference and a timestamp. No document, image or biometric is ever held.",
+ o:["OI-5","OI-7"],r:["R4"]},
+{id:"db.escalations",st:"data",sec:"safety",own:"own",label:"Escalation records",
+ note:"Retention is longer than transcripts and is not yet set, because the safeguarding policy that would set it does not exist. A commitment with no number behind it.",
+ o:["OI-4"],r:["R4"]},
+
+// ---- bought and supplied -----------------------------------------
+{id:"ext.dfe",st:"supply",sec:"content",own:"external",label:"DfE subject content",
+ note:"The published specification the bank is written from. The licence under which that may be done commercially is unanswered.",
+ o:["OI-9"],r:["R1"]},
+{id:"ext.board",st:"supply",sec:"content",own:"external",label:"Board paper structure",
+ note:"Command words, mark tariffs, paper structure and time allowances, observed from papers we may not reproduce. The sharpest edge in the clean room.",
+ d:["D19","D34"],o:["OI-1","OI-2","OI-3"],r:["R1"]},
+{id:"proc.authoring",st:"supply",sec:"content",own:"process",label:"Item writers",
+ note:"CINE writers working from the published subject content, never from board or textbook material. The writer and the validator are always different people.",
+ d:["D12"],r:["R7"]},
+{id:"proc.validators",st:"supply",sec:"content",own:"process",label:"Examiner validators",
+ note:"Current or recent examiners on terms that forbid bringing awarding-body material. A rate-limited human process that does not get cheaper when the next model ships.",
+ t:["T-VAL-01"],d:["D20"],r:["R7"]},
+{id:"proc.raters",st:"supply",sec:"style",own:"process",label:"Style raters",
+ note:"Three independent qualified raters per preset, scoring twelve dimensions without sight of each other, with a reliability gate and unfitted dimensions flagged rather than guessed.",
+ t:["T-STY-02"],d:["D7"]},
+{id:"proc.creator",st:"supply",sec:"style",own:"process",label:"Creator review right",
+ note:"The creator sees the twelve numbers and the rendered card and may object before the preset goes live. A term of the licence, not a courtesy.",
+ d:["D5"],o:["OI-6"],r:["R1"]},
+{id:"ext.genvendor",st:"supply",sec:"pipeline",own:"buy",label:"Generator vendor",
+ note:"Pinned, abstracted, and disqualified regardless of model quality if zero-retention terms cannot be had.",
+ d:["D22","D24"],r:["R6"]},
+{id:"ext.verifyvendor",st:"supply",sec:"pipeline",own:"buy",label:"Verifier vendor",
+ note:"Deliberately a different vendor from the generator. Two relationships to qualify instead of one, which is the price of not sharing a failure mode.",
+ d:["D24","D27"],r:["R6"]},
+{id:"ext.ageassurance",st:"supply",sec:"safety",own:"buy",label:"Age assurance provider",
+ note:"Certified to a recognised standard, returning a result rather than a document. We want a boolean, not an identity document sitting in our database.",
+ o:["OI-5"],r:["R4"]},
+{id:"ext.safetyvendor",st:"supply",sec:"safety",own:"buy",label:"Classifier vendor",
+ note:"Bought. The policy and the routing are not.",
+ r:["R4"]},
+{id:"ext.billingvendor",st:"supply",sec:"commerce",own:"buy",label:"Payments",
+ note:"And the app stores, which are also the route by which a regulatory disruption order would arrive.",
+ r:["R5"]},
+{id:"ext.cdn",st:"supply",sec:"commerce",own:"buy",label:"CDN and store metadata",
+ note:"Twenty-four hours in the kill-switch timetable, by a scripted purge rehearsed in advance rather than assembled on the day.",
+ d:["D29"],r:["R5"]},
+{id:"ext.schoolidp",st:"supply",sec:"commerce",own:"buy",label:"School identity provider",
+ note:"Route B. The school already knows who its pupils are, and age assurance largely dissolves as a problem.",
+ d:["D3"]},
+];
+
+/* from depends on to */
+const EDGES = [
+["ui.session","svc.composer","calls"],["ui.session","svc.gate","renders"],
+["ui.session","eng.figure","renders"],["ui.session","eng.classifier","calls"],
+["ui.session","svc.caps","calls"],["ui.session","db.learner","reads"],
+["ui.refusal","svc.gate","renders"],["ui.refusal","gov.p2","governs"],
+["ui.check","db.items","reads"],["ui.check","eng.mastery","writes"],["ui.check","gov.floors","governs"],
+["svc.composer","eng.mastery","reads"],["svc.composer","eng.retrieval","calls"],
+["svc.composer","eng.renderer","calls"],["svc.composer","svc.summariser","calls"],
+["svc.composer","db.objectives","reads"],["svc.composer","db.snapshot","writes"],
+["svc.generator","svc.composer","calls"],["svc.generator","ext.genvendor","calls"],
+["svc.generator","gov.pinned","governs"],
+["svc.verifier","svc.generator","calls"],["svc.verifier","eng.citation","calls"],
+["svc.verifier","eng.entail","calls"],["svc.verifier","eng.scope","calls"],
+["svc.verifier","eng.cas","calls"],["svc.verifier","gov.p2","governs"],
+["svc.verifier","gov.floors","governs"],
+["eng.citation","eng.retrieval","reads"],["eng.entail","ext.verifyvendor","calls"],
+["eng.entail","gov.pinned","governs"],["eng.scope","db.objectives","reads"],
+["svc.gate","svc.verifier","calls"],["svc.gate","svc.fallback","calls"],
+["svc.gate","svc.adjudication","writes"],["svc.gate","gov.p2","governs"],
+["svc.fallback","db.items","reads"],
+["svc.logger","svc.gate","calls"],["svc.logger","db.turns","writes"],
+["svc.logger","eng.signature","calls"],
+["eng.signature","db.turns","writes"],["eng.signature","db.styleobj","reads"],
+["svc.summariser","db.turns","reads"],
+["svc.adjudication","db.items","reads"],["svc.adjudication","db.validation","writes"],
+["eng.retrieval","db.items","reads"],["eng.retrieval","db.objectives","reads"],
+["eng.figure","db.items","reads"],["eng.figure","gov.provenance","governs"],
+["eng.cas","gov.floors","governs"],
+["ui.chooser","db.presets","reads"],["ui.chooser","eng.killswitch","calls"],
+["ui.chooser","db.learner","writes"],
+["ui.adjust","db.learner","writes"],["ui.adjust","db.styleobj","reads"],
+["eng.renderer","db.styleobj","reads"],["eng.renderer","db.learner","reads"],
+["eng.renderer","eng.killswitch","calls"],
+["eng.killswitch","db.presets","reads"],["eng.killswitch","gov.licence","governs"],
+["eng.killswitch","ext.cdn","calls"],
+["db.styleobj","db.presets","binds"],["db.licences","db.presets","binds"],
+["db.snapshot","db.styleobj","binds"],["db.snapshot","gov.licence","governs"],
+["db.styleobj","proc.raters","feeds"],["db.styleobj","proc.creator","feeds"],
+["db.licences","proc.creator","feeds"],
+["eng.mastery","db.mastery","writes"],["eng.mastery","db.items","reads"],
+["eng.paperasm","db.items","reads"],["eng.paperasm","db.mastery","reads"],
+["eng.paperasm","db.papers","writes"],["eng.paperasm","ext.board","reads"],
+["eng.grademap","db.mastery","reads"],["eng.grademap","db.grade","writes"],
+["eng.grademap","gov.outcome","governs"],
+["ui.paper","eng.paperasm","calls"],["ui.paper","db.papers","reads"],
+["ui.paper","gov.outcome","governs"],
+["ui.grade","db.grade","reads"],["ui.grade","gov.childrenscode","governs"],
+["ui.grade","gov.outcome","governs"],
+["ui.parent","svc.reporting","calls"],["ui.parent","db.grade","reads"],
+["svc.reporting","db.mastery","reads"],["svc.reporting","db.grade","reads"],
+["svc.reporting","gov.childrenscode","governs"],
+["db.learner","db.presets","binds"],["db.mastery","db.objectives","binds"],
+["db.grade","db.mastery","binds"],["db.grade","gov.outcome","governs"],
+["ui.onboard","ext.ageassurance","calls"],["ui.onboard","db.accounts","writes"],
+["ui.onboard","gov.childrenscode","governs"],["ui.onboard","svc.billing","calls"],
+["eng.classifier","ext.safetyvendor","calls"],["eng.classifier","svc.escalation","calls"],
+["svc.escalation","db.escalations","writes"],["svc.escalation","gov.osa","governs"],
+["svc.escalation","gov.childrenscode","governs"],
+["svc.caps","db.turns","reads"],["svc.caps","gov.childrenscode","governs"],
+["db.accounts","gov.childrenscode","governs"],["db.turns","gov.childrenscode","governs"],
+["db.mastery","gov.childrenscode","governs"],["db.escalations","gov.osa","governs"],
+["ext.genvendor","gov.zeroretention","governs"],["ext.verifyvendor","gov.zeroretention","governs"],
+["ext.safetyvendor","gov.zeroretention","governs"],["ext.ageassurance","gov.childrenscode","governs"],
+["db.items","db.validation","binds"],["db.items","db.objectives","binds"],
+["db.items","proc.authoring","feeds"],["db.validation","proc.validators","feeds"],
+["db.validation","gov.floors","governs"],
+["proc.authoring","ext.dfe","reads"],["proc.authoring","gov.cleanroom","governs"],
+["proc.validators","gov.cleanroom","governs"],["db.objectives","ext.dfe","reads"],
+["ext.board","gov.cleanroom","governs"],["db.papers","ext.board","binds"],
+["svc.billing","ext.billingvendor","calls"],["svc.billing","db.accounts","reads"],
+["ui.marketing","ext.cdn","renders"],["ui.marketing","gov.outcome","governs"],
+["ui.marketing","gov.zeroretention","governs"],
+["ui.school","ext.schoolidp","calls"],["ui.school","db.learner","reads"],
+["ui.school","svc.reporting","calls"],
+];
+</script>
+
+<script>
+"use strict";
+const N = new Map(NODES.map(n => [n.id, n]));
+const bad = [];
+EDGES.forEach(([a,b]) => { if(!N.has(a)) bad.push(a); if(!N.has(b)) bad.push(b); });
+if (bad.length) console.error("unknown node ids in EDGES:", [...new Set(bad)]);
+
+const deps = new Map(), dependants = new Map();
+NODES.forEach(n => { deps.set(n.id, []); dependants.set(n.id, []); });
+EDGES.forEach(([a,b,k]) => { deps.get(a).push({to:b,kind:k}); dependants.get(b).push({from:a,kind:k}); });
+const degree = id => deps.get(id).length + dependants.get(id).length;
+
+/* ---------- layout: strata by altitude, concerns by azimuth ---------- */
+const RADIUS = {obligation:212, surface:176, orchestration:142, engine:162, data:190, supply:226};
+const SY = Object.fromEntries(STRATA.map(s => [s.id, s.y]));
+(function layout(){
+  const groups = new Map();
+  NODES.forEach(n => {
+    const k = n.st + "|" + n.sec;
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(n);
+  });
+  for (const [k, list] of groups){
+    const [st, sec] = k.split("|");
+    const cols = Math.min(3, Math.ceil(Math.sqrt(list.length)));
+    const rows = Math.ceil(list.length / cols);
+    list.forEach((n, i) => {
+      const col = i % cols, row = Math.floor(i / cols);
+      const az = (SECTORS[sec].az + (col - (cols-1)/2) * 14) * Math.PI/180;
+      const r  = RADIUS[st] + (row - (rows-1)/2) * 46;
+      n.x = r * Math.sin(az);
+      n.z = r * Math.cos(az);
+      n.y = SY[st];
+      n.deg = degree(n.id);
+    });
+  }
+})();
+
+/* ---------- impact model ---------- */
+const TRANSMIT = {
+  interface:{calls:1.00, renders:0.95, reads:0.34, writes:0.34, binds:0.20, feeds:0.20, governs:0.14},
+  schema:   {calls:0.42, renders:0.50, reads:1.00, writes:1.00, binds:0.95, feeds:0.48, governs:0.50},
+  behaviour:{calls:0.90, renders:0.62, reads:0.48, writes:0.48, binds:0.22, feeds:0.40, governs:0.30},
+  vendor:   {calls:0.86, renders:0.30, reads:0.20, writes:0.20, binds:0.15, feeds:0.15, governs:0.58},
+  policy:   {calls:0.62, renders:0.62, reads:0.70, writes:0.70, binds:0.70, feeds:0.90, governs:1.00},
+  removal:  {calls:1.00, renders:1.00, reads:0.90, writes:0.90, binds:0.80, feeds:0.78, governs:0.40},
+};
+const KIND_HINT = {
+  interface:"The shape of the call changes. Travels through callers and renderings, and barely through stored data.",
+  schema:"A stored shape changes. Travels through everything that reads or writes it, and on into retention.",
+  behaviour:"Same interface, different output. Travels to whatever measures the distribution or depends on it.",
+  vendor:"A bought component is swapped or its version moves. Damped at the abstractions, and absent where nothing calls a model.",
+  policy:"An obligation moves. Travels down into every component that exists to satisfy it.",
+  removal:"The component is withdrawn or disabled. Travels to everything without a fallback path.",
+};
+const KIND_LABEL = {interface:"interface change", schema:"schema change", behaviour:"behaviour change",
+  vendor:"vendor change", policy:"obligation change", removal:"withdrawal"};
+const MIN_SCORE = 0.18;
+
+function computeImpact(originId, kind){
+  const T = TRANSMIT[kind];
+  const score = new Map([[originId, 1]]);
+  const hop = new Map([[originId, 0]]);
+  const via = new Map();
+  const stopped = [];
+  let frontier = [originId], guard = 0;
+  while (frontier.length && guard++ < 40){
+    const next = [];
+    for (const cur of frontier){
+      const s = score.get(cur);
+      for (const e of dependants.get(cur)){
+        const nd = N.get(e.from);
+        let v = s * (T[e.kind] ?? 0.3);
+        if (nd.abs && nd.abs.kinds.includes(kind)){
+          v *= nd.abs.f;
+          if (!stopped.some(x => x.id === nd.id)) stopped.push({id:nd.id, why:nd.abs.why});
+        }
+        if (v < MIN_SCORE) continue;
+        if (!score.has(e.from) || score.get(e.from) < v - 1e-9){
+          score.set(e.from, v);
+          hop.set(e.from, (hop.get(cur) ?? 0) + 1);
+          via.set(e.from, {from:cur, kind:e.kind});
+          next.push(e.from);
+        }
+      }
+    }
+    frontier = next;
+  }
+  score.delete(originId);
+
+  const up = new Map();
+  let uf = [originId], ud = 0;
+  const seen = new Set([originId]);
+  while (uf.length && ud++ < 3){
+    const next = [];
+    for (const cur of uf) for (const e of deps.get(cur)){
+      if (seen.has(e.to)) continue;
+      seen.add(e.to); up.set(e.to, {hop:ud, via:{from:cur, kind:e.kind}});
+      next.push(e.to);
+    }
+    uf = next;
+  }
+
+  const origin = N.get(originId);
+  const mine = new Set(deps.get(originId).map(e => e.to));
+  const lateral = [];
+  for (const n of NODES){
+    if (n.id === originId || score.has(n.id) || n.st !== origin.st) continue;
+    const shared = deps.get(n.id).map(e => e.to).filter(t => mine.has(t));
+    if (shared.length) lateral.push({id:n.id, shared});
+  }
+  lateral.sort((a,b) => b.shared.length - a.shared.length);
+
+  const reg = {t:new Set(), d:new Set(), o:new Set(), r:new Set()};
+  for (const id of [originId, ...score.keys()]){
+    const n = N.get(id);
+    (n.t||[]).forEach(v => reg.t.add(v));
+    (n.d||[]).forEach(v => reg.d.add(v));
+    (n.o||[]).forEach(v => reg.o.add(v));
+    (n.r||[]).forEach(v => reg.r.add(v));
+  }
+  return {originId, kind, score, hop, via, stopped, up, lateral, reg};
+}
+
+/* ---------- state ---------- */
+var dragging = false;
+const state = {
+  origin:"db.items",
+  kind:"schema",
+  hidden:new Set(),
+  impact:null,
+  hover:null,
+};
+const cam = {az:0.62, el:0.34, dist:980, tAz:0.62, tEl:0.34, tDist:980};
+const HOME = {az:0.62, el:0.34, dist:980};
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let spinning = !reduced;
+
+/* ---------- canvas ---------- */
+const cv = document.getElementById("viz");
+const ctx = cv.getContext("2d");
+let W = 0, H = 0, DPR = 1;
+function resize(){
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const r = cv.getBoundingClientRect();
+  W = Math.max(1, r.width); H = Math.max(1, r.height);
+  cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+new ResizeObserver(resize).observe(cv);
+resize();
+
+const panelEl = document.getElementById("panel");
+function camera(){
+  const st = cv.getBoundingClientRect();
+  const pr = panelEl.getBoundingClientRect();
+  const side = pr.width < st.width * 0.9;
+  const availW = side ? Math.max(260, W - pr.width) : W;
+  const availH = side ? H : Math.max(220, H - pr.height);
+  const cx = side ? availW / 2 : W / 2;
+  const cy = side ? H / 2 : availH / 2;
+  const ce = Math.cos(cam.el), se = Math.sin(cam.el);
+  const eye = [cam.dist*ce*Math.sin(cam.az), cam.dist*se, cam.dist*ce*Math.cos(cam.az)];
+  let f = [-eye[0], -eye[1], -eye[2]];
+  const fl = Math.hypot(f[0],f[1],f[2]); f = f.map(v => v/fl);
+  let rgt = [-f[2], 0, f[0]];
+  const rl = Math.hypot(rgt[0],rgt[1],rgt[2]) || 1; rgt = rgt.map(v => v/rl);
+  const upv = [rgt[1]*f[2]-rgt[2]*f[1], rgt[2]*f[0]-rgt[0]*f[2], rgt[0]*f[1]-rgt[1]*f[0]];
+  return {eye, f, rgt, upv, focal: Math.min(availW, availH) * 1.02, cx, cy, availW, availH, side};
+}
+function project(p, c){
+  const dx = p[0]-c.eye[0], dy = p[1]-c.eye[1], dz = p[2]-c.eye[2];
+  const z = dx*c.f[0] + dy*c.f[1] + dz*c.f[2];
+  if (z < 40) return null;
+  const x = dx*c.rgt[0] + dy*c.rgt[1] + dz*c.rgt[2];
+  const y = dx*c.upv[0] + dy*c.upv[1] + dz*c.upv[2];
+  const sc = c.focal / z;
+  return {sx: c.cx + x*sc, sy: c.cy - y*sc, z, s: sc};
+}
+
+const PALETTE = {origin:"#E4622B", down:"#E8B33C", up:"#4FB3A6", side:"#9A86DE", oblig:"#CE5A72", idle:"#3E5058"};
+function roleOf(id){
+  const im = state.impact;
+  if (!im) return "idle";
+  if (id === im.originId) return "origin";
+  const inDown = im.score.has(id), inUp = im.up.has(id);
+  const isSide = im.lateral.some(l => l.id === id);
+  if (!inDown && !inUp && !isSide) return "idle";
+  if (N.get(id).st === "obligation") return "oblig";
+  if (inDown) return "down";
+  if (inUp) return "up";
+  return "side";
+}
+const visible = n => !state.hidden.has(n.st);
+const fade = z => Math.max(0.1, Math.min(1, 1 - (z - 620) / 1150));
+
+let screenPos = new Map();
+let tAnim = 0;
+
+function draw(){
+  const c = camera();
+  ctx.clearRect(0,0,W,H);
+  const g = ctx.createRadialGradient(c.cx, H*0.44, 20, c.cx, H*0.5, Math.max(W,H)*0.8);
+  g.addColorStop(0, "#131C20"); g.addColorStop(1, "#0E1417");
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+  screenPos = new Map();
+  const items = [], labels = [];
+
+  for (const st of STRATA){
+    if (state.hidden.has(st.id)) continue;
+    const r = RADIUS[st.id] + 56;
+    const pts = [];
+    for (let i = 0; i <= 60; i++){
+      const a = i/60 * Math.PI*2;
+      pts.push(project([r*Math.sin(a), st.y, r*Math.cos(a)], c));
+    }
+    const mid = project([0, st.y, 0], c);
+    items.push({z: mid ? mid.z + 4 : 9e5, kind:"disc", pts, tint:st.tint});
+    const lab = project([(r+30)*Math.sin(0.524), st.y, (r+30)*Math.cos(0.524)], c);
+    if (lab) items.push({z: lab.z, kind:"datum", p:lab, text:st.label, tint:st.tint});
+  }
+  if (!state.hidden.has("supply")){
+    for (const key in SECTORS){
+      const a = SECTORS[key].az * Math.PI/180, r = RADIUS.supply + 96;
+      const pp = project([r*Math.sin(a), SY.supply - 26, r*Math.cos(a)], c);
+      if (pp) items.push({z: pp.z, kind:"sector", p:pp, text:SECTORS[key].label});
+    }
+  }
+
+  for (const [a, b, k] of EDGES){
+    const na = N.get(a), nb = N.get(b);
+    if (!visible(na) || !visible(nb)) continue;
+    const ra = roleOf(a), rb = roleOf(b);
+    const im = state.impact;
+    const lit = im && ra !== "idle" && rb !== "idle" &&
+      (im.via.get(a)?.from === b || im.up.get(b)?.via.from === a ||
+       a === im.originId || b === im.originId);
+    const pa = project([na.x, na.y, na.z], c), pb = project([nb.x, nb.y, nb.z], c);
+    if (!pa || !pb) continue;
+    const bulge = 1.1;
+    const pm = project([(na.x+nb.x)/2*bulge, (na.y+nb.y)/2 + 12, (na.z+nb.z)/2*bulge], c);
+    if (!pm) continue;
+    items.push({z:(pa.z+pb.z)/2, kind:"edge", pa, pb, pm, lit, ek:k,
+      colour: lit ? (PALETTE[ra] === PALETTE.idle ? PALETTE[rb] : PALETTE[ra]) : null});
+  }
+
+  for (const n of NODES){
+    if (!visible(n)) continue;
+    const p = project([n.x, n.y, n.z], c);
+    if (!p) continue;
+    const role = roleOf(n.id);
+    const base = role === "origin" ? 6.6 : 2.6 + Math.min(3.0, n.deg * 0.26);
+    const rad = Math.max(2.4, base * p.s * 1.55);
+    screenPos.set(n.id, {x:p.sx, y:p.sy, r:rad, z:p.z, role});
+    items.push({z:p.z, kind:"node", n, p, role, rad});
+  }
+
+  items.sort((u,v) => v.z - u.z);
+
+  for (const it of items){
+    if (it.kind === "disc"){
+      ctx.beginPath();
+      let started = false;
+      for (const p of it.pts){ if (!p){ started = false; continue; }
+        if (!started){ ctx.moveTo(p.sx,p.sy); started = true; } else ctx.lineTo(p.sx,p.sy); }
+      ctx.strokeStyle = it.tint + "2B"; ctx.lineWidth = 1; ctx.stroke();
+    } else if (it.kind === "datum"){
+      ctx.font = "600 10px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = it.tint + "B0";
+      ctx.textAlign = "left"; ctx.textBaseline = "middle";
+      ctx.fillText(it.text.toUpperCase(), it.p.sx, it.p.sy);
+    } else if (it.kind === "sector"){
+      ctx.font = "400 9.5px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#6C838C";
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(it.text.toUpperCase(), it.p.sx, it.p.sy);
+    } else if (it.kind === "edge"){
+      ctx.beginPath();
+      ctx.moveTo(it.pa.sx, it.pa.sy);
+      ctx.quadraticCurveTo(it.pm.sx, it.pm.sy, it.pb.sx, it.pb.sy);
+      ctx.setLineDash(it.ek === "governs" ? [3,4] : []);
+      if (it.lit){ ctx.strokeStyle = it.colour + "D0"; ctx.lineWidth = 1.6; }
+      else { const a = state.impact ? 0.05 : 0.095; ctx.strokeStyle = "rgba(125,158,170," + a.toFixed(3) + ")"; ctx.lineWidth = 1; }
+      ctx.stroke(); ctx.setLineDash([]);
+      if (it.lit && !reduced && it.colour){
+        const t = (tAnim * 0.00042 + (it.pa.sx + it.pa.sy) * 0.0013) % 1;
+        const u = 1-t;
+        const px = u*u*it.pa.sx + 2*u*t*it.pm.sx + t*t*it.pb.sx;
+        const py = u*u*it.pa.sy + 2*u*t*it.pm.sy + t*t*it.pb.sy;
+        ctx.beginPath(); ctx.arc(px, py, 1.7, 0, 6.2832);
+        ctx.fillStyle = it.colour; ctx.fill();
+      }
+    } else {
+      const {n, p, role, rad} = it;
+      const col = PALETTE[role];
+      const hop = state.impact ? state.impact.hop.get(n.id) : null;
+      ctx.globalAlpha = role === "idle" ? fade(p.z) * (state.impact ? 0.34 : 0.72) : 1;
+      if (role === "origin" || hop === 1){
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, rad * 2.2, 0, 6.2832);
+        ctx.fillStyle = col + "1C"; ctx.fill();
+      }
+      ctx.beginPath(); ctx.arc(p.sx, p.sy, rad, 0, 6.2832);
+      ctx.fillStyle = col; ctx.fill();
+      if (role === "origin"){
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, rad + 5.5, 0, 6.2832);
+        ctx.strokeStyle = col; ctx.lineWidth = 1.3; ctx.stroke();
+      } else if (n.own === "policy" && role !== "idle"){
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, rad + 3, 0, 6.2832);
+        ctx.strokeStyle = col + "80"; ctx.lineWidth = 1;
+        ctx.setLineDash([2,3]); ctx.stroke(); ctx.setLineDash([]);
+      }
+      ctx.globalAlpha = 1;
+      const hovered = state.hover === n.id;
+      let pri = 9;
+      if (role === "origin" || hovered) pri = 0;
+      else if (hop === 1) pri = 1;
+      else if (role !== "idle") pri = 2;
+      else if (!state.impact && n.deg >= 8) pri = 4;
+      if (pri < 9) labels.push({n, role, pri, z:p.z, x:p.sx + rad + 6, y:p.sy});
+    }
+  }
+
+  // labels last, nearest and most relevant first, skipping any that would collide
+  labels.sort((a,b) => a.pri - b.pri || a.z - b.z);
+  const placed = [];
+  const limit = c.side ? c.availW : W;
+  for (const L of labels){
+    ctx.font = (L.role === "origin" ? "700 12px" : (L.role === "idle" ? "500 10.5px" : "500 11.5px")) + " Archivo, sans-serif";
+    const w = ctx.measureText(L.n.label).width;
+    const box = {x:L.x - 3, y:L.y - 8, w:w + 6, h:16};
+    if (box.x + box.w > limit - 6 || box.x < 4 || box.y < 4 || box.y + box.h > H - 4) continue;
+    let clash = false;
+    for (const q of placed){
+      if (box.x < q.x + q.w && box.x + box.w > q.x && box.y < q.y + q.h && box.y + box.h > q.y){ clash = true; break; }
+    }
+    if (clash) continue;
+    placed.push(box);
+    ctx.globalAlpha = L.role === "idle" ? 0.5 : 0.98;
+    ctx.fillStyle = "rgba(14,20,23,.74)";
+    ctx.fillRect(box.x, box.y, box.w, box.h);
+    ctx.fillStyle = L.role === "idle" ? "#8FA2A9" : (L.role === "origin" ? PALETTE.origin : "#E7EEF0");
+    ctx.textAlign = "left"; ctx.textBaseline = "middle";
+    ctx.fillText(L.n.label, L.x, L.y);
+    ctx.globalAlpha = 1;
+  }
+}
+
+function frame(ts){
+  tAnim = ts || 0;
+  if (spinning && !dragging) cam.tAz += 0.0016;
+  cam.az += (cam.tAz - cam.az) * 0.14;
+  cam.el += (cam.tEl - cam.el) * 0.14;
+  cam.dist += (cam.tDist - cam.dist) * 0.14;
+  draw();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+
+<script>
+const panel = document.getElementById("panel");
+const chip = document.getElementById("chip");
+const esc = s => String(s).replace(/[&<>"]/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const OWN_LABEL = {own:"built here", buy:"bought", mixed:"mixed", process:"human process", policy:"obligation", external:"external source"};
+const OWN_CLASS = {own:"own", buy:"buy", mixed:"buy", process:"process", policy:"policy", external:"buy"};
+const VIA_WORD = {calls:"called by", renders:"rendered by", reads:"read by", writes:"written by",
+  binds:"bound to", feeds:"supplied to", governs:"constrains"};
+
+function hitRow(id, hopN, viaText){
+  const n = N.get(id);
+  return '<button type="button" class="hit" data-go="' + id + '">' +
+    '<span class="hop">' + (hopN != null ? hopN : "·") + '</span>' +
+    '<span class="nm">' + esc(n.label) + '</span>' +
+    (viaText ? '<span class="via">' + esc(viaText) + '</span>' : '') +
+    '</button>';
+}
+function regList(map, ids, cls){
+  if (!ids.length) return '<p class="empty">None in the path.</p>';
+  return '<div class="reg">' + ids.map(i =>
+    '<div class="item ' + cls + '"><code>' + esc(i) + '</code><span>' + esc(map[i] || "") + '</span></div>').join("") + '</div>';
+}
+
+function renderPanel(){
+  const im = state.impact, n = N.get(state.origin);
+  const optgroups = STRATA.map(s => {
+    const list = NODES.filter(x => x.st === s.id)
+      .map(x => '<option value="' + x.id + '"' + (x.id === state.origin ? " selected" : "") + '>' + esc(x.label) + '</option>').join("");
+    return '<optgroup label="' + esc(s.label) + '">' + list + '</optgroup>';
+  }).join("");
+
+  const downIds = [...im.score.keys()].sort((a,b) => (im.hop.get(a) - im.hop.get(b)) || (im.score.get(b) - im.score.get(a)));
+  const upIds = [...im.up.keys()].filter(id => im.up.get(id).hop === 1);
+  const strataTouched = new Set(downIds.map(i => N.get(i).st)).size;
+
+  const downHtml = downIds.length
+    ? downIds.slice(0, 14).map(id => {
+        const v = im.via.get(id);
+        return hitRow(id, im.hop.get(id), v ? (VIA_WORD[v.kind] || v.kind) + " " + N.get(v.from).label.toLowerCase() : "");
+      }).join("") + (downIds.length > 14 ? '<p class="empty">and ' + (downIds.length - 14) + ' further components.</p>' : "")
+    : '<p class="empty">Nothing depends on this component, so a ' + KIND_LABEL[state.kind] + ' here reaches no further.</p>';
+
+  const stopHtml = im.stopped.length
+    ? '<div class="stops">' + im.stopped.map(s =>
+        '<p><b>' + esc(N.get(s.id).label) + '</b><br>' + esc(s.why) + '</p>').join("") + '</div>'
+    : "";
+
+  const upHtml = upIds.length
+    ? upIds.map(id => hitRow(id, null, VIA_WORD[im.up.get(id).via.kind] || "")).join("")
+    : '<p class="empty">Nothing. This is a leaf: it stands on its own.</p>';
+
+  const sideHtml = im.lateral.length
+    ? im.lateral.slice(0, 6).map(l =>
+        hitRow(l.id, null, "shares " + l.shared.map(s => N.get(s).label.toLowerCase()).slice(0,2).join(", "))).join("")
+    : '<p class="empty">Nothing else in this stratum shares a dependency with it.</p>';
+
+  panel.innerHTML =
+    '<div class="phead">' +
+      '<div class="pickrow"><label for="pick">Component</label>' +
+      '<select id="pick">' + optgroups + '</select></div>' +
+      '<h2 class="ptitle">' + esc(n.label) + '</h2>' +
+      '<div class="chips">' +
+        '<span class="chip ' + OWN_CLASS[n.own] + '">' + OWN_LABEL[n.own] + '</span>' +
+        '<span class="chip">' + esc(SECTORS[n.sec].label) + '</span>' +
+        '<span class="chip">' + esc(STRATA.find(s => s.id === n.st).label) + '</span>' +
+      '</div>' +
+      '<p class="pnote">' + esc(n.note) + '</p>' +
+    '</div>' +
+    '<div class="readout">' +
+      '<div class="down"><span class="n">' + downIds.length + '</span><span class="k">downstream</span></div>' +
+      '<div class="up"><span class="n">' + im.up.size + '</span><span class="k">it stands on</span></div>' +
+    '</div>' +
+    '<div class="sect"><h3><i class="dot c-down"></i>Where a ' + KIND_LABEL[state.kind] + ' lands</h3>' +
+      downHtml + stopHtml + '</div>' +
+    '<div class="sect"><h3><i class="dot c-up"></i>What it stands on</h3>' + upHtml + '</div>' +
+    '<div class="sect"><h3><i class="dot c-side"></i>Moves alongside it</h3>' + sideHtml + '</div>' +
+    '<div class="sect"><h3>Tests that would have to run again</h3>' +
+      regList(TESTS, [...im.reg.t].sort(), "t") + '</div>' +
+    '<div class="sect"><h3>Decisions you would be reopening</h3>' +
+      regList(DECISIONS, [...im.reg.d].sort((a,b) => (+a.slice(1)) - (+b.slice(1))), "d") + '</div>' +
+    '<div class="sect"><h3>Unanswered questions in the path</h3>' +
+      regList(OPEN, [...im.reg.o].sort((a,b) => (+a.slice(3)) - (+b.slice(3))), "o") + '</div>' +
+    '<div class="sect"><h3>Risks in the path</h3>' +
+      regList(RISKS, [...im.reg.r].sort((a,b) => (+a.slice(1)) - (+b.slice(1))), "r") + '</div>' +
+    '<p class="pfoot">This change would reach <b>' + strataTouched + ' of the 6 strata</b> and ' +
+      downIds.length + ' of the ' + (NODES.length - 1) + ' other components on the map. ' +
+      'Nothing here has been built: the thirteen tests named across these documents are specified and none has been run, ' +
+      'so the map shows what a change would reach, not what it would break.</p>';
+
+  document.getElementById("pick").addEventListener("change", e => select(e.target.value));
+}
+
+function select(id, kind){
+  if (id) state.origin = id;
+  if (kind) state.kind = kind;
+  state.impact = computeImpact(state.origin, state.kind);
+  renderPanel();
+  document.getElementById("kindhint").textContent = KIND_HINT[state.kind];
+  document.querySelectorAll(".kinds button").forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.kind === state.kind)));
+}
+
+panel.addEventListener("click", e => {
+  const b = e.target.closest("[data-go]");
+  if (b) select(b.dataset.go);
+});
+document.querySelectorAll(".kinds button").forEach(b =>
+  b.addEventListener("click", () => select(null, b.dataset.kind)));
+
+/* ---------- strata filters ---------- */
+const strataBox = document.getElementById("strata");
+strataBox.innerHTML = STRATA.map(s =>
+  '<button type="button" data-st="' + s.id + '" aria-pressed="true">' +
+  '<i class="bar-i s-' + s.id + '"></i>' + esc(s.label) + '</button>').join("");
+strataBox.addEventListener("click", e => {
+  const b = e.target.closest("[data-st]");
+  if (!b) return;
+  const id = b.dataset.st;
+  if (state.hidden.has(id)) state.hidden.delete(id); else state.hidden.add(id);
+  b.setAttribute("aria-pressed", String(!state.hidden.has(id)));
+});
+
+/* ---------- pointer ---------- */
+let px = 0, py = 0, moved = 0;
+const pointers = new Map();
+let pinchBase = 0;
+
+function pick(cx, cy){
+  let best = null, bd = 1e9;
+  for (const [id, p] of screenPos){
+    const d = Math.hypot(p.x - cx, p.y - cy);
+    if (d < Math.max(p.r + 9, 13) && d < bd){ bd = d; best = id; }
+  }
+  return best;
+}
+cv.addEventListener("pointerdown", e => {
+  cv.setPointerCapture(e.pointerId);
+  pointers.set(e.pointerId, [e.clientX, e.clientY]);
+  if (pointers.size === 2){
+    const [a, b] = [...pointers.values()];
+    pinchBase = Math.hypot(a[0]-b[0], a[1]-b[1]);
+  }
+  dragging = true; moved = 0; px = e.clientX; py = e.clientY;
+  cv.classList.add("dragging");
+});
+cv.addEventListener("pointermove", e => {
+  const r = cv.getBoundingClientRect();
+  if (pointers.has(e.pointerId)) pointers.set(e.pointerId, [e.clientX, e.clientY]);
+  if (dragging && pointers.size === 2){
+    const [a, b] = [...pointers.values()];
+    const d = Math.hypot(a[0]-b[0], a[1]-b[1]);
+    if (pinchBase > 0) cam.tDist = Math.max(260, Math.min(1500, cam.tDist * (pinchBase / d)));
+    pinchBase = d;
+    return;
+  }
+  if (dragging){
+    const dx = e.clientX - px, dy = e.clientY - py;
+    moved += Math.abs(dx) + Math.abs(dy);
+    cam.tAz -= dx * 0.0062;
+    cam.tEl = Math.max(-1.18, Math.min(1.18, cam.tEl + dy * 0.0052));
+    px = e.clientX; py = e.clientY;
+    chip.style.opacity = 0;
+    return;
+  }
+  const cx = e.clientX - r.left, cy = e.clientY - r.top;
+  const id = pick(cx, cy);
+  state.hover = id;
+  if (id){
+    const n = N.get(id);
+    chip.innerHTML = '<b>' + esc(n.label) + '</b><i>' + esc(SECTORS[n.sec].label) + ' · ' + OWN_LABEL[n.own] + '</i>';
+    chip.style.opacity = 1;
+    chip.style.left = Math.min(cx + 14, W - 250) + "px";
+    chip.style.top = Math.max(8, cy - 40) + "px";
+    cv.style.cursor = "pointer";
+  } else {
+    chip.style.opacity = 0;
+    cv.style.cursor = "grab";
+  }
+});
+function endPointer(e){
+  pointers.delete(e.pointerId);
+  if (pointers.size < 2) pinchBase = 0;
+  if (pointers.size === 0){
+    dragging = false;
+    cv.classList.remove("dragging");
+    if (moved < 5){
+      const r = cv.getBoundingClientRect();
+      const id = pick(e.clientX - r.left, e.clientY - r.top);
+      if (id) select(id);
+    }
+  }
+}
+cv.addEventListener("pointerup", endPointer);
+cv.addEventListener("pointercancel", endPointer);
+cv.addEventListener("wheel", e => {
+  e.preventDefault();
+  cam.tDist = Math.max(260, Math.min(1500, cam.tDist * Math.exp(e.deltaY * 0.0011)));
+}, {passive:false});
+cv.addEventListener("keydown", e => {
+  const k = e.key;
+  if (k === "ArrowLeft") cam.tAz -= 0.12;
+  else if (k === "ArrowRight") cam.tAz += 0.12;
+  else if (k === "ArrowUp") cam.tEl = Math.min(1.18, cam.tEl + 0.09);
+  else if (k === "ArrowDown") cam.tEl = Math.max(-1.18, cam.tEl - 0.09);
+  else if (k === "+" || k === "=") cam.tDist = Math.max(260, cam.tDist * 0.88);
+  else if (k === "-") cam.tDist = Math.min(1500, cam.tDist * 1.14);
+  else return;
+  e.preventDefault();
+});
+
+const spinBtn = document.getElementById("spin");
+spinBtn.setAttribute("aria-pressed", String(spinning));
+spinBtn.addEventListener("click", () => {
+  spinning = !spinning;
+  spinBtn.setAttribute("aria-pressed", String(spinning));
+});
+document.getElementById("reset").addEventListener("click", () => {
+  cam.tAz = HOME.az; cam.tEl = HOME.el; cam.tDist = HOME.dist;
+});
+
+select(state.origin, state.kind);
+</script>

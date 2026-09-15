@@ -8,6 +8,8 @@ from pathlib import Path
 import datetime
 import shutil
 import re
+import hashlib
+import base64
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "src" / "content"
@@ -71,6 +73,7 @@ SHELL = """<!doctype html>
   </details>
   <nav class="toplinks">
     <a href="{status_href}">Status</a>
+    <a href="../map/">Map</a>
     <a href="{evidence_href}">Evidence</a>
     <a href="{home}">Contents</a>
   </nav>
@@ -127,6 +130,7 @@ def switcher_for(current_slug):
         no = number or ""
         out.append(f'<a href="{slug}.html"{here}><span class="sw-no">{no}</span>{title}</a>')
     out.append('<a href="status.html"><span class="sw-no"></span>Status</a>')
+    out.append('<a href="../map/"><span class="sw-no"></span>Impact surface</a>')
     out.append('<a href="../evidence/sources.html"><span class="sw-no"></span>Evidence register</a>')
     return "".join(out)
 
@@ -217,6 +221,74 @@ PUBLISH_DIR = ROOT / "_site"
 PUBLISHED = ["docs", "evidence", "contracts"]
 
 
+# viz/dependency-map.html is the one page here that runs a script. It goes to
+# /map/ rather than into docs/, because header rules are matched by path prefix
+# and there is no way to write "everything except this page". Separate prefixes
+# mean the strict policy that covers the documents is never loosened to
+# accommodate the map.
+MAP_SRC = ROOT / "viz" / "dependency-map.html"
+
+STRICT_CSP = ("default-src 'none'; script-src 'none'; style-src 'self'; "
+              "img-src 'self' data:; font-src 'self'; base-uri 'none'; "
+              "form-action 'none'")
+
+
+def _csp_hashes(html, tag):
+    """SHA-256 of each inline block, so the policy names this page's own code.
+
+    Computed from the file at build time rather than written down, so it cannot
+    fall out of step with the page the way a pasted hash would.
+    """
+    pat = re.compile(r"<" + tag + r"[^>]*>(.*?)</" + tag + r">", re.S)
+    out = []
+    for body in pat.findall(html):
+        digest = hashlib.sha256(body.encode("utf-8")).digest()
+        out.append("'sha256-" + base64.b64encode(digest).decode("ascii") + "'")
+    return out
+
+
+def publish_map():
+    if not MAP_SRC.exists():
+        return None
+    html = MAP_SRC.read_text(encoding="utf-8")
+    out = PUBLISH_DIR / "map"
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "index.html").write_text(html, encoding="utf-8")
+    scripts, styles = _csp_hashes(html, "script"), _csp_hashes(html, "style")
+    print(f"  published /map/: {len(scripts)} scripts and {len(styles)} styles, hashed")
+    return scripts, styles
+
+
+def write_headers(map_hashes):
+    """One _headers file, generated, so the map's policy and the documents'
+    policy cannot overlap on a path and be intersected by the browser."""
+    lines = []
+
+    def block(path, extra):
+        lines.append(path)
+        lines.append("  X-Content-Type-Options: nosniff")
+        lines.append("  X-Frame-Options: DENY")
+        lines.append("  Referrer-Policy: strict-origin-when-cross-origin")
+        lines.extend(extra)
+        lines.append("")
+
+    for path in ("/", "/docs/*", "/evidence/*"):
+        block(path, ["  Content-Security-Policy: " + STRICT_CSP])
+    # The contracts are markdown by design; serve them as text so a creator
+    # opens them in the browser instead of downloading a file.
+    block("/contracts/*", ["  Content-Security-Policy: " + STRICT_CSP,
+                           "  Content-Type: text/plain; charset=utf-8"])
+    if map_hashes:
+        scripts, styles = map_hashes
+        csp = ("default-src 'none'; script-src " + " ".join(scripts)
+               + "; style-src " + " ".join(styles) + " https://fonts.googleapis.com"
+               + "; font-src https://fonts.gstatic.com; img-src 'self' data:; "
+                 "base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
+        block("/map/*", ["  Content-Security-Policy: " + csp])
+    (PUBLISH_DIR / "_headers").write_text("\n".join(lines), encoding="utf-8")
+    print(f"  wrote _site/_headers: {sum(1 for l in lines if l and not l.startswith(' '))} path rules")
+
+
 def assemble_publish_dir():
     if PUBLISH_DIR.exists():
         shutil.rmtree(PUBLISH_DIR)
@@ -225,8 +297,9 @@ def assemble_publish_dir():
         src = ROOT / name
         if src.is_dir():
             shutil.copytree(src, PUBLISH_DIR / name)
+    write_headers(publish_map())
     n = sum(1 for _ in PUBLISH_DIR.rglob("*") if _.is_file())
-    print(f"  assembled _site/ for publishing: {n} files from {', '.join(PUBLISHED)}")
+    print(f"  assembled _site/ for publishing: {n} files from {', '.join(PUBLISHED)}, plus the map")
 
 
 # ---------------------------------------------------------------- status view
