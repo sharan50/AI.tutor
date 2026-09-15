@@ -6,6 +6,7 @@ root after editing any fragment.
 """
 from pathlib import Path
 import datetime
+import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "src" / "content"
@@ -153,6 +154,30 @@ def build():
         out.mkdir(exist_ok=True)
         (out / "sources.html").write_text(html, encoding="utf-8")
         print("  built ../evidence/sources.html")
+
+    assemble_publish_dir()
+
+
+# Netlify publishes PUBLISH_DIR, not the repository root. Anything absent from
+# PUBLISHED is therefore never uploaded, rather than uploaded and then hidden
+# behind a rule. BUILD_BRIEF.md and src/ are repository files, not site pages:
+# nothing in docs/ or evidence/ links to them, and they do not belong on a
+# public URL. README.md is left out for the same reason; its links point at the
+# two things above and would dangle.
+PUBLISH_DIR = ROOT / "_site"
+PUBLISHED = ["docs", "evidence", "contracts"]
+
+
+def assemble_publish_dir():
+    if PUBLISH_DIR.exists():
+        shutil.rmtree(PUBLISH_DIR)
+    PUBLISH_DIR.mkdir()
+    for name in PUBLISHED:
+        src = ROOT / name
+        if src.is_dir():
+            shutil.copytree(src, PUBLISH_DIR / name)
+    n = sum(1 for _ in PUBLISH_DIR.rglob("*") if _.is_file())
+    print(f"  assembled _site/ for publishing: {n} files from {', '.join(PUBLISHED)}")
 
 
 if __name__ == "__main__":

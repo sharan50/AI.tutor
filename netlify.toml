@@ -1,13 +1,19 @@
 # AI.tutor design vault
 #
-# publish is the repository root, not docs/, because evidence/ is a sibling of
-# docs/ and every claim carrying a Verified marker links to the evidence
-# register. Publishing docs/ alone makes that register 404, which silently
-# breaks the rule the whole vault rests on. contracts/ is linked from the
-# documents for the same reason.
+# publish is _site, assembled by src/build.py from docs/, evidence/ and
+# contracts/.
+#
+# It cannot be docs/ alone: evidence/ is a sibling, and every claim carrying a
+# Verified marker links to the evidence register, so publishing docs/ makes that
+# register 404 and silently breaks the rule the whole vault rests on. contracts/
+# is linked from the documents for the same reason.
+#
+# It is no longer the repository root either: that put BUILD_BRIEF.md and src/
+# on public URLs. Assembling an explicit directory means those are never
+# uploaded, rather than uploaded and hidden behind a rule.
 
 [build]
-  publish = "."
+  publish = "_site"
   command = "python3 src/build.py"
 
 # Site root serves the contents page.
