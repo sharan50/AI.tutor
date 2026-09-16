@@ -1942,3 +1942,111 @@ name, once two helpers called before they were defined — the sequence was the
 same: `figures.py` failed, `figures.csv` went stale, `render.py` refused to write
 the documents, and `verify.py` reported failures naming the unrendered files.
 Before round 6 that sequence ended in a green verifier over a stale document.
+
+### 7.9 The reachable pool read its catalogue on the wrong clock, and round 7's own coherence fix enshrined the result
+
+`content_build_plan()` delivers every content step at `month + launch_shift`. The
+acquisition loop read the subject catalogue that sets the reachable pool at raw
+`t`, off the unshifted schedule. So under a launch delay the pool — and with it
+the saturation denominator, the penetration term, the lifetime-value budget cap
+and the standing-book room — stepped up for item banks that had not been built
+or paid for.
+
+`launch_shift` is zero in the published run and in every scenario except the two
+launch delays, which is why this survived seven rounds, and it is why the base
+run reproduces character for character with the fix in. It bit in exactly the
+place it mattered.
+
+**Measured**, paired per path, 20,000 paths, by patching `model.py` in memory:
+
+| scenario | published delta | corrected clock | paired SE |
+|---|---|---|---|
+| three months late | -605,704 | **-961,639** | 58,784 |
+| six months late | **+297,481** | **-189,731** | 109,133 |
+
+The six-month delay's mean delta changes **sign**. And that matters beyond the
+scenario, because of the order in which this round happened.
+
+Round 7's coherence pass found the write-up asserting "on the mean, both delays
+cost money" over a table in which the six-month delay gained 297,481. That is a
+real contradiction and the pass was right to raise it. The sentence was corrected
+to read "the six-month delay **makes** money — all three of its statistics favour
+delaying", and it was committed, and it stood for about an hour before the
+adversarial pass found the defect underneath it.
+
+**The correction matched the prose to a number that was itself wrong.** The
+original sentence had been right by accident and was made wrong on purpose, with
+more confidence than before, because now the sentence agreed with the file.
+
+Nothing in this directory could have caught that. The byte-exact gate could not:
+the defect is in the published code. The invariants could not: households are
+conserved exactly through the loop either way. `verify.py` could not: every
+figure was correctly derived from outputs that were correctly produced by code
+that was wrong. Pass 0c could not: the document was a faithful render of a
+faithful figures file. The month loop had to be read.
+
+Section 9 now says three things are wrong with the delay scenarios rather than
+two, and says which round found each.
+
+### 7.10 The segment-mix fix reached two of its three sites
+
+CHANGELOG 6.2 added `normalise_segment_mix()` and applied it in the month loop
+and in `ltv_estimate`. `cohorts.py` computes `blended_retained_months_mean` from
+the same three shares and kept the pre-6.2 arithmetic verbatim — floor the
+pre-examination share at zero, leave the other two alone — so on the roughly five
+per cent of paths where the two drawn shares sum to more than one, the published
+lifetime value was built on more than one cohort's worth of households. It was
+the only live use of `seg_mix_exam` outside `model.py` that did not call the
+function that exists to prevent exactly this.
+
+Worth about 0.17 per cent of blended retained months. Small; recorded because it
+is the same defect the model was cleaned of one round earlier, still sitting in
+the file that reports on the model, and because "we fixed that" is a claim about
+every site and was true of two.
+
+### 7.11 Two sizings that change what a headline means
+
+**The feedback bundle is about 29 per cent a level shift.** `variants.py`
+references the price-to-churn elasticity on the **mode** of the tutoring price
+prior — a triangular whose mean and median both sit well above its mode — so the
+multiplier averages about 1.12 and roughly 68 per cent of paths take a churn
+penalty before any price effect. The quality limb is one-sided by construction.
+The bundle runs the book at about a third more churn than base, which is why its
+cost sits close to the pure churn stress in `out/sized_omissions.csv`. Recentring
+on each regime's own median sampled price cuts the price limb by about 1.7m of
+the quoted 5.9m.
+
+The limb decomposition LIMITS said had never been done was also run: price to
+churn about -3.0m, build pace to quality about -2.8m, automation to engineering
+about -0.4m, against -5.9m combined.
+
+**The demand-independent share is about 1.2 points too high.** The safeguarding
+rota steps on active consumer households — that is demand — and sits inside the
+United Kingdom people line the share counts as demand-independent. Removing both
+steps takes about 492,000 dollars out, 1.22 per cent of the cost base. Item 5 has
+named the rota as a genuine step for several rounds without ever sizing it. It
+runs opposite to the launch-subsidy correction recorded in round 6, and the two
+roughly cancel.
+
+### 7.12 What the adversarial pass confirmed sound
+
+Recorded so the eighth round does not repeat it. Household conservation through
+the month loop is exact to 3e-15 across every add, the churn, both sitting exits,
+the summer lapse and the progression. The arrivals exemption is complete: all
+four calendar exits subtract arrivals, and there is no fifth exit needing it.
+Both "met across the whole prior range" break-even labels were re-checked on an
+independent nine-point grid and are monotone. `budget_cap_from_ltv` inverts
+`effective_cac` faithfully, and the cap binds on about 21 per cent of wanted
+budget dollars, so it is a live constraint. The two-way grid's exact additivity
+is structural, not coincidence: `items_per_unit` enters only `content_cost`,
+linearly, and the acquisition envelope is built from revenue rather than cash, so
+there is no feedback path from content spend to anything else. The demand shock
+is correctly de-meaned at every month after the round 6 fix. The overage integral
+is correct.
+
+That last point deserves to be stated as a limit rather than a clean bill: **the
+instrument has no cash constraint anywhere**, so no cost line can throttle any
+other. That is what makes the grid exactly separable, and it means this model is
+structurally incapable of showing cost-side interaction on terminal cash. Section
+9 draws a conclusion from that separability; the conclusion is about the model's
+shape, not the business's.

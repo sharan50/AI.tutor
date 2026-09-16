@@ -272,6 +272,7 @@ MECHANISM_DEFECTS = [
     ("6.1", "the summer lapse and the progression applied to that month's arrivals"),
     ("6.2", "a segment mix that did not sum to one, so households were billed that were never bought"),
     ("6.3", "the budget cap valuing an examination household acquired in its sitting month at zero months"),
+    ("7.9", "the reachable pool's catalogue read on the undelayed calendar while content is built on the delayed one"),
 ]
 
 

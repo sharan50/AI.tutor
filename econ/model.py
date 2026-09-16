@@ -1121,7 +1121,21 @@ def run(drv, cfg=None):
 
         schedules_live = cfg.get("unit_schedules") or UNIT_SCHEDULES
         for m in open_markets:
-            subj_live, _lev_live, _b_live = units_cost_weight(m, t, schedules_live)
+            # The catalogue the reachable pool is credited for must be the one
+            # that has actually been BUILT, which under a launch delay is not
+            # the one the raw schedule names at t. content_build_plan delivers
+            # every step at month + launch_shift; this read the schedule at t,
+            # so a delayed launch was credited breadth -- and therefore pool,
+            # saturation denominator, budget cap and standing-book room -- for
+            # item banks it had not paid for yet.
+            #
+            # launch_shift is zero in the published run and in every scenario
+            # except the two launch delays, which is why this survived seven
+            # rounds. It bit exactly where it mattered: it flattered delay, in
+            # the same direction as the two contaminations section 9 already
+            # names, and it was large enough to invert a sign. See CHANGELOG 7.9.
+            subj_live, _lev_live, _b_live = units_cost_weight(
+                m, t - cfg["launch_shift"], schedules_live)
             breadth = (max(subj_live, 1) / POOL_BREADTH_REFERENCE_SUBJECTS) ** POOL_BREADTH_EXPONENT
             pool = drv["pool_uk"] * breadth * {M_UK: 1.0, M_US: drv["pool_rel_us"],
                                                M_IN: drv["pool_rel_in"], M_ROW: drv["pool_rel_row"]}[m]

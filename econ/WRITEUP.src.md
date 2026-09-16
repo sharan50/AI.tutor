@@ -1112,16 +1112,37 @@ cancel. Together they are @@delta_por_dependence_feedback_terminal_cash_mean|usd
 
 **The launch-delay scenarios do not support any conclusion at all, and the honest
 thing is to say so rather than to quote the one column that agrees with
-intuition.** On the mean the three-month delay costs money and the six-month
-delay **makes** money — all three of its statistics favour delaying. On the
-median path and on the capital requirement, both delays HELP:
+intuition.** On the mean both delays cost money. On the median path and on the
+capital requirement, both delays HELP:
 
 | | Delta, mean | Delta, median path | Delta, peak funding p80 |
 |---|---|---|---|
 | Three months late | @@delta_por_launch_plus3_terminal_cash_mean|usd0@@ | @@delta_por_launch_plus3_terminal_cash_p50|usd0@@ | @@delta_por_launch_plus3_peak_funding_p80|usd0@@ |
 | Six months late | @@delta_por_launch_plus6_terminal_cash_mean|usd0@@ | @@delta_por_launch_plus6_terminal_cash_p50|usd0@@ | @@delta_por_launch_plus6_peak_funding_p80|usd0@@ |
 
-Two things are wrong with these scenarios and both run the same way.
+**Three** things are wrong with these scenarios and all three run the same way,
+which is the only reason to report them at all.
+
+The third was found in round 7 and it is the one that should worry a reader of
+earlier drafts. The reachable pool's catalogue was read on the **undelayed**
+calendar while the content it stands for was built on the delayed one, so a
+delayed launch was credited reach for item banks it had not paid for yet. That
+inflated the delay scenarios and nothing else: `launch_shift` is zero everywhere
+in the published run, which is why the base run reproduces character for
+character with the fix in. Before it was fixed the six-month delay showed a
+**gain** on the mean rather than the loss the table above now shows — a
+difference of sign, fifteen paired standard errors wide. CHANGELOG 7.9 records
+the measurement and how it was taken; it is not quoted here as a figure because
+it is a counterfactual against a model that no longer exists, and this document
+does not put those in the prose as though they were outputs.
+
+The round 7 coherence pass found the prose saying "on the mean, both delays cost
+money" over a table in which one of them gained, and the sentence was duly
+corrected to say the six-month delay makes money. That correction was wrong: it
+matched the prose to a number that was itself an artefact, and it stood for about
+an hour. A document that fixes its sentences against its own outputs will follow
+its outputs into an error, and the only thing that caught this was somebody
+reading the month loop.
 
 `launch_shift` moves the content schedule along with the market openings, so a
 six-month shift pushes the month-54 content step past the end of the horizon and

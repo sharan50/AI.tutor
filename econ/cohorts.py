@@ -214,8 +214,17 @@ add("gross_minus_allin_contrib_per_hh_month_pooled", gross_pooled - allin_pooled
 add("allin_consumed_per_hh_month_median", -float(np.median(fy_allin[REAL])), "USD per household month",
     "the median path's all-in contribution with the sign reversed: what a household month consumes on the median path", "16")
 
-blended_months = float((DRV["seg_mix_exam"] * exam_months + DRV["seg_mix_alevel"] * al_months
-                        + np.maximum(1 - DRV["seg_mix_exam"] - DRV["seg_mix_alevel"], 0) * pre_months).mean())
+# The three shares must sum to one, which they do not as drawn: they exceed one
+# on about a twentieth of paths. CHANGELOG 6.2 added normalise_segment_mix and
+# applied it at the model's two sites; this third site, in the file that reports
+# ON the model, kept the pre-6.2 arithmetic verbatim -- floor the pre-exam share
+# and leave the other two alone -- so the published lifetime value was built on
+# more than one cohort's worth of households on those paths. It is the only live
+# use of seg_mix_exam outside model.py that did not call the function.
+# See CHANGELOG 7.10.
+_mix_p, _mix_e, _mix_a = NS["normalise_segment_mix"](DRV["seg_mix_exam"], DRV["seg_mix_alevel"])
+blended_months = float((_mix_e * exam_months + _mix_a * al_months
+                        + _mix_p * pre_months).mean())
 add("blended_retained_months_mean", blended_months, "months",
     "retained months weighted by the sampled segment mix", "14")
 
