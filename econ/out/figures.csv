@@ -1278,6 +1278,9 @@ sobol_terminal_cash_rank_rank7_driver,examiner_rate_gbp_hr,driver name,sobol.csv
 sobol_terminal_cash_rank_rank7_value,0.037606,share of variance,sobol.csv,sobol_first_order at rank 7 for target terminal_cash_rank
 sobol_terminal_cash_rank_rank8_driver,eng_usd_yr,driver name,sobol.csv,driver at rank 8 by sobol_first_order for target terminal_cash_rank
 sobol_terminal_cash_rank_rank8_value,0.032758,share of variance,sobol.csv,sobol_first_order at rank 8 for target terminal_cash_rank
+registry_content_driver_count,8,count,sobol.csv,how many registry entries the content-driver set contains
+registry_acq_driver_count,12,count,sobol.csv,how many registry entries the acquisition-driver set contains
+registry_cost_per_item_driver_count,3,count,sobol.csv,"how many registry entries make up cost per item, which one timed pilot measures at once"
 sobol_peak_funding_requirement_content_drivers_in_top7,5,count,sobol.csv,how many of the top seven drivers by first-order index for peak_funding_requirement are content-cost drivers
 sobol_peak_funding_requirement_acq_drivers_in_top3,1,count,sobol.csv,how many of the top three drivers for peak_funding_requirement are acquisition drivers
 sobol_peak_funding_requirement_content_drivers_in_top3,1,count,sobol.csv,how many of the top three drivers for peak_funding_requirement are content-cost drivers

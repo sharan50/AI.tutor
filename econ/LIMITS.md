@@ -692,9 +692,13 @@ restraining acquisition spend.
 
 `out/sobol.csv` ranks the 80 registry entries. A count of how many
 of them in a top seven belong to one cost is therefore a fact about the registry,
-not about the business. Content cost per item is three entries because that is
-how it decomposes; one timed pilot measures all three at once. Acquisition is
-nine entries acting through effectively one anchor. Split a cost finely and its
+not about the business. Content cost per item is
+3 entries because that is how it
+decomposes; one timed pilot measures all of them at once. The content-driver set
+this document counts with is 8 entries and
+the acquisition set is 12, and both are read off
+the same sets `figures.py` uses for the top-seven counts rather than listed by
+hand — the acquisition entries act through effectively one anchor. Split a cost finely and its
 entries individually rank lower while its block ranks higher; split it coarsely
 and the reverse.
 

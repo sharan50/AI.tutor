@@ -438,6 +438,19 @@ if os.path.exists(os.path.join(OUT, "sobol.csv")):
     ACQ_DRIVERS = {"cac_anchor_usd", "cac_ref_spend_usd", "sat_kappa", "pool_pressure_psi",
                    "creator_share", "creator_cac_rel", "pool_uk", "acq_pct_of_rev",
                    "acq_launch_ramp", "cac_rel_us", "cac_rel_in", "cac_rel_row"}
+    # The set sizes, so prose comparing "content is three entries, acquisition is
+    # twelve" reads them off the same sets the counts above use rather than from
+    # a reviewer's list or from memory.
+    _all_drivers = {r["driver"] for r in sb}
+    add("registry_content_driver_count", len(CONTENT_DRIVERS & _all_drivers), "count", "sobol.csv",
+        "how many registry entries the content-driver set contains")
+    add("registry_acq_driver_count", len(ACQ_DRIVERS & _all_drivers), "count", "sobol.csv",
+        "how many registry entries the acquisition-driver set contains")
+    add("registry_cost_per_item_driver_count",
+        len({"minutes_per_item", "examiner_rate_gbp_hr", "writer_gbp_item"} & _all_drivers),
+        "count", "sobol.csv",
+        "how many registry entries make up cost per item, which one timed pilot measures at once")
+
     for target in sorted({r["target"] for r in sb}):
         rows = sorted([r for r in sb if r["target"] == target], key=lambda r: -float(r["sobol_first_order"]))
         top7 = [r["driver"] for r in rows[:7]]

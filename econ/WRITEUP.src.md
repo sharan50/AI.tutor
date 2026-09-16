@@ -680,10 +680,12 @@ computed in `figures.py` from `out/sobol.csv` rather than counted by eye.
 
 **Do not lean on those counts, and an earlier draft did.** A count of how many
 content drivers appear in a top seven is a fact about how finely the registry
-splits each cost, not about the business. Content cost per item is three priors
-here — validation minutes, the examiner rate, the authoring rate — because that
-is how it decomposes; but one timed pilot measures all three at once, so as an
-object of decision it is **one** quantity. Acquisition is split across nine.
+splits each cost, not about the business. Content cost per item is
+@@registry_cost_per_item_driver_count|int@@ priors here — validation minutes, the
+examiner rate, the authoring rate — because that is how it decomposes; but one
+timed pilot measures all of them at once, so as an object of decision it is
+**one** quantity. The acquisition set is split across
+@@registry_acq_driver_count|int@@.
 Rank the registry entries and content wins on count; group them the way the
 instruments that would measure them group them and the ranking changes.
 `out/sobol_grouped.csv` does that, on genuine scalars rather than by summing
