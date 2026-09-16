@@ -165,8 +165,14 @@ and involuntary churn move between them, not a measurement of either.
 
 **In total the absent lines are 2,958,630 to
 7,492,398 dollars, or 19.49 per cent of the modelled
-cost base at the top of the range.** They deepen the hole; they do not change the
-ordering in section 8 of the write-up.
+cost base at the top of the range**, up from a twelfth of it before round 3 added
+specification change, which is the largest of them. They deepen the hole. They do
+not reverse the ordering in section 8 of the write-up, and the largest of them
+pushes the same way: specification change acts on the content line, so closing it
+would make content a larger share of cost rather than a smaller one. **But a
+fifth of the cost base sitting outside the model is not a footnote**, and a
+reader who takes the absolute levels from this document rather than the ordering
+is being misled by more than they were two rounds ago.
 
 **One more, and it is the important one: the creator licence.** D4 makes named
 educators the wedge and D14 requires named presets from day one, and the published

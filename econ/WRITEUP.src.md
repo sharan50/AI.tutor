@@ -404,7 +404,20 @@ is @@por_share_inference_cost_pct|num1@@ per cent of total cost under these prio
 matter. C2 is a threshold test against the first month of contribution, not a
 share of the cost base, and section 10 gives its break-even. But the idea that
 verification could dominate the cost structure is not supported: what it does is
-subtract from the acquisition budget, exactly as docs/10 says.
+subtract from the acquisition budget, roughly as docs/10 says — not pound for
+pound, and the mechanism is set out in E4 of OPEN_ITEMS.md.
+
+**And a fourth reading, which is about the table rather than in it.** Every share
+above is a share of the cost the model *carries*.
+`out/omissions.csv` names @@omission_line_count|int@@ cost lines the model does
+not carry and prices them at
+@@omission_total_of_every_absent_line_low|usd0@@ to
+@@omission_total_of_every_absent_line_high|usd0@@ dollars, which at the top of
+the range is @@omission_total_of_every_absent_line_share_high_pct|num1@@ per cent
+of the base in that table. The largest of them, specification change, acts on the
+content line, so closing them would make content a larger share rather than a
+smaller one: the ordering above survives. **The levels do not.** Read this table
+as the ordering it is, which is what this whole document is for.
 
 ---
 
