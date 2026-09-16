@@ -1581,9 +1581,13 @@ the test fails.
 
 `apply_dependence` reorders the driver columns by Iman-Conover, so path i in
 `por_dependence` carries different driver values from path i in the base. The
-file says so itself: `pathwise_spearman_vs_base` is 0.2998 and 0.2985 for the
-two dependence scenarios against 0.77 to 1.00 for every other. A paired standard
-error was published for them anyway, and the preamble told the reader to use the
+file says so itself: `pathwise_spearman_vs_base` is about 0.30 for both
+dependence scenarios against 0.77 to 1.00 for every other, and `out/variants.csv`
+carries the exact values. (A draft of this entry quoted them to four places from
+the pre-regeneration file; the regeneration moved them, which is the reason a
+change log should quote a magnitude and point at the file rather than transcribe
+a figure that is still moving.) A paired standard error was published for them
+anyway, and the preamble told the reader to use the
 paired error for every scenario. `variants.csv` now carries a `pairing_holds`
 column.
 
@@ -1689,3 +1693,22 @@ That was asserted in LIMITS.md for three rounds. It is now measured.
 
 The two round 6.1 rows do not sum to the combined row, because the progression
 acts on whatever the summer lapse left.
+
+### 6.16 Four numbers this round typed in by hand, caught by the verifier
+
+The round 6 write-up of the all-in contamination quoted what the figure becomes
+with the institution channel removed — about 18.05 pooled and about -84.37 on the
+median path — and typed both in from a measurement taken before the regeneration.
+`verify.py` Pass B refused them, correctly: they are present-tense claims about
+the current model that trace to nothing on disk, and the regeneration had moved
+them.
+
+`variants.py` now publishes the final-year contribution per household month for
+every scenario, all-in and gross, pooled and median, so the size of the
+contamination is read off the `por_no_schools` row rather than asserted. The
+prose carries tokens.
+
+This is the third time in six rounds that a hand-typed number has been the
+defect, and the second time in this round alone. The verifier is now the only
+thing catching them, which is an argument for it and not for the discipline that
+keeps producing them.

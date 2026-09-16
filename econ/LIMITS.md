@@ -28,12 +28,12 @@ prior, not a rate.
 
 **Quoted prices are read as gross, that is, tax-inclusive.** Net revenue is the
 gross price divided by one plus the rate. Over the horizon that removes
-3,739,911 dollars, or 10.9 per cent of gross consumer
+3,991,372 dollars, or 10.8 per cent of gross consumer
 revenue. On the United Kingdom alone at 20 per cent it removes a sixth.
 
 **The other reading, quantified.** If the quoted prices were net and tax were added
 on top, revenue over the horizon would be higher by that whole line,
-3,739,911 dollars. That is 10.9 per cent of GROSS, and because it
+3,991,372 dollars. That is 10.8 per cent of GROSS, and because it
 would be added to net rather than removed from gross it is 12.2 per cent MORE
 REVENUE, which are two different percentages of two different denominators. It
 would reduce the peak funding requirement by approximately the same cash amount.
@@ -65,12 +65,12 @@ household reaches and left the overage revenue in place. It now enforces the
 allowance and removes the overage line with it, which is what the decision
 actually is. See `CHANGELOG.md` 2.3.
 
-23.6 per cent of active households exceed the allowance being sold to
+23.4 per cent of active households exceed the allowance being sold to
 them. That is a household-month weighted share within each path and then a plain
 mean across paths, so a path with a hundred households and a path with one count
 equally in it.
 
-**Enforcing the allowance destroys 5,010,731 dollars of terminal cash**,
+**Enforcing the allowance destroys 5,272,575 dollars of terminal cash**,
 because the overage revenue lost is larger than the inference cost saved. Before
 round 2 this scenario reported a small gain, from truncating delivery at the
 billing cap rather than at the allowance.
@@ -85,16 +85,16 @@ this item cannot be clean.
 partly the scenario's fault".** The `por_fx_sampled` scenario replaces the
 sterling rate with a sampled one, drawn outside the published stream so the paths
 stay matched. Terminal cash moves by
-34,655 dollars on the mean. **That is
-not "small", it is zero**: the delta is 0.33
+48,899 dollars on the mean. **That is
+not "small", it is zero**: the delta is 0.44
 paired standard errors from zero, so at another seed it would carry a different
 sign. (A round-four draft reached the same conclusion by comparing against the
 *unpaired* standard error of the base mean, which is several times too large for
 a paired comparison — the right conclusion from the wrong number, one paragraph
 after this document explains the paired-versus-unpaired distinction for the
 demand shock.) The peak funding requirement at the eightieth percentile
-moves from 28,081,281 to
-28,132,898. **The exposure is in the
+moves from 28,039,074 to
+28,089,318. **The exposure is in the
 width, not the centre**, which is exactly what fixing a rate hides: fixed rates do
 not remove the risk, they remove the evidence of it.
 
@@ -142,7 +142,7 @@ build base's night, and there is no shift premium anywhere in the cost base.
 Priced in `out/omissions.csv` at 449,379 to
 898,759 dollars from the United Kingdom go-to-market month to
 the end of the horizon, four and a half years rather than five, which is up to
-2.31 per cent of the modelled cost base.
+2.23 per cent of the modelled cost base.
 
 ### 6. A cost that scales per market, per shift or per institution: **clean, except the shift**
 
@@ -173,24 +173,32 @@ refunds, chargebacks and failed payments; insurance: professional indemnity, cyb
 anyway, because a zero recorded is not the same as a line left out:
 consumer subscription regime: renewal reminders, cooling off, easy exit; trial-to-paid conversion and involuntary churn; institution contract revenue lost to annual recognition; organic and referred acquisition; corporation tax on trading profit; translation and localisation; regulatory enforcement exposure; examiner supply, as a quantity rather than a price.
 
-They are zero for three different reasons and the breakdown used to name only
-two of them. **Four are genuine zeros**: no scenario here returns a taxable
+They are zero for four different reasons. The breakdown named two of them for
+several rounds, then three, and the three-way version still accounted for only
+seven of the eight: "organic and referred acquisition" appeared in the list of
+zero lines above and in none of the groups below it, which is the same
+hand-kept-list failure this item is about. **Four are genuine zeros**: no
+scenario here returns a taxable
 trading profit, the expansion is across English-speaking curricula by decision,
 nothing here puts a probability on enforcement, and examiner supply is a quantity
 question rather than a cost. **One is not a cost at all** — institution revenue
 lost to annual recognition is a timing artefact that makes the channel look worse
 than the plan describes, and it is in the list because a zero recorded is better
-than a line left out. **The remaining two** are zero only as *cost* lines,
+than a line left out. **One is a revenue mechanic rather than a cost**: there is
+no unpaid channel anywhere in the model, so every household in it is bought, and
+organic and referred acquisition is carried at zero not because it is small but
+because the model has no term for it at all. That is the one of the eight most
+likely to be materially wrong in the company's favour. **The remaining two** are zero only as *cost* lines,
 because they are retention mechanics rather than costs, and their size is
 published separately in `out/sized_omissions.csv`:
 scaling both churn drivers by 25 per cent costs
-4,760,362 dollars of terminal cash, which is
-12.2 per cent of the modelled cost base.
+4,950,548 dollars of terminal cash, which is
+12.3 per cent of the modelled cost base.
 That scale is a prior on how much of the book a reminder-and-easy-exit regime
 and involuntary churn move between them, not a measurement of either.
 
-**In total the absent lines are 3,907,792 to
-9,441,168 dollars, or 24.25 per cent of the modelled
+**In total the absent lines are 3,980,848 to
+9,635,694 dollars, or 23.92 per cent of the modelled
 cost base at the top of the range**, up from about an eighth before round 3 added
 specification change, which is the largest single line in the file. They deepen the hole. They do
 not reverse the ordering in section 8 of the write-up, and the largest of them
@@ -206,7 +214,7 @@ run charges nothing for them, because D5 describes a one-page name-and-likeness
 agreement and the vault has never established what a creator charges to sign it.
 Rather than invent the figure, the `por_creator_fees` scenario prices both limbs,
 a fixed annual minimum per creator and a share of the revenue their audience
-brought: -2,088,444 dollars of terminal cash. **The published run
+brought: -2,146,404 dollars of terminal cash. **The published run
 assumes creators sign for nothing.** That assumption is now visible.
 
 ---
@@ -285,8 +293,8 @@ would collapse the first and inflate the second.
 **This is where an earlier draft was wrong, in the passage whose whole point was
 that matching is measured.** It named two scenarios as the loosest and the
 tightest and neither bound was the bound in the file. Across the scenarios that
-only flip a switch the correlation runs from 0.7682 to 1.0000.
-The two dependence scenarios sit at 0.2985 and above, and that is correct
+only flip a switch the correlation runs from 0.7707 to 1.0000.
+The two dependence scenarios sit at 0.2986 and above, and that is correct
 behaviour rather than a defect: Iman-Conover reordering changes which path holds
 which driver value, so it preserves the marginals exactly and path identity not
 at all. They are comparable to the base in distribution, not path by path, and
@@ -299,9 +307,9 @@ the write-up says so where it uses them.
 ### 12. Anchor or effective cost: **clean**
 
 Both published. The anchor is a driver with median 32.26 dollars. The
-effective cost at the spend actually modelled is 55.17 in the final
-year, pooled across paths, which is 1.71 times the anchor. On the median
-path it is 31.71, because the median path never spends enough to
+effective cost at the spend actually modelled is 58.27 in the final
+year, pooled across paths, which is 1.81 times the anchor. On the median
+path it is 33.12, because the median path never spends enough to
 saturate anything. It is published month by month as `cac_effective_blended_mean`
 in `out/por_monthly.csv`, with the non-creator channel beside it.
 
@@ -329,8 +337,8 @@ overhead and compliance. It is the only restraint on acquisition spend anywhere 
 the model, and it is a loose one.
 
 **Does lifetime value exceed cost per acquisition in the final year?** On the mean,
-pooled, yes: 120.26 against 55.17, a ratio of
-2.18. **On 10.4 per cent of individual paths, no.** And the
+pooled, yes: 122.24 against 58.27, a ratio of
+2.10. **On 10.5 per cent of individual paths, no.** And the
 lifetime value in that ratio is the **gross** one; against the all-in contribution
 the ratio is far worse, and on the median path it is negative, which is item 16.
 
@@ -340,13 +348,13 @@ docs/10 states that a Year 10 household can afford roughly twice the acquisition
 cost of a Year 11 household. The model asserts no such ratio; it produces one from
 a sampled summer lapse probability and a sampled progression rate.
 
-**The number the code actually uses is 1.04, not two**
-(3.79 months against 3.63, measured by pinning the
+**The number the code actually uses is 1.06, not two**
+(4.01 months against 3.79, measured by pinning the
 segment mix and re-running on the same random numbers). It reaches two or better
 on 0.01 per cent of paths. docs/10's shape survives; its magnitude
 does not, and docs/10's own caveat about the summer is most of why: removing the
-summer entirely lifts the ratio by 0.407
-against 0.029 for flooring in-term churn,
+summer entirely lifts the ratio by 0.354
+against 0.025 for flooring in-term churn,
 a factor of 14. **Neither recovers two,
 and nor do both together** — that is the finding, and it is larger than either
 lever. This document said the summer, the write-up then said in-term churn, and
@@ -368,14 +376,14 @@ denominator collapses on paths whose book has collapsed, so a handful of paths
 carry it to millions. Two defensible figures are published instead, the pooled
 ratio and the median path's.
 
-31.90 dollars per household month pooled, and
-17.25 on the median path, is a **gross**
+31.21 dollars per household month pooled, and
+17.19 on the median path, is a **gross**
 contribution: net revenue less inference, support, payment, hosting and store fees.
 
 The all-in figure, net of engineering, content, overhead and compliance (payment
-fees are already out of the gross row above, and are not deducted twice), is 15.41 dollars per household month pooled and
--97.72 on the median path. Pooled, the all-in figure is
-16.49 dollars a household month lower than the gross one.
+fees are already out of the gross row above, and are not deducted twice), is 16.53 dollars per household month pooled and
+-86.91 on the median path. Pooled, the all-in figure is
+14.67 dollars a household month lower than the gross one.
 
 **The pooled and median all-in figures disagree in sign**, because the pooled one
 is dominated by the few paths with large books that spread the fixed costs, and
@@ -386,9 +394,9 @@ other and neither can stand in for the gross figure.
 **The same trap has a second door, and a round-three review found the document
 walking through it.** The lifetime-value-against-acquisition-cost comparison was
 published on the gross basis only: lifetime value is below acquisition cost on
-10.4 per cent of paths, which reads as
+10.5 per cent of paths, which reads as
 reassurance. On the all-in basis the same comparison fails on
-85.3 per cent. Both are now in
+85.0 per cent. Both are now in
 `out/cohorts.csv` and item 19 publishes them side by side. Publishing only the
 first is precisely this checklist item, committed by a document whose own answer
 to this checklist item was "clean".
@@ -420,9 +428,9 @@ No figure in the write-up divides a `_mean` by a `_band`.
 
 The demand shock is AR(1), not independent. Persistence is sampled between
 0.45 and 0.95, median 0.70. The longest run of consecutive months with the
-demand multiplier below 0.80 averages 5.8 months and is
-13.0 at the ninetieth percentile; 36.9 per cent of paths contain a run
-of six or more and 12.1 per cent a run of twelve or more.
+demand multiplier below 0.80 averages 5.7 months and is
+13.0 at the ninetieth percentile; 36.8 per cent of paths contain a run
+of six or more and 11.9 per cent a run of twelve or more.
 
 **It did nothing at all until round 2.** Realised acquisition spend was recomputed
 from realised acquisitions, so a shock that halved customers halved the money
@@ -431,11 +439,11 @@ spent and cost nothing. Spend is now committed in advance. See `CHANGELOG.md` 1b
 **And the run lengths above are a property of the demand series, not of the
 answer.** What the whole persistent-shock apparatus is worth, measured by pinning
 the innovation standard deviation to zero and re-running on the same random
-numbers: 36,464 dollars of terminal cash on the mean,
--8,163 on the median path, and 23,172 on the eightieth-percentile
-capital requirement. On the 12.1 per cent of paths that do take a run of twelve
-or more bad months it bites harder, -3,563,470 on the mean of that group, but
-even there the median damage is -564,186. **A sustained demand drought is in
+numbers: 63,843 dollars of terminal cash on the mean,
+-22,691 on the median path, and 26,641 on the eightieth-percentile
+capital requirement. On the 11.9 per cent of paths that do take a run of twelve
+or more bad months it bites harder, -3,789,819 on the mean of that group, but
+even there the median damage is -614,994. **A sustained demand drought is in
 this model and it is not what ends the company.**
 
 **What is still missing.** The shock acts on acquisition only. There is no
@@ -455,14 +463,14 @@ variable-cost row and wronger after.
 
 | Proposition | Share of paths on which it holds | The write-up |
 |---|---|---|
-| Content exceeds acquisition spend | 84.6 per cent | asserts it |
-| Content exceeds both acquisition and people | 59.9 per cent | asserts it |
+| Content exceeds acquisition spend | 83.5 per cent | asserts it |
+| Content exceeds both acquisition and people | 59.2 per cent | asserts it |
 | The Year 10 cohort retains at least twice the months | 0.01 per cent | **denies it**, against docs/10 |
-| Gross lifetime value is below acquisition cost in the final year | 10.4 per cent | **denies it** on the gross basis |
+| Gross lifetime value is below acquisition cost in the final year | 10.5 per cent | **denies it** on the gross basis |
 | Variable cost exceeds half of gross consumer revenue, which is where docs/10's row reverses | 1.4 per cent | **denies it** for the plan, concedes it for these paths |
-| All-in lifetime value is below acquisition cost in the final year | 85.3 per cent | asserts it on the all-in basis |
-| Peak funding exceeds ten million dollars | 83.4 per cent | asserts it |
-| Terminal cumulative cash is positive | 11.5 per cent | **denies it** |
+| All-in lifetime value is below acquisition cost in the final year | 85.0 per cent | asserts it on the all-in basis |
+| Peak funding exceeds ten million dollars | 83.0 per cent | asserts it |
+| Terminal cumulative cash is positive | 11.9 per cent | **denies it** |
 
 **Two failures of this item were found in round four and both are fixed above.**
 The first: the lifetime-value share was computed by multiplying each path's own
@@ -470,8 +478,8 @@ contribution by the SAMPLE MEAN retained months, a scalar. Retention varies
 strongly across paths and correlates with churn, so the published share was a
 hybrid presented as a per-path statistic, in the answer to the item about exactly
 that. Using each path's own realised retention gives
-10.4 per cent against the old
-9.9; both are in
+10.5 per cent against the old
+10.2; both are in
 `out/cohorts.csv` so the size of the error is on the record. The second: the
 docs/10 variable-cost row was answered with a mean and is now given per path in
 section 5 of the write-up, where variable cost exceeds half of revenue on
@@ -482,7 +490,7 @@ draft published only the first.** On the gross basis, which charges a household
 inference, support, payments and age assurance and nothing else, lifetime value
 clears acquisition cost on almost every path. On the all-in basis, which also
 carries the content build and the people who make it, it fails on
-85.3 per cent. Quoting the gross
+85.0 per cent. Quoting the gross
 number alone is checklist item 16 — a gross margin presented as a net one — and
 it was being done here.
 
@@ -492,9 +500,9 @@ it was being done here.
 
 ### 20. Sized on the base case or the plan of record: **clean**
 
-Sized on the **plan of record**, at 28,081,281 dollars across the
+Sized on the **plan of record**, at 28,039,074 dollars across the
 horizon at the eightieth percentile. The base case is stated beside it at
-17,406,101, along with two narrower scopes. They differ enough
+17,370,253, along with two narrower scopes. They differ enough
 that sizing on the base case would underfund the plan actually described.
 
 **One method note, because it looks like a defect this document warns about
@@ -525,18 +533,27 @@ six of the model's own content steps were missing and the count was 10 of 14.
 One of the six is a second violation of the section's own test. An instrument
 that measures whether staging matches decisions, built as a hand-kept list of
 half the decisions, is the failure class this document spends most of its change
-log converting away from. One commitment lands
-after the Series A opens with its spend starting before it: all four boards live
-at month 18, built from month 12. The rest-of-English-speaking market at month 24
+log converting away from. 2 commitments land
+in a later stage than the one their spend starts in, and until round 6 this
+paragraph announced the second one and then named only the first. They are: all
+four United Kingdom boards live at month 18, built from month 12, inside the
+seed window; and the United States seven-subject step live at month 40, built
+from month 34, inside the Series A. The rest-of-English-speaking market at month 24
 begins its build at month 18, exactly as the Series A opens, so the file's test
 puts it on the right side of the line.
+
+The column that carries this test used to be called
+`decision_taken_after_its_round_closed` and answered "no" on both violations and
+"yes" on the eighteen clean rows, so a reader filtering the file for the problem
+got its complement. It is now `spend_starts_before_its_stage_opens` and answers
+yes when the test fails.
 
 **The Series A does not buy those decisions. It refinances them.** `out/funding_commitments.csv`
 holds the landing month and the spend-start month for each.
 
 **What it would move.** Nothing in the cash flow; the spend happens either way.
 What it moves is the round sizing: the seed for the plan of record is
-10,173,752 dollars, and a round of that size described as a seed will
+10,184,720 dollars, and a round of that size described as a seed will
 be raised on seed terms against a Series A-sized commitment.
 
 ---
@@ -570,7 +587,7 @@ top; the range is wider in both directions because nothing measures it.
 
 **What it would move.** `out/breakeven.csv` records the solve. What can be said now
 is that the allowance of sixteen sessions, which is a commercial decision already
-taken in `model.py`, sits inside that range, so whether 23.6 per cent
+taken in `model.py`, sits inside that range, so whether 23.4 per cent
 of households exceed it or almost none do is not determined by anything measured.
 
 ### 23. Do the instrument's strata match the mix the cost base assumes: **not clean**
@@ -631,7 +648,7 @@ curriculum specifically.
 failing, beyond the lifetime-value cap on acquisition. The peak funding
 requirement is therefore the requirement of the plan as stated, not of a company
 that notices and reacts. A real team would cut, and the honest reading of
-28,081,281 dollars is "this is what it costs to execute the plan of
+28,039,074 dollars is "this is what it costs to execute the plan of
 record without flinching", which is not the same as what it would actually cost.
 
 **The institution channel is one blended channel.** Route B is modelled as a single
@@ -668,7 +685,7 @@ own. The whole of the price-anchor conclusion, which is the second-ranked decisi
 in the write-up, rests on a mechanism with no demand-side cost of price anywhere
 in it.
 
-**What it would move.** The anchor spread of 29,766,439 dollars is an
+**What it would move.** The anchor spread of 31,103,443 dollars is an
 upper bound. docs/12 names the competing anchor explicitly, that the free tools are already on
 the parent's phone, and docs/07 states the substitution arithmetic against the
 verified 25 to 45 pound hourly tutoring rate. The two price regimes here differ
@@ -679,14 +696,14 @@ price loop can be run alone is a half-day of work and has not been done.
 
 ### The largest paths are not plausible and nothing in the instrument says so
 
-Total acquisitions across the horizon run to a median of 42,720, a
-ninety-ninth percentile of 3,477,495 and a maximum of 25,525,207.
-2.58 per cent of paths end the horizon above a hundred million dollars.
+Total acquisitions across the horizon run to a median of 45,624, a
+ninety-ninth percentile of 3,654,991 and a maximum of 26,225,593.
+2.71 per cent of paths end the horizon above a hundred million dollars.
 
 There is now a ceiling, `POOL_REACQUISITION_MULTIPLE`, set at
 3.0, so no path acquires more
 than that multiple of its own sampled pool in any market, and the largest ratio of
-acquisitions to that path's own United Kingdom pool is 37.36 across three
+acquisitions to that path's own United Kingdom pool is 37.70 across three
 open consumer markets. **That bounds the arithmetic; it does not make the top of
 the distribution believable.**
 
@@ -696,8 +713,8 @@ saturation term, so it sets how fast the effective cost of acquisition rises as
 a market is worked — one number doing two jobs, neither of them measured. It is
 now a configuration key rather than a buried literal, and two scenarios price
 it: working the pool twice over rather than three times is worth
--2,876,058 dollars of terminal cash, and
-five times over 4,116,017. Nothing in the
+-3,045,286 dollars of terminal cash, and
+five times over 4,345,477. Nothing in the
 vault sets this number. It is a prior, it is not in `out/drivers.csv` because it
 is a constant rather than a sampled driver, and a constant that moves the answer
 by that much while being invisible to the sensitivity analysis is a defect of
@@ -710,8 +727,8 @@ scenario table in the write-up now gives the median beside it.
 ### "Content is the largest line" is partly a property of the budget rule
 
 On the median path, content costs 12,448,547 over the horizon and
-acquisition and verification together cost 1,386,923, a ratio of
-9.0 to one. Content is almost entirely exogenous: a fixed schedule
+acquisition and verification together cost 1,516,841, a ratio of
+8.2 to one. Content is almost entirely exogenous: a fixed schedule
 times a sampled item cost, with no demand feedback at all. Acquisition is
 throttled by the lifetime-value cap and the launch-subsidy taper.
 
@@ -784,8 +801,8 @@ rest are hiding.** `POOL_REACQUISITION_MULTIPLE`, at
 acquisitions and it is the denominator of the saturation term, so it also sets
 how fast acquisition gets dearer as a market is worked. It is now a configuration
 key with two scenarios, and moving it from three to two is worth
--2,876,058 dollars of terminal cash while
-moving it to five is worth 4,116,017. That
+-3,045,286 dollars of terminal cash while
+moving it to five is worth 4,345,477. That
 is comparable with several of the sampled drivers that section 8 ranks, from a
 number nothing in the vault sets and no instrument in this directory could see
 until it was lifted out. **The other constants above have not had this done to
@@ -794,7 +811,7 @@ way.**
 
 ### The retained book is far shorter than the product being sold
 
-An examination-year household is retained 3.63 months. The commercial unit
+An examination-year household is retained 3.79 months. The commercial unit
 is an examination-cycle plan billed monthly to the last paper, which docs/07 puts
 at nine months for a September acquisition and five or six for a January one. **The
 average customer in this model never completes a cycle.** Two things produce
@@ -845,40 +862,49 @@ Kingdom ones**, and the expansion case should not be argued from them.
 `terminal_cash` is the cumulative cash at month 60 and nothing else. At that
 month the instrument assigns **zero** value to the item bank it has just spent
 13,965,826 dollars building, and zero to the standing book of
-28,471 households still paying.
+31,102 households still paying.
 
 That is not a neutral default. A large share of the content spend falls in the
 last two years and is charged in full against a truncated revenue window:
 38.9 per cent of content spend falls in months 36 to 60, and
 14.7 per cent in the final twelve. Terminal-month net cash is
-303,124 and terminal-month net revenue 1,006,489, an annual
-run rate of 12,077,865.
+360,025 and terminal-month net revenue 1,088,526, an annual
+run rate of 13,062,311.
 
 **Every statement in this document of the form "content is the largest line",
-"content sets the slope" and "64.1 per cent
+"content sets the slope" and "62.0 per cent
 of the cost base does not respond to demand" is partly a function of where the
 window was cut.** The `por_residual` scenario
-credits a residual and is worth 22,223,831 dollars of terminal cash and
--257,653 on the capital requirement. Both of its parameters are priors
+credits a residual and is worth 23,591,879 dollars of terminal cash and
+-265,455 on the capital requirement. Both of its parameters are priors
 and neither is defensible as a valuation; the point is the size, not the number.
 
 Nothing sweeps the horizon itself, no scenario stops building content when the
 remaining window is shorter than the payback, and the launch-delay scenarios in
 section 9 of the write-up are the same defect showing through in another place.
-**This is the second item, alongside the restricted-transfer question, that
-changes the ordering rather than the levels, and it is cheaper to test than that
-one.**
+**Whether this one changes the ordering rather than the levels is not known,
+because nothing here computes it.** This paragraph asserted for four rounds that
+it does, and named the restricted-transfer question as the other item that does.
+Both halves were wrong. The restricted-transfer half was the round-2 position,
+retracted in round 4 once the decomposition was actually run under full
+onshoring — `out/sobol.csv` carries it as the `onshore_all` run, item count
+holds rank 1 exactly as on the plan of record, and the write-up's section 12 says
+plainly that it barely moves the ordering at all. The residual half was never
+computed in any round: `out/sobol.csv` carries three configurations and a
+residual-on decomposition is not among them. What is known is the size of the
+cash, which is in the two figures above. The ordering claim is withdrawn rather
+than restated, and it is a one-run job to settle if it matters.
 
 ### Age assurance is charged once per acquired household, never per check
 
 `verif_total += acq * v`. Every check on somebody who does not convert is free.
 A reusable identity check is billed per attempt, so at any realistic ratio of
 checks to conversions the line is a multiple of what is modelled, priced in
-`out/omissions.csv` at 802,412 to
-2,006,030 dollars.
+`out/omissions.csv` at 851,697 to
+2,129,241 dollars.
 
 The conclusion elsewhere in this file that verification does not dominate the cost
-structure rests on a 1.0 per cent share that assumes one check per acquired
+structure rests on a 1.1 per cent share that assumes one check per acquired
 household. **Nothing states that ratio and nothing measures it.** Condition C2 in
 docs/09 is a threshold against first-month contribution and is unaffected; the
 share-of-cost claim is not.
@@ -960,7 +986,7 @@ cash-positive months together. `out/breakeven.csv` now carries, for each solved
 row, the median path's terminal cash and the eightieth-percentile funding
 requirement at that same value, and the share of the paths that meet the target
 and still end the horizon negative. On the plan of record that last share is
-33.1
+33.5
 per cent. The number was always in the file; the word attached to it was wrong.
 
 ### Two mechanisms were tested by the wrong test, and the test said so in the right words
@@ -973,7 +999,7 @@ mechanism correctness test in this instrument and there cannot easily be one:
 what would it compare against?** The four defects were found by reading the
 code, which is the only method that has worked, and which does not scale.
 
-### The gate covers two files of 24
+### The gate covers two files of 25
 
 `por_monthly.csv` and `por_paths.csv` are rebuilt character for character on
 every load. The other derived outputs are not rebuilt by anything, and the check
@@ -1011,17 +1037,17 @@ still not clean after them.
 Terminal cash, the peak funding requirement, every break-even, the rescue grid
 and the residual are undiscounted nominal sums over sixty months. There is no
 cost of capital, no present value, and no financing cost on the
-28,081,281 the plan raises — no
+28,039,074 the plan raises — no
 interest, no fees, and nothing for the cash sitting idle between rounds.
 
 `out/cohorts.csv` now prices the first half of that: the same net cash line
-discounted at twelve per cent a year is -7,256,671 and at
-twenty-five per cent -6,539,790, against
--8,049,733 undiscounted. **The direction matters more than
+discounted at twelve per cent a year is -6,754,870 and at
+twenty-five per cent -6,205,736, against
+-7,278,633 undiscounted. **The direction matters more than
 the level.** Content spend is front- and mid-loaded and revenue arrives late, so
 discounting makes content relatively dearer and sharpens the ordering this
 document reports; and the residual scenario, the largest single item in the
-scenario table at 22,223,831, sits entirely
+scenario table at 23,591,879, sits entirely
 at month 60 and would shrink by more than anything else. Nothing in the write-up
 is restated on a discounted basis. A reader who would discount should assume
 every level here is optimistic about late money and that the residual in
@@ -1039,9 +1065,9 @@ function round four rewrote to take the calendar from the loop was using
 arithmetic the loop does not.
 
 All three are fixed. The gap is smaller and is **not** closed: `out/cohorts.csv`
-publishes `ltv_cap_assumed_months` at 5.87 against
-`ltv_cap_realised_months` at 3.70, a ratio of
-1.58. What remains is a geometric life ignoring
+publishes `ltv_cap_assumed_months` at 5.62 against
+`ltv_cap_realised_months` at 3.80, a ratio of
+1.48. What remains is a geometric life ignoring
 the other exits, and realised retention being itself right-censored by the
 horizon — the second of which means the true ratio is smaller than the published
 one.
@@ -1066,7 +1092,7 @@ strong about the level, and the lifetime-value ratio built on it is a floor too.
 ### The demand shock's cost is smaller than the Monte Carlo error on the mean
 
 `shock_cost_terminal_cash_mean` in `out/cohorts.csv` is a small number, and the
-sampling error on the headline mean is 607,839. The
+sampling error on the headline mean is 631,271. The
 shock's cost is measured on a PAIRED run, which is far tighter than that, so the
 comparison is not quite apples to apples — but it is the right thing to hold in
 mind when reading any unpaired difference in this document. The sampled
@@ -1076,19 +1102,19 @@ is **zero** at this sample size.
 ### The funding requirement is right-censored for four paths in five
 
 `out/por_paths.csv` records each path's trough month.
-78.1 per cent of paths have it in the
+77.1 per cent of paths have it in the
 **last month of the horizon**: cash is still falling when the window closes and
 the trough has not happened yet. The median path troughs at month
 59 of 60.
 
 The peak funding requirement is the negative of the trough, so every capital
-figure in section 11 — the 28,081,281
+figure in section 11 — the 28,039,074
 headline, the staged sum, all four scopes — is a **floor** on the same four paths
 in five. The instrument has nothing to say about how much more month 61 asks for,
 because there is no month 61.
 
 This was hidden by a mean. The write-up quoted the mean trough month,
-53.2 against the averaged line's
+53.0 against the averaged line's
 44, and concluded the averaged line troughs
 "later" — by four tenths of a month. The mean sits between a fifth of paths that
 trough early and four fifths that never trough at all, and describes neither.
@@ -1100,7 +1126,9 @@ entire subject is that a mean of minimums is not the minimum of a mean.**
 `model.py` scales the reachable pool with subject breadth and discards the level
 and board counts from the same call. So the go-to-market minimum — five subjects,
 one level, one board — and the plan of record's United Kingdom at month 18 — five
-subjects, two levels, four boards, and about twelve times the content — are
+subjects, two levels, four boards, and 3.7 times the content by the
+model's own full-equivalent measure (18.7 against
+5.0, and eight times by raw subject-level-board count) — are
 credited the **same** reachable pool, through a window that spans the whole seed
 and Series A. A United Kingdom household sits one awarding body's specification;
 a one-board product cannot serve three quarters of them. Round 0 fixed the
@@ -1156,24 +1184,29 @@ recognised only in the annual renewal month, so a contract signed in any other
 month earns nothing until the following one, and contracts landing in the last
 months of the horizon are never recognised at all. Both are in
 `out/omissions.csv`. Together they mean
-"2,248,602" understates the channel's cost
+"2,249,220" understates the channel's cost
 and its revenue at once. It is small either way — the channel is
-0.55 per cent of net revenue — but the
+0.52 per cent of net revenue — but the
 figure is not a clean measure of anything.
 
 ---
 
-## What five rounds of review say about the gates in this directory
+## What six rounds of review say about the gates in this directory
 
 This is the most important limit in the document and it is an empirical one, so
 it goes last rather than among the checklist items.
 
-Seven mechanism defects have been found in `model.py` across rounds 2, 4 and 5:
+Ten mechanism defects have been found in `model.py` across rounds 2, 4, 5 and 6:
 a churn reference in the wrong place, an allowance that truncated at the wrong
 number and kept the revenue anyway, saturation measured on the wrong quantity,
 an onshoring switch that moved the wrong people, a sitting-month exit applied to
 a cohort in the month it arrived — twice, on two different paths into the
-segment — and a lifetime-value estimate using a calendar the loop does not have.
+segment — a lifetime-value estimate using a calendar the loop does not have, the
+summer lapse and the year-group progression firing on the month's arrivals in
+exactly the way the two sitting exits had been fixed not to, a segment mix that
+did not sum to one so that households were billed which had never been bought,
+and a lifetime-value cap that valued an examination household acquired in its own
+sitting month at zero months of life.
 
 **Every one of them passed every automated check in this directory, on every
 run, while it was wrong.** Not by accident: the checks cannot see this class of
@@ -1183,32 +1216,59 @@ defect by construction.
   against a rebuild from the same source. A defect that is *in* the published
   run reproduces perfectly. The gate proves the file matches the code; it says
   nothing about whether the code is right.
-- The **two-sided off-test** applies only to switchable mechanisms. Five of the
-  seven defects were in the base loop, which has no switch.
-- The **five accounting identities** check that cash adds up. Five of the seven
+- The **two-sided off-test** applies only to switchable mechanisms. Eight of the
+  ten defects were in the base loop, which has no switch.
+- The **five accounting identities** check that cash adds up. Eight of the ten
   moved households, ratios or a spend cap — quantities that do not appear in a
-  cash identity.
+  cash identity. This is now measured rather than asserted:
+  `out/invariant_defect_costs.csv` re-runs the model with each historical defect
+  put back and records what terminal cash does, and
+  2 of the reintroduced defects move the
+  terminal cash mean by **exactly nothing** — identical to six decimal places —
+  because they move a decomposition rather than a total. No cash identity can
+  see those, on any run, ever.
+- The **structural invariants**, added in round 5b as the answer to all of the
+  above, did not catch round 6's three because two of them were outside what any
+  invariant then covered and the third was covered by an invariant that was
+  arithmetically incapable of firing. That is written up in the round 6 section
+  below, and it is the most instructive single item in this document.
 - **`verify.py` Pass B** checks that a number in the prose exists on disk at the
   precision printed. A wrong number computed consistently is on disk.
 - The **staleness check** proves the outputs were generated against the current
   code. Against the current *wrong* code, they were.
 
-All seven were found by a reader going through the month loop line by line.
+All ten were found by a reader going through the month loop line by line.
 That is the only method that has worked here, it does not scale, and it is not
-guaranteed to have finished. **The honest position after five rounds is not that
+guaranteed to have finished. **The honest position after six rounds is not that
 the mechanisms are correct; it is that a defect of this class survives until
-somebody reads the code, and five readings have found seven.** A sixth reading
-should be assumed to find more.
+somebody reads the code, and six readings have found ten.**
+
+The previous version of this paragraph ended "a sixth reading should be assumed
+to find more". A sixth reading found three, one of which had been sitting under a
+check written to catch precisely it. The sentence stands unchanged for the
+seventh, and the rate of discovery is not falling fast enough to argue that the
+process has converged. Anyone relying on a level from this instrument, rather
+than on the ordering it is for, should read that as the warning it is.
 
 **Something has been built against it, and it is worth being precise about how
 far it goes.** `invariants.py` asserts structural statements about what the month
-loop must produce — not that cash adds up, which all seven defects left perfect,
-but that a household is in the right place at the right time. Four of them are
+loop must produce — not that cash adds up, which all ten defects left perfect,
+but that a household is in the right place at the right time.
+8 of them are
 proved to bite the way the harness gate is: the defect each was written for is
 reintroduced into a copy of `model.py` in memory, the check is required to fail,
 and the copy is discarded. `out/invariant_selftest.txt` records it.
 
-**Three things it does not do.** Three of the seven checks are containment or
+**And one of them was proved to bite while being incapable of catching what its
+own name promised.** The round 6 section below is the account; the short version
+is that "every acquisition can be billed" read a diagnostic that was
+algebraically zero, was reintroduced against the single line that diagnostic was
+written for, refused it, and was reported as proved — while two of the four
+exits it was named after were violating the property in every run. Being proved
+to bite is necessary and it is not sufficient. It shows the check can fail; it
+does not show the check covers what its name says.
+
+**Three things it does not do.** Some of the checks are containment or
 boundary statements that no defect found so far has violated, so they are
 untested in the only way that matters. One is not an invariant at all but a
 regression tripwire, thresholded between the correct code's value and a known
@@ -1232,3 +1292,123 @@ contamination as CHANGELOG 5.2; and the round 5 arrivals fix compared a churned
 stock against un-churned arrivals and clamped the difference at zero, which hid
 the mismatch and made the exemption slightly too generous on paths with a small
 standing book. Neither was found by a reviewer.
+
+---
+
+## What a sixth adversarial round found, which was three more live mechanism defects
+
+The protocol this document was built under says to run paired fresh-context
+reviews until a round returns nothing new, and to expect three rounds. This is
+the sixth, and it returned three live mechanism defects in the month loop, a
+duplicated function carrying arithmetic a previous round had removed, and a
+diagnostic that was arithmetically incapable of firing. The count of mechanism
+defects found by reading the loop is now **ten**, across rounds 2, 4, 5 and 6.
+Every one of them passed every automated gate in this directory on every run
+while it was wrong.
+
+### The invariant that was named for a property it did not check
+
+This is the one worth reading even if nothing else here is.
+
+Round 5b added `invariants.py` as the answer to exactly the problem the section
+above describes: the gates cannot see a defect that is in the published run, so
+the loop needs structural checks that are not about reproduction. The first
+invariant in the list is called **"every acquisition can be billed"**, and its
+docstring asserted that "every acquisition must be able to produce billed
+household months". That is a real property and it is the right one to check.
+
+What the check actually read was a single diagnostic column, and that column
+compared what the two examination-sitting exits removed against what they ought
+to have removed. Given the line immediately above it, those two expressions are
+the same expression. The column was zero by construction. It could not become
+non-zero unless someone edited the one line it was written against — which is
+precisely what the self-test did, and the self-test passed, and the suite
+reported the check as one of four "proved to bite".
+
+Underneath it, two of the four examination-calendar exits — the summer lapse and
+the year-group progression — were deleting households in the month they arrived,
+for five rounds, worth 524,796 of terminal cash
+against the 2,141,420 that the two exits it COULD
+see were worth. The check read zero in all sixty months of every run the whole
+time. Those two figures are measured by putting each defect back and re-running,
+and they are in `out/invariant_defect_costs.csv` with everything else the suite
+has been proved against.
+
+An invariant fitted to one line and named for a general property is worse than
+no invariant at all, because the name is what a reader trusts and the name was
+doing work the code was not. The diagnostic is now written against the arrivals
+array rather than against any exit, and the self-test reintroduces each of the
+offending exits separately and confirms the check refuses each one.
+
+The general lesson, which applies to every check in this directory and not only
+that one: **a check written after a defect, against the defect, tests the fix
+and not the property.** The suite still says so about itself, and now it says it
+with an instance.
+
+### A clamp that concealed rather than prevented
+
+The three segment shares did not sum to one. Two were drawn independently and
+their sum exceeds one on a twentieth of paths; an `np.maximum` floored the third
+at zero and rescaled nothing. On those paths the model billed households it had
+never bought. It is fixed and it is now an invariant, but the thing to take from
+it is that the clamp is what made it invisible: without the `np.maximum` the
+pre-examination share would have gone negative and the defect would have
+surfaced in the first run. Every remaining clamp in `model.py` is a candidate
+for the same reading.
+
+### What is still not clean after this round
+
+**The all-in contribution per household month mixes two channels.** `model.py`
+computes it as net cash plus acquisition spend plus verification, over
+**consumer** household months. Net cash carries the institution channel's entire
+cost base — the United Kingdom sales reps, the institution platform heads, the
+security certification, the per-school onboarding and the school inference —
+against a channel that is about one per cent of net revenue. Round 5 fixed
+exactly this contamination on the GROSS row and left it on the all-in row, which
+is the row the write-up calls the one that answers whether a household pays for
+the business that serves it. Removing the institution channel entirely moves the
+pooled figure from 17 to
+about 18.05 dollars, roughly 17 per cent, and the median path from
+-87 to about -84.37. The
+figures quoted in section 4 and in item 19 inherit it. It is left rather than
+fixed because there is a real question about which basis is wanted, and the
+answer is the owner's: the honest position is that the row as published is
+neither a consumer figure nor a whole-business figure.
+
+**The acquisition budget cap is blind to every variant's mechanism.**
+`expected_contrib_pm` takes no configuration. It always credits overage revenue,
+so under the enforced-allowance scenario the cap believes in revenue that is
+never billed; it never subtracts the app-store fee or the creator revenue share;
+it always uses the Bengaluru support rate even under onshoring. Every
+cost-adding scenario therefore runs an acquisition budget a company that knew its
+own economics would not run, and the contamination has a known sign. Measured on
+the two largest cases it is about one per cent of the allowance-enforced delta
+and about two per cent of the app-store delta — small, but systematic, and it
+was not written down before this round.
+
+**"Met" and "missed across the whole prior range" are decided on two points.**
+When the bisection finds no bracket, the status is read off the two endpoint
+evaluations alone. If a metric were non-monotone with an interior excursion past
+the target, the label would be wrong. The two rows the write-up calls the most
+actionable positive result in the file were checked on a nine-point grid this
+round and are monotone, so those two labels are sound. The other eighteen rest
+on two evaluations each and are not independently checked.
+
+**The band-placement stability argument is measured where the construction
+forces the answer.** Bands are ranked on terminal cumulative cash, so the
+central band line's placement at the final month is pinned near the fiftieth
+percentile by construction, and measuring it across scenarios measures the
+construction rather than the model. `out/variants_bands.csv` carries the low and
+high bands too, and nothing in the prose reads them: the high band's
+cross-scenario placement at mid-horizon moves several times further than the
+central band's does at the terminal month. The conclusion the section draws —
+that terminal band lines may be compared across scenarios — is true of the band
+and the month it was measured on, and is stated more narrowly than it was.
+
+**The demand-independent share omits the launch subsidy.** For twelve months
+after go-to-market the acquisition envelope is a fixed dollar amount independent
+of revenue and of the demand shock, tapering over the twelve after that. It sits
+in the acquisition line and therefore outside the content-people-step sum the
+document calls demand-independent. Including it raises that share by about one
+percentage point, which pushes the document's own argument further in its own
+direction and is recorded here rather than folded in silently.

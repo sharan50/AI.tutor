@@ -389,7 +389,12 @@ OUTCOME_COLS = [
     "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
     "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta",
     "paired_mc_se", "pairing_holds", "pathwise_p50_delta", "pathwise_p50_delta_se",
+    "final_year_allin_contrib_pooled", "final_year_allin_contrib_median",
+    "final_year_gross_contrib_pooled",
 ]
+
+# The final twelve months, the window every contribution figure here is struck on.
+_FY = slice(NS["HORIZON"] - 12, NS["HORIZON"])
 
 # The one column that is a word rather than a number.
 TEXT_COLS = {"pairing_holds"}
@@ -433,6 +438,26 @@ def evaluate(name):
         median_month_rev_passes_cost=float(np.median(o["month_rev_passes_cost"][reach])) if reach.any() else float("nan"),
         terminal_active_hh_mean=float(o["terminal_active_hh"].mean()),
         final_year_effective_cac_mean=float(o["final_year_effective_cac"].mean()),
+        # The final-year contribution per household month, per scenario. These
+        # exist so that the size of the institution channel's contamination of
+        # the all-in row can be read off the no-schools scenario instead of
+        # being typed into the prose by hand, which is how round 6 left it for
+        # one draft. The all-in numerator is net cash plus what acquisition and
+        # verification took out of it; the denominator is consumer household
+        # months, which is exactly the mismatch LIMITS.md records as open.
+        # See CHANGELOG 6.6 and 6.16.
+        final_year_allin_contrib_pooled=float(
+            (out["net_cash"][:, _FY] + out["cac_spend"][:, _FY]
+             + out["verif_cost"][:, _FY]).sum()
+            / max(out["active_hh"][:, _FY].sum(), 1e-9)),
+        final_year_allin_contrib_median=float(
+            np.median(o["final_year_allin_contrib_per_hh_month"])),
+        final_year_gross_contrib_pooled=float(
+            (out["net_rev_consumer"][:, _FY]
+             - (out["inference_cost"][:, _FY] - out["school_inference_cost"][:, _FY])
+             - out["support_cost"][:, _FY] - out["payment_cost"][:, _FY]
+             - out["hosting_cost"][:, _FY] - out["appstore_fee"][:, _FY]).sum()
+            / max(out["active_hh"][:, _FY].sum(), 1e-9)),
         # A mean over paths of a per-path household-month-weighted share. It is
         # a well-behaved quantity because its denominator is household months
         # rather than a book that can collapse, which is what made the

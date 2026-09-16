@@ -394,9 +394,12 @@ cost base — the United Kingdom sales reps, the institution platform heads, the
 security certification, the per-school onboarding, the school inference — over a
 denominator of consumer household months. The institution channel is about one
 per cent of net revenue and rather more than that of cost, so the row is
-pessimistic about the consumer household by roughly a sixth: removing the channel
-entirely moves the pooled figure to about 18.05 dollars and the median path to
-about -84.37. It is left as published rather than quietly re-based, because which
+pessimistic about the consumer household: removing the channel entirely, which is
+the `por_no_schools` scenario, moves the pooled figure from
+@@scenario_por_final_year_allin_contrib_pooled|num2@@ to
+@@scenario_por_no_schools_final_year_allin_contrib_pooled|num2@@ and the median
+path from @@scenario_por_final_year_allin_contrib_median|num2@@ to
+@@scenario_por_no_schools_final_year_allin_contrib_median|num2@@. It is left as published rather than quietly re-based, because which
 basis is wanted is a decision rather than an arithmetic question, and the
 @@share_paths_final_year_ltv_allin_below_cac|pct1@@ per cent figure below inherits
 it either way. It is in LIMITS.md as an open defect.
