@@ -1,9 +1,11 @@
 """
 rescue_grid.py
 
-Every single-driver break-even in out/breakeven.csv is unbracketed: no value of
-any one driver, anywhere in its prior range, gets the median path whole. That is
-the finding, but it is not a useful instruction on its own.
+No single-driver break-even in out/breakeven.csv reaches a CASH target: no value
+of any one driver, anywhere in its prior range, gets the median path whole or
+brings the capital requirement under ten million dollars. (Four solves against
+the profitability target do bracket; see WRITEUP.md section 10.) That is the
+finding on the cash targets, and it is not a useful instruction on its own.
 
 This asks the next question. Taking the two drivers that the break-even
 endpoints get closest on, the acquisition anchor and the tutoring-anchored

@@ -88,6 +88,11 @@ if os.path.exists(os.path.join(OUT, "drivers.csv")):
         if r["mode"]:
             add("driver_%s_mode" % r["driver"], float(r["mode"]), "driver units", "drivers.csv",
                 "the mode column for %s" % r["driver"])
+        if r["driver"] == "uk_gbp_yr":
+            add("driver_uk_gbp_yr_low_usd", float(r["low"]) * 1.27, "USD", "drivers.csv",
+                "the low column for uk_gbp_yr converted at the fixed rate in constants.csv")
+            add("driver_uk_gbp_yr_high_usd", float(r["high"]) * 1.27, "USD", "drivers.csv",
+                "the high column for uk_gbp_yr converted at the fixed rate in constants.csv")
         add("driver_%s_low_pct" % r["driver"], 100.0 * float(r["low"]), "per cent", "drivers.csv",
             "the low column for %s, as a percentage" % r["driver"])
         add("driver_%s_high_pct" % r["driver"], 100.0 * float(r["high"]), "per cent", "drivers.csv",
@@ -228,8 +233,34 @@ add("por_total_tax_collected_mean", tax_c, "USD", "por_monthly.csv", "sum over m
 add("por_tax_share_of_gross", tax_c / gross_c if gross_c else 0.0, "share", "por_monthly.csv",
     "tax collected divided by gross consumer revenue: the part of a gross-quoted price that is not revenue")
 add("por_tax_share_of_gross_pct", 100.0 * (tax_c / gross_c if gross_c else 0.0), "per cent", "por_monthly.csv", "the same as a percentage")
+# A different denominator, and the one a sentence about "more revenue" needs.
+add("por_tax_share_of_net_pct", 100.0 * (tax_c / (gross_c - tax_c)) if gross_c > tax_c else 0.0,
+    "per cent", "por_monthly.csv",
+    "tax collected divided by NET consumer revenue: how much more revenue there would be if the quoted price were net and tax were added on top")
 add("por_schools_share_of_net_revenue_pct", 100.0 * rev_s / (rev_c + rev_s) if (rev_c + rev_s) else 0.0, "per cent",
     "por_monthly.csv", "net_rev_schools_mean summed, over total net revenue summed")
+
+# --------------------------------------------------------------------------
+# What the horizon writes to zero, and when the content spend falls. These are
+# the numbers behind the terminal-value limit in LIMITS.md.
+# --------------------------------------------------------------------------
+content_by_month = col(monthly, "content_cost_mean")
+_tot_content = float(content_by_month.sum())
+add("por_content_share_last_24m_pct",
+    100.0 * float(content_by_month[36:].sum()) / _tot_content if _tot_content else 0.0,
+    "per cent", "por_monthly.csv", "content_cost_mean summed over months 36 onward, over the same summed over all months")
+add("por_content_share_last_12m_pct",
+    100.0 * float(content_by_month[48:].sum()) / _tot_content if _tot_content else 0.0,
+    "per cent", "por_monthly.csv", "content_cost_mean summed over the final twelve months, over the same summed over all months")
+add("por_terminal_active_hh_mean", float(col(monthly, "active_hh_mean")[-1]), "households",
+    "por_monthly.csv", "active_hh_mean in the final row")
+add("por_terminal_month_net_cash_mean", float(col(monthly, "net_cash_mean")[-1]), "USD",
+    "por_monthly.csv", "net_cash_mean in the final row")
+_tnr = float(col(monthly, "net_rev_consumer_mean")[-1] + col(monthly, "net_rev_schools_mean")[-1])
+add("por_terminal_month_net_rev_mean", _tnr, "USD", "por_monthly.csv",
+    "net_rev_consumer_mean plus net_rev_schools_mean in the final row")
+add("por_terminal_annual_run_rate", 12.0 * _tnr, "USD", "por_monthly.csv",
+    "that final-month net revenue multiplied by twelve")
 
 # --------------------------------------------------------------------------
 # Band construction and where the band line actually sits
@@ -396,7 +427,37 @@ if os.path.exists(os.path.join(OUT, "twoway_grid.csv")):
 # Break-evens and funding
 # --------------------------------------------------------------------------
 if os.path.exists(os.path.join(OUT, "breakeven.csv")):
-    for r in read_csv("breakeven.csv"):
+    berows = read_csv("breakeven.csv")
+    # Counts stated in prose must be computed. "Every one is unbracketed" was
+    # hand-typed and was false, and the verifier cannot see a word.
+    add("breakeven_rows_total", len(berows), "count", "breakeven.csv", "row count")
+    add("breakeven_rows_bracketed", len([r for r in berows if r["status"] == "bracketed"]),
+        "count", "breakeven.csv", "rows whose status is bracketed")
+    add("breakeven_rows_unbracketed", len([r for r in berows if r["status"] != "bracketed"]),
+        "count", "breakeven.csv", "rows whose status is not bracketed")
+    for scope in sorted({r["scope"] for r in berows}):
+        sc = [r for r in berows if r["scope"] == scope]
+        add("breakeven_%s_questions" % scope, len(sc), "count", "breakeven.csv",
+            "questions solved for scope %s" % scope)
+        add("breakeven_%s_bracketed" % scope, len([r for r in sc if r["status"] == "bracketed"]),
+            "count", "breakeven.csv", "bracketed rows for scope %s" % scope)
+    add("breakeven_distinct_drivers", len({r["driver"] for r in berows}), "count", "breakeven.csv",
+        "distinct drivers appearing in the breakeven table")
+    add("breakeven_distinct_metrics", len({r["metric"] for r in berows}), "count", "breakeven.csv",
+        "distinct targets the questions were solved against")
+    for r in berows:
+        if r["status"] == "bracketed" and r["breakeven_value"]:
+            v = float(r["breakeven_value"])
+            add("breakeven_at_%s_%s_%s" % (r["scope"], r["driver"], r["metric"]), v,
+                "driver units", "breakeven.csv",
+                "the bracketed break-even value for %s on %s against %s" % (r["driver"], r["scope"], r["metric"]))
+            if r["driver"] == "price_uk_tut_gbp":
+                add("breakeven_%s_price_hours_at_25" % r["scope"], v / 25.0, "hours",
+                    "breakeven.csv",
+                    "that monthly price as hours of GCSE tutoring at the bottom of the verified 25 to 45 pound hourly band")
+                add("breakeven_%s_price_hours_at_45" % r["scope"], v / 45.0, "hours",
+                    "breakeven.csv", "the same at the top of that band")
+    for r in berows:
         key = "breakeven_%s_%s_%s" % (r["scope"], r["driver"], r["metric"])
         if r["status"] == "bracketed" and r["breakeven_value"]:
             add(key, float(r["breakeven_value"]), "driver units", "breakeven.csv",
@@ -472,7 +533,18 @@ if os.path.exists(os.path.join(OUT, "cohorts.csv")):
         except ValueError:
             add(r["name"], r["value"], r["unit"], "cohorts.csv", r["derivation"])
 
+if os.path.exists(os.path.join(OUT, "offtest.csv")):
+    otr = read_csv("offtest.csv")
+    add("offtest_mechanism_count", len(otr), "count", "offtest.csv", "row count")
+    add("offtest_all_exact", all(r["reproduces_base_exactly"] == "yes" for r in otr),
+        "boolean", "offtest.csv", "every mechanism reproduces the base run exactly when switched off")
+
 if os.path.exists(os.path.join(OUT, "omissions.csv")):
+    orows = [r for r in read_csv("omissions.csv") if not r["absent_cost_line"].startswith("TOTAL")]
+    add("omission_line_count", len(orows), "count", "omissions.csv",
+        "rows naming an absent cost line, excluding the total row")
+    add("omission_zero_line_count", len([r for r in orows if float(r["high_usd"]) == 0.0]),
+        "count", "omissions.csv", "of those, the ones priced at zero")
     for r in read_csv("omissions.csv"):
         slug = re.sub(r"[^a-z0-9]+", "_", r["absent_cost_line"].split(":")[0].lower()).strip("_")
         add("omission_%s_low" % slug, float(r["low_usd"]), "USD", "omissions.csv", r["basis"])

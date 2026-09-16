@@ -1,5 +1,5 @@
 harness self-test
-perturbed por_monthly.csv row 30 field 7 from 193.482429 to 193.482430, one unit in the last place
+perturbed por_monthly.csv row 30 field 7 from 193.417145 to 193.417146, one unit in the last place
 RESULT: the harness refused, as it must.
 file restored; the harness verifies again.
-sha256 of the restored file: 18c7c6e0b2533878145473bf10cb1770bf1f822d9324cd4c1425a98204fc37cf
+sha256 of the restored file: f51e3e83ec3a565aae05b48bab680b5a49c3b350227c8c96859edad050e86b41

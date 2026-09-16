@@ -80,11 +80,17 @@ def bisect(driver, lo, hi, metric_fn, target, log_scale, anchor_tutoring, scope,
     Returns (value, (f_lo, f_hi), bracketed). If the target is not bracketed by
     the driver's own prior range, that is the answer and it is reported as such
     rather than extrapolated: no value of that driver alone reaches the target.
+
+    The endpoint metrics returned are ALWAYS the values at the driver's own
+    support, never the converged bracket. They used to be whichever the loop
+    last held, so the two columns meant different things depending on status and
+    a reader opening the CSV on a bracketed row would read the converged bracket
+    as if the metric were flat across the whole prior range.
     """
-    f_lo = evaluate(driver, lo, metric_fn, anchor_tutoring, scope)
-    f_hi = evaluate(driver, hi, metric_fn, anchor_tutoring, scope)
+    f_lo = support_lo = evaluate(driver, lo, metric_fn, anchor_tutoring, scope)
+    f_hi = support_hi = evaluate(driver, hi, metric_fn, anchor_tutoring, scope)
     if (f_lo - target) * (f_hi - target) > 0:
-        return None, (f_lo, f_hi), False
+        return None, (support_lo, support_hi), False
     for _ in range(steps):
         mid = math.exp((math.log(lo) + math.log(hi)) / 2) if log_scale else (lo + hi) / 2
         f_mid = evaluate(driver, mid, metric_fn, anchor_tutoring, scope)
@@ -93,7 +99,7 @@ def bisect(driver, lo, hi, metric_fn, target, log_scale, anchor_tutoring, scope,
         else:
             lo, f_lo = mid, f_mid
     mid = math.exp((math.log(lo) + math.log(hi)) / 2) if log_scale else (lo + hi) / 2
-    return mid, (f_lo, f_hi), True
+    return mid, (support_lo, support_hi), True
 
 
 # The support of each driver is its own prior range, taken from the registry so

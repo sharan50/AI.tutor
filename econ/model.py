@@ -37,6 +37,7 @@ SEED_AUX_FX = 771220260916
 SEED_AUX_INDIA = 771320260916
 SEED_AUX_APPSTORE = 771420260916
 SEED_AUX_CREATOR = 771520260916
+SEED_AUX_RESIDUAL = 771620260916
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out")
 
@@ -199,6 +200,11 @@ PLATFORM_FOR_INSTITUTIONS = 2.0
 POOL_BREADTH_REFERENCE_SUBJECTS = 5.0
 POOL_BREADTH_EXPONENT = 0.6
 
+# The app store commission applied by variant_appstore(). This is the small
+# business rate; the headline rate is double it, and LIMITS.md says the scenario
+# uses the lower one on every path including the large ones.
+APPSTORE_FEE = 0.15
+
 # The demand multiplier at or below which a month counts toward a bad run.
 SHOCK_BAD_THRESHOLD = 0.80
 
@@ -332,7 +338,7 @@ DRIVERS = [
     ("step_cert_setup_usd", "u", (18000.0, 70000.0), "information security certification, first award, prior"),
     ("step_cert_annual_usd", "u", (9000.0, 28000.0), "certification surveillance and renewal, prior"),
     ("step_uk_rep_usd_yr", "u", (3500.0, 16000.0), "UK Article 27 representative, prior"),
-    ("step_counsel_initial_usd", "u", (25000.0, 130000.0), "the eleven counsel items in docs/14, prior"),
+    ("step_counsel_initial_usd", "u", (25000.0, 130000.0), "the counsel items in docs/14, prior. The vault is not internally consistent about how many there are: docs/14 lists OI-1 to OI-12, its README and docs/11 both say eleven"),
     ("step_counsel_market_usd", "u", (12000.0, 70000.0), "counsel per additional jurisdiction, prior"),
     ("step_office_usd_head_yr", "u", (900.0, 3600.0), "premises per head per year once premises exist, prior"),
     ("step_dpia_audit_usd_yr", "u", (8000.0, 40000.0), "DPIA maintenance and ICO-facing audit readiness, prior"),
@@ -518,6 +524,7 @@ def headcount(drv, cfg, t, active_consumer, units_fe_total, units_fe_ahead, reps
     # market must not be charged a platform team sized for four; charging it one
     # made every narrow scope look worse than it is, which is checklist item 10
     # (see CHANGELOG.md 0.8).
+    plat_heads = z
     if t < 0:
         plat = z
     else:
@@ -530,6 +537,7 @@ def headcount(drv, cfg, t, active_consumer, units_fe_total, units_fe_ahead, reps
         schools_on = 1.0 if t >= _school_open_month(cfg, M_UK) else 0.0
         plat = (base + PLATFORM_PER_EXTRA_MARKET * extra_markets
                 + PLATFORM_FOR_INSTITUTIONS * schools_on) * drv["eng_ramp_mult"]
+    plat_heads = plat
 
     # Content: what is being built over the coming year, plus revalidation of
     # what is live. Both divided by what one content head sustains in a year.
@@ -563,7 +571,7 @@ def headcount(drv, cfg, t, active_consumer, units_fe_total, units_fe_ahead, reps
     # Route B field sales. A fixed cost that cannot be turned down quickly, and
     # one a scenario that does not open the institution channel must not carry.
     uk = uk + reps_live
-    return beng, uk
+    return beng, uk, plat_heads
 
 
 def step_costs_usd(drv, cfg, t, heads_total, active_consumer):
@@ -737,6 +745,7 @@ def base_config():
         unit_schedules=None,      # None means the published schedules in CONSTANTS
         creator=None,             # None means no creator licence cost, which is the published run
         onshore_share=None,       # None or 0.0 means all engineering stays in Bengaluru
+        residual=None,            # None means the horizon writes everything to zero, which is the published run
     )
 
 
@@ -812,6 +821,7 @@ def run(drv, cfg=None):
         "people_beng_cost", "people_uk_cost", "step_cost", "school_onboard_cost",
         "appstore_fee", "sessions_delivered", "share_over_allowance",
         "cac_effective_blended", "cac_effective_noncreator", "net_cash", "demand_shock",
+        "terminal_value",
     ]}
 
     stock = np.zeros((P, MS, N_COHORT_YEARS))
@@ -890,11 +900,18 @@ def run(drv, cfg=None):
                     over_cache[key] = overage_terms(drv, mu)
                 share_over, billed = over_cache[key]
                 if cfg["enforce_allowance"]:
-                    _, exc_cap = _gamma_tail(mu, drv["sessions_cv"], OVERAGE_CAP_MULT * SESSION_ALLOWANCE)
-                    delivered = mu - exc_cap
+                    # Enforce the ALLOWANCE. This used to truncate delivery at
+                    # OVERAGE_CAP_MULT * SESSION_ALLOWANCE, which is the billing
+                    # cap, so it cut off sessions almost nobody reaches and left
+                    # the overage revenue in place: it answered a different
+                    # question from the one the scenario is named for.
+                    _, exc_allow = _gamma_tail(mu, drv["sessions_cv"], SESSION_ALLOWANCE)
+                    delivered = mu - exc_allow
+                    billed_here = np.zeros_like(billed)     # nothing to bill above a hard cap
                 else:
                     delivered = mu
-                g = price_g + billed * over_price
+                    billed_here = billed
+                g = price_g + billed_here * over_price
                 gross_c = gross_c + st * g
                 net_c = net_c + st * g / (1.0 + trate)
                 sess_total = sess_total + st * delivered
@@ -951,7 +968,14 @@ def run(drv, cfg=None):
             breadth = (max(subj_live, 1) / POOL_BREADTH_REFERENCE_SUBJECTS) ** POOL_BREADTH_EXPONENT
             pool = drv["pool_uk"] * breadth * {M_UK: 1.0, M_US: drv["pool_rel_us"],
                                                M_IN: drv["pool_rel_in"], M_ROW: drv["pool_rel_row"]}[m]
-            pen = np.clip(active_by_market[m] / np.maximum(pool, 1.0), 0.0, 0.97)
+            # Pressure rises with CUMULATIVE reach, not with the standing book.
+            # Measured on the standing book, a path that churned and reacquired
+            # could sell to its whole market three times over while the
+            # saturation term never rose above a fifth, which made the effective
+            # cost curve in section 4 of the write-up describe something the
+            # model was not doing.
+            reach = cum_acq[m] / np.maximum(pool * POOL_REACQUISITION_MULTIPLE, 1.0)
+            pen = np.clip(reach, 0.0, 0.97)
             ltv_m = ltv_estimate(drv, expected_contrib_pm(drv, m, t, cps, billed_flat), m)
             cap = budget_cap_from_ltv(drv, m, ltv_m, pen)
             season = season_factor(_ACQ_SHAPE, m, t, drv["acq_season_amp"])
@@ -1025,7 +1049,7 @@ def run(drv, cfg=None):
 
         # --- people and steps --------------------------------------------
         live_fe_ahead = build_live[min(t + 12, HORIZON - 1)]
-        beng, uk = headcount(drv, cfg, t, active_total, live_fe, live_fe_ahead, reps_live)
+        beng, uk, plat_heads = headcount(drv, cfg, t, active_total, live_fe, live_fe_ahead, reps_live)
         if fb:
             beng = beng + fb["eng_heads_extra"]
         # docs/05 flags the restricted transfer of United Kingdom children's data
@@ -1034,10 +1058,25 @@ def run(drv, cfg=None):
         # onshore, the Bengaluru cost advantage goes with it. onshore_share moves
         # that fraction of engineering onto United Kingdom cost. Zero in the
         # published run, so this changes nothing there.
+        # Onshoring moves the people who touch learner data: the platform
+        # engineers who build and operate the learner path, and support, who read
+        # learner conversations. It does NOT move content authoring, which works
+        # from published DfE subject content and sees no learner, nor general and
+        # administrative. An earlier version moved content and administration and
+        # left support in Bengaluru, which is close to the opposite of what a
+        # transfer restriction would do.
         onshore = cfg["onshore_share"] or 0.0
-        out["people_beng_cost"][:, t] = beng * (1.0 - onshore) * drv["eng_usd_yr"] * drv["overhead_mult"] / 12.0
-        out["people_uk_cost"][:, t] = ((uk + beng * onshore) * drv["uk_gbp_yr"] * FX_GBP_USD
+        moved = plat_heads * onshore
+        out["people_beng_cost"][:, t] = (beng - moved) * drv["eng_usd_yr"] * drv["overhead_mult"] / 12.0
+        out["people_uk_cost"][:, t] = ((uk + moved) * drv["uk_gbp_yr"] * FX_GBP_USD
                                        * fx_scale * drv["overhead_mult"] / 12.0)
+        if onshore > 0.0:
+            # Support moves with them, from a Bengaluru hourly rate to a United
+            # Kingdom one, pro rata.
+            uk_support_hr = drv["uk_gbp_yr"] * FX_GBP_USD * fx_scale / 2000.0
+            out["support_cost"][:, t] = (active_total * drv["support_min_hh_month"] / 60.0
+                                         * ((1.0 - onshore) * drv["support_usd_hr"] + onshore * uk_support_hr)
+                                         * (fb["support_mult"] if fb else 1.0))
         out["step_cost"][:, t] = step_costs_usd(drv, cfg, t, beng + uk, active_total)
 
         # The creator licence, which the published run costs at zero. Both limbs
@@ -1051,12 +1090,25 @@ def run(drv, cfg=None):
             out["step_cost"][:, t] += (n_creators * cfg["creator"]["fee_per_creator_yr"] / 12.0
                                        + gross_c * drv["creator_share"] * cfg["creator"]["rev_share"])
 
+        # The horizon writes everything to zero. A large share of the content
+        # spend falls in the last two years and is charged against a truncated
+        # revenue window, while the item bank it buys and the standing book are
+        # both worth something on the day the window closes. Crediting nothing is
+        # a choice, not a neutral default, and it is the choice that makes
+        # content look as expensive as it does. residual prices the other
+        # reading. Zero in the published run.
+        if cfg["residual"] and t == T - 1:
+            r = cfg["residual"]
+            content_to_date = sum(out["content_cost"][:, tt] for tt in range(T))
+            out["terminal_value"][:, t] = (content_to_date * r["content_retained"]
+                                           + active_total * contrib_pm * r["book_months"])
+
         cost_t = sum(out[k][:, t] for k in [
             "inference_cost", "support_cost", "payment_cost", "hosting_cost", "verif_cost",
             "cac_spend", "content_cost", "people_beng_cost", "people_uk_cost", "step_cost",
             "school_onboard_cost", "appstore_fee"])
         rev_t = out["net_rev_consumer"][:, t] + out["net_rev_schools"][:, t]
-        out["net_cash"][:, t] = rev_t - cost_t
+        out["net_cash"][:, t] = rev_t - cost_t + out["terminal_value"][:, t]
         trailing_net = 0.5 * trailing_net + 0.5 * rev_t
 
         contrib_cum_add = contrib_pm
@@ -1302,7 +1354,7 @@ MONTHLY_SERIES = [
     "verif_cost", "cac_spend", "content_cost", "people_beng_cost", "people_uk_cost",
     "step_cost", "school_onboard_cost", "appstore_fee", "sessions_delivered",
     "share_over_allowance", "cac_effective_blended", "cac_effective_noncreator", "net_cash",
-    "demand_shock",
+    "demand_shock", "terminal_value",
 ]
 
 PATH_FIELDS = [

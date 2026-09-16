@@ -75,6 +75,26 @@ add("penetration testing and vulnerability disclosure", 25000.0 * years_live, 60
 add("intercompany markup and Indian tax on it", 0.10 * beng_people * 0.25, 0.15 * beng_people * 0.25,
     "a ten to fifteen per cent cost-plus markup on the Bengaluru people cost, taxed at twenty-five per cent")
 
+# Age assurance is charged once per ACQUIRED household. Every check on someone
+# who does not convert is free. A reusable identity check is billed per attempt.
+_verif_total = float(MOUT["verif_cost"].sum(axis=1).mean())
+add("age assurance on non-converting checks", 2.0 * _verif_total, 5.0 * _verif_total,
+    "the model bills one check per acquisition; at two to five checks per acquired household, which is a conservative funnel for a consumer trial, the line is two to five times what is modelled")
+
+# The United Kingdom consumer subscription regime. The Digital Markets,
+# Competition and Consumers Act 2024 brings mandatory renewal reminders, a
+# cooling-off right on renewal and an easy-exit duty; the Consumer Contracts
+# Regulations bring a fourteen-day cancellation right. All of them are retention
+# and revenue mechanics and none has a term here.
+add("consumer subscription regime: renewal reminders, cooling off, easy exit", 0.0, 0.0,
+    "zero, and that is the omission: these are retention mechanics rather than a cost line, so they cannot be priced from anything the model carries, and their effect is on churn and on refunds")
+
+# Trial-to-paid conversion and involuntary churn. Acquisitions here are paying
+# households from the month after acquisition; failed cards appear only as a
+# cost line and never as retention.
+add("trial-to-paid conversion and involuntary churn", 0.0, 0.0,
+    "zero: an acquisition is a paying household immediately, and failed payments reduce cash without reducing the book, so involuntary churn is absent from retention entirely")
+
 # Accessibility conformance, which a school procurement process asks for directly.
 add("accessibility conformance and audit", 15000.0 * years_live * 0.5, 40000.0 * years_live * 0.5,
     "fifteen to forty thousand dollars a year, from roughly halfway through the horizon")

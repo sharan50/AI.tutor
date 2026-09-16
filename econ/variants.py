@@ -121,10 +121,25 @@ def feedback_params(drv, cfg, on=True):
     quality_gamma = rng.uniform(0.0, 0.80, P)
     autom_beta = rng.uniform(0.0, 8.0, P)
 
-    # Does a higher price cost retention? Referenced to the midpoint of the
-    # tutoring-anchored band, so a software-anchored path is not penalised.
+    # Does a higher price cost retention?
+    #
+    # This used a single reference: the median price over ALL paths. Because the
+    # two price regimes are far apart, that reference landed in the gap between
+    # them, so every tutoring-anchored path got a churn penalty and every
+    # software-anchored path got a churn BONUS. The only price-retention
+    # mechanism in the instrument had its sign backwards on half the sample, and
+    # the penalty it applied was a transfer between regimes rather than an
+    # elasticity. See CHANGELOG 2.2.
+    #
+    # The reference is now each regime's OWN modal price, so the elasticity is
+    # within-regime and correctly signed everywhere: above your regime's mode
+    # costs retention, below it saves some.
     price_now = NS["gross_price_usd"](drv, NS["M_UK"], 0)
-    ref = np.median(price_now)
+    tut = drv["anchor_u"] < NS["P_TUTORING_ANCHOR"]
+    reg = {n: (kind, params) for n, kind, params, _ in NS["DRIVERS"]}
+    mode_tut = reg["price_uk_tut_gbp"][1][1] * NS["FX_GBP_USD"]
+    mode_sw = reg["price_uk_sw_gbp"][1][1] * NS["FX_GBP_USD"]
+    ref = np.where(tut, mode_tut, mode_sw)
     churn_price_mult = (np.maximum(price_now, 1e-6) / ref) ** price_elast
 
     # Does expanding faster cost quality, and does that cost retention? Build
@@ -171,7 +186,7 @@ def sampled_fx():
 
 def appstore_params():
     rng = np.random.default_rng(NS["SEED_AUX_APPSTORE"])
-    return dict(share=rng.uniform(0.15, 0.70, P), fee=np.full(P, 0.15))
+    return dict(share=rng.uniform(0.15, 0.70, P), fee=np.full(P, NS["APPSTORE_FEE"]))
 
 
 SCENARIOS = {}
@@ -262,6 +277,20 @@ def s_onshore_half():
 @scenario("por_onshore_all", "all learner-facing engineering forced onshore, the worst reading of docs/05's unconfirmed transfer position")
 def s_onshore_all():
     return DRV, dict(NS["base_config"](), onshore_share=1.0)
+
+
+def residual_params():
+    rng = np.random.default_rng(NS["SEED_AUX_RESIDUAL"])
+    # Both are priors. The item bank is an asset with a life beyond the horizon;
+    # how much of its cost is still worth something at month 60 is unknown, and
+    # so is what a standing book of subscribers is worth to a buyer.
+    return dict(content_retained=rng.uniform(0.15, 0.65, P),
+                book_months=rng.uniform(6.0, 30.0, P))
+
+
+@scenario("por_residual", "the horizon credits a residual: part of the item bank as an asset, and the standing book at a multiple of monthly contribution")
+def s_residual():
+    return DRV, dict(NS["base_config"](), residual=residual_params())
 
 
 @scenario("por_anchor_tutoring", "condition C1 passes: every path anchors on the tutoring rate")
@@ -364,6 +393,8 @@ def test_off_reproduces_base():
         ("creator_zero", dict(NS["base_config"](),
                               creator=dict(fee_per_creator_yr=np.zeros(P), rev_share=np.zeros(P)))),
         ("onshore_zero", dict(NS["base_config"](), onshore_share=0.0)),
+        ("residual_zero", dict(NS["base_config"](),
+                               residual=dict(content_retained=np.zeros(P), book_months=np.zeros(P)))),
     ]:
         out, summary = NS["run"](DRV, cfg)
         o, cum = NS["path_outcomes"](out, summary)
@@ -373,6 +404,13 @@ def test_off_reproduces_base():
         print("  switched-off reproduction, %-14s %s" % (name, "EXACT" if ok else "DIFFERS"))
         if not ok:
             raise AssertionError("variant %s does not reproduce the base run when switched off" % name)
+    # Written down so the count can be read off a file rather than typed into
+    # prose. A hand-typed count is exactly what the reviewers kept catching.
+    with open(os.path.join(OUT, "offtest.csv"), "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["seed", "run_date", "mechanism", "reproduces_base_exactly"])
+        for name, ok in results:
+            w.writerow([SEED, RUN_DATE, name, "yes" if ok else "no"])
     return results
 
 

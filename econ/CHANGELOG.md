@@ -102,8 +102,9 @@ sign for nothing is now visible rather than implicit.
 **Found.** `scipy.stats.gamma.sf` cost 22.4 seconds of a 27.6 second run.
 
 **Fixed.** Swapped for `scipy.special.gammaincc`, which is what it calls
-underneath, and the seasonal overage integral is now computed once per phase per
-month rather than once per market per segment. Verified bit-identical: both
+underneath, and the seasonal overage integral is now computed once per
+(phase, segment) per month rather than once per (market, segment), which is what
+the code comment says and what the code does. Verified bit-identical: both
 published CSVs kept their sha256 across the change.
 
 **Moved.** Nothing. That is the point.
@@ -145,9 +146,11 @@ September intake. That explanation is wrong. `launch_shift` moves the content
 schedule along with the market openings, so a six-month shift pushes the
 month-54 content step past the end of the horizon and the run never pays for it.
 
-**Left, and labelled.** The scenarios are kept because "later is worse" is real,
-and the content-cost delta that produces the non-monotonicity is now published
-beside them so the artefact is visible. No calendar conclusion is drawn from them.
+**Left, and labelled.** The scenarios are kept and the content-cost delta that
+produces the non-monotonicity is published beside them. At the time of this entry
+the write-up still said "later is worse" was real; round 2 showed that even that
+does not survive the median and capital columns, and that the contamination runs
+both ways. See 2.5.
 
 ### 0.11 The gate had never been shown to refuse
 
@@ -295,9 +298,12 @@ median delta flips sign against the mean for several scenarios. The scenario tab
 now carries the mean, the median path and the effect on peak funding side by side,
 with a column saying whether the first two agree in sign.
 
-**1b.8 The break-even section implied the narrow scope produced answers.** Both
-scopes are unbracketed on every row. The section now says so, and the rescue grid,
-which was built and then never written up at all, is now section 10's second half.
+**1b.8 The break-even section implied the narrow scope produced answers.** At the
+time of this entry both scopes were unbracketed on every row, and the section was
+corrected to say so. Round 2 then found that a third target had been added and
+four rows now bracket, which made the correction itself wrong; see 2.1. The
+rescue grid, which was built and then never written up at all, is section 10's
+second half.
 
 **1b.9 The staged rounds and the headline are computed by different rules.** Each
 staged round carries six months of buffer and the whole-horizon figure carries
@@ -337,3 +343,129 @@ States, and the treatment of a dozen curricula as one bucket are all named in
 LIMITS.md and none is fixed. They do not change the ordering, because the ordering
 is set by two market-agnostic drivers, and they do mean no foreign-market level in
 this document should be argued from.
+
+---
+
+## Round 2: the same two reviewers, fresh context again, on the corrected artefacts
+
+The brief that commissioned this work predicted that the third round would find
+the worst defect, because the first two clear the surface and the third reaches
+the structure. That is what happened. Every code claim below was verified against
+the model before being accepted; all of them held.
+
+### 2.1 Section 10's central claim was false, and the truth is a better finding
+
+**Found, by both reviewers independently and by pulling the figures myself.**
+The write-up said ten questions were solved and "every one is unbracketed". There
+are twelve per scope, and **four bracket**, all on the profitability target and
+all on the two drivers section 8 says decide whether the venture exists.
+
+The four thresholds were sitting in `out/breakeven.csv` unmentioned, and they are
+the most actionable numbers the instrument produces. The narrow scope reaches
+half-of-paths profitability at a price that is roughly one hour of GCSE tutoring a
+month, which is inside docs/07's own substitution table rather than outside it.
+
+**Why it survived.** The count was hand-typed, and `verify.py` cannot read a
+word. `figures.py` now counts bracketed rows, questions, targets and distinct
+drivers from the file, and section 10 is rewritten around the four solves.
+
+**Also fixed in the same place.** `bisect()` returned the converged bracket in
+the endpoint columns on a bracketed row and the support endpoints on an
+unbracketed one, so a reader opening the CSV saw two different quantities under
+one pair of headers and would have concluded the metric was flat across the whole
+prior range. Both columns are now always the support endpoints.
+
+### 2.2 The only price-to-retention mechanism had its sign backwards on half the sample
+
+**Found.** `feedback_params()` referenced the price to the median over ALL paths.
+The two price regimes are far apart, so that reference landed in the gap between
+them: every tutoring-anchored path got a churn penalty and every software-anchored
+path got a churn **bonus**. Measured on the published draws, the multiplier
+averaged 1.617 on tutoring paths and 0.621 on software paths, and exactly half the
+sample was being rewarded for its price.
+
+So "the feedback loops cost X" was substantially a transfer between price regimes,
+and it damaged precisely the regime the document's second-ranked decision depends
+on. The comment above the line said it was referenced to the tutoring band so that
+software paths were not penalised; the code did something else.
+
+**Fixed.** Each regime is now referenced to its own modal price, so the elasticity
+is within-regime and correctly signed everywhere. The multiplier now averages a
+penalty in both regimes, only paths priced below their own regime's mode get
+relief, and the correlation with price inside the tutoring regime is 0.85.
+
+### 2.3 The allowance-enforcement scenario enforced the billing cap instead
+
+**Found.** `enforce_allowance` truncated delivery at `OVERAGE_CAP_MULT *
+SESSION_ALLOWANCE`, which is forty sessions, not at the sixteen-session allowance,
+and left the overage revenue in place. It priced cutting a learner off at a level
+almost nobody reaches. The figure was quoted in four places, including as owner
+decision 4, and the framing around it was about the posture toward a struggling
+learner.
+
+**Fixed.** It enforces the allowance and removes the billed overage with it, which
+is what the commercial decision actually is.
+
+### 2.4 Saturation was measured on the standing book, not on cumulative reach
+
+**Found.** The penetration term feeding both the effective-cost curve and the
+budget cap was the instantaneous book over the pool. On a high-churn path the
+company could sell to its whole market several times over while the mechanism
+meant to make acquisition harder never rose above a fifth. `POOL_REACQUISITION_MULTIPLE`,
+added in round 1b, bounded the arithmetic and left the economics untouched: it
+fixed the symptom.
+
+**Fixed.** Pressure now rises with cumulative reach, so the effective-cost curve
+the write-up presents as the reason the anchor understates at scale is driven by
+the quantity it claims.
+
+### 2.5 The onshoring scenario moved the wrong people, and X8 was over-claimed
+
+**Found.** `onshore_share` scaled the whole Bengaluru head count, which is
+platform engineering plus content authoring plus general and administrative. At
+month 12, 63 per cent of what it relocated was content authors and administration,
+who work from published DfE subject content and see no learner. It also left
+Bengaluru support, the people who actually read learner conversations, where they
+were. A transfer restriction would do close to the opposite.
+
+**Fixed.** It now moves platform engineering and support, and neither content
+authoring nor administration.
+
+**And the claim about it was too strong.** The write-up said the restricted-transfer
+question "inverts the sensitivity ordering". A reviewer ran the decomposition
+under full onshoring: it re-ranks, putting a United Kingdom salary driver into the
+top three on capital, and content drivers still hold most of the top seven. The
+write-up now says re-ranks. It is still the largest thing a letter to counsel
+could resolve.
+
+### 2.6 A second omission that changes the ordering, not the levels
+
+**Found, and not admitted anywhere.** The horizon writes the item bank and the
+standing book to zero at month 60. A large share of the content spend falls in the
+last two years and is charged in full against a truncated revenue window, while
+the asset it buys has a life well beyond it.
+
+Every statement of the form "content is the largest line" and "content sets the
+slope" is partly a function of where the window was cut, and the document already
+had the proof and misread it: the launch-delay scenarios move because one content
+step falls past month 60, and the write-up called that a defect in the comparator
+without drawing the general conclusion.
+
+**Added.** A `residual` switch credits part of the item bank and the standing book
+at the horizon, off in the published run, priced as a scenario. Both its
+parameters are priors and neither is a valuation; the point is the size.
+
+### 2.7 Smaller, and there were many
+
+The staging table still listed an India entity and an India pilot the run never
+buys, and omitted the rest-of-English-speaking entity it does. The
+whole-horizon row of `out/funding.csv` wrote a mean into a column headed p80. The
+write-up claimed everything downstream runs through the harness, which is false
+for the three scripts that deliberately read only the CSVs. "Four mechanisms are
+tested" was five, now six and counted from a file. "Nine named and priced" was
+eleven. "M4 is not before M5" is wrong about the roadmap. Two currencies were
+presented as one in X8. An app-store cost was written with an inverted sign. The
+all-in contribution was defined two ways in two documents. Four table headers
+carried units their own rows contradicted. The demand shock's run lengths were
+published and its cost never was; it is now measured, and it is about one per cent.
+

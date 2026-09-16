@@ -33,8 +33,10 @@ revenue. On the United Kingdom alone at @@const_VAT_UK_pct|num0@@ per cent it re
 
 **The other reading, quantified.** If the quoted prices were net and tax were added
 on top, revenue over the horizon would be higher by that whole line,
-@@por_total_tax_collected_mean|usd0@@ dollars, which is @@por_tax_share_of_gross_pct|num1@@ per cent more revenue and would
-reduce the mean peak funding requirement by approximately the same amount.
+@@por_total_tax_collected_mean|usd0@@ dollars. That is @@por_tax_share_of_gross_pct|num1@@ per cent of GROSS, and because it
+would be added to net rather than removed from gross it is @@por_tax_share_of_net_pct|num1@@ per cent MORE
+REVENUE, which are two different percentages of two different denominators. It
+would reduce the peak funding requirement by approximately the same cash amount.
 
 Institution prices are treated the other way round, as net of VAT, because that is
 the convention a business-to-business price is quoted in. The two conventions are
@@ -49,12 +51,19 @@ Billed overage is the expectation of the gamma tail above the allowance, less th
 tail above the billing cap, computed per path from a sampled mean and coefficient
 of variation of sessions per household.
 
-### 3. Allowance and overage: **clean, and measured**
+### 3. Allowance and overage: **clean now; the scenario measured the wrong threshold until round 2**
 
 Not "neither". The allowance is **sold but not enforced**: sessions above it are
 delivered and cost money. Overage **is billed**, up to @@const_OVERAGE_CAP_MULT|num1@@ times the
 allowance. Above that cap, cost runs and revenue does not, so the omission sits on
 one side only and its sign is known.
+
+**The scenario that priced enforcement was measuring the wrong threshold until
+round 2.** It truncated delivery at the billing cap, @@const_OVERAGE_CAP_MULT|num1@@ times the
+allowance, rather than at the allowance itself, so it cut off a level almost no
+household reaches and left the overage revenue in place. It now enforces the
+allowance and removes the overage line with it, which is what the decision
+actually is. See `CHANGELOG.md` 2.3.
 
 @@por_mean_share_over_allowance_pct|num1@@ per cent of active households exceed the allowance being sold to
 them, household-month weighted. Enforcing it instead is worth
@@ -127,18 +136,21 @@ That this matters is visible in the sweep: pinning `board_reuse` from its fifth 
 its ninety-fifth percentile swings terminal cash by @@pinned_board_reuse_swing_abs|usd0@@ dollars,
 and `market_reuse` is ranked @@sobol_peak_funding_requirement_rank_of_market_reuse|int@@ on the capital target.
 
-### 8. A cost with no term at all: **not clean, nine named and priced**
+### 8. A cost with no term at all: **not clean, @@omission_line_count|int@@ named and priced**
 
 Grepped for. `out/omissions.csv` names each absent line and prices it from a
 figure the model already carries: refunds, chargebacks and failed payments;
 insurance; recruitment fees; the night rota; penetration testing and vulnerability
 disclosure; intercompany markup and Indian tax on it; accessibility conformance;
-corporation tax; and translation.
+corporation tax; translation; regulatory enforcement exposure; and examiner
+supply as a quantity rather than a price.
 
-The last two are priced at zero and written down anyway, because a zero recorded
-is not the same as a line left out: corporation tax because no scenario here
-returns a taxable trading profit, translation because the expansion is across
-English-speaking curricula by decision.
+@@omission_zero_line_count|int@@ of them are priced at zero and written down anyway, because a zero recorded
+is not the same as a line left out: corporation tax, because no scenario here
+returns a taxable trading profit; translation, because the expansion is across
+English-speaking curricula by decision; regulatory enforcement exposure, because
+nothing here puts a probability on it; and examiner supply, because the model
+prices examiner time and never asks whether it exists.
 
 **In total the absent lines are @@omission_total_of_every_absent_line_low|usd0@@ to
 @@omission_total_of_every_absent_line_high|usd0@@ dollars, or @@omission_total_of_every_absent_line_share_high_pct|num2@@ per cent of the modelled
@@ -169,27 +181,38 @@ what it moved.
 The plan of record is charged for every market and channel it opens, and the
 schedules that drive content cost are gated the same way.
 
-### 10. Like-for-like comparators: **clean**
+### 10. Like-for-like comparators: **clean now, twice**
 
 Every scenario in `out/variants.csv` shares one drawn driver dictionary and
 differs only in named switches. A scenario that carries a market or a channel is
 charged its entities, its counsel, its content build and its people.
+
+**It took two rounds to get here.** Round 1 found the United Kingdom-only
+comparator hiring sales representatives and paying for entities it never opens.
+Round 2 found the institution channel charged an India content bank that nothing
+in the model ever bills, which was most of what "the cost of Route B" appeared to
+be. Both are fixed and both are in `CHANGELOG.md`.
+
+**One comparator is still not like for like and is labelled where it is used.**
+The United Kingdom-only scenario drops three consumer markets AND the institution
+channel, so it cannot be read as a measure of market scope alone.
 
 One comparison in the write-up is **not** like for like and is labelled as such:
 the institution channel is charged its costs and credited its revenue, but not
 credited the outcome evidence that docs/09 says is the only durable moat. The
 instrument cannot value evidence. That is a limit of the instrument.
 
-### 11. The same random numbers: **clean, and tested**
+### 11. The same random numbers: **clean and tested; the passage reporting it was not**
 
 No draw happens inside the month loop, so scenario branches cannot make the
 streams diverge. Every variant reuses the base driver dictionary, and every new
 parameter is drawn from a separate auxiliary seed.
 
 Tested rather than asserted: `test_off_reproduces_base()` runs the feedback
-machinery, the app-store fee, the exchange-rate override and the creator licence
-each switched off, and requires the rebuilt monthly CSV text to equal the base
-character for character. All four pass on every run of `variants.py`.
+machinery, the app-store fee, the exchange-rate override, the creator licence,
+the onshoring switch and the terminal-value residual each switched off, and
+requires the rebuilt monthly CSV text to equal the base character for character.
+All @@offtest_mechanism_count|int@@ pass on every run of `variants.py`.
 
 Matching is also measured, not just argued. `out/variants.csv` carries for every
 scenario the rank correlation of per-path terminal cash against the base and the
@@ -227,7 +250,7 @@ anchor value that produces the outcome at the effective cost. `pinned_sweeps.csv
 carries `final_year_effective_cac_mean` at every pin, so the effective cost at each
 pinned anchor is on disk.
 
-### 14. An acquisition budget with no cap: **clean now**
+### 14. An acquisition budget with no cap: **clean now, and the cap is looser than it sounds**
 
 Capped at @@const_CAC_LTV_CAP|num2@@ times the company's own lifetime value estimate, by inverting the
 saturation curve for the spend at which effective cost reaches the cap.
@@ -235,6 +258,12 @@ saturation curve for the spend at which effective cost reaches the cap.
 It was not clean in another way: the launch acquisition subsidy ran unconditionally
 for all sixty months. It now holds for @@const_ACQ_RAMP_HOLD_MONTHS|int@@ months after go-to-market and tapers
 to nothing over the next @@const_ACQ_RAMP_TAPER_MONTHS|int@@. See `CHANGELOG.md` 0.4.
+
+**The cap is struck on the GROSS lifetime value**, which subtracts nothing but
+verification. The all-in contribution is negative on the median path, so the rule
+permits spending @@const_CAC_LTV_CAP|num2@@ times a number that excludes engineering, content,
+overhead and compliance. It is the only restraint on acquisition spend anywhere in
+the model, and it is a loose one.
 
 **Does lifetime value exceed cost per acquisition in the final year?** On the mean,
 pooled, yes: @@final_year_ltv_gross_pooled|num2@@ against @@final_year_effective_cac_pooled|num2@@, a ratio of
@@ -273,8 +302,8 @@ ratio and the median path's.
 @@final_year_contrib_per_hh_month_gross_median|num2@@ on the median path, is a **gross**
 contribution: net revenue less inference, support, payment, hosting and store fees.
 
-The all-in figure, net of engineering, content, overhead, compliance and payment
-fees, is @@final_year_contrib_per_hh_month_allin_pooled|num2@@ dollars per household month pooled and
+The all-in figure, net of engineering, content, overhead and compliance (payment
+fees are already out of the gross row above, and are not deducted twice), is @@final_year_contrib_per_hh_month_allin_pooled|num2@@ dollars per household month pooled and
 @@final_year_contrib_per_hh_month_allin_median|num2@@ on the median path. Pooled, the all-in figure is
 @@gross_minus_allin_contrib_per_hh_month_pooled|num2@@ dollars a household month lower than the gross one.
 
@@ -288,17 +317,26 @@ other and neither can stand in for the gross figure.
 
 ## Statistics
 
-### 17. Series on the same basis: **clean, and enforced in code**
+### 17. Series on the same basis: **clean now, and the enforcement was vacuous until round 2**
 
 Column suffixes are disjoint by construction: `_mean` is a mean over all paths,
 `_p10`, `_p50`, `_p90` are percentiles of the per-path distribution at that month,
 and `_bandlow`, `_bandcentral`, `_bandhigh` are within-band averages of whole
-paths. `check_suffix_discipline()` in `model.py` raises on a header in which a
-mean suffix and a band suffix could collide, and it runs on every write.
+paths.
+
+**The check that enforces this could not fire until round 2.** It tested whether
+a name ended in both a mean suffix and a band suffix, which no string can do, and
+it ran on one of the two writers. It now checks that every column in the monthly
+file carries exactly one basis and no stray basis marker, that no column in the
+per-path file carries an aggregate basis at all, and it runs on both writers.
+`suffix_discipline_selftest()` shows it refusing four headers it must refuse, and
+the output is in `out/suffix_selftest.txt`. The first real thing it caught was a
+driver called `sessions_mean` sitting in a file that has no means in it; it is
+now `sessions_per_hh_month`.
 
 No figure in the write-up divides a `_mean` by a `_band`.
 
-### 18. Sustained bad runs: **clean**
+### 18. Sustained bad runs: **clean now, and worth less than it looks**
 
 The demand shock is AR(1), not independent. Persistence is sampled between
 @@driver_shock_rho_low|num2@@ and @@driver_shock_rho_high|num2@@, median @@shock_rho_median|num2@@. The longest run of consecutive months with the
@@ -306,10 +344,25 @@ demand multiplier below @@const_SHOCK_BAD_THRESHOLD|num2@@ averages @@shock_long
 @@shock_longest_bad_run_p90|num1@@ at the ninetieth percentile; @@shock_share_paths_bad_run_6plus|pct1@@ per cent of paths contain a run
 of six or more and @@shock_share_paths_bad_run_12plus|pct1@@ per cent a run of twelve or more.
 
+**It did nothing at all until round 2.** Realised acquisition spend was recomputed
+from realised acquisitions, so a shock that halved customers halved the money
+spent and cost nothing. Spend is now committed in advance. See `CHANGELOG.md` 1b.2.
+
+**And the run lengths above are a property of the demand series, not of the
+answer.** What the whole persistent-shock apparatus is worth, measured by pinning
+the innovation standard deviation to zero and re-running on the same random
+numbers: @@shock_cost_terminal_cash_mean|usd0@@ dollars of terminal cash on the mean,
+@@shock_cost_terminal_cash_median|usd0@@ on the median path, and @@shock_cost_peak_funding_p80|usd0@@ on the eightieth-percentile
+capital requirement. On the @@shock_share_paths_bad_run_12plus|pct1@@ per cent of paths that do take a run of twelve
+or more bad months it bites harder, @@shock_cost_on_worst_affected_mean|usd0@@ on the mean of that group, but
+even there the median damage is @@shock_cost_on_worst_affected_median|usd0@@. **A sustained demand drought is in
+this model and it is not what ends the company.**
+
 **What is still missing.** The shock acts on acquisition only. There is no
 correlated shock to retention, to vendor prices, or to the examiner labour market,
 and no regime in which several go wrong together for the same reason. A recession
-would do all of those at once and this model cannot represent it.
+would do all of those at once and this model cannot represent it, and that, not
+the acquisition shock, is the thing worth worrying about.
 
 ### 19. Conclusions true only of an averaged line: **clean, each restated per path**
 
@@ -371,9 +424,10 @@ three age-assurance quotes, a landing page and thirty school conversations. M2
 produces cost per session from a frozen battery, which gives cost per session but
 not sessions per household. M4 instruments return rate and sessions per learner per
 fourteen days, and that secondary metric is the first instrument in the roadmap
-that touches the quantity at all. M4 is not before M5, and it requires a signed
-creator and a built product, so the quantity is not available cheaply or early
-either way.
+that touches the quantity at all. M4 comes before M5 in docs/11, and it already requires a signed creator and a
+built product, so the quantity is not available cheaply or early on either
+milestone. An earlier draft of this item said M4 was not before M5, which is
+simply wrong about the roadmap.
 
 **Volume per customer is the factor nothing measures**, exactly as the brief
 predicts. `sessions_per_hh_month` is sampled between @@driver_sessions_per_hh_month_low|num1@@ and @@driver_sessions_per_hh_month_high|num0@@ a month, a fivefold
@@ -482,9 +536,12 @@ in the write-up, rests on a mechanism with no demand-side cost of price anywhere
 in it.
 
 **What it would move.** The anchor spread of @@anchor_tutoring_minus_software_terminal_cash_mean|usd0@@ dollars is an
-upper bound. docs/07 states the competing anchor explicitly: the free tools are
-the alternative, and a threefold price difference against a free substitute
-cannot plausibly leave conversion untouched. Splitting the feedback bundle so the
+upper bound. docs/12 names the competing anchor explicitly, that the free tools are already on
+the parent's phone, and docs/07 states the substitution arithmetic against the
+verified 25 to 45 pound hourly tutoring rate. The two price regimes here differ
+by roughly the ratio of their modal prices, @@driver_price_uk_tut_gbp_mode|num2@@ against @@driver_price_uk_sw_gbp_mode|num2@@ pounds,
+and a difference of that size against a free substitute cannot plausibly leave
+conversion untouched. Splitting the feedback bundle so the
 price loop can be run alone is a half-day of work and has not been done.
 
 ### The largest paths are not plausible and nothing in the instrument says so
@@ -582,3 +639,72 @@ None of this changes the ordering of the levers, because the ordering is set by
 acquisition cost and content cost and both are market-agnostic in this model. It
 does mean **every foreign-market level in this document is weaker than the United
 Kingdom ones**, and the expansion case should not be argued from them.
+
+---
+
+## What a second adversarial round found, after the first had cleared the surface
+
+### The horizon writes a five-year asset to zero, and that is what makes content look expensive
+
+`terminal_cash` is the cumulative cash at month @@horizon_months|int@@ and nothing else. At that
+month the instrument assigns **zero** value to the item bank it has just spent
+@@por_total_content_cost_mean|usd0@@ dollars building, and zero to the standing book of
+@@por_terminal_active_hh_mean|usd0@@ households still paying.
+
+That is not a neutral default. A large share of the content spend falls in the
+last two years and is charged in full against a truncated revenue window:
+@@por_content_share_last_24m_pct|num1@@ per cent of content spend falls in months 36 to @@horizon_months|int@@, and
+@@por_content_share_last_12m_pct|num1@@ per cent in the final twelve. Terminal-month net cash is
+@@por_terminal_month_net_cash_mean|usd0@@ and terminal-month net revenue @@por_terminal_month_net_rev_mean|usd0@@, an annual
+run rate of @@por_terminal_annual_run_rate|usd0@@.
+
+**Every statement in this document of the form "content is the largest line",
+"content sets the slope" and "@@por_share_demand_independent_pct|num1@@ per cent of the cost base is committed" is
+partly a function of where the window was cut.** The `por_residual` scenario
+credits a residual and is worth @@delta_por_residual_terminal_cash_mean|usd0@@ dollars of terminal cash and
+@@delta_por_residual_peak_funding_p80|usd0@@ on the capital requirement. Both of its parameters are priors
+and neither is defensible as a valuation; the point is the size, not the number.
+
+Nothing sweeps the horizon itself, no scenario stops building content when the
+remaining window is shorter than the payback, and the launch-delay scenarios in
+section 9 of the write-up are the same defect showing through in another place.
+**This is the second item, alongside the restricted-transfer question, that
+changes the ordering rather than the levels, and it is cheaper to test than that
+one.**
+
+### Age assurance is charged once per acquired household, never per check
+
+`verif_total += acq * v`. Every check on somebody who does not convert is free.
+A reusable identity check is billed per attempt, so at any realistic ratio of
+checks to conversions the line is a multiple of what is modelled, priced in
+`out/omissions.csv` at @@omission_age_assurance_on_non_converting_checks_low|usd0@@ to
+@@omission_age_assurance_on_non_converting_checks_high|usd0@@ dollars.
+
+The conclusion elsewhere in this file that verification does not dominate the cost
+structure rests on a @@por_share_verif_cost_pct|num1@@ per cent share that assumes one check per acquired
+household. **Nothing states that ratio and nothing measures it.** Condition C2 in
+docs/09 is a threshold against first-month contribution and is unaffected; the
+share-of-cost claim is not.
+
+### There is no United Kingdom consumer subscription regime in the model
+
+A monthly consumer subscription sold to United Kingdom households inside this
+horizon carries the Digital Markets, Competition and Consumers Act 2024 duties,
+mandatory renewal reminders, a cooling-off right on renewal and an easy-exit
+obligation, and the fourteen-day cancellation right under the Consumer Contracts
+Regulations. All of them are retention and revenue mechanics. None has a term
+here, and unlike the other absent lines they cannot be priced from anything the
+model carries, so `out/omissions.csv` records them at zero and says why.
+
+Related and in the same class: **there is no trial-to-paid step and no involuntary
+churn.** An acquisition is a paying household from the month after it is acquired.
+Failed cards appear only as a cost line, never as a reason a household leaves.
+Every operator of a consumer subscription would put involuntary churn at a
+material fraction of gross churn.
+
+### The app-store fee is the small-business rate on every path
+
+`appstore_params()` sets @@const_APPSTORE_FEE_PCT|num0@@ per cent on every path, including paths billing
+tens of millions a year, where the small-business rate does not apply and the
+headline rate is double. The app-store decision is priced at the lower rate
+throughout.

@@ -103,3 +103,7 @@ token,reason
 109.95,"the same round 1a value stated as an amount consumed"
 0.772,"a round 1a Sobol sum on the rank transform, superseded by the round 1b model fixes"
 0.742,"a round 1a Sobol sum on peak funding, superseded by the round 1b model fixes"
+1.617,"a superseded price-churn multiplier mean on tutoring paths, from change log 2.2, before the reference was fixed"
+0.621,"a superseded price-churn multiplier mean on software paths, from change log 2.2"
+0.85,"the correlation of the corrected price-churn multiplier with price inside the tutoring regime, quoted to two places"
+63,"a share of the Bengaluru head count that onshoring wrongly relocated, from change log 2.5"

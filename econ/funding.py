@@ -77,7 +77,7 @@ def main():
                      "%.6f" % float(np.percentile(peak, 50)),
                      "%.6f" % float(np.percentile(peak, SIZING_PERCENTILE)),
                      "%.6f" % float(np.percentile(peak, 95)),
-                     "%.6f" % float(np.maximum(-net, 0.0).mean(axis=1).mean()),
+                     "%.6f" % float(np.percentile(np.maximum(-net, 0.0).mean(axis=1), SIZING_PERCENTILE)),
                      "%.6f" % float(np.percentile(peak, SIZING_PERCENTILE))])
         print("%-20s peak funding p50 %14s  p80 %14s  p95 %14s"
               % (label, format(np.percentile(peak, 50), ",.0f"),
@@ -106,11 +106,11 @@ def main():
         ("A-level content live", 13, 13 - W),
         ("information security certification for the institution channel", 10, 10),
         ("institution channel opens, first sales rep", 12, 12),
-        ("US and India entity set-up and market counsel", 13, 13),
+        ("United States entity set-up and market counsel", 13, 13),
         ("US consumer market opens", 15, 15 - W),
-        ("India institution pilot opens", 15, 15 - W),
         ("third UK board content live", 16, 16 - W),
         ("all four UK boards live", 18, 18 - W),
+        ("rest-of-English-speaking entity set-up and market counsel", 22, 22),
         ("rest-of-English-speaking market opens", 24, 24 - W),
         ("second sales rep cohort", 24, 24),
         ("seven UK subjects live", 30, 30 - W),

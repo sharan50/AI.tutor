@@ -212,11 +212,44 @@ add("final_year_ltv_over_cac_pooled", ltv_pooled / cac_pooled, "ratio",
     "pooled gross lifetime value divided by pooled final-year effective cost per acquisition", "14")
 add("final_year_cac_pooled_over_anchor_median", cac_pooled / float(np.median(DRV["cac_anchor_usd"])), "ratio",
     "pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled", "12 and 13")
-add("cac_anchor_median", float(np.median(DRV["cac_anchor_usd"])), "USD per acquisition",
-    "median of the cac_anchor_usd driver column, which is the low-volume anchor and not a cost at scale", "12")
+
 ltv_path = fy_contrib * blended_months
 add("share_paths_final_year_ltv_below_cac", float((ltv_path[REAL] < fy_cac[REAL]).mean()), "share",
     "share of paths with a real final year on which gross lifetime value is below the final-year effective cost per acquisition", "14 and 19")
+
+# ---------------------------------------------------------------------------
+# What the demand shock is actually worth. Checklist item 18 published the run
+# lengths, which are a property of the demand series, and never the cost, which
+# is a property of the answer. One paired run settles it.
+# ---------------------------------------------------------------------------
+def _pin_run(**pins):
+    drv = dict(DRV)
+    for k, v in pins.items():
+        drv[k] = np.full(P, v)
+    o, sm = NS["run"](drv, NS["base_config"]())
+    oc, cum = NS["path_outcomes"](o, sm)
+    return oc
+
+
+_noshock = _pin_run(shock_sd=0.0)
+add("shock_cost_terminal_cash_mean",
+    float(OUTC["terminal_cash"].mean() - _noshock["terminal_cash"].mean()), "USD",
+    "terminal cash mean with the demand shock as sampled, less the same with shock_sd pinned to zero: what the whole persistent-shock apparatus is worth", "18")
+add("shock_cost_terminal_cash_median",
+    float(np.median(OUTC["terminal_cash"]) - np.median(_noshock["terminal_cash"])), "USD",
+    "the same on the median path", "18")
+add("shock_cost_peak_funding_p80",
+    float(np.percentile(OUTC["peak_funding_requirement"], 80)
+          - np.percentile(_noshock["peak_funding_requirement"], 80)), "USD",
+    "the same on the eightieth-percentile peak funding requirement", "18")
+_worst = longest >= 12
+if _worst.any():
+    add("shock_cost_on_worst_affected_mean",
+        float(OUTC["terminal_cash"][_worst].mean() - _noshock["terminal_cash"][_worst].mean()), "USD",
+        "the same terminal-cash difference, over only the paths with a run of twelve or more bad months", "18")
+    add("shock_cost_on_worst_affected_median",
+        float(np.median(OUTC["terminal_cash"][_worst]) - np.median(_noshock["terminal_cash"][_worst])), "USD",
+        "the median of that difference over the same worst-affected paths", "18")
 
 # ---------------------------------------------------------------------------
 # The night rota that is not in the cost base. Priced rather than waved at.
