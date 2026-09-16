@@ -403,7 +403,9 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
                   "understatement_ratio", "band_central_placement_terminal",
                   "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
                   "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta",
-                  "paired_mc_se", "pathwise_p50_delta", "pathwise_p50_delta_se"):
+                  "paired_mc_se", "pathwise_p50_delta", "pathwise_p50_delta_se",
+                  "final_year_allin_contrib_pooled", "final_year_allin_contrib_median",
+                  "final_year_gross_contrib_pooled"):
             if k in r:
                 add("scenario_%s_%s" % (name, k), float(r[k]), "USD or share", "variants.csv",
                     "column %s for scenario %s" % (k, name))

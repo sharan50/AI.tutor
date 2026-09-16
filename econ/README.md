@@ -45,5 +45,15 @@ that refused its own reintroduced defect while being arithmetically incapable of
 catching two others the same name covered. See the round 6 section of
 `LIMITS.md`.
 
+    python3 verify.py     six passes: currency tags, structural invariants,
+                          published documents against their sources, generator
+                          staleness, independent re-derivation, prose scrape
+
+`render.py` refuses to write a published `.md` when a token is missing, and
+records what it did write in `out/render_manifest.csv`. Pass 0c reads that and
+refuses a set in which a document has been edited since it was rendered, or was
+never rendered at all. Round 6 added it after the verifier reported no failures
+over two documents that `render.py` had declined to rebuild.
+
 Read `WRITEUP.md` first, then `LIMITS.md`, then `OPEN_ITEMS.md`. `CHANGELOG.md`
 records what each review round found.

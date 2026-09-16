@@ -193,8 +193,16 @@ def pass_a(figs):
 # ---------------------------------------------------------------------------
 # The comma-grouped alternative must REQUIRE a comma group, or the regex matches
 # the first three digits of an ungrouped number and reports "202" for "20260916".
+# The trailing guard used to be (?![\d,]), which rejected a perfectly good
+# decimal whenever prose put a comma after it: in "-73.54, both read off" the
+# match failed on the comma, backtracked, and reported "-73". That is worse than
+# a false alarm. It means the scraper was checking a TRUNCATED PREFIX of the
+# printed number, so "-73.54" would have been accepted against a figure of -73
+# and a wrong decimal could pass. The guard now blocks a following digit, and a
+# following comma only when a digit follows it, which is what distinguishes a
+# grouped number from a sentence. See CHANGELOG 6.18.
 NUM_RE = re.compile(
-    r"(?<![\w.])(-?\d{1,3}(?:,\d{3})+(?:\.\d+)?|-?\d+(?:\.\d+)?)(?![\d,])\s*(m\b|bn\b|%|)", re.I)
+    r"(?<![\w.])(-?\d{1,3}(?:,\d{3})+(?:\.\d+)?|-?\d+(?:\.\d+)?)(?!\d)(?!,\d)\s*(m\b|bn\b|%|)", re.I)
 
 
 def printed_tolerance(text):
@@ -304,6 +312,59 @@ def pass_format_units():
     return fails
 
 
+def _sha(path):
+    import hashlib
+    return hashlib.sha256(open(path, "rb").read()).hexdigest()
+
+
+def pass_render_freshness():
+    """
+    Every published .md must be the render of its own .src.md, against the
+    figures.csv on disk.
+
+    render.py refuses to write when a token is missing, which is right, and
+    until round 6 nothing downstream could see that it had refused. A chained
+    shell command swallowed its exit code; this verifier reported no failures;
+    and WRITEUP.md and LIMITS.md sat on disk holding the PREVIOUS render, with
+    hand-typed numbers in them that an exemption in verify_allow.csv was
+    covering. Every pass here was green over a document that had not been
+    rebuilt from its source.
+
+    This reads the manifest render.py writes and refuses a set in which any
+    source or rendered file has changed since, any .src.md on disk has no row,
+    or the figures file the render was made against is not the current one.
+    See CHANGELOG 6.17.
+    """
+    path = os.path.join(OUT, "render_manifest.csv")
+    if not os.path.exists(path):
+        return ["render_manifest.csv is missing: run render.py"]
+    rows = read_csv(path)
+    fails = []
+    have = {r["source"] for r in rows}
+    for f in sorted(os.listdir(HERE)):
+        if f.endswith(".src.md") and f not in have:
+            fails.append("%s has no row in the manifest: render.py did not write it, "
+                         "which it refuses to do when a token is missing" % f)
+    cur_figs = _sha(os.path.join(OUT, "figures.csv"))
+    for r in rows:
+        src = os.path.join(HERE, r["source"])
+        dst = os.path.join(HERE, r["rendered"])
+        if not os.path.exists(src):
+            fails.append("%s is in the manifest but not on disk" % r["source"])
+            continue
+        if not os.path.exists(dst):
+            fails.append("%s is in the manifest but not on disk" % r["rendered"])
+            continue
+        if _sha(src) != r["source_sha256"]:
+            fails.append("%s has changed since it was last rendered" % r["source"])
+        if _sha(dst) != r["rendered_sha256"]:
+            fails.append("%s has been edited since it was rendered: the published "
+                         "document is not the render of its source" % r["rendered"])
+        if r["figures_sha256"] != cur_figs:
+            fails.append("%s was rendered against a different figures.csv" % r["rendered"])
+    return fails
+
+
 def pass_staleness():
     import hashlib
     h = hashlib.sha256()
@@ -344,6 +405,12 @@ def main():
         inv_fails = ["invariants.csv is missing: run invariants.py"]
         print("\nPASS 0b, structural invariants: not run")
 
+    render_fails = pass_render_freshness()
+    print("\nPASS 0c, published documents match their sources: %s"
+          % ("clean" if not render_fails else "%d problems" % len(render_fails)))
+    for f in render_fails:
+        print("  FAIL " + f)
+
     n_prov, stale = pass_staleness()
     print("\nPASS 0, generator staleness: %d scripts recorded" % n_prov)
     for f in stale:
@@ -362,7 +429,8 @@ def main():
         print("  UNDERIVABLE %s:%d  %-14s  %s" % (doc, lineno, token, ctx))
     print("  %d numbers could not be re-derived" % len(unmatched))
 
-    total = len(fails) + len(unmatched) + len(stale) + len(unit_fails) + len(inv_fails)
+    total = (len(fails) + len(unmatched) + len(stale) + len(unit_fails)
+             + len(inv_fails) + len(render_fails))
     print("\nTOTAL FAILURES: %d" % total)
     return 1 if total else 0
 

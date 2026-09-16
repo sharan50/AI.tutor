@@ -1697,11 +1697,12 @@ acts on whatever the summer lapse left.
 ### 6.16 Four numbers this round typed in by hand, caught by the verifier
 
 The round 6 write-up of the all-in contamination quoted what the figure becomes
-with the institution channel removed — about 18.05 pooled and about -84.37 on the
-median path — and typed both in from a measurement taken before the regeneration.
-`verify.py` Pass B refused them, correctly: they are present-tense claims about
-the current model that trace to nothing on disk, and the regeneration had moved
-them.
+with the institution channel removed, pooled and on the median path, and typed
+both in from a measurement taken before the regeneration. `verify.py` Pass B
+refused them, correctly: they were present-tense claims about the current model
+that traced to nothing on disk, and the regeneration had moved both. The values
+are not repeated here, because repeating them would need an exemption, and an
+exemption for exactly those numbers is what hid the next defect.
 
 `variants.py` now publishes the final-year contribution per household month for
 every scenario, all-in and gross, pooled and median, so the size of the
@@ -1712,3 +1713,55 @@ This is the third time in six rounds that a hand-typed number has been the
 defect, and the second time in this round alone. The verifier is now the only
 thing catching them, which is an argument for it and not for the discipline that
 keeps producing them.
+
+### 6.17 The verifier reported a clean document that had not been rebuilt
+
+`render.py` refuses to write a published `.md` when a token is missing from
+`figures.csv`, and returns without touching the file. That is the right
+behaviour. Nothing downstream could see that it had done it.
+
+So when 6.16's new tokens were added before `figures.py` knew how to emit the
+columns behind them, `render.py` refused both `WRITEUP.md` and `LIMITS.md`, a
+chained shell command swallowed its exit code, and `verify.py` reported
+**TOTAL FAILURES: 0** over two published documents that were still the previous
+render — carrying the hand-typed numbers 6.16 had just been written about, under
+an exemption in `verify_allow.csv` that covered exactly those numbers.
+
+Every pass was green. The gate that should have caught it was the one that had
+just been told to ignore it.
+
+Two things are fixed. `render.py` writes `out/render_manifest.csv` recording each
+source, its hash, the file it rendered to and that file's hash, and the hash of
+the `figures.csv` it resolved against. `verify.py` grows **Pass 0c**, which
+refuses a set in which any published document has changed since it was rendered,
+any source has changed since, any `.src.md` on disk has no row at all — which is
+exactly what a refusal leaves behind — or any document was rendered against a
+different figures file. And the two exemptions that masked it are gone.
+
+Pass 0c was proved to bite the way the harness gate is, before being relied on:
+a line was appended to the published `WRITEUP.md` by hand, the pass refused it
+with "the published document is not the render of its source", the file was
+restored and the pass went clean again.
+
+The general shape is worth naming, because it is the third instance in this
+directory. A check that is told what to ignore will ignore it. The staleness
+check, the invariant named for a property it did not have, and now an exemption
+list: in each case the artefact that was supposed to provide assurance was the
+artefact that provided the blind spot.
+
+### 6.18 The prose scraper was checking a truncated prefix of the number
+
+`NUM_RE` ended with `(?![\d,])`, meant to stop the scraper matching the first
+three digits of an ungrouped number. It also rejected any decimal that prose
+followed with a comma: in "-73.54, both read off" the match failed on the comma,
+backtracked, and reported **-73**.
+
+That is not merely a false alarm. It means the scraper was comparing a truncated
+prefix against the figures file, so a document could print -73.54 where the file
+said -73 and Pass B would have accepted it. The guard now blocks a following
+digit, and a following comma only when a digit follows the comma, which is what
+separates a grouped number from a sentence. Checked against grouped numbers,
+the seed, ordinary decimals and negative millions before being applied.
+
+Found because the fix in 6.16 put a rendered decimal in front of a comma for the
+first time. It had been wrong for six rounds.

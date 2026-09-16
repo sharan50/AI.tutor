@@ -1367,9 +1367,11 @@ against a channel that is about one per cent of net revenue. Round 5 fixed
 exactly this contamination on the GROSS row and left it on the all-in row, which
 is the row the write-up calls the one that answers whether a household pays for
 the business that serves it. Removing the institution channel entirely moves the
-pooled figure from 17 to
-about 18.05 dollars, roughly 17 per cent, and the median path from
--87 to about -84.37. The
+pooled figure from 16.53 to
+18.93 and the median
+path from -87.97 to
+-73.54, both read off
+the `por_no_schools` scenario rather than typed in. The
 figures quoted in section 4 and in item 19 inherit it. It is left rather than
 fixed because there is a real question about which basis is wanted, and the
 answer is the owner's: the honest position is that the row as published is

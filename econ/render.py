@@ -27,6 +27,7 @@ Formats:
 """
 
 import csv
+import hashlib
 import os
 import re
 import sys
@@ -100,12 +101,42 @@ def render(path, figs):
     return dest, 0
 
 
+def sha(path):
+    return hashlib.sha256(open(path, "rb").read()).hexdigest()
+
+
 if __name__ == "__main__":
     figs = load()
     print("figures available: %d" % len(figs))
     bad = 0
+    rendered = []
     for f in sorted(os.listdir(HERE)):
         if f.endswith(".src.md"):
-            _dest, n = render(os.path.join(HERE, f), figs)
+            dest, n = render(os.path.join(HERE, f), figs)
             bad += n
+            if dest:
+                rendered.append((f, sha(os.path.join(HERE, f)),
+                                 os.path.basename(dest), sha(dest)))
+    # A manifest of what was rendered and from what.
+    #
+    # Round 6: render() REFUSES to write when a token is missing, and returns
+    # without touching the published .md. That is the right behaviour, but
+    # nothing downstream could see it. A chained shell command swallowed the
+    # exit code, verify.py reported TOTAL FAILURES: 0, and WRITEUP.md and
+    # LIMITS.md sat on disk holding the previous render -- stale against their
+    # own sources, with hand-typed numbers in them that an exemption in
+    # verify_allow.csv was covering. The verifier said the document was clean
+    # while the document had not been rebuilt.
+    #
+    # So the fact is recorded rather than left to an exit code: verify.py reads
+    # this file and refuses a set in which any .md does not match the hash it
+    # was written with, or in which a .src.md present on disk has no row at all.
+    # See CHANGELOG 6.17.
+    with open(os.path.join(OUT, "render_manifest.csv"), "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["source", "source_sha256", "rendered", "rendered_sha256",
+                    "figures_sha256"])
+        fsha = sha(os.path.join(OUT, "figures.csv"))
+        for row in rendered:
+            w.writerow(list(row) + [fsha])
     sys.exit(1 if bad else 0)
