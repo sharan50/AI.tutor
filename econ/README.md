@@ -17,14 +17,16 @@ published code rather than a restatement of it: `params.py`, `variants.py`,
 `verify.py` read only the CSVs on disk, because a verifier that imported the
 thing it verifies is not one.
 
-`harness.load()` also records which `model.py` each script ran against, in
-`out/provenance.csv`. `verify.py` refuses a set of outputs whose recorded hashes
+`harness.load()` also records which `model.py` **and `harness.py`** each script
+ran against, hashed together, in `out/provenance.csv`. The harness is in the
+hash because it splits, executes and gates the model, so a change to the
+splitter or to the gate would otherwise leave no trace in any output. `verify.py` refuses a set of outputs whose recorded hashes
 disagree. That is a staleness check and not a reproduction check: the byte-exact
 gate covers `por_monthly.csv` and `por_paths.csv` only.
 
-It hashes the whole file, so **editing a comment in `model.py` invalidates every
-derived output and the whole pipeline has to be re-run**, even though the
-published CSVs are unchanged. That is deliberate. A check that tried to hash only
+It hashes both files whole, so **editing a comment in `model.py` or in
+`harness.py` invalidates every derived output and the whole pipeline has to be
+re-run**, even though the published CSVs are unchanged. That is deliberate. A check that tried to hash only
 the code would have to decide what counts as code, and a comment that
 misdescribes the line below it is exactly the kind of defect these reviews keep
 finding, so a comment is not free here either. Budget about forty minutes for a

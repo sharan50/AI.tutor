@@ -53,10 +53,12 @@ METRICS = {
 
 
 # A break-even is only a useful question on a scope that can be rescued. On the
-# plan of record it cannot: no value of any single driver, anywhere in its prior
-# range, reaches any of the targets, because roughly two thirds of the cost base
-# is committed before demand can speak to it. Both scopes are therefore solved,
-# and the plan of record's answer is reported as the finding it is.
+# plan of record no value of any single driver, anywhere in its prior range,
+# reaches either CASH target — not because the money is committed early, but
+# because nothing in the model ever stops building. Four rows across the two
+# scopes do bracket, all on the profitability target, and four more are
+# unbracketed on the SATISFYING side. Both scopes are solved and every row is
+# reported as what it is.
 SCOPES = {
     "plan_of_record": BASE_CFG,
     "gtm_minimum_uk_one_board": dict(NS["base_config"](), scope="ukonly", schools=False,
@@ -175,6 +177,34 @@ QUESTIONS = [
 ]
 
 
+def side_of_target(metric_name, ends, target):
+    """
+    Which side of the target an UNBRACKETED row sits on.
+
+    "Not bracketed" only says the metric does not cross the target inside the
+    prior range. It says nothing about whether the plan meets the target or
+    misses it, and the write-up read every unbracketed row as a failure. Four of
+    the twenty-four are unbracketed on the SATISFYING side: on the go-to-market
+    minimum the ten-million-dollar capital ceiling is met everywhere in the
+    prior range of both drivers it was solved against, which is the most
+    actionable positive result in this file and was being reported as a failure.
+    See CHANGELOG 5.3.
+
+    The direction of "good" differs by metric: more is better for a cash median
+    and for a share of paths, less is better for a capital requirement.
+    """
+    lower_is_better = (metric_name == "peak_funding_p80")
+    worst = max(ends) if lower_is_better else min(ends)
+    best = min(ends) if lower_is_better else max(ends)
+    if lower_is_better:
+        if worst <= target:
+            return "met across the whole prior range"
+        return "missed across the whole prior range"
+    if worst >= target:
+        return "met across the whole prior range"
+    return "missed across the whole prior range"
+
+
 def main():
     rows = []
     for scope in SCOPES:
@@ -190,7 +220,8 @@ def main():
                          "anchor_tutoring" if anchor_tut else "published",
                          "%.6f" % lo, "%.6f" % hi,
                          "%.6f" % ends[0], "%.6f" % ends[1],
-                         "bracketed" if bracketed else "not bracketed by the prior range",
+                         "bracketed" if bracketed
+                         else "not bracketed: " + side_of_target(mname, ends, target),
                          ("%.6f" % value) if value is not None else "",
                          "%.6f" % base_val,
                          ("%.6f" % at["terminal_cash_median"]) if at else "",

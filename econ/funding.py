@@ -114,6 +114,19 @@ def main():
         ("rest-of-English-speaking market opens", 24, 24 - W),
         ("second sales rep cohort", 24, 24),
         ("seven UK subjects live", 30, 30 - W),
+        # The list used to stop at month 30 of a sixty-month horizon, so the
+        # staging test ran on the first half of the plan and the count it
+        # reasons from was 10 of 14 rather than 10 of 20. Every remaining
+        # content step in UNIT_SCHEDULES is below. One of them is a second
+        # violation of the file's own test: the United States seven-subject step
+        # lands in the Series B window and starts its build inside the Series A.
+        # See CHANGELOG 5.6.
+        ("US second board and A-level content live", 24, 24 - W),
+        ("rest-of-English-speaking second board and A-level content live", 34, 34 - W),
+        ("US seven subjects live", 40, 40 - W),
+        ("nine UK subjects live", 42, 42 - W),
+        ("rest-of-English-speaking seven subjects, third board", 48, 48 - W),
+        ("eleven UK subjects live", 54, 54 - W),
     ]
     crows = []
     for note, month, starts in commitments:

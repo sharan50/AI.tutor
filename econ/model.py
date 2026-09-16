@@ -711,8 +711,11 @@ def ltv_estimate(drv, contrib_pm, m, t):
     It must agree with the survival the month loop actually applies, because it
     is the only restraint on acquisition spend anywhere in the model and the cap
     it sets scales as roughly the square of it. It did not. Two things were
-    missing and between them they made the estimate 2.6 times the retention the
-    same model delivers:
+    missing and between them they made the estimate about two and a half times the
+    retention the same model delivers. Round five found a third, and all three
+    are listed here because the function is the only restraint on acquisition
+    spend anywhere in the model and the cap it sets scales as roughly its
+    square:
 
       1. First-month attrition. An acquisition enters as `add * keep` and is
          then hit by `churn` in the same month, before it is ever billed. About
@@ -723,8 +726,15 @@ def ltv_estimate(drv, contrib_pm, m, t):
          constant seven months credited it up to seven months wherever in the
          year it was acquired, including the month before a sitting.
 
-    Both are now taken from the loop's own quantities rather than from a
-    constant. See CHANGELOG 4.3.
+      3. The pre-examination cap. The loop moves a pre-examination household on
+         at the PROGRESSION month, two months after the sitting; this function
+         capped its life at the sitting plus ten. Those are different
+         quantities and not congruent, and the post-progression term counted
+         the months to THIS year's sitting rather than to the household's own.
+
+    All three are now taken from the loop's own quantities rather than from a
+    constant. The gap is smaller and is not closed; cohorts.py publishes what
+    remains. See CHANGELOG 4.3 and 5.4.
     """
     ch = np.clip(drv["churn_base"], 1e-3, 0.95)
     # What survives to be billed at all.
@@ -732,9 +742,19 @@ def ltv_estimate(drv, contrib_pm, m, t):
     # Months from here to the next sitting in this market, which is the hard
     # ceiling on an examination-year household however slowly it churns.
     to_sitting = float((EXAM_CAL_MONTH[m] - cal_month(t)) % 12)
+    # A pre-examination household leaves that segment at the PROGRESSION month,
+    # which the loop puts two months after the sitting, not at the sitting plus
+    # ten. Those are different quantities and not congruent: for a household
+    # acquired in the sitting month the true figure is two and the code used
+    # ten. After progressing it has a full run to its OWN sitting, ten months
+    # later, not to this year's. Round 4 rewrote this function to take the
+    # calendar from the loop and then used arithmetic the loop does not.
+    # See CHANGELOG 5.4.
+    to_progress = float((EXAM_CAL_MONTH[m] + 2 - cal_month(t)) % 12)
     m_exam = np.minimum(1.0 / ch, to_sitting)
-    m_pre_first = np.minimum(1.0 / ch, to_sitting + 10.0)
-    m_pre = m_pre_first + (1.0 - drv["summer_lapse_pre"]) * drv["progress_continue"] * m_exam
+    m_pre_first = np.minimum(1.0 / ch, to_progress)
+    m_pre = (m_pre_first + (1.0 - drv["summer_lapse_pre"]) * drv["progress_continue"]
+             * np.minimum(1.0 / ch, 10.0))
     m_al = np.minimum(1.0 / ch, to_sitting + 12.0)
     mix_e = drv["seg_mix_exam"]
     mix_a = drv["seg_mix_alevel"]
@@ -799,6 +819,7 @@ def base_config():
         onshore_share=None,       # None or 0.0 means all engineering stays in Bengaluru
         residual=None,            # None means the horizon writes everything to zero, which is the published run
         pool_reacq_multiple=None, # None means the published POOL_REACQUISITION_MULTIPLE
+        stop_acquisition_after=None,  # None means acquire to the end, which is the published run
     )
 
 
@@ -872,13 +893,21 @@ def run(drv, cfg=None):
         "net_rev_schools", "school_contracts", "inference_cost", "support_cost",
         "payment_cost", "hosting_cost", "verif_cost", "cac_spend", "content_cost",
         "people_beng_cost", "people_uk_cost", "step_cost", "school_onboard_cost",
-        "appstore_fee", "people_beng_content_cost",
+        "appstore_fee", "people_beng_content_cost", "school_inference_cost",
         "sessions_delivered", "share_over_allowance",
         "cac_effective_blended", "cac_effective_noncreator", "net_cash", "demand_shock",
         "terminal_value",
     ]}
 
     stock = np.zeros((P, MS, N_COHORT_YEARS))
+    # Households acquired THIS month, tracked alongside the standing book. The
+    # examination-calendar exits below must not fire on them: billing starts the
+    # month after acquisition, so an arrival deleted in the month it arrives has
+    # been charged its acquisition cost and its age-assurance check and billed
+    # for nothing at all. Round 4 fixed the same ordering error on the
+    # progression path and left it on the acquisition path, where it is twice
+    # the size. See CHANGELOG 5.1.
+    arrivals = np.zeros((P, MS, N_COHORT_YEARS))
     # acq_cum, cac_cum, contrib_cum and months_cum lived here. They were
     # populated every month, returned in the summary, and read by nothing in the
     # directory. contrib_cum in particular accumulated the WHOLE-BOOK blended
@@ -908,6 +937,7 @@ def run(drv, cfg=None):
     bad_run_longest = np.zeros(P)
 
     for t in range(T):
+        arrivals[:] = 0.0
         cps = cost_per_session_usd(drv, t)
 
         # --- persistent demand shock; independent monthly noise would remove
@@ -1020,7 +1050,17 @@ def run(drv, cfg=None):
         else:
             envelope = np.zeros(P)
 
-        open_markets = [m for m in range(NM) if t >= _open_month(cfg, m)]
+        # Retained months are computed over the whole horizon, and acquisitions
+        # are still ramping in its last months, so most of them have their
+        # retention cut off by the window rather than by churn. Switching
+        # acquisition off partway through leaves every remaining acquisition a
+        # long run to churn out in, which is how the size of that censoring is
+        # measured. None in the published run. See CHANGELOG 5.8.
+        _stop = cfg.get("stop_acquisition_after")
+        if _stop is not None and t >= _stop:
+            open_markets = []
+        else:
+            open_markets = [m for m in range(NM) if t >= _open_month(cfg, m)]
         pool_reacq = cfg.get("pool_reacq_multiple") or POOL_REACQUISITION_MULTIPLE
         wsum = sum(MARKET_BUDGET_WEIGHT[m] for m in open_markets) or 1.0
         spend_total = np.zeros(P)
@@ -1079,6 +1119,7 @@ def run(drv, cfg=None):
             for s, mix in ((S_PRE, mix_p), (S_EXAM, mix_e), (S_ALEVEL, mix_a)):
                 add = acq * mix
                 stock[:, ms(m, s), cy] += add * keep
+                arrivals[:, ms(m, s), cy] += add * keep
 
         out["cac_spend"][:, t] = spend_total
         out["verif_cost"][:, t] = verif_total
@@ -1107,6 +1148,15 @@ def run(drv, cfg=None):
         out["school_contracts"][:, t] = school_live
         school_sessions = school_live * drv["school_seats"] * drv["sessions_per_hh_month"] * SCHOOL_USAGE_REL * \
             season_factor(_USE_SHAPE, M_UK, t, drv["usage_season_amp"])
+        # School seats consume inference and it lands in the same series as the
+        # consumer book's. That is right for a cost total and wrong for every
+        # ratio built against CONSUMER revenue or consumer household months,
+        # because the cost of an institution seat then sits in a numerator whose
+        # denominator excludes the institution's revenue. The school share is
+        # emitted separately so those ratios can be built consistently. It is a
+        # DECOMPOSITION of inference_cost, never a thirteenth cost line. See
+        # CHANGELOG 5.2.
+        out["school_inference_cost"][:, t] = school_sessions * cps
         out["inference_cost"][:, t] += school_sessions * cps
         out["sessions_delivered"][:, t] += school_sessions
         new_schools = school_pending[:, t] if reps_live > 0 else np.zeros(P)
@@ -1189,9 +1239,9 @@ def run(drv, cfg=None):
         out["net_cash"][:, t] = rev_t - cost_t + out["terminal_value"][:, t]
         trailing_net = 0.5 * trailing_net + 0.5 * rev_t
 
-        for m in range(NM):
-            for s in range(NS):
-                st = stock[:, ms(m, s), :]
+        # A nested loop whose whole body bound a view of stock and discarded it
+        # stood here. It was the remains of the cohort accumulators removed in
+        # round 4 and did nothing. See CHANGELOG 5.5.
 
         # --- survival and the examination calendar ------------------------
         churn = drv["churn_base"]
@@ -1203,15 +1253,22 @@ def run(drv, cfg=None):
             em = EXAM_CAL_MONTH[m]
             cm = cal_month(t)
             if cm == em:
-                leaving = stock[:, ms(m, S_EXAM), :] * (1.0 - drv["exam_carryover"])[:, None]
+                # Both sitting-month exits fire on the STANDING book only:
+                # households already on it before this month, not those acquired
+                # into it this month. Two separate orderings were wrong here.
+                # Round 4 fixed the A-level one against the PROGRESSION path,
+                # which used to subject a household that had just moved up from
+                # GCSE to the A-level sitting exit two years before its own
+                # sitting; that was worth 1,049,552 of terminal cash. Round 5
+                # found the same error against the ACQUISITION path, on both
+                # segments, worth about twice as much again. See CHANGELOG 5.1.
+                std_exam = np.maximum(stock[:, ms(m, S_EXAM), :]
+                                      - arrivals[:, ms(m, S_EXAM), :], 0.0)
+                leaving = std_exam * (1.0 - drv["exam_carryover"])[:, None]
                 stock[:, ms(m, S_EXAM), :] -= leaving
-                # The exit fires on the STANDING A-level stock, before this
-                # year's arrivals are added. The two lines used to be the other
-                # way round, which subjected a household that had just
-                # progressed from GCSE to the A-level sitting exit in the same
-                # month it arrived, two years before its own sitting. Worth
-                # 1,049,552 of terminal cash at the mean. See CHANGELOG 4.2.
-                stock[:, ms(m, S_ALEVEL), :] *= (1.0 - drv["alevel_exit_rate"])[:, None]
+                std_al = np.maximum(stock[:, ms(m, S_ALEVEL), :]
+                                    - arrivals[:, ms(m, S_ALEVEL), :], 0.0)
+                stock[:, ms(m, S_ALEVEL), :] -= std_al * drv["alevel_exit_rate"][:, None]
                 stock[:, ms(m, S_ALEVEL), :] += leaving * drv["alevel_continue"][:, None]
             if cm in ((em + 1) % 12, (em + 2) % 12):
                 per_month = 1.0 - np.sqrt(1.0 - drv["summer_lapse_pre"])
@@ -1336,8 +1393,16 @@ def path_outcomes(out, summary=None):
     fy_spend = out["cac_spend"][:, fy].sum(axis=1) + out["verif_cost"][:, fy].sum(axis=1)
     o["final_year_effective_cac"] = np.where(fy_acq > 0, fy_spend / np.maximum(fy_acq, 1e-9), 0.0)
     fy_active = out["active_hh"][:, fy].sum(axis=1)
-    fy_contrib = (out["net_rev_consumer"][:, fy] + out["net_rev_schools"][:, fy]
-                  - out["inference_cost"][:, fy] - out["support_cost"][:, fy]
+    # CONSUMER contribution per consumer household month. It used to carry the
+    # institution channel's revenue AND the institution channel's inference in a
+    # numerator whose denominator is consumer household months only, which is
+    # not the quantity the write-up describes ("net revenue less inference,
+    # support, payment, hosting and store fees" per household month) and is not
+    # a quantity anyone wants. The institution channel is priced on its own in
+    # the no-schools scenario. See CHANGELOG 5.2.
+    fy_contrib = (out["net_rev_consumer"][:, fy]
+                  - (out["inference_cost"][:, fy] - out["school_inference_cost"][:, fy])
+                  - out["support_cost"][:, fy]
                   - out["payment_cost"][:, fy] - out["hosting_cost"][:, fy]
                   - out["appstore_fee"][:, fy]).sum(axis=1)
     o["final_year_contrib_per_hh_month"] = np.where(fy_active > 0, fy_contrib / np.maximum(fy_active, 1e-9), 0.0)
@@ -1433,7 +1498,7 @@ MONTHLY_SERIES = [
     "school_contracts", "inference_cost", "support_cost", "payment_cost", "hosting_cost",
     "verif_cost", "cac_spend", "content_cost", "people_beng_cost", "people_uk_cost",
     "step_cost", "school_onboard_cost", "appstore_fee", "people_beng_content_cost",
-    "sessions_delivered",
+    "school_inference_cost", "sessions_delivered",
     "share_over_allowance", "cac_effective_blended", "cac_effective_noncreator", "net_cash",
     "demand_shock", "terminal_value",
 ]

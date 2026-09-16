@@ -138,6 +138,26 @@ add("institution channel variable cost other than inference",
 add("institution contract revenue lost to annual recognition", 0.0, 0.0,
     "zero, and it is a timing artefact rather than a cost: school_live only updates in the renewal month, so a contract signed in October is paid for that month and earns nothing until the following September, and contracts landing in the last five months of the horizon are never recognised at all. It makes the institution channel look worse than the plan describes")
 
+# Contractor engagement on-cost on the largest cost line. cost_per_item_usd
+# charges an examiner rate and an authoring rate and carries no overhead_mult,
+# which is right for a direct contractor and leaves no term for agency margin or
+# for United Kingdom off-payroll status. X10's own trigger is "ask three
+# examiner-supply agencies", so an agency is the assumed route. Round 4 fixed
+# school_onboard_cost for omitting overhead_mult on exactly this reasoning.
+_exam_share = 0.43   # examiner validation as a share of cost per item at the medians
+_content_total_2 = float(MOUT["content_cost"].sum(axis=1).mean())
+add("agency margin or off-payroll on-cost on examiner time",
+    0.15 * _exam_share * _content_total_2, 0.30 * _exam_share * _content_total_2,
+    "fifteen to thirty per cent on the examiner share of the content line. The counter-argument is that examiner_rate_gbp_hr spans a wide range and an agency margin is inside it; that argument would dissolve most of this file, so the line is written down instead")
+
+# No organic or referred acquisition of any kind. Every household in the model is
+# bought: acq = spend / effective_cac, with spend capped at a fraction of
+# lifetime value and funded from trailing revenue. There is no zero-cost channel,
+# so there is no mechanism by which the book grows without spending — which is a
+# large part of why no single driver rescues the plan.
+add("organic and referred acquisition", 0.0, 0.0,
+    "zero, and it is a revenue mechanic rather than a cost: there is no unpaid channel in the model at all. Sizing it needs an organic-share prior, which would be an invention, and it would interact with the budget cap and the pool term rather than adding to them. It has a known sign: every path here is pessimistic by whatever the real organic share is")
+
 # Accessibility conformance, which a school procurement process asks for directly.
 add("accessibility conformance and audit", 15000.0 * years_live * 0.5, 40000.0 * years_live * 0.5,
     "fifteen to forty thousand dollars a year, from roughly halfway through the horizon")
@@ -160,7 +180,10 @@ add("translation and localisation", 0.0, 0.0,
 # penalties are the higher of 18m pounds or a tenth of qualifying worldwide
 # revenue, with business-disruption orders reaching app stores and payment
 # processors. Priced at zero because this instrument has no probability to put
-# on it, and the zero is the point.
+# on it, and the zero is the point. How the penalties compare against the cost
+# lines is COMPUTED below, not asserted here: an earlier comment claimed a
+# single penalty exceeds every line except content, and the computation shows
+# the largest exceeds every line including it.
 # The comparison is computed rather than asserted. Two earlier drafts asserted
 # it and both were wrong: the SMALLEST penalty in the reference class does not
 # exceed every cost line except content, and does not exceed the seed round.

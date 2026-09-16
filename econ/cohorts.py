@@ -107,7 +107,7 @@ add("year10_ratio_with_churn_at_its_floor", _r_lowchurn, "ratio",
     "the same ratio with in-term churn pinned to the bottom of its prior range and the summer left as sampled", "15")
 # WHICH of the two levers is larger. The write-up asserted in-term churn and
 # never differenced the two counterfactuals against the base. It is the summer,
-# by a wide margin. See CHANGELOG 4.14.
+# by a wide margin. See CHANGELOG 4.13.
 add("year10_ratio_lift_from_removing_summer", _r_nosummer - ratio, "ratio points",
     "the Year 10 ratio with the summer removed entirely, less the ratio as sampled", "15 and 19")
 add("year10_ratio_lift_from_flooring_churn", _r_lowchurn - ratio, "ratio points",
@@ -303,7 +303,6 @@ if _worst.any():
 # ---------------------------------------------------------------------------
 NIGHT_FTE = 3.0
 NIGHT_PREMIUM = 1.30
-HOURS_PER_FTE_YEAR = 2000.0
 rota_yr = NIGHT_FTE * float(np.median(DRV["eng_usd_yr"])) * float(np.median(DRV["overhead_mult"])) * NIGHT_PREMIUM
 months_live = NS["HORIZON"] - NS["CONSUMER_OPEN"][NS["M_UK"]]
 rota_total = rota_yr * months_live / 12.0
@@ -321,8 +320,10 @@ add("por_total_cost_recomputed", total_cost, "USD",
     "sum over paths and months of every modelled cost line, averaged over paths", "5")
 
 # ---------------------------------------------------------------------------
-# Five quantities a round-four adversarial review showed the document was
-# asserting without a number behind it. Each is cheap to compute from the
+# Quantities the document was asserting without a number behind it, found in
+# rounds four and five. The blocks are numbered 0, 0b, 1, 2, 3 and 4 in the
+# order they were added; an earlier version of this comment counted five of
+# them and there are six. Each is cheap to compute from the
 # published outputs and each corrects or qualifies a claim in the write-up.
 # ---------------------------------------------------------------------------
 
@@ -364,6 +365,46 @@ add("price_drift_multiplier_at_horizon_p05", float(np.percentile((1.0 + _pd) ** 
     "the cumulative real price multiplier at month 60 at the fifth percentile of paths", "the instrument")
 add("price_drift_multiplier_at_horizon_p95", float(np.percentile((1.0 + _pd) ** 5.0, 95)), "multiple",
     "the same at the ninety-fifth percentile", "the instrument")
+
+# 0c. Where in the horizon each line's money sits. The preamble asserted that
+#     discounting shrinks the loss "because the largest negative months are the
+#     late ones", which is false — nine of the ten most negative months are in
+#     the first two thirds. What is true is the relative ordering below.
+_mm = np.arange(MOUT["net_cash"].shape[1], dtype=float)
+def _mean_month(series):
+    w = series.mean(axis=0)
+    return float((w * _mm).sum() / max(w.sum(), 1e-9))
+add("por_content_cost_mean_month", _mean_month(MOUT["content_cost"]), "month",
+    "the acquisition-weighted mean month of content spend", "the instrument")
+add("por_cac_spend_mean_month", _mean_month(MOUT["cac_spend"]), "month",
+    "the same for acquisition spend", "the instrument")
+add("por_revenue_mean_month", _mean_month(MOUT["net_rev_consumer"] + MOUT["net_rev_schools"]),
+    "month", "the same for net revenue", "the instrument")
+_nc = MOUT["net_cash"].mean(axis=0)
+_neg = np.minimum(_nc, 0.0); _pos = np.maximum(_nc, 0.0)
+add("por_negative_cash_mean_month", float((-_neg * _mm).sum() / max((-_neg).sum(), 1e-9)),
+    "month", "the magnitude-weighted mean month of the NEGATIVE net cash months", "the instrument")
+add("por_positive_cash_mean_month", float((_pos * _mm).sum() / max(_pos.sum(), 1e-9)),
+    "month", "the same for the positive ones", "the instrument")
+add("por_negative_cash_month_count", float((_nc < 0).sum()), "months",
+    "how many of the months carry negative mean net cash", "the instrument")
+
+# 0d. How much of the retained-months figure is the horizon rather than churn.
+#     Three passages lean on this and the size of it was asserted as "about a
+#     sixth" with nothing behind it. Acquisition is switched off after month 24
+#     so every acquisition has at least three years to churn out in.
+STOP_ACQ_AT = 24
+_o2, _s2 = NS["run"](dict(DRV), dict(NS["base_config"](), stop_acquisition_after=STOP_ACQ_AT))
+_unc = float((_o2["active_hh"].sum(axis=1)
+              / np.maximum(_o2["acquisitions"].sum(axis=1), 1e-9)).mean())
+_cen = float((MOUT["active_hh"].sum(axis=1)
+              / np.maximum(MOUT["acquisitions"].sum(axis=1), 1e-9)).mean())
+add("retained_months_uncensored_mean", _unc, "months",
+    "retained months with acquisition switched off after month %d, so every acquisition has at least three years to run out" % STOP_ACQ_AT, "19")
+add("retained_months_censoring_lift", _unc - _cen, "months",
+    "how many months the horizon is taking off the published figure", "19")
+add("retained_months_censoring_lift_pct", 100.0 * (_unc / max(_cen, 1e-9) - 1.0), "per cent",
+    "the same as a percentage of the published figure", "19")
 
 # 1. Monte Carlo error. "A figure re-derived from a different seed is a
 #    different number" was stated and never sized. It is one line from the
@@ -413,10 +454,15 @@ for rate in (0.0, 0.12, 0.25):
 # 3. Variable cost against PRICE, which is the quantity docs/10's load-bearing
 #    row is about. The write-up answered it with inference over TOTAL COST, a
 #    denominator dominated by the content build, which is a different question.
+# CONSUMER variable cost over CONSUMER gross revenue. inference_cost carries
+# the institution channel's seat consumption as well, so the published ratio
+# used to put an institution cost in a numerator whose denominator excludes
+# institution revenue. On the paths where a small consumer book sits beside a
+# profitable institution book that inverted the answer. See CHANGELOG 5.2.
 gross_rev = MOUT["gross_rev_consumer"].sum(axis=1)
-var_lines = ["inference_cost", "support_cost", "payment_cost", "hosting_cost"]
-inf_tot = MOUT["inference_cost"].sum(axis=1)
-var_tot = sum(MOUT[c].sum(axis=1) for c in var_lines)
+inf_tot = (MOUT["inference_cost"] - MOUT["school_inference_cost"]).sum(axis=1)
+var_tot = (inf_tot + MOUT["support_cost"].sum(axis=1)
+           + MOUT["payment_cost"].sum(axis=1) + MOUT["hosting_cost"].sum(axis=1))
 LIVE = gross_rev > 0
 add("por_inference_over_gross_revenue_pooled", float(inf_tot.sum() / gross_rev.sum()), "share",
     "total inference cost over total gross consumer revenue, pooled across paths: docs/10's row is variable cost against PRICE, not against total cost", "19")

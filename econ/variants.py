@@ -388,6 +388,7 @@ OUTCOME_COLS = [
     "understatement_ratio", "band_central_placement_terminal",
     "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
     "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta",
+    "paired_mc_se",
 ]
 
 
@@ -434,6 +435,16 @@ def evaluate(name):
         pathwise_mean_abs_delta=float(np.mean(np.abs(o["terminal_cash"] - BASE_TERMINAL)))
         if BASE_TERMINAL is not None else 0.0,
         abs_mean_delta=float(abs(o["terminal_cash"].mean() - BASE_TERMINAL.mean()))
+        if BASE_TERMINAL is not None else 0.0,
+        # The sampling error on THIS scenario's delta, computed on the paired
+        # per-path differences. Every scenario here shares its random numbers
+        # with the base, so the relevant error is the paired one and not the
+        # standard error of the base mean, which is several times larger. The
+        # write-up used the unpaired figure to argue that one scenario is
+        # indistinguishable from zero; the conclusion held, the number offered
+        # for it did not. See CHANGELOG 5.9.
+        paired_mc_se=float(np.std(o["terminal_cash"] - BASE_TERMINAL, ddof=1)
+                           / np.sqrt(o["terminal_cash"].shape[0]))
         if BASE_TERMINAL is not None else 0.0,
         total_content_cost_mean=float(out["content_cost"].sum(axis=1).mean()),
         total_cost_mean=float(sum(out[c].sum(axis=1).mean() for c in [
@@ -495,6 +506,9 @@ def test_off_reproduces_base():
         ("pool_reacq_published",
          dict(bc(), pool_reacq_multiple=NS["POOL_REACQUISITION_MULTIPLE"]),
          dict(bc(), pool_reacq_multiple=2.0)),
+        ("stop_acquisition_never",
+         dict(bc(), stop_acquisition_after=NS["HORIZON"]),
+         dict(bc(), stop_acquisition_after=24)),
     ]
     results = []
     for name, off_cfg, on_cfg in cases:

@@ -167,6 +167,15 @@ add("por_trough_p90", float(np.percentile(trough, 90)), "USD", "por_paths.csv", 
 # closes, so its peak funding requirement is a floor rather than a figure.
 _tm = col(paths, "trough_month")
 _H = len(monthly)
+# How often each rota step actually fires. "Those steps fire on most paths" was
+# true of the first and false of the second: the second fires on about one path
+# in five.
+_ah = col(paths, "terminal_active_hh")
+add("por_share_paths_over_rota_extended", float((_ah > 3000).mean()), "share", "por_paths.csv",
+    "share of paths whose terminal active household count exceeds the first safeguarding rota step")
+add("por_share_paths_over_rota_24_7", float((_ah > 25000).mean()), "share", "por_paths.csv",
+    "share exceeding the second, round-the-clock step")
+
 add("por_share_paths_trough_at_horizon", float((_tm >= _H - 1).mean()), "share",
     "por_paths.csv",
     "share of paths whose cumulative cash is at its minimum in the last month of the horizon, so the trough and the funding requirement are both right-censored")
@@ -374,7 +383,8 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
                   "mean_share_over_allowance",
                   "understatement_ratio", "band_central_placement_terminal",
                   "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
-                  "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta"):
+                  "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta",
+                  "paired_mc_se"):
             if k in r:
                 add("scenario_%s_%s" % (name, k), float(r[k]), "USD or share", "variants.csv",
                     "column %s for scenario %s" % (k, name))
@@ -438,6 +448,12 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
         add("delta_%s_peak_funding_p80_abs" % name,
             abs(float(r["peak_funding_p80"]) - base_pf80), "USD", "variants.csv",
             "the absolute value of that difference")
+        # The delta against its own paired sampling error. Below about two this
+        # is not a difference the sample can see.
+        if "paired_mc_se" in r and float(r["paired_mc_se"]) > 0:
+            add("delta_%s_t_stat" % name, abs(d) / float(r["paired_mc_se"]), "ratio",
+                "variants.csv",
+                "the absolute terminal-cash delta for %s divided by the paired standard error of that delta" % name)
         add("delta_%s_sign_agrees_mean_and_median" % name,
             1.0 if (d == 0 and dm == 0) or (d * dm > 0) else 0.0, "boolean", "variants.csv",
             "1 when the mean delta and the median delta for %s have the same sign, 0 when they disagree" % name)
@@ -464,6 +480,18 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
             "total_content_cost_mean for gtm_minimum: United Kingdom content frozen at the go-to-market five subjects, one board")
         add("scope_ladder_uk_escalation_mean", cc("ukonly") - cc("gtm_minimum"), "USD", "variants.csv",
             "total_content_cost_mean for ukonly less the same for gtm_minimum: what widening the United Kingdom catalogue costs")
+        # The two ratios section 12 reasons with. Both were typed, both were
+        # taken from a superseded run, and both were wrong by about half.
+        _tc = lambda n: float(vr[n]["terminal_cash_mean"])
+        _b = _tc("por")
+        _ukd, _gtmd = _tc("ukonly") - _b, _tc("gtm_minimum") - _b
+        _frzd = _tc("por_content_frozen") - _b
+        if _ukd:
+            add("scope_gtm_over_ukonly_terminal_cash", _gtmd / _ukd, "ratio", "variants.csv",
+                "the go-to-market minimum's terminal-cash delta divided by the United Kingdom-only scenario's: how much larger the real scope reduction is than the one the document used to read it off")
+            add("scope_content_freeze_over_market_drop_terminal_cash", _frzd / _ukd, "ratio",
+                "variants.csv",
+                "freezing the content schedule divided by dropping the second and third markets, on terminal cash at the mean")
 
 # --------------------------------------------------------------------------
 # Sensitivity
@@ -592,6 +620,16 @@ if os.path.exists(os.path.join(OUT, "breakeven.csv")):
         "count", "breakeven.csv", "rows whose status is bracketed")
     add("breakeven_rows_unbracketed", len([r for r in berows if r["status"] != "bracketed"]),
         "count", "breakeven.csv", "rows whose status is not bracketed")
+    # Which side the unbracketed rows sit on. Reading them all as failures
+    # inverted the most actionable positive result in the file.
+    add("breakeven_rows_unbracketed_met",
+        len([r for r in berows if r["status"].startswith("not bracketed: met")]),
+        "count", "breakeven.csv",
+        "rows where the target is met across the whole prior range, so the driver never crosses it because the plan already satisfies it")
+    add("breakeven_rows_unbracketed_missed",
+        len([r for r in berows if r["status"].startswith("not bracketed: missed")]),
+        "count", "breakeven.csv",
+        "rows where the target is missed across the whole prior range, which is the real failure")
     for scope in sorted({r["scope"] for r in berows}):
         sc = [r for r in berows if r["scope"] == scope]
         add("breakeven_%s_questions" % scope, len(sc), "count", "breakeven.csv",
@@ -622,6 +660,13 @@ if os.path.exists(os.path.join(OUT, "breakeven.csv")):
         else:
             add(key + "_status", r["status"], "text", "breakeven.csv", "the status column")
         add(key + "_prior_median", float(r["prior_median"]), "driver units", "breakeven.csv", "the prior_median column")
+        # The metric at each end of the driver's own prior range. On an
+        # unbracketed row these are the whole answer: they say which side of the
+        # target the plan sits on, which "not bracketed" alone does not.
+        add(key + "_metric_at_support_low", float(r["metric_at_support_low"]), "metric units",
+            "breakeven.csv", "the metric with the driver pinned at the bottom of its prior range")
+        add(key + "_metric_at_support_high", float(r["metric_at_support_high"]), "metric units",
+            "breakeven.csv", "the metric with it pinned at the top")
         # What the plan looks like AT the solved value, on the statistics the
         # solve did not target. Without these a break-even reads as a rescue.
         for suffix, col, unit in (

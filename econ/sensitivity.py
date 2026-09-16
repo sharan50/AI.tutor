@@ -4,16 +4,20 @@ sensitivity.py
 Runs on the harness, which means it runs the published model.py rather than a
 restatement of it.
 
-Four instruments, in increasing cost and decreasing generality:
+Five instruments, in increasing cost and decreasing generality:
   1. first-order Sobol indices, estimated by binning on driver rank
   2. a decile tornado
   3. pinned sweeps, where a driver is fixed across the whole sample and the model
      re-run, with the pin applied AFTER the draws so every run in a sweep shares
      its random numbers and the difference is that driver's alone
   4. a two-way grid over the two drivers that own the most variance
+  5. grouped indices on scalars that match how the quantities would actually be
+     measured, because a count of registry entries in a top seven is a fact
+     about the registry rather than about the business
 
 Outputs, all under out/:
-  sobol.csv  tornado.csv  pinned_sweeps.csv  twoway_grid.csv
+  sobol.csv  tornado.csv  pinned_sweeps.csv  twoway_grid.csv  sobol_grouped.csv
+  sensitivity_top.txt
 """
 
 import csv
@@ -221,7 +225,9 @@ def run_twoway(d1, d2):
 # Content cost per item is registered as three priors (validation minutes, the
 # examiner rate, the authoring rate) because that is how it decomposes; but one
 # timed pilot measures all three at once, so as an object of decision it is ONE
-# quantity. Acquisition, by contrast, is split across nine. Rank the registry
+# quantity. The acquisition set, by contrast, is twelve registry entries acting
+# through effectively one anchor; figures.py publishes both counts so no copy of
+# them lives in a comment. Rank the registry
 # entries and content wins on count; group them the way the instruments that
 # would measure them group them and the picture is different again.
 #
@@ -229,6 +235,9 @@ def run_twoway(d1, d2):
 # makes a one-dimensional index legitimate. Summing the individual indices of a
 # group is NOT a group index and is not done here.
 # ---------------------------------------------------------------------------
+GROUPED_REFERENCE_SPEND = 50000.0
+
+
 def grouped_quantities():
     d = DRV
     exam_gbp = d["minutes_per_item"] / 60.0 * d["examiner_rate_gbp_hr"] * 1.10
@@ -241,6 +250,18 @@ def grouped_quantities():
          "that, times items per bank: what one full item bank costs to build"),
         ("cac_anchor_blended_usd", d["cac_anchor_usd"] * blend,
          "the low-volume acquisition anchor after the creator-led blend, which is the scalar the acquisition drivers act through at low volume"),
+        # The content group is four of the eight content entries: everything one
+        # timed pilot plus one objective count would settle. The acquisition
+        # group above is three of twelve and leaves out saturation, so the two
+        # were not grouped on the same principle. E2's own trigger in
+        # OPEN_ITEMS.md is a channel test at two spend levels, which measures
+        # effective cost AT a spend, so that is the matching scalar. See
+        # CHANGELOG 5.10.
+        ("cac_effective_at_reference_spend_usd",
+         d["cac_anchor_usd"] * blend
+         * (GROUPED_REFERENCE_SPEND / d["cac_ref_spend_usd"]) ** d["sat_kappa"],
+         "effective cost per acquisition at a common monthly spend of %s dollars: the anchor, the creator blend and the saturation exponent together, which is what one channel test at two spend levels measures"
+         % format(GROUPED_REFERENCE_SPEND, ",.0f")),
     ]
 
 

@@ -10,7 +10,10 @@ from the file it claims to come from and an unknown name fails loudly rather
 than rendering as itself.
 
 Formats:
-  usd0   -1234567.8  ->  -1,234,568
+  usd0   -1234567.8  ->  -1,234,568   (currency only; num0 is the same
+                                          formatting for a quantity that is not
+                                          money, and the two are kept apart so a
+                                          household count is not tagged as dollars)
   usdm   -12361321   ->  -12.36        (millions, two decimals)
   usdm1  -12361321   ->  -12.4         (millions, one decimal)
   usdk    536980     ->  537           (thousands, whole)

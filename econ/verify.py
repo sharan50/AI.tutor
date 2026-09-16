@@ -4,7 +4,13 @@ verify.py
 Re-derives every stated figure from the raw outputs, knowing nothing of the
 prose, and then checks the prose against what it derived.
 
-Three passes:
+Four passes, and the first two are cheap guards rather than re-derivations:
+
+  0a. CURRENCY TAGS. A usd* format on a figure whose unit is not USD. The two
+      render identically, so this is invisible in the output.
+
+  0.  STALENESS. Every generating script records the SHA-256 of the model.py and
+      harness.py it ran against; a set whose hashes disagree is refused.
 
   A. INDEPENDENT RE-DERIVATION. A second implementation of the core figures,
      computed from out/por_monthly.csv and out/por_paths.csv by a different code
@@ -260,6 +266,33 @@ def pass_b(figs, allowed):
 # model.py it ran against and this refuses a set whose hashes disagree. It is a
 # weaker check than the gate and is reported as such.
 # ---------------------------------------------------------------------------
+def pass_format_units():
+    """
+    A currency format tag on a quantity that is not money.
+
+    `usd0` and `num0` render identically, so the difference is invisible in the
+    output and shows up only when someone reads the source and takes a household
+    count for a dollar figure. Twelve tokens were tagged that way until round
+    four. This keeps them apart.
+    """
+    figs = {r["name"]: r for r in read_csv("figures.csv")}
+    tok = re.compile(r"@@([A-Za-z0-9_]+)\|([a-z0-9]+)@@")
+    fails = []
+    for doc in DOCS:
+        src = doc.replace(".md", ".src.md")
+        if not os.path.exists(src):
+            continue
+        for m in tok.finditer(open(src).read()):
+            name, spec = m.group(1), m.group(2)
+            r = figs.get(name)
+            if not r:
+                continue
+            if spec.startswith("usd") and "USD" not in r["unit"]:
+                fails.append("%s: %s is tagged %s but its unit is %r"
+                             % (os.path.basename(src), name, spec, r["unit"]))
+    return fails
+
+
 def pass_staleness():
     import hashlib
     h = hashlib.sha256()
@@ -272,8 +305,8 @@ def pass_staleness():
     rows = read_csv("provenance.csv")
     fails = [
         "%s last ran against model.py+harness.py %s, not the current %s: its outputs are stale"
-        % (r["script"], r["model_sha256"][:12], sha[:12])
-        for r in rows if r["model_sha256"] != sha
+        % (r["script"], r["model_and_harness_sha256"][:12], sha[:12])
+        for r in rows if r["model_and_harness_sha256"] != sha
     ]
     return len(rows), fails
 
@@ -282,6 +315,11 @@ def main():
     figs = load_figures()
     allowed = load_allow()
     print("figures on disk: %d" % len(figs))
+
+    unit_fails = pass_format_units()
+    print("\nPASS 0a, currency tags on non-currency figures: %d" % len(unit_fails))
+    for f in unit_fails:
+        print("  FAIL " + f)
 
     n_prov, stale = pass_staleness()
     print("\nPASS 0, generator staleness: %d scripts recorded" % n_prov)
@@ -301,7 +339,7 @@ def main():
         print("  UNDERIVABLE %s:%d  %-14s  %s" % (doc, lineno, token, ctx))
     print("  %d numbers could not be re-derived" % len(unmatched))
 
-    total = len(fails) + len(unmatched) + len(stale)
+    total = len(fails) + len(unmatched) + len(stale) + len(unit_fails)
     print("\nTOTAL FAILURES: %d" % total)
     return 1 if total else 0
 

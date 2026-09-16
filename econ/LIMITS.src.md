@@ -86,9 +86,13 @@ partly the scenario's fault".** The `por_fx_sampled` scenario replaces the
 sterling rate with a sampled one, drawn outside the published stream so the paths
 stay matched. Terminal cash moves by
 @@delta_por_fx_sampled_terminal_cash_mean|usd0@@ dollars on the mean. **That is
-not "small", it is zero**: a round-four review showed the delta is
-indistinguishable from zero at this sample size, and at another seed it would
-carry a different sign. The peak funding requirement at the eightieth percentile
+not "small", it is zero**: the delta is @@delta_por_fx_sampled_t_stat|num2@@
+paired standard errors from zero, so at another seed it would carry a different
+sign. (A round-four draft reached the same conclusion by comparing against the
+*unpaired* standard error of the base mean, which is several times too large for
+a paired comparison — the right conclusion from the wrong number, one paragraph
+after this document explains the paired-versus-unpaired distinction for the
+demand shock.) The peak funding requirement at the eightieth percentile
 moves from @@por_peak_funding_p80|usd0@@ to
 @@scenario_por_fx_sampled_peak_funding_p80|usd0@@. **The exposure is in the
 width, not the centre**, which is exactly what fixing a rate hides: fixed rates do
@@ -124,7 +128,7 @@ Modelled as genuine steps: foreign entity set-up and its annual compliance, per
 market; counsel per jurisdiction; the United Kingdom Article 27 representative;
 DPIA maintenance and audit readiness; information security certification, first
 award and annual renewal; premises above eight heads; the safeguarding rota, which
-steps at @@const_ROTA_EXTENDED_AT|usd0@@ active households and again at @@const_ROTA_24_7_AT|usd0@@ where an
+steps at @@const_ROTA_EXTENDED_AT|num0@@ active households and again at @@const_ROTA_24_7_AT|num0@@ where an
 out-of-hours rota is about three and a half further posts; the general and administrative schedule; and
 the field sales ramp.
 
@@ -493,6 +497,18 @@ horizon at the eightieth percentile. The base case is stated beside it at
 @@funding_base_case_uk_only_whole_horizon_round_size|usd0@@, along with two narrower scopes. They differ enough
 that sizing on the base case would underfund the plan actually described.
 
+**One method note, because it looks like a defect this document warns about
+elsewhere.** A staged round is sized as the eightieth percentile of the window's
+need **plus** six times the eightieth percentile of its monthly burn — two
+percentiles of different distributions added together, which is the construction
+section 6 refuses for band lines. Here it is safe, and that was measured rather
+than assumed: need and burn correlate at 0.97 to 1.00 across the three windows,
+so the sum of the two percentiles differs from the eightieth percentile of the
+sum by about seven hundred dollars across a staged total of thirty-seven
+million. Adding percentiles of near-perfectly correlated quantities is the one
+case where it is not blending; if the correlation ever fell, this would need
+re-deriving as a joint percentile.
+
 ### 21. Staging against decisions: **not clean**
 
 @@commitments_spend_starts_in_seed|int@@ of the file's
@@ -655,8 +671,8 @@ price loop can be run alone is a half-day of work and has not been done.
 
 ### The largest paths are not plausible and nothing in the instrument says so
 
-Total acquisitions across the horizon run to a median of @@por_total_acquisitions_median|usd0@@, a
-ninety-ninth percentile of @@por_total_acquisitions_p99|usd0@@ and a maximum of @@por_total_acquisitions_max|usd0@@.
+Total acquisitions across the horizon run to a median of @@por_total_acquisitions_median|num0@@, a
+ninety-ninth percentile of @@por_total_acquisitions_p99|num0@@ and a maximum of @@por_total_acquisitions_max|num0@@.
 @@por_share_paths_terminal_cash_above_100m|pct2@@ per cent of paths end the horizon above a hundred million dollars.
 
 There is now a ceiling, `POOL_REACQUISITION_MULTIPLE`, set at
@@ -719,12 +735,20 @@ hand — the acquisition entries act through effectively one anchor. Split a cos
 entries individually rank lower while its block ranks higher; split it coarsely
 and the reverse.
 
-`out/sobol_grouped.csv` computes indices on the grouped scalars — cost per item,
-the cost of one bank, the blended acquisition anchor — and section 8 of the
-write-up quotes those beside the registry ranking. It does **not** sum individual
-indices to make a group index, which would be wrong. The conclusion happens to
-survive the regrouping in this case; that is luck rather than method, and there
-is no instrument here that would have told us if it had not.
+`out/sobol_grouped.csv` computes indices on the grouped scalars and section 8 of
+the write-up quotes those beside the registry ranking. It does **not** sum
+individual indices to make a group index, which would be wrong.
+
+**The first version of it was not symmetric, which a round-five review caught.**
+The content scalar collects four of the eight content entries — everything one
+timed pilot and one objective count would settle — while the acquisition scalar
+collected three of twelve and left the saturation exponent out, although E2's own
+trigger is a channel test at two spend levels, which measures effective cost *at*
+a spend. A fourth grouped quantity does it that way. The conclusion survives both
+groupings and the margin narrows under the symmetric one. **That it survives is
+luck rather than method**: there is no instrument here that would have told us if
+it had not, and the grouping is still a judgement about which questions one
+instrument answers together.
 
 ### Decided constants are not in the sensitivity at all
 
@@ -765,9 +789,13 @@ way.**
 An examination-year household is retained @@retained_months_exam_year_mean|num2@@ months. The commercial unit
 is an examination-cycle plan billed monthly to the last paper, which docs/07 puts
 at nine months for a September acquisition and five or six for a January one. **The
-average customer in this model never completes a cycle.** That follows entirely
-from the in-term churn prior, which nothing has measured, and it means the pricing
-decision and the retention prior are describing different products.
+average customer in this model never completes a cycle.** Two things produce
+that and an earlier version of this passage credited only the first: the in-term
+churn prior, which nothing has measured, and the horizon, which right-censors
+retention for the reason set out further down this document. The level is a
+floor. Either way the pricing decision and the retention prior are describing
+different products, which is the point of this item and does not depend on the
+split.
 
 ### The foreign markets are the United Kingdom calendar copied
 
@@ -809,7 +837,7 @@ Kingdom ones**, and the expansion case should not be argued from them.
 `terminal_cash` is the cumulative cash at month @@horizon_months|int@@ and nothing else. At that
 month the instrument assigns **zero** value to the item bank it has just spent
 @@por_total_content_cost_mean|usd0@@ dollars building, and zero to the standing book of
-@@por_terminal_active_hh_mean|usd0@@ households still paying.
+@@por_terminal_active_hh_mean|num0@@ households still paying.
 
 That is not a neutral default. A large share of the content spend falls in the
 last two years and is charged in full against a truncated revenue window:
@@ -819,8 +847,9 @@ last two years and is charged in full against a truncated revenue window:
 run rate of @@por_terminal_annual_run_rate|usd0@@.
 
 **Every statement in this document of the form "content is the largest line",
-"content sets the slope" and "@@por_share_demand_independent_pct|num1@@ per cent of the cost base is committed" is
-partly a function of where the window was cut.** The `por_residual` scenario
+"content sets the slope" and "@@por_share_demand_independent_pct|num1@@ per cent
+of the cost base does not respond to demand" is partly a function of where the
+window was cut.** The `por_residual` scenario
 credits a residual and is worth @@delta_por_residual_terminal_cash_mean|usd0@@ dollars of terminal cash and
 @@delta_por_residual_peak_funding_p80|usd0@@ on the capital requirement. Both of its parameters are priors
 and neither is defensible as a valuation; the point is the size, not the number.
@@ -940,10 +969,10 @@ code, which is the only method that has worked, and which does not scale.
 
 `por_monthly.csv` and `por_paths.csv` are rebuilt character for character on
 every load. The other derived outputs are not rebuilt by anything, and the check
-that now exists — every generating script recording the SHA-256 of the `model.py`
-it ran against, and `verify.py` refusing a set whose hashes disagree — catches
-staleness and nothing else. A derived CSV can be generated by a buggy
-`sensitivity.py` against the right `model.py` and pass.
+that now exists — every generating script recording the SHA-256 of `model.py`
+and `harness.py` together, and `verify.py` refusing a set whose hashes disagree
+— catches staleness and nothing else. A derived CSV can be generated by a buggy
+`sensitivity.py` against the right model and pass.
 
 ### And one absence that is not about shape at all
 
@@ -993,13 +1022,21 @@ particular is the most optimistic thing in the file.
 ### The acquisition budget cap still believes in a longer-lived household than the model delivers
 
 Round four found `ltv_estimate` — the company's own running estimate, and the
-only restraint on acquisition spend anywhere in the model — assuming
-**8.35 retained months against the 3.31 the same model delivered**, because it
-ignored first-month attrition and the examination calendar. Both are now taken
-from the loop's own quantities and the gap is much smaller. It is not closed:
-the estimate still runs ahead of realised retention, partly because a geometric
-life ignores the other exits and partly because realised retention is itself
-right-censored by the horizon. `out/cohorts.csv` publishes both numbers.
+only restraint on acquisition spend anywhere in the model — assuming roughly two
+and a half times the retention the same model delivered, because it ignored
+first-month attrition and the examination calendar. Round five found a third
+cause: the pre-examination branch capped its life at the sitting plus ten months
+while the loop moves that household on at the sitting plus **two**, so the
+function round four rewrote to take the calendar from the loop was using
+arithmetic the loop does not.
+
+All three are fixed. The gap is smaller and is **not** closed: `out/cohorts.csv`
+publishes `ltv_cap_assumed_months` at @@ltv_cap_assumed_months|num2@@ against
+`ltv_cap_realised_months` at @@ltv_cap_realised_months|num2@@, a ratio of
+@@ltv_cap_months_overstatement|num2@@. What remains is a geometric life ignoring
+the other exits, and realised retention being itself right-censored by the
+horizon — the second of which means the true ratio is smaller than the published
+one.
 
 **Why it matters more than the dollars.** `budget_cap_from_ltv` inverts the
 saturation curve, so permitted spend scales as roughly the square of the
@@ -1049,6 +1086,33 @@ This was hidden by a mean. The write-up quoted the mean trough month,
 trough early and four fifths that never trough at all, and describes neither.
 **It is the same defect as checklist item 19 and it was inside the section whose
 entire subject is that a mean of minimums is not the minimum of a mean.**
+
+### The reachable pool responds to subjects and not to levels or boards
+
+`model.py` scales the reachable pool with subject breadth and discards the level
+and board counts from the same call. So the go-to-market minimum — five subjects,
+one level, one board — and the plan of record's United Kingdom at month 18 — five
+subjects, two levels, four boards, and about twelve times the content — are
+credited the **same** reachable pool, through a window that spans the whole seed
+and Series A. A United Kingdom household sits one awarding body's specification;
+a one-board product cannot serve three quarters of them. Round 0 fixed the
+subject half of exactly this asymmetry and left the board and level half.
+
+Separately, the pool reads the **unshifted** schedule months while the content
+build applies `launch_shift`, so under the launch-delay scenarios the pool widens
+on the original calendar while the content arrives late. That is a third
+contamination of those rows, on top of the two section 9 already names.
+
+**It is not corrected here, and the reason is worth more than the correction
+would be.** Mapping board coverage onto reachable households needs a prior
+nothing in the vault supplies. And the pool is nearly inert: `out/breakeven.csv`
+shows it pinned across its thirtyfold range moving the median path's terminal
+cash and the capital requirement by a few per cent, because the acquisition
+envelope is revenue-driven rather than pool-driven. So the narrow scope's
+advantage in this document is **not** protected by an argument that it reaches as
+many households — it is protected by the pool doing almost nothing. Open item E5
+says the muting is a model property rather than a fact; what it did not say is
+that the muting is what makes this asymmetry invisible.
 
 ### The one prior with no bounds, and the file used to print it as if it had them
 

@@ -37,9 +37,14 @@ level in this document is rendered to the dollar because that is the precision
 the file holds, not because it is known to the dollar; read roughly a million
 either side of any terminal-cash figure before you read anything else about it.
 The scenario deltas are far tighter than that because the scenarios share their
-random numbers path by path, which is the point of the paired construction — but
-one of them, the sampled foreign exchange rate, is **indistinguishable from zero
-at this sample size**, and section 9 says so where it is tabulated.
+random numbers path by path, which is the point of the paired construction, and
+each carries its own paired standard error in `out/variants.csv`. **Use that one,
+not the figure above, when judging a scenario**: an earlier draft argued that the
+sampled foreign exchange rate is indistinguishable from zero by setting its delta
+against the unpaired error, which is several times too large for the comparison.
+The conclusion survives on the right number — that scenario's delta is
+@@delta_por_fx_sampled_t_stat|num2@@ paired standard errors from zero — and
+section 9 says so where it is tabulated.
 
 The seed and the date are quoted wherever a number appears for the same reason.
 
@@ -51,15 +56,27 @@ break-even and the residual are undiscounted nominal sums over sixty months.
 The headline loss gets *smaller*: at twelve per cent a year the same net cash
 line is worth @@por_terminal_cash_npv_12|usd0@@ against the undiscounted
 @@por_terminal_cash_mean|usd0@@, and at twenty-five per cent
-@@por_terminal_cash_npv_25|usd0@@, because the largest negative months are the
-late ones. The economics get *worse*: revenue arrives later than cost, so
+@@por_terminal_cash_npv_25|usd0@@ — not for the reason an earlier draft gave. It
+said "because the largest negative months are the late ones", and they are not:
+the magnitude-weighted mean month of negative net cash is
+@@por_negative_cash_mean_month|num1@@ against
+@@por_positive_cash_mean_month|num1@@ for the positive months. The reason is
+duller. @@por_negative_cash_month_count|num0@@ of the
+@@horizon_months|int@@ months are negative, so discounting shrinks a sum that is
+mostly negative — and the negatives being **early** is what limits how much it
+shrinks by. The economics get *worse*: revenue arrives later than cost, so
 discounted cost over discounted revenue rises from
 @@por_discounted_cost_over_revenue_00|num2@@ undiscounted to
 @@por_discounted_cost_over_revenue_25|num2@@ at twenty-five per cent. And
 content's share of cost **rises** — from @@por_share_content_cost_pct|num1@@ per
 cent to @@por_discounted_content_cost_share_25_pct|num1@@ — while acquisition's
-falls to @@por_discounted_cac_spend_share_25_pct|num1@@, because content is built
-early and acquisition spend follows revenue. So discounting sharpens the ordering
+falls to @@por_discounted_cac_spend_share_25_pct|num1@@, because content is
+built **earlier than acquisition spend is made** — content's mean month is
+@@por_content_cost_mean_month|num1@@ against
+@@por_cac_spend_mean_month|num1@@ for acquisition and
+@@por_revenue_mean_month|num1@@ for revenue. It is not built early in absolute
+terms, as section 1 says; it is built early *relative to the money it is being
+weighed against*, which is what a discount rate cares about. So discounting sharpens the ordering
 this document reports rather than disturbing it, and it shrinks the residual
 scenario, which sits entirely at month 60 and is the largest single item in the
 scenario table. Nothing here is restated on a discounted basis; these figures are
@@ -117,8 +134,11 @@ brackets.
 
 "About" is doing work in that sentence too, and it is meant to. Part of the United
 Kingdom people line is not demand-independent: the safeguarding rota steps at
-@@const_ROTA_EXTENDED_AT|usd0@@ and again at @@const_ROTA_24_7_AT|usd0@@ active households, and those steps fire on
-most paths. The overwhelming majority of the @@por_share_demand_independent_pct|num1@@ per cent is fixed; a
+@@const_ROTA_EXTENDED_AT|num0@@ and again at @@const_ROTA_24_7_AT|num0@@ active
+households. The first fires on @@por_share_paths_over_rota_extended|pct1@@ per
+cent of paths and the second on @@por_share_paths_over_rota_24_7|pct1@@ — an
+earlier draft said "most paths", which is true of the first and not of the
+second. The overwhelming majority of the @@por_share_demand_independent_pct|num1@@ per cent is fixed; a
 slice of it is not, and LIMITS.md item 5 says which. This is why **no single driver gets the median path whole**: every break-even
 solved in section 10 against a cash target is unbracketed, because the money is
 spent whether or not anyone buys — not because it was committed early, but
@@ -136,7 +156,8 @@ than of the business.** On the go-to-market minimum the capital ordering
 rearranges: content drivers fall from
 @@sobol_peak_funding_requirement_content_drivers_in_top7|int@@ of the top seven
 to @@sobol_gtm_peak_funding_requirement_content_drivers_in_top7|int@@, and a
-Bengaluru salary driver comes second. "Content is the thing to get right" is
+Bengaluru salary driver arrives at rank
+@@sobol_gtm_peak_funding_requirement_rank_of_eng_usd_yr|int@@. "Content is the thing to get right" is
 true of the plan of record and follows from the scope decision rather than
 informing it. Section 8 gives both orderings side by side.
 
@@ -229,10 +250,13 @@ a name now.** `por_monthly.csv` and `por_paths.csv` are rebuilt and compared
 character for character on every load. Nothing rebuilds `sobol.csv` or
 `funding.csv` or the rest, and rebuilding them would mean re-running the whole
 pipeline to check the whole pipeline. What can actually go wrong there is
-staleness — a derived file generated against an older `model.py` and never
-regenerated — so `harness.load()` records the SHA-256 of the `model.py` it ran
-against into `out/provenance.csv`, and `verify.py` fails the whole run if any
-generating script's recorded hash is not the current one. That is a weaker check
+staleness — a derived file generated against an older model and never
+regenerated — so `harness.load()` records the SHA-256 of `model.py` **and
+`harness.py` together** into `out/provenance.csv`, and `verify.py` fails the
+whole run if any generating script's recorded hash is not the current one.
+Hashing the harness as well matters: it is the file that splits, executes and
+gates the model, and a change to the splitter or to the gate itself would
+otherwise leave no trace in any output. That is a weaker check
 than the gate and is reported as the weaker thing it is.
 
 **Every mechanism that a variant adds must reproduce the base run exactly when it
@@ -455,7 +479,11 @@ over acquisitions across the whole horizon, and acquisitions are still ramping i
 the last months of it, so a large share of them have their retention cut off by
 the end of the window rather than by churn. A round-four review re-ran the model
 with acquisition switched off after month 24, so every acquisition had at least
-three years to run out, and the level rose by about a sixth. **The ratio between
+three years to run out. The level rises from
+@@retained_months_per_path_mean|num2@@ to
+@@retained_months_uncensored_mean|num2@@ months, a lift of
+@@retained_months_censoring_lift_pct|num0@@ per cent, and that counterfactual is
+now a switch in `model.py` rather than a number quoted from a working note. **The ratio between
 year groups, which is what refutes docs/10, survives the correction intact** —
 that was checked deliberately. The level does not, and every figure built on it,
 including the lifetime-value ratio above, is a floor for the same reason.
@@ -752,14 +780,22 @@ individual indices, which is not a group index:
 | `items_per_unit` alone, rank 1 in the table above | @@sobol_peak_funding_requirement_value_of_items_per_unit|num4@@ |
 | Cost per item, as one timed pilot would measure it | @@sobol_grouped_peak_funding_requirement_cost_per_item_usd|num4@@ |
 | The cost of one full item bank, items times cost per item | @@sobol_grouped_peak_funding_requirement_cost_of_one_bank_usd|num4@@ |
-| The blended acquisition anchor | @@sobol_grouped_peak_funding_requirement_cac_anchor_blended_usd|num4@@ |
+| The blended acquisition anchor alone | @@sobol_grouped_peak_funding_requirement_cac_anchor_blended_usd|num4@@ |
+| Effective acquisition cost at a common spend, which is what E2's channel test measures | @@sobol_grouped_peak_funding_requirement_cac_effective_at_reference_spend_usd|num4@@ |
 
 Read that table rather than the count. **The finding survives and is stronger
 stated this way**: the cost of one item bank owns more of the variance in the
-capital requirement than any single registry entry does, and more than the
-acquisition anchor. The count of five was never the evidence, and no instrument
-in this directory can see registry granularity — it is a defect of the
-measurement, named in LIMITS.md.
+capital requirement than any single registry entry does, and more than
+acquisition however acquisition is grouped.
+
+The last row exists because a round-five review pointed out that the first
+grouping was not symmetric — the content scalar collects four of the eight
+content entries, everything one timed pilot and one objective count would
+settle, while the anchor collects three of twelve and leaves saturation out.
+Grouping acquisition the way its own open item proposes to measure it raises its
+index, and the margin narrows. It does not close. The count of five was never the
+evidence, and no instrument in this directory can see registry granularity — it
+is a defect of the measurement, named in LIMITS.md.
 
 The practical reading: **work on acquisition and the price anchor to make the
 business exist; work on content cost to make it fundable.** They are different
@@ -993,11 +1029,33 @@ all paths running three consecutive cash-positive months.
 **Nothing rescues the cash targets.** No value of the reachable pool, the
 acquisition anchor, age assurance cost, validation minutes, item count, sessions
 per household, churn or price, anywhere in its prior range, gets the median path
-whole on either scope. Two of those eight — the reachable pool and the
-acquisition anchor — were also solved against the ten-million-dollar capital
-ceiling and fail that too; the other six were solved against the median-path
-target only, and this paragraph used to read as though all eight had failed
-both. That is not a modelling failure; it is the answer, and the reason is in
+whole on either scope. The other six of those eight were solved against the
+median-path target only.
+
+**But two of them were also solved against the ten-million-dollar capital
+ceiling, and there the answer is the opposite of what this paragraph used to
+say.** "Not bracketed" means only that the metric does not *cross* the target
+inside the prior range; it says nothing about which side of it the metric sits
+on, and two drafts read every unbracketed row as a failure. On the plan of record
+the reachable pool and the acquisition anchor do fail the ceiling everywhere. **On
+the go-to-market minimum they meet it everywhere** — at the very top of the
+acquisition anchor's log-uniform prior, four times its median, the narrow scope
+still needs
+@@breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_peak_funding_p80_metric_at_support_high|usd0@@
+against the ten-million ceiling, and across the reachable pool's thirtyfold range
+the figure never leaves the neighbourhood of
+@@breakeven_gtm_minimum_uk_one_board_pool_uk_peak_funding_p80_metric_at_support_low|usd0@@.
+Section 11's own table says the same thing from the other end, and this section
+contradicted it for two rounds. `out/breakeven.csv` now records which side every
+unbracketed row sits on:
+@@breakeven_rows_unbracketed_met|int@@ of the
+@@breakeven_rows_unbracketed|int@@ unbracketed rows are unbracketed because the
+target is **met** across the whole prior range.
+
+**That is the most actionable positive result in the file and it was being
+reported as a failure.** The narrow scope stays inside a ten-million-dollar
+capital ceiling at the eightieth percentile wherever the acquisition anchor and
+the reachable pool land inside their priors. That is not a modelling failure; it is the answer, and the reason is in
 the cost split. Content is @@por_share_content_cost_pct|num1@@ per cent of cost, people @@por_share_people_beng_cost_pct|num1@@ per cent in
 Bengaluru plus @@por_share_people_uk_cost_pct|num1@@ in the United Kingdom, and step costs @@por_share_step_cost_pct|num1@@ per cent.
 A driver that acts only on demand cannot move a cost base that demand does not
@@ -1009,12 +1067,25 @@ LIMITS.md item 5.)
 
 All four are on the same target, half of all paths running three consecutive
 cash-positive months, and all four are on the two drivers section 8 says decide
-whether the venture exists at all. **That is a tautology, not corroboration, and
-an earlier draft called it "the instrument agreeing with itself" as though it
-were evidence.** A bisection can only bracket a target on a driver that moves
-that target a lot, and the Sobol index ranks drivers by exactly how much they
-move it. Both are computed on the same metric. There is no information in the
-agreement; it would have been alarming only if it had failed.
+whether the venture exists at all — and **two drafts running have got the reason
+for that wrong in opposite directions.** The first called it "the instrument
+agreeing with itself", as though it were corroboration. The second called it a
+tautology, on the argument that a bisection can only bracket on a driver the
+index ranks highly. That argument fails on this file: the price driver brackets
+while ranking @@sobol_reaches_profitability_rank_of_price_uk_tut_gbp|int@@ on the
+same target, at @@sobol_reaches_profitability_value_of_price_uk_tut_gbp|num4@@
+against the anchor regime's
+@@sobol_reaches_profitability_value_of_anchor_u|num4@@ — and the anchor regime,
+which ranks second, has no break-even at all.
+
+**The real reason is the pinning, and the write-up says so two paragraphs
+below.** The price solve pins the anchor regime to tutoring; the Sobol run does
+not. So the price row brackets *conditionally*, on a scope where the largest
+competing uncertainty has been switched off, while `anchor_u` cannot bracket
+because it is a regime switch rather than a continuum. The agreement between the
+two lists is neither corroboration nor a tautology. It is a consequence of what
+each instrument was allowed to hold fixed, which is the sort of thing that has to
+be read off the code rather than inferred from the shape of the answer.
 
 | Scope | Driver | Break-even | Prior median | Prior mode |
 |---|---|---|---|---|
@@ -1233,7 +1304,8 @@ content line is @@scenario_ukonly_total_content_cost_mean|usd0@@ against the
 go-to-market minimum's @@scenario_gtm_minimum_total_content_cost_mean|usd0@@. On
 terminal cash that scenario is worth @@delta_ukonly_terminal_cash_mean|usd0@@,
 which is close to nothing and which the document duly called close to nothing.
-The real scope reduction is worth six times that. So the capital figure was a
+The real scope reduction is worth
+@@scope_gtm_over_ukonly_terminal_cash|num0@@ times that. So the capital figure was a
 comparison against the real scope reduction, the terminal-cash figure was a
 comparison against a different and much smaller one, and the conclusion drawn
 from putting them side by side was an artefact of the mismatch rather than a
@@ -1259,7 +1331,8 @@ requirement they are worth almost the same — freezing content
 reduction they come to @@delta_gtm_minimum_peak_funding_p80_abs|usd0@@. On
 terminal cash they are not close: freezing content is worth
 @@delta_por_content_frozen_terminal_cash_mean|usd0@@ and dropping markets
-@@delta_ukonly_terminal_cash_mean|usd0@@, a factor of five.
+@@delta_ukonly_terminal_cash_mean|usd0@@, a factor of
+@@scope_content_freeze_over_market_drop_terminal_cash|num0@@.
 
 **The two decisions separate exactly on the content column, and that is checked
 rather than eyeballed — but read what the check covers.** Foreign content
@@ -1410,7 +1483,8 @@ OPEN_ITEMS.md.
 | `out/sobol_grouped.csv` | The same decomposition on grouped scalars rather than registry entries, because the registry's granularity is not the business's. |
 | `out/drivers.csv`, `out/constants.csv` | Every sampled driver with its range and what anchors it, and every decided constant with what it is. |
 | `out/aux_params.csv` | The priors drawn outside the published random stream, which are not in `out/drivers.csv` because they are not in the published run. |
-| `out/provenance.csv` | Which `model.py` each generating script last ran against. `verify.py` fails the run if they disagree. |
+| `out/provenance.csv` | Which `model.py` **and `harness.py`** each generating script last ran against, hashed together. `verify.py` fails the run if they disagree. |
+| `out/harness_selftest.txt`, `out/suffix_selftest.txt` | The records of the three self-tests: both harness gates, and the column-naming discipline. |
 | `out/offtest.csv` | Each mechanism, off and on: exact when off, and not inert when on. |
 | `out/figures.csv` | Every figure quoted anywhere, with its source file and its derivation. |
 | `LIMITS.md`, `OPEN_ITEMS.md`, `CHANGELOG.md` | What is not clean, what is unanswered, and what moved. |

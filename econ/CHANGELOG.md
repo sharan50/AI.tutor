@@ -552,8 +552,10 @@ not simply the opposite of the old one. Scope is much the largest decision on th
 capital requirement and the third largest on terminal cash, behind the residual
 and the price-anchor spread — material on both, where the old text had it at
 close to nothing on one. And "scope" turns out to be two decisions: freezing the
-content schedule is worth five times what dropping markets is on terminal cash,
-while on capital the two are worth about the same. `GTM_MINIMUM_SCHEDULES` moved
+content schedule is worth several times what dropping markets is on terminal
+cash, while on capital the two are worth about the same. (This entry gave a
+multiplier of five, from the round 3 run. It did not move when the scenarios
+did, and nor did the one in section 12. Both are rendered tokens now; see 5.7.) `GTM_MINIMUM_SCHEDULES` moved
 into `model.py` so `variants.py`, `funding.py`, `rescue_grid.py` and
 `breakeven.py` cannot drift apart.
 
@@ -565,7 +567,9 @@ on content cost to make it fundable — was stated as a property of the business
 
 **Verified.** On the go-to-market minimum the capital ordering rearranges:
 content drivers fall from five of the top seven to one, and `eng_usd_yr` moves
-from rank eight to rank two.
+from rank eight to rank two. (That was the round 3 run. The ranks moved with the
+model in rounds 4 and 5; section 1 of the write-up renders the current one from
+`out/sobol.csv` rather than repeating this.)
 
 **Fixed.** `sensitivity.py` now runs the decomposition on three configurations
 and writes them all to `out/sobol.csv` under the `run` column. `figures.py` keeps
@@ -784,7 +788,7 @@ their own rows in the scenario table. It passed the harness gate (it was in the
 published run, so byte-exactness confirmed it), the off/on test (it is not a
 switchable mechanism) and every accounting identity (it moves stock, not cash).
 
-### 4.3 The acquisition budget cap believed in a household 2.6 times longer-lived than the model delivers
+### 4.3 The acquisition budget cap believed in a household about two and a half times longer-lived than the model delivers
 
 **Found.** `ltv_estimate` is the company's own running estimate of what a
 household is worth and the only restraint on acquisition spend anywhere in the
@@ -1061,12 +1065,233 @@ that keeps `_mean` and `_band` columns from colliding, and the measurement of th
 placement itself were all correct. It was only the sentence drawing a conclusion
 from them.
 
+### 4.18 A currency tag on twelve quantities that are not money
+
+Found by sweeping every figure token against its unit in `out/figures.csv`.
+
+`usd0` and `num0` render identically — both are a comma-separated integer — so
+twelve tokens tagging household counts, rota thresholds and pound-denominated
+driver bounds as `usd0` produced exactly the right output. The prose around each
+was correct. The defect is only visible to someone reading the source, where a
+household count is labelled as dollars.
+
+Retagged to `num0`, which leaves all three rendered documents byte-identical, and
+`verify.py` gained a pass that fails the run on any currency tag over a
+non-currency unit. `render.py`'s format table says which is which and why they
+are kept apart.
+
+**And the provenance file was recording things that generate nothing.** An
+ad-hoc `python3 -` that loads the harness to check a number wrote a row into
+`out/provenance.csv` under the script name `-`. It writes no output, so the row
+stands for nothing. `harness.load()` now records only callers whose name ends in
+`.py`.
+
 ### 4.14 What held up
 
-Recorded because a round that only reports failures is not a review. The harness
+Recorded because a round that only reports failures is not a review.
+
+**Round sizing adds two percentiles and it is safe.** A staged round is the
+eightieth percentile of the window's need plus six times the eightieth
+percentile of its burn — the construction section 6 refuses for band lines. I
+expected this to be a finding and it is not: need and burn correlate at 0.97 to
+1.00 across the three windows, so the sum of the percentiles differs from the
+percentile of the sum by about seven hundred dollars on a staged total of
+thirty-seven million. LIMITS item 20 now states the check and the condition
+under which it would stop holding.
+ The harness
 gate and both its self-tests; the suffix discipline check; that no draw occurs
 inside the month loop; that the funding section's staged-versus-headline gap is
 buffer rather than quantile arithmetic; that the shared market budget pot does
 not penalise the plan of record; that the pre-to-exam retained-month ratio
 survives horizon censoring; that the Sobol ANOVA estimator is correctly
 specified; and that the launch-delay deltas are not Monte Carlo noise.
+
+---
+
+## Round 5: two more mechanism defects, and a positive result the document reported as a failure
+
+The protocol says repeat until a round returns nothing new. Round 5 returned a
+great deal, including two live defects in the month loop — one of them the same
+ordering error round 4 found, on the other of the two paths into the segment.
+
+Every finding was checked against the code before being accepted.
+
+### 5.1 The sitting-month exits deleted households acquired that same month
+
+**Found.** Round 4 fixed the A-level sitting exit against the PROGRESSION path.
+The same error was live on the ACQUISITION path, on both segments. Acquisitions
+are added to `stock` before the calendar block runs, so a household acquired in
+a sitting month was charged its effective acquisition cost and its age-assurance
+check, billed for **nothing** — billing starts the month after — and deleted at
+the end of the month it arrived in.
+
+**Verified.** Tracking arrivals separately and exempting them from both
+same-month exits, paired: terminal cash at the mean -7,867,103 against the
+published -10,049,080.
+
+**Moved.** About +2.2m on the mean, roughly twice what round 4's fix was worth
+and larger than the creator-fee and app-store scenarios that have their own rows
+in the scenario table. It passed the harness gate, the off/on test and every
+accounting identity — the same three gates round 4's version passed while wrong.
+
+**Left.** `seg_mix_exam` does not vary with the calendar, so the model still buys
+examination-year households in the sitting month, merely at a price that now
+buys something. What share of arrivals is examination-year in which month is
+unmeasured, so it stays a prior rather than becoming a second invented schedule.
+
+### 5.2 An institution cost in a consumer ratio, twice
+
+**Found.** `inference_cost` carries the institution channel's seat consumption as
+well as the consumer book's. `cohorts.py` divided it by `gross_rev_consumer`,
+which excludes institution revenue entirely. The published claim — that variable
+cost exceeds half of revenue on a minority of paths and exceeds revenue outright
+on a few per cent — was an artefact of that. On the paths carrying the headline,
+about four fifths of the "variable cost" was institution inference, against
+institution revenue more than twice its size that the denominator did not see.
+
+**Fixed.** `model.py` emits `school_inference_cost` as its own monthly series, a
+decomposition of `inference_cost` and never a thirteenth cost line. The ratio is
+consumer-only, and so is `final_year_contrib_per_hh_month`, which had both the
+institution channel's revenue and its inference in a numerator whose denominator
+is consumer household months.
+
+**The corrected finding is stronger than the published one.** Constructed
+consistently, docs/10's load-bearing row does not reverse on a minority of paths;
+it does not reverse at all. Checklist item 19's table drops the row it had
+conceded.
+
+### 5.3 "Not bracketed" was read as failure regardless of which side it sits on
+
+**Found.** Section 10 said the ten-million-dollar capital ceiling is failed on
+both scopes by both drivers solved against it. On the go-to-market minimum the
+ceiling is **met across the entire prior range of both**: at the top of the
+acquisition anchor's log-uniform prior, four times its median, the narrow scope
+still needs about 7.2m. Section 11's own table said the same thing from the
+other end, and section 10 contradicted it for two rounds.
+
+`bisect()` returns "not bracketed" when the metric does not cross the target
+inside the prior range. That says nothing about which side of it the metric sits
+on, and four of the twenty-four rows are unbracketed on the satisfying side.
+
+**Fixed.** `breakeven.py` classifies every unbracketed row as met or missed
+across the range, with the direction of "good" taken per metric. `figures.py`
+counts both. Section 10 now reports the result it had been inverting: **the
+narrow scope stays inside a ten-million-dollar ceiling wherever the acquisition
+anchor and the reachable pool land inside their priors.** It is the most
+actionable positive result in the file.
+
+### 5.4 The lifetime-value estimate used a calendar the loop does not have
+
+**Found.** Round 4 rewrote `ltv_estimate` to take the examination calendar from
+the loop. Its pre-examination branch capped the household's life at the sitting
+plus ten months; the loop moves that household on at the sitting plus **two**.
+Those are different quantities and not congruent — for a household acquired in
+the sitting month the true figure is two and the code used ten — and the
+post-progression term counted the months to this year's sitting rather than to
+the household's own.
+
+**Fixed.** Both terms come from the loop's calendar now. `LIMITS.md` no longer
+attributes the residual gap to two causes when there were three.
+
+### 5.5 Dead code, again
+
+A nested loop in the month loop whose entire body bound a view of `stock` and
+discarded it — the remains of the accumulators round 4 removed. A constant in
+`cohorts.py` referenced nowhere. Both removed on the rule rounds 3 and 4 set.
+
+### 5.6 The staging test ran on the first half of the plan
+
+**Found.** `funding.py`'s commitments list is hand-typed and every entry landed
+at month 30 or earlier, in a sixty-month horizon. Six of the model's own content
+steps were missing, so the count section 11 reasons from was 10 of 14 rather
+than 10 of 20 — and one of the missing six, the United States seven-subject step,
+violates the section's own test a second time: it lands in the Series B window
+and starts its build inside the Series A.
+
+**Fixed.** All six added. The instrument that measures "staging against
+decisions" was itself a hand-typed list, which is the failure class round 4 spent
+an entry converting away from.
+
+### 5.7 Two multipliers taken from a superseded run
+
+Section 12 said the real scope reduction is worth "six times" the one the
+document used to read it off, and that freezing content is worth "five times"
+what dropping markets is. Both were round 3 figures. The scenarios moved twice
+since and the words did not; both are about half the true values. Both are
+rendered tokens now, and so is the rank ordinal in section 1 that said a
+Bengaluru salary driver "comes second" when the file and section 8's own table
+both say third.
+
+### 5.8 Claims with no artefact behind them
+
+"The level rose by about a sixth" under an acquisition-off counterfactual that
+existed only in a working note: `stop_acquisition_after` is a configuration key
+now, with an off-test, and the lift is a figure. "Those steps fire on most
+paths": true of the first safeguarding rota step, false of the second, which
+fires on about one path in five. Both now rendered.
+
+### 5.9 A paired conclusion argued from an unpaired error
+
+The sampled foreign-exchange scenario is indistinguishable from zero — reached
+by comparing its delta against the standard error of the base mean, which is
+several times too large for a scenario that shares its random numbers path by
+path. `out/variants.csv` carries a `paired_mc_se` column now and the preamble
+quotes the t-statistic. The conclusion held; the number offered for it did not.
+
+### 5.10 The grouped indices were not grouped on the same principle
+
+The content scalar collects four of eight content entries, everything one timed
+pilot and one objective count would settle. The acquisition scalar collected
+three of twelve and left out saturation, although E2's own trigger measures
+effective cost *at* a spend. A fourth grouped quantity does it symmetrically.
+The conclusion survives and the margin narrows.
+
+### 5.11 Two absent lines and one asymmetry, now written down
+
+Agency margin or off-payroll on-cost on examiner time — the largest cost line
+carries no overhead term at all, and X10's trigger assumes an agency. No organic
+or referred acquisition of any kind: every household in the model is bought, so
+there is no mechanism by which the book grows without spending, which is part of
+why no single driver rescues the plan. And the reachable pool scales with subject
+breadth while discarding levels and boards, so the go-to-market minimum and a
+scope with twelve times the content are credited the same pool. The last is not
+corrected, because mapping board coverage onto households needs a prior nothing
+supplies — and because the pool is nearly inert, which is the more interesting
+half of the finding.
+
+### 5.12 Smaller, and again there were many
+
+LIMITS asserted a sentence 250 lines above the passage that retracts it, and
+quoted a superseded pair of retention figures while pointing at a file holding a
+different pair. Item 19 said two of its rows are propositions the document
+refutes; four are. Item 8 accounted for six of seven zero-priced lines. Item 11
+named six mechanisms under a count of seven. A "where to look" table omitted the
+two self-test records that are the evidence for section 3's central claim. The
+staleness check is described as hashing `model.py` in four places and hashes
+`model.py` and `harness.py`; the CSV column said `model_sha256` over a hash of
+two files. `breakeven.py`'s header comment said no driver reaches any target when
+four bracket. Five more comments and docstrings described something other than
+the code below them. The change log asserted "2.6 times" over its own 8.351 and
+3.309. Section 10's tautology argument was itself wrong: the price driver
+brackets while ranking sixth on that target, and the real reason is the pinning,
+which the write-up says two paragraphs later.
+
+### 5.13 What held up
+
+Recorded because a round that only reports failures is not a review.
+
+Every figure in the scenario table, the scope ladder and the funding table
+reconciles to the CSVs to the dollar. The cost split, the whole Sobol section
+including both scope orderings and the onshoring ordering, the rescue grid, the
+two-way grid, the Year 10 counterfactuals and their differencing, the trough
+table and the new censoring figures, all fifteen discounting figures, the
+penalty comparison, the examiner-hours and night-rota derivations. Both harness
+gates and the source-level no-draw check. The suffix discipline and its
+self-test. The two-sided off-test on every mechanism. The five identities and the
+count of them. `enforce_allowance` truncating delivery and removing the overage
+with it. The A-level exit firing on the standing stock. `fx_scale` reaching
+content. `people_beng_content_cost` never entering a total. And the
+percentile-addition in the round sizing, which I expected to be a finding and is
+not: need and burn correlate at 0.97 to 1.00, so the sum of the percentiles is
+the percentile of the sum to within seven hundred dollars on thirty-seven
+million.

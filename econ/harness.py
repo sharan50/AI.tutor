@@ -172,22 +172,32 @@ def _record_provenance():
     all the current one. It is a staleness check, not a reproduction check, and
     it is reported as the weaker thing it is.
     """
-    script = os.path.basename(sys.argv[0]) or "interactive"
+    script = os.path.basename(sys.argv[0]) or ""
+    # Only the generating scripts belong in this file. An ad-hoc `python3 -` or
+    # `python3 -c` that loads the harness to check something writes no output,
+    # so recording it puts a row in the provenance file that stands for nothing
+    # and that a reader has to work out how to ignore.
+    if not script.endswith(".py"):
+        return
     path = os.path.join(OUTDIR, "provenance.csv")
     sha = model_sha()
     rows = {}
+    # The header changed when the hash started covering harness.py as well. An
+    # old file carries the old column name, so it is discarded rather than
+    # merged: a row whose hash is under a different header means nothing.
     if os.path.exists(path):
         with open(path, newline="") as fh:
             rdr = csv.reader(fh)
             header = next(rdr, None)
-            for r in rdr:
-                if len(r) >= 2:
-                    rows[r[0]] = r
+            if header == ["script", "model_and_harness_sha256", "ran_at_utc"]:
+                for r in rdr:
+                    if len(r) >= 2:
+                        rows[r[0]] = r
     rows[script] = [script, sha, datetime.datetime.now(datetime.timezone.utc)
                     .strftime("%Y-%m-%dT%H:%M:%SZ")]
     with open(path, "w", newline="") as fh:
         w = csv.writer(fh, lineterminator="\n")
-        w.writerow(["script", "model_sha256", "ran_at_utc"])
+        w.writerow(["script", "model_and_harness_sha256", "ran_at_utc"])
         for k in sorted(rows):
             w.writerow(rows[k])
 
