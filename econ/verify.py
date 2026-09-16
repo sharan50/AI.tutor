@@ -153,8 +153,14 @@ def pass_a(figs):
     fails, checked = [], 0
     for k, v in d.items():
         if k.startswith("_xcheck_"):
-            # Identities that must hold to within floating point and the six
-            # decimal places the CSV is written at.
+            # Identities. The threshold below is one dollar on lines that run
+            # to tens of millions, not the six decimal places the CSV is
+            # written at: the monthly file rounds each column independently, so
+            # a sum of twelve rounded columns can differ from a rounded sum by
+            # more than the last place. A dollar is loose enough to survive that
+            # and tight enough that no real error hides under it. An earlier
+            # comment here claimed the six decimal places and did not match the
+            # code below.
             if abs(v) > 1.0:
                 fails.append("%s: identity violated by %.6f" % (k, v))
             checked += 1

@@ -76,9 +76,11 @@ share_double = float((pre_months >= 2.0 * exam_months).mean())
 add("share_paths_year10_at_least_doubles", share_double, "share",
     "share of paths on which the pre-examination cohort retains at least twice as many months as the examination cohort", "15 and 19")
 
-# WHY the ratio is 1.24 rather than two. The write-up first blamed the summer,
-# following docs/10's own caveat. That is not what the model says. These
-# counterfactuals pin the drivers one at a time, after the draws, and re-run.
+# WHY the ratio is what it is rather than two. These counterfactuals pin the
+# drivers one at a time, after the draws, and re-run. The lifts they imply are
+# now computed below rather than read off by eye: the write-up concluded from
+# these three numbers that in-term churn was the larger lever, which is the
+# opposite of what differencing them says.
 def retained_ratio(**pins):
     drv = dict(DRV)
     for k, v in pins.items():
@@ -103,8 +105,18 @@ add("year10_ratio_with_no_summer_at_all", _r_nosummer, "ratio",
     "the pre-to-examination retained-month ratio with the summer lapse pinned to zero and progression pinned to one: the summer removed entirely", "15")
 add("year10_ratio_with_churn_at_its_floor", _r_lowchurn, "ratio",
     "the same ratio with in-term churn pinned to the bottom of its prior range and the summer left as sampled", "15")
+# WHICH of the two levers is larger. The write-up asserted in-term churn and
+# never differenced the two counterfactuals against the base. It is the summer,
+# by a wide margin. See CHANGELOG 4.14.
+add("year10_ratio_lift_from_removing_summer", _r_nosummer - ratio, "ratio points",
+    "the Year 10 ratio with the summer removed entirely, less the ratio as sampled", "15 and 19")
+add("year10_ratio_lift_from_flooring_churn", _r_lowchurn - ratio, "ratio points",
+    "the Year 10 ratio with in-term churn at its floor, less the ratio as sampled", "15 and 19")
+add("year10_summer_lever_over_churn_lever",
+    (_r_nosummer - ratio) / max(_r_lowchurn - ratio, 1e-9), "ratio",
+    "the summer lever divided by the in-term churn lever: which of docs/10's two questions is the larger one", "15 and 19")
 add("year10_ratio_with_no_summer_and_floor_churn", _r_both, "ratio",
-    "the same ratio with both pinned: this is the only combination that recovers the figure docs/10 reasons toward", "15")
+    "the same ratio with both pinned. An earlier version of this string called it the only combination that recovers the figure docs/10 reasons toward. It does not recover it: nothing in the prior ranges does, and saying otherwise was the same error the write-up made", "15")
 add("retained_months_exam_at_floor_churn", _e2, "months per acquisition",
     "examination-year retained months with in-term churn at the bottom of its prior range", "15")
 add("retained_months_pre_at_floor_churn", _p2, "months per acquisition",
@@ -313,6 +325,33 @@ add("por_total_cost_recomputed", total_cost, "USD",
 # asserting without a number behind it. Each is cheap to compute from the
 # published outputs and each corrects or qualifies a claim in the write-up.
 # ---------------------------------------------------------------------------
+
+# 0. What the acquisition budget cap believes about retention, against what the
+#    model delivers. Two documents claimed this file published both numbers
+#    before it did; round 4's coherence pass caught that. It does now.
+_ch = np.clip(DRV["churn_base"], 1e-3, 0.95)
+_keep_first = (1.0 - DRV["churn_m1_extra"]) * (1.0 - _ch)
+_num = np.zeros(P); _den = np.zeros(P)
+for _t in range(NS["HORIZON"]):
+    _to_sit = float((NS["EXAM_CAL_MONTH"][NS["M_UK"]] - NS["cal_month"](_t)) % 12)
+    _m_exam = np.minimum(1.0 / _ch, _to_sit)
+    _m_pre = (np.minimum(1.0 / _ch, _to_sit + 10.0)
+              + (1.0 - DRV["summer_lapse_pre"]) * DRV["progress_continue"] * _m_exam)
+    _m_al = np.minimum(1.0 / _ch, _to_sit + 12.0)
+    _mix_e, _mix_a = DRV["seg_mix_exam"], DRV["seg_mix_alevel"]
+    _mix_p = np.maximum(1.0 - _mix_e - _mix_a, 0.0)
+    _w = MOUT["acquisitions"][:, _t]
+    _num += _w * _keep_first * (_mix_e * _m_exam + _mix_p * _m_pre + _mix_a * _m_al)
+    _den += _w
+_assumed = float((_num / np.maximum(_den, 1e-9)).mean())
+_realised = float((MOUT["active_hh"].sum(axis=1)
+                   / np.maximum(MOUT["acquisitions"].sum(axis=1), 1e-9)).mean())
+add("ltv_cap_assumed_months", _assumed, "months",
+    "the retained months ltv_estimate assumes, weighted by the acquisitions actually made in each month and using the United Kingdom examination calendar: what the only restraint on acquisition spend believes", "14")
+add("ltv_cap_realised_months", _realised, "months",
+    "the retained months the model delivers over the same run, right-censored by the horizon", "14")
+add("ltv_cap_months_overstatement", _assumed / max(_realised, 1e-9), "ratio",
+    "the first divided by the second. The budget cap inverts the saturation curve, so permitted spend scales as roughly the square of this", "14")
 
 # 1. Monte Carlo error. "A figure re-derived from a different seed is a
 #    different number" was stated and never sized. It is one line from the

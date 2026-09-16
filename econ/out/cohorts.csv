@@ -8,7 +8,10 @@ seed,run_date,name,value,unit,derivation,checklist_item
 20260916,2026-09-16,share_paths_year10_at_least_doubles,0.000150,share,share of paths on which the pre-examination cohort retains at least twice as many months as the examination cohort,15 and 19
 20260916,2026-09-16,year10_ratio_with_no_summer_at_all,1.450914,ratio,the pre-to-examination retained-month ratio with the summer lapse pinned to zero and progression pinned to one: the summer removed entirely,15
 20260916,2026-09-16,year10_ratio_with_churn_at_its_floor,1.051127,ratio,the same ratio with in-term churn pinned to the bottom of its prior range and the summer left as sampled,15
-20260916,2026-09-16,year10_ratio_with_no_summer_and_floor_churn,1.616931,ratio,the same ratio with both pinned: this is the only combination that recovers the figure docs/10 reasons toward,15
+20260916,2026-09-16,year10_ratio_lift_from_removing_summer,0.431072,ratio points,"the Year 10 ratio with the summer removed entirely, less the ratio as sampled",15 and 19
+20260916,2026-09-16,year10_ratio_lift_from_flooring_churn,0.031284,ratio points,"the Year 10 ratio with in-term churn at its floor, less the ratio as sampled",15 and 19
+20260916,2026-09-16,year10_summer_lever_over_churn_lever,13.779310,ratio,the summer lever divided by the in-term churn lever: which of docs/10's two questions is the larger one,15 and 19
+20260916,2026-09-16,year10_ratio_with_no_summer_and_floor_churn,1.616931,ratio,"the same ratio with both pinned. An earlier version of this string called it the only combination that recovers the figure docs/10 reasons toward. It does not recover it: nothing in the prior ranges does, and saying otherwise was the same error the write-up made",15
 20260916,2026-09-16,retained_months_exam_at_floor_churn,5.278662,months per acquisition,examination-year retained months with in-term churn at the bottom of its prior range,15
 20260916,2026-09-16,retained_months_pre_at_floor_churn,5.548542,months per acquisition,pre-examination retained months with in-term churn at the bottom of its prior range,15
 20260916,2026-09-16,shock_longest_bad_run_mean,5.770750,months,"mean of longest_demand_shock_bad_run, a published column of por_paths.csv: the longest run of consecutive months with the demand multiplier below SHOCK_BAD_THRESHOLD",18
@@ -52,6 +55,9 @@ seed,run_date,name,value,unit,derivation,checklist_item
 20260916,2026-09-16,missing_night_rota_cost_total,674068.980182,USD,that annual cost from the UK go-to-market month to the end of the horizon,5 and 8
 20260916,2026-09-16,missing_night_rota_share_of_total_cost,0.017626,share,the missing rota divided by the total modelled cost,5 and 8
 20260916,2026-09-16,por_total_cost_recomputed,38242309.651151,USD,"sum over paths and months of every modelled cost line, averaged over paths",5
+20260916,2026-09-16,ltv_cap_assumed_months,5.811445,months,"the retained months ltv_estimate assumes, weighted by the acquisitions actually made in each month and using the United Kingdom examination calendar: what the only restraint on acquisition spend believes",14
+20260916,2026-09-16,ltv_cap_realised_months,3.546992,months,"the retained months the model delivers over the same run, right-censored by the horizon",14
+20260916,2026-09-16,ltv_cap_months_overstatement,1.638415,ratio,"the first divided by the second. The budget cap inverts the saturation curve, so permitted spend scales as roughly the square of this",14
 20260916,2026-09-16,por_terminal_cash_mc_se,533243.956808,USD,standard error of the mean of terminal_cash across paths: the sampling error on the headline level at this seed and this path count,the instrument
 20260916,2026-09-16,por_terminal_cash_mc_se_two_sigma,1066487.913616,USD,"twice that, which is the interval a figure quoted to the dollar actually carries",the instrument
 20260916,2026-09-16,por_terminal_cash_npv_00,-10049079.627034,USD,"mean over paths of net cash discounted monthly at 0 per cent a year: the model discounts nothing, and this is what that is worth",the instrument

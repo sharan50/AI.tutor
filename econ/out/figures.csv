@@ -3,6 +3,8 @@ seed,20260916,integer,por_monthly.csv,"the seed column, constant down the file"
 run_date,2026-09-16,date,por_monthly.csv,"the run_date column, constant down the file"
 horizon_months,60,months,por_monthly.csv,row count
 n_paths,20000,paths,por_paths.csv,row count
+out_csv_count,23,count,out/,how many .csv files the out directory holds
+out_csv_gated_count,2,count,out/,how many of them the character-for-character harness gate rebuilds and compares
 n_drivers,80,count,drivers.csv,row count
 driver_anchor_u_low,0.000000,driver units,drivers.csv,the low column for anchor_u
 driver_anchor_u_high,1.000000,driver units,drivers.csv,the high column for anchor_u
@@ -30,10 +32,8 @@ driver_price_rel_row_low,0.550000,driver units,drivers.csv,the low column for pr
 driver_price_rel_row_high,1.050000,driver units,drivers.csv,the high column for price_rel_row
 driver_price_rel_row_low_pct,55.000000,per cent,drivers.csv,"the low column for price_rel_row, as a percentage"
 driver_price_rel_row_high_pct,105.000000,per cent,drivers.csv,"the high column for price_rel_row, as a percentage"
-driver_price_drift_yr_low,0.015000,driver units,drivers.csv,the low column for price_drift_yr
-driver_price_drift_yr_high,0.030000,driver units,drivers.csv,the high column for price_drift_yr
-driver_price_drift_yr_low_pct,1.500000,per cent,drivers.csv,"the low column for price_drift_yr, as a percentage"
-driver_price_drift_yr_high_pct,3.000000,per cent,drivers.csv,"the high column for price_drift_yr, as a percentage"
+driver_price_drift_yr_mean,0.015000,driver units,drivers.csv,the mean of the normal prior for price_drift_yr
+driver_price_drift_yr_sd,0.030000,driver units,drivers.csv,"the standard deviation of that prior, which is not a bound"
 driver_overage_price_frac_low,0.550000,driver units,drivers.csv,the low column for overage_price_frac
 driver_overage_price_frac_high,1.450000,driver units,drivers.csv,the high column for overage_price_frac
 driver_overage_price_frac_low_pct,55.000000,per cent,drivers.csv,"the low column for overage_price_frac, as a percentage"
@@ -334,7 +334,6 @@ driver_price_uk_sw_gbp_range,9.500000,driver units,drivers.csv,the high column l
 driver_price_rel_us_range,0.600000,driver units,drivers.csv,the high column less the low column for price_rel_us
 driver_price_rel_in_range,0.220000,driver units,drivers.csv,the high column less the low column for price_rel_in
 driver_price_rel_row_range,0.500000,driver units,drivers.csv,the high column less the low column for price_rel_row
-driver_price_drift_yr_range,0.015000,driver units,drivers.csv,the high column less the low column for price_drift_yr
 driver_overage_price_frac_range,0.900000,driver units,drivers.csv,the high column less the low column for overage_price_frac
 driver_sessions_per_hh_month_range,14.500000,driver units,drivers.csv,the high column less the low column for sessions_per_hh_month
 driver_sessions_cv_range,1.050000,driver units,drivers.csv,the high column less the low column for sessions_cv
@@ -485,7 +484,7 @@ por_trough_understatement_pct,47.483688,per cent,por_monthly.csv and por_paths.c
 por_trough_p10,-33233771.708868,USD,por_paths.csv,10th percentile of the per-path trough
 por_trough_p90,-5857945.328638,USD,por_paths.csv,90th percentile of the per-path trough
 por_mean_trough_month,53.605450,month index,por_paths.csv,mean of trough_month
-por_final_year_contrib_per_hh_month_median,27.946554,USD per household month,por_paths.csv,"median of final_year_contrib_per_hh_month, which is net revenue less inference, support, payment and hosting only"
+por_final_year_contrib_per_hh_month_median,27.946554,USD per household month,por_paths.csv,"median of final_year_contrib_per_hh_month, which is net revenue less inference, support, payment, hosting and app store fees only. The store fees are zero in the published run and are not zero in the app-store scenario, so leaving them out of this sentence described a different quantity from the one path_outcomes computes"
 por_final_year_contrib_per_hh_month_p05,6.784935,USD per household month,por_paths.csv,5th percentile of final_year_contrib_per_hh_month
 por_final_year_contrib_per_hh_month_p95,94.445718,USD per household month,por_paths.csv,95th percentile of final_year_contrib_per_hh_month
 por_final_year_effective_cac_mean,40.408499,USD per acquisition,por_paths.csv,mean of final_year_effective_cac: final twelve months of acquisition and verification spend divided by final twelve months of acquisitions
@@ -2910,7 +2909,7 @@ funding_one_subject_uk_one_board_whole_horizon_round_size,5722828.036696,USD,fun
 funding_one_subject_uk_one_board_whole_horizon_need_p80,5722828.036696,USD,funding.csv,need_p80 for scenario one_subject_uk_one_board stage whole_horizon
 commitments_total,14,count,funding_commitments.csv,row count
 commitments_spend_starts_in_seed,10,count,funding_commitments.csv,rows whose stage_that_actually_pays is seed
-commitments_decided_after_their_round_closed,1,count,funding_commitments.csv,rows where the commitment lands in a stage later than the one that pays for it
+commitments_paid_by_an_earlier_round_than_they_land_in,1,count,funding_commitments.csv,rows where the commitment LANDS in a stage later than the one whose window its spend starts in: the Series A refinancing a seed-window decision
 commitments_entity_count,2,count,funding_commitments.csv,rows whose commitment names an entity set-up
 commitments_entity_names,United States entity set-up and market counsel; rest-of-English-speaking entity set-up and market counsel,text,funding_commitments.csv,"those rows' commitment text, verbatim"
 commitments_entities_paid_by_seed,1,count,funding_commitments.csv,"of those, the ones whose spend starts in the seed window"
@@ -3031,7 +3030,10 @@ year10_to_year11_ratio_p90,1.058893,ratio,cohorts.csv,the same ratio at the nine
 share_paths_year10_at_least_doubles,0.000150,share,cohorts.csv,share of paths on which the pre-examination cohort retains at least twice as many months as the examination cohort
 year10_ratio_with_no_summer_at_all,1.450914,ratio,cohorts.csv,the pre-to-examination retained-month ratio with the summer lapse pinned to zero and progression pinned to one: the summer removed entirely
 year10_ratio_with_churn_at_its_floor,1.051127,ratio,cohorts.csv,the same ratio with in-term churn pinned to the bottom of its prior range and the summer left as sampled
-year10_ratio_with_no_summer_and_floor_churn,1.616931,ratio,cohorts.csv,the same ratio with both pinned: this is the only combination that recovers the figure docs/10 reasons toward
+year10_ratio_lift_from_removing_summer,0.431072,ratio points,cohorts.csv,"the Year 10 ratio with the summer removed entirely, less the ratio as sampled"
+year10_ratio_lift_from_flooring_churn,0.031284,ratio points,cohorts.csv,"the Year 10 ratio with in-term churn at its floor, less the ratio as sampled"
+year10_summer_lever_over_churn_lever,13.779310,ratio,cohorts.csv,the summer lever divided by the in-term churn lever: which of docs/10's two questions is the larger one
+year10_ratio_with_no_summer_and_floor_churn,1.616931,ratio,cohorts.csv,"the same ratio with both pinned. An earlier version of this string called it the only combination that recovers the figure docs/10 reasons toward. It does not recover it: nothing in the prior ranges does, and saying otherwise was the same error the write-up made"
 retained_months_exam_at_floor_churn,5.278662,months per acquisition,cohorts.csv,examination-year retained months with in-term churn at the bottom of its prior range
 retained_months_pre_at_floor_churn,5.548542,months per acquisition,cohorts.csv,pre-examination retained months with in-term churn at the bottom of its prior range
 shock_longest_bad_run_mean,5.770750,months,cohorts.csv,"mean of longest_demand_shock_bad_run, a published column of por_paths.csv: the longest run of consecutive months with the demand multiplier below SHOCK_BAD_THRESHOLD"
@@ -3075,6 +3077,9 @@ missing_night_rota_cost_per_year,149793.106707,USD per year,cohorts.csv,"three f
 missing_night_rota_cost_total,674068.980182,USD,cohorts.csv,that annual cost from the UK go-to-market month to the end of the horizon
 missing_night_rota_share_of_total_cost,0.017626,share,cohorts.csv,the missing rota divided by the total modelled cost
 por_total_cost_recomputed,38242309.651151,USD,cohorts.csv,"sum over paths and months of every modelled cost line, averaged over paths"
+ltv_cap_assumed_months,5.811445,months,cohorts.csv,"the retained months ltv_estimate assumes, weighted by the acquisitions actually made in each month and using the United Kingdom examination calendar: what the only restraint on acquisition spend believes"
+ltv_cap_realised_months,3.546992,months,cohorts.csv,"the retained months the model delivers over the same run, right-censored by the horizon"
+ltv_cap_months_overstatement,1.638415,ratio,cohorts.csv,"the first divided by the second. The budget cap inverts the saturation curve, so permitted spend scales as roughly the square of this"
 por_terminal_cash_mc_se,533243.956808,USD,cohorts.csv,standard error of the mean of terminal_cash across paths: the sampling error on the headline level at this seed and this path count
 por_terminal_cash_mc_se_two_sigma,1066487.913616,USD,cohorts.csv,"twice that, which is the interval a figure quoted to the dollar actually carries"
 por_terminal_cash_npv_00,-10049079.627034,USD,cohorts.csv,"mean over paths of net cash discounted monthly at 0 per cent a year: the model discounts nothing, and this is what that is worth"
@@ -3110,6 +3115,7 @@ demand_independent_share_after_gtm,0.942456,share,cohorts.csv,the share of the d
 offtest_mechanism_count,7,count,offtest.csv,row count
 offtest_all_exact,True,boolean,offtest.csv,every mechanism reproduces the base run exactly when switched off
 offtest_all_move_when_on,True,boolean,offtest.csv,"every mechanism changes the run when switched on, so none is inert"
+offtest_mechanism_names,feedback; appstore_zero; fx_fixed; creator_zero; onshore_zero; residual_zero; pool_reacq_published,text,offtest.csv,"every mechanism tested, in file order"
 omission_line_count,17,count,omissions.csv,"rows naming an absent cost line, excluding the total row"
 omission_zero_line_count,7,count,omissions.csv,"of those, the ones priced at zero"
 omission_line_names,"refunds, chargebacks and failed payments; insurance: professional indemnity, cyber and directors; recruitment fees; out-of-hours operations rota; penetration testing and vulnerability disclosure; intercompany markup and Indian tax on it; age assurance on non-converting checks; consumer subscription regime: renewal reminders, cooling off, easy exit; trial-to-paid conversion and involuntary churn; institution channel variable cost other than inference; institution contract revenue lost to annual recognition; accessibility conformance and audit; corporation tax on trading profit; translation and localisation; regulatory enforcement exposure; examiner supply, as a quantity rather than a price; specification change and curriculum reform",text,omissions.csv,"every absent_cost_line in file order, excluding the total row"

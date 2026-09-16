@@ -118,10 +118,13 @@ def main():
     crows = []
     for note, month, starts in commitments:
         stage = next((n for n, a, b in STAGES if a <= month < b), "beyond_horizon")
-        closes_at = next((a for n, a, b in STAGES if n == stage), 0)
+        # The month the stage OPENS. It was called closes_at, which is a third
+        # name for a quantity whose CSV header already calls it
+        # that_stage_opens_month.
+        opens_at = next((a for n, a, b in STAGES if n == stage), 0)
         prior = next((n for n, a, b in STAGES if a <= starts < b), "before_the_first_round")
-        crows.append([SEED, RUN_DATE, note, month, max(starts, 0), stage, closes_at, prior,
-                      "no" if starts < closes_at else "yes",
+        crows.append([SEED, RUN_DATE, note, month, max(starts, 0), stage, opens_at, prior,
+                      "no" if starts < opens_at else "yes",
                       "%.6f" % float(out["content_cost"][:, month].mean()),
                       "%.6f" % float(out["step_cost"][:, month].mean())])
     with open(os.path.join(OUT, "funding_commitments.csv"), "w", newline="") as fh:

@@ -167,12 +167,18 @@ typed, because a hand-kept copy of it drifted from the file twice:
 
 @@omission_zero_line_count|int@@ of them are priced at zero and written down
 anyway, because a zero recorded is not the same as a line left out:
-@@omission_zero_line_names|raw@@. Four of those zeros are genuine — no scenario
-here returns a taxable trading profit, the expansion is across English-speaking
-curricula by decision, nothing here puts a probability on enforcement, and
-examiner supply is a quantity question rather than a cost. The other two are
-zero only as *cost* lines, because they are retention mechanics rather than
-costs, and their size is published separately in `out/sized_omissions.csv`:
+@@omission_zero_line_names|raw@@.
+
+They are zero for three different reasons and the breakdown used to name only
+two of them. **Four are genuine zeros**: no scenario here returns a taxable
+trading profit, the expansion is across English-speaking curricula by decision,
+nothing here puts a probability on enforcement, and examiner supply is a quantity
+question rather than a cost. **One is not a cost at all** — institution revenue
+lost to annual recognition is a timing artefact that makes the channel look worse
+than the plan describes, and it is in the list because a zero recorded is better
+than a line left out. **The remaining two** are zero only as *cost* lines,
+because they are retention mechanics rather than costs, and their size is
+published separately in `out/sized_omissions.csv`:
 scaling both churn drivers by @@retention_stress_churn_pct|num0@@ per cent costs
 @@retention_stress_terminal_cash_cost|usd0@@ dollars of terminal cash, which is
 @@retention_stress_share_of_cost_pct|num1@@ per cent of the modelled cost base.
@@ -181,8 +187,8 @@ and involuntary churn move between them, not a measurement of either.
 
 **In total the absent lines are @@omission_total_of_every_absent_line_low|usd0@@ to
 @@omission_total_of_every_absent_line_high|usd0@@ dollars, or @@omission_total_of_every_absent_line_share_high_pct|num2@@ per cent of the modelled
-cost base at the top of the range**, up from a twelfth of it before round 3 added
-specification change, which is the largest of them. They deepen the hole. They do
+cost base at the top of the range**, up from about an eighth before round 3 added
+specification change, which is the largest single line in the file. They deepen the hole. They do
 not reverse the ordering in section 8 of the write-up, and the largest of them
 pushes the same way: specification change acts on the content line, so closing it
 would make content a larger share of cost rather than a smaller one. **But a
@@ -259,11 +265,13 @@ No draw happens inside the month loop, so scenario branches cannot make the
 streams diverge. Every variant reuses the base driver dictionary, and every new
 parameter is drawn from a separate auxiliary seed.
 
-Tested rather than asserted: `test_off_reproduces_base()` runs the feedback
-machinery, the app-store fee, the exchange-rate override, the creator licence,
-the onshoring switch and the terminal-value residual each switched off, and
-requires the rebuilt monthly CSV text to equal the base character for character.
-All @@offtest_mechanism_count|int@@ pass on every run of `variants.py`.
+Tested rather than asserted: `test_off_reproduces_base()` runs each mechanism
+switched off and requires the rebuilt monthly CSV text to equal the base
+character for character, then runs each switched on and requires that it does
+not. All @@offtest_mechanism_count|int@@ pass both ways on every run of
+`variants.py`. The list is rendered from `out/offtest.csv` rather than typed,
+because a hand-kept copy of it named six against a count of seven:
+@@offtest_mechanism_names|raw@@.
 
 Matching is also measured, not just argued. `out/variants.csv` carries for every
 scenario the rank correlation of per-path terminal cash against the base and the
@@ -332,7 +340,14 @@ a sampled summer lapse probability and a sampled progression rate.
 (@@retained_months_pre_exam_mean|num2@@ months against @@retained_months_exam_year_mean|num2@@, measured by pinning the
 segment mix and re-running on the same random numbers). It reaches two or better
 on @@share_paths_year10_at_least_doubles|pct2@@ per cent of paths. docs/10's shape survives; its magnitude
-does not, and docs/10's own caveat about the summer is why.
+does not, and docs/10's own caveat about the summer is most of why: removing the
+summer entirely lifts the ratio by @@year10_ratio_lift_from_removing_summer|num3@@
+against @@year10_ratio_lift_from_flooring_churn|num3@@ for flooring in-term churn,
+a factor of @@year10_summer_lever_over_churn_lever|num0@@. **Neither recovers two,
+and nor do both together** — that is the finding, and it is larger than either
+lever. This document said the summer, the write-up then said in-term churn, and
+the two disagreed across three files until round four differenced the
+counterfactuals instead of reading them off a list.
 
 Market ratios are all sampled, none asserted: price, acquisition cost and
 reachable pool relative to the United Kingdom each have a stated range in the
@@ -428,9 +443,11 @@ the acquisition shock, is the thing worth worrying about.
 ### 19. Conclusions true only of an averaged line: **not clean, and round four found two the table had missed**
 
 Every averaged claim in the write-up is given its per-path share. The last
-column says whether the write-up asserts the proposition or denies it, because
-two of these rows are propositions the document exists to *refute* and reading
-their shares as support would invert them:
+column says whether the write-up asserts each proposition or denies it, because
+**four of these eight rows are propositions the document exists to refute** and
+reading their shares as support would invert them. That count was "two" until
+round four counted the table; it was wrong before round four added the
+variable-cost row and wronger after.
 
 | Proposition | Share of paths on which it holds | The write-up |
 |---|---|---|
@@ -714,7 +731,9 @@ is no instrument here that would have told us if it had not.
 `out/sobol.csv` and `out/tornado.csv` cover the @@n_drivers|int@@ sampled drivers. They cover
 none of the constants in `out/constants.csv`, and `out/constants.csv` is itself
 incomplete: it omits the two seasonality shapes, the examination-month and
-season-shift maps, the market opening months, all four content schedules, the
+season-shift maps, the United States, India and rest-of-English-speaking opening
+months and `SCHOOL_OPEN` (the United Kingdom's is in the file, as `GTM_MONTH`),
+all four content schedules, the
 market budget weights, the segment usage relatives, the sales and creator ramps,
 the platform headcount floor and the general and administrative schedule. Those
 are invented numbers that drive every calendar statement in the document, and
@@ -917,7 +936,7 @@ mechanism correctness test in this instrument and there cannot easily be one:
 what would it compare against?** The four defects were found by reading the
 code, which is the only method that has worked, and which does not scale.
 
-### The gate covers two files of twenty-two
+### The gate covers two files of @@out_csv_count|int@@
 
 `por_monthly.csv` and `por_paths.csv` are rebuilt character for character on
 every load. The other derived outputs are not rebuilt by anything, and the check

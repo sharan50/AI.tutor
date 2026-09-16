@@ -436,11 +436,14 @@ def season_factor(shape, m, t, amp):
 
 def units_cost_weight(m, t, schedules=None):
     """
-    Content units weighted by what they actually cost to build, which is not one
-    unit each. The first board of a subject and level costs a full bank; further
-    UK boards cost only the part that does not carry over; a foreign curriculum
-    costs most of a fresh bank. Returned as (full_equivalents, boards, subjects,
-    levels) so the caller can price the reuse terms itself.
+    The catalogue reached by month t in market m, as (subjects, levels, boards).
+
+    It returns the SCHEDULE, not a cost. content_full_equivalents() turns these
+    three into full item-bank equivalents, applying board reuse and market reuse,
+    and that is the quantity the content cost line is built on. An earlier
+    docstring here described a four-value return beginning with full
+    equivalents; three are returned and none of them is that, which would have
+    misled a reader about the mechanism the largest cost line rests on.
     """
     subj = lev = boards = 0
     for month, s, l, b in (schedules or UNIT_SCHEDULES)[m]:

@@ -413,8 +413,12 @@ def evaluate(name):
         median_month_rev_passes_cost=float(np.median(o["month_rev_passes_cost"][reach])) if reach.any() else float("nan"),
         terminal_active_hh_mean=float(o["terminal_active_hh"].mean()),
         final_year_effective_cac_mean=float(o["final_year_effective_cac"].mean()),
-        # The mean of this per-path ratio is not a number; see CHANGELOG 1a.1.
-        # The median over paths with a real final year is published instead.
+        # A mean over paths of a per-path household-month-weighted share. It is
+        # a well-behaved quantity because its denominator is household months
+        # rather than a book that can collapse, which is what made the
+        # contribution-per-household ratio unusable in CHANGELOG 1a.1. The
+        # comment that used to sit here described that other ratio, and said a
+        # median was published instead of the mean on the line below it.
         mean_share_over_allowance=float(o["mean_share_over_allowance"].mean()),
         total_tax_collected_mean=float(o["total_tax_collected"].mean()),
         min_of_mean_trough=ts["min_of_mean"],

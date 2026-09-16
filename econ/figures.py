@@ -77,10 +77,25 @@ cac_anchor = col(paths, "cac_anchor_usd")
 # The driver registry and the decided constants, so that a range or a constant
 # quoted in prose traces to a file on disk like every other number.
 # --------------------------------------------------------------------------
+# How many CSVs sit under out/, so a sentence comparing the gate's coverage
+# against the file count reads it rather than counting by hand.
+_csvs = sorted(f for f in os.listdir(OUT) if f.endswith(".csv"))
+add("out_csv_count", len(_csvs), "count", "out/", "how many .csv files the out directory holds")
+add("out_csv_gated_count", 2, "count", "out/",
+    "how many of them the character-for-character harness gate rebuilds and compares")
+
 if os.path.exists(os.path.join(OUT, "drivers.csv")):
     drows = read_csv("drivers.csv")
     add("n_drivers", len(drows), "count", "drivers.csv", "row count")
     for r in drows:
+        # A normal driver has no bounds, so it gets no low/high figure: emitting
+        # one would let prose quote a mean and a standard deviation as a range.
+        if r["distribution"] == "n":
+            add("driver_%s_mean" % r["driver"], float(r["normal_mean"]), "driver units",
+                "drivers.csv", "the mean of the normal prior for %s" % r["driver"])
+            add("driver_%s_sd" % r["driver"], float(r["normal_sd"]), "driver units",
+                "drivers.csv", "the standard deviation of that prior, which is not a bound")
+            continue
         add("driver_%s_low" % r["driver"], float(r["low"]), "driver units", "drivers.csv",
             "the low column for %s" % r["driver"])
         add("driver_%s_high" % r["driver"], float(r["high"]), "driver units", "drivers.csv",
@@ -101,6 +116,8 @@ if os.path.exists(os.path.join(OUT, "drivers.csv")):
     # The width of each prior range, so prose comparing an instrument's
     # precision against the range it would narrow has a file behind it.
     for r in read_csv("drivers.csv"):
+        if r["distribution"] == "n" or not r["low"]:
+            continue
         lo, hi = float(r["low"]), float(r["high"])
         add("driver_%s_range" % r["driver"], hi - lo, "driver units", "drivers.csv",
             "the high column less the low column for %s" % r["driver"])
@@ -156,7 +173,7 @@ add("por_mean_trough_month", float(trough_month.mean()), "month index", "por_pat
 # pooled figure, which is the one to quote.
 add("por_final_year_contrib_per_hh_month_median", float(np.median(fy_contrib)), "USD per household month",
     "por_paths.csv",
-    "median of final_year_contrib_per_hh_month, which is net revenue less inference, support, payment and hosting only")
+    "median of final_year_contrib_per_hh_month, which is net revenue less inference, support, payment, hosting and app store fees only. The store fees are zero in the published run and are not zero in the app-store scenario, so leaving them out of this sentence described a different quantity from the one path_outcomes computes")
 add("por_final_year_contrib_per_hh_month_p05", float(np.percentile(fy_contrib, 5)), "USD per household month",
     "por_paths.csv", "5th percentile of final_year_contrib_per_hh_month")
 add("por_final_year_contrib_per_hh_month_p95", float(np.percentile(fy_contrib, 95)), "USD per household month",
@@ -623,10 +640,13 @@ if os.path.exists(os.path.join(OUT, "funding_commitments.csv")):
     add("commitments_total", len(fc), "count", "funding_commitments.csv", "row count")
     add("commitments_spend_starts_in_seed", len([r for r in fc if r["stage_that_actually_pays"] == "seed"]),
         "count", "funding_commitments.csv", "rows whose stage_that_actually_pays is seed")
-    add("commitments_decided_after_their_round_closed",
+    # Named for what it counts. The old name said "decided after their round
+    # closed" over a count of rows whose answer to that question is "no", which
+    # is the inverse; the derivation string was right and the name was not.
+    add("commitments_paid_by_an_earlier_round_than_they_land_in",
         len([r for r in fc if r["decision_taken_after_its_round_closed"] == "no"]),
         "count", "funding_commitments.csv",
-        "rows where the commitment lands in a stage later than the one that pays for it")
+        "rows where the commitment LANDS in a stage later than the one whose window its spend starts in: the Series A refinancing a seed-window decision")
     ents = [r for r in fc if "entity" in r["commitment"]]
     add("commitments_entity_count", len(ents), "count", "funding_commitments.csv",
         "rows whose commitment names an entity set-up")
@@ -681,6 +701,10 @@ if os.path.exists(os.path.join(OUT, "offtest.csv")):
         "boolean", "offtest.csv", "every mechanism reproduces the base run exactly when switched off")
     add("offtest_all_move_when_on", all(r.get("moves_the_run_when_switched_on") == "yes" for r in otr),
         "boolean", "offtest.csv", "every mechanism changes the run when switched on, so none is inert")
+    # The list, rendered from the file, because a hand-kept copy of it named six
+    # while the count beside it said seven.
+    add("offtest_mechanism_names", "; ".join(r["mechanism"] for r in otr), "text",
+        "offtest.csv", "every mechanism tested, in file order")
 
 if os.path.exists(os.path.join(OUT, "omissions.csv")):
     orows = [r for r in read_csv("omissions.csv") if not r["absent_cost_line"].startswith("TOTAL")]

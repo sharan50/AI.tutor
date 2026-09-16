@@ -360,7 +360,8 @@ over a sampled reference spend, and again as the reachable pool is penetrated.
 Quoting the anchor as the cost at scale would understate by a factor of
 @@final_year_cac_pooled_over_anchor_median|num2@@ at the spend actually modelled. The median path is a different
 story, at @@final_year_effective_cac_median|num2@@, because the median path never spends enough to
-saturate anything; that is why the pooled figure is the one to plan against. The
+saturate anything; that is why the pooled figure is the one to plan against.
+
 A related but different series is published by month in `out/por_monthly.csv` as
 `cac_effective_blended_mean`, with the non-creator channel beside it. It is not
 the same number: it excludes verification and the shock wastage, and it is a
@@ -413,14 +414,35 @@ all-pre-examination-year, on the same random numbers:
 The ratio the code produces is @@year10_to_year11_retained_months_ratio|num2@@, not two. It reaches two or
 better on @@share_paths_year10_at_least_doubles|pct2@@ per cent of paths.
 
-**The summer is not where it goes, and an earlier draft of this passage said it
-was, following docs/10's own caveat rather than the model.** Pinning the summer
-lapse to zero and progression to one, which removes the summer entirely, lifts
-the ratio only to @@year10_ratio_with_no_summer_at_all|num2@@. Pinning in-term churn to the bottom of its
-prior range instead, with the summer left alone, gives @@year10_ratio_with_churn_at_its_floor|num2@@. Only
-pinning both recovers it, at @@year10_ratio_with_no_summer_and_floor_churn|num2@@. **It is in-term churn, not the
-summer, that is eating the Year 10 advantage**, and docs/10's caveat sends the
-owner to measure the wrong thing first.
+**Where does it go? Mostly to the summer, and two earlier drafts of this passage
+got that backwards in opposite directions.** The first blamed the summer,
+following docs/10's own caveat rather than the model. The second reversed it and
+said in-term churn was the culprit — reading three counterfactual ratios off a
+list without differencing any of them against the base. Differenced, and now
+computed in `out/cohorts.csv` rather than read by eye:
+
+| Counterfactual | Ratio | Lift against the sampled ratio |
+|---|---|---|
+| As sampled | @@year10_to_year11_retained_months_ratio|num2@@ | — |
+| Summer removed entirely: lapse pinned to zero, progression to one | @@year10_ratio_with_no_summer_at_all|num2@@ | **@@year10_ratio_lift_from_removing_summer|num3@@** |
+| In-term churn at the floor of its prior, summer left alone | @@year10_ratio_with_churn_at_its_floor|num2@@ | @@year10_ratio_lift_from_flooring_churn|num3@@ |
+| Both | @@year10_ratio_with_no_summer_and_floor_churn|num2@@ | — |
+
+**The summer is the larger lever by a factor of
+@@year10_summer_lever_over_churn_lever|num0@@**, and the correct reading of these
+four rows is narrower than either earlier draft:
+
+1. docs/10's **shape** survives — the pre-examination cohort does retain longer —
+   but its magnitude does not: the ratio is @@year10_to_year11_retained_months_ratio|num2@@, not two, and it reaches two on
+   @@share_paths_year10_at_least_doubles|pct2@@ per cent of paths.
+2. **Neither lever alone recovers two, and neither do both together.** Removing
+   the summer entirely still leaves @@year10_ratio_with_no_summer_at_all|num2@@;
+   both pinned give @@year10_ratio_with_no_summer_and_floor_churn|num2@@. An
+   earlier draft called that combination "the only one that recovers" docs/10's
+   figure. It does not recover it. Nothing in the prior ranges does, which is the
+   actual finding and is more interesting than either lever.
+3. So docs/10's caveat about the summer points at the **right** question, and the
+   open items are ordered accordingly: the summer is X5, in-term churn X5b.
 
 There is a larger problem sitting underneath those numbers, and it is in
 LIMITS.md: an examination-year household is retained @@retained_months_exam_year_mean|num2@@ months in this
@@ -1093,16 +1115,18 @@ delivered and an entity is stood up before a market opens.
 
 @@commitments_spend_starts_in_seed|int@@ of the file's
 @@commitments_total|int@@ commitments have their spend starting inside the seed
-window: the United States entity and its market counsel, the information security
-certification, A-level content, the second and third United Kingdom boards, the
-first sales representative and the go-to-market content build itself. The Series A
+window, among them the United States entity and its market counsel, the
+information security certification, A-level content, the second and third United
+Kingdom boards, the first sales representative and the go-to-market content build
+itself. (An earlier draft introduced that list with a colon, as though it were
+all of them; it is seven of the @@commitments_spend_starts_in_seed|int@@.) The Series A
 does not buy them; it refinances decisions the seed already committed to. The
 file names @@commitments_entity_count|int@@ entity set-ups —
 @@commitments_entity_names|raw@@ — of which
 @@commitments_entities_paid_by_seed|int@@ is paid for out of the seed window; an
 earlier draft named an India entity, which this model never stands up because
 India is an institution market here, and called both entities seed-window.
-@@commitments_decided_after_their_round_closed|int@@ commitment lands in the
+@@commitments_paid_by_an_earlier_round_than_they_land_in|int@@ commitment lands in the
 Series A window with its spend starting before that round opens: all four United
 Kingdom boards live at month 18, built from month 12.
 The rest-of-English-speaking market at month 24 starts its build at month 18,
@@ -1341,6 +1365,9 @@ OPEN_ITEMS.md.
 | `out/funding.csv`, `out/funding_commitments.csv` | Round sizing, and the staging test. |
 | `out/cohorts.csv`, `out/omissions.csv` | The checklist measurements and the priced absent cost lines. |
 | `out/sized_omissions.csv` | Quantities that are not cost lines but were being reported as zero: the retention stress, the examiner hours, the penalty comparison. |
+| `out/rescue_grid.csv` | The two-driver rescue grid behind the second half of section 10, on both scopes. |
+| `out/sobol_grouped.csv` | The same decomposition on grouped scalars rather than registry entries, because the registry's granularity is not the business's. |
+| `out/drivers.csv`, `out/constants.csv` | Every sampled driver with its range and what anchors it, and every decided constant with what it is. |
 | `out/aux_params.csv` | The priors drawn outside the published random stream, which are not in `out/drivers.csv` because they are not in the published run. |
 | `out/provenance.csv` | Which `model.py` each generating script last ran against. `verify.py` fails the run if they disagree. |
 | `out/offtest.csv` | Each mechanism, off and on: exact when off, and not inert when on. |
@@ -1351,15 +1378,22 @@ OPEN_ITEMS.md.
 run against the current `model.py` — a check that has already bitten, on a
 comment-only edit to `model.py` that left every published CSV byte-identical —
 then re-derives the core figures from the raw CSVs by a different code path from
-`figures.py`, checks five identities — **two** of them down every row of the
+`figures.py`, checks five identities — **three** of them down every row of the
 monthly file (net revenue equals gross less tax; net cash equals revenue less
-every cost line), one a point check that terminal cash at the horizon agrees with
-the cumulative monthly line, one that the cumulative line is the running sum of
-the monthly one, and one that the scope ladder in section 12 decomposes on its
-content column — and then scrapes every number in this document and matches it
-against a figure on disk. An earlier draft said three ran down every row. Two do.
-This is the third time a hand-typed count in this document has been wrong, which
-is the argument of the next two paragraphs.
+every cost line plus any residual; the cumulative line is the running sum of the
+monthly one), one a point check that terminal cash at the horizon agrees with
+that cumulative line, and one that the scope ladder in section 12 decomposes on
+its content column — and then scrapes every number in this document and matches
+it against a figure on disk.
+
+**That count has now been wrong twice in opposite directions**, which is a small
+thing worth recording because it is the argument of the next two paragraphs. It
+said "four accounting identities down the whole monthly file" when one of the
+four was a point check; a round-four correction over-corrected to "two", missing
+that the running-sum check is computed the same elementwise way as the other two.
+Three is right. Nothing in this repository counts the identities for the prose,
+because the prose describes what each one *is*, and that is the class of
+statement no verifier here can check.
 
 **Be clear about what that second pass does and does not do.** It checks that
 every number printed here exists on disk to the precision it is printed at. It

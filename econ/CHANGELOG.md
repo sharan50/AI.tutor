@@ -325,6 +325,14 @@ largest cost line and the sensitivity ordering the whole document is built on
 inverts. `onshore_share` prices it, two scenarios run it, and it is open item X8.
 It is the single most consequential thing either reviewer found.
 
+**Superseded twice, and the second half of that sentence is wrong.** Round 2.5
+softened "inverts" to "re-ranks"; round 3.4 found even that was never computed
+and is false. On `out/sobol.csv`'s `onshore_all` run, item count stays at rank 1
+on the capital requirement and the United Kingdom salary driver never enters the
+top three on any target. The cash consequence stands; the ordering claim does
+not. Left in place as the record of what this round believed, marked here so a
+reader arriving at it is not told the opposite of the current finding.
+
 **1b.12 Regulatory enforcement exposure and examiner supply**, both priced at zero
 in `out/omissions.csv` and named there, because a zero written down is not the
 same as a line left out.
@@ -924,7 +932,77 @@ actual point. Corrected in the preamble and in section 12. Recorded because a
 correction introduced while acting on a review is exactly the kind that goes
 unreviewed.
 
-### 4.13 What held up
+### 4.13 What the coherence pass found, and one of them reverses a conclusion
+
+The coherence half of round four ran against a moving target — every output was
+rewritten while it worked — and it re-verified each finding against the final
+state. It confirmed that rendering the three sources against `out/figures.csv`
+reproduces the three documents character for character, so no figure token had
+drifted. Every error it found is in hand-typed prose, in a comment, or in a name
+the file behind it does not support.
+
+**The Year 10 conclusion was the reverse of the two numbers printed above it.**
+Section 4 said in bold: "It is in-term churn, not the summer, that is eating the
+Year 10 advantage", and open item X5 ranked in-term churn ahead of the summer on
+the strength of it. Differencing the two counterfactuals against the base — which
+no draft had done — removing the summer entirely lifts the ratio by about
+fourteen times what flooring in-term churn does. LIMITS said the summer and was
+right; the write-up and the open items said in-term churn and were wrong, and
+sent the owner at the smaller question first, which is the exact failure mode
+`OPEN_ITEMS.md` opens by warning about. The lifts are now computed in
+`out/cohorts.csv`, the passage gives all four rows with their differences, X5 and
+X5b are swapped, and the three documents agree. **The larger finding, which no
+draft stated, is that neither lever recovers the two docs/10 reasons toward, and
+nor do both together** — `cohorts.py` carried a derivation string calling the
+combination "the only one that recovers" it, which it does not.
+
+**Two errors this round introduced while fixing others.** LIMITS and this log
+both claimed `out/cohorts.csv` published the assumed and realised retention
+months behind 4.3; it published neither, and `cohorts.py` computed neither. They
+are computed and published now. And section 13's identity count, corrected in
+round four from "four down the whole monthly file" to "two", over-corrected:
+three of the five run elementwise down every row. Three is right, the count has
+now been wrong in both directions, and nothing in the repository can check it,
+because the sentence describes what each identity *is*.
+
+**Counts that the file moved and the prose did not.** LIMITS item 19 said two of
+its rows are propositions the document refutes; four are. Item 8's zero-priced
+breakdown accounted for six of seven and its "up from a twelfth" is an eighth on
+the file's own arithmetic. Item 11 named six mechanisms under a count of seven.
+The gate-coverage heading said twenty-two files against twenty-three. A
+colon-introduced list of ten commitments named seven. All are now either rendered
+from the file or written as "including".
+
+**`out/drivers.csv` had a low/high header over a mean and a standard deviation.**
+`price_drift_yr` is the registry's only normal driver and `params.py` wrote its
+two parameters under `low` and `high`, so the file said drift is sampled between
+1.5 and 3.0 per cent when it is N(0.015, 0.030), unbounded, with roughly a third
+of paths drawing a negative drift. `figures.py` emitted `_low` and `_high` tokens
+from those columns, so the wrong reading was one token away from the prose.
+Nothing quoted it. The file now has `normal_mean` and `normal_sd` columns and
+`figures.py` emits no bounds for a driver that has none.
+
+**Three comments and two names that described something other than the code.**
+`units_cost_weight()`'s docstring documented a four-value return beginning with a
+quantity it does not compute. A comment in `variants.py` about the
+contribution-per-household ratio sat orphaned above the allowance share and
+promised a median over a mean. `verify.py`'s tolerance comment claimed six
+decimal places over a one-dollar threshold. `commitments_decided_after_their_
+round_closed` counted rows whose answer to that question is "no".
+`funding.py`'s `closes_at` held a stage's opening month, which its own CSV header
+calls `that_stage_opens_month`. A figure derivation omitted the app-store fee
+that `path_outcomes()` subtracts, which agrees with the published run only
+because that line is zero in it.
+
+**And the write-up's file table sent readers to sixteen files while the argument
+rests on twenty.** `rescue_grid.csv`, `sobol_grouped.csv`, `drivers.csv` and
+`constants.csv` are all cited by name in the prose and were not in it.
+
+Change log entry 1b.11 still asserted the onshoring conclusion that 2.5 and 3.4
+retract. It is left in place as the record of what that round believed and is now
+marked superseded where it stands.
+
+### 4.14 What held up
 
 Recorded because a round that only reports failures is not a review. The harness
 gate and both its self-tests; the suffix discipline check; that no draw occurs

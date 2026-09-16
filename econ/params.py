@@ -51,17 +51,31 @@ CONSTANTS = [
 ]
 
 if __name__ == "__main__":
+    # The "low" and "high" columns mean different things for different
+    # distributions, and the header used to hide that. For a normal driver the
+    # two registry parameters are a MEAN and a STANDARD DEVIATION, not bounds:
+    # writing them under low/high told a reader that price_drift_yr is sampled
+    # between 1.5 and 3.0 per cent when it is N(0.015, 0.030), unbounded, with
+    # roughly a third of paths drawing a negative drift. The columns now say
+    # what they hold, and a normal driver's bounds are left empty because it has
+    # none.
     rows = []
     for name, kind, params, note in NS["DRIVERS"]:
-        lo = params[0]
-        hi = params[2] if kind == "tri" else params[1]
-        mode = params[1] if kind == "tri" else ""
-        rows.append([SEED, RUN_DATE, name, kind, "%.6f" % lo, ("%.6f" % mode) if mode != "" else "",
-                     "%.6f" % hi, note])
+        lo = mode = hi = mu = sd = ""
+        if kind == "tri":
+            lo, mode, hi = params[0], params[1], params[2]
+        elif kind == "n":
+            mu, sd = params[0], params[1]
+        else:
+            lo, hi = params[0], params[1]
+        fmt = lambda v: ("%.6f" % v) if v != "" else ""
+        rows.append([SEED, RUN_DATE, name, kind, fmt(lo), fmt(mode), fmt(hi),
+                     fmt(mu), fmt(sd), note])
     path = os.path.join(OUT, "drivers.csv")
     with open(path, "w", newline="") as fh:
         w = csv.writer(fh, lineterminator="\n")
-        w.writerow(["seed", "run_date", "driver", "distribution", "low", "mode", "high", "what_anchors_the_range"])
+        w.writerow(["seed", "run_date", "driver", "distribution", "low", "mode", "high",
+                    "normal_mean", "normal_sd", "what_anchors_the_range"])
         w.writerows(rows)
     print("wrote", path, len(rows), "drivers")
 
