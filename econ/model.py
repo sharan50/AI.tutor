@@ -175,6 +175,19 @@ ACQ_RAMP_TAPER_MONTHS = 12
 # variant_creator_fees() prices what it costs if they want money.
 CREATOR_RAMP = [(6, 3.0), (18, 8.0), (30, 15.0), (48, 25.0)]
 
+# Platform engineering above the floor: heads per additional live consumer
+# market, and heads for running the institution channel at all.
+PLATFORM_PER_EXTRA_MARKET = 1.5
+PLATFORM_FOR_INSTITUTIONS = 2.0
+
+# The reachable pool driver is defined for the five-subject go-to-market scope.
+# A product covering one subject reaches fewer households than one covering
+# eleven, sublinearly. Without this a narrow scope was credited the whole pool
+# while being charged only its own content, which is the same like-for-like
+# defect as the platform ramp, running the other way (see CHANGELOG.md 0.9).
+POOL_BREADTH_REFERENCE_SUBJECTS = 5.0
+POOL_BREADTH_EXPONENT = 0.6
+
 # Safeguarding rota thresholds, in active consumer households.
 ROTA_EXTENDED_AT = 3000
 ROTA_24_7_AT = 25000
@@ -485,16 +498,24 @@ def headcount(drv, cfg, t, active_consumer, units_fe_total, units_fe_ahead, reps
     """
     z = np.zeros_like(drv["eng_usd_yr"])
 
-    # Platform engineering: a decided ramp, scaled by a sampled multiplier.
+    # Platform engineering. A floor, because the product has to exist at all,
+    # plus a component that scales with how many consumer markets are live and
+    # whether the institution channel is running. A scenario that opens one
+    # market must not be charged a platform team sized for four; charging it one
+    # made every narrow scope look worse than it is, which is checklist item 10
+    # (see CHANGELOG.md 0.8).
     if t < 0:
         plat = z
     else:
-        pts = [(0, 4.0), (6, 7.0), (12, 10.0), (24, 16.0), (36, 19.0), (48, 22.0)]
-        base = pts[0][1]
-        for month, v in pts:
+        floor_pts = [(0, 4.0), (6, 7.0), (12, 9.0), (24, 11.0), (36, 12.0), (48, 13.0)]
+        base = floor_pts[0][1]
+        for month, v in floor_pts:
             if t >= month:
                 base = v
-        plat = base * drv["eng_ramp_mult"]
+        extra_markets = max(sum(1 for mm in range(NM) if t >= _open_month(cfg, mm)) - 1, 0)
+        schools_on = 1.0 if t >= _school_open_month(cfg, M_UK) else 0.0
+        plat = (base + PLATFORM_PER_EXTRA_MARKET * extra_markets
+                + PLATFORM_FOR_INSTITUTIONS * schools_on) * drv["eng_ramp_mult"]
 
     # Content: what is being built over the coming year, plus revalidation of
     # what is live. Both divided by what one content head sustains in a year.
@@ -877,9 +898,12 @@ def run(drv, cfg=None):
         cac_blend_num = np.zeros(P)
         cac_nc_num = np.zeros(P)
 
+        schedules_live = cfg.get("unit_schedules") or UNIT_SCHEDULES
         for m in open_markets:
-            pool = drv["pool_uk"] * {M_UK: 1.0, M_US: drv["pool_rel_us"],
-                                     M_IN: drv["pool_rel_in"], M_ROW: drv["pool_rel_row"]}[m]
+            subj_live, _lev_live, _b_live = units_cost_weight(m, t, schedules_live)
+            breadth = (max(subj_live, 1) / POOL_BREADTH_REFERENCE_SUBJECTS) ** POOL_BREADTH_EXPONENT
+            pool = drv["pool_uk"] * breadth * {M_UK: 1.0, M_US: drv["pool_rel_us"],
+                                               M_IN: drv["pool_rel_in"], M_ROW: drv["pool_rel_row"]}[m]
             pen = np.clip(active_by_market[m] / np.maximum(pool, 1.0), 0.0, 0.97)
             ltv_m = ltv_estimate(drv, expected_contrib_pm(drv, m, t, cps, billed_flat), m)
             cap = budget_cap_from_ltv(drv, m, ltv_m, pen)

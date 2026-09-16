@@ -108,6 +108,9 @@ band_placement_ukonly_high_terminal,0.819900,percentile as a share,variants_band
 band_placement_por_no_schools_low_terminal,0.192800,percentile as a share,variants_bands.csv,placement_terminal for scenario por_no_schools band low
 band_placement_por_no_schools_central_terminal,0.498350,percentile as a share,variants_bands.csv,placement_terminal for scenario por_no_schools band central
 band_placement_por_no_schools_high_terminal,0.825350,percentile as a share,variants_bands.csv,placement_terminal for scenario por_no_schools band high
+band_placement_por_creator_fees_low_terminal,0.193350,percentile as a share,variants_bands.csv,placement_terminal for scenario por_creator_fees band low
+band_placement_por_creator_fees_central_terminal,0.496850,percentile as a share,variants_bands.csv,placement_terminal for scenario por_creator_fees band central
+band_placement_por_creator_fees_high_terminal,0.822550,percentile as a share,variants_bands.csv,placement_terminal for scenario por_creator_fees band high
 band_placement_por_anchor_tutoring_low_terminal,0.193800,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_tutoring band low
 band_placement_por_anchor_tutoring_central_terminal,0.500550,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_tutoring band central
 band_placement_por_anchor_tutoring_high_terminal,0.822250,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_tutoring band high
@@ -230,6 +233,16 @@ scenario_por_no_schools_final_year_contrib_per_hh_month_mean,21.096211,USD or sh
 scenario_por_no_schools_mean_share_over_allowance,0.235764,USD or share,variants.csv,column mean_share_over_allowance for scenario por_no_schools
 scenario_por_no_schools_understatement_ratio,0.509670,USD or share,variants.csv,column understatement_ratio for scenario por_no_schools
 scenario_por_no_schools_band_central_placement_terminal,0.498350,USD or share,variants.csv,column band_central_placement_terminal for scenario por_no_schools
+scenario_por_creator_fees_terminal_cash_mean,-14500155.374673,USD or share,variants.csv,column terminal_cash_mean for scenario por_creator_fees
+scenario_por_creator_fees_terminal_cash_p50,-24422131.665950,USD or share,variants.csv,column terminal_cash_p50 for scenario por_creator_fees
+scenario_por_creator_fees_peak_funding_mean,25087259.616679,USD or share,variants.csv,column peak_funding_mean for scenario por_creator_fees
+scenario_por_creator_fees_peak_funding_p90,40004208.862368,USD or share,variants.csv,column peak_funding_p90 for scenario por_creator_fees
+scenario_por_creator_fees_share_reaching_profitability,0.168400,USD or share,variants.csv,column share_reaching_profitability for scenario por_creator_fees
+scenario_por_creator_fees_final_year_effective_cac_mean,39.552986,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_creator_fees
+scenario_por_creator_fees_final_year_contrib_per_hh_month_mean,2314540.738000,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_creator_fees
+scenario_por_creator_fees_mean_share_over_allowance,0.236157,USD or share,variants.csv,column mean_share_over_allowance for scenario por_creator_fees
+scenario_por_creator_fees_understatement_ratio,0.618586,USD or share,variants.csv,column understatement_ratio for scenario por_creator_fees
+scenario_por_creator_fees_band_central_placement_terminal,0.496850,USD or share,variants.csv,column band_central_placement_terminal for scenario por_creator_fees
 scenario_por_anchor_tutoring_terminal_cash_mean,1950079.146309,USD or share,variants.csv,column terminal_cash_mean for scenario por_anchor_tutoring
 scenario_por_anchor_tutoring_terminal_cash_p50,-19979302.793724,USD or share,variants.csv,column terminal_cash_p50 for scenario por_anchor_tutoring
 scenario_por_anchor_tutoring_peak_funding_mean,20647132.293906,USD or share,variants.csv,column peak_funding_mean for scenario por_anchor_tutoring
@@ -280,6 +293,7 @@ delta_por_appstore_terminal_cash_mean,-2391354.467446,USD,variants.csv,terminal_
 delta_por_allowance_enforced_terminal_cash_mean,94243.518589,USD,variants.csv,terminal_cash_mean for por_allowance_enforced less terminal_cash_mean for por
 delta_ukonly_terminal_cash_mean,2671223.630615,USD,variants.csv,terminal_cash_mean for ukonly less terminal_cash_mean for por
 delta_por_no_schools_terminal_cash_mean,5062670.471854,USD,variants.csv,terminal_cash_mean for por_no_schools less terminal_cash_mean for por
+delta_por_creator_fees_terminal_cash_mean,-2138834.647553,USD,variants.csv,terminal_cash_mean for por_creator_fees less terminal_cash_mean for por
 delta_por_anchor_tutoring_terminal_cash_mean,14311399.873429,USD,variants.csv,terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por
 delta_por_anchor_software_terminal_cash_mean,-14509434.012898,USD,variants.csv,terminal_cash_mean for por_anchor_software less terminal_cash_mean for por
 delta_por_launch_plus3_terminal_cash_mean,-1475653.966977,USD,variants.csv,terminal_cash_mean for por_launch_plus3 less terminal_cash_mean for por
@@ -381,26 +395,46 @@ twoway_driver2,cac_anchor_usd,driver name,twoway_grid.csv,the driver2 column
 twoway_best_terminal_cash_mean,29385107.119448,USD,twoway_grid.csv,maximum of terminal_cash_mean over the grid
 twoway_worst_terminal_cash_mean,-34619537.234431,USD,twoway_grid.csv,minimum of terminal_cash_mean over the grid
 twoway_range,64004644.353879,USD,twoway_grid.csv,that maximum less that minimum
-breakeven_pool_uk_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
-breakeven_pool_uk_terminal_cash_median_prior_median,219049.577965,driver units,breakeven.csv,the prior_median column
-breakeven_pool_uk_peak_funding_p80_status,not bracketed by the prior range,text,breakeven.csv,the status column
-breakeven_pool_uk_peak_funding_p80_prior_median,219049.577965,driver units,breakeven.csv,the prior_median column
-breakeven_cac_anchor_usd_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
-breakeven_cac_anchor_usd_terminal_cash_median_prior_median,32.263315,driver units,breakeven.csv,the prior_median column
-breakeven_cac_anchor_usd_peak_funding_p80_status,not bracketed by the prior range,text,breakeven.csv,the status column
-breakeven_cac_anchor_usd_peak_funding_p80_prior_median,32.263315,driver units,breakeven.csv,the prior_median column
-breakeven_verif_cost_usd_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
-breakeven_verif_cost_usd_terminal_cash_median_prior_median,0.929795,driver units,breakeven.csv,the prior_median column
-breakeven_minutes_per_item_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
-breakeven_minutes_per_item_terminal_cash_median_prior_median,17.035431,driver units,breakeven.csv,the prior_median column
-breakeven_items_per_unit_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
-breakeven_items_per_unit_terminal_cash_median_prior_median,3902.370574,driver units,breakeven.csv,the prior_median column
-breakeven_sessions_mean_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
-breakeven_sessions_mean_terminal_cash_median_prior_median,10.724003,driver units,breakeven.csv,the prior_median column
-breakeven_churn_base_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
-breakeven_churn_base_terminal_cash_median_prior_median,0.104764,driver units,breakeven.csv,the prior_median column
-breakeven_price_uk_tut_gbp_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
-breakeven_price_uk_tut_gbp_terminal_cash_median_prior_median,25.209647,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_pool_uk_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_plan_of_record_pool_uk_terminal_cash_median_prior_median,219049.577965,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_pool_uk_peak_funding_p80_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_plan_of_record_pool_uk_peak_funding_p80_prior_median,219049.577965,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_cac_anchor_usd_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_plan_of_record_cac_anchor_usd_terminal_cash_median_prior_median,32.263315,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_cac_anchor_usd_peak_funding_p80_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_plan_of_record_cac_anchor_usd_peak_funding_p80_prior_median,32.263315,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_verif_cost_usd_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_plan_of_record_verif_cost_usd_terminal_cash_median_prior_median,0.929795,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_minutes_per_item_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_plan_of_record_minutes_per_item_terminal_cash_median_prior_median,17.035431,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_items_per_unit_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_plan_of_record_items_per_unit_terminal_cash_median_prior_median,3902.370574,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_sessions_mean_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_plan_of_record_sessions_mean_terminal_cash_median_prior_median,10.724003,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_churn_base_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_plan_of_record_churn_base_terminal_cash_median_prior_median,0.104764,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_price_uk_tut_gbp_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_plan_of_record_price_uk_tut_gbp_terminal_cash_median_prior_median,25.209647,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_pool_uk_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_gtm_minimum_uk_one_board_pool_uk_terminal_cash_median_prior_median,219049.577965,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_pool_uk_peak_funding_p80_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_gtm_minimum_uk_one_board_pool_uk_peak_funding_p80_prior_median,219049.577965,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_terminal_cash_median_prior_median,32.263315,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_peak_funding_p80_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_peak_funding_p80_prior_median,32.263315,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_verif_cost_usd_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_gtm_minimum_uk_one_board_verif_cost_usd_terminal_cash_median_prior_median,0.929795,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_minutes_per_item_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_gtm_minimum_uk_one_board_minutes_per_item_terminal_cash_median_prior_median,17.035431,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_items_per_unit_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_gtm_minimum_uk_one_board_items_per_unit_terminal_cash_median_prior_median,3902.370574,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_sessions_mean_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_gtm_minimum_uk_one_board_sessions_mean_terminal_cash_median_prior_median,10.724003,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_churn_base_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_gtm_minimum_uk_one_board_churn_base_terminal_cash_median_prior_median,0.104764,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_prior_median,25.209647,driver units,breakeven.csv,the prior_median column
 funding_plan_of_record_seed_round_size,12886272.767128,USD,funding.csv,round_size for scenario plan_of_record stage seed
 funding_plan_of_record_seed_need_p80,9664395.738908,USD,funding.csv,need_p80 for scenario plan_of_record stage seed
 funding_plan_of_record_series_a_round_size,13071355.324611,USD,funding.csv,round_size for scenario plan_of_record stage series_a
@@ -433,3 +467,34 @@ funding_one_subject_uk_one_board_series_b_round_size,4444172.086631,USD,funding.
 funding_one_subject_uk_one_board_series_b_need_p80,3549389.083687,USD,funding.csv,need_p80 for scenario one_subject_uk_one_board stage series_b
 funding_one_subject_uk_one_board_whole_horizon_round_size,7123486.704232,USD,funding.csv,round_size for scenario one_subject_uk_one_board stage whole_horizon
 funding_one_subject_uk_one_board_whole_horizon_need_p80,7123486.704232,USD,funding.csv,need_p80 for scenario one_subject_uk_one_board stage whole_horizon
+retained_months_exam_year_mean,2.967509,months per acquisition,cohorts.csv,every acquisition pinned into the examination-year segment; active households summed over months divided by acquisitions summed over months
+retained_months_pre_exam_mean,3.666357,months per acquisition,cohorts.csv,"every acquisition pinned into the pre-examination-year segment, same arithmetic"
+retained_months_alevel_mean,4.077857,months per acquisition,cohorts.csv,"every acquisition pinned into the A-level segment, same arithmetic"
+year10_to_year11_retained_months_ratio,1.235500,ratio,cohorts.csv,"pre-examination-year retained months divided by examination-year retained months, as the code produces it"
+year10_to_year11_ratio_p10,1.144357,ratio,cohorts.csv,the same ratio at the tenth percentile of each
+year10_to_year11_ratio_p90,1.317082,ratio,cohorts.csv,the same ratio at the ninetieth percentile of each
+share_paths_year10_at_least_doubles,0.000350,share,cohorts.csv,share of paths on which the pre-examination cohort retains at least twice as many months as the examination cohort
+shock_longest_bad_run_mean,5.770750,months,cohorts.csv,"longest run of consecutive months with the demand multiplier below 0.80, reconstructed from shock_rho, shock_sd and the published innovations"
+shock_longest_bad_run_p90,13.000000,months,cohorts.csv,the ninetieth percentile of that run length
+shock_share_paths_bad_run_6plus,0.369350,share,cohorts.csv,share of paths with at least six consecutive months of demand at or below 0.80
+shock_share_paths_bad_run_12plus,0.121250,share,cohorts.csv,share of paths with at least twelve consecutive such months
+shock_rho_median,0.701148,AR(1) coefficient,cohorts.csv,median of the shock_rho driver column
+share_paths_content_exceeds_acquisition,0.855150,share,cohorts.csv,share of paths on which total content cost exceeds total acquisition and verification spend
+share_paths_content_is_largest_line,0.648650,share,cohorts.csv,share of paths on which content is larger than both acquisition and people
+share_paths_peak_funding_over_10m,0.877600,share,cohorts.csv,share of paths whose peak funding requirement exceeds ten million dollars
+share_paths_terminal_cash_positive,0.094900,share,cohorts.csv,share of paths ending the horizon with cumulative cash above zero
+final_year_contrib_per_hh_month_gross_mean,2314540.738000,USD per household month,cohorts.csv,"net revenue less inference, support, payment and hosting only: a gross margin, not a net one"
+final_year_contrib_per_hh_month_allin_mean,-100665209.939890,USD per household month,cohorts.csv,"net cash per active household month with acquisition and verification added back, so net of engineering, content, overhead, compliance and payment fees"
+allin_minus_gross_contrib_per_hh_month,-102979750.677891,USD per household month,cohorts.csv,the all-in figure less the gross one: what the gross margin leaves out
+blended_retained_months_mean,3.293776,months,cohorts.csv,retained months weighted by the sampled segment mix
+final_year_ltv_gross_mean,7623579.260119,USD per household,cohorts.csv,gross contribution per household month times blended retained months
+final_year_effective_cac_mean,39.552986,USD per acquisition,cohorts.csv,final twelve months of acquisition and verification spend divided by final twelve months of acquisitions
+final_year_ltv_over_cac_mean,192743.456090,ratio,cohorts.csv,mean gross lifetime value divided by mean final-year effective cost per acquisition
+share_paths_final_year_ltv_below_cac,0.046100,share,cohorts.csv,share of paths on which gross lifetime value is below the final-year effective cost per acquisition
+missing_night_rota_cost_per_year,149793.106707,USD per year,cohorts.csv,"three full-time posts at the median Bengaluru salary and overhead multiplier, with a thirty per cent night premium"
+missing_night_rota_cost_total,674068.980182,USD,cohorts.csv,that annual cost from the UK go-to-market month to the end of the horizon
+missing_night_rota_share_of_total_cost,0.015023,share,cohorts.csv,the missing rota divided by the total modelled cost
+por_total_cost_recomputed,44868432.560367,USD,cohorts.csv,"sum over paths and months of every modelled cost line, averaged over paths"
+imanconover_pairs,10,count,imanconover_check.csv,row count
+imanconover_worst_corr_error,0.016000,rank correlation,imanconover_check.csv,largest absolute difference between target_rank_corr and achieved_rank_corr
+imanconover_all_marginals_preserved,True,boolean,imanconover_check.csv,every marginal_preserved column is True

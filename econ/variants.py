@@ -285,6 +285,7 @@ OUTCOME_COLS = [
     "final_year_contrib_per_hh_month_mean", "mean_share_over_allowance",
     "total_tax_collected_mean", "min_of_mean_trough", "mean_of_min_trough",
     "understatement_ratio", "band_central_placement_terminal",
+    "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
 ]
 
 
@@ -313,6 +314,12 @@ def evaluate(name):
         mean_of_min_trough=ts["mean_of_min"],
         understatement_ratio=ts["understatement_ratio"],
         band_central_placement_terminal=float(placement[-1]),
+        total_content_cost_mean=float(out["content_cost"].sum(axis=1).mean()),
+        total_cost_mean=float(sum(out[c].sum(axis=1).mean() for c in [
+            "inference_cost", "support_cost", "payment_cost", "hosting_cost", "verif_cost",
+            "cac_spend", "content_cost", "people_beng_cost", "people_uk_cost", "step_cost",
+            "school_onboard_cost", "appstore_fee"])),
+        total_net_revenue_mean=float((out["net_rev_consumer"] + out["net_rev_schools"]).sum(axis=1).mean()),
     )
     return note, vals, out, o, cum, placement
 

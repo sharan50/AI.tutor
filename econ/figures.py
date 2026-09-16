@@ -11,6 +11,7 @@ Output: out/figures.csv with name, value, unit, source file and derivation.
 import csv
 import math
 import os
+import re
 
 import numpy as np
 
@@ -165,7 +166,8 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
         for k in ("terminal_cash_mean", "terminal_cash_p50", "peak_funding_mean", "peak_funding_p80",
                   "peak_funding_p90", "share_reaching_profitability", "final_year_effective_cac_mean",
                   "final_year_contrib_per_hh_month_mean", "mean_share_over_allowance",
-                  "understatement_ratio", "band_central_placement_terminal"):
+                  "understatement_ratio", "band_central_placement_terminal",
+                  "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean"):
             if k in r:
                 add("scenario_%s_%s" % (name, k), float(r[k]), "USD or share", "variants.csv",
                     "column %s for scenario %s" % (k, name))
@@ -175,6 +177,11 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
             continue
         add("delta_%s_terminal_cash_mean" % name, float(r["terminal_cash_mean"]) - base, "USD", "variants.csv",
             "terminal_cash_mean for %s less terminal_cash_mean for por" % name)
+        if "total_content_cost_mean" in r:
+            add("delta_%s_total_content_cost_mean" % name,
+                float(r["total_content_cost_mean"]) - float(vr["por"]["total_content_cost_mean"]),
+                "USD", "variants.csv",
+                "total_content_cost_mean for %s less the same for por" % name)
 
 # --------------------------------------------------------------------------
 # Sensitivity
@@ -237,6 +244,14 @@ if os.path.exists(os.path.join(OUT, "cohorts.csv")):
             add(r["name"], float(r["value"]), r["unit"], "cohorts.csv", r["derivation"])
         except ValueError:
             add(r["name"], r["value"], r["unit"], "cohorts.csv", r["derivation"])
+
+if os.path.exists(os.path.join(OUT, "omissions.csv")):
+    for r in read_csv("omissions.csv"):
+        slug = re.sub(r"[^a-z0-9]+", "_", r["absent_cost_line"].split(":")[0].lower()).strip("_")
+        add("omission_%s_low" % slug, float(r["low_usd"]), "USD", "omissions.csv", r["basis"])
+        add("omission_%s_high" % slug, float(r["high_usd"]), "USD", "omissions.csv", r["basis"])
+        add("omission_%s_share_high_pct" % slug, 100.0 * float(r["high_share_of_total_cost"]), "per cent",
+            "omissions.csv", "high_share_of_total_cost as a percentage")
 
 if os.path.exists(os.path.join(OUT, "imanconover_check.csv")):
     rows = read_csv("imanconover_check.csv")
