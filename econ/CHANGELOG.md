@@ -228,3 +228,107 @@ quoted somewhere by name.
 drops an exact repeat. At the time of this entry that took the file from 1,283
 rows to 1,163, written and loaded alike; the current count is whatever
 `figures.py` last reported and is not this number.
+
+---
+
+## Round 1b: two reviewers in fresh context, given only the artefacts
+
+A coherence pass and an adversarial pass, each run with no knowledge of how the
+instrument was built. Between them they found more than thirty items. Every
+structural claim below was verified against the code before being accepted; all
+of them held.
+
+### Model defects
+
+**1b.1 India age assurance was charged twice and credited at zero.** The
+acquisition loop charged India double verification, correctly, because verifiable
+parental consent under the DPDP Rules is a heavier process. `ltv_estimate`
+credited India nothing. The India acquisition budget cap was therefore struck on
+a lifetime value that omitted the largest India-specific unit cost. Both now call
+one `verification_cost()` function.
+
+**1b.2 The demand shock cost nothing.** `realised_spend = acq * cac_b` recomputed
+spend from realised acquisitions, so a shock that halved customers also halved
+the money spent. The model could not represent spending a budget and getting
+nobody, which is the only way a demand shock ends a company. Checklist item 18's
+"clean" verdict was resting on a shock that did not bite. Spend is now committed
+in advance and only running out of market reduces it.
+
+**1b.3 Cumulative acquisition was unbounded.** The reachable pool capped the
+standing book and nothing capped the flow, so a path could churn and reacquire
+its way to tens of millions of households in a market of a few million. The worst
+path bought 51.5 million. `POOL_REACQUISITION_MULTIPLE` now caps cumulative
+acquisitions per market at three times that path's own pool.
+
+**1b.4 The institution channel was charged an India content bank it never bills.**
+The India content build and the India entity were gated on the institution switch,
+but `SCHOOL_OPEN` is only ever read for the United Kingdom, so there is no India
+institution motion in this model at all. Dropping the channel therefore dropped an
+India item bank, and roughly forty-six per cent of "the cost of Route B" was that
+bank. India content is now gated on India trading, and the dead per-market
+`SCHOOL_OPEN` entries are gone.
+
+**1b.5 The suffix-discipline gate could never fire.** It tested whether a column
+name ended in both a mean suffix and a band suffix, which no string can do. It
+also ran on one of the two writers. It is now a real check on both, and
+`suffix_discipline_selftest()` shows it refusing four headers it must refuse. The
+first thing it caught was a genuine ambiguity: the driver `sessions_mean` ended in
+an aggregate suffix inside a per-path file, and is now `sessions_per_hh_month`.
+
+### Reporting defects
+
+**1b.6 The passage claiming matching was measured got the measurement wrong.** It
+named two scenarios as the loosest and tightest rank correlation and neither was
+the bound in the file. The real loosest is the dependence scenario at 0.28, three
+times looser than quoted, and that is correct behaviour rather than a defect:
+Iman-Conover deliberately does not preserve path identity. Both figures are now
+computed from the column rather than hand-picked, and the dependence scenarios are
+separated out with the reason.
+
+**1b.7 Every scenario delta was a mean of a heavy-tailed distribution.** The
+median delta flips sign against the mean for several scenarios. The scenario table
+now carries the mean, the median path and the effect on peak funding side by side,
+with a column saying whether the first two agree in sign.
+
+**1b.8 The break-even section implied the narrow scope produced answers.** Both
+scopes are unbracketed on every row. The section now says so, and the rescue grid,
+which was built and then never written up at all, is now section 10's second half.
+
+**1b.9 The staged rounds and the headline are computed by different rules.** Each
+staged round carries six months of buffer and the whole-horizon figure carries
+none, so the three staged rounds sum to about a third more than the number the
+document led with. Both are now printed with the difference named.
+
+**1b.10 The summer is not what costs the Year 10 advantage.** The write-up blamed
+it, following docs/10's own caveat. Removing the summer entirely lifts the ratio
+to 1.75, not 2; only pinning in-term churn to its floor as well recovers 2. The
+open item now sends the owner to measure in-term churn first and the summer
+second.
+
+### Added because they were absent
+
+**1b.11 The restricted transfer of United Kingdom children's data to Bengaluru.**
+docs/05 names it and marks it unconfirmed, and nothing in the model touched it.
+If counsel forces the learner path onshore, people overtakes content as the
+largest cost line and the sensitivity ordering the whole document is built on
+inverts. `onshore_share` prices it, two scenarios run it, and it is open item X8.
+It is the single most consequential thing either reviewer found.
+
+**1b.12 Regulatory enforcement exposure and examiner supply**, both priced at zero
+in `out/omissions.csv` and named there, because a zero written down is not the
+same as a line left out.
+
+### Left deliberately
+
+The base model still has **no price elasticity of demand**: raising the price
+raises acquisitions, because price feeds the budget cap and nothing else. Splitting
+the feedback bundle so the price loop runs alone is half a day and has not been
+done. It is stated plainly in LIMITS.md, and it means the anchor spread is an
+upper bound.
+
+The **foreign-market calendars** are the United Kingdom's with a shift. The
+southern-hemisphere academic year, the absence of a terminal sitting in the United
+States, and the treatment of a dozen curricula as one bucket are all named in
+LIMITS.md and none is fixed. They do not change the ordering, because the ordering
+is set by two market-agnostic drivers, and they do mean no foreign-market level in
+this document should be argued from.

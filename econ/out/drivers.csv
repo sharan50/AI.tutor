@@ -7,7 +7,7 @@ seed,run_date,driver,distribution,low,mode,high,what_anchors_the_range
 20260916,2026-09-16,price_rel_row,u,0.550000,,1.050000,"rest-of-English-speaking price relative to UK, prior"
 20260916,2026-09-16,price_drift_yr,n,0.015000,,0.030000,"annual real price drift, prior"
 20260916,2026-09-16,overage_price_frac,u,0.550000,,1.450000,"overage price per session as a fraction of (plan price / allowance), prior"
-20260916,2026-09-16,sessions_mean,u,3.500000,,18.000000,"mean sessions per active household per month; docs/03 implies ~3/week for a revising Year 11, which is the top of this range"
+20260916,2026-09-16,sessions_per_hh_month,u,3.500000,,18.000000,"mean sessions per active household per month; docs/03 implies ~3/week for a revising Year 11, which is the top of this range"
 20260916,2026-09-16,sessions_cv,u,0.550000,,1.600000,"coefficient of variation of sessions across households, prior"
 20260916,2026-09-16,usage_season_amp,u,0.100000,,0.550000,"seasonal swing in sessions per household, prior"
 20260916,2026-09-16,churn_base,u,0.030000,,0.180000,"voluntary monthly churn in season, prior"

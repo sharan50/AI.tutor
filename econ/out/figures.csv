@@ -776,35 +776,65 @@ scenario_por_launch_plus6_abs_mean_delta,793872.483849,USD or share,variants.csv
 anchor_tutoring_minus_software_terminal_cash_mean,30769800.355361,USD,variants.csv,"terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por_anchor_software: the spread between the two regimes, not either one's delta against the published mix"
 anchor_tutoring_minus_software_peak_funding_p80,4441824.028506,USD,variants.csv,peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring
 delta_por_feedback_off_terminal_cash_mean,0.000000,USD,variants.csv,terminal_cash_mean for por_feedback_off less terminal_cash_mean for por
+delta_por_feedback_off_terminal_cash_abs,0.000000,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_feedback_off_terminal_cash_mean
 delta_por_feedback_off_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_feedback_off less the same for por
+delta_por_feedback_off_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
 delta_por_feedback_on_terminal_cash_mean,-8320187.299539,USD,variants.csv,terminal_cash_mean for por_feedback_on less terminal_cash_mean for por
+delta_por_feedback_on_terminal_cash_abs,8320187.299539,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_feedback_on_terminal_cash_mean
 delta_por_feedback_on_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_feedback_on less the same for por
+delta_por_feedback_on_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
 delta_por_dependence_terminal_cash_mean,4478947.399037,USD,variants.csv,terminal_cash_mean for por_dependence less terminal_cash_mean for por
+delta_por_dependence_terminal_cash_abs,4478947.399037,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_dependence_terminal_cash_mean
 delta_por_dependence_total_content_cost_mean,-80594.447512,USD,variants.csv,total_content_cost_mean for por_dependence less the same for por
+delta_por_dependence_total_content_cost_abs,80594.447512,USD,variants.csv,the absolute value of that difference
 delta_por_dependence_feedback_terminal_cash_mean,-6144326.729797,USD,variants.csv,terminal_cash_mean for por_dependence_feedback less terminal_cash_mean for por
+delta_por_dependence_feedback_terminal_cash_abs,6144326.729797,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_dependence_feedback_terminal_cash_mean
 delta_por_dependence_feedback_total_content_cost_mean,-80594.447512,USD,variants.csv,total_content_cost_mean for por_dependence_feedback less the same for por
+delta_por_dependence_feedback_total_content_cost_abs,80594.447512,USD,variants.csv,the absolute value of that difference
 delta_por_fx_sampled_terminal_cash_mean,93069.890636,USD,variants.csv,terminal_cash_mean for por_fx_sampled less terminal_cash_mean for por
+delta_por_fx_sampled_terminal_cash_abs,93069.890636,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_fx_sampled_terminal_cash_mean
 delta_por_fx_sampled_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_fx_sampled less the same for por
+delta_por_fx_sampled_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
 delta_por_india_d2c_terminal_cash_mean,-214869.369083,USD,variants.csv,terminal_cash_mean for por_india_d2c less terminal_cash_mean for por
+delta_por_india_d2c_terminal_cash_abs,214869.369083,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_india_d2c_terminal_cash_mean
 delta_por_india_d2c_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_india_d2c less the same for por
+delta_por_india_d2c_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
 delta_por_appstore_terminal_cash_mean,-2559715.001681,USD,variants.csv,terminal_cash_mean for por_appstore less terminal_cash_mean for por
+delta_por_appstore_terminal_cash_abs,2559715.001681,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_appstore_terminal_cash_mean
 delta_por_appstore_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_appstore less the same for por
+delta_por_appstore_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
 delta_por_allowance_enforced_terminal_cash_mean,98660.581154,USD,variants.csv,terminal_cash_mean for por_allowance_enforced less terminal_cash_mean for por
+delta_por_allowance_enforced_terminal_cash_abs,98660.581154,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_allowance_enforced_terminal_cash_mean
 delta_por_allowance_enforced_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_allowance_enforced less the same for por
+delta_por_allowance_enforced_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
 delta_ukonly_terminal_cash_mean,3192876.143843,USD,variants.csv,terminal_cash_mean for ukonly less terminal_cash_mean for por
+delta_ukonly_terminal_cash_abs,3192876.143843,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_ukonly_terminal_cash_mean
 delta_ukonly_total_content_cost_mean,-7865485.705477,USD,variants.csv,total_content_cost_mean for ukonly less the same for por
+delta_ukonly_total_content_cost_abs,7865485.705477,USD,variants.csv,the absolute value of that difference
 delta_por_no_schools_terminal_cash_mean,5435966.650656,USD,variants.csv,terminal_cash_mean for por_no_schools less terminal_cash_mean for por
+delta_por_no_schools_terminal_cash_abs,5435966.650656,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_no_schools_terminal_cash_mean
 delta_por_no_schools_total_content_cost_mean,-2495758.221031,USD,variants.csv,total_content_cost_mean for por_no_schools less the same for por
+delta_por_no_schools_total_content_cost_abs,2495758.221031,USD,variants.csv,the absolute value of that difference
 delta_por_creator_fees_terminal_cash_mean,-2204366.019756,USD,variants.csv,terminal_cash_mean for por_creator_fees less terminal_cash_mean for por
+delta_por_creator_fees_terminal_cash_abs,2204366.019756,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_creator_fees_terminal_cash_mean
 delta_por_creator_fees_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_creator_fees less the same for por
+delta_por_creator_fees_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
 delta_por_anchor_tutoring_terminal_cash_mean,15268951.175832,USD,variants.csv,terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por
+delta_por_anchor_tutoring_terminal_cash_abs,15268951.175832,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_anchor_tutoring_terminal_cash_mean
 delta_por_anchor_tutoring_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_anchor_tutoring less the same for por
+delta_por_anchor_tutoring_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
 delta_por_anchor_software_terminal_cash_mean,-15500849.179529,USD,variants.csv,terminal_cash_mean for por_anchor_software less terminal_cash_mean for por
+delta_por_anchor_software_terminal_cash_abs,15500849.179529,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_anchor_software_terminal_cash_mean
 delta_por_anchor_software_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_anchor_software less the same for por
+delta_por_anchor_software_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
 delta_por_launch_plus3_terminal_cash_mean,-1493647.769686,USD,variants.csv,terminal_cash_mean for por_launch_plus3 less terminal_cash_mean for por
+delta_por_launch_plus3_terminal_cash_abs,1493647.769686,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_launch_plus3_terminal_cash_mean
 delta_por_launch_plus3_total_content_cost_mean,-223132.976530,USD,variants.csv,total_content_cost_mean for por_launch_plus3 less the same for por
+delta_por_launch_plus3_total_content_cost_abs,223132.976530,USD,variants.csv,the absolute value of that difference
 delta_por_launch_plus6_terminal_cash_mean,-793872.483849,USD,variants.csv,terminal_cash_mean for por_launch_plus6 less terminal_cash_mean for por
+delta_por_launch_plus6_terminal_cash_abs,793872.483849,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_launch_plus6_terminal_cash_mean
 delta_por_launch_plus6_total_content_cost_mean,-1787131.148799,USD,variants.csv,total_content_cost_mean for por_launch_plus6 less the same for por
+delta_por_launch_plus6_total_content_cost_abs,1787131.148799,USD,variants.csv,the absolute value of that difference
 sobol_peak_funding_requirement_sum_first_order,0.742431,share of variance,sobol.csv,sum of sobol_first_order over every driver for target peak_funding_requirement
 sobol_peak_funding_requirement_rank1_driver,items_per_unit,driver name,sobol.csv,driver at rank 1 by sobol_first_order for target peak_funding_requirement
 sobol_peak_funding_requirement_rank1_value,0.164611,share of variance,sobol.csv,sobol_first_order at rank 1 for target peak_funding_requirement

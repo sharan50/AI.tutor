@@ -59,8 +59,8 @@ def stage_need(cum, net_cash, a, b):
 def main():
     rows = []
     for label, cfg in SCENARIOS.items():
-        out, _ = NS["run"](DRV, cfg)
-        o, cum = NS["path_outcomes"](out)
+        out, summary = NS["run"](DRV, cfg)
+        o, cum = NS["path_outcomes"](out, summary)
         net = out["net_cash"]
         for name, a, b in STAGES:
             need, window = stage_need(cum, net, a, b)

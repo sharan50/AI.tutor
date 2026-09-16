@@ -65,7 +65,7 @@ DEPENDENCE = [
      "the slower examiners are the cheaper ones per hour"),
     ("price_in_mtok_usd", "price_out_mtok_usd", 0.80,
      "vendor input and output prices move together"),
-    ("turns_per_session", "sessions_mean", -0.25,
+    ("turns_per_session", "sessions_per_hh_month", -0.25,
      "longer sessions substitute for more of them"),
     ("churn_base", "summer_lapse_pre", 0.40,
      "a book that churns in term churns harder over the summer"),
@@ -254,6 +254,16 @@ def s_creator():
     return DRV, dict(NS["base_config"](), creator=creator_params())
 
 
+@scenario("por_onshore_half", "half the engineering forced onshore by a restricted-transfer finding on United Kingdom children's data")
+def s_onshore_half():
+    return DRV, dict(NS["base_config"](), onshore_share=0.5)
+
+
+@scenario("por_onshore_all", "all learner-facing engineering forced onshore, the worst reading of docs/05's unconfirmed transfer position")
+def s_onshore_all():
+    return DRV, dict(NS["base_config"](), onshore_share=1.0)
+
+
 @scenario("por_anchor_tutoring", "condition C1 passes: every path anchors on the tutoring rate")
 def s_anchor_tut():
     drv = dict(DRV)
@@ -283,7 +293,7 @@ OUTCOME_COLS = [
     "peak_funding_p80", "peak_funding_p90", "share_reaching_profitability",
     "median_month_rev_passes_cost",
     "terminal_active_hh_mean", "final_year_effective_cac_mean",
-    "final_year_contrib_per_hh_month_mean", "mean_share_over_allowance",
+    "mean_share_over_allowance",
     "total_tax_collected_mean", "min_of_mean_trough", "mean_of_min_trough",
     "understatement_ratio", "band_central_placement_terminal",
     "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
@@ -297,8 +307,8 @@ BASE_TERMINAL = None
 def evaluate(name):
     fn, note = SCENARIOS[name]
     drv, cfg = fn()
-    out, _ = NS["run"](drv, cfg)
-    o, cum = NS["path_outcomes"](out)
+    out, summary = NS["run"](drv, cfg)
+    o, cum = NS["path_outcomes"](out, summary)
     ts = NS["trough_stats"](cum)
     placement = NS["band_percentile_placement"](cum, cum, "central")
     reach = o["month_rev_passes_cost"] >= 0
@@ -313,7 +323,8 @@ def evaluate(name):
         median_month_rev_passes_cost=float(np.median(o["month_rev_passes_cost"][reach])) if reach.any() else float("nan"),
         terminal_active_hh_mean=float(o["terminal_active_hh"].mean()),
         final_year_effective_cac_mean=float(o["final_year_effective_cac"].mean()),
-        final_year_contrib_per_hh_month_mean=float(o["final_year_contrib_per_hh_month"].mean()),
+        # The mean of this per-path ratio is not a number; see CHANGELOG 1a.1.
+        # The median over paths with a real final year is published instead.
         mean_share_over_allowance=float(o["mean_share_over_allowance"].mean()),
         total_tax_collected_mean=float(o["total_tax_collected"].mean()),
         min_of_mean_trough=ts["min_of_mean"],
@@ -342,8 +353,8 @@ def evaluate(name):
 
 def test_off_reproduces_base():
     """A mechanism switched off must reproduce the base run character for character."""
-    base_out, _ = NS["run"](DRV, NS["base_config"]())
-    base_o, base_cum = NS["path_outcomes"](base_out)
+    base_out, base_summary = NS["run"](DRV, NS["base_config"]())
+    base_o, base_cum = NS["path_outcomes"](base_out, base_summary)
     base_text = NS["monthly_csv_text"](base_out, base_cum, "por")
     results = []
     for name, cfg in [
@@ -352,9 +363,10 @@ def test_off_reproduces_base():
         ("fx_fixed", dict(NS["base_config"](), fx=dict(gbp=np.full(P, NS["FX_GBP_USD"])))),
         ("creator_zero", dict(NS["base_config"](),
                               creator=dict(fee_per_creator_yr=np.zeros(P), rev_share=np.zeros(P)))),
+        ("onshore_zero", dict(NS["base_config"](), onshore_share=0.0)),
     ]:
-        out, _ = NS["run"](DRV, cfg)
-        o, cum = NS["path_outcomes"](out)
+        out, summary = NS["run"](DRV, cfg)
+        o, cum = NS["path_outcomes"](out, summary)
         text = NS["monthly_csv_text"](out, cum, "por")
         ok = (text == base_text)
         results.append((name, ok))
@@ -369,8 +381,8 @@ def main():
     test_off_reproduces_base()
 
     global BASE_TERMINAL
-    base_out, _ = NS["run"](DRV, NS["base_config"]())
-    base_o, _base_cum = NS["path_outcomes"](base_out)
+    base_out, base_summary = NS["run"](DRV, NS["base_config"]())
+    base_o, _base_cum = NS["path_outcomes"](base_out, base_summary)
     BASE_TERMINAL = base_o["terminal_cash"]
 
     rows, band_rows = [], []

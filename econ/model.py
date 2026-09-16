@@ -115,8 +115,12 @@ EXAM_CAL_MONTH = {M_UK: 5, M_US: 4, M_IN: 2, M_ROW: 5}
 # the published run, so that turning the switch on actually opens the market.
 CONSUMER_OPEN = {M_UK: 6, M_US: 15, M_IN: 15, M_ROW: 24}
 
-# Institution (Route B) channel opening months.
-SCHOOL_OPEN = {M_UK: 12, M_US: 18, M_IN: 15, M_ROW: 30}
+# Institution (Route B) channel opening month. The institution channel is
+# modelled as ONE United Kingdom-priced motion, not per market, so this carries
+# the United Kingdom only. Entries for the other markets were dead constants:
+# _school_open_month is never called with anything else, and the seat price has
+# no market index.
+SCHOOL_OPEN = {M_UK: 12}
 
 # ---------------------------------------------------------------------------
 # Content scope, in units. A unit is one (subject x level x board).
@@ -160,6 +164,13 @@ OVERAGE_CAP_MULT = 2.5     # billed overage capped at this multiple of allowance
 # saturating channel eventually buys customers for more than they are worth.
 CAC_LTV_CAP = 0.75         # never spend so that effective CAC exceeds this x LTV
 
+# How many times over the reachable pool may be worked across the whole horizon.
+# A household that churns can be sold to again; it cannot be sold to without
+# limit. Without this the standing-book cap left cumulative acquisitions
+# unbounded and the best paths bought tens of millions of households in a market
+# of a few million.
+POOL_REACQUISITION_MULTIPLE = 3.0
+
 # The launch acquisition subsidy is not revenue-linked, so it must switch off.
 # It holds for a year after go-to-market and tapers to nothing over the second,
 # after which acquisition is funded only from trailing revenue. A standing
@@ -187,6 +198,9 @@ PLATFORM_FOR_INSTITUTIONS = 2.0
 # defect as the platform ramp, running the other way (see CHANGELOG.md 0.9).
 POOL_BREADTH_REFERENCE_SUBJECTS = 5.0
 POOL_BREADTH_EXPONENT = 0.6
+
+# The demand multiplier at or below which a month counts toward a bad run.
+SHOCK_BAD_THRESHOLD = 0.80
 
 # Safeguarding rota thresholds, in active consumer households.
 ROTA_EXTENDED_AT = 3000
@@ -217,8 +231,8 @@ DRIVERS = [
      "overage price per session as a fraction of (plan price / allowance), prior"),
 
     # --- usage -------------------------------------------------------------
-    ("sessions_mean", "u", (3.5, 18.0),
-     "mean sessions per active household per month; docs/03 implies ~3/week for a revising Year 11, which is the top of this range"),
+    ("sessions_per_hh_month", "u", (3.5, 18.0),
+     "mean sessions per active household per month. docs/03's own arithmetic, three sessions a week for a Year 11 revising one strand, is about 13 a month; the top of this range is above that and the bottom well below it, because nothing measures this before M5"),
     ("sessions_cv", "u", (0.55, 1.60), "coefficient of variation of sessions across households, prior"),
     ("usage_season_amp", "u", (0.10, 0.55), "seasonal swing in sessions per household, prior"),
 
@@ -534,7 +548,8 @@ def headcount(drv, cfg, t, active_consumer, units_fe_total, units_fe_ahead, reps
 
     # UK-based roles. Safeguarding is a rota, which is a step cost: docs/05
     # concedes next-business-day review is not adequate for an acute
-    # disclosure, and an out-of-hours rota is roughly five full-time posts.
+    # disclosure. The step below adds three and a half further posts, which is
+    # thin for genuine round-the-clock cover and is named as such in LIMITS.md.
     uk = np.zeros_like(z)
     if t >= 3:
         uk = uk + 0.5                      # data protection officer, part time
@@ -560,7 +575,10 @@ def step_costs_usd(drv, cfg, t, heads_total, active_consumer):
     z = np.zeros_like(drv["eng_usd_yr"])
     c = z.copy()
 
-    # The eleven counsel items in docs/14, spread over the first four months.
+    # The counsel items in docs/14, spread over the first four months. The vault
+    # is not internally consistent about how many there are: docs/14 lists
+    # OI-1 to OI-12, while its README and docs/11 both say eleven. The cost here
+    # does not depend on which is right.
     if 0 <= t < 4:
         c = c + drv["step_counsel_initial_usd"] / 4.0
 
@@ -574,7 +592,7 @@ def step_costs_usd(drv, cfg, t, heads_total, active_consumer):
     if cfg["scope"] != "ukonly":
         entity_months[M_US] = 13 + cfg["launch_shift"]
         entity_months[M_ROW] = 22 + cfg["launch_shift"]
-        if cfg["schools"] or cfg["india_d2c"]:
+        if cfg["india_d2c"]:
             entity_months[M_IN] = 13 + cfg["launch_shift"]
     for m, month in entity_months.items():
         if t == month:
@@ -622,7 +640,7 @@ def expected_contrib_pm(drv, m, t, cps, billed=None):
     """
     price_g = gross_price_usd(drv, m, t)
     trate = tax_rate(drv, m)
-    mu = drv["sessions_mean"]
+    mu = drv["sessions_per_hh_month"]
     if billed is None:
         _share, billed = overage_terms(drv, mu)
     gross = price_g + billed * price_g / SESSION_ALLOWANCE * drv["overage_price_frac"]
@@ -632,6 +650,20 @@ def expected_contrib_pm(drv, m, t, cps, billed=None):
            + gross * drv["pay_pct"] + drv["pay_fixed_usd"]
            + drv["hosting_hh_usd"])
     return net - var
+
+
+def verification_cost(drv, m):
+    """
+    Age assurance per acquired account. India is charged double because verifiable
+    parental consent under the DPDP Rules is a heavier process than United Kingdom
+    age assurance, not the same one.
+
+    This exists as a function because the acquisition loop and the lifetime value
+    estimate used to disagree: the loop charged India twice and the estimate
+    credited it nothing, so the India budget cap was set on a lifetime value that
+    omitted the largest India-specific unit cost.
+    """
+    return drv["verif_cost_usd"] * (2.0 if m == M_IN else 1.0)
 
 
 def ltv_estimate(drv, contrib_pm, m):
@@ -650,8 +682,7 @@ def ltv_estimate(drv, contrib_pm, m):
     mix_a = drv["seg_mix_alevel"]
     mix_p = np.maximum(1.0 - mix_e - mix_a, 0.0)
     months = mix_e * m_exam + mix_p * m_pre + mix_a * m_al
-    v = drv["verif_cost_usd"] if m in (M_UK, M_US, M_ROW) else 0.0
-    return np.maximum(contrib_pm * months - v, 0.0)
+    return np.maximum(contrib_pm * months - verification_cost(drv, m), 0.0)
 
 
 def effective_cac(drv, m, spend, penetration):
@@ -705,6 +736,7 @@ def base_config():
         launch_shift=0,           # months added to every market opening
         unit_schedules=None,      # None means the published schedules in CONSTANTS
         creator=None,             # None means no creator licence cost, which is the published run
+        onshore_share=None,       # None or 0.0 means all engineering stays in Bengaluru
     )
 
 
@@ -720,7 +752,7 @@ def _open_month(cfg, m):
 
 
 def _school_open_month(cfg, m):
-    if not cfg["schools"] or cfg["scope"] == "ukonly":
+    if not cfg["schools"] or cfg["scope"] == "ukonly" or m not in SCHOOL_OPEN:
         return 10 ** 9
     return SCHOOL_OPEN[m] + cfg["launch_shift"]
 
@@ -737,7 +769,11 @@ def content_build_plan(drv, cfg):
     for m in range(NM):
         if cfg["scope"] == "ukonly" and m != M_UK:
             continue
-        if m == M_IN and not cfg["india_d2c"] and not cfg["schools"]:
+        # India content is built only if India actually trades. The institution
+        # channel is modelled as a single United Kingdom motion (see LIMITS.md),
+        # so tying the India bank to it charged the base run for a bank nothing
+        # bills and made por_no_schools differ in two things rather than one.
+        if m == M_IN and not cfg["india_d2c"]:
             continue
         prev = np.zeros(P)
         for month, _s, _l, _b in schedules[m]:
@@ -775,7 +811,7 @@ def run(drv, cfg=None):
         "payment_cost", "hosting_cost", "verif_cost", "cac_spend", "content_cost",
         "people_beng_cost", "people_uk_cost", "step_cost", "school_onboard_cost",
         "appstore_fee", "sessions_delivered", "share_over_allowance",
-        "cac_effective_blended", "cac_effective_noncreator", "net_cash",
+        "cac_effective_blended", "cac_effective_noncreator", "net_cash", "demand_shock",
     ]}
 
     stock = np.zeros((P, MS, N_COHORT_YEARS))
@@ -790,7 +826,7 @@ def run(drv, cfg=None):
 
     # The unseasoned overage terms do not depend on the month or the market, so
     # they are computed once rather than per market per month.
-    _share_flat, billed_flat = overage_terms(drv, drv["sessions_mean"])
+    _share_flat, billed_flat = overage_terms(drv, drv["sessions_per_hh_month"])
 
     shock_state = np.zeros(P)
     shock_var = drv["shock_sd"] ** 2 / np.maximum(1.0 - drv["shock_rho"] ** 2, 1e-3)
@@ -798,6 +834,9 @@ def run(drv, cfg=None):
     school_live = np.zeros(P)
     school_pending = np.zeros((P, T + 24))
     trailing_net = np.zeros(P)
+    cum_acq = [np.zeros(P) for _ in range(NM)]
+    bad_run_current = np.zeros(P)
+    bad_run_longest = np.zeros(P)
 
     for t in range(T):
         cps = cost_per_session_usd(drv, t)
@@ -806,6 +845,14 @@ def run(drv, cfg=None):
         # --- exactly the sustained bad run that ends companies.
         shock_state = drv["shock_rho"] * shock_state + drv["shock_sd"] * drv["_shock_eps"][:, t]
         shock_mult = np.exp(shock_state - 0.5 * shock_var)
+        # Tracked here so that the sustained-bad-run figures are re-derivable
+        # from a published file. The innovations themselves are not published,
+        # so a claim to have reconstructed the run lengths from them was not
+        # checkable by a reader.
+        is_bad = shock_mult < SHOCK_BAD_THRESHOLD
+        bad_run_current = np.where(is_bad, bad_run_current + 1.0, 0.0)
+        bad_run_longest = np.maximum(bad_run_longest, bad_run_current)
+        out["demand_shock"][:, t] = shock_mult
 
         # --- content spend this month ------------------------------------
         built = build_plan[t]
@@ -837,7 +884,7 @@ def run(drv, cfg=None):
                 st = stock[:, ms(m, s), :].sum(axis=1)
                 if not np.any(st > 0):
                     continue
-                mu = drv["sessions_mean"] * use_season * SEG_USAGE_REL[s]
+                mu = drv["sessions_per_hh_month"] * use_season * SEG_USAGE_REL[s]
                 key = (SEASON_SHIFT[m], s)
                 if key not in over_cache:
                     over_cache[key] = overage_terms(drv, mu)
@@ -911,11 +958,22 @@ def run(drv, cfg=None):
             want = envelope * MARKET_BUDGET_WEIGHT[m] / wsum * season
             spend = np.minimum(want, cap)
             cac_b, cac_nc = effective_cac(drv, m, spend, pen)
-            acq = spend / np.maximum(cac_b, 1e-6) * shock_mult
+            acq_wanted = spend / np.maximum(cac_b, 1e-6) * shock_mult
+            # The pool caps the standing book. It does not cap the cumulative
+            # flow, so without the second term a path could churn and reacquire
+            # its way to tens of millions of households in a market of a few
+            # million. A household can be worked more than once, not endlessly.
             room = np.maximum(pool - active_by_market[m], 0.0)
-            acq = np.minimum(acq, room)
-            realised_spend = acq * cac_b
-            v = drv["verif_cost_usd"] if m != M_IN else drv["verif_cost_usd"] * 2.0
+            room_cum = np.maximum(pool * POOL_REACQUISITION_MULTIPLE - cum_acq[m], 0.0)
+            acq = np.minimum(acq_wanted, np.minimum(room, room_cum))
+            # Spend is committed in advance, so a demand shock buys fewer
+            # households for the same money. Only running out of market stops the
+            # spend. Recomputing spend from realised acquisitions, which is what
+            # this did before, made the shock cost nothing at all.
+            served = np.where(acq_wanted > 1e-12, np.minimum(acq / np.maximum(acq_wanted, 1e-12), 1.0), 0.0)
+            realised_spend = spend * served
+            cum_acq[m] = cum_acq[m] + acq
+            v = verification_cost(drv, m)
             verif_total = verif_total + acq * v
             spend_total = spend_total + realised_spend
             acq_total = acq_total + acq
@@ -958,7 +1016,7 @@ def run(drv, cfg=None):
         school_rev = school_live * drv["school_seats"] * seat_price_usd / 12.0
         out["net_rev_schools"][:, t] = school_rev
         out["school_contracts"][:, t] = school_live
-        school_sessions = school_live * drv["school_seats"] * drv["sessions_mean"] * SCHOOL_USAGE_REL * \
+        school_sessions = school_live * drv["school_seats"] * drv["sessions_per_hh_month"] * SCHOOL_USAGE_REL * \
             season_factor(_USE_SHAPE, M_UK, t, drv["usage_season_amp"])
         out["inference_cost"][:, t] += school_sessions * cps
         out["sessions_delivered"][:, t] += school_sessions
@@ -970,8 +1028,16 @@ def run(drv, cfg=None):
         beng, uk = headcount(drv, cfg, t, active_total, live_fe, live_fe_ahead, reps_live)
         if fb:
             beng = beng + fb["eng_heads_extra"]
-        out["people_beng_cost"][:, t] = beng * drv["eng_usd_yr"] * drv["overhead_mult"] / 12.0
-        out["people_uk_cost"][:, t] = uk * drv["uk_gbp_yr"] * FX_GBP_USD * fx_scale * drv["overhead_mult"] / 12.0
+        # docs/05 flags the restricted transfer of United Kingdom children's data
+        # to an Indian controller as a standard position not confirmed for this
+        # fact pattern. If a DPIA or counsel forces the learner-content path
+        # onshore, the Bengaluru cost advantage goes with it. onshore_share moves
+        # that fraction of engineering onto United Kingdom cost. Zero in the
+        # published run, so this changes nothing there.
+        onshore = cfg["onshore_share"] or 0.0
+        out["people_beng_cost"][:, t] = beng * (1.0 - onshore) * drv["eng_usd_yr"] * drv["overhead_mult"] / 12.0
+        out["people_uk_cost"][:, t] = ((uk + beng * onshore) * drv["uk_gbp_yr"] * FX_GBP_USD
+                                       * fx_scale * drv["overhead_mult"] / 12.0)
         out["step_cost"][:, t] = step_costs_usd(drv, cfg, t, beng + uk, active_total)
 
         # The creator licence, which the published run costs at zero. Both limbs
@@ -1023,7 +1089,8 @@ def run(drv, cfg=None):
                 stock[:, ms(m, S_EXAM), :] += moving
 
     summary = dict(stock=stock, acq_cum=acq_cum, cac_cum=cac_cum,
-                   contrib_cum=contrib_cum, months_cum=months_cum)
+                   contrib_cum=contrib_cum, months_cum=months_cum,
+                   bad_run_longest=bad_run_longest, cum_acq=cum_acq)
     return out, summary
 # === SECTION: AGGREGATE ===
 # Band definitions. A band is a set of whole paths ranked on terminal cumulative
@@ -1105,7 +1172,7 @@ def sustained_mask(x, k=3):
     return run
 
 
-def path_outcomes(out):
+def path_outcomes(out, summary=None):
     cum = cumulative_cash(out)
     rev = out["net_rev_consumer"] + out["net_rev_schools"]
     cost = rev - out["net_cash"]
@@ -1146,6 +1213,11 @@ def path_outcomes(out):
                 - (out["net_rev_consumer"][:, fy] + out["net_rev_schools"][:, fy] - out["net_cash"][:, fy])
                 + out["cac_spend"][:, fy] + out["verif_cost"][:, fy]).sum(axis=1)
     o["final_year_allin_contrib_per_hh_month"] = np.where(fy_active > 0, fy_allin / np.maximum(fy_active, 1e-9), 0.0)
+    fyh = out["active_hh"][:, fy].sum(axis=1)
+    o["final_year_hh_months"] = fyh
+    o["total_demand_shock_months_below_threshold"] = (out["demand_shock"] < 0.80).sum(axis=1).astype(float)
+    o["longest_demand_shock_bad_run"] = (summary["bad_run_longest"] if summary is not None
+                                         else np.zeros(fyh.shape[0]))
     o["mean_share_over_allowance"] = np.where(
         out["active_hh"].sum(axis=1) > 0,
         (out["share_over_allowance"] * out["active_hh"]).sum(axis=1) / np.maximum(out["active_hh"].sum(axis=1), 1e-9),
@@ -1153,12 +1225,74 @@ def path_outcomes(out):
     return o, cum
 
 
-def check_suffix_discipline(header):
-    """A mean over all paths and a band planning line must not share a suffix."""
-    bad = [h for h in header if h.endswith(MEAN_SUFFIX) and any(h.endswith(b) for b in BAND_SUFFIXES)]
-    if bad:
-        raise AssertionError("suffix collision: %r" % bad)
+PERCENTILE_SUFFIXES = ("_p10", "_p50", "_p90")
+PLACEMENT_SUFFIX = "_placement"
+BASIS_SUFFIXES = (MEAN_SUFFIX,) + PERCENTILE_SUFFIXES + BAND_SUFFIXES + (PLACEMENT_SUFFIX,)
+MONTHLY_META = ("run", "seed", "run_date", "t", "cal_year", "cal_month")
+
+# One column is exempt and is named here rather than pattern-matched. It is the
+# percentile position of the central band line, so it legitimately carries a band
+# marker that is not its own basis. Everything else in the monthly file must end
+# in exactly one basis and carry no other basis marker anywhere.
+MONTHLY_EXEMPT = ("cum_cash_bandcentral_placement",)
+
+
+def check_suffix_discipline(header, kind):
+    """
+    Refuse a header in which a reader could not tell what basis a column is on.
+
+    An earlier version of this tested whether a name ended in both a mean suffix
+    and a band suffix, which no string can do, so it could never fire. This one
+    can, and suffix_discipline_selftest() shows it firing.
+
+    kind is "monthly", where every column carries a basis, or "paths", where no
+    column may carry one because nothing in that file is aggregated across paths.
+    """
+    problems = []
+    for h in header:
+        if h in MONTHLY_EXEMPT:
+            continue
+        ends = [s for s in BASIS_SUFFIXES if h.endswith(s)]
+        inside = [s for s in BASIS_SUFFIXES if s in h and not h.endswith(s)]
+        if inside:
+            problems.append("%s carries the basis marker %s somewhere other than its suffix"
+                            % (h, ", ".join(inside)))
+        if kind == "monthly":
+            if h in MONTHLY_META:
+                continue
+            if not ends:
+                problems.append("%s carries no basis suffix, in a file where every column has one" % h)
+            elif len(ends) > 1:
+                problems.append("%s ends in more than one basis: %s" % (h, ", ".join(ends)))
+        elif kind == "paths":
+            if ends:
+                problems.append("%s ends in %s, which is an aggregate basis, in a per-path file"
+                                % (h, ", ".join(ends)))
+        else:
+            raise ValueError(kind)
+    if problems:
+        raise AssertionError("suffix discipline: %s" % "; ".join(problems))
     return True
+
+
+def suffix_discipline_selftest():
+    """Show the gate refusing. A check that has never failed is not a check."""
+    cases = [
+        (["active_hh_mean_bandlow"], "monthly", "a name carrying two bases"),
+        (["active_hh"], "monthly", "a monthly column with no basis at all"),
+        (["terminal_cash_mean"], "paths", "an aggregate basis in a per-path file"),
+        (["sessions_mean_usd"], "paths", "a basis marker buried inside a name"),
+    ]
+    lines = ["suffix discipline self-test"]
+    ok = True
+    for header, kind, why in cases:
+        try:
+            check_suffix_discipline(header, kind)
+            lines.append("FAILED to refuse %-34s (%s)" % (header[0], why))
+            ok = False
+        except AssertionError as exc:
+            lines.append("refused %-34s %s" % (header[0], str(exc).split(": ", 1)[1]))
+    return ok, "\n".join(lines) + "\n"
 
 # === SECTION: EMIT ===
 MONTHLY_SERIES = [
@@ -1168,6 +1302,7 @@ MONTHLY_SERIES = [
     "verif_cost", "cac_spend", "content_cost", "people_beng_cost", "people_uk_cost",
     "step_cost", "school_onboard_cost", "appstore_fee", "sessions_delivered",
     "share_over_allowance", "cac_effective_blended", "cac_effective_noncreator", "net_cash",
+    "demand_shock",
 ]
 
 PATH_FIELDS = [
@@ -1178,6 +1313,8 @@ PATH_FIELDS = [
     "total_step_cost", "total_tax_collected", "total_sessions", "effective_cac_all_in",
     "final_year_effective_cac", "final_year_contrib_per_hh_month",
     "final_year_allin_contrib_per_hh_month", "mean_share_over_allowance",
+    "final_year_hh_months", "total_demand_shock_months_below_threshold",
+    "longest_demand_shock_bad_run",
 ]
 
 FMT = "%.6f"
@@ -1191,7 +1328,7 @@ def monthly_csv_text(out, cum, run_label):
     header += ["cum_cash_mean", "cum_cash_p10", "cum_cash_p50", "cum_cash_p90",
                "cum_cash_bandlow", "cum_cash_bandcentral", "cum_cash_bandhigh",
                "cum_cash_bandcentral_placement"]
-    check_suffix_discipline(header)
+    check_suffix_discipline(header, "monthly")
 
     prepared = {}
     for s in MONTHLY_SERIES + ["cum_cash"]:
@@ -1224,6 +1361,7 @@ def monthly_csv_text(out, cum, run_label):
 
 def paths_csv_text(o, drv, run_label):
     header = ["run", "seed", "run_date", "path"] + PATH_FIELDS + DRIVER_NAMES
+    check_suffix_discipline(header, "paths")
     buf = io.StringIO()
     w = csv.writer(buf, lineterminator="\n")
     w.writerow(header)
@@ -1244,12 +1382,17 @@ def write_text(path, text):
 def build_base():
     """The published base run: the plan of record."""
     drv = draw_drivers()
-    out, _summary = run(drv, base_config())
-    o, cum = path_outcomes(out)
+    out, summary = run(drv, base_config())
+    o, cum = path_outcomes(out, summary)
     return drv, out, o, cum
 
 
 def main():
+    ok, text = suffix_discipline_selftest()
+    write_text(os.path.join(OUT, "suffix_selftest.txt"), text)
+    print(text, end="")
+    if not ok:
+        raise AssertionError("the suffix discipline check failed to refuse a header it must refuse")
     drv, out, o, cum = build_base()
     mtext = monthly_csv_text(out, cum, "por")
     ptext = paths_csv_text(o, drv, "por")

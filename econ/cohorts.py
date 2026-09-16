@@ -76,6 +76,40 @@ share_double = float((pre_months >= 2.0 * exam_months).mean())
 add("share_paths_year10_at_least_doubles", share_double, "share",
     "share of paths on which the pre-examination cohort retains at least twice as many months as the examination cohort", "15 and 19")
 
+# WHY the ratio is 1.24 rather than two. The write-up first blamed the summer,
+# following docs/10's own caveat. That is not what the model says. These
+# counterfactuals pin the drivers one at a time, after the draws, and re-run.
+def retained_ratio(**pins):
+    drv = dict(DRV)
+    for k, v in pins.items():
+        drv[k] = np.full(P, v)
+    outs = []
+    for mix_e, mix_a in ((1.0, 0.0), (0.0, 0.0)):
+        d2 = dict(drv)
+        d2["seg_mix_exam"] = np.full(P, mix_e)
+        d2["seg_mix_alevel"] = np.full(P, mix_a)
+        o, sm = NS["run"](d2, NS["base_config"]())
+        acq = o["acquisitions"].sum(axis=1)
+        outs.append(np.where(acq > 0, o["active_hh"].sum(axis=1) / np.maximum(acq, 1e-9), 0.0).mean())
+    return float(outs[1] / outs[0]), float(outs[0]), float(outs[1])
+
+_r_nosummer, _e1, _p1 = retained_ratio(summer_lapse_pre=0.0, progress_continue=1.0)
+_r_lowchurn, _e2, _p2 = retained_ratio(churn_base=float(NS["DRIVERS"][
+    [d[0] for d in NS["DRIVERS"]].index("churn_base")][2][0]))
+_r_both, _e3, _p3 = retained_ratio(
+    summer_lapse_pre=0.0, progress_continue=1.0,
+    churn_base=float(NS["DRIVERS"][[d[0] for d in NS["DRIVERS"]].index("churn_base")][2][0]))
+add("year10_ratio_with_no_summer_at_all", _r_nosummer, "ratio",
+    "the pre-to-examination retained-month ratio with the summer lapse pinned to zero and progression pinned to one: the summer removed entirely", "15")
+add("year10_ratio_with_churn_at_its_floor", _r_lowchurn, "ratio",
+    "the same ratio with in-term churn pinned to the bottom of its prior range and the summer left as sampled", "15")
+add("year10_ratio_with_no_summer_and_floor_churn", _r_both, "ratio",
+    "the same ratio with both pinned: this is the only combination that recovers the figure docs/10 reasons toward", "15")
+add("retained_months_exam_at_floor_churn", _e2, "months per acquisition",
+    "examination-year retained months with in-term churn at the bottom of its prior range", "15")
+add("retained_months_pre_at_floor_churn", _p2, "months per acquisition",
+    "pre-examination retained months with in-term churn at the bottom of its prior range", "15")
+
 # ---------------------------------------------------------------------------
 # Demand shock persistence. Independent monthly shocks would mean no sustained
 # bad run, which is the failure mode that ends companies.

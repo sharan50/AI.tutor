@@ -43,6 +43,8 @@ CONSTANTS = [
     ("HORIZON", "months in the horizon"),
     ("N_PATHS", "paths simulated"),
     ("P_TUTORING_ANCHOR", "probability a path lands in the tutoring-anchored price regime"),
+    ("SHOCK_BAD_THRESHOLD", "demand multiplier below which a month counts toward a bad run"),
+    ("POOL_REACQUISITION_MULTIPLE", "how many times over the reachable pool may be worked across the horizon"),
     ("START_YEAR", "calendar year of month zero"),
     ("START_MONTH_IDX", "calendar month index of month zero, zero being January"),
 ]

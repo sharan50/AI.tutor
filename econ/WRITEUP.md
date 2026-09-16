@@ -22,8 +22,9 @@ one market, no institution channel. The first eighteen months of the plan of
 record alone need 12.94 million.
 
 **Two. Roughly two thirds of the cost base is committed before demand can say
-anything about it.** Content, people and step costs together are
-35.9, 15.2 plus 7.2, and 3.2 per cent of total modelled cost. Acquisition is
+anything about it.** Content is 35.9 per cent of total modelled cost, people
+15.2 per cent in Bengaluru plus 7.2 in the United Kingdom, and step
+costs 3.2 per cent. Acquisition, which does depend on demand, is
 30.3 per cent. Inference, the cost docs/06 builds up so carefully, is
 2.5 per cent. This is why **no single driver rescues the plan of record**:
 every break-even solved in section 10 is unbracketed, because the money is spent
@@ -384,10 +385,11 @@ Target: the peak funding requirement.
 **The two orderings are different and the difference is the finding.** Acquisition
 cost and the price-anchor regime decide whether. Item count per subject bank,
 authoring cost per item, validation minutes per item, reuse across boards and the
-examiner rate decide how much. 5 of the top seven drivers on
-capital are content-cost drivers, against 0 in the top three on
-whether the venture ever makes money. Both counts are computed in `figures.py`
-from `out/sobol.csv` rather than counted by eye.
+examiner rate decide how much. Content-cost drivers take
+5 of the top seven places on capital and
+0 of the top three on whether the venture ever makes money.
+Acquisition drivers take 2 of that top three. All three counts are
+computed in `figures.py` from `out/sobol.csv` rather than counted by eye.
 
 The practical reading: **work on acquisition and the price anchor to make the
 business exist; work on content cost to make it fundable.** They are different
@@ -459,10 +461,15 @@ switches named. Every scenario that opens a market or a channel is charged for i
 Five readings.
 
 **The price anchor is worth 30,769,800 dollars between its two states**, and
-it is a landing page and a few days of spend to test. (The column beside it shows
-each regime against the published run, which is a fifty-fifty mix of the two; the
-spread between the regimes is the larger number and it is the one that matters.) It is condition C1 in docs/09 and
-nothing else in this instrument comes close to it on cost of information.
+it is a landing page and a few days of spend to test. It is condition C1 in
+docs/09, and nothing else in this instrument comes close to it on cost of
+information.
+
+Read that figure from the middle column, not the right-hand one. The right-hand
+column gives each regime against the published run, and the published run draws
+each path into one regime or the other with probability 0.50, so it is a
+mixture of both. The quantity a landing-page test resolves is the spread between
+the regimes, which is the larger number.
 
 **The institution channel destroys 5,435,967 dollars.** Field sales
 salaries, per-school onboarding, a security certification and its annual renewal,
@@ -472,7 +479,7 @@ Route B was never that it pays sooner; it was that it produces the outcome
 evidence that is the only durable moat, and this instrument does not value
 evidence. That is a limit of the instrument, not a refutation of the argument.
 
-**The feedback loops cost -8,320,187 dollars.** A higher price costs
+**The feedback loops cost 8,320,187 dollars.** A higher price costs
 retention, expanding faster costs quality and quality costs retention, and a higher
 automation ceiling costs engineering heads. The base model has none of these and
 is therefore optimistic by that amount. Every lever in section 8 should be read
@@ -489,13 +496,13 @@ cancel. Together they are -6,144,327.
 
 **Launching later is not monotonic, and the reason is a defect in the comparator
 rather than a fact about the calendar.** Three months late costs
--1,493,648; six months late costs -793,872, which is less.
+1,493,648; six months late costs 793,872, which is less.
 
 That is not a finding about examination timing. `launch_shift` moves the content
 schedule along with the market openings, so a six-month shift pushes the
 month-54 content step past the end of the horizon and the run simply never pays
-for it. Content cost falls by -1,787,131 dollars against the plan of
-record at a six-month shift, against -223,133 at three months.
+for it. Content cost falls by 1,787,131 dollars against the plan of
+record at a six-month shift, against 223,133 at three months.
 **The saving is the horizon boundary, not the season.** The two launch scenarios
 are therefore usable for "later is worse" and not for comparing one delay against
 another, and no calendar conclusion should be drawn from them.
@@ -513,10 +520,11 @@ pool, the acquisition anchor, age assurance cost, validation minutes, item count
 sessions per household, churn or price, anywhere in its prior range, reaches any
 of those targets on the plan of record.
 
-That is not a modelling failure; it is the answer. Content, people and step costs
-are 35.9, 15.2, 7.2 and 3.2 per cent of cost and none of
-them depends on whether a single household buys. A driver that acts only on demand
-cannot move a cost base that demand does not touch.
+That is not a modelling failure; it is the answer. Content is 35.9 per cent of
+cost, people 15.2 per cent in Bengaluru plus 7.2 in the United Kingdom,
+and step costs 3.2 per cent. Not one of them depends on whether a single
+household buys. A driver that acts only on demand cannot move a cost base that
+demand does not touch.
 
 **The break-evens are therefore solved again on a scope that can be rescued**: the
 go-to-market minimum, being five GCSE subjects at one board in the United Kingdom

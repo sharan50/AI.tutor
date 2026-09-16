@@ -1,0 +1,5 @@
+suffix discipline self-test
+refused active_hh_mean_bandlow             active_hh_mean_bandlow carries the basis marker _mean somewhere other than its suffix
+refused active_hh                          active_hh carries no basis suffix, in a file where every column has one
+refused terminal_cash_mean                 terminal_cash_mean ends in _mean, which is an aggregate basis, in a per-path file
+refused sessions_mean_usd                  sessions_mean_usd carries the basis marker _mean somewhere other than its suffix

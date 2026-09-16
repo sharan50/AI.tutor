@@ -60,7 +60,7 @@ def sobol_first_order(x, y, k=N_BINS):
     Var(E[Y|X]) / Var(Y), estimated by sorting on the rank of X, cutting into k
     equal-count bins and applying the one-way ANOVA correction for bin noise.
     Without the correction every index is biased upward by the within-bin
-    variance and a driver that does nothing scores about (k-1)/N.
+    variance, and a driver that does nothing scores about k/N.
     """
     n = x.shape[0]
     order = np.argsort(x, kind="stable")
@@ -130,8 +130,8 @@ def pinned_run(pins):
     drv = dict(DRV)
     for name, value in pins.items():
         drv[name] = np.full_like(DRV[name], value)
-    out, _ = NS["run"](drv, NS["base_config"]())
-    o, cum = NS["path_outcomes"](out)
+    out, summary = NS["run"](drv, NS["base_config"]())
+    o, cum = NS["path_outcomes"](out, summary)
     return o, cum
 
 

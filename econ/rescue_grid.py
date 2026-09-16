@@ -45,8 +45,8 @@ def run_cell(scope, v1, v2):
     drv[D1] = np.full_like(DRV[D1], v1)
     drv[D2] = np.full_like(DRV[D2], v2)
     drv["anchor_u"] = np.zeros_like(DRV["anchor_u"])      # condition C1 passing
-    out, _ = NS["run"](drv, SCOPES[scope])
-    o, cum = NS["path_outcomes"](out)
+    out, summary = NS["run"](drv, SCOPES[scope])
+    o, cum = NS["path_outcomes"](out, summary)
     return o
 
 

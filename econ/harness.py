@@ -90,8 +90,8 @@ def verify(ns=None, quiet=False):
     """
     ns = ns or exec_sections(split_sections())
     drv = ns["draw_drivers"]()
-    out, _summary = ns["run"](drv, ns["base_config"]())
-    o, cum = ns["path_outcomes"](out)
+    out, summary = ns["run"](drv, ns["base_config"]())
+    o, cum = ns["path_outcomes"](out, summary)
 
     checks = [
         ("por_monthly.csv", ns["monthly_csv_text"](out, cum, "por")),

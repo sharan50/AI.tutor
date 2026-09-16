@@ -3,7 +3,7 @@ seed,run_date,driver_a,driver_b,target_rank_corr,achieved_rank_corr,marginal_pre
 20260916,2026-09-16,cac_anchor_usd,pool_uk,-0.4000,-0.3877,True,True,a larger reachable pool is a cheaper one to find people in
 20260916,2026-09-16,minutes_per_item,examiner_rate_gbp_hr,-0.3000,-0.2872,True,True,the slower examiners are the cheaper ones per hour
 20260916,2026-09-16,price_in_mtok_usd,price_out_mtok_usd,0.8000,0.7850,True,True,vendor input and output prices move together
-20260916,2026-09-16,turns_per_session,sessions_mean,-0.2500,-0.2413,True,True,longer sessions substitute for more of them
+20260916,2026-09-16,turns_per_session,sessions_per_hh_month,-0.2500,-0.2413,True,True,longer sessions substitute for more of them
 20260916,2026-09-16,churn_base,summer_lapse_pre,0.4000,0.3855,True,True,a book that churns in term churns harder over the summer
 20260916,2026-09-16,cac_anchor_usd,creator_share,-0.3000,-0.2881,True,True,"where paid acquisition is dear, creator channels carry more of the load"
 20260916,2026-09-16,eng_usd_yr,uk_gbp_yr,0.5000,0.4841,True,True,"one labour market, two currencies"

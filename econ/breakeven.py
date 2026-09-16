@@ -70,8 +70,8 @@ def evaluate(driver, value, metric_fn, anchor_tutoring=False, scope="plan_of_rec
     drv[driver] = np.full_like(DRV[driver], value)
     if anchor_tutoring:
         drv["anchor_u"] = np.zeros_like(DRV["anchor_u"])
-    out, _ = NS["run"](drv, SCOPES[scope])
-    o, _cum = NS["path_outcomes"](out)
+    out, summary = NS["run"](drv, SCOPES[scope])
+    o, _cum = NS["path_outcomes"](out, summary)
     return metric_fn(o)
 
 
@@ -123,7 +123,7 @@ QUESTIONS = [
     ("items_per_unit", "terminal_cash_median", False,
      "how large can a full subject bank be before the median path ends the horizon under water",
      "decompose one DfE subject content document into objectives and count the items the ten-per-objective rule implies"),
-    ("sessions_mean", "terminal_cash_median", False,
+    ("sessions_per_hh_month", "terminal_cash_median", False,
      "how little can a household use the product before the median path ends the horizon under water",
      "nothing in docs/11 produces this before M5; it needs thirty households instrumented for one month, and it is the factor the planned instruments do not measure"),
     ("churn_base", "terminal_cash_median", False,
@@ -132,6 +132,12 @@ QUESTIONS = [
     ("price_uk_tut_gbp", "terminal_cash_median", True,
      "with condition C1 passing on every path, how low can the tutoring-anchored price be before the median path ends the horizon under water",
      "landing-page price testing, condition C1 in docs/09, days and a small spend"),
+    ("cac_anchor_usd", "share_reaching_profitability", False,
+     "how cheap must a household be to acquire before half of all paths run three consecutive cash-positive months",
+     "the same thirty measured acquisitions at two spend levels"),
+    ("price_uk_tut_gbp", "share_reaching_profitability", True,
+     "with condition C1 passing on every path, how high must the price be before half of all paths run three consecutive cash-positive months",
+     "the same landing-page price test"),
 ]
 
 

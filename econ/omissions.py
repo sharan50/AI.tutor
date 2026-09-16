@@ -89,6 +89,28 @@ add("corporation tax on trading profit", 0.0, 0.0,
 add("translation and localisation", 0.0, 0.0,
     "zero: the plan of record expands only across English-speaking curricula")
 
+# Regulatory enforcement exposure. Written down because a zero recorded is not
+# the same as a line left out, and because the vault's own verified facts put a
+# single penalty above every cost line here except content. docs/05: the ICO
+# fined Reddit 14.47m pounds in February 2026 for inadequate age assurance and
+# unlawful profiling of children, TikTok 12.7m and Snap 1.95m; Online Safety Act
+# penalties are the higher of 18m pounds or a tenth of qualifying worldwide
+# revenue, with business-disruption orders reaching app stores and payment
+# processors. Priced at zero because this instrument has no probability to put
+# on it, and the zero is the point.
+add("regulatory enforcement exposure", 0.0, 0.0,
+    "zero, and deliberately so: no probability of enforcement is modelled, while the smallest United Kingdom penalty in the vault's own verified set exceeds every cost line here except content")
+
+# Examiner supply has a price in this model and no quantity. The month-18 scope
+# is five subjects, two levels and four boards, and at the median item count and
+# validation minutes that is tens of thousands of hours of qualified United
+# Kingdom examiner time. examiner_rate_gbp_hr is perfectly elastic.
+_units_m18 = 5 * 2 * 4
+_hours = _units_m18 * float(np.median(DRV["items_per_unit"])) * float(np.median(DRV["minutes_per_item"])) / 60.0
+add("examiner supply, as a quantity rather than a price", 0.0, 0.0,
+    "zero: the model prices examiner time and never asks whether it exists. The month-18 scope needs about %s hours of qualified examiner time and the rate is perfectly elastic"
+    % format(_hours, ",.0f"))
+
 if __name__ == "__main__":
     path = os.path.join(OUT, "omissions.csv")
     with open(path, "w", newline="") as fh:

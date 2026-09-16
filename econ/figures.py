@@ -159,6 +159,22 @@ add("por_cac_effective_over_anchor", float(np.median(fy_cac) / np.median(cac_anc
     "median final-year effective CAC divided by the median anchor, both medians so the ratio is on one basis")
 add("por_effective_cac_all_in_mean", float(eff_cac_all.mean()), "USD per acquisition", "por_paths.csv",
     "mean of effective_cac_all_in over the whole horizon")
+# The size of the largest paths, so a reader can judge their plausibility rather
+# than being asked to take the mean on trust.
+tot_acq = col(paths, "total_acquisitions")
+pool_uk_col = col(paths, "pool_uk")
+add("por_total_acquisitions_median", float(np.median(tot_acq)), "households", "por_paths.csv",
+    "median over paths of total_acquisitions across the horizon")
+add("por_total_acquisitions_p99", float(np.percentile(tot_acq, 99)), "households", "por_paths.csv",
+    "99th percentile of total_acquisitions")
+add("por_total_acquisitions_max", float(tot_acq.max()), "households", "por_paths.csv",
+    "the largest total_acquisitions on any path")
+add("por_max_acquisitions_over_own_uk_pool", float((tot_acq / np.maximum(pool_uk_col, 1.0)).max()),
+    "ratio", "por_paths.csv",
+    "the largest ratio of total acquisitions to that path's own sampled United Kingdom pool; the cap is POOL_REACQUISITION_MULTIPLE per market and the plan of record opens three consumer markets")
+add("por_share_paths_terminal_cash_above_100m", float((terminal_cash > 1e8).mean()), "share",
+    "por_paths.csv", "share of paths ending the horizon with cumulative cash above one hundred million dollars")
+
 add("por_mean_share_over_allowance", float(share_over.mean()), "share", "por_paths.csv",
     "mean of mean_share_over_allowance: the household-weighted share of active households exceeding the sold session allowance")
 add("por_mean_share_over_allowance_pct", 100.0 * float(share_over.mean()), "per cent", "por_paths.csv", "the same share as a percentage")
@@ -172,12 +188,34 @@ COST_LINES = ["inference_cost", "support_cost", "payment_cost", "hosting_cost", 
 totals = {c: float(col(monthly, c + "_mean").sum()) for c in COST_LINES}
 grand = sum(totals.values())
 add("por_total_cost_mean", grand, "USD", "por_monthly.csv", "sum over months of the mean of every cost line")
+# Medians, because the acquisition line is throttled by the budget rule and the
+# content line is not, so the mean and the median path spend very differently.
+med_content = float(np.median(col(paths, "total_content_cost")))
+med_cac = float(np.median(col(paths, "total_cac_spend")))
+add("por_median_path_total_content_cost", med_content, "USD", "por_paths.csv",
+    "median over paths of total_content_cost")
+add("por_median_path_total_cac_spend", med_cac, "USD", "por_paths.csv",
+    "median over paths of total_cac_spend, which includes verification")
+add("por_median_path_content_over_cac", med_content / med_cac if med_cac else 0.0, "ratio",
+    "por_paths.csv", "the median path's content cost divided by its acquisition and verification spend")
 for c, v in totals.items():
     add("por_total_%s_mean" % c, v, "USD", "por_monthly.csv", "sum over months of %s_mean" % c)
     add("por_share_%s" % c, v / grand if grand else 0.0, "share", "por_monthly.csv",
         "%s_mean summed over months, divided by the sum of every cost line" % c)
     add("por_share_%s_pct" % c, 100.0 * (v / grand if grand else 0.0), "per cent", "por_monthly.csv",
         "the same share as a percentage")
+
+# Demand-independent cost: content, people and step costs. None of them depends
+# on whether a single household buys, which is the reason no single demand driver
+# rescues the plan.
+DEMAND_INDEPENDENT = ["content_cost", "people_beng_cost", "people_uk_cost", "step_cost"]
+_di = sum(totals[c] for c in DEMAND_INDEPENDENT)
+add("por_demand_independent_cost_mean", _di, "USD", "por_monthly.csv",
+    "content, Bengaluru people, United Kingdom people and step costs, summed over months")
+add("por_share_demand_independent", _di / grand if grand else 0.0, "share", "por_monthly.csv",
+    "that sum divided by the sum of every cost line")
+add("por_share_demand_independent_pct", 100.0 * (_di / grand if grand else 0.0), "per cent",
+    "por_monthly.csv", "the same share as a percentage")
 
 rev_c = float(col(monthly, "net_rev_consumer_mean").sum())
 rev_s = float(col(monthly, "net_rev_schools_mean").sum())
@@ -219,7 +257,7 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
     for name, r in vr.items():
         for k in ("terminal_cash_mean", "terminal_cash_p50", "peak_funding_mean", "peak_funding_p80",
                   "peak_funding_p90", "share_reaching_profitability", "final_year_effective_cac_mean",
-                  "final_year_contrib_per_hh_month_mean", "mean_share_over_allowance",
+                  "mean_share_over_allowance",
                   "understatement_ratio", "band_central_placement_terminal",
                   "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
                   "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta"):
@@ -240,16 +278,61 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
             "USD", "variants.csv",
             "peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring")
     base = float(vr["por"]["terminal_cash_mean"])
+    base_p50 = float(vr["por"]["terminal_cash_p50"])
+    base_pf80 = float(vr["por"]["peak_funding_p80"])
+    # The real range of the path-matching diagnostic, computed rather than
+    # hand-picked: quoting two scenarios as "the loosest and the tightest" was
+    # wrong by a factor of nearly three.
+    sp = {n: float(r["pathwise_spearman_vs_base"]) for n, r in vr.items()}
+    lo_name = min(sp, key=sp.get)
+    dep = {n: v for n, v in sp.items() if "dependence" in n}
+    nodep = {n: v for n, v in sp.items() if "dependence" not in n}
+    add("pathwise_spearman_min", sp[lo_name], "rank correlation", "variants.csv",
+        "the lowest pathwise_spearman_vs_base over every scenario")
+    add("pathwise_spearman_min_scenario", lo_name, "scenario name", "variants.csv",
+        "the scenario carrying that lowest value")
+    add("pathwise_spearman_min_excluding_dependence", min(nodep.values()), "rank correlation",
+        "variants.csv",
+        "the lowest pathwise_spearman_vs_base over scenarios that do not reorder driver values across paths")
+    add("pathwise_spearman_min_excluding_dependence_scenario",
+        min(nodep, key=nodep.get), "scenario name", "variants.csv", "the scenario carrying that value")
+    add("pathwise_spearman_max_dependence", max(dep.values()), "rank correlation", "variants.csv",
+        "the highest pathwise_spearman_vs_base among the scenarios that do reorder driver values across paths")
+    add("pathwise_spearman_max", max(sp.values()), "rank correlation", "variants.csv",
+        "the highest pathwise_spearman_vs_base over every scenario")
     for name, r in vr.items():
         if name == "por":
             continue
-        add("delta_%s_terminal_cash_mean" % name, float(r["terminal_cash_mean"]) - base, "USD", "variants.csv",
+        d = float(r["terminal_cash_mean"]) - base
+        add("delta_%s_terminal_cash_mean" % name, d, "USD", "variants.csv",
             "terminal_cash_mean for %s less terminal_cash_mean for por" % name)
+        # Terminal cash is heavy-tailed, so a delta in the mean can differ from
+        # the delta on the median path, and for several scenarios it differs in
+        # SIGN. Both are published and the write-up quotes both.
+        dm = float(r["terminal_cash_p50"]) - base_p50
+        add("delta_%s_terminal_cash_p50" % name, dm, "USD", "variants.csv",
+            "terminal_cash_p50 for %s less terminal_cash_p50 for por" % name)
+        add("delta_%s_terminal_cash_p50_abs" % name, abs(dm), "USD", "variants.csv",
+            "the absolute value of that median difference")
+        add("delta_%s_peak_funding_p80" % name,
+            float(r["peak_funding_p80"]) - base_pf80, "USD", "variants.csv",
+            "peak_funding_p80 for %s less peak_funding_p80 for por" % name)
+        add("delta_%s_peak_funding_p80_abs" % name,
+            abs(float(r["peak_funding_p80"]) - base_pf80), "USD", "variants.csv",
+            "the absolute value of that difference")
+        add("delta_%s_sign_agrees_mean_and_median" % name,
+            1.0 if (d == 0 and dm == 0) or (d * dm > 0) else 0.0, "boolean", "variants.csv",
+            "1 when the mean delta and the median delta for %s have the same sign, 0 when they disagree" % name)
+        # The magnitude, so prose can say "costs" or "is worth" without writing a
+        # minus sign into a sentence that already carries the direction in words.
+        add("delta_%s_terminal_cash_abs" % name, abs(d), "USD", "variants.csv",
+            "the absolute value of that difference; the direction is in the sign of delta_%s_terminal_cash_mean" % name)
         if "total_content_cost_mean" in r:
-            add("delta_%s_total_content_cost_mean" % name,
-                float(r["total_content_cost_mean"]) - float(vr["por"]["total_content_cost_mean"]),
-                "USD", "variants.csv",
+            dc = float(r["total_content_cost_mean"]) - float(vr["por"]["total_content_cost_mean"])
+            add("delta_%s_total_content_cost_mean" % name, dc, "USD", "variants.csv",
                 "total_content_cost_mean for %s less the same for por" % name)
+            add("delta_%s_total_content_cost_abs" % name, abs(dc), "USD", "variants.csv",
+                "the absolute value of that difference")
 
 # --------------------------------------------------------------------------
 # Sensitivity
@@ -283,6 +366,11 @@ if os.path.exists(os.path.join(OUT, "sobol.csv")):
             "count", "sobol.csv", "how many of the top three drivers for %s are acquisition drivers" % target)
         add("sobol_%s_content_drivers_in_top3" % target, len([d for d in top3 if d in CONTENT_DRIVERS]),
             "count", "sobol.csv", "how many of the top three drivers for %s are content-cost drivers" % target)
+        # Ranks by name, so an ordinal quoted in prose is read off the file for
+        # the target it claims rather than typed from a different one.
+        for pos, r in enumerate(rows, start=1):
+            add("sobol_%s_rank_of_%s" % (target, r["driver"]), pos, "rank", "sobol.csv",
+                "the rank of %s by first-order index for target %s" % (r["driver"], target))
 
 if os.path.exists(os.path.join(OUT, "pinned_sweeps.csv")):
     ps = read_csv("pinned_sweeps.csv")
@@ -318,7 +406,29 @@ if os.path.exists(os.path.join(OUT, "breakeven.csv")):
         add(key + "_prior_median", float(r["prior_median"]), "driver units", "breakeven.csv", "the prior_median column")
 
 if os.path.exists(os.path.join(OUT, "funding.csv")):
-    for r in read_csv("funding.csv"):
+    frows = read_csv("funding.csv")
+    _fw = {(r["scenario"], r["stage"]): r for r in frows}
+    if ("plan_of_record", "whole_horizon") in _fw and ("gtm_minimum_uk_one_board", "whole_horizon") in _fw:
+        add("funding_por_less_gtm_minimum_whole_horizon",
+            float(_fw[("plan_of_record", "whole_horizon")]["round_size"])
+            - float(_fw[("gtm_minimum_uk_one_board", "whole_horizon")]["round_size"]),
+            "USD", "funding.csv",
+            "whole-horizon round_size for the plan of record less the same for the go-to-market minimum")
+    # The staged rounds carry a buffer and the whole-horizon figure does not, so
+    # they are computed by different rules and their sum is not the headline.
+    for scen in sorted({r["scenario"] for r in frows}):
+        staged = sum(float(r["round_size"]) for r in frows
+                     if r["scenario"] == scen and r["stage"] != "whole_horizon")
+        whole = [float(r["round_size"]) for r in frows
+                 if r["scenario"] == scen and r["stage"] == "whole_horizon"]
+        add("funding_%s_staged_sum" % scen, staged, "USD", "funding.csv",
+            "the three staged round_size values for %s, added" % scen)
+        if whole:
+            add("funding_%s_staged_over_whole" % scen, staged / whole[0], "ratio", "funding.csv",
+                "that staged sum divided by the whole-horizon round_size for %s" % scen)
+            add("funding_%s_staged_less_whole" % scen, staged - whole[0], "USD", "funding.csv",
+                "that staged sum less the whole-horizon round_size for %s" % scen)
+    for r in frows:
         add("funding_%s_%s_round_size" % (r["scenario"], r["stage"]), float(r["round_size"]), "USD", "funding.csv",
             "round_size for scenario %s stage %s" % (r["scenario"], r["stage"]))
         add("funding_%s_%s_need_p80" % (r["scenario"], r["stage"]), float(r["need_p80"]), "USD", "funding.csv",

@@ -1,7 +1,11 @@
 # Limits: the checklist, item by item
 
-**Seed @@seed|int@@, run date @@run_date|raw@@.** Every item from part 4 of the brief, answered
-explicitly, including where the answer is clean. Items that are not clean carry
+**Seed @@seed|int@@, run date @@run_date|raw@@.** Every item of the twenty-four-point review
+checklist the owner supplied with the instruction for this work, answered
+explicitly, including where the answer is clean. That checklist is not in
+`BUILD_BRIEF.md`, whose part 4 is a different list, of nine unverified legal and
+commercial assumptions; it came with the request and is reproduced by its item
+numbers here. Items that are not clean carry
 the number they would move and by how much.
 
 Three verdicts are used. **Clean** means the defect is not present. **Clean now**
@@ -101,7 +105,8 @@ sustains. Real hiring is lumpy and lags. This understates the cost of a fast ram
 21:00, which is 21:30 to 02:30 in Bengaluru. The product's busiest hours are the
 build base's night, and there is no shift premium anywhere in the cost base.
 Priced in `out/omissions.csv` at @@omission_out_of_hours_operations_rota_low|usd0@@ to
-@@omission_out_of_hours_operations_rota_high|usd0@@ dollars over the horizon, which is up to
+@@omission_out_of_hours_operations_rota_high|usd0@@ dollars from the United Kingdom go-to-market month to
+the end of the horizon, four and a half years rather than five, which is up to
 @@omission_out_of_hours_operations_rota_share_high_pct|num2@@ per cent of the modelled cost base.
 
 ### 6. A cost that scales per market, per shift or per institution: **clean, except the shift**
@@ -120,7 +125,7 @@ being granted for free the thing it is asking to buy.
 
 That this matters is visible in the sweep: pinning `board_reuse` from its fifth to
 its ninety-fifth percentile swings terminal cash by @@pinned_board_reuse_swing_abs|usd0@@ dollars,
-and `market_reuse` is the ninth-ranked driver on the capital target.
+and `market_reuse` is ranked @@sobol_peak_funding_requirement_rank_of_market_reuse|int@@ on the capital target.
 
 ### 8. A cost with no term at all: **not clean, nine named and priced**
 
@@ -189,9 +194,17 @@ character for character. All four pass on every run of `variants.py`.
 Matching is also measured, not just argued. `out/variants.csv` carries for every
 scenario the rank correlation of per-path terminal cash against the base and the
 mean absolute per-path change beside the change in the mean. Unmatched paths
-would collapse the first and inflate the second. Across every scenario the
-correlation runs from @@scenario_por_anchor_software_pathwise_spearman_vs_base|num4@@ at the loosest to
-@@scenario_por_allowance_enforced_pathwise_spearman_vs_base|num4@@ at the tightest.
+would collapse the first and inflate the second.
+
+**This is where an earlier draft was wrong, in the passage whose whole point was
+that matching is measured.** It named two scenarios as the loosest and the
+tightest and neither bound was the bound in the file. Across the scenarios that
+only flip a switch the correlation runs from @@pathwise_spearman_min_excluding_dependence|num4@@ to @@pathwise_spearman_max|num4@@.
+The two dependence scenarios sit at @@pathwise_spearman_min|num4@@ and above, and that is correct
+behaviour rather than a defect: Iman-Conover reordering changes which path holds
+which driver value, so it preserves the marginals exactly and path identity not
+at all. They are comparable to the base in distribution, not path by path, and
+the write-up says so where it uses them.
 
 ---
 
@@ -288,10 +301,10 @@ No figure in the write-up divides a `_mean` by a `_band`.
 ### 18. Sustained bad runs: **clean**
 
 The demand shock is AR(1), not independent. Persistence is sampled between
-@@driver_shock_rho_low|num2@@ and @@driver_shock_rho_high|num2@@, median @@shock_rho_median|num2@@. The longest run of consecutive months with demand at
-or below 0.80 averages @@shock_longest_bad_run_mean|num1@@ months and is @@shock_longest_bad_run_p90|num1@@ at the
-ninetieth percentile; @@shock_share_paths_bad_run_6plus|pct1@@ per cent of paths contain a run of six or
-more and @@shock_share_paths_bad_run_12plus|pct1@@ per cent a run of twelve or more.
+@@driver_shock_rho_low|num2@@ and @@driver_shock_rho_high|num2@@, median @@shock_rho_median|num2@@. The longest run of consecutive months with the
+demand multiplier below @@const_SHOCK_BAD_THRESHOLD|num2@@ averages @@shock_longest_bad_run_mean|num1@@ months and is
+@@shock_longest_bad_run_p90|num1@@ at the ninetieth percentile; @@shock_share_paths_bad_run_6plus|pct1@@ per cent of paths contain a run
+of six or more and @@shock_share_paths_bad_run_12plus|pct1@@ per cent a run of twelve or more.
 
 **What is still missing.** The shock acts on acquisition only. There is no
 correlated shock to retention, to vendor prices, or to the examiner labour market,
@@ -305,7 +318,7 @@ Every averaged claim in the write-up is given its per-path share:
 | Averaged claim | Share of paths on which it holds |
 |---|---|
 | Content exceeds acquisition spend | @@share_paths_content_exceeds_acquisition|pct1@@ per cent |
-| Content is the single largest line | @@share_paths_content_is_largest_line|pct1@@ per cent |
+| Content exceeds both acquisition and people | @@share_paths_content_is_largest_line|pct1@@ per cent |
 | The Year 10 cohort retains at least twice the months | @@share_paths_year10_at_least_doubles|pct1@@ per cent |
 | Lifetime value is below acquisition cost in the final year | @@share_paths_final_year_ltv_below_cac|pct1@@ per cent |
 | Peak funding exceeds ten million dollars | @@share_paths_peak_funding_over_10m|pct1@@ per cent |
@@ -326,10 +339,11 @@ that sizing on the base case would underfund the plan actually described.
 
 Every commitment through month 18 has its spend starting inside the seed window,
 including both foreign entities, foreign counsel, the security certification,
-A-level content and the second and third United Kingdom boards. Two commitments
-land after the Series A opens with their spend starting before it: all four boards
-live at month 18, built from month 12, and the rest-of-English-speaking market at
-month 24, built from month 18.
+A-level content and the second and third United Kingdom boards. One commitment lands
+after the Series A opens with its spend starting before it: all four boards live
+at month 18, built from month 12. The rest-of-English-speaking market at month 24
+begins its build at month 18, exactly as the Series A opens, so the file's test
+puts it on the right side of the line.
 
 **The Series A does not buy those decisions. It refinances them.** `out/funding_commitments.csv`
 holds the landing month and the spend-start month for each.
@@ -355,14 +369,17 @@ in the pricing decision, since the allowance cannot be set without it.
 **No instrument in docs/11 produces it before M5.** M1 is counsel, board policies,
 three age-assurance quotes, a landing page and thirty school conversations. M2
 produces cost per session from a frozen battery, which gives cost per session but
-not sessions per household. M4 instruments return rate and sessions per learner
-per fourteen days, which is the first thing that touches it, and M4 requires a
-signed creator and a built product.
+not sessions per household. M4 instruments return rate and sessions per learner per
+fourteen days, and that secondary metric is the first instrument in the roadmap
+that touches the quantity at all. M4 is not before M5, and it requires a signed
+creator and a built product, so the quantity is not available cheaply or early
+either way.
 
 **Volume per customer is the factor nothing measures**, exactly as the brief
-predicts. `sessions_mean` is sampled between @@driver_sessions_mean_low|num1@@ and @@driver_sessions_mean_high|num0@@ a month, a fivefold range,
-and the top of that range is what docs/03's own usage arithmetic implies for a
-revising Year 11.
+predicts. `sessions_per_hh_month` is sampled between @@driver_sessions_per_hh_month_low|num1@@ and @@driver_sessions_per_hh_month_high|num0@@ a month, a fivefold
+range. docs/03's own arithmetic, three sessions a week for a Year 11 revising one
+strand, is about thirteen a month, which sits inside the range rather than at its
+top; the range is wider in both directions because nothing measures it.
 
 **What it would move.** `out/breakeven.csv` records the solve. What can be said now
 is that the allowance of sixteen sessions, which is a commercial decision already
@@ -373,7 +390,7 @@ of households exceed it or almost none do is not determined by anything measured
 
 docs/03's validation pilot is two examiners validating the same twenty items. The
 cost base applies `minutes_per_item` across 5 to 11 subjects, two levels and up to
-four boards, and `minutes_per_item` is the fourth-ranked driver on the capital
+four boards, and `minutes_per_item` is ranked @@sobol_peak_funding_requirement_rank_of_minutes_per_item|int@@ on the capital
 target.
 
 Twenty items of one kind, in one strand, of one subject, at one tier, is not a
@@ -405,11 +422,18 @@ open item OI-10. Nothing in M1 exercises that path.
 ## Limits of the instrument itself, beyond the checklist
 
 **It cannot value evidence.** docs/09's strongest argument for the institution
-channel is that outcome evidence is the only durable moat and that every comparator
-that carries weight in education is school-based. This model charges Route B its
-costs, credits it its revenue, and gives it nothing for evidence. The
-@@delta_por_no_schools_terminal_cash_mean|usd0@@ dollar figure is therefore a lower bound on Route B's
-worth, not an estimate of it.
+channel is that outcome evidence is the only durable moat; docs/08 supplies the
+supporting fact, that the comparators carrying weight in education are all
+school-based, ASSISTments at 0.18 to 0.29 standard deviations with an ESSA Tier 1
+rating and Carnegie Learning MATHia at 0.21 to 0.38. This model charges Route B
+its costs, credits it its revenue, and gives it nothing for evidence.
+
+**It is a lower bound in one direction and was an overstatement in the other.**
+An earlier run tied the India content build to the institution switch, so the
+figure carried an India item bank the channel never bills. That is fixed and the
+number here is the corrected one. What remains is that the instrument still
+gives Route B no credit for evidence, so the figure is an upper bound on what
+dropping the channel is worth, not a settled estimate of it.
 
 **It has no competitive response.** Free general tools sit in front of the same
 parent and Google has committed capital at national scale. Nothing here represents
@@ -434,3 +458,127 @@ nothing in particular.
 
 **A-level is one pooled segment**, not two years, with an exit rate sampled between
 @@driver_alevel_exit_rate_low|num2@@ and @@driver_alevel_exit_rate_high|num2@@ standing in for the cohort structure.
+
+---
+
+## Limits an adversarial reading found that the sections above did not admit
+
+These were added after a reviewer with no knowledge of how the instrument was
+built went looking for them. Each is stated at the strength the evidence supports,
+which in several cases is stronger than comfortable.
+
+### The base model has no price elasticity at all, so a higher price buys more customers
+
+Price enters revenue, then lifetime value, then the acquisition budget cap, then
+spend, then acquisitions. It appears nowhere in `effective_cac()` and nowhere in
+the churn calculation. **In the published run, raising the price raises the number
+of households acquired.** That is not a subtle artefact; it is the direction of
+the mechanism.
+
+The feedback scenario adds a price-to-churn penalty, but only inside a bundle
+with the quality and automation loops, so the price penalty is never priced on its
+own. The whole of the price-anchor conclusion, which is the second-ranked decision
+in the write-up, rests on a mechanism with no demand-side cost of price anywhere
+in it.
+
+**What it would move.** The anchor spread of @@anchor_tutoring_minus_software_terminal_cash_mean|usd0@@ dollars is an
+upper bound. docs/07 states the competing anchor explicitly: the free tools are
+the alternative, and a threefold price difference against a free substitute
+cannot plausibly leave conversion untouched. Splitting the feedback bundle so the
+price loop can be run alone is a half-day of work and has not been done.
+
+### The largest paths are not plausible and nothing in the instrument says so
+
+Total acquisitions across the horizon run to a median of @@por_total_acquisitions_median|usd0@@, a
+ninety-ninth percentile of @@por_total_acquisitions_p99|usd0@@ and a maximum of @@por_total_acquisitions_max|usd0@@.
+@@por_share_paths_terminal_cash_above_100m|pct2@@ per cent of paths end the horizon above a hundred million dollars.
+
+There is now a ceiling, `POOL_REACQUISITION_MULTIPLE`, so no path acquires more
+than that multiple of its own sampled pool in any market, and the largest ratio of
+acquisitions to that path's own United Kingdom pool is @@por_max_acquisitions_over_own_uk_pool|num2@@ across three
+open consumer markets. **That bounds the arithmetic; it does not make the top of
+the distribution believable.** The reachable-pool prior is log-uniform across a
+thirtyfold range and the market relatives multiply it further, so the upper tail
+describes a business several times the size of the demand the vault has evidence
+for. Those paths are what makes the mean of terminal cash, which is why the
+scenario table in the write-up now gives the median beside it.
+
+### "Content is the largest line" is partly a property of the budget rule
+
+On the median path, content costs @@por_median_path_total_content_cost|usd0@@ over the horizon and
+acquisition and verification together cost @@por_median_path_total_cac_spend|usd0@@, a ratio of
+@@por_median_path_content_over_cac|num1@@ to one. Content is almost entirely exogenous: a fixed schedule
+times a sampled item cost, with no demand feedback at all. Acquisition is
+throttled by the lifetime-value cap and the launch-subsidy taper.
+
+So the claim is true, and part of the reason it is true is that on most paths the
+company barely markets. A plan that spends that ratio on content against customers
+is not a plan anyone would execute, and the instruction the write-up draws from
+it, that content cost is what makes the venture fundable, should be read with
+that in view.
+
+### The lifetime-value cap is struck on a gross figure
+
+`CAC_LTV_CAP` limits acquisition spend to @@const_CAC_LTV_CAP|num2@@ times lifetime value, and the
+lifetime value it uses subtracts nothing but verification. It is the gross margin,
+not the all-in one, and the all-in figure is negative on the median path. The cap
+is therefore looser than it sounds, and it is the only thing in the model
+restraining acquisition spend.
+
+### Decided constants are not in the sensitivity at all
+
+`out/sobol.csv` and `out/tornado.csv` cover the @@n_drivers|int@@ sampled drivers. They cover
+none of the constants in `out/constants.csv`, and `out/constants.csv` is itself
+incomplete: it omits the two seasonality shapes, the examination-month and
+season-shift maps, the market opening months, all four content schedules, the
+market budget weights, the segment usage relatives, the sales and creator ramps,
+the platform headcount floor and the general and administrative schedule. Those
+are invented numbers that drive every calendar statement in the document, and
+nothing sweeps them.
+
+The four that carry the most weight, and are named as decisions rather than
+findings: `P_TUTORING_ANCHOR` at @@const_P_TUTORING_ANCHOR|num2@@, which makes every plan-of-record
+figure a mixture of two regimes; `POOL_BREADTH_EXPONENT` and
+`PLATFORM_PER_EXTRA_MARKET`, which between them set the ratio the write-up calls
+the owner's largest decision; and `OVERAGE_CAP_MULT` at @@const_OVERAGE_CAP_MULT|num1@@, which sets the
+one-sided asymmetry that checklist item 3 rests on.
+
+### The retained book is far shorter than the product being sold
+
+An examination-year household is retained @@retained_months_exam_year_mean|num2@@ months. The commercial unit
+is an examination-cycle plan billed monthly to the last paper, which docs/07 puts
+at nine months for a September acquisition and five or six for a January one. **The
+average customer in this model never completes a cycle.** That follows entirely
+from the in-term churn prior, which nothing has measured, and it means the pricing
+decision and the retention prior are describing different products.
+
+### The foreign markets are the United Kingdom calendar copied
+
+The United Kingdom calendar in the model is right: a June exit, a July and August
+lapse, September and January acquisition peaks, a March to May usage peak. The
+others are that year with a shift applied.
+
+- **The rest-of-English-speaking bucket is given a June sitting and a
+  July-to-August summer lapse.** Australia, New Zealand and Singapore run a
+  January academic year with terminal examinations in October and November and
+  their long holiday across December and January. The model lapses their
+  pre-examination cohort during their term and empties their examination cohort
+  mid-year. There is one seasonal phase shift for the whole bucket and it is zero.
+- **That bucket is also one price, one tax rate, one acquisition cost and one
+  pool** for Ireland's Leaving Certificate, eight Australian state certificates,
+  thirteen Canadian provincial curricula, New Zealand's NCEA and Cambridge
+  qualifications in Singapore. `ROW_TAX` is a single blended @@const_ROW_TAX_pct|num0@@ per cent against
+  rates from 5 to 23 per cent.
+- **The United States is given levels and boards, and a terminal May sitting.** It
+  has neither. The pre-examination to examination to lapse machinery is a
+  terminal-high-stakes-sitting structure, and the mass United States tutoring
+  drivers are year-round: SAT and ACT across seven sittings, and grade
+  maintenance. The May sitting modelled is an Advanced Placement analogue taken by
+  a minority.
+- **India is given one board rising to two**, against CBSE, ICSE and roughly
+  thirty state boards.
+
+None of this changes the ordering of the levers, because the ordering is set by
+acquisition cost and content cost and both are market-agnostic in this model. It
+does mean **every foreign-market level in this document is weaker than the United
+Kingdom ones**, and the expansion case should not be argued from them.
