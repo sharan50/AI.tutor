@@ -130,7 +130,10 @@ comparison passes when it should fail.
 **A gate that has never been shown to refuse is not a gate.** `python3 harness.py
 --selftest` perturbs one field of the published file by one unit in its last
 decimal place, confirms the harness refuses, restores the file and confirms it
-verifies again. The result is written to `out/harness_selftest.txt`.
+verifies again. It then does the same for the harness's second gate, the one
+that forbids a random draw inside the month loop, by inserting a draw into a
+copy of `model.py` and confirming the check rejects it. Both results are written
+to `out/harness_selftest.txt`.
 
 Every script that RUNS THE MODEL goes through `harness.load()`: the sensitivity,
 the scenarios, the funding sizing, the break-even solves, the rescue grid, the
@@ -177,10 +180,18 @@ all. Neither half is a substitute for reading the code, which is how all four
 were actually found.
 
 Because no draw happens inside the month loop, the streams cannot diverge between
-scenarios. That is shown rather than asserted: `out/variants.csv` carries, for
-every scenario, the rank correlation of per-path terminal cash against the base
-and the mean absolute per-path change beside the change in the mean. Unmatched
-paths would collapse the first and inflate the second.
+scenarios. **That is now checked at the source rather than inferred from its
+consequences.** The harness refuses to proceed if any draw call appears inside
+the `LOOP` section of `model.py`, and `python3 harness.py --selftest` proves that
+second gate refuses by inserting a draw into a copy of the file and confirming
+it is rejected. `out/harness_selftest.txt` records both gates. An earlier draft
+of this paragraph offered a rank correlation as the evidence, which is a
+consequence of the fact rather than the fact.
+
+The consequence is published too, and it is worth having: `out/variants.csv`
+carries, for every scenario, the rank correlation of per-path terminal cash
+against the base and the mean absolute per-path change beside the change in the
+mean. Unmatched paths would collapse the first and inflate the second.
 
 **The range has to be quoted in two parts, and an earlier draft of this section
 quoted it wrong.** Across the scenarios that only flip a switch, the correlation
@@ -1008,6 +1019,17 @@ terminal cash they are not close: freezing content is worth
 @@delta_por_content_frozen_terminal_cash_mean|usd0@@ and dropping markets
 @@delta_ukonly_terminal_cash_mean|usd0@@, a factor of five.
 
+**The two decisions separate exactly, and that is checked rather than eyeballed.**
+Foreign content computed as the plan of record less the United Kingdom-only
+scenario is @@scope_ladder_foreign_content_mean|usd0@@; computed as content-frozen
+less the go-to-market minimum it is the same figure to the dollar, and
+`verify.py` fails the run if the two ever disagree. So the content column really
+does decompose into @@scope_ladder_frozen_uk_content_mean|usd0@@ of content you
+must build to go to market at all, @@scope_ladder_uk_escalation_mean|usd0@@ of
+United Kingdom catalogue widening, and @@scope_ladder_foreign_content_mean|usd0@@
+of foreign curriculum. Those are three separable commitments and they are taken
+at different times.
+
 So "how much scope" is two decisions and they are not interchangeable. **How many
 subjects, levels and boards to build is the one that moves terminal cash; how
 many markets to open moves capital and almost nothing else.** If you are sizing a
@@ -1120,11 +1142,14 @@ OPEN_ITEMS.md.
 | `LIMITS.md`, `OPEN_ITEMS.md`, `CHANGELOG.md` | What is not clean, what is unanswered, and what moved. |
 
 `verify.py` first refuses any set of outputs whose generating scripts did not all
-run against the current `model.py`, then re-derives the core figures from the raw
-CSVs by a different code path from `figures.py`, checks four accounting identities — three of them down every
-row of the monthly file, the fourth a single point check that terminal cash at
-the horizon agrees with the cumulative monthly line — and then scrapes every
-number in this document and matches it against a figure on disk.
+run against the current `model.py` — a check that has already bitten, on a
+comment-only edit to `model.py` that left every published CSV byte-identical —
+then re-derives the core figures from the raw CSVs by a different code path from
+`figures.py`, checks five identities — three of them down every
+row of the monthly file, one a point check that terminal cash at the horizon
+agrees with the cumulative monthly line, and one that the scope ladder in section
+12 decomposes exactly — and then scrapes every number in this document and
+matches it against a figure on disk.
 
 **Be clear about what that second pass does and does not do.** It checks that
 every number printed here exists on disk to the precision it is printed at. It

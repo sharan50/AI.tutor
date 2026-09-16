@@ -420,13 +420,11 @@ def season_factor(shape, m, t, amp):
     return 1.0 + amp * (shape[idx] - 1.0)
 
 
-def units_target(m, t):
-    """Cumulative content units (subject x level x board) targeted by month t."""
-    total = 0.0
-    for month, subj, lev, boards in UNIT_SCHEDULES[m]:
-        if t >= month:
-            total = subj * lev * boards
-    return total
+# units_target() lived here and was never called. It read UNIT_SCHEDULES directly
+# rather than the config's schedules, so any future caller would have silently
+# ignored every narrow-scope scenario. Removed rather than fixed: dead code that
+# would be wrong if used is worse than no code. units_cost_weight() below is the
+# live function and it takes the schedules as an argument.
 
 
 def units_cost_weight(m, t, schedules=None):

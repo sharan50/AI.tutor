@@ -693,7 +693,9 @@ over an arithmetic that did the reverse. A share rendering as "0.0 per cent" now
 renders at two decimals. Three `verify_allow.csv` reasons described superseded
 values as current. `econ/README.md` still carried the harness claim round 2
 corrected in the write-up. Section 3's "four accounting identities down the whole
-monthly file" is three down the file and one point check. The auxiliary priors
+monthly file" is three down the file and one point check, and a fifth was added
+that checks the section 12 scope ladder decomposes exactly, because owner
+decision 1 now rests on reading it as two separable decisions. The auxiliary priors
 drawn outside the published stream were literals in `variants.py` quoted in prose
 with no file behind them; they are now declared once and written to
 `out/aux_params.csv`.
@@ -706,3 +708,25 @@ it is the documented and intended behaviour of rank reordering and section 3
 already says so. One treated the residual scenario's size as evidence that the
 horizon is too short; the horizon is the owner's instruction and the residual
 prices what that instruction costs, which is the point of running it.
+
+### 3.13 Two more, found by the author rather than by a reviewer
+
+**`units_target()` was dead code that would have been wrong if used.** It read
+`UNIT_SCHEDULES` directly rather than the configuration's schedules, so any
+future caller would have silently ignored every narrow-scope scenario. Nothing
+called it. Removed rather than fixed, with a comment saying why, because dead
+code that would be wrong if used is worse than no code.
+
+**The claim that no draw happens inside the month loop was asserted, and what
+the document offered as evidence was a consequence rather than the fact.** Every
+paired comparison in the write-up depends on it. The harness now refuses any
+`model.py` with a draw call inside its `LOOP` section, and `--selftest` proves
+that second gate refuses by inserting one into a copy of the file. Both gates
+are recorded in `out/harness_selftest.txt`.
+
+**And the staleness check from 3.7 bit for real during this round**, on a
+comment-only edit to `model.py` that left both published CSVs byte-identical. It
+invalidated every derived output and forced a full regeneration. That is the
+intended behaviour and it is not free; `econ/README.md` says so, and says why a
+check that tried to hash only the code would be the wrong trade in a repository
+where a misleading comment is a defect these reviews keep finding.

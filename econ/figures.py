@@ -369,15 +369,29 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
             add("delta_%s_total_content_cost_abs" % name, abs(dc), "USD", "variants.csv",
                 "the absolute value of that difference")
 
+    # The scope ladder, as two separable decisions. Owner decision 1 reads the
+    # content column of a four-row table this way, so the two quantities it
+    # reads are computed here and verify.py checks that the decomposition is
+    # exact rather than approximate.
+    if all(n in vr for n in ("por", "por_content_frozen", "ukonly", "gtm_minimum")):
+        cc = lambda n: float(vr[n]["total_content_cost_mean"])
+        add("scope_ladder_foreign_content_mean", cc("por") - cc("ukonly"), "USD", "variants.csv",
+            "total_content_cost_mean for por less the same for ukonly: the content built for markets other than the United Kingdom")
+        add("scope_ladder_frozen_uk_content_mean", cc("gtm_minimum"), "USD", "variants.csv",
+            "total_content_cost_mean for gtm_minimum: United Kingdom content frozen at the go-to-market five subjects, one board")
+        add("scope_ladder_uk_escalation_mean", cc("ukonly") - cc("gtm_minimum"), "USD", "variants.csv",
+            "total_content_cost_mean for ukonly less the same for gtm_minimum: what widening the United Kingdom catalogue costs")
+
 # --------------------------------------------------------------------------
 # Sensitivity
 # --------------------------------------------------------------------------
 if os.path.exists(os.path.join(OUT, "sobol.csv")):
     sb_all = read_csv("sobol.csv")
-    # sobol.csv now carries two scopes. The ordering is a property of the scope,
-    # so the two are never pooled: the unprefixed names stay the plan of record
-    # and the second scope gets its own prefix. Pooling them would average two
-    # orderings that disagree and produce a third that is true of neither.
+    # sobol.csv carries three configurations. The ordering is a property of the
+    # configuration it was computed on, so they are never pooled: the unprefixed
+    # names stay the plan of record and each other run gets its own prefix.
+    # Pooling them would average orderings that disagree and produce one that is
+    # true of none of them.
     RUN_PREFIX = {"por": "", "gtm_minimum": "gtm_", "onshore_all": "onshore_"}
     sb = [r for r in sb_all if r["run"] == "por"]
     for target in sorted({r["target"] for r in sb}):

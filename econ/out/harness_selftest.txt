@@ -3,3 +3,8 @@ perturbed por_monthly.csv row 30 field 7 from 193.417145 to 193.417146, one unit
 RESULT: the harness refused, as it must.
 file restored; the harness verifies again.
 sha256 of the restored file: f51e3e83ec3a565aae05b48bab680b5a49c3b350227c8c96859edad050e86b41
+
+second gate: no random draw inside the month loop
+RESULT: the check refused, as it must.
+  a random draw appears inside the month loop, at LOOP line 2: '_probe = np.random.default_rng(1).uniform(0, 1, 1)'
+the published model.py passes the same check.

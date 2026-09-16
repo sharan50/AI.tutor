@@ -472,7 +472,7 @@ be raised on seed terms against a Series A-sized commitment.
 
 ## The measuring instrument
 
-### 22. Does the instrument produce the quantities claimed: **not clean, and this is the worst of them**
+### 22. Does the instrument produce the quantities claimed: **not clean, and it is the worst of the ones that cannot be fixed by writing code**
 
 Decompose revenue per household: it is the plan price, plus the overage, and the
 overage is a function of **sessions per household per month**. Decompose the cost

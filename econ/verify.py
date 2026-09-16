@@ -120,6 +120,23 @@ def rederive():
     cost = sum(mcol(c + "_mean") for c in lines)
     d["_xcheck_net_cash_identity"] = float(np.max(np.abs(rev - cost - mcol("net_cash_mean"))))
 
+    # Cross-check: the scope ladder must decompose. Owner decision 1 rests on
+    # reading the content column of a four-row table as two separable
+    # decisions, so the separability is checked rather than eyeballed. Foreign
+    # content, computed as (plan of record less United Kingdom only), must equal
+    # the same quantity computed as (content frozen less the go-to-market
+    # minimum). If the two disagree the table cannot be read the way section 12
+    # reads it.
+    if os.path.exists(os.path.join(OUT, "variants.csv")):
+        v = {r["scenario"]: r for r in read_csv("variants.csv")}
+        need = ("por", "por_content_frozen", "ukonly", "gtm_minimum")
+        if all(n in v for n in need):
+            cc = lambda n: float(v[n]["total_content_cost_mean"])
+            d["_xcheck_scope_ladder_separable"] = float(
+                (cc("por") - cc("ukonly")) - (cc("por_content_frozen") - cc("gtm_minimum")))
+            d["scope_ladder_foreign_content_mean"] = cc("por") - cc("ukonly")
+            d["scope_ladder_frozen_uk_content_mean"] = cc("gtm_minimum")
+
     d["por_final_year_effective_cac_mean"] = float(np.mean(pcol("final_year_effective_cac")))
     d["por_mean_share_over_allowance"] = float(np.mean(pcol("mean_share_over_allowance")))
     d["por_band_central_placement_terminal"] = float(mcol("cum_cash_bandcentral_placement")[-1])

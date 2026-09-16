@@ -57,6 +57,31 @@ def split_sections(path=MODEL):
     return sections
 
 
+# Every paired comparison in the write-up depends on the scenarios sharing their
+# random numbers path by path, and that in turn depends on no draw happening
+# inside the month loop. The document said so and showed a rank correlation,
+# which is a consequence rather than the fact. This checks the fact, at the
+# source level, on the section that would have to contain the draw.
+_DRAW_CALLS = ("default_rng", "np.random", ".standard_normal(", ".normal(",
+               ".uniform(", ".lognormal(", ".triangular(", ".integers(")
+
+
+def check_no_draws_in_loop(sections):
+    for name, src in sections:
+        if name != "LOOP":
+            continue
+        for n, line in enumerate(src.split("\n"), 1):
+            code = line.split("#", 1)[0]
+            for call in _DRAW_CALLS:
+                if call in code:
+                    raise HarnessRefusal(
+                        "a random draw appears inside the month loop, at LOOP line %d: %r. "
+                        "Every paired comparison in the write-up assumes the streams cannot "
+                        "diverge between scenarios, and this would break that." % (n, line.strip()))
+        return
+    raise HarnessRefusal("no LOOP section found to check for draws")
+
+
 def exec_sections(sections):
     """Execute each section in order into one namespace."""
     ns = {"__name__": "model_under_harness", "__file__": MODEL}
@@ -90,7 +115,10 @@ def verify(ns=None, quiet=False):
     Rebuild the published CSVs from the executed sections and compare the text
     character for character. Returns the namespace, or raises HarnessRefusal.
     """
-    ns = ns or exec_sections(split_sections())
+    if ns is None:
+        sections = split_sections()
+        check_no_draws_in_loop(sections)
+        ns = exec_sections(sections)
     drv = ns["draw_drivers"]()
     out, summary = ns["run"](drv, ns["base_config"]())
     o, cum = ns["path_outcomes"](out, summary)
@@ -195,6 +223,33 @@ def selftest():
     log.append("file restored; the harness verifies again.")
     log.append("sha256 of the restored file: %s"
                % hashlib.sha256(original.encode()).hexdigest())
+
+    # The second gate, proved the same way: insert a draw at the top of the LOOP
+    # section of a COPY of model.py and confirm the check refuses it. model.py
+    # itself is never written to, so this cannot leave the file damaged.
+    log.append("")
+    log.append("second gate: no random draw inside the month loop")
+    src = open(MODEL).read()
+    i = src.index(MARKER + "LOOP")
+    j = src.index("\n", i)
+    probed = src[:j + 1] + "_probe = np.random.default_rng(1).uniform(0, 1, 1)\n" + src[j + 1:]
+    probe_path = os.path.join(OUTDIR, "_probe_model.py")
+    try:
+        with open(probe_path, "w") as fh:
+            fh.write(probed)
+        try:
+            check_no_draws_in_loop(split_sections(probe_path))
+            log.append("RESULT: FAILED. The check accepted a draw inside the month loop.")
+            ok = False
+        except HarnessRefusal as exc:
+            log.append("RESULT: the check refused, as it must.")
+            log.append("  %s" % str(exc).split(". ")[0])
+    finally:
+        if os.path.exists(probe_path):
+            os.remove(probe_path)
+    check_no_draws_in_loop(split_sections())
+    log.append("the published model.py passes the same check.")
+
     text = "\n".join(log) + "\n"
     with open(os.path.join(OUTDIR, "harness_selftest.txt"), "w") as fh:
         fh.write(text)
