@@ -7,8 +7,10 @@ published model.
 Two rules hold for everything in this file, and are tested rather than asserted:
 
   1. A variant that changes the mechanism must reproduce the base run EXACTLY
-     when the new mechanism is switched off. test_off_reproduces_base() checks
-     this on the written CSV text, not on in-memory floats.
+     when the new mechanism is switched off, and must NOT reproduce it when the
+     mechanism is switched on. test_off_reproduces_base() checks both on the
+     written CSV text, not on in-memory floats. Neither direction is a
+     correctness test and the write-up says so.
   2. Every new parameter is drawn OUTSIDE the published random stream, from the
      auxiliary seeds in model.py, so the two runs stay comparable path by path
      rather than only in aggregate.
@@ -29,6 +31,34 @@ OUT, SEED, RUN_DATE = NS["OUT"], NS["SEED"], NS["RUN_DATE"]
 DRV = NS["_verified"]["drv"]
 P = DRV["anchor_u"].shape[0]
 T = NS["HORIZON"]
+
+
+# ---------------------------------------------------------------------------
+# The priors drawn OUTSIDE the published random stream.
+#
+# Every one of these is a prior and not one of them is in out/drivers.csv,
+# because drivers.csv holds the published run's drivers and none of these is in
+# the published run. They were nevertheless quoted in prose, which meant a range
+# in the write-up traced to a literal in this file and nowhere else. They are
+# declared here once, used from here, and written to out/aux_params.csv, so a
+# range quoted anywhere has a file behind it.
+# ---------------------------------------------------------------------------
+AUX = {
+    "price_elast": (0.20, 1.40, "how hard a price above the regime's own mode costs retention"),
+    "quality_gamma": (0.0, 0.80, "how hard build intensity three months ago costs retention now"),
+    "autom_beta": (0.0, 8.0, "engineering heads bought per unit of automation ceiling"),
+    "fx_terminal_sd": (0.04, 0.16, "terminal dispersion of the GBP/USD random walk"),
+    "appstore_share": (0.15, 0.70, "share of consumer billing routed through an app store"),
+    "creator_fee_per_creator_yr": (2000.0, 40000.0, "fixed annual minimum per signed creator, USD"),
+    "creator_rev_share": (0.0, 0.15, "share of the revenue a creator's audience brought"),
+    "residual_content_retained": (0.15, 0.65, "share of accumulated content cost still worth something at month 60"),
+    "residual_book_months": (6.0, 30.0, "months of contribution a standing book is worth to a buyer"),
+}
+
+
+def aux(name):
+    lo, hi, _why = AUX[name]
+    return lo, hi
 
 
 # ---------------------------------------------------------------------------
@@ -117,9 +147,9 @@ def feedback_params(drv, cfg, on=True):
     if not on:
         return None
     rng = np.random.default_rng(NS["SEED_AUX_FEEDBACK"])
-    price_elast = rng.uniform(0.20, 1.40, P)
-    quality_gamma = rng.uniform(0.0, 0.80, P)
-    autom_beta = rng.uniform(0.0, 8.0, P)
+    price_elast = rng.uniform(*aux('price_elast'), P)
+    quality_gamma = rng.uniform(*aux('quality_gamma'), P)
+    autom_beta = rng.uniform(*aux('autom_beta'), P)
 
     # Does a higher price cost retention?
     #
@@ -179,14 +209,14 @@ def sampled_fx():
     rng = np.random.default_rng(NS["SEED_AUX_FX"])
     # A random walk on GBP/USD with a sampled terminal dispersion. Fixed FX is
     # the owner's instruction; this exists to price what that instruction costs.
-    sd = rng.uniform(0.04, 0.16, P)
+    sd = rng.uniform(*aux('fx_terminal_sd'), P)
     z = rng.standard_normal(P)
     return dict(gbp=NS["FX_GBP_USD"] * np.exp(sd * z - 0.5 * sd ** 2))
 
 
 def appstore_params():
     rng = np.random.default_rng(NS["SEED_AUX_APPSTORE"])
-    return dict(share=rng.uniform(0.15, 0.70, P), fee=np.full(P, NS["APPSTORE_FEE"]))
+    return dict(share=rng.uniform(*aux('appstore_share'), P), fee=np.full(P, NS["APPSTORE_FEE"]))
 
 
 SCENARIOS = {}
@@ -258,10 +288,31 @@ def s_nosch():
     return DRV, dict(NS["base_config"](), schools=False)
 
 
+# The scope ladder has three rungs, not two, and the middle one was doing the
+# work of the bottom one. "ukonly" drops the second market and the institution
+# channel but keeps the whole United Kingdom content escalation to eleven
+# subjects; the content line barely moves. Comparing the plan of record against
+# it alone answers "what does a second market cost", not "what does scope cost",
+# and the write-up was reading the first answer as the second. The two
+# scenarios below separate the market decision from the content decision so the
+# ladder is like-for-like at each rung.
+@scenario("por_content_frozen", "the plan of record's markets and channels, with United Kingdom content frozen at the go-to-market five subjects: isolates the content escalation")
+def s_content_frozen():
+    sched = dict(NS["UNIT_SCHEDULES"])
+    sched[NS["M_UK"]] = NS["GTM_MINIMUM_SCHEDULES"][NS["M_UK"]]
+    return DRV, dict(NS["base_config"](), unit_schedules=sched)
+
+
+@scenario("gtm_minimum", "the floor of the scope ladder: United Kingdom consumer only, no institution channel, five subjects at one board and never widened")
+def s_gtm_min():
+    return DRV, dict(NS["base_config"](), scope="ukonly", schools=False,
+                     unit_schedules=NS["GTM_MINIMUM_SCHEDULES"])
+
+
 def creator_params():
     rng = np.random.default_rng(NS["SEED_AUX_CREATOR"])
-    return dict(fee_per_creator_yr=rng.uniform(2000.0, 40000.0, P),
-                rev_share=rng.uniform(0.0, 0.15, P))
+    return dict(fee_per_creator_yr=rng.uniform(*aux('creator_fee_per_creator_yr'), P),
+                rev_share=rng.uniform(*aux('creator_rev_share'), P))
 
 
 @scenario("por_creator_fees", "signed creators want money: a fixed annual minimum each, plus a share of the revenue their audience brought")
@@ -284,13 +335,23 @@ def residual_params():
     # Both are priors. The item bank is an asset with a life beyond the horizon;
     # how much of its cost is still worth something at month 60 is unknown, and
     # so is what a standing book of subscribers is worth to a buyer.
-    return dict(content_retained=rng.uniform(0.15, 0.65, P),
-                book_months=rng.uniform(6.0, 30.0, P))
+    return dict(content_retained=rng.uniform(*aux('residual_content_retained'), P),
+                book_months=rng.uniform(*aux('residual_book_months'), P))
 
 
 @scenario("por_residual", "the horizon credits a residual: part of the item bank as an asset, and the standing book at a multiple of monthly contribution")
 def s_residual():
     return DRV, dict(NS["base_config"](), residual=residual_params())
+
+
+@scenario("por_reacq_low", "the reachable pool may be worked twice rather than three times over the horizon")
+def s_reacq_low():
+    return DRV, dict(NS["base_config"](), pool_reacq_multiple=2.0)
+
+
+@scenario("por_reacq_high", "the reachable pool may be worked five times rather than three")
+def s_reacq_high():
+    return DRV, dict(NS["base_config"](), pool_reacq_multiple=5.0)
 
 
 @scenario("por_anchor_tutoring", "condition C1 passes: every path anchors on the tutoring rate")
@@ -381,41 +442,82 @@ def evaluate(name):
 
 
 def test_off_reproduces_base():
-    """A mechanism switched off must reproduce the base run character for character."""
+    """
+    Two sides of the same test, and neither of them is a correctness test.
+
+    OFF: a mechanism switched off must reproduce the base run character for
+    character. This is what the brief asks for, and what it proves is narrow:
+    that the mechanism's own parameters were drawn outside the published random
+    stream, so the on and off runs are comparable path by path. It does not
+    look at what the mechanism does when it is on. Every one of the four
+    mechanism defects found in round two passed this test while wrong.
+
+    ON: the same mechanism switched on must NOT reproduce the base run. This
+    catches the opposite failure, a mechanism that is wired up, configured and
+    inert, which the off test cannot see and which reads in a scenario table as
+    a lever that does not matter. It is still not a correctness test: a
+    mechanism can move the answer and move it wrongly, and only reading the code
+    settles that.
+    """
     base_out, base_summary = NS["run"](DRV, NS["base_config"]())
     base_o, base_cum = NS["path_outcomes"](base_out, base_summary)
     base_text = NS["monthly_csv_text"](base_out, base_cum, "por")
-    results = []
-    for name, cfg in [
-        ("feedback", dict(NS["base_config"](), feedback=feedback_off())),
-        ("appstore_zero", dict(NS["base_config"](), appstore=dict(share=np.zeros(P), fee=np.zeros(P)))),
-        ("fx_fixed", dict(NS["base_config"](), fx=dict(gbp=np.full(P, NS["FX_GBP_USD"])))),
-        ("creator_zero", dict(NS["base_config"](),
-                              creator=dict(fee_per_creator_yr=np.zeros(P), rev_share=np.zeros(P)))),
-        ("onshore_zero", dict(NS["base_config"](), onshore_share=0.0)),
-        ("residual_zero", dict(NS["base_config"](),
-                               residual=dict(content_retained=np.zeros(P), book_months=np.zeros(P)))),
-    ]:
+
+    def text_of(cfg):
         out, summary = NS["run"](DRV, cfg)
         o, cum = NS["path_outcomes"](out, summary)
-        text = NS["monthly_csv_text"](out, cum, "por")
-        ok = (text == base_text)
-        results.append((name, ok))
-        print("  switched-off reproduction, %-14s %s" % (name, "EXACT" if ok else "DIFFERS"))
-        if not ok:
+        return NS["monthly_csv_text"](out, cum, "por")
+
+    bc = NS["base_config"]
+    cases = [
+        ("feedback",
+         dict(bc(), feedback=feedback_off()),
+         dict(bc(), feedback=feedback_params(DRV, bc(), on=True))),
+        ("appstore_zero",
+         dict(bc(), appstore=dict(share=np.zeros(P), fee=np.zeros(P))),
+         dict(bc(), appstore=appstore_params())),
+        ("fx_fixed",
+         dict(bc(), fx=dict(gbp=np.full(P, NS["FX_GBP_USD"]))),
+         dict(bc(), fx=sampled_fx())),
+        ("creator_zero",
+         dict(bc(), creator=dict(fee_per_creator_yr=np.zeros(P), rev_share=np.zeros(P))),
+         dict(bc(), creator=creator_params())),
+        ("onshore_zero",
+         dict(bc(), onshore_share=0.0),
+         dict(bc(), onshore_share=1.0)),
+        ("residual_zero",
+         dict(bc(), residual=dict(content_retained=np.zeros(P), book_months=np.zeros(P))),
+         dict(bc(), residual=residual_params())),
+        ("pool_reacq_published",
+         dict(bc(), pool_reacq_multiple=NS["POOL_REACQUISITION_MULTIPLE"]),
+         dict(bc(), pool_reacq_multiple=2.0)),
+    ]
+    results = []
+    for name, off_cfg, on_cfg in cases:
+        off_ok = (text_of(off_cfg) == base_text)
+        on_moves = (text_of(on_cfg) != base_text)
+        results.append((name, off_ok, on_moves))
+        print("  %-14s off: %-7s  on: %s"
+              % (name, "EXACT" if off_ok else "DIFFERS",
+                 "moves the run" if on_moves else "INERT"))
+        if not off_ok:
             raise AssertionError("variant %s does not reproduce the base run when switched off" % name)
+        if not on_moves:
+            raise AssertionError("variant %s is inert: switching it on changes nothing" % name)
     # Written down so the count can be read off a file rather than typed into
     # prose. A hand-typed count is exactly what the reviewers kept catching.
     with open(os.path.join(OUT, "offtest.csv"), "w", newline="") as fh:
         w = csv.writer(fh, lineterminator="\n")
-        w.writerow(["seed", "run_date", "mechanism", "reproduces_base_exactly"])
-        for name, ok in results:
-            w.writerow([SEED, RUN_DATE, name, "yes" if ok else "no"])
+        w.writerow(["seed", "run_date", "mechanism", "reproduces_base_exactly",
+                    "moves_the_run_when_switched_on"])
+        for name, off_ok, on_moves in results:
+            w.writerow([SEED, RUN_DATE, name, "yes" if off_ok else "no",
+                        "yes" if on_moves else "no"])
     return results
 
 
 def main():
-    print("checking that each mechanism reproduces the base run when switched off")
+    print("checking each mechanism both ways: exact when off, and not inert when on")
     test_off_reproduces_base()
 
     global BASE_TERMINAL
@@ -455,7 +557,13 @@ def main():
             pa = bool(np.array_equal(np.sort(drv2[a]), np.sort(DRV[a])))
             pb = bool(np.array_equal(np.sort(drv2[b]), np.sort(DRV[b])))
             w.writerow([SEED, RUN_DATE, a, b, "%.4f" % r, "%.4f" % ach, pa, pb, why])
-    print("wrote variants.csv, variants_bands.csv, imanconover_check.csv")
+    with open(os.path.join(OUT, "aux_params.csv"), "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["seed", "run_date", "parameter", "low", "high", "what_it_is"])
+        for k in sorted(AUX):
+            lo, hi, why = AUX[k]
+            w.writerow([SEED, RUN_DATE, k, "%.6f" % lo, "%.6f" % hi, why])
+    print("wrote variants.csv, variants_bands.csv, imanconover_check.csv, aux_params.csv")
 
 
 if __name__ == "__main__":

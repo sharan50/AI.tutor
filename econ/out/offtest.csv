@@ -1,7 +1,8 @@
-seed,run_date,mechanism,reproduces_base_exactly
-20260916,2026-09-16,feedback,yes
-20260916,2026-09-16,appstore_zero,yes
-20260916,2026-09-16,fx_fixed,yes
-20260916,2026-09-16,creator_zero,yes
-20260916,2026-09-16,onshore_zero,yes
-20260916,2026-09-16,residual_zero,yes
+seed,run_date,mechanism,reproduces_base_exactly,moves_the_run_when_switched_on
+20260916,2026-09-16,feedback,yes,yes
+20260916,2026-09-16,appstore_zero,yes,yes
+20260916,2026-09-16,fx_fixed,yes,yes
+20260916,2026-09-16,creator_zero,yes,yes
+20260916,2026-09-16,onshore_zero,yes,yes
+20260916,2026-09-16,residual_zero,yes,yes
+20260916,2026-09-16,pool_reacq_published,yes,yes

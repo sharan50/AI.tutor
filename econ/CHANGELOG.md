@@ -419,6 +419,21 @@ fixed the symptom.
 the write-up presents as the reason the anchor understates at scale is driven by
 the quantity it claims.
 
+**Moved.** This entry recorded no figures, which was an omission: it is the
+round-2 fix with the largest effect on the acquisition mechanism. Plan-of-record
+terminal cash at the mean moved from -8,682,961 at the end of round 1b to
+-11,711,069 across the round 2 fixes taken together, of which this was one. The
+entry cannot separate its own contribution, because four mechanism fixes were
+regenerated in one pass; that is the honest record of it rather than a number
+invented after the fact, and the two endpoints are read off the committed
+`out/variants.csv` at each round rather than from a working note.
+
+**Left, then fixed in round 3.** `POOL_REACQUISITION_MULTIPLE` came out of this
+doing two jobs — bounding cumulative acquisitions and setting the saturation
+denominator — as a literal in `model.py` that nothing could vary and no
+sensitivity instrument could see. Round 3 made it a configuration key with two
+scenarios. See 3.9.
+
 ### 2.5 The onshoring scenario moved the wrong people, and X8 was over-claimed
 
 **Found.** `onshore_share` scaled the whole Bengaluru head count, which is
@@ -467,7 +482,9 @@ eleven. "M4 is not before M5" is wrong about the roadmap. Two currencies were
 presented as one in X8. An app-store cost was written with an inverted sign. The
 all-in contribution was defined two ways in two documents. Four table headers
 carried units their own rows contradicted. The demand shock's run lengths were
-published and its cost never was; it is now measured, and it is about one per cent.
+published and its cost never was; it is now measured, and it is a fraction of a
+per cent of terminal cash on the mean. The exact figures are in
+`out/cohorts.csv` under `shock_cost_*`, and 2.8 below gives the reading.
 
 ### 2.8 What the round 2 fixes moved
 
@@ -480,9 +497,212 @@ instead of sitting against it.
 The terminal-value residual is worth more than any other scenario in the file,
 which is the measure of how much the horizon choice was doing.
 
-The demand shock's measured cost is about half a per cent of terminal cash on the
-mean, against run lengths that read as though it were the thing that ends the
-company. Both numbers are now published together.
+The demand shock's measured cost is well under one per cent of terminal cash on
+the mean — `shock_cost_terminal_cash_mean` in `out/cohorts.csv`, against the mean
+of terminal cash itself — while the run lengths read as though it were the thing
+that ends the company. An earlier version of this log said "about one per cent"
+in 2.7 and "about half a per cent" here, for the same quantity; both are now
+stated the same way and point at the file. Both numbers are published together,
+because the run lengths without the cost are the misleading half.
 
 The onshoring scenario got smaller once it moved the right people, and stayed
 large.
+
+---
+
+## Round 3: two fresh-context reviews, and the structure gave way
+
+The brief predicted this round would find the worst defect, because the first two
+clear the surface and the third reaches the structure. It did. Five of the
+findings below are about the *shape* of the argument rather than about a figure
+in it, and three of those change a conclusion the document was built around.
+
+Both reviewers were given the artefacts and none of the reasoning. Every finding
+was checked against the code before being accepted; two were rejected on the
+magnitude and one was accepted in the opposite direction from the one reported.
+
+### 3.1 The scope comparator was mismatched, and the headline conclusion was an artefact
+
+**Found.** Owner decision 1 compared the plan of record against the go-to-market
+minimum on the capital requirement and against the United Kingdom-only scenario
+on terminal cash, then set the two side by side and concluded, in bold and twice,
+that scope is dominant on the statistic that sizes rounds and minor on the one
+that measures return. The two comparisons are against different scope reductions.
+`ukonly` drops the second market and the institution channel and keeps the entire
+United Kingdom content escalation to eleven subjects; its content line is most of
+the plan of record's. The conclusion was a property of the mismatch.
+
+**Verified.** Run directly against the model: against the plan of record,
+`ukonly` is worth +1,609,577 on the mean and +7,550,724 on the median, while the
+go-to-market minimum is worth +9,743,120 and +14,923,687. Six times the size on
+the mean, twice on the median.
+
+**Fixed.** Two scenarios added, `por_content_frozen` and `gtm_minimum`, so the
+scope ladder has three rungs and the market decision separates from the content
+decision. Decision 1 now carries a four-row table, and the corrected reading is
+not simply the opposite of the old one. Scope is much the largest decision on the
+capital requirement and the third largest on terminal cash, behind the residual
+and the price-anchor spread — material on both, where the old text had it at
+close to nothing on one. And "scope" turns out to be two decisions: freezing the
+content schedule is worth five times what dropping markets is on terminal cash,
+while on capital the two are worth about the same. `GTM_MINIMUM_SCHEDULES` moved
+into `model.py` so `variants.py`, `funding.py`, `rescue_grid.py` and
+`breakeven.py` cannot drift apart.
+
+### 3.2 The sensitivity ordering was computed on one scope and quoted as the ordering
+
+**Found.** Every Sobol index in section 8 is computed on the plan of record. The
+document's central instruction — work on acquisition to make the business exist,
+on content cost to make it fundable — was stated as a property of the business.
+
+**Verified.** On the go-to-market minimum the capital ordering rearranges:
+content drivers fall from five of the top seven to one, and `eng_usd_yr` moves
+from rank eight to rank two.
+
+**Fixed.** `sensitivity.py` now runs the decomposition on three configurations
+and writes them all to `out/sobol.csv` under the `run` column. `figures.py` keeps
+the plan of record's names unprefixed and gives the others their own prefix, so
+the two orderings can never be pooled into a third that is true of neither.
+Section 8 has a new subsection putting them side by side, and section 1 says the
+content ordering follows from the scope decision rather than informing it. This is
+the **third** item in the document whose answer changes with a choice rather than
+with evidence.
+
+### 3.3 The largest scenario in the file appeared in no document
+
+**Found.** `por_residual` is the largest single scenario in `out/variants.csv`
+and `WRITEUP.md` did not mention it.
+
+**Fixed.** It is in the scenario table and has its own reading in section 9,
+which states that every number in it is a prior, gives the two prior ranges, and
+says why it is not in the plan of record.
+
+### 3.4 Open item X8 still carried both claims round 2 retracted
+
+**Found.** The write-up's onshoring paragraph was corrected in round 2 from
+"inverts the ordering" to "re-ranks it". `OPEN_ITEMS.md` still said "the one
+unmodelled item that reorders the answer" and "inverts the sensitivity ordering
+the whole write-up is built on".
+
+**And the round 2 correction was itself wrong.** It claimed onshoring moves a
+United Kingdom salary driver into the top three and pushes item count down.
+Verified against the model: under `onshore_share=1.0`, `items_per_unit` stays at
+rank 1 on the capital requirement and `uk_gbp_yr` reaches rank 7. Across all four
+targets it never enters the top three. Three drafts of the same paragraph, none
+of them computed.
+
+**Fixed.** `onshore_all` added as a third Sobol run, so the paragraph is read off
+a file. Both documents now say onshoring is the largest single unmodelled item by
+cash and does **not** rearrange the ordering, and X8 no longer claims to be the
+only such item — the residual is larger in the other direction.
+
+### 3.5 The break-evens were solved against a target that is not viability
+
+**Found.** The four solved break-evens are all against "half of all paths run
+three consecutive cash-positive months", and the write-up called the result the
+point at which "half of this becomes viable".
+
+**Verified.** At the plan of record's break-even price the median path still ends
+the horizon deeply negative, peak funding at the eightieth percentile is barely
+moved, and a third of the paths that *hit* the target still end with negative
+cash. (One reviewer put that last share above half. Recomputed on the regenerated
+run it is lower than that, and the point stands on either figure: a path can
+string three cash-positive months together and still lose money over the
+horizon.)
+
+**Fixed.** `breakeven.py` now reports, for every solved row, the two statistics
+the solve did not target and the share of target-hitting paths that still end
+negative. Section 10 quotes them and retracts the word viable.
+
+### 3.6 The off-test is a stream test and was reading as a mechanism test
+
+**Found.** Section 3 presented the switched-off reproduction test as the thing
+that makes the mechanisms trustworthy. All four of round 2's mechanism defects
+passed it on every run while they were wrong.
+
+**Fixed.** The test is now two-sided — off must reproduce exactly, on must not —
+which catches a mechanism that is wired up and inert. Section 3 says plainly that
+neither half is a correctness test, names the four defects that passed it, and
+says reading the code is how they were found.
+
+### 3.7 The gate covers two of the output files and the document implied more
+
+**Found.** The character-for-character gate covers `por_monthly.csv` and
+`por_paths.csv`. Nothing checks the other derived outputs.
+
+**Fixed.** `harness.load()` records the SHA-256 of the `model.py` each script ran
+against into `out/provenance.csv`, and `verify.py` gained a pass that fails the
+whole run if any recorded hash is not the current one. It is a staleness check
+rather than a reproduction check and is described as the weaker thing it is.
+
+### 3.8 Two omissions priced at zero could be sized, and one was missing entirely
+
+**Found.** The consumer subscription regime and involuntary churn are retention
+mechanics, correctly zero as cost lines, and were given no size at all when
+`cohorts.py` could produce one. Separately, specification change and curriculum
+reform are absent from the model, the limits, the open items and the omissions
+file: `content_full_equivalents` only ever rises and no item ever expires, on a
+five-year horizon.
+
+**Fixed.** `omissions.py` runs a churn stress and writes the cash consequence to
+`out/sized_omissions.csv`, which LIMITS item 8 quotes. Specification change is a
+priced omission line and a new open item X11 with an owner and a trigger that can
+actually produce the quantity, the awarding bodies' published reform timetables.
+
+### 3.9 A constant doing two jobs, invisible to every instrument
+
+**Found.** `POOL_REACQUISITION_MULTIPLE` bounds cumulative acquisitions and is
+the denominator of the saturation term. It is a literal, so no sweep, no Sobol
+index and no scenario could see it, and nothing in the vault sets it.
+
+**Fixed.** It is a configuration key with two scenarios, `por_reacq_low` and
+`por_reacq_high`, and an off-test entry. LIMITS names it load-bearing and says
+that a constant moving the answer while being invisible to the sensitivity
+analysis is a defect of the instrument.
+
+### 3.10 The all-in lifetime value comparison was published on the gross basis only
+
+**Found.** "Lifetime value is below acquisition cost" was published at a small
+percentage of paths on the gross basis and nowhere on the all-in basis. That is
+checklist item 16 — a gross margin presented as a net one — committed by a
+document whose answer to item 16 was "clean".
+
+**Fixed.** Both shares are computed in `cohorts.py` and published beside each
+other in LIMITS items 16 and 19, and item 19's table now says for each row
+whether the write-up asserts the proposition or denies it.
+
+### 3.11 Smaller, and again there were many
+
+Section 11 named an India entity in the staging that `out/funding_commitments.csv`
+does not contain, and LIMITS called both foreign entities seed-window when one
+lands in the Series A; both are now counted from the file. The United
+Kingdom-only scenario drops two consumer markets, not three. Section 1 quoted the
+whole-horizon funding figure without saying it is the smaller of the two numbers
+in the document. Section 12 said items 3 onward were ordered by terminal cash;
+they are grouped, not ordered. `OPEN_ITEMS.md` claimed an ordering its own first
+two rows break. The break-even table headed a column "Prior median" and put a
+mode in it. The examiner-hours figure counted the catalogue rather than the full
+item-bank equivalents the model builds, and was too large by about a factor of
+two. X9 said the *smallest* penalty in the reference class exceeds every cost
+line except content and exceeds the seed round; the largest does, the smallest
+does neither, and the comparison is now computed in `omissions.py`. E4 said age
+assurance subtracts from the acquisition budget pound for pound; it does not, and
+the mechanism is now described. `SHOCK_BAD_THRESHOLD`'s comment said "at or
+below" against a strict inequality. A figures name said tutoring minus software
+over an arithmetic that did the reverse. A share rendering as "0.0 per cent" now
+renders at two decimals. Three `verify_allow.csv` reasons described superseded
+values as current. `econ/README.md` still carried the harness claim round 2
+corrected in the write-up. Section 3's "four accounting identities down the whole
+monthly file" is three down the file and one point check. The auxiliary priors
+drawn outside the published stream were literals in `variants.py` quoted in prose
+with no file behind them; they are now declared once and written to
+`out/aux_params.csv`.
+
+### 3.12 Rejected, and why
+
+The reviewers were wrong twice and imprecise once, and the brief says to check.
+One report treated the Iman-Conover scenarios' low path correlation as a defect;
+it is the documented and intended behaviour of rank reordering and section 3
+already says so. One treated the residual scenario's size as evidence that the
+horizon is too short; the horizon is the owner's instruction and the residual
+prices what that instruction costs, which is the point of running it.

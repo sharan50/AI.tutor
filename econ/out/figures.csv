@@ -378,8 +378,8 @@ const_SHOCK_BAD_THRESHOLD,0.800000,model units,constants.csv,demand multiplier b
 const_SHOCK_BAD_THRESHOLD_pct,80.000000,per cent,constants.csv,"demand multiplier below which a month counts toward a bad run, as a percentage"
 const_APPSTORE_FEE,0.150000,model units,constants.csv,"app store commission used by the app-store scenario, the small business rate"
 const_APPSTORE_FEE_pct,15.000000,per cent,constants.csv,"app store commission used by the app-store scenario, the small business rate, as a percentage"
-const_POOL_REACQUISITION_MULTIPLE,3.000000,model units,constants.csv,how many times over the reachable pool may be worked across the horizon
-const_POOL_REACQUISITION_MULTIPLE_pct,300.000000,per cent,constants.csv,"how many times over the reachable pool may be worked across the horizon, as a percentage"
+const_POOL_REACQUISITION_MULTIPLE,3.000000,model units,constants.csv,"how many times over the reachable pool may be worked across the horizon; it is also the denominator of the saturation term, so it sets how fast acquisition gets dearer as a market is worked"
+const_POOL_REACQUISITION_MULTIPLE_pct,300.000000,per cent,constants.csv,"how many times over the reachable pool may be worked across the horizon; it is also the denominator of the saturation term, so it sets how fast acquisition gets dearer as a market is worked, as a percentage"
 const_START_YEAR,2027.000000,model units,constants.csv,calendar year of month zero
 const_START_YEAR_pct,202700.000000,per cent,constants.csv,"calendar year of month zero, as a percentage"
 const_START_MONTH_IDX,2.000000,model units,constants.csv,"calendar month index of month zero, zero being January"
@@ -512,6 +512,12 @@ band_placement_ukonly_high_terminal,0.818500,percentile as a share,variants_band
 band_placement_por_no_schools_low_terminal,0.192000,percentile as a share,variants_bands.csv,placement_terminal for scenario por_no_schools band low
 band_placement_por_no_schools_central_terminal,0.499400,percentile as a share,variants_bands.csv,placement_terminal for scenario por_no_schools band central
 band_placement_por_no_schools_high_terminal,0.824500,percentile as a share,variants_bands.csv,placement_terminal for scenario por_no_schools band high
+band_placement_por_content_frozen_low_terminal,0.193450,percentile as a share,variants_bands.csv,placement_terminal for scenario por_content_frozen band low
+band_placement_por_content_frozen_central_terminal,0.499700,percentile as a share,variants_bands.csv,placement_terminal for scenario por_content_frozen band central
+band_placement_por_content_frozen_high_terminal,0.822900,percentile as a share,variants_bands.csv,placement_terminal for scenario por_content_frozen band high
+band_placement_gtm_minimum_low_terminal,0.194850,percentile as a share,variants_bands.csv,placement_terminal for scenario gtm_minimum band low
+band_placement_gtm_minimum_central_terminal,0.501050,percentile as a share,variants_bands.csv,placement_terminal for scenario gtm_minimum band central
+band_placement_gtm_minimum_high_terminal,0.819700,percentile as a share,variants_bands.csv,placement_terminal for scenario gtm_minimum band high
 band_placement_por_creator_fees_low_terminal,0.193450,percentile as a share,variants_bands.csv,placement_terminal for scenario por_creator_fees band low
 band_placement_por_creator_fees_central_terminal,0.498850,percentile as a share,variants_bands.csv,placement_terminal for scenario por_creator_fees band central
 band_placement_por_creator_fees_high_terminal,0.822600,percentile as a share,variants_bands.csv,placement_terminal for scenario por_creator_fees band high
@@ -524,6 +530,12 @@ band_placement_por_onshore_all_high_terminal,0.816850,percentile as a share,vari
 band_placement_por_residual_low_terminal,0.195050,percentile as a share,variants_bands.csv,placement_terminal for scenario por_residual band low
 band_placement_por_residual_central_terminal,0.500700,percentile as a share,variants_bands.csv,placement_terminal for scenario por_residual band central
 band_placement_por_residual_high_terminal,0.820750,percentile as a share,variants_bands.csv,placement_terminal for scenario por_residual band high
+band_placement_por_reacq_low_low_terminal,0.192100,percentile as a share,variants_bands.csv,placement_terminal for scenario por_reacq_low band low
+band_placement_por_reacq_low_central_terminal,0.497850,percentile as a share,variants_bands.csv,placement_terminal for scenario por_reacq_low band central
+band_placement_por_reacq_low_high_terminal,0.821550,percentile as a share,variants_bands.csv,placement_terminal for scenario por_reacq_low band high
+band_placement_por_reacq_high_low_terminal,0.192150,percentile as a share,variants_bands.csv,placement_terminal for scenario por_reacq_high band low
+band_placement_por_reacq_high_central_terminal,0.498200,percentile as a share,variants_bands.csv,placement_terminal for scenario por_reacq_high band central
+band_placement_por_reacq_high_high_terminal,0.826950,percentile as a share,variants_bands.csv,placement_terminal for scenario por_reacq_high band high
 band_placement_por_anchor_tutoring_low_terminal,0.193550,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_tutoring band low
 band_placement_por_anchor_tutoring_central_terminal,0.501150,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_tutoring band central
 band_placement_por_anchor_tutoring_high_terminal,0.819800,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_tutoring band high
@@ -712,6 +724,38 @@ scenario_por_no_schools_total_net_revenue_mean,26503030.125013,USD or share,vari
 scenario_por_no_schools_pathwise_spearman_vs_base,0.998693,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_no_schools
 scenario_por_no_schools_pathwise_mean_abs_delta,2240198.253829,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_no_schools
 scenario_por_no_schools_abs_mean_delta,2240198.253829,USD or share,variants.csv,column abs_mean_delta for scenario por_no_schools
+scenario_por_content_frozen_terminal_cash_mean,-3339803.774109,USD or share,variants.csv,column terminal_cash_mean for scenario por_content_frozen
+scenario_por_content_frozen_terminal_cash_p50,-12860270.661806,USD or share,variants.csv,column terminal_cash_p50 for scenario por_content_frozen
+scenario_por_content_frozen_peak_funding_mean,12435940.341292,USD or share,variants.csv,column peak_funding_mean for scenario por_content_frozen
+scenario_por_content_frozen_peak_funding_p80,17271903.845986,USD or share,variants.csv,column peak_funding_p80 for scenario por_content_frozen
+scenario_por_content_frozen_peak_funding_p90,19841469.841891,USD or share,variants.csv,column peak_funding_p90 for scenario por_content_frozen
+scenario_por_content_frozen_share_reaching_profitability,0.251950,USD or share,variants.csv,column share_reaching_profitability for scenario por_content_frozen
+scenario_por_content_frozen_final_year_effective_cac_mean,42.129206,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_content_frozen
+scenario_por_content_frozen_mean_share_over_allowance,0.236123,USD or share,variants.csv,column mean_share_over_allowance for scenario por_content_frozen
+scenario_por_content_frozen_understatement_ratio,0.375055,USD or share,variants.csv,column understatement_ratio for scenario por_content_frozen
+scenario_por_content_frozen_band_central_placement_terminal,0.499700,USD or share,variants.csv,column band_central_placement_terminal for scenario por_content_frozen
+scenario_por_content_frozen_total_content_cost_mean,6521033.521006,USD or share,variants.csv,column total_content_cost_mean for scenario por_content_frozen
+scenario_por_content_frozen_total_cost_mean,28025737.170032,USD or share,variants.csv,column total_cost_mean for scenario por_content_frozen
+scenario_por_content_frozen_total_net_revenue_mean,24685933.395923,USD or share,variants.csv,column total_net_revenue_mean for scenario por_content_frozen
+scenario_por_content_frozen_pathwise_spearman_vs_base,0.947761,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_content_frozen
+scenario_por_content_frozen_pathwise_mean_abs_delta,9061589.401723,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_content_frozen
+scenario_por_content_frozen_abs_mean_delta,8371264.864313,USD or share,variants.csv,column abs_mean_delta for scenario por_content_frozen
+scenario_gtm_minimum_terminal_cash_mean,-1967948.463967,USD or share,variants.csv,column terminal_cash_mean for scenario gtm_minimum
+scenario_gtm_minimum_terminal_cash_p50,-5329245.591728,USD or share,variants.csv,column terminal_cash_p50 for scenario gtm_minimum
+scenario_gtm_minimum_peak_funding_mean,5044248.948728,USD or share,variants.csv,column peak_funding_mean for scenario gtm_minimum
+scenario_gtm_minimum_peak_funding_p80,6936085.622767,USD or share,variants.csv,column peak_funding_p80 for scenario gtm_minimum
+scenario_gtm_minimum_peak_funding_p90,7718440.321642,USD or share,variants.csv,column peak_funding_p90 for scenario gtm_minimum
+scenario_gtm_minimum_share_reaching_profitability,0.268050,USD or share,variants.csv,column share_reaching_profitability for scenario gtm_minimum
+scenario_gtm_minimum_final_year_effective_cac_mean,38.605832,USD or share,variants.csv,column final_year_effective_cac_mean for scenario gtm_minimum
+scenario_gtm_minimum_mean_share_over_allowance,0.234598,USD or share,variants.csv,column mean_share_over_allowance for scenario gtm_minimum
+scenario_gtm_minimum_understatement_ratio,0.390137,USD or share,variants.csv,column understatement_ratio for scenario gtm_minimum
+scenario_gtm_minimum_band_central_placement_terminal,0.501050,USD or share,variants.csv,column band_central_placement_terminal for scenario gtm_minimum
+scenario_gtm_minimum_total_content_cost_mean,1151306.036560,USD or share,variants.csv,column total_content_cost_mean for scenario gtm_minimum
+scenario_gtm_minimum_total_cost_mean,11924185.880169,USD or share,variants.csv,column total_cost_mean for scenario gtm_minimum
+scenario_gtm_minimum_total_net_revenue_mean,9956237.416202,USD or share,variants.csv,column total_net_revenue_mean for scenario gtm_minimum
+scenario_gtm_minimum_pathwise_spearman_vs_base,0.749377,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario gtm_minimum
+scenario_gtm_minimum_pathwise_mean_abs_delta,21383937.718193,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario gtm_minimum
+scenario_gtm_minimum_abs_mean_delta,9743120.174455,USD or share,variants.csv,column abs_mean_delta for scenario gtm_minimum
 scenario_por_creator_fees_terminal_cash_mean,-13682210.042093,USD or share,variants.csv,column terminal_cash_mean for scenario por_creator_fees
 scenario_por_creator_fees_terminal_cash_p50,-21635297.061836,USD or share,variants.csv,column terminal_cash_p50 for scenario por_creator_fees
 scenario_por_creator_fees_peak_funding_mean,21913492.676688,USD or share,variants.csv,column peak_funding_mean for scenario por_creator_fees
@@ -776,6 +820,38 @@ scenario_por_residual_total_net_revenue_mean,26731867.570937,USD or share,varian
 scenario_por_residual_pathwise_spearman_vs_base,0.887274,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_residual
 scenario_por_residual_pathwise_mean_abs_delta,19794067.934986,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_residual
 scenario_por_residual_abs_mean_delta,19794067.934986,USD or share,variants.csv,column abs_mean_delta for scenario por_residual
+scenario_por_reacq_low_terminal_cash_mean,-13950841.577623,USD or share,variants.csv,column terminal_cash_mean for scenario por_reacq_low
+scenario_por_reacq_low_terminal_cash_p50,-20343582.540244,USD or share,variants.csv,column terminal_cash_p50 for scenario por_reacq_low
+scenario_por_reacq_low_peak_funding_mean,20777175.713389,USD or share,variants.csv,column peak_funding_mean for scenario por_reacq_low
+scenario_por_reacq_low_peak_funding_p80,28567497.193772,USD or share,variants.csv,column peak_funding_p80 for scenario por_reacq_low
+scenario_por_reacq_low_peak_funding_p90,33565217.690549,USD or share,variants.csv,column peak_funding_p90 for scenario por_reacq_low
+scenario_por_reacq_low_share_reaching_profitability,0.178800,USD or share,variants.csv,column share_reaching_profitability for scenario por_reacq_low
+scenario_por_reacq_low_final_year_effective_cac_mean,42.461296,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_reacq_low
+scenario_por_reacq_low_mean_share_over_allowance,0.236122,USD or share,variants.csv,column mean_share_over_allowance for scenario por_reacq_low
+scenario_por_reacq_low_understatement_ratio,0.677363,USD or share,variants.csv,column understatement_ratio for scenario por_reacq_low
+scenario_por_reacq_low_band_central_placement_terminal,0.497850,USD or share,variants.csv,column band_central_placement_terminal for scenario por_reacq_low
+scenario_por_reacq_low_total_content_cost_mean,13965825.810650,USD or share,variants.csv,column total_content_cost_mean for scenario por_reacq_low
+scenario_por_reacq_low_total_cost_mean,36301883.405114,USD or share,variants.csv,column total_cost_mean for scenario por_reacq_low
+scenario_por_reacq_low_total_net_revenue_mean,22351041.827491,USD or share,variants.csv,column total_net_revenue_mean for scenario por_reacq_low
+scenario_por_reacq_low_pathwise_spearman_vs_base,0.999107,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_reacq_low
+scenario_por_reacq_low_pathwise_mean_abs_delta,2243757.726474,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_reacq_low
+scenario_por_reacq_low_abs_mean_delta,2239772.939201,USD or share,variants.csv,column abs_mean_delta for scenario por_reacq_low
+scenario_por_reacq_high_terminal_cash_mean,-8331324.360479,USD or share,variants.csv,column terminal_cash_mean for scenario por_reacq_high
+scenario_por_reacq_high_terminal_cash_p50,-20203252.037207,USD or share,variants.csv,column terminal_cash_p50 for scenario por_reacq_high
+scenario_por_reacq_high_peak_funding_mean,20565772.155259,USD or share,variants.csv,column peak_funding_mean for scenario por_reacq_high
+scenario_por_reacq_high_peak_funding_p80,28471683.542256,USD or share,variants.csv,column peak_funding_p80 for scenario por_reacq_high
+scenario_por_reacq_high_peak_funding_p90,33480375.763800,USD or share,variants.csv,column peak_funding_p90 for scenario por_reacq_high
+scenario_por_reacq_high_share_reaching_profitability,0.193850,USD or share,variants.csv,column share_reaching_profitability for scenario por_reacq_high
+scenario_por_reacq_high_final_year_effective_cac_mean,41.767068,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_reacq_high
+scenario_por_reacq_high_mean_share_over_allowance,0.236102,USD or share,variants.csv,column mean_share_over_allowance for scenario por_reacq_high
+scenario_por_reacq_high_understatement_ratio,0.478134,USD or share,variants.csv,column understatement_ratio for scenario por_reacq_high
+scenario_por_reacq_high_band_central_placement_terminal,0.498200,USD or share,variants.csv,column band_central_placement_terminal for scenario por_reacq_high
+scenario_por_reacq_high_total_content_cost_mean,13965825.810650,USD or share,variants.csv,column total_content_cost_mean for scenario por_reacq_high
+scenario_por_reacq_high_total_cost_mean,41237392.249321,USD or share,variants.csv,column total_cost_mean for scenario por_reacq_high
+scenario_por_reacq_high_total_net_revenue_mean,32906067.888842,USD or share,variants.csv,column total_net_revenue_mean for scenario por_reacq_high
+scenario_por_reacq_high_pathwise_spearman_vs_base,0.999127,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_reacq_high
+scenario_por_reacq_high_pathwise_mean_abs_delta,3383434.079732,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_reacq_high
+scenario_por_reacq_high_abs_mean_delta,3379744.277943,USD or share,variants.csv,column abs_mean_delta for scenario por_reacq_high
 scenario_por_anchor_tutoring_terminal_cash_mean,16897.674878,USD or share,variants.csv,column terminal_cash_mean for scenario por_anchor_tutoring
 scenario_por_anchor_tutoring_terminal_cash_p50,-17402757.569382,USD or share,variants.csv,column terminal_cash_p50 for scenario por_anchor_tutoring
 scenario_por_anchor_tutoring_peak_funding_mean,17689714.903098,USD or share,variants.csv,column peak_funding_mean for scenario por_anchor_tutoring
@@ -841,11 +917,11 @@ scenario_por_launch_plus6_pathwise_spearman_vs_base,0.998571,USD or share,varian
 scenario_por_launch_plus6_pathwise_mean_abs_delta,3445095.133280,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_launch_plus6
 scenario_por_launch_plus6_abs_mean_delta,769605.959200,USD or share,variants.csv,column abs_mean_delta for scenario por_launch_plus6
 anchor_tutoring_minus_software_terminal_cash_mean,23582606.467215,USD,variants.csv,"terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por_anchor_software: the spread between the two regimes, not either one's delta against the published mix"
-anchor_tutoring_minus_software_peak_funding_p80,4082201.176603,USD,variants.csv,peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring
+anchor_software_minus_tutoring_peak_funding_p80,4082201.176603,USD,variants.csv,peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring: the extra capital the software-anchored regime needs
 pathwise_spearman_min,0.299768,rank correlation,variants.csv,the lowest pathwise_spearman_vs_base over every scenario
 pathwise_spearman_min_scenario,por_dependence_feedback,scenario name,variants.csv,the scenario carrying that lowest value
-pathwise_spearman_min_excluding_dependence,0.787101,rank correlation,variants.csv,the lowest pathwise_spearman_vs_base over scenarios that do not reorder driver values across paths
-pathwise_spearman_min_excluding_dependence_scenario,por_anchor_software,scenario name,variants.csv,the scenario carrying that value
+pathwise_spearman_min_excluding_dependence,0.749377,rank correlation,variants.csv,the lowest pathwise_spearman_vs_base over scenarios that do not reorder driver values across paths
+pathwise_spearman_min_excluding_dependence_scenario,gtm_minimum,scenario name,variants.csv,the scenario carrying that value
 pathwise_spearman_max_dependence,0.300447,rank correlation,variants.csv,the highest pathwise_spearman_vs_base among the scenarios that do reorder driver values across paths
 pathwise_spearman_max,1.000000,rank correlation,variants.csv,the highest pathwise_spearman_vs_base over every scenario
 delta_por_feedback_off_terminal_cash_mean,0.000000,USD,variants.csv,terminal_cash_mean for por_feedback_off less terminal_cash_mean for por
@@ -938,6 +1014,24 @@ delta_por_no_schools_sign_agrees_mean_and_median,1.000000,boolean,variants.csv,"
 delta_por_no_schools_terminal_cash_abs,2240198.253829,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_no_schools_terminal_cash_mean
 delta_por_no_schools_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_no_schools less the same for por
 delta_por_no_schools_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
+delta_por_content_frozen_terminal_cash_mean,8371264.864313,USD,variants.csv,terminal_cash_mean for por_content_frozen less terminal_cash_mean for por
+delta_por_content_frozen_terminal_cash_p50,7392662.407048,USD,variants.csv,terminal_cash_p50 for por_content_frozen less terminal_cash_p50 for por
+delta_por_content_frozen_terminal_cash_p50_abs,7392662.407048,USD,variants.csv,the absolute value of that median difference
+delta_por_content_frozen_peak_funding_p80,-11247127.212504,USD,variants.csv,peak_funding_p80 for por_content_frozen less peak_funding_p80 for por
+delta_por_content_frozen_peak_funding_p80_abs,11247127.212504,USD,variants.csv,the absolute value of that difference
+delta_por_content_frozen_sign_agrees_mean_and_median,1.000000,boolean,variants.csv,"1 when the mean delta and the median delta for por_content_frozen have the same sign, 0 when they disagree"
+delta_por_content_frozen_terminal_cash_abs,8371264.864313,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_content_frozen_terminal_cash_mean
+delta_por_content_frozen_total_content_cost_mean,-7444792.289644,USD,variants.csv,total_content_cost_mean for por_content_frozen less the same for por
+delta_por_content_frozen_total_content_cost_abs,7444792.289644,USD,variants.csv,the absolute value of that difference
+delta_gtm_minimum_terminal_cash_mean,9743120.174455,USD,variants.csv,terminal_cash_mean for gtm_minimum less terminal_cash_mean for por
+delta_gtm_minimum_terminal_cash_p50,14923687.477126,USD,variants.csv,terminal_cash_p50 for gtm_minimum less terminal_cash_p50 for por
+delta_gtm_minimum_terminal_cash_p50_abs,14923687.477126,USD,variants.csv,the absolute value of that median difference
+delta_gtm_minimum_peak_funding_p80,-21582945.435723,USD,variants.csv,peak_funding_p80 for gtm_minimum less peak_funding_p80 for por
+delta_gtm_minimum_peak_funding_p80_abs,21582945.435723,USD,variants.csv,the absolute value of that difference
+delta_gtm_minimum_sign_agrees_mean_and_median,1.000000,boolean,variants.csv,"1 when the mean delta and the median delta for gtm_minimum have the same sign, 0 when they disagree"
+delta_gtm_minimum_terminal_cash_abs,9743120.174455,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_gtm_minimum_terminal_cash_mean
+delta_gtm_minimum_total_content_cost_mean,-12814519.774090,USD,variants.csv,total_content_cost_mean for gtm_minimum less the same for por
+delta_gtm_minimum_total_content_cost_abs,12814519.774090,USD,variants.csv,the absolute value of that difference
 delta_por_creator_fees_terminal_cash_mean,-1971141.403671,USD,variants.csv,terminal_cash_mean for por_creator_fees less terminal_cash_mean for por
 delta_por_creator_fees_terminal_cash_p50,-1382363.992982,USD,variants.csv,terminal_cash_p50 for por_creator_fees less terminal_cash_p50 for por
 delta_por_creator_fees_terminal_cash_p50_abs,1382363.992982,USD,variants.csv,the absolute value of that median difference
@@ -974,6 +1068,24 @@ delta_por_residual_sign_agrees_mean_and_median,1.000000,boolean,variants.csv,"1 
 delta_por_residual_terminal_cash_abs,19794067.934986,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_residual_terminal_cash_mean
 delta_por_residual_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_residual less the same for por
 delta_por_residual_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
+delta_por_reacq_low_terminal_cash_mean,-2239772.939201,USD,variants.csv,terminal_cash_mean for por_reacq_low less terminal_cash_mean for por
+delta_por_reacq_low_terminal_cash_p50,-90649.471390,USD,variants.csv,terminal_cash_p50 for por_reacq_low less terminal_cash_p50 for por
+delta_por_reacq_low_terminal_cash_p50_abs,90649.471390,USD,variants.csv,the absolute value of that median difference
+delta_por_reacq_low_peak_funding_p80,48466.135282,USD,variants.csv,peak_funding_p80 for por_reacq_low less peak_funding_p80 for por
+delta_por_reacq_low_peak_funding_p80_abs,48466.135282,USD,variants.csv,the absolute value of that difference
+delta_por_reacq_low_sign_agrees_mean_and_median,1.000000,boolean,variants.csv,"1 when the mean delta and the median delta for por_reacq_low have the same sign, 0 when they disagree"
+delta_por_reacq_low_terminal_cash_abs,2239772.939201,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_reacq_low_terminal_cash_mean
+delta_por_reacq_low_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_reacq_low less the same for por
+delta_por_reacq_low_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
+delta_por_reacq_high_terminal_cash_mean,3379744.277943,USD,variants.csv,terminal_cash_mean for por_reacq_high less terminal_cash_mean for por
+delta_por_reacq_high_terminal_cash_p50,49681.031647,USD,variants.csv,terminal_cash_p50 for por_reacq_high less terminal_cash_p50 for por
+delta_por_reacq_high_terminal_cash_p50_abs,49681.031647,USD,variants.csv,the absolute value of that median difference
+delta_por_reacq_high_peak_funding_p80,-47347.516234,USD,variants.csv,peak_funding_p80 for por_reacq_high less peak_funding_p80 for por
+delta_por_reacq_high_peak_funding_p80_abs,47347.516234,USD,variants.csv,the absolute value of that difference
+delta_por_reacq_high_sign_agrees_mean_and_median,1.000000,boolean,variants.csv,"1 when the mean delta and the median delta for por_reacq_high have the same sign, 0 when they disagree"
+delta_por_reacq_high_terminal_cash_abs,3379744.277943,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_reacq_high_terminal_cash_mean
+delta_por_reacq_high_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_reacq_high less the same for por
+delta_por_reacq_high_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
 delta_por_anchor_tutoring_terminal_cash_mean,11727966.313300,USD,variants.csv,terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por
 delta_por_anchor_tutoring_terminal_cash_p50,2850175.499472,USD,variants.csv,terminal_cash_p50 for por_anchor_tutoring less terminal_cash_p50 for por
 delta_por_anchor_tutoring_terminal_cash_p50_abs,2850175.499472,USD,variants.csv,the absolute value of that median difference
@@ -1410,6 +1522,790 @@ sobol_terminal_cash_rank_rank_of_step_counsel_initial_usd,77,rank,sobol.csv,the 
 sobol_terminal_cash_rank_rank_of_step_counsel_market_usd,78,rank,sobol.csv,the rank of step_counsel_market_usd by first-order index for target terminal_cash_rank
 sobol_terminal_cash_rank_rank_of_step_office_usd_head_yr,79,rank,sobol.csv,the rank of step_office_usd_head_yr by first-order index for target terminal_cash_rank
 sobol_terminal_cash_rank_rank_of_step_dpia_audit_usd_yr,80,rank,sobol.csv,the rank of step_dpia_audit_usd_yr by first-order index for target terminal_cash_rank
+sobol_gtm_peak_funding_requirement_content_drivers_in_top7,1,count,sobol.csv,how many of the top seven drivers for peak_funding_requirement on the gtm_minimum scope are content-cost drivers
+sobol_gtm_peak_funding_requirement_acq_drivers_in_top3,1,count,sobol.csv,how many of the top three drivers for peak_funding_requirement on the gtm_minimum scope are acquisition drivers
+sobol_gtm_peak_funding_requirement_rank1_driver,anchor_u,driver name,sobol.csv,driver at rank 1 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank1_value,0.210142,share of variance,sobol.csv,first-order index at rank 1 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank2_driver,eng_usd_yr,driver name,sobol.csv,driver at rank 2 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank2_value,0.153891,share of variance,sobol.csv,first-order index at rank 2 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank3_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 3 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank3_value,0.142023,share of variance,sobol.csv,first-order index at rank 3 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank4_driver,eng_ramp_mult,driver name,sobol.csv,driver at rank 4 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank4_value,0.043662,share of variance,sobol.csv,first-order index at rank 4 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank5_driver,cac_ref_spend_usd,driver name,sobol.csv,driver at rank 5 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank5_value,0.031000,share of variance,sobol.csv,first-order index at rank 5 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank6_driver,items_per_unit,driver name,sobol.csv,driver at rank 6 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank6_value,0.024470,share of variance,sobol.csv,first-order index at rank 6 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank7_driver,overhead_mult,driver name,sobol.csv,driver at rank 7 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank7_value,0.017641,share of variance,sobol.csv,first-order index at rank 7 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank8_driver,churn_base,driver name,sobol.csv,driver at rank 8 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank8_value,0.016217,share of variance,sobol.csv,first-order index at rank 8 for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_anchor_u,1,rank,sobol.csv,the rank of anchor_u for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_eng_usd_yr,2,rank,sobol.csv,the rank of eng_usd_yr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_cac_anchor_usd,3,rank,sobol.csv,the rank of cac_anchor_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_eng_ramp_mult,4,rank,sobol.csv,the rank of eng_ramp_mult for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_cac_ref_spend_usd,5,rank,sobol.csv,the rank of cac_ref_spend_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_items_per_unit,6,rank,sobol.csv,the rank of items_per_unit for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_overhead_mult,7,rank,sobol.csv,the rank of overhead_mult for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_churn_base,8,rank,sobol.csv,the rank of churn_base for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_writer_gbp_item,9,rank,sobol.csv,the rank of writer_gbp_item for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_minutes_per_item,10,rank,sobol.csv,the rank of minutes_per_item for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_price_uk_tut_gbp,11,rank,sobol.csv,the rank of price_uk_tut_gbp for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_sat_kappa,12,rank,sobol.csv,the rank of sat_kappa for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_uk_gbp_yr,13,rank,sobol.csv,the rank of uk_gbp_yr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_examiner_rate_gbp_hr,14,rank,sobol.csv,the rank of examiner_rate_gbp_hr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_acq_pct_of_rev,15,rank,sobol.csv,the rank of acq_pct_of_rev for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_acq_launch_ramp,16,rank,sobol.csv,the rank of acq_launch_ramp for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_churn_m1_extra,17,rank,sobol.csv,the rank of churn_m1_extra for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_price_drift_yr,18,rank,sobol.csv,the rank of price_drift_yr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_reval_frac_yr,19,rank,sobol.csv,the rank of reval_frac_yr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_price_uk_sw_gbp,20,rank,sobol.csv,the rank of price_uk_sw_gbp for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_sessions_per_hh_month,21,rank,sobol.csv,the rank of sessions_per_hh_month for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_creator_share,22,rank,sobol.csv,the rank of creator_share for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_pool_rel_row,23,rank,sobol.csv,the rank of pool_rel_row for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_creator_cac_rel,24,rank,sobol.csv,the rank of creator_cac_rel for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_overage_price_frac,25,rank,sobol.csv,the rank of overage_price_frac for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_school_win_rate,26,rank,sobol.csv,the rank of school_win_rate for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_pool_uk,27,rank,sobol.csv,the rank of pool_uk for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_step_entity_annual_usd,28,rank,sobol.csv,the rank of step_entity_annual_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_price_in_mtok_usd,29,rank,sobol.csv,the rank of price_in_mtok_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_step_uk_rep_usd_yr,30,rank,sobol.csv,the rank of step_uk_rep_usd_yr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_pay_pct,31,rank,sobol.csv,the rank of pay_pct for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_shock_sd,32,rank,sobol.csv,the rank of shock_sd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_school_rep_pipeline_yr,33,rank,sobol.csv,the rank of school_rep_pipeline_yr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_school_seats,34,rank,sobol.csv,the rank of school_seats for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_verif_cost_usd,35,rank,sobol.csv,the rank of verif_cost_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_market_reuse,36,rank,sobol.csv,the rank of market_reuse for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_step_office_usd_head_yr,37,rank,sobol.csv,the rank of step_office_usd_head_yr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_hosting_hh_usd,38,rank,sobol.csv,the rank of hosting_hh_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_us_sales_tax_eff,39,rank,sobol.csv,the rank of us_sales_tax_eff for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_alevel_exit_rate,40,rank,sobol.csv,the rank of alevel_exit_rate for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_acq_season_amp,41,rank,sobol.csv,the rank of acq_season_amp for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_units_per_content_head,42,rank,sobol.csv,the rank of units_per_content_head for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_price_rel_row,43,rank,sobol.csv,the rank of price_rel_row for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_tok_in_per_turn,44,rank,sobol.csv,the rank of tok_in_per_turn for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_exam_carryover,45,rank,sobol.csv,the rank of exam_carryover for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_step_entity_setup_usd,46,rank,sobol.csv,the rank of step_entity_setup_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_price_rel_us,47,rank,sobol.csv,the rank of price_rel_us for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_pay_fixed_usd,48,rank,sobol.csv,the rank of pay_fixed_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_step_cert_setup_usd,49,rank,sobol.csv,the rank of step_cert_setup_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_turns_per_session,50,rank,sobol.csv,the rank of turns_per_session for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_price_out_mtok_usd,51,rank,sobol.csv,the rank of price_out_mtok_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_cac_rel_row,52,rank,sobol.csv,the rank of cac_rel_row for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_alevel_continue,53,rank,sobol.csv,the rank of alevel_continue for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_price_rel_in,54,rank,sobol.csv,the rank of price_rel_in for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_support_min_hh_month,55,rank,sobol.csv,the rank of support_min_hh_month for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_infer_decline_yr,56,rank,sobol.csv,the rank of infer_decline_yr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_progress_continue,57,rank,sobol.csv,the rank of progress_continue for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_seg_mix_alevel,58,rank,sobol.csv,the rank of seg_mix_alevel for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_pool_rel_us,59,rank,sobol.csv,the rank of pool_rel_us for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_sessions_cv,60,rank,sobol.csv,the rank of sessions_cv for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_usage_season_amp,61,rank,sobol.csv,the rank of usage_season_amp for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_summer_lapse_pre,62,rank,sobol.csv,the rank of summer_lapse_pre for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_tok_out_per_turn,63,rank,sobol.csv,the rank of tok_out_per_turn for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_verify_overhead,64,rank,sobol.csv,the rank of verify_overhead for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_gate_fire_rate,65,rank,sobol.csv,the rank of gate_fire_rate for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_support_usd_hr,66,rank,sobol.csv,the rank of support_usd_hr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_board_reuse,67,rank,sobol.csv,the rank of board_reuse for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_cac_rel_us,68,rank,sobol.csv,the rank of cac_rel_us for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_cac_rel_in,69,rank,sobol.csv,the rank of cac_rel_in for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_pool_pressure_psi,70,rank,sobol.csv,the rank of pool_pressure_psi for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_pool_rel_in,71,rank,sobol.csv,the rank of pool_rel_in for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_seg_mix_exam,72,rank,sobol.csv,the rank of seg_mix_exam for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_shock_rho,73,rank,sobol.csv,the rank of shock_rho for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_school_gbp_seat_yr,74,rank,sobol.csv,the rank of school_gbp_seat_yr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_school_renewal,75,rank,sobol.csv,the rank of school_renewal for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_school_cycle_m,76,rank,sobol.csv,the rank of school_cycle_m for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_step_cert_annual_usd,77,rank,sobol.csv,the rank of step_cert_annual_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_step_counsel_initial_usd,78,rank,sobol.csv,the rank of step_counsel_initial_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_step_counsel_market_usd,79,rank,sobol.csv,the rank of step_counsel_market_usd for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_peak_funding_requirement_rank_of_step_dpia_audit_usd_yr,80,rank,sobol.csv,the rank of step_dpia_audit_usd_yr for target peak_funding_requirement on the gtm_minimum scope
+sobol_gtm_reaches_profitability_content_drivers_in_top7,0,count,sobol.csv,how many of the top seven drivers for reaches_profitability on the gtm_minimum scope are content-cost drivers
+sobol_gtm_reaches_profitability_acq_drivers_in_top3,2,count,sobol.csv,how many of the top three drivers for reaches_profitability on the gtm_minimum scope are acquisition drivers
+sobol_gtm_reaches_profitability_rank1_driver,anchor_u,driver name,sobol.csv,driver at rank 1 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank1_value,0.222451,share of variance,sobol.csv,first-order index at rank 1 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank2_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 2 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank2_value,0.213398,share of variance,sobol.csv,first-order index at rank 2 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank3_driver,cac_ref_spend_usd,driver name,sobol.csv,driver at rank 3 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank3_value,0.048445,share of variance,sobol.csv,first-order index at rank 3 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank4_driver,sat_kappa,driver name,sobol.csv,driver at rank 4 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank4_value,0.023014,share of variance,sobol.csv,first-order index at rank 4 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank5_driver,churn_base,driver name,sobol.csv,driver at rank 5 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank5_value,0.018827,share of variance,sobol.csv,first-order index at rank 5 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank6_driver,price_uk_tut_gbp,driver name,sobol.csv,driver at rank 6 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank6_value,0.009574,share of variance,sobol.csv,first-order index at rank 6 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank7_driver,eng_usd_yr,driver name,sobol.csv,driver at rank 7 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank7_value,0.003325,share of variance,sobol.csv,first-order index at rank 7 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank8_driver,acq_launch_ramp,driver name,sobol.csv,driver at rank 8 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank8_value,0.003244,share of variance,sobol.csv,first-order index at rank 8 for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_anchor_u,1,rank,sobol.csv,the rank of anchor_u for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_cac_anchor_usd,2,rank,sobol.csv,the rank of cac_anchor_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_cac_ref_spend_usd,3,rank,sobol.csv,the rank of cac_ref_spend_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_sat_kappa,4,rank,sobol.csv,the rank of sat_kappa for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_churn_base,5,rank,sobol.csv,the rank of churn_base for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_price_uk_tut_gbp,6,rank,sobol.csv,the rank of price_uk_tut_gbp for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_eng_usd_yr,7,rank,sobol.csv,the rank of eng_usd_yr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_acq_launch_ramp,8,rank,sobol.csv,the rank of acq_launch_ramp for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_creator_cac_rel,9,rank,sobol.csv,the rank of creator_cac_rel for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_churn_m1_extra,10,rank,sobol.csv,the rank of churn_m1_extra for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_overage_price_frac,11,rank,sobol.csv,the rank of overage_price_frac for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_creator_share,12,rank,sobol.csv,the rank of creator_share for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_price_uk_sw_gbp,13,rank,sobol.csv,the rank of price_uk_sw_gbp for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_sessions_per_hh_month,14,rank,sobol.csv,the rank of sessions_per_hh_month for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_price_drift_yr,15,rank,sobol.csv,the rank of price_drift_yr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_step_cert_setup_usd,16,rank,sobol.csv,the rank of step_cert_setup_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_pool_uk,17,rank,sobol.csv,the rank of pool_uk for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_eng_ramp_mult,18,rank,sobol.csv,the rank of eng_ramp_mult for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_school_seats,19,rank,sobol.csv,the rank of school_seats for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_pool_pressure_psi,20,rank,sobol.csv,the rank of pool_pressure_psi for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_pool_rel_row,21,rank,sobol.csv,the rank of pool_rel_row for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_turns_per_session,22,rank,sobol.csv,the rank of turns_per_session for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_price_in_mtok_usd,23,rank,sobol.csv,the rank of price_in_mtok_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_cac_rel_in,24,rank,sobol.csv,the rank of cac_rel_in for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_market_reuse,25,rank,sobol.csv,the rank of market_reuse for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_school_win_rate,26,rank,sobol.csv,the rank of school_win_rate for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_price_rel_row,27,rank,sobol.csv,the rank of price_rel_row for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_reval_frac_yr,28,rank,sobol.csv,the rank of reval_frac_yr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_shock_sd,29,rank,sobol.csv,the rank of shock_sd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_exam_carryover,30,rank,sobol.csv,the rank of exam_carryover for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_pay_pct,31,rank,sobol.csv,the rank of pay_pct for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_units_per_content_head,32,rank,sobol.csv,the rank of units_per_content_head for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_items_per_unit,33,rank,sobol.csv,the rank of items_per_unit for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_step_uk_rep_usd_yr,34,rank,sobol.csv,the rank of step_uk_rep_usd_yr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_pay_fixed_usd,35,rank,sobol.csv,the rank of pay_fixed_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_alevel_exit_rate,36,rank,sobol.csv,the rank of alevel_exit_rate for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_progress_continue,37,rank,sobol.csv,the rank of progress_continue for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_uk_gbp_yr,38,rank,sobol.csv,the rank of uk_gbp_yr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_step_counsel_initial_usd,39,rank,sobol.csv,the rank of step_counsel_initial_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_tok_in_per_turn,40,rank,sobol.csv,the rank of tok_in_per_turn for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_examiner_rate_gbp_hr,41,rank,sobol.csv,the rank of examiner_rate_gbp_hr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_verif_cost_usd,42,rank,sobol.csv,the rank of verif_cost_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_school_rep_pipeline_yr,43,rank,sobol.csv,the rank of school_rep_pipeline_yr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_price_rel_us,44,rank,sobol.csv,the rank of price_rel_us for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_hosting_hh_usd,45,rank,sobol.csv,the rank of hosting_hh_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_acq_pct_of_rev,46,rank,sobol.csv,the rank of acq_pct_of_rev for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_support_min_hh_month,47,rank,sobol.csv,the rank of support_min_hh_month for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_price_out_mtok_usd,48,rank,sobol.csv,the rank of price_out_mtok_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_cac_rel_row,49,rank,sobol.csv,the rank of cac_rel_row for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_school_renewal,50,rank,sobol.csv,the rank of school_renewal for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_price_rel_in,51,rank,sobol.csv,the rank of price_rel_in for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_sessions_cv,52,rank,sobol.csv,the rank of sessions_cv for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_usage_season_amp,53,rank,sobol.csv,the rank of usage_season_amp for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_summer_lapse_pre,54,rank,sobol.csv,the rank of summer_lapse_pre for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_alevel_continue,55,rank,sobol.csv,the rank of alevel_continue for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_tok_out_per_turn,56,rank,sobol.csv,the rank of tok_out_per_turn for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_verify_overhead,57,rank,sobol.csv,the rank of verify_overhead for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_gate_fire_rate,58,rank,sobol.csv,the rank of gate_fire_rate for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_infer_decline_yr,59,rank,sobol.csv,the rank of infer_decline_yr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_support_usd_hr,60,rank,sobol.csv,the rank of support_usd_hr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_minutes_per_item,61,rank,sobol.csv,the rank of minutes_per_item for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_writer_gbp_item,62,rank,sobol.csv,the rank of writer_gbp_item for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_board_reuse,63,rank,sobol.csv,the rank of board_reuse for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_overhead_mult,64,rank,sobol.csv,the rank of overhead_mult for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_cac_rel_us,65,rank,sobol.csv,the rank of cac_rel_us for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_pool_rel_us,66,rank,sobol.csv,the rank of pool_rel_us for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_pool_rel_in,67,rank,sobol.csv,the rank of pool_rel_in for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_acq_season_amp,68,rank,sobol.csv,the rank of acq_season_amp for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_seg_mix_exam,69,rank,sobol.csv,the rank of seg_mix_exam for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_seg_mix_alevel,70,rank,sobol.csv,the rank of seg_mix_alevel for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_shock_rho,71,rank,sobol.csv,the rank of shock_rho for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_school_gbp_seat_yr,72,rank,sobol.csv,the rank of school_gbp_seat_yr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_school_cycle_m,73,rank,sobol.csv,the rank of school_cycle_m for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_us_sales_tax_eff,74,rank,sobol.csv,the rank of us_sales_tax_eff for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_step_entity_setup_usd,75,rank,sobol.csv,the rank of step_entity_setup_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_step_entity_annual_usd,76,rank,sobol.csv,the rank of step_entity_annual_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_step_cert_annual_usd,77,rank,sobol.csv,the rank of step_cert_annual_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_step_counsel_market_usd,78,rank,sobol.csv,the rank of step_counsel_market_usd for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_step_office_usd_head_yr,79,rank,sobol.csv,the rank of step_office_usd_head_yr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_reaches_profitability_rank_of_step_dpia_audit_usd_yr,80,rank,sobol.csv,the rank of step_dpia_audit_usd_yr for target reaches_profitability on the gtm_minimum scope
+sobol_gtm_terminal_cash_content_drivers_in_top7,0,count,sobol.csv,how many of the top seven drivers for terminal_cash on the gtm_minimum scope are content-cost drivers
+sobol_gtm_terminal_cash_acq_drivers_in_top3,2,count,sobol.csv,how many of the top three drivers for terminal_cash on the gtm_minimum scope are acquisition drivers
+sobol_gtm_terminal_cash_rank1_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 1 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank1_value,0.075631,share of variance,sobol.csv,first-order index at rank 1 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank2_driver,anchor_u,driver name,sobol.csv,driver at rank 2 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank2_value,0.053686,share of variance,sobol.csv,first-order index at rank 2 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank3_driver,sat_kappa,driver name,sobol.csv,driver at rank 3 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank3_value,0.029476,share of variance,sobol.csv,first-order index at rank 3 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank4_driver,pool_uk,driver name,sobol.csv,driver at rank 4 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank4_value,0.014863,share of variance,sobol.csv,first-order index at rank 4 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank5_driver,price_uk_tut_gbp,driver name,sobol.csv,driver at rank 5 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank5_value,0.011854,share of variance,sobol.csv,first-order index at rank 5 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank6_driver,churn_base,driver name,sobol.csv,driver at rank 6 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank6_value,0.011851,share of variance,sobol.csv,first-order index at rank 6 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank7_driver,cac_ref_spend_usd,driver name,sobol.csv,driver at rank 7 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank7_value,0.010238,share of variance,sobol.csv,first-order index at rank 7 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank8_driver,eng_usd_yr,driver name,sobol.csv,driver at rank 8 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank8_value,0.002755,share of variance,sobol.csv,first-order index at rank 8 for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_cac_anchor_usd,1,rank,sobol.csv,the rank of cac_anchor_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_anchor_u,2,rank,sobol.csv,the rank of anchor_u for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_sat_kappa,3,rank,sobol.csv,the rank of sat_kappa for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_pool_uk,4,rank,sobol.csv,the rank of pool_uk for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_price_uk_tut_gbp,5,rank,sobol.csv,the rank of price_uk_tut_gbp for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_churn_base,6,rank,sobol.csv,the rank of churn_base for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_cac_ref_spend_usd,7,rank,sobol.csv,the rank of cac_ref_spend_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_eng_usd_yr,8,rank,sobol.csv,the rank of eng_usd_yr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_sessions_per_hh_month,9,rank,sobol.csv,the rank of sessions_per_hh_month for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_acq_pct_of_rev,10,rank,sobol.csv,the rank of acq_pct_of_rev for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_churn_m1_extra,11,rank,sobol.csv,the rank of churn_m1_extra for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_eng_ramp_mult,12,rank,sobol.csv,the rank of eng_ramp_mult for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_pool_pressure_psi,13,rank,sobol.csv,the rank of pool_pressure_psi for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_creator_share,14,rank,sobol.csv,the rank of creator_share for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_price_drift_yr,15,rank,sobol.csv,the rank of price_drift_yr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_uk_gbp_yr,16,rank,sobol.csv,the rank of uk_gbp_yr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_price_rel_row,17,rank,sobol.csv,the rank of price_rel_row for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_pool_rel_row,18,rank,sobol.csv,the rank of pool_rel_row for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_pay_fixed_usd,19,rank,sobol.csv,the rank of pay_fixed_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_sessions_cv,20,rank,sobol.csv,the rank of sessions_cv for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_step_uk_rep_usd_yr,21,rank,sobol.csv,the rank of step_uk_rep_usd_yr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_step_counsel_initial_usd,22,rank,sobol.csv,the rank of step_counsel_initial_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_pool_rel_in,23,rank,sobol.csv,the rank of pool_rel_in for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_overage_price_frac,24,rank,sobol.csv,the rank of overage_price_frac for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_school_renewal,25,rank,sobol.csv,the rank of school_renewal for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_turns_per_session,26,rank,sobol.csv,the rank of turns_per_session for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_school_rep_pipeline_yr,27,rank,sobol.csv,the rank of school_rep_pipeline_yr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_price_in_mtok_usd,28,rank,sobol.csv,the rank of price_in_mtok_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_minutes_per_item,29,rank,sobol.csv,the rank of minutes_per_item for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_shock_sd,30,rank,sobol.csv,the rank of shock_sd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_acq_launch_ramp,31,rank,sobol.csv,the rank of acq_launch_ramp for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_writer_gbp_item,32,rank,sobol.csv,the rank of writer_gbp_item for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_school_win_rate,33,rank,sobol.csv,the rank of school_win_rate for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_support_min_hh_month,34,rank,sobol.csv,the rank of support_min_hh_month for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_cac_rel_in,35,rank,sobol.csv,the rank of cac_rel_in for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_market_reuse,36,rank,sobol.csv,the rank of market_reuse for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_step_entity_setup_usd,37,rank,sobol.csv,the rank of step_entity_setup_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_alevel_exit_rate,38,rank,sobol.csv,the rank of alevel_exit_rate for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_reval_frac_yr,39,rank,sobol.csv,the rank of reval_frac_yr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_gate_fire_rate,40,rank,sobol.csv,the rank of gate_fire_rate for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_creator_cac_rel,41,rank,sobol.csv,the rank of creator_cac_rel for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_step_dpia_audit_usd_yr,42,rank,sobol.csv,the rank of step_dpia_audit_usd_yr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_summer_lapse_pre,43,rank,sobol.csv,the rank of summer_lapse_pre for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_units_per_content_head,44,rank,sobol.csv,the rank of units_per_content_head for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_price_uk_sw_gbp,45,rank,sobol.csv,the rank of price_uk_sw_gbp for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_price_rel_us,46,rank,sobol.csv,the rank of price_rel_us for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_price_rel_in,47,rank,sobol.csv,the rank of price_rel_in for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_usage_season_amp,48,rank,sobol.csv,the rank of usage_season_amp for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_progress_continue,49,rank,sobol.csv,the rank of progress_continue for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_alevel_continue,50,rank,sobol.csv,the rank of alevel_continue for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_exam_carryover,51,rank,sobol.csv,the rank of exam_carryover for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_tok_in_per_turn,52,rank,sobol.csv,the rank of tok_in_per_turn for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_tok_out_per_turn,53,rank,sobol.csv,the rank of tok_out_per_turn for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_price_out_mtok_usd,54,rank,sobol.csv,the rank of price_out_mtok_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_verify_overhead,55,rank,sobol.csv,the rank of verify_overhead for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_infer_decline_yr,56,rank,sobol.csv,the rank of infer_decline_yr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_support_usd_hr,57,rank,sobol.csv,the rank of support_usd_hr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_pay_pct,58,rank,sobol.csv,the rank of pay_pct for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_hosting_hh_usd,59,rank,sobol.csv,the rank of hosting_hh_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_verif_cost_usd,60,rank,sobol.csv,the rank of verif_cost_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_examiner_rate_gbp_hr,61,rank,sobol.csv,the rank of examiner_rate_gbp_hr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_items_per_unit,62,rank,sobol.csv,the rank of items_per_unit for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_board_reuse,63,rank,sobol.csv,the rank of board_reuse for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_overhead_mult,64,rank,sobol.csv,the rank of overhead_mult for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_cac_rel_us,65,rank,sobol.csv,the rank of cac_rel_us for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_cac_rel_row,66,rank,sobol.csv,the rank of cac_rel_row for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_pool_rel_us,67,rank,sobol.csv,the rank of pool_rel_us for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_acq_season_amp,68,rank,sobol.csv,the rank of acq_season_amp for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_seg_mix_exam,69,rank,sobol.csv,the rank of seg_mix_exam for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_seg_mix_alevel,70,rank,sobol.csv,the rank of seg_mix_alevel for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_shock_rho,71,rank,sobol.csv,the rank of shock_rho for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_school_seats,72,rank,sobol.csv,the rank of school_seats for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_school_gbp_seat_yr,73,rank,sobol.csv,the rank of school_gbp_seat_yr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_school_cycle_m,74,rank,sobol.csv,the rank of school_cycle_m for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_us_sales_tax_eff,75,rank,sobol.csv,the rank of us_sales_tax_eff for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_step_entity_annual_usd,76,rank,sobol.csv,the rank of step_entity_annual_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_step_cert_setup_usd,77,rank,sobol.csv,the rank of step_cert_setup_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_step_cert_annual_usd,78,rank,sobol.csv,the rank of step_cert_annual_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_step_counsel_market_usd,79,rank,sobol.csv,the rank of step_counsel_market_usd for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_of_step_office_usd_head_yr,80,rank,sobol.csv,the rank of step_office_usd_head_yr for target terminal_cash on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_content_drivers_in_top7,1,count,sobol.csv,how many of the top seven drivers for terminal_cash_rank on the gtm_minimum scope are content-cost drivers
+sobol_gtm_terminal_cash_rank_acq_drivers_in_top3,1,count,sobol.csv,how many of the top three drivers for terminal_cash_rank on the gtm_minimum scope are acquisition drivers
+sobol_gtm_terminal_cash_rank_rank1_driver,anchor_u,driver name,sobol.csv,driver at rank 1 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank1_value,0.189916,share of variance,sobol.csv,first-order index at rank 1 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank2_driver,eng_usd_yr,driver name,sobol.csv,driver at rank 2 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank2_value,0.188585,share of variance,sobol.csv,first-order index at rank 2 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank3_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 3 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank3_value,0.123703,share of variance,sobol.csv,first-order index at rank 3 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank4_driver,eng_ramp_mult,driver name,sobol.csv,driver at rank 4 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank4_value,0.049029,share of variance,sobol.csv,first-order index at rank 4 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank5_driver,cac_ref_spend_usd,driver name,sobol.csv,driver at rank 5 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank5_value,0.027074,share of variance,sobol.csv,first-order index at rank 5 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank6_driver,items_per_unit,driver name,sobol.csv,driver at rank 6 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank6_value,0.021179,share of variance,sobol.csv,first-order index at rank 6 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank7_driver,overhead_mult,driver name,sobol.csv,driver at rank 7 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank7_value,0.019843,share of variance,sobol.csv,first-order index at rank 7 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank8_driver,churn_base,driver name,sobol.csv,driver at rank 8 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank8_value,0.016773,share of variance,sobol.csv,first-order index at rank 8 for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_anchor_u,1,rank,sobol.csv,the rank of anchor_u for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_eng_usd_yr,2,rank,sobol.csv,the rank of eng_usd_yr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_cac_anchor_usd,3,rank,sobol.csv,the rank of cac_anchor_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_eng_ramp_mult,4,rank,sobol.csv,the rank of eng_ramp_mult for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_cac_ref_spend_usd,5,rank,sobol.csv,the rank of cac_ref_spend_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_items_per_unit,6,rank,sobol.csv,the rank of items_per_unit for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_overhead_mult,7,rank,sobol.csv,the rank of overhead_mult for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_churn_base,8,rank,sobol.csv,the rank of churn_base for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_minutes_per_item,9,rank,sobol.csv,the rank of minutes_per_item for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_writer_gbp_item,10,rank,sobol.csv,the rank of writer_gbp_item for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_sat_kappa,11,rank,sobol.csv,the rank of sat_kappa for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_uk_gbp_yr,12,rank,sobol.csv,the rank of uk_gbp_yr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_price_uk_tut_gbp,13,rank,sobol.csv,the rank of price_uk_tut_gbp for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_examiner_rate_gbp_hr,14,rank,sobol.csv,the rank of examiner_rate_gbp_hr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_acq_pct_of_rev,15,rank,sobol.csv,the rank of acq_pct_of_rev for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_acq_launch_ramp,16,rank,sobol.csv,the rank of acq_launch_ramp for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_price_drift_yr,17,rank,sobol.csv,the rank of price_drift_yr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_churn_m1_extra,18,rank,sobol.csv,the rank of churn_m1_extra for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_reval_frac_yr,19,rank,sobol.csv,the rank of reval_frac_yr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_sessions_per_hh_month,20,rank,sobol.csv,the rank of sessions_per_hh_month for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_price_uk_sw_gbp,21,rank,sobol.csv,the rank of price_uk_sw_gbp for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_pool_rel_row,22,rank,sobol.csv,the rank of pool_rel_row for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_creator_share,23,rank,sobol.csv,the rank of creator_share for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_step_entity_annual_usd,24,rank,sobol.csv,the rank of step_entity_annual_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_pool_uk,25,rank,sobol.csv,the rank of pool_uk for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_school_win_rate,26,rank,sobol.csv,the rank of school_win_rate for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_creator_cac_rel,27,rank,sobol.csv,the rank of creator_cac_rel for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_step_uk_rep_usd_yr,28,rank,sobol.csv,the rank of step_uk_rep_usd_yr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_shock_sd,29,rank,sobol.csv,the rank of shock_sd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_price_in_mtok_usd,30,rank,sobol.csv,the rank of price_in_mtok_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_overage_price_frac,31,rank,sobol.csv,the rank of overage_price_frac for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_step_office_usd_head_yr,32,rank,sobol.csv,the rank of step_office_usd_head_yr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_school_rep_pipeline_yr,33,rank,sobol.csv,the rank of school_rep_pipeline_yr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_pay_pct,34,rank,sobol.csv,the rank of pay_pct for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_verif_cost_usd,35,rank,sobol.csv,the rank of verif_cost_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_price_rel_row,36,rank,sobol.csv,the rank of price_rel_row for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_step_entity_setup_usd,37,rank,sobol.csv,the rank of step_entity_setup_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_alevel_exit_rate,38,rank,sobol.csv,the rank of alevel_exit_rate for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_school_seats,39,rank,sobol.csv,the rank of school_seats for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_market_reuse,40,rank,sobol.csv,the rank of market_reuse for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_units_per_content_head,41,rank,sobol.csv,the rank of units_per_content_head for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_exam_carryover,42,rank,sobol.csv,the rank of exam_carryover for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_acq_season_amp,43,rank,sobol.csv,the rank of acq_season_amp for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_us_sales_tax_eff,44,rank,sobol.csv,the rank of us_sales_tax_eff for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_price_rel_in,45,rank,sobol.csv,the rank of price_rel_in for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_tok_in_per_turn,46,rank,sobol.csv,the rank of tok_in_per_turn for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_pay_fixed_usd,47,rank,sobol.csv,the rank of pay_fixed_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_hosting_hh_usd,48,rank,sobol.csv,the rank of hosting_hh_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_cac_rel_row,49,rank,sobol.csv,the rank of cac_rel_row for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_price_rel_us,50,rank,sobol.csv,the rank of price_rel_us for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_infer_decline_yr,51,rank,sobol.csv,the rank of infer_decline_yr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_school_renewal,52,rank,sobol.csv,the rank of school_renewal for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_step_cert_setup_usd,53,rank,sobol.csv,the rank of step_cert_setup_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_seg_mix_alevel,54,rank,sobol.csv,the rank of seg_mix_alevel for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_alevel_continue,55,rank,sobol.csv,the rank of alevel_continue for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_turns_per_session,56,rank,sobol.csv,the rank of turns_per_session for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_sessions_cv,57,rank,sobol.csv,the rank of sessions_cv for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_usage_season_amp,58,rank,sobol.csv,the rank of usage_season_amp for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_summer_lapse_pre,59,rank,sobol.csv,the rank of summer_lapse_pre for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_progress_continue,60,rank,sobol.csv,the rank of progress_continue for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_tok_out_per_turn,61,rank,sobol.csv,the rank of tok_out_per_turn for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_price_out_mtok_usd,62,rank,sobol.csv,the rank of price_out_mtok_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_verify_overhead,63,rank,sobol.csv,the rank of verify_overhead for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_gate_fire_rate,64,rank,sobol.csv,the rank of gate_fire_rate for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_support_min_hh_month,65,rank,sobol.csv,the rank of support_min_hh_month for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_support_usd_hr,66,rank,sobol.csv,the rank of support_usd_hr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_board_reuse,67,rank,sobol.csv,the rank of board_reuse for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_cac_rel_us,68,rank,sobol.csv,the rank of cac_rel_us for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_cac_rel_in,69,rank,sobol.csv,the rank of cac_rel_in for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_pool_pressure_psi,70,rank,sobol.csv,the rank of pool_pressure_psi for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_pool_rel_us,71,rank,sobol.csv,the rank of pool_rel_us for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_pool_rel_in,72,rank,sobol.csv,the rank of pool_rel_in for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_seg_mix_exam,73,rank,sobol.csv,the rank of seg_mix_exam for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_shock_rho,74,rank,sobol.csv,the rank of shock_rho for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_school_gbp_seat_yr,75,rank,sobol.csv,the rank of school_gbp_seat_yr for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_school_cycle_m,76,rank,sobol.csv,the rank of school_cycle_m for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_step_cert_annual_usd,77,rank,sobol.csv,the rank of step_cert_annual_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_step_counsel_initial_usd,78,rank,sobol.csv,the rank of step_counsel_initial_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_step_counsel_market_usd,79,rank,sobol.csv,the rank of step_counsel_market_usd for target terminal_cash_rank on the gtm_minimum scope
+sobol_gtm_terminal_cash_rank_rank_of_step_dpia_audit_usd_yr,80,rank,sobol.csv,the rank of step_dpia_audit_usd_yr for target terminal_cash_rank on the gtm_minimum scope
+sobol_onshore_peak_funding_requirement_content_drivers_in_top7,4,count,sobol.csv,how many of the top seven drivers for peak_funding_requirement on the onshore_all scope are content-cost drivers
+sobol_onshore_peak_funding_requirement_acq_drivers_in_top3,1,count,sobol.csv,how many of the top three drivers for peak_funding_requirement on the onshore_all scope are acquisition drivers
+sobol_onshore_peak_funding_requirement_rank1_driver,items_per_unit,driver name,sobol.csv,driver at rank 1 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank1_value,0.135517,share of variance,sobol.csv,first-order index at rank 1 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank2_driver,anchor_u,driver name,sobol.csv,driver at rank 2 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank2_value,0.105720,share of variance,sobol.csv,first-order index at rank 2 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank3_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 3 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank3_value,0.084724,share of variance,sobol.csv,first-order index at rank 3 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank4_driver,writer_gbp_item,driver name,sobol.csv,driver at rank 4 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank4_value,0.068981,share of variance,sobol.csv,first-order index at rank 4 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank5_driver,minutes_per_item,driver name,sobol.csv,driver at rank 5 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank5_value,0.065919,share of variance,sobol.csv,first-order index at rank 5 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank6_driver,board_reuse,driver name,sobol.csv,driver at rank 6 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank6_value,0.054730,share of variance,sobol.csv,first-order index at rank 6 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank7_driver,uk_gbp_yr,driver name,sobol.csv,driver at rank 7 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank7_value,0.053324,share of variance,sobol.csv,first-order index at rank 7 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank8_driver,examiner_rate_gbp_hr,driver name,sobol.csv,driver at rank 8 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank8_value,0.035070,share of variance,sobol.csv,first-order index at rank 8 for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_items_per_unit,1,rank,sobol.csv,the rank of items_per_unit for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_anchor_u,2,rank,sobol.csv,the rank of anchor_u for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_cac_anchor_usd,3,rank,sobol.csv,the rank of cac_anchor_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_writer_gbp_item,4,rank,sobol.csv,the rank of writer_gbp_item for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_minutes_per_item,5,rank,sobol.csv,the rank of minutes_per_item for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_board_reuse,6,rank,sobol.csv,the rank of board_reuse for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_uk_gbp_yr,7,rank,sobol.csv,the rank of uk_gbp_yr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_examiner_rate_gbp_hr,8,rank,sobol.csv,the rank of examiner_rate_gbp_hr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_eng_ramp_mult,9,rank,sobol.csv,the rank of eng_ramp_mult for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_cac_ref_spend_usd,10,rank,sobol.csv,the rank of cac_ref_spend_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_market_reuse,11,rank,sobol.csv,the rank of market_reuse for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_units_per_content_head,12,rank,sobol.csv,the rank of units_per_content_head for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_reval_frac_yr,13,rank,sobol.csv,the rank of reval_frac_yr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_overhead_mult,14,rank,sobol.csv,the rank of overhead_mult for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_price_uk_tut_gbp,15,rank,sobol.csv,the rank of price_uk_tut_gbp for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_sat_kappa,16,rank,sobol.csv,the rank of sat_kappa for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_eng_usd_yr,17,rank,sobol.csv,the rank of eng_usd_yr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_churn_base,18,rank,sobol.csv,the rank of churn_base for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_creator_share,19,rank,sobol.csv,the rank of creator_share for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_churn_m1_extra,20,rank,sobol.csv,the rank of churn_m1_extra for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_acq_pct_of_rev,21,rank,sobol.csv,the rank of acq_pct_of_rev for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_price_drift_yr,22,rank,sobol.csv,the rank of price_drift_yr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_sessions_per_hh_month,23,rank,sobol.csv,the rank of sessions_per_hh_month for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_acq_season_amp,24,rank,sobol.csv,the rank of acq_season_amp for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_step_uk_rep_usd_yr,25,rank,sobol.csv,the rank of step_uk_rep_usd_yr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_pool_rel_row,26,rank,sobol.csv,the rank of pool_rel_row for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_price_rel_us,27,rank,sobol.csv,the rank of price_rel_us for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_price_in_mtok_usd,28,rank,sobol.csv,the rank of price_in_mtok_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_hosting_hh_usd,29,rank,sobol.csv,the rank of hosting_hh_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_school_win_rate,30,rank,sobol.csv,the rank of school_win_rate for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_pool_uk,31,rank,sobol.csv,the rank of pool_uk for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_school_seats,32,rank,sobol.csv,the rank of school_seats for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_pay_pct,33,rank,sobol.csv,the rank of pay_pct for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_alevel_exit_rate,34,rank,sobol.csv,the rank of alevel_exit_rate for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_shock_sd,35,rank,sobol.csv,the rank of shock_sd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_cac_rel_us,36,rank,sobol.csv,the rank of cac_rel_us for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_step_cert_setup_usd,37,rank,sobol.csv,the rank of step_cert_setup_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_price_out_mtok_usd,38,rank,sobol.csv,the rank of price_out_mtok_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_us_sales_tax_eff,39,rank,sobol.csv,the rank of us_sales_tax_eff for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_progress_continue,40,rank,sobol.csv,the rank of progress_continue for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_price_uk_sw_gbp,41,rank,sobol.csv,the rank of price_uk_sw_gbp for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_summer_lapse_pre,42,rank,sobol.csv,the rank of summer_lapse_pre for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_cac_rel_row,43,rank,sobol.csv,the rank of cac_rel_row for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_pool_rel_in,44,rank,sobol.csv,the rank of pool_rel_in for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_cac_rel_in,45,rank,sobol.csv,the rank of cac_rel_in for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_school_cycle_m,46,rank,sobol.csv,the rank of school_cycle_m for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_overage_price_frac,47,rank,sobol.csv,the rank of overage_price_frac for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_step_counsel_market_usd,48,rank,sobol.csv,the rank of step_counsel_market_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_price_rel_row,49,rank,sobol.csv,the rank of price_rel_row for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_verif_cost_usd,50,rank,sobol.csv,the rank of verif_cost_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_acq_launch_ramp,51,rank,sobol.csv,the rank of acq_launch_ramp for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_school_renewal,52,rank,sobol.csv,the rank of school_renewal for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_seg_mix_exam,53,rank,sobol.csv,the rank of seg_mix_exam for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_step_counsel_initial_usd,54,rank,sobol.csv,the rank of step_counsel_initial_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_turns_per_session,55,rank,sobol.csv,the rank of turns_per_session for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_alevel_continue,56,rank,sobol.csv,the rank of alevel_continue for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_support_min_hh_month,57,rank,sobol.csv,the rank of support_min_hh_month for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_price_rel_in,58,rank,sobol.csv,the rank of price_rel_in for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_sessions_cv,59,rank,sobol.csv,the rank of sessions_cv for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_usage_season_amp,60,rank,sobol.csv,the rank of usage_season_amp for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_exam_carryover,61,rank,sobol.csv,the rank of exam_carryover for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_tok_in_per_turn,62,rank,sobol.csv,the rank of tok_in_per_turn for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_tok_out_per_turn,63,rank,sobol.csv,the rank of tok_out_per_turn for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_verify_overhead,64,rank,sobol.csv,the rank of verify_overhead for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_gate_fire_rate,65,rank,sobol.csv,the rank of gate_fire_rate for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_infer_decline_yr,66,rank,sobol.csv,the rank of infer_decline_yr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_support_usd_hr,67,rank,sobol.csv,the rank of support_usd_hr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_pay_fixed_usd,68,rank,sobol.csv,the rank of pay_fixed_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_pool_pressure_psi,69,rank,sobol.csv,the rank of pool_pressure_psi for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_creator_cac_rel,70,rank,sobol.csv,the rank of creator_cac_rel for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_pool_rel_us,71,rank,sobol.csv,the rank of pool_rel_us for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_seg_mix_alevel,72,rank,sobol.csv,the rank of seg_mix_alevel for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_shock_rho,73,rank,sobol.csv,the rank of shock_rho for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_school_gbp_seat_yr,74,rank,sobol.csv,the rank of school_gbp_seat_yr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_school_rep_pipeline_yr,75,rank,sobol.csv,the rank of school_rep_pipeline_yr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_step_entity_setup_usd,76,rank,sobol.csv,the rank of step_entity_setup_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_step_entity_annual_usd,77,rank,sobol.csv,the rank of step_entity_annual_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_step_cert_annual_usd,78,rank,sobol.csv,the rank of step_cert_annual_usd for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_step_office_usd_head_yr,79,rank,sobol.csv,the rank of step_office_usd_head_yr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_peak_funding_requirement_rank_of_step_dpia_audit_usd_yr,80,rank,sobol.csv,the rank of step_dpia_audit_usd_yr for target peak_funding_requirement on the onshore_all scope
+sobol_onshore_reaches_profitability_content_drivers_in_top7,0,count,sobol.csv,how many of the top seven drivers for reaches_profitability on the onshore_all scope are content-cost drivers
+sobol_onshore_reaches_profitability_acq_drivers_in_top3,2,count,sobol.csv,how many of the top three drivers for reaches_profitability on the onshore_all scope are acquisition drivers
+sobol_onshore_reaches_profitability_rank1_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 1 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank1_value,0.168172,share of variance,sobol.csv,first-order index at rank 1 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank2_driver,anchor_u,driver name,sobol.csv,driver at rank 2 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank2_value,0.131315,share of variance,sobol.csv,first-order index at rank 2 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank3_driver,cac_ref_spend_usd,driver name,sobol.csv,driver at rank 3 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank3_value,0.030528,share of variance,sobol.csv,first-order index at rank 3 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank4_driver,sat_kappa,driver name,sobol.csv,driver at rank 4 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank4_value,0.022649,share of variance,sobol.csv,first-order index at rank 4 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank5_driver,price_uk_tut_gbp,driver name,sobol.csv,driver at rank 5 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank5_value,0.015502,share of variance,sobol.csv,first-order index at rank 5 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank6_driver,churn_base,driver name,sobol.csv,driver at rank 6 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank6_value,0.009963,share of variance,sobol.csv,first-order index at rank 6 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank7_driver,sessions_per_hh_month,driver name,sobol.csv,driver at rank 7 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank7_value,0.003686,share of variance,sobol.csv,first-order index at rank 7 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank8_driver,creator_share,driver name,sobol.csv,driver at rank 8 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank8_value,0.003619,share of variance,sobol.csv,first-order index at rank 8 for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_cac_anchor_usd,1,rank,sobol.csv,the rank of cac_anchor_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_anchor_u,2,rank,sobol.csv,the rank of anchor_u for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_cac_ref_spend_usd,3,rank,sobol.csv,the rank of cac_ref_spend_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_sat_kappa,4,rank,sobol.csv,the rank of sat_kappa for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_price_uk_tut_gbp,5,rank,sobol.csv,the rank of price_uk_tut_gbp for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_churn_base,6,rank,sobol.csv,the rank of churn_base for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_sessions_per_hh_month,7,rank,sobol.csv,the rank of sessions_per_hh_month for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_creator_share,8,rank,sobol.csv,the rank of creator_share for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_cac_rel_us,9,rank,sobol.csv,the rank of cac_rel_us for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_churn_m1_extra,10,rank,sobol.csv,the rank of churn_m1_extra for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_price_drift_yr,11,rank,sobol.csv,the rank of price_drift_yr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_acq_pct_of_rev,12,rank,sobol.csv,the rank of acq_pct_of_rev for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_price_rel_us,13,rank,sobol.csv,the rank of price_rel_us for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_uk_gbp_yr,14,rank,sobol.csv,the rank of uk_gbp_yr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_pool_uk,15,rank,sobol.csv,the rank of pool_uk for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_overage_price_frac,16,rank,sobol.csv,the rank of overage_price_frac for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_creator_cac_rel,17,rank,sobol.csv,the rank of creator_cac_rel for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_eng_ramp_mult,18,rank,sobol.csv,the rank of eng_ramp_mult for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_market_reuse,19,rank,sobol.csv,the rank of market_reuse for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_progress_continue,20,rank,sobol.csv,the rank of progress_continue for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_school_win_rate,21,rank,sobol.csv,the rank of school_win_rate for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_price_in_mtok_usd,22,rank,sobol.csv,the rank of price_in_mtok_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_school_seats,23,rank,sobol.csv,the rank of school_seats for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_reval_frac_yr,24,rank,sobol.csv,the rank of reval_frac_yr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_items_per_unit,25,rank,sobol.csv,the rank of items_per_unit for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_pool_rel_row,26,rank,sobol.csv,the rank of pool_rel_row for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_minutes_per_item,27,rank,sobol.csv,the rank of minutes_per_item for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_step_cert_setup_usd,28,rank,sobol.csv,the rank of step_cert_setup_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_step_uk_rep_usd_yr,29,rank,sobol.csv,the rank of step_uk_rep_usd_yr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_price_rel_row,30,rank,sobol.csv,the rank of price_rel_row for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_pay_pct,31,rank,sobol.csv,the rank of pay_pct for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_cac_rel_in,32,rank,sobol.csv,the rank of cac_rel_in for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_units_per_content_head,33,rank,sobol.csv,the rank of units_per_content_head for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_pay_fixed_usd,34,rank,sobol.csv,the rank of pay_fixed_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_writer_gbp_item,35,rank,sobol.csv,the rank of writer_gbp_item for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_step_dpia_audit_usd_yr,36,rank,sobol.csv,the rank of step_dpia_audit_usd_yr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_alevel_exit_rate,37,rank,sobol.csv,the rank of alevel_exit_rate for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_step_counsel_market_usd,38,rank,sobol.csv,the rank of step_counsel_market_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_alevel_continue,39,rank,sobol.csv,the rank of alevel_continue for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_step_entity_annual_usd,40,rank,sobol.csv,the rank of step_entity_annual_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_pool_rel_us,41,rank,sobol.csv,the rank of pool_rel_us for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_school_gbp_seat_yr,42,rank,sobol.csv,the rank of school_gbp_seat_yr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_seg_mix_alevel,43,rank,sobol.csv,the rank of seg_mix_alevel for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_cac_rel_row,44,rank,sobol.csv,the rank of cac_rel_row for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_price_out_mtok_usd,45,rank,sobol.csv,the rank of price_out_mtok_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_price_uk_sw_gbp,46,rank,sobol.csv,the rank of price_uk_sw_gbp for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_price_rel_in,47,rank,sobol.csv,the rank of price_rel_in for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_sessions_cv,48,rank,sobol.csv,the rank of sessions_cv for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_usage_season_amp,49,rank,sobol.csv,the rank of usage_season_amp for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_summer_lapse_pre,50,rank,sobol.csv,the rank of summer_lapse_pre for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_exam_carryover,51,rank,sobol.csv,the rank of exam_carryover for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_turns_per_session,52,rank,sobol.csv,the rank of turns_per_session for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_tok_in_per_turn,53,rank,sobol.csv,the rank of tok_in_per_turn for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_tok_out_per_turn,54,rank,sobol.csv,the rank of tok_out_per_turn for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_verify_overhead,55,rank,sobol.csv,the rank of verify_overhead for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_gate_fire_rate,56,rank,sobol.csv,the rank of gate_fire_rate for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_infer_decline_yr,57,rank,sobol.csv,the rank of infer_decline_yr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_support_min_hh_month,58,rank,sobol.csv,the rank of support_min_hh_month for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_support_usd_hr,59,rank,sobol.csv,the rank of support_usd_hr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_hosting_hh_usd,60,rank,sobol.csv,the rank of hosting_hh_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_verif_cost_usd,61,rank,sobol.csv,the rank of verif_cost_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_examiner_rate_gbp_hr,62,rank,sobol.csv,the rank of examiner_rate_gbp_hr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_board_reuse,63,rank,sobol.csv,the rank of board_reuse for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_eng_usd_yr,64,rank,sobol.csv,the rank of eng_usd_yr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_overhead_mult,65,rank,sobol.csv,the rank of overhead_mult for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_pool_pressure_psi,66,rank,sobol.csv,the rank of pool_pressure_psi for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_pool_rel_in,67,rank,sobol.csv,the rank of pool_rel_in for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_acq_season_amp,68,rank,sobol.csv,the rank of acq_season_amp for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_seg_mix_exam,69,rank,sobol.csv,the rank of seg_mix_exam for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_acq_launch_ramp,70,rank,sobol.csv,the rank of acq_launch_ramp for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_shock_rho,71,rank,sobol.csv,the rank of shock_rho for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_shock_sd,72,rank,sobol.csv,the rank of shock_sd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_school_rep_pipeline_yr,73,rank,sobol.csv,the rank of school_rep_pipeline_yr for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_school_renewal,74,rank,sobol.csv,the rank of school_renewal for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_school_cycle_m,75,rank,sobol.csv,the rank of school_cycle_m for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_us_sales_tax_eff,76,rank,sobol.csv,the rank of us_sales_tax_eff for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_step_entity_setup_usd,77,rank,sobol.csv,the rank of step_entity_setup_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_step_cert_annual_usd,78,rank,sobol.csv,the rank of step_cert_annual_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_step_counsel_initial_usd,79,rank,sobol.csv,the rank of step_counsel_initial_usd for target reaches_profitability on the onshore_all scope
+sobol_onshore_reaches_profitability_rank_of_step_office_usd_head_yr,80,rank,sobol.csv,the rank of step_office_usd_head_yr for target reaches_profitability on the onshore_all scope
+sobol_onshore_terminal_cash_content_drivers_in_top7,0,count,sobol.csv,how many of the top seven drivers for terminal_cash on the onshore_all scope are content-cost drivers
+sobol_onshore_terminal_cash_acq_drivers_in_top3,2,count,sobol.csv,how many of the top three drivers for terminal_cash on the onshore_all scope are acquisition drivers
+sobol_onshore_terminal_cash_rank1_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 1 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank1_value,0.051434,share of variance,sobol.csv,first-order index at rank 1 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank2_driver,anchor_u,driver name,sobol.csv,driver at rank 2 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank2_value,0.030439,share of variance,sobol.csv,first-order index at rank 2 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank3_driver,sat_kappa,driver name,sobol.csv,driver at rank 3 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank3_value,0.025317,share of variance,sobol.csv,first-order index at rank 3 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank4_driver,price_uk_tut_gbp,driver name,sobol.csv,driver at rank 4 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank4_value,0.008324,share of variance,sobol.csv,first-order index at rank 4 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank5_driver,churn_base,driver name,sobol.csv,driver at rank 5 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank5_value,0.006130,share of variance,sobol.csv,first-order index at rank 5 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank6_driver,cac_ref_spend_usd,driver name,sobol.csv,driver at rank 6 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank6_value,0.006025,share of variance,sobol.csv,first-order index at rank 6 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank7_driver,pool_uk,driver name,sobol.csv,driver at rank 7 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank7_value,0.005374,share of variance,sobol.csv,first-order index at rank 7 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank8_driver,items_per_unit,driver name,sobol.csv,driver at rank 8 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank8_value,0.004373,share of variance,sobol.csv,first-order index at rank 8 for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_cac_anchor_usd,1,rank,sobol.csv,the rank of cac_anchor_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_anchor_u,2,rank,sobol.csv,the rank of anchor_u for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_sat_kappa,3,rank,sobol.csv,the rank of sat_kappa for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_price_uk_tut_gbp,4,rank,sobol.csv,the rank of price_uk_tut_gbp for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_churn_base,5,rank,sobol.csv,the rank of churn_base for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_cac_ref_spend_usd,6,rank,sobol.csv,the rank of cac_ref_spend_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_pool_uk,7,rank,sobol.csv,the rank of pool_uk for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_items_per_unit,8,rank,sobol.csv,the rank of items_per_unit for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_uk_gbp_yr,9,rank,sobol.csv,the rank of uk_gbp_yr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_writer_gbp_item,10,rank,sobol.csv,the rank of writer_gbp_item for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_minutes_per_item,11,rank,sobol.csv,the rank of minutes_per_item for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_acq_pct_of_rev,12,rank,sobol.csv,the rank of acq_pct_of_rev for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_eng_ramp_mult,13,rank,sobol.csv,the rank of eng_ramp_mult for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_board_reuse,14,rank,sobol.csv,the rank of board_reuse for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_sessions_per_hh_month,15,rank,sobol.csv,the rank of sessions_per_hh_month for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_creator_share,16,rank,sobol.csv,the rank of creator_share for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_price_drift_yr,17,rank,sobol.csv,the rank of price_drift_yr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_pool_pressure_psi,18,rank,sobol.csv,the rank of pool_pressure_psi for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_price_rel_row,19,rank,sobol.csv,the rank of price_rel_row for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_cac_rel_us,20,rank,sobol.csv,the rank of cac_rel_us for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_step_entity_setup_usd,21,rank,sobol.csv,the rank of step_entity_setup_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_churn_m1_extra,22,rank,sobol.csv,the rank of churn_m1_extra for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_pool_rel_row,23,rank,sobol.csv,the rank of pool_rel_row for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_pool_rel_in,24,rank,sobol.csv,the rank of pool_rel_in for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_examiner_rate_gbp_hr,25,rank,sobol.csv,the rank of examiner_rate_gbp_hr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_pay_fixed_usd,26,rank,sobol.csv,the rank of pay_fixed_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_step_counsel_initial_usd,27,rank,sobol.csv,the rank of step_counsel_initial_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_market_reuse,28,rank,sobol.csv,the rank of market_reuse for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_sessions_cv,29,rank,sobol.csv,the rank of sessions_cv for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_price_in_mtok_usd,30,rank,sobol.csv,the rank of price_in_mtok_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_acq_launch_ramp,31,rank,sobol.csv,the rank of acq_launch_ramp for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_school_renewal,32,rank,sobol.csv,the rank of school_renewal for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_step_cert_setup_usd,33,rank,sobol.csv,the rank of step_cert_setup_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_pool_rel_us,34,rank,sobol.csv,the rank of pool_rel_us for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_step_uk_rep_usd_yr,35,rank,sobol.csv,the rank of step_uk_rep_usd_yr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_acq_season_amp,36,rank,sobol.csv,the rank of acq_season_amp for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_reval_frac_yr,37,rank,sobol.csv,the rank of reval_frac_yr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_units_per_content_head,38,rank,sobol.csv,the rank of units_per_content_head for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_step_dpia_audit_usd_yr,39,rank,sobol.csv,the rank of step_dpia_audit_usd_yr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_shock_sd,40,rank,sobol.csv,the rank of shock_sd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_school_win_rate,41,rank,sobol.csv,the rank of school_win_rate for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_overage_price_frac,42,rank,sobol.csv,the rank of overage_price_frac for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_alevel_exit_rate,43,rank,sobol.csv,the rank of alevel_exit_rate for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_cac_rel_row,44,rank,sobol.csv,the rank of cac_rel_row for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_school_seats,45,rank,sobol.csv,the rank of school_seats for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_price_rel_us,46,rank,sobol.csv,the rank of price_rel_us for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_price_uk_sw_gbp,47,rank,sobol.csv,the rank of price_uk_sw_gbp for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_price_rel_in,48,rank,sobol.csv,the rank of price_rel_in for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_usage_season_amp,49,rank,sobol.csv,the rank of usage_season_amp for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_summer_lapse_pre,50,rank,sobol.csv,the rank of summer_lapse_pre for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_progress_continue,51,rank,sobol.csv,the rank of progress_continue for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_alevel_continue,52,rank,sobol.csv,the rank of alevel_continue for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_exam_carryover,53,rank,sobol.csv,the rank of exam_carryover for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_turns_per_session,54,rank,sobol.csv,the rank of turns_per_session for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_tok_in_per_turn,55,rank,sobol.csv,the rank of tok_in_per_turn for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_tok_out_per_turn,56,rank,sobol.csv,the rank of tok_out_per_turn for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_price_out_mtok_usd,57,rank,sobol.csv,the rank of price_out_mtok_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_verify_overhead,58,rank,sobol.csv,the rank of verify_overhead for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_gate_fire_rate,59,rank,sobol.csv,the rank of gate_fire_rate for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_infer_decline_yr,60,rank,sobol.csv,the rank of infer_decline_yr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_support_min_hh_month,61,rank,sobol.csv,the rank of support_min_hh_month for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_support_usd_hr,62,rank,sobol.csv,the rank of support_usd_hr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_pay_pct,63,rank,sobol.csv,the rank of pay_pct for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_hosting_hh_usd,64,rank,sobol.csv,the rank of hosting_hh_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_verif_cost_usd,65,rank,sobol.csv,the rank of verif_cost_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_eng_usd_yr,66,rank,sobol.csv,the rank of eng_usd_yr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_overhead_mult,67,rank,sobol.csv,the rank of overhead_mult for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_cac_rel_in,68,rank,sobol.csv,the rank of cac_rel_in for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_creator_cac_rel,69,rank,sobol.csv,the rank of creator_cac_rel for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_seg_mix_exam,70,rank,sobol.csv,the rank of seg_mix_exam for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_seg_mix_alevel,71,rank,sobol.csv,the rank of seg_mix_alevel for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_shock_rho,72,rank,sobol.csv,the rank of shock_rho for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_school_gbp_seat_yr,73,rank,sobol.csv,the rank of school_gbp_seat_yr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_school_rep_pipeline_yr,74,rank,sobol.csv,the rank of school_rep_pipeline_yr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_school_cycle_m,75,rank,sobol.csv,the rank of school_cycle_m for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_us_sales_tax_eff,76,rank,sobol.csv,the rank of us_sales_tax_eff for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_step_entity_annual_usd,77,rank,sobol.csv,the rank of step_entity_annual_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_step_cert_annual_usd,78,rank,sobol.csv,the rank of step_cert_annual_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_step_counsel_market_usd,79,rank,sobol.csv,the rank of step_counsel_market_usd for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_of_step_office_usd_head_yr,80,rank,sobol.csv,the rank of step_office_usd_head_yr for target terminal_cash on the onshore_all scope
+sobol_onshore_terminal_cash_rank_content_drivers_in_top7,4,count,sobol.csv,how many of the top seven drivers for terminal_cash_rank on the onshore_all scope are content-cost drivers
+sobol_onshore_terminal_cash_rank_acq_drivers_in_top3,0,count,sobol.csv,how many of the top three drivers for terminal_cash_rank on the onshore_all scope are acquisition drivers
+sobol_onshore_terminal_cash_rank_rank1_driver,items_per_unit,driver name,sobol.csv,driver at rank 1 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank1_value,0.146025,share of variance,sobol.csv,first-order index at rank 1 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank2_driver,anchor_u,driver name,sobol.csv,driver at rank 2 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank2_value,0.094094,share of variance,sobol.csv,first-order index at rank 2 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank3_driver,writer_gbp_item,driver name,sobol.csv,driver at rank 3 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank3_value,0.073676,share of variance,sobol.csv,first-order index at rank 3 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank4_driver,minutes_per_item,driver name,sobol.csv,driver at rank 4 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank4_value,0.069319,share of variance,sobol.csv,first-order index at rank 4 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank5_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 5 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank5_value,0.067953,share of variance,sobol.csv,first-order index at rank 5 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank6_driver,uk_gbp_yr,driver name,sobol.csv,driver at rank 6 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank6_value,0.063878,share of variance,sobol.csv,first-order index at rank 6 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank7_driver,board_reuse,driver name,sobol.csv,driver at rank 7 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank7_value,0.054639,share of variance,sobol.csv,first-order index at rank 7 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank8_driver,eng_ramp_mult,driver name,sobol.csv,driver at rank 8 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank8_value,0.041232,share of variance,sobol.csv,first-order index at rank 8 for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_items_per_unit,1,rank,sobol.csv,the rank of items_per_unit for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_anchor_u,2,rank,sobol.csv,the rank of anchor_u for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_writer_gbp_item,3,rank,sobol.csv,the rank of writer_gbp_item for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_minutes_per_item,4,rank,sobol.csv,the rank of minutes_per_item for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_cac_anchor_usd,5,rank,sobol.csv,the rank of cac_anchor_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_uk_gbp_yr,6,rank,sobol.csv,the rank of uk_gbp_yr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_board_reuse,7,rank,sobol.csv,the rank of board_reuse for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_eng_ramp_mult,8,rank,sobol.csv,the rank of eng_ramp_mult for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_examiner_rate_gbp_hr,9,rank,sobol.csv,the rank of examiner_rate_gbp_hr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_market_reuse,10,rank,sobol.csv,the rank of market_reuse for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_units_per_content_head,11,rank,sobol.csv,the rank of units_per_content_head for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_cac_ref_spend_usd,12,rank,sobol.csv,the rank of cac_ref_spend_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_overhead_mult,13,rank,sobol.csv,the rank of overhead_mult for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_reval_frac_yr,14,rank,sobol.csv,the rank of reval_frac_yr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_eng_usd_yr,15,rank,sobol.csv,the rank of eng_usd_yr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_price_uk_tut_gbp,16,rank,sobol.csv,the rank of price_uk_tut_gbp for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_churn_base,17,rank,sobol.csv,the rank of churn_base for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_sat_kappa,18,rank,sobol.csv,the rank of sat_kappa for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_churn_m1_extra,19,rank,sobol.csv,the rank of churn_m1_extra for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_creator_share,20,rank,sobol.csv,the rank of creator_share for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_price_drift_yr,21,rank,sobol.csv,the rank of price_drift_yr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_acq_pct_of_rev,22,rank,sobol.csv,the rank of acq_pct_of_rev for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_pool_rel_row,23,rank,sobol.csv,the rank of pool_rel_row for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_hosting_hh_usd,24,rank,sobol.csv,the rank of hosting_hh_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_price_rel_us,25,rank,sobol.csv,the rank of price_rel_us for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_acq_season_amp,26,rank,sobol.csv,the rank of acq_season_amp for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_price_in_mtok_usd,27,rank,sobol.csv,the rank of price_in_mtok_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_sessions_per_hh_month,28,rank,sobol.csv,the rank of sessions_per_hh_month for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_alevel_exit_rate,29,rank,sobol.csv,the rank of alevel_exit_rate for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_pool_uk,30,rank,sobol.csv,the rank of pool_uk for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_step_uk_rep_usd_yr,31,rank,sobol.csv,the rank of step_uk_rep_usd_yr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_price_out_mtok_usd,32,rank,sobol.csv,the rank of price_out_mtok_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_cac_rel_us,33,rank,sobol.csv,the rank of cac_rel_us for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_school_win_rate,34,rank,sobol.csv,the rank of school_win_rate for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_shock_sd,35,rank,sobol.csv,the rank of shock_sd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_school_seats,36,rank,sobol.csv,the rank of school_seats for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_school_renewal,37,rank,sobol.csv,the rank of school_renewal for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_cac_rel_row,38,rank,sobol.csv,the rank of cac_rel_row for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_price_uk_sw_gbp,39,rank,sobol.csv,the rank of price_uk_sw_gbp for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_summer_lapse_pre,40,rank,sobol.csv,the rank of summer_lapse_pre for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_pay_pct,41,rank,sobol.csv,the rank of pay_pct for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_progress_continue,42,rank,sobol.csv,the rank of progress_continue for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_verif_cost_usd,43,rank,sobol.csv,the rank of verif_cost_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_pool_rel_in,44,rank,sobol.csv,the rank of pool_rel_in for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_overage_price_frac,45,rank,sobol.csv,the rank of overage_price_frac for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_us_sales_tax_eff,46,rank,sobol.csv,the rank of us_sales_tax_eff for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_seg_mix_exam,47,rank,sobol.csv,the rank of seg_mix_exam for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_acq_launch_ramp,48,rank,sobol.csv,the rank of acq_launch_ramp for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_price_rel_row,49,rank,sobol.csv,the rank of price_rel_row for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_alevel_continue,50,rank,sobol.csv,the rank of alevel_continue for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_seg_mix_alevel,51,rank,sobol.csv,the rank of seg_mix_alevel for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_step_counsel_initial_usd,52,rank,sobol.csv,the rank of step_counsel_initial_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_step_cert_setup_usd,53,rank,sobol.csv,the rank of step_cert_setup_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_support_usd_hr,54,rank,sobol.csv,the rank of support_usd_hr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_school_cycle_m,55,rank,sobol.csv,the rank of school_cycle_m for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_sessions_cv,56,rank,sobol.csv,the rank of sessions_cv for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_step_entity_annual_usd,57,rank,sobol.csv,the rank of step_entity_annual_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_turns_per_session,58,rank,sobol.csv,the rank of turns_per_session for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_price_rel_in,59,rank,sobol.csv,the rank of price_rel_in for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_usage_season_amp,60,rank,sobol.csv,the rank of usage_season_amp for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_exam_carryover,61,rank,sobol.csv,the rank of exam_carryover for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_tok_in_per_turn,62,rank,sobol.csv,the rank of tok_in_per_turn for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_tok_out_per_turn,63,rank,sobol.csv,the rank of tok_out_per_turn for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_verify_overhead,64,rank,sobol.csv,the rank of verify_overhead for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_gate_fire_rate,65,rank,sobol.csv,the rank of gate_fire_rate for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_infer_decline_yr,66,rank,sobol.csv,the rank of infer_decline_yr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_support_min_hh_month,67,rank,sobol.csv,the rank of support_min_hh_month for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_pay_fixed_usd,68,rank,sobol.csv,the rank of pay_fixed_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_cac_rel_in,69,rank,sobol.csv,the rank of cac_rel_in for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_pool_pressure_psi,70,rank,sobol.csv,the rank of pool_pressure_psi for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_creator_cac_rel,71,rank,sobol.csv,the rank of creator_cac_rel for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_pool_rel_us,72,rank,sobol.csv,the rank of pool_rel_us for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_shock_rho,73,rank,sobol.csv,the rank of shock_rho for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_school_gbp_seat_yr,74,rank,sobol.csv,the rank of school_gbp_seat_yr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_school_rep_pipeline_yr,75,rank,sobol.csv,the rank of school_rep_pipeline_yr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_step_entity_setup_usd,76,rank,sobol.csv,the rank of step_entity_setup_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_step_cert_annual_usd,77,rank,sobol.csv,the rank of step_cert_annual_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_step_counsel_market_usd,78,rank,sobol.csv,the rank of step_counsel_market_usd for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_step_office_usd_head_yr,79,rank,sobol.csv,the rank of step_office_usd_head_yr for target terminal_cash_rank on the onshore_all scope
+sobol_onshore_terminal_cash_rank_rank_of_step_dpia_audit_usd_yr,80,rank,sobol.csv,the rank of step_dpia_audit_usd_yr for target terminal_cash_rank on the onshore_all scope
 pinned_anchor_u_terminal_cash_q5,16897.674878,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 5 for anchor_u
 pinned_anchor_u_terminal_cash_q95,-23565708.792337,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 95 for anchor_u
 pinned_anchor_u_swing,-23582606.467215,USD,pinned_sweeps.csv,terminal_cash_mean at q95 less terminal_cash_mean at q5 for anchor_u
@@ -1478,8 +2374,16 @@ breakeven_plan_of_record_price_uk_tut_gbp_terminal_cash_median_status,not bracke
 breakeven_plan_of_record_price_uk_tut_gbp_terminal_cash_median_prior_median,25.209647,driver units,breakeven.csv,the prior_median column
 breakeven_plan_of_record_cac_anchor_usd_share_reaching_profitability,8.969204,driver units,breakeven.csv,bisection on a pinned cac_anchor_usd against share_reaching_profitability = 0.500000
 breakeven_plan_of_record_cac_anchor_usd_share_reaching_profitability_prior_median,32.263315,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_cac_anchor_usd_share_reaching_profitability_at_be_terminal_cash_median,-13276845.750922,USD,breakeven.csv,"the at_breakeven_terminal_cash_median column, which is that statistic at the solved break-even"
+breakeven_plan_of_record_cac_anchor_usd_share_reaching_profitability_at_be_peak_funding_p80,24164148.244246,USD,breakeven.csv,"the at_breakeven_peak_funding_p80 column, which is that statistic at the solved break-even"
+breakeven_plan_of_record_cac_anchor_usd_share_reaching_profitability_at_be_hitting_paths_ending_negative_pct,34.485500,per cent,breakeven.csv,"of the paths that meet the target at the solved break-even, the share that still end the horizon with negative cash"
+breakeven_plan_of_record_cac_anchor_usd_share_reaching_profitability_at_be_share_reaching_profitability_pct,49.905000,per cent,breakeven.csv,"the share of paths reaching profitability at the solved break-even, which is the solve's own target where it was the target"
 breakeven_plan_of_record_price_uk_tut_gbp_share_reaching_profitability,39.976562,driver units,breakeven.csv,bisection on a pinned price_uk_tut_gbp against share_reaching_profitability = 0.500000
 breakeven_plan_of_record_price_uk_tut_gbp_share_reaching_profitability_prior_median,25.209647,driver units,breakeven.csv,the prior_median column
+breakeven_plan_of_record_price_uk_tut_gbp_share_reaching_profitability_at_be_terminal_cash_median,-12670609.752406,USD,breakeven.csv,"the at_breakeven_terminal_cash_median column, which is that statistic at the solved break-even"
+breakeven_plan_of_record_price_uk_tut_gbp_share_reaching_profitability_at_be_peak_funding_p80,23309205.287822,USD,breakeven.csv,"the at_breakeven_peak_funding_p80 column, which is that statistic at the solved break-even"
+breakeven_plan_of_record_price_uk_tut_gbp_share_reaching_profitability_at_be_hitting_paths_ending_negative_pct,34.200000,per cent,breakeven.csv,"of the paths that meet the target at the solved break-even, the share that still end the horizon with negative cash"
+breakeven_plan_of_record_price_uk_tut_gbp_share_reaching_profitability_at_be_share_reaching_profitability_pct,50.000000,per cent,breakeven.csv,"the share of paths reaching profitability at the solved break-even, which is the solve's own target where it was the target"
 breakeven_gtm_minimum_uk_one_board_pool_uk_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
 breakeven_gtm_minimum_uk_one_board_pool_uk_terminal_cash_median_prior_median,219049.577965,driver units,breakeven.csv,the prior_median column
 breakeven_gtm_minimum_uk_one_board_pool_uk_peak_funding_p80_status,not bracketed by the prior range,text,breakeven.csv,the status column
@@ -1502,8 +2406,16 @@ breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_status,
 breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_prior_median,25.209647,driver units,breakeven.csv,the prior_median column
 breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_share_reaching_profitability,12.988840,driver units,breakeven.csv,bisection on a pinned cac_anchor_usd against share_reaching_profitability = 0.500000
 breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_share_reaching_profitability_prior_median,32.263315,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_share_reaching_profitability_at_be_terminal_cash_median,-4047956.447221,USD,breakeven.csv,"the at_breakeven_terminal_cash_median column, which is that statistic at the solved break-even"
+breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_share_reaching_profitability_at_be_peak_funding_p80,6450832.802121,USD,breakeven.csv,"the at_breakeven_peak_funding_p80 column, which is that statistic at the solved break-even"
+breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_share_reaching_profitability_at_be_hitting_paths_ending_negative_pct,39.183400,per cent,breakeven.csv,"of the paths that meet the target at the solved break-even, the share that still end the horizon with negative cash"
+breakeven_gtm_minimum_uk_one_board_cac_anchor_usd_share_reaching_profitability_at_be_share_reaching_profitability_pct,50.085000,per cent,breakeven.csv,"the share of paths reaching profitability at the solved break-even, which is the solve's own target where it was the target"
 breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_share_reaching_profitability,27.835938,driver units,breakeven.csv,bisection on a pinned price_uk_tut_gbp against share_reaching_profitability = 0.500000
 breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_share_reaching_profitability_prior_median,25.209647,driver units,breakeven.csv,the prior_median column
+breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_share_reaching_profitability_at_be_terminal_cash_median,-3811959.069172,USD,breakeven.csv,"the at_breakeven_terminal_cash_median column, which is that statistic at the solved break-even"
+breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_share_reaching_profitability_at_be_peak_funding_p80,6079809.969379,USD,breakeven.csv,"the at_breakeven_peak_funding_p80 column, which is that statistic at the solved break-even"
+breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_share_reaching_profitability_at_be_hitting_paths_ending_negative_pct,41.423400,per cent,breakeven.csv,"of the paths that meet the target at the solved break-even, the share that still end the horizon with negative cash"
+breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_share_reaching_profitability_at_be_share_reaching_profitability_pct,50.020000,per cent,breakeven.csv,"the share of paths reaching profitability at the solved break-even, which is the solve's own target where it was the target"
 funding_por_less_gtm_minimum_whole_horizon,21582945.435723,USD,funding.csv,whole-horizon round_size for the plan of record less the same for the go-to-market minimum
 funding_base_case_uk_only_staged_sum,23336262.001594,USD,funding.csv,"the three staged round_size values for base_case_uk_only, added"
 funding_base_case_uk_only_staged_over_whole,1.315540,ratio,funding.csv,that staged sum divided by the whole-horizon round_size for base_case_uk_only
@@ -1549,6 +2461,12 @@ funding_one_subject_uk_one_board_series_b_round_size,3382850.912699,USD,funding.
 funding_one_subject_uk_one_board_series_b_need_p80,2705409.003726,USD,funding.csv,need_p80 for scenario one_subject_uk_one_board stage series_b
 funding_one_subject_uk_one_board_whole_horizon_round_size,5938868.282958,USD,funding.csv,round_size for scenario one_subject_uk_one_board stage whole_horizon
 funding_one_subject_uk_one_board_whole_horizon_need_p80,5938868.282958,USD,funding.csv,need_p80 for scenario one_subject_uk_one_board stage whole_horizon
+commitments_total,14,count,funding_commitments.csv,row count
+commitments_spend_starts_in_seed,10,count,funding_commitments.csv,rows whose stage_that_actually_pays is seed
+commitments_decided_after_their_round_closed,1,count,funding_commitments.csv,rows where the commitment lands in a stage later than the one that pays for it
+commitments_entity_count,2,count,funding_commitments.csv,rows whose commitment names an entity set-up
+commitments_entity_names,United States entity set-up and market counsel; rest-of-English-speaking entity set-up and market counsel,text,funding_commitments.csv,"those rows' commitment text, verbatim"
+commitments_entities_paid_by_seed,1,count,funding_commitments.csv,"of those, the ones whose spend starts in the seed window"
 rescue_gtm_minimum_uk_one_board_cells_total,36,count,rescue_grid.csv,cells in the grid for scope gtm_minimum_uk_one_board
 rescue_gtm_minimum_uk_one_board_cells_clearing,10,count,rescue_grid.csv,cells whose terminal_cash_median is above zero for scope gtm_minimum_uk_one_board
 rescue_gtm_minimum_uk_one_board_best_median,15793057.417536,USD,rescue_grid.csv,highest terminal_cash_median in the grid for gtm_minimum_uk_one_board
@@ -1694,6 +2612,9 @@ final_year_effective_cac_median,33.313287,USD per acquisition,cohorts.csv,median
 final_year_ltv_over_cac_pooled,1.864644,ratio,cohorts.csv,pooled gross lifetime value divided by pooled final-year effective cost per acquisition
 final_year_cac_pooled_over_anchor_median,1.716692,ratio,cohorts.csv,pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled
 share_paths_final_year_ltv_below_cac,0.057707,share,cohorts.csv,share of paths with a real final year on which gross lifetime value is below the final-year effective cost per acquisition
+share_paths_final_year_ltv_allin_below_cac,0.885689,share,cohorts.csv,"share of paths with a real final year on which ALL-IN lifetime value, which carries the demand-independent cost base, is below the final-year effective cost per acquisition"
+share_paths_final_year_ltv_allin_below_cac_pct,88.568852,per cent,cohorts.csv,the same share as a percentage
+share_paths_final_year_ltv_below_cac_pct,5.770676,per cent,cohorts.csv,"the gross share as a percentage, published beside the all-in one so the two are never quoted apart"
 shock_cost_terminal_cash_mean,51215.749330,USD,cohorts.csv,"terminal cash mean with the demand shock as sampled, less the same with shock_sd pinned to zero: what the whole persistent-shock apparatus is worth"
 shock_cost_terminal_cash_median,-10625.614727,USD,cohorts.csv,the same on the median path
 shock_cost_peak_funding_p80,12308.897731,USD,cohorts.csv,the same on the eightieth-percentile peak funding requirement
@@ -1703,10 +2624,13 @@ missing_night_rota_cost_per_year,149793.106707,USD per year,cohorts.csv,"three f
 missing_night_rota_cost_total,674068.980182,USD,cohorts.csv,that annual cost from the UK go-to-market month to the end of the horizon
 missing_night_rota_share_of_total_cost,0.017534,share,cohorts.csv,the missing rota divided by the total modelled cost
 por_total_cost_recomputed,38442936.209359,USD,cohorts.csv,"sum over paths and months of every modelled cost line, averaged over paths"
-offtest_mechanism_count,6,count,offtest.csv,row count
+offtest_mechanism_count,7,count,offtest.csv,row count
 offtest_all_exact,True,boolean,offtest.csv,every mechanism reproduces the base run exactly when switched off
-omission_line_count,14,count,omissions.csv,"rows naming an absent cost line, excluding the total row"
+offtest_all_move_when_on,True,boolean,offtest.csv,"every mechanism changes the run when switched on, so none is inert"
+omission_line_count,15,count,omissions.csv,"rows naming an absent cost line, excluding the total row"
 omission_zero_line_count,6,count,omissions.csv,"of those, the ones priced at zero"
+omission_line_names,"refunds, chargebacks and failed payments; insurance: professional indemnity, cyber and directors; recruitment fees; out-of-hours operations rota; penetration testing and vulnerability disclosure; intercompany markup and Indian tax on it; age assurance on non-converting checks; consumer subscription regime: renewal reminders, cooling off, easy exit; trial-to-paid conversion and involuntary churn; accessibility conformance and audit; corporation tax on trading profit; translation and localisation; regulatory enforcement exposure; examiner supply, as a quantity rather than a price; specification change and curriculum reform",text,omissions.csv,"every absent_cost_line in file order, excluding the total row"
+omission_zero_line_names,"consumer subscription regime: renewal reminders, cooling off, easy exit; trial-to-paid conversion and involuntary churn; corporation tax on trading profit; translation and localisation; regulatory enforcement exposure; examiner supply, as a quantity rather than a price",text,omissions.csv,"the absent_cost_line values priced at zero, in file order"
 omission_refunds_chargebacks_and_failed_payments_low,298321.405832,USD,omissions.csv,one to three per cent of modelled gross consumer revenue
 omission_refunds_chargebacks_and_failed_payments_high,894964.217495,USD,omissions.csv,one to three per cent of modelled gross consumer revenue
 omission_refunds_chargebacks_and_failed_payments_share_high_pct,2.328000,per cent,omissions.csv,high_share_of_total_cost as a percentage
@@ -1728,11 +2652,11 @@ omission_intercompany_markup_and_indian_tax_on_it_share_high_pct,0.629000,per ce
 omission_age_assurance_on_non_converting_checks_low,806574.420228,USD,omissions.csv,"the model bills one check per acquisition; at two to five checks per acquired household, which is a conservative funnel for a consumer trial, the line is two to five times what is modelled"
 omission_age_assurance_on_non_converting_checks_high,2016436.050571,USD,omissions.csv,"the model bills one check per acquisition; at two to five checks per acquired household, which is a conservative funnel for a consumer trial, the line is two to five times what is modelled"
 omission_age_assurance_on_non_converting_checks_share_high_pct,5.245300,per cent,omissions.csv,high_share_of_total_cost as a percentage
-omission_consumer_subscription_regime_low,0.000000,USD,omissions.csv,"zero, and that is the omission: these are retention mechanics rather than a cost line, so they cannot be priced from anything the model carries, and their effect is on churn and on refunds"
-omission_consumer_subscription_regime_high,0.000000,USD,omissions.csv,"zero, and that is the omission: these are retention mechanics rather than a cost line, so they cannot be priced from anything the model carries, and their effect is on churn and on refunds"
+omission_consumer_subscription_regime_low,0.000000,USD,omissions.csv,"zero as a cost line, because these are retention mechanics rather than costs. The size is not zero: scaling both churn drivers by 25 per cent, which is this file's prior on what a reminder-and-easy-exit regime does to a consumer book, costs 3,705,131 of terminal cash, shared with the row below"
+omission_consumer_subscription_regime_high,0.000000,USD,omissions.csv,"zero as a cost line, because these are retention mechanics rather than costs. The size is not zero: scaling both churn drivers by 25 per cent, which is this file's prior on what a reminder-and-easy-exit regime does to a consumer book, costs 3,705,131 of terminal cash, shared with the row below"
 omission_consumer_subscription_regime_share_high_pct,0.000000,per cent,omissions.csv,high_share_of_total_cost as a percentage
-omission_trial_to_paid_conversion_and_involuntary_churn_low,0.000000,USD,omissions.csv,"zero: an acquisition is a paying household immediately, and failed payments reduce cash without reducing the book, so involuntary churn is absent from retention entirely"
-omission_trial_to_paid_conversion_and_involuntary_churn_high,0.000000,USD,omissions.csv,"zero: an acquisition is a paying household immediately, and failed payments reduce cash without reducing the book, so involuntary churn is absent from retention entirely"
+omission_trial_to_paid_conversion_and_involuntary_churn_low,0.000000,USD,omissions.csv,"zero as a cost line: an acquisition is a paying household immediately, and failed payments reduce cash without reducing the book, so involuntary churn is absent from retention entirely. The size is the same 3,705,131 churn stress as the row above, not a second independent amount"
+omission_trial_to_paid_conversion_and_involuntary_churn_high,0.000000,USD,omissions.csv,"zero as a cost line: an acquisition is a paying household immediately, and failed payments reduce cash without reducing the book, so involuntary churn is absent from retention entirely. The size is the same 3,705,131 churn stress as the row above, not a second independent amount"
 omission_trial_to_paid_conversion_and_involuntary_churn_share_high_pct,0.000000,per cent,omissions.csv,high_share_of_total_cost as a percentage
 omission_accessibility_conformance_and_audit_low,33750.000000,USD,omissions.csv,"fifteen to forty thousand dollars a year, from roughly halfway through the horizon"
 omission_accessibility_conformance_and_audit_high,90000.000000,USD,omissions.csv,"fifteen to forty thousand dollars a year, from roughly halfway through the horizon"
@@ -1743,15 +2667,45 @@ omission_corporation_tax_on_trading_profit_share_high_pct,0.000000,per cent,omis
 omission_translation_and_localisation_low,0.000000,USD,omissions.csv,zero: the plan of record expands only across English-speaking curricula
 omission_translation_and_localisation_high,0.000000,USD,omissions.csv,zero: the plan of record expands only across English-speaking curricula
 omission_translation_and_localisation_share_high_pct,0.000000,per cent,omissions.csv,high_share_of_total_cost as a percentage
-omission_regulatory_enforcement_exposure_low,0.000000,USD,omissions.csv,"zero, and deliberately so: no probability of enforcement is modelled, while the smallest United Kingdom penalty in the vault's own verified set exceeds every cost line here except content"
-omission_regulatory_enforcement_exposure_high,0.000000,USD,omissions.csv,"zero, and deliberately so: no probability of enforcement is modelled, while the smallest United Kingdom penalty in the vault's own verified set exceeds every cost line here except content"
+omission_regulatory_enforcement_exposure_low,0.000000,USD,omissions.csv,"zero, and deliberately so: no probability of enforcement is modelled. Against the modelled cost lines, the smallest penalty in the vault's verified United Kingdom set is 2,476,500 dollars and exceeds 7 of the 11 non-zero cost lines; the largest is 18,376,900 dollars and exceeds 11 of them. Only the largest exceeds the whole modelled content line, and only the largest exceeds the seed round"
+omission_regulatory_enforcement_exposure_high,0.000000,USD,omissions.csv,"zero, and deliberately so: no probability of enforcement is modelled. Against the modelled cost lines, the smallest penalty in the vault's verified United Kingdom set is 2,476,500 dollars and exceeds 7 of the 11 non-zero cost lines; the largest is 18,376,900 dollars and exceeds 11 of them. Only the largest exceeds the whole modelled content line, and only the largest exceeds the seed round"
 omission_regulatory_enforcement_exposure_share_high_pct,0.000000,per cent,omissions.csv,high_share_of_total_cost as a percentage
-omission_examiner_supply_as_a_quantity_rather_than_a_price_low,0.000000,USD,omissions.csv,"zero: the model prices examiner time and never asks whether it exists. The month-18 scope needs about 44,319 hours of qualified examiner time and the rate is perfectly elastic"
-omission_examiner_supply_as_a_quantity_rather_than_a_price_high,0.000000,USD,omissions.csv,"zero: the model prices examiner time and never asks whether it exists. The month-18 scope needs about 44,319 hours of qualified examiner time and the rate is perfectly elastic"
+omission_examiner_supply_as_a_quantity_rather_than_a_price_low,0.000000,USD,omissions.csv,"zero: the model prices examiner time and never asks whether it exists. The month-18 United Kingdom scope is 18.7 full item-bank equivalents after board reuse, which at the median item count and validation minutes and the ten per cent second-validation sample is about 22,779 hours of qualified examiner time, and the rate is perfectly elastic"
+omission_examiner_supply_as_a_quantity_rather_than_a_price_high,0.000000,USD,omissions.csv,"zero: the model prices examiner time and never asks whether it exists. The month-18 United Kingdom scope is 18.7 full item-bank equivalents after board reuse, which at the median item count and validation minutes and the ten per cent second-validation sample is about 22,779 hours of qualified examiner time, and the rate is perfectly elastic"
 omission_examiner_supply_as_a_quantity_rather_than_a_price_share_high_pct,0.000000,per cent,omissions.csv,high_share_of_total_cost as a percentage
-omission_total_of_every_absent_line_low,2120680.484410,USD,omissions.csv,"sum of the rows above, against the modelled total cost of 38442936"
-omission_total_of_every_absent_line_high,4978548.906487,USD,omissions.csv,"sum of the rows above, against the modelled total cost of 38442936"
-omission_total_of_every_absent_line_share_high_pct,12.950500,per cent,omissions.csv,high_share_of_total_cost as a percentage
+omission_specification_change_and_curriculum_reform_low,837949.548639,USD,omissions.csv,"six to eighteen per cent of the modelled content spend: the model never expires an item, and on a five-year horizon a share of the bank is written to a specification that has since been reissued. The range is a prior on how much of the bank turns over, not a measurement"
+omission_specification_change_and_curriculum_reform_high,2513848.645917,USD,omissions.csv,"six to eighteen per cent of the modelled content spend: the model never expires an item, and on a five-year horizon a share of the bank is written to a specification that has since been reissued. The range is a prior on how much of the bank turns over, not a measurement"
+omission_specification_change_and_curriculum_reform_share_high_pct,6.539200,per cent,omissions.csv,high_share_of_total_cost as a percentage
+omission_total_of_every_absent_line_low,2958630.033049,USD,omissions.csv,"sum of the rows above, against the modelled total cost of 38442936"
+omission_total_of_every_absent_line_high,7492397.552404,USD,omissions.csv,"sum of the rows above, against the modelled total cost of 38442936"
+omission_total_of_every_absent_line_share_high_pct,19.489700,per cent,omissions.csv,high_share_of_total_cost as a percentage
+appstore_share_low,0.150000,prior bound,aux_params.csv,low bound of the auxiliary prior appstore_share: share of consumer billing routed through an app store
+appstore_share_high,0.700000,prior bound,aux_params.csv,high bound of the auxiliary prior appstore_share: share of consumer billing routed through an app store
+autom_beta_low,0.000000,prior bound,aux_params.csv,low bound of the auxiliary prior autom_beta: engineering heads bought per unit of automation ceiling
+autom_beta_high,8.000000,prior bound,aux_params.csv,high bound of the auxiliary prior autom_beta: engineering heads bought per unit of automation ceiling
+creator_fee_per_creator_yr_low,2000.000000,prior bound,aux_params.csv,"low bound of the auxiliary prior creator_fee_per_creator_yr: fixed annual minimum per signed creator, USD"
+creator_fee_per_creator_yr_high,40000.000000,prior bound,aux_params.csv,"high bound of the auxiliary prior creator_fee_per_creator_yr: fixed annual minimum per signed creator, USD"
+creator_rev_share_low,0.000000,prior bound,aux_params.csv,low bound of the auxiliary prior creator_rev_share: share of the revenue a creator's audience brought
+creator_rev_share_high,0.150000,prior bound,aux_params.csv,high bound of the auxiliary prior creator_rev_share: share of the revenue a creator's audience brought
+fx_terminal_sd_low,0.040000,prior bound,aux_params.csv,low bound of the auxiliary prior fx_terminal_sd: terminal dispersion of the GBP/USD random walk
+fx_terminal_sd_high,0.160000,prior bound,aux_params.csv,high bound of the auxiliary prior fx_terminal_sd: terminal dispersion of the GBP/USD random walk
+price_elast_low,0.200000,prior bound,aux_params.csv,low bound of the auxiliary prior price_elast: how hard a price above the regime's own mode costs retention
+price_elast_high,1.400000,prior bound,aux_params.csv,high bound of the auxiliary prior price_elast: how hard a price above the regime's own mode costs retention
+quality_gamma_low,0.000000,prior bound,aux_params.csv,low bound of the auxiliary prior quality_gamma: how hard build intensity three months ago costs retention now
+quality_gamma_high,0.800000,prior bound,aux_params.csv,high bound of the auxiliary prior quality_gamma: how hard build intensity three months ago costs retention now
+residual_book_months_low,6.000000,prior bound,aux_params.csv,low bound of the auxiliary prior residual_book_months: months of contribution a standing book is worth to a buyer
+residual_book_months_high,30.000000,prior bound,aux_params.csv,high bound of the auxiliary prior residual_book_months: months of contribution a standing book is worth to a buyer
+residual_content_retained_low,0.150000,prior bound,aux_params.csv,low bound of the auxiliary prior residual_content_retained: share of accumulated content cost still worth something at month 60
+residual_content_retained_high,0.650000,prior bound,aux_params.csv,high bound of the auxiliary prior residual_content_retained: share of accumulated content cost still worth something at month 60
+retention_stress_churn_scale,1.250000,multiple,sized_omissions.csv,the multiple applied to both churn drivers
+retention_stress_terminal_cash_cost,3705130.901185,USD,sized_omissions.csv,"the two retention omissions above are priced at zero as cost lines because they are not costs; this is what the book being that much worse is worth in terminal cash, and it is a prior on the size of the effect, not a measurement of it"
+retention_stress_share_of_total_cost,0.096380,share,sized_omissions.csv,that cost against the modelled cost base
+examiner_full_equivalents_month18,18.690337,full item-bank equivalents,sized_omissions.csv,"median full item-bank equivalents of United Kingdom content at month 18, after board reuse, from the model's own content function"
+penalty_smallest_usd,2476500.000000,USD,sized_omissions.csv,"the smallest penalty in the vault's verified United Kingdom set, 1.95m pounds to Snap, at the fixed rate"
+penalty_largest_usd,18376900.000000,USD,sized_omissions.csv,"the largest, 14.47m pounds to Reddit in February 2026, at the fixed rate"
+examiner_hours_month18,22779.290708,hours,sized_omissions.csv,"those equivalents at the median item count and median validation minutes, with the ten per cent second-validation sample"
+retention_stress_churn_pct,25.000000,per cent,sized_omissions.csv,the churn multiple as a percentage increase
+retention_stress_share_of_cost_pct,9.638000,per cent,sized_omissions.csv,that cost as a share of the modelled cost base
 imanconover_pairs,10,count,imanconover_check.csv,row count
 imanconover_worst_corr_error,0.016000,rank correlation,imanconover_check.csv,largest absolute difference between target_rank_corr and achieved_rank_corr
 imanconover_all_marginals_preserved,True,boolean,imanconover_check.csv,every marginal_preserved column is True

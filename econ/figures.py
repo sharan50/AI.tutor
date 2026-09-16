@@ -303,11 +303,15 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
             - float(vr["por_anchor_software"]["terminal_cash_mean"]),
             "USD", "variants.csv",
             "terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por_anchor_software: the spread between the two regimes, not either one's delta against the published mix")
-        add("anchor_tutoring_minus_software_peak_funding_p80",
+        # The name used to say tutoring minus software while the arithmetic did
+        # the reverse. The arithmetic is the one worth keeping — capital is a
+        # need, so the software regime's excess is the positive quantity — so
+        # the name was corrected to match it rather than the other way round.
+        add("anchor_software_minus_tutoring_peak_funding_p80",
             float(vr["por_anchor_software"]["peak_funding_p80"])
             - float(vr["por_anchor_tutoring"]["peak_funding_p80"]),
             "USD", "variants.csv",
-            "peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring")
+            "peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring: the extra capital the software-anchored regime needs")
     base = float(vr["por"]["terminal_cash_mean"])
     base_p50 = float(vr["por"]["terminal_cash_p50"])
     base_pf80 = float(vr["por"]["peak_funding_p80"])
@@ -369,7 +373,13 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
 # Sensitivity
 # --------------------------------------------------------------------------
 if os.path.exists(os.path.join(OUT, "sobol.csv")):
-    sb = read_csv("sobol.csv")
+    sb_all = read_csv("sobol.csv")
+    # sobol.csv now carries two scopes. The ordering is a property of the scope,
+    # so the two are never pooled: the unprefixed names stay the plan of record
+    # and the second scope gets its own prefix. Pooling them would average two
+    # orderings that disagree and produce a third that is true of neither.
+    RUN_PREFIX = {"por": "", "gtm_minimum": "gtm_", "onshore_all": "onshore_"}
+    sb = [r for r in sb_all if r["run"] == "por"]
     for target in sorted({r["target"] for r in sb}):
         rows = sorted([r for r in sb if r["target"] == target], key=lambda r: -float(r["sobol_first_order"]))
         add("sobol_%s_sum_first_order" % target, sum(float(r["sobol_first_order"]) for r in rows), "share of variance",
@@ -402,6 +412,32 @@ if os.path.exists(os.path.join(OUT, "sobol.csv")):
         for pos, r in enumerate(rows, start=1):
             add("sobol_%s_rank_of_%s" % (target, r["driver"]), pos, "rank", "sobol.csv",
                 "the rank of %s by first-order index for target %s" % (r["driver"], target))
+
+    # The same quantities on every other scope in the file, under their own
+    # prefix, so the write-up can put the two orderings side by side.
+    for run in sorted({r["run"] for r in sb_all} - {"por"}):
+        pre = RUN_PREFIX.get(run, run + "_")
+        srows_run = [r for r in sb_all if r["run"] == run]
+        for target in sorted({r["target"] for r in srows_run}):
+            rows = sorted([r for r in srows_run if r["target"] == target],
+                          key=lambda r: -float(r["sobol_first_order"]))
+            top7 = [r["driver"] for r in rows[:7]]
+            top3 = [r["driver"] for r in rows[:3]]
+            add("sobol_%s%s_content_drivers_in_top7" % (pre, target),
+                len([d for d in top7 if d in CONTENT_DRIVERS]), "count", "sobol.csv",
+                "how many of the top seven drivers for %s on the %s scope are content-cost drivers" % (target, run))
+            add("sobol_%s%s_acq_drivers_in_top3" % (pre, target),
+                len([d for d in top3 if d in ACQ_DRIVERS]), "count", "sobol.csv",
+                "how many of the top three drivers for %s on the %s scope are acquisition drivers" % (target, run))
+            for i, r in enumerate(rows[:8], start=1):
+                add("sobol_%s%s_rank%d_driver" % (pre, target, i), r["driver"], "driver name", "sobol.csv",
+                    "driver at rank %d for target %s on the %s scope" % (i, target, run))
+                add("sobol_%s%s_rank%d_value" % (pre, target, i), float(r["sobol_first_order"]),
+                    "share of variance", "sobol.csv",
+                    "first-order index at rank %d for target %s on the %s scope" % (i, target, run))
+            for pos, r in enumerate(rows, start=1):
+                add("sobol_%s%s_rank_of_%s" % (pre, target, r["driver"]), pos, "rank", "sobol.csv",
+                    "the rank of %s for target %s on the %s scope" % (r["driver"], target, run))
 
 if os.path.exists(os.path.join(OUT, "pinned_sweeps.csv")):
     ps = read_csv("pinned_sweeps.csv")
@@ -465,6 +501,25 @@ if os.path.exists(os.path.join(OUT, "breakeven.csv")):
         else:
             add(key + "_status", r["status"], "text", "breakeven.csv", "the status column")
         add(key + "_prior_median", float(r["prior_median"]), "driver units", "breakeven.csv", "the prior_median column")
+        # What the plan looks like AT the solved value, on the statistics the
+        # solve did not target. Without these a break-even reads as a rescue.
+        for suffix, col, unit in (
+            ("at_be_terminal_cash_median", "at_breakeven_terminal_cash_median", "USD"),
+            ("at_be_peak_funding_p80", "at_breakeven_peak_funding_p80", "USD"),
+        ):
+            if r.get(col):
+                add(key + "_" + suffix, float(r[col]), unit, "breakeven.csv",
+                    "the %s column, which is that statistic at the solved break-even" % col)
+        if r.get("at_breakeven_share_of_hitting_paths_ending_negative"):
+            add(key + "_at_be_hitting_paths_ending_negative_pct",
+                100.0 * float(r["at_breakeven_share_of_hitting_paths_ending_negative"]),
+                "per cent", "breakeven.csv",
+                "of the paths that meet the target at the solved break-even, the share that still end the horizon with negative cash")
+        if r.get("at_breakeven_share_reaching_profitability"):
+            add(key + "_at_be_share_reaching_profitability_pct",
+                100.0 * float(r["at_breakeven_share_reaching_profitability"]),
+                "per cent", "breakeven.csv",
+                "the share of paths reaching profitability at the solved break-even, which is the solve's own target where it was the target")
 
 if os.path.exists(os.path.join(OUT, "funding.csv")):
     frows = read_csv("funding.csv")
@@ -494,6 +549,27 @@ if os.path.exists(os.path.join(OUT, "funding.csv")):
             "round_size for scenario %s stage %s" % (r["scenario"], r["stage"]))
         add("funding_%s_%s_need_p80" % (r["scenario"], r["stage"]), float(r["need_p80"]), "USD", "funding.csv",
             "need_p80 for scenario %s stage %s" % (r["scenario"], r["stage"]))
+
+if os.path.exists(os.path.join(OUT, "funding_commitments.csv")):
+    # The prose kept naming entities and counting commitments by hand, and got
+    # both wrong: it named an India entity that is not in this file at all, and
+    # called two entities seed-window when one of them lands in the Series A.
+    fc = read_csv("funding_commitments.csv")
+    add("commitments_total", len(fc), "count", "funding_commitments.csv", "row count")
+    add("commitments_spend_starts_in_seed", len([r for r in fc if r["stage_that_actually_pays"] == "seed"]),
+        "count", "funding_commitments.csv", "rows whose stage_that_actually_pays is seed")
+    add("commitments_decided_after_their_round_closed",
+        len([r for r in fc if r["decision_taken_after_its_round_closed"] == "no"]),
+        "count", "funding_commitments.csv",
+        "rows where the commitment lands in a stage later than the one that pays for it")
+    ents = [r for r in fc if "entity" in r["commitment"]]
+    add("commitments_entity_count", len(ents), "count", "funding_commitments.csv",
+        "rows whose commitment names an entity set-up")
+    add("commitments_entity_names", "; ".join(r["commitment"] for r in ents), "text",
+        "funding_commitments.csv", "those rows' commitment text, verbatim")
+    add("commitments_entities_paid_by_seed",
+        len([r for r in ents if r["stage_that_actually_pays"] == "seed"]), "count",
+        "funding_commitments.csv", "of those, the ones whose spend starts in the seed window")
 
 if os.path.exists(os.path.join(OUT, "rescue_grid.csv")):
     rg = read_csv("rescue_grid.csv")
@@ -538,6 +614,8 @@ if os.path.exists(os.path.join(OUT, "offtest.csv")):
     add("offtest_mechanism_count", len(otr), "count", "offtest.csv", "row count")
     add("offtest_all_exact", all(r["reproduces_base_exactly"] == "yes" for r in otr),
         "boolean", "offtest.csv", "every mechanism reproduces the base run exactly when switched off")
+    add("offtest_all_move_when_on", all(r.get("moves_the_run_when_switched_on") == "yes" for r in otr),
+        "boolean", "offtest.csv", "every mechanism changes the run when switched on, so none is inert")
 
 if os.path.exists(os.path.join(OUT, "omissions.csv")):
     orows = [r for r in read_csv("omissions.csv") if not r["absent_cost_line"].startswith("TOTAL")]
@@ -545,12 +623,39 @@ if os.path.exists(os.path.join(OUT, "omissions.csv")):
         "rows naming an absent cost line, excluding the total row")
     add("omission_zero_line_count", len([r for r in orows if float(r["high_usd"]) == 0.0]),
         "count", "omissions.csv", "of those, the ones priced at zero")
+    # The prose used to list these by hand and the list drifted from the file
+    # twice. The list is now the file's, rendered verbatim, so a line added to
+    # omissions.py appears in the write-up without anyone remembering to add it.
+    def _names(rs):
+        return "; ".join(r["absent_cost_line"] for r in rs)
+    add("omission_line_names", _names(orows), "text", "omissions.csv",
+        "every absent_cost_line in file order, excluding the total row")
+    add("omission_zero_line_names", _names([r for r in orows if float(r["high_usd"]) == 0.0]),
+        "text", "omissions.csv", "the absent_cost_line values priced at zero, in file order")
     for r in read_csv("omissions.csv"):
         slug = re.sub(r"[^a-z0-9]+", "_", r["absent_cost_line"].split(":")[0].lower()).strip("_")
         add("omission_%s_low" % slug, float(r["low_usd"]), "USD", "omissions.csv", r["basis"])
         add("omission_%s_high" % slug, float(r["high_usd"]), "USD", "omissions.csv", r["basis"])
         add("omission_%s_share_high_pct" % slug, 100.0 * float(r["high_share_of_total_cost"]), "per cent",
             "omissions.csv", "high_share_of_total_cost as a percentage")
+
+if os.path.exists(os.path.join(OUT, "aux_params.csv")):
+    for r in read_csv("aux_params.csv"):
+        add("%s_low" % r["parameter"], float(r["low"]), "prior bound", "aux_params.csv",
+            "low bound of the auxiliary prior %s: %s" % (r["parameter"], r["what_it_is"]))
+        add("%s_high" % r["parameter"], float(r["high"]), "prior bound", "aux_params.csv",
+            "high bound of the auxiliary prior %s: %s" % (r["parameter"], r["what_it_is"]))
+
+if os.path.exists(os.path.join(OUT, "sized_omissions.csv")):
+    so = {r["quantity"]: r for r in read_csv("sized_omissions.csv")}
+    for k, r in so.items():
+        add(k, float(r["value"]), r["unit"], "sized_omissions.csv", r["basis"])
+    add("retention_stress_churn_pct",
+        100.0 * (float(so["retention_stress_churn_scale"]["value"]) - 1.0), "per cent",
+        "sized_omissions.csv", "the churn multiple as a percentage increase")
+    add("retention_stress_share_of_cost_pct",
+        100.0 * float(so["retention_stress_share_of_total_cost"]["value"]), "per cent",
+        "sized_omissions.csv", "that cost as a share of the modelled cost base")
 
 if os.path.exists(os.path.join(OUT, "imanconover_check.csv")):
     rows = read_csv("imanconover_check.csv")

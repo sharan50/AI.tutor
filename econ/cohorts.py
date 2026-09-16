@@ -217,6 +217,23 @@ ltv_path = fy_contrib * blended_months
 add("share_paths_final_year_ltv_below_cac", float((ltv_path[REAL] < fy_cac[REAL]).mean()), "share",
     "share of paths with a real final year on which gross lifetime value is below the final-year effective cost per acquisition", "14 and 19")
 
+# The same share on the all-in basis. Checklist item 16 is about a gross margin
+# presented as a net one, and publishing only the gross share commits the very
+# error the item names: the gross share is small and reads as reassurance, and
+# the all-in share is the one that decides whether a household pays for the
+# business that serves it. Both are published, on the same paths, and the
+# write-up quotes the second whenever it quotes the first.
+ltv_path_allin = fy_allin * blended_months
+add("share_paths_final_year_ltv_allin_below_cac",
+    float((ltv_path_allin[REAL] < fy_cac[REAL]).mean()), "share",
+    "share of paths with a real final year on which ALL-IN lifetime value, which carries the demand-independent cost base, is below the final-year effective cost per acquisition", "14, 16 and 19")
+add("share_paths_final_year_ltv_allin_below_cac_pct",
+    100.0 * float((ltv_path_allin[REAL] < fy_cac[REAL]).mean()), "per cent",
+    "the same share as a percentage", "14, 16 and 19")
+add("share_paths_final_year_ltv_below_cac_pct",
+    100.0 * float((ltv_path[REAL] < fy_cac[REAL]).mean()), "per cent",
+    "the gross share as a percentage, published beside the all-in one so the two are never quoted apart", "14, 16 and 19")
+
 # ---------------------------------------------------------------------------
 # What the demand shock is actually worth. Checklist item 18 published the run
 # lengths, which are a property of the demand series, and never the cost, which

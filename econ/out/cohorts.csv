@@ -36,6 +36,9 @@ seed,run_date,name,value,unit,derivation,checklist_item
 20260916,2026-09-16,final_year_ltv_over_cac_pooled,1.864644,ratio,pooled gross lifetime value divided by pooled final-year effective cost per acquisition,14
 20260916,2026-09-16,final_year_cac_pooled_over_anchor_median,1.716692,ratio,pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled,12 and 13
 20260916,2026-09-16,share_paths_final_year_ltv_below_cac,0.057707,share,share of paths with a real final year on which gross lifetime value is below the final-year effective cost per acquisition,14 and 19
+20260916,2026-09-16,share_paths_final_year_ltv_allin_below_cac,0.885689,share,"share of paths with a real final year on which ALL-IN lifetime value, which carries the demand-independent cost base, is below the final-year effective cost per acquisition","14, 16 and 19"
+20260916,2026-09-16,share_paths_final_year_ltv_allin_below_cac_pct,88.568852,per cent,the same share as a percentage,"14, 16 and 19"
+20260916,2026-09-16,share_paths_final_year_ltv_below_cac_pct,5.770676,per cent,"the gross share as a percentage, published beside the all-in one so the two are never quoted apart","14, 16 and 19"
 20260916,2026-09-16,shock_cost_terminal_cash_mean,51215.749330,USD,"terminal cash mean with the demand shock as sampled, less the same with shock_sd pinned to zero: what the whole persistent-shock apparatus is worth",18
 20260916,2026-09-16,shock_cost_terminal_cash_median,-10625.614727,USD,the same on the median path,18
 20260916,2026-09-16,shock_cost_peak_funding_p80,12308.897731,USD,the same on the eightieth-percentile peak funding requirement,18

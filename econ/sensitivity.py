@@ -54,6 +54,36 @@ def targets(o):
 TARGETS = targets(OUTCOMES)
 N_BINS = 40
 
+# The ordering is a property of the scope it was computed on, not of the
+# business. On the plan of record the content escalation is the largest single
+# commitment and content drivers dominate; on the go-to-market minimum there is
+# almost no content escalation to be wrong about, and the ordering rearranges.
+# Reporting one ordering as "the" ordering is the error this second run exists
+# to make impossible, so both are written to sobol.csv under the run column and
+# the write-up quotes them side by side.
+# The third run is here because the write-up makes an ordering claim about full
+# onshoring, and an ordering claim with no file behind it is exactly what the
+# reviews kept catching. An earlier draft asserted that onshoring put a United
+# Kingdom salary driver into the top three and pushed item count down; both were
+# typed rather than read, and both were wrong.
+ALT_RUNS = [
+    ("gtm_minimum", dict(scope="ukonly", schools=False, unit_schedules=None)),
+    ("onshore_all", dict(onshore_share=1.0)),
+]
+
+
+def scope_runs():
+    runs = [("por", TARGETS)]
+    for name, over in ALT_RUNS:
+        cfg = dict(NS["base_config"]())
+        cfg.update(over)
+        if name == "gtm_minimum":
+            cfg["unit_schedules"] = NS["GTM_MINIMUM_SCHEDULES"]
+        out, summary = NS["run"](dict(DRV), cfg)
+        o, _cum = NS["path_outcomes"](out, summary)
+        runs.append((name, targets(o)))
+    return runs
+
 
 def sobol_first_order(x, y, k=N_BINS):
     """
@@ -101,22 +131,24 @@ def write_csv(name, header, rows):
 
 def run_sobol_and_tornado():
     srows, trows = [], []
-    for tname, y in TARGETS.items():
-        for d in DRIVER_NAMES:
-            x = DRV[d]
-            s = sobol_first_order(x, y)
-            lo, hi, spread = decile_spread(x, y)
-            srows.append([SEED, RUN_DATE, "por", tname, d, "%.6f" % s])
-            trows.append([SEED, RUN_DATE, "por", tname, d,
-                          "%.6f" % lo, "%.6f" % hi, "%.6f" % spread, "%.6f" % abs(spread)])
+    for rname, tset in scope_runs():
+        for tname, y in tset.items():
+            for d in DRIVER_NAMES:
+                x = DRV[d]
+                s = sobol_first_order(x, y)
+                lo, hi, spread = decile_spread(x, y)
+                srows.append([SEED, RUN_DATE, rname, tname, d, "%.6f" % s])
+                trows.append([SEED, RUN_DATE, rname, tname, d,
+                              "%.6f" % lo, "%.6f" % hi, "%.6f" % spread, "%.6f" % abs(spread)])
     write_csv("sobol.csv", ["seed", "run_date", "run", "target", "driver", "sobol_first_order"], srows)
     write_csv("tornado.csv", ["seed", "run_date", "run", "target", "driver",
                               "decile1_mean", "decile10_mean", "spread", "abs_spread"], trows)
     ranked = {}
-    for tname in TARGETS:
-        rows = [r for r in srows if r[3] == tname]
-        rows.sort(key=lambda r: -float(r[5]))
-        ranked[tname] = [(r[4], float(r[5])) for r in rows]
+    for rname in ["por"] + [n for n, _ in ALT_RUNS]:
+        for tname in TARGETS:
+            rows = [r for r in srows if r[2] == rname and r[3] == tname]
+            rows.sort(key=lambda r: -float(r[5]))
+            ranked[(rname, tname)] = [(r[4], float(r[5])) for r in rows]
     return ranked
 
 
@@ -183,17 +215,22 @@ def run_twoway(d1, d2):
 
 def main():
     ranked = run_sobol_and_tornado()
-    # Rank the sweeps on the rank-transformed target, which is the robust one.
-    top = [d for d, _ in ranked["terminal_cash_rank"][:8]]
+    # The sweeps and the grid are instruments on the plan of record, so they
+    # take the plan of record's ordering. The second ordering is written to the
+    # files beside it and is not silently averaged into this one.
+    top = [d for d, _ in ranked[("por", "terminal_cash_rank")][:8]]
     print("top first-order Sobol drivers on terminal cash:")
-    for d, s in ranked["terminal_cash"][:12]:
+    for d, s in ranked[("por", "terminal_cash")][:12]:
+        print("  %-28s %.4f" % (d, s))
+    print("the same ordering on the go-to-market minimum, for comparison:")
+    for d, s in ranked[("gtm_minimum", "peak_funding_requirement")][:8]:
         print("  %-28s %.4f" % (d, s))
     run_pinned_sweeps(top[:6])
     run_twoway(top[0], top[1])
     with open(os.path.join(OUT, "sensitivity_top.txt"), "w") as fh:
         fh.write("seed %s run_date %s\n" % (SEED, RUN_DATE))
-        for tname, items in ranked.items():
-            fh.write("target %s\n" % tname)
+        for (rname, tname), items in ranked.items():
+            fh.write("run %s target %s\n" % (rname, tname))
             for d, s in items[:15]:
                 fh.write("  %-30s %.6f\n" % (d, s))
     print("done")

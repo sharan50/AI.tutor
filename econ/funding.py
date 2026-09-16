@@ -32,7 +32,7 @@ BUFFER_MONTHS = 6               # months of the stage's own burn carried as buff
 
 # Two narrower scopes, to answer what a round of seed size could actually buy.
 # Both are the plan of record with the expansion removed, not different models.
-GTM_MINIMUM = {NS["M_UK"]: [(6, 5, 1, 1)], NS["M_US"]: [], NS["M_IN"]: [], NS["M_ROW"]: []}
+GTM_MINIMUM = NS["GTM_MINIMUM_SCHEDULES"]
 ONE_SUBJECT = {NS["M_UK"]: [(6, 1, 1, 1)], NS["M_US"]: [], NS["M_IN"]: [], NS["M_ROW"]: []}
 
 SCENARIOS = {

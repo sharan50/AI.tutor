@@ -57,11 +57,10 @@ METRICS = {
 # range, reaches any of the targets, because roughly two thirds of the cost base
 # is committed before demand can speak to it. Both scopes are therefore solved,
 # and the plan of record's answer is reported as the finding it is.
-GTM_MINIMUM = {NS["M_UK"]: [(6, 5, 1, 1)], NS["M_US"]: [], NS["M_IN"]: [], NS["M_ROW"]: []}
 SCOPES = {
     "plan_of_record": BASE_CFG,
     "gtm_minimum_uk_one_board": dict(NS["base_config"](), scope="ukonly", schools=False,
-                                     unit_schedules=GTM_MINIMUM),
+                                     unit_schedules=NS["GTM_MINIMUM_SCHEDULES"]),
 }
 
 
@@ -73,6 +72,35 @@ def evaluate(driver, value, metric_fn, anchor_tutoring=False, scope="plan_of_rec
     out, summary = NS["run"](drv, SCOPES[scope])
     o, _cum = NS["path_outcomes"](out, summary)
     return metric_fn(o)
+
+
+def describe_at(driver, value, anchor_tutoring, scope):
+    """
+    What the plan looks like AT the solved break-even, on the metrics the solve
+    did not target.
+
+    A break-even is a solve against one statistic and says nothing about the
+    others. The share-of-paths target in particular is a low bar: a path counts
+    as reaching profitability if it strings three cash-positive months together,
+    which it can do while still ending the horizon far under water and while
+    still needing capital the plan has not raised. Solving to it and calling the
+    answer viable is the error these columns exist to prevent, so every solved
+    row carries the other two statistics and the share of the paths that hit the
+    target and still end negative.
+    """
+    drv = dict(DRV)
+    drv[driver] = np.full_like(DRV[driver], value)
+    if anchor_tutoring:
+        drv["anchor_u"] = np.zeros_like(DRV["anchor_u"])
+    out, summary = NS["run"](drv, SCOPES[scope])
+    o, _cum = NS["path_outcomes"](out, summary)
+    hits = o["month_rev_passes_cost"] >= 0
+    neg_among_hits = (float((o["terminal_cash"][hits] < 0).mean())
+                      if hits.any() else float("nan"))
+    return dict(terminal_cash_median=float(np.median(o["terminal_cash"])),
+                peak_funding_p80=float(np.percentile(o["peak_funding_requirement"], 80)),
+                share_reaching_profitability=float(hits.mean()),
+                share_of_hitting_paths_ending_negative=neg_among_hits)
 
 
 def bisect(driver, lo, hi, metric_fn, target, log_scale, anchor_tutoring, scope, steps=STEPS):
@@ -157,13 +185,24 @@ def main():
             fn, target, meaning = METRICS[mname]
             value, ends, bracketed = bisect(driver, lo, hi, fn, target, log_scale, anchor_tut, scope)
             base_val = float(np.median(DRV[driver]))
+            at = describe_at(driver, value, anchor_tut, scope) if bracketed else {}
             rows.append([SEED, RUN_DATE, scope, driver, mname, "%.6f" % target, meaning,
                          "anchor_tutoring" if anchor_tut else "published",
                          "%.6f" % lo, "%.6f" % hi,
                          "%.6f" % ends[0], "%.6f" % ends[1],
                          "bracketed" if bracketed else "not bracketed by the prior range",
                          ("%.6f" % value) if value is not None else "",
-                         "%.6f" % base_val, question, trigger])
+                         "%.6f" % base_val,
+                         ("%.6f" % at["terminal_cash_median"]) if at else "",
+                         ("%.6f" % at["peak_funding_p80"]) if at else "",
+                         ("%.6f" % at["share_reaching_profitability"]) if at else "",
+                         ("%.6f" % at["share_of_hitting_paths_ending_negative"]) if at else "",
+                         question, trigger])
+            if bracketed:
+                print("    at that value: median %s, peak funding p80 %s, %.1f%% of the paths that hit the target still end negative"
+                      % (format(at["terminal_cash_median"], ",.0f"),
+                         format(at["peak_funding_p80"], ",.0f"),
+                         100 * at["share_of_hitting_paths_ending_negative"]))
             print("%-26s %-20s %-30s %s" % (scope, driver, mname,
                   ("break-even at %.4f (prior median %.4f)" % (value, base_val)) if bracketed
                   else "no value in the prior range reaches the target: ends %.4f and %.4f" % ends))
@@ -172,7 +211,11 @@ def main():
         w = csv.writer(fh, lineterminator="\n")
         w.writerow(["seed", "run_date", "scope", "driver", "metric", "target", "target_meaning", "sample",
                     "support_low", "support_high", "metric_at_support_low", "metric_at_support_high",
-                    "status", "breakeven_value", "prior_median", "question", "trigger"])
+                    "status", "breakeven_value", "prior_median",
+                    "at_breakeven_terminal_cash_median", "at_breakeven_peak_funding_p80",
+                    "at_breakeven_share_reaching_profitability",
+                    "at_breakeven_share_of_hitting_paths_ending_negative",
+                    "question", "trigger"])
         w.writerows(rows)
     print("wrote breakeven.csv")
 

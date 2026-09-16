@@ -31,7 +31,7 @@ NS = harness.load()
 OUT, SEED, RUN_DATE = NS["OUT"], NS["SEED"], NS["RUN_DATE"]
 DRV = NS["_verified"]["drv"]
 
-GTM_MINIMUM = {NS["M_UK"]: [(6, 5, 1, 1)], NS["M_US"]: [], NS["M_IN"]: [], NS["M_ROW"]: []}
+GTM_MINIMUM = NS["GTM_MINIMUM_SCHEDULES"]
 SCOPES = {
     "plan_of_record": NS["base_config"](),
     "gtm_minimum_uk_one_board": dict(NS["base_config"](), scope="ukonly", schools=False,

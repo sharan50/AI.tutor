@@ -154,6 +154,18 @@ UNIT_SCHEDULES = {
     M_ROW: ROW_UNIT_SCHEDULE,
 }
 
+# The go-to-market minimum: the five subjects of the brief, GCSE only, one
+# board, United Kingdom only, and never widened. This is the floor of the scope
+# ladder. It is defined here rather than in the scripts because two of them use
+# it and a second copy would be free to drift from the first. It is never read
+# by the published run: base_config() leaves unit_schedules at None.
+GTM_MINIMUM_SCHEDULES = {
+    M_UK: [(GTM_MONTH, 5, 1, 1)],
+    M_US: [],
+    M_IN: [],
+    M_ROW: [],
+}
+
 # ---------------------------------------------------------------------------
 # Commercial decisions taken here, so that the revenue line matches a pricing
 # decision rather than being users times price.
@@ -170,6 +182,11 @@ CAC_LTV_CAP = 0.75         # never spend so that effective CAC exceeds this x LT
 # limit. Without this the standing-book cap left cumulative acquisitions
 # unbounded and the best paths bought tens of millions of households in a market
 # of a few million.
+# It does two jobs, and both are load-bearing: it bounds cumulative acquisitions
+# AND it is the denominator of the saturation term, so it sets how fast the
+# effective cost of acquisition rises. A single number doing two jobs is worth
+# being able to vary, so base_config() carries pool_reacq_multiple; None means
+# this published value and the switched-off case reproduces the base run.
 POOL_REACQUISITION_MULTIPLE = 3.0
 
 # The launch acquisition subsidy is not revenue-linked, so it must switch off.
@@ -205,7 +222,9 @@ POOL_BREADTH_EXPONENT = 0.6
 # uses the lower one on every path including the large ones.
 APPSTORE_FEE = 0.15
 
-# The demand multiplier at or below which a month counts toward a bad run.
+# The demand multiplier BELOW which a month counts toward a bad run. Strictly
+# below: the test at the call site is `shock_mult < SHOCK_BAD_THRESHOLD`, and
+# this comment said "at or below" until a review read the two together.
 SHOCK_BAD_THRESHOLD = 0.80
 
 # Safeguarding rota thresholds, in active consumer households.
@@ -746,6 +765,7 @@ def base_config():
         creator=None,             # None means no creator licence cost, which is the published run
         onshore_share=None,       # None or 0.0 means all engineering stays in Bengaluru
         residual=None,            # None means the horizon writes everything to zero, which is the published run
+        pool_reacq_multiple=None, # None means the published POOL_REACQUISITION_MULTIPLE
     )
 
 
@@ -955,6 +975,7 @@ def run(drv, cfg=None):
             envelope = np.zeros(P)
 
         open_markets = [m for m in range(NM) if t >= _open_month(cfg, m)]
+        pool_reacq = cfg.get("pool_reacq_multiple") or POOL_REACQUISITION_MULTIPLE
         wsum = sum(MARKET_BUDGET_WEIGHT[m] for m in open_markets) or 1.0
         spend_total = np.zeros(P)
         acq_total = np.zeros(P)
@@ -974,7 +995,7 @@ def run(drv, cfg=None):
             # saturation term never rose above a fifth, which made the effective
             # cost curve in section 4 of the write-up describe something the
             # model was not doing.
-            reach = cum_acq[m] / np.maximum(pool * POOL_REACQUISITION_MULTIPLE, 1.0)
+            reach = cum_acq[m] / np.maximum(pool * pool_reacq, 1.0)
             pen = np.clip(reach, 0.0, 0.97)
             ltv_m = ltv_estimate(drv, expected_contrib_pm(drv, m, t, cps, billed_flat), m)
             cap = budget_cap_from_ltv(drv, m, ltv_m, pen)
@@ -988,7 +1009,7 @@ def run(drv, cfg=None):
             # its way to tens of millions of households in a market of a few
             # million. A household can be worked more than once, not endlessly.
             room = np.maximum(pool - active_by_market[m], 0.0)
-            room_cum = np.maximum(pool * POOL_REACQUISITION_MULTIPLE - cum_acq[m], 0.0)
+            room_cum = np.maximum(pool * pool_reacq - cum_acq[m], 0.0)
             acq = np.minimum(acq_wanted, np.minimum(room, room_cum))
             # Spend is committed in advance, so a demand shock buys fewer
             # households for the same money. Only running out of market stops the

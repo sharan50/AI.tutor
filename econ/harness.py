@@ -14,6 +14,8 @@ Usage:
     from harness import load      returns the verified namespace
 """
 
+import csv
+import datetime
 import difflib
 import hashlib
 import os
@@ -112,9 +114,52 @@ def verify(ns=None, quiet=False):
     return ns
 
 
+def model_sha():
+    return hashlib.sha256(open(MODEL, "rb").read()).hexdigest()
+
+
+def _record_provenance():
+    """
+    The gate proves that model.py reproduces its own two published CSVs. It says
+    nothing about the other files under out/, which are written by scripts that
+    run ON the harness but whose output nothing re-derives. The failure mode
+    that leaves is staleness: a derived CSV generated against an older model.py
+    and never regenerated, which no amount of byte-exactness on por_monthly.csv
+    would catch.
+
+    So every script that loads the harness records which model.py it ran
+    against, and verify.py refuses a set of files whose recorded hashes are not
+    all the current one. It is a staleness check, not a reproduction check, and
+    it is reported as the weaker thing it is.
+    """
+    script = os.path.basename(sys.argv[0]) or "interactive"
+    path = os.path.join(OUTDIR, "provenance.csv")
+    sha = model_sha()
+    rows = {}
+    if os.path.exists(path):
+        with open(path, newline="") as fh:
+            rdr = csv.reader(fh)
+            header = next(rdr, None)
+            for r in rdr:
+                if len(r) >= 2:
+                    rows[r[0]] = r
+    rows[script] = [script, sha, datetime.datetime.now(datetime.timezone.utc)
+                    .strftime("%Y-%m-%dT%H:%M:%SZ")]
+    with open(path, "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["script", "model_sha256", "ran_at_utc"])
+        for k in sorted(rows):
+            w.writerow(rows[k])
+
+
 def load(quiet=True):
     """Downstream entry point. Everything else in this directory calls this."""
-    return verify(quiet=quiet)
+    ns = verify(quiet=quiet)
+    try:
+        _record_provenance()
+    except OSError:
+        pass
+    return ns
 
 
 def selftest():

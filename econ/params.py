@@ -45,7 +45,7 @@ CONSTANTS = [
     ("P_TUTORING_ANCHOR", "probability a path lands in the tutoring-anchored price regime"),
     ("SHOCK_BAD_THRESHOLD", "demand multiplier below which a month counts toward a bad run"),
     ("APPSTORE_FEE", "app store commission used by the app-store scenario, the small business rate"),
-    ("POOL_REACQUISITION_MULTIPLE", "how many times over the reachable pool may be worked across the horizon"),
+    ("POOL_REACQUISITION_MULTIPLE", "how many times over the reachable pool may be worked across the horizon; it is also the denominator of the saturation term, so it sets how fast acquisition gets dearer as a market is worked"),
     ("START_YEAR", "calendar year of month zero"),
     ("START_MONTH_IDX", "calendar month index of month zero, zero being January"),
 ]

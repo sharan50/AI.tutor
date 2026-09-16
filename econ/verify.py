@@ -225,10 +225,39 @@ def pass_b(figs, allowed):
     return matched, exempt, unmatched
 
 
+# ---------------------------------------------------------------------------
+# Pass 0: staleness. The harness gate proves model.py reproduces its own two
+# published CSVs; it says nothing about the other files under out/, which are
+# written by scripts that run on the harness but whose output nothing
+# re-derives. What can go wrong there is staleness, so every script records the
+# model.py it ran against and this refuses a set whose hashes disagree. It is a
+# weaker check than the gate and is reported as such.
+# ---------------------------------------------------------------------------
+def pass_staleness():
+    import hashlib
+    sha = hashlib.sha256(open(os.path.join(HERE, "model.py"), "rb").read()).hexdigest()
+    path = os.path.join(OUT, "provenance.csv")
+    if not os.path.exists(path):
+        return 0, ["provenance.csv is missing: no script has recorded which model.py it ran against"]
+    rows = read_csv("provenance.csv")
+    fails = [
+        "%s last ran against model.py %s, not the current %s: its outputs are stale"
+        % (r["script"], r["model_sha256"][:12], sha[:12])
+        for r in rows if r["model_sha256"] != sha
+    ]
+    return len(rows), fails
+
+
 def main():
     figs = load_figures()
     allowed = load_allow()
     print("figures on disk: %d" % len(figs))
+
+    n_prov, stale = pass_staleness()
+    print("\nPASS 0, generator staleness: %d scripts recorded" % n_prov)
+    for f in stale:
+        print("  FAIL " + f)
+    print("  %d stale" % len(stale))
 
     checked, fails = pass_a(figs)
     print("\nPASS A, independent re-derivation: %d checks" % checked)
@@ -242,7 +271,7 @@ def main():
         print("  UNDERIVABLE %s:%d  %-14s  %s" % (doc, lineno, token, ctx))
     print("  %d numbers could not be re-derived" % len(unmatched))
 
-    total = len(fails) + len(unmatched)
+    total = len(fails) + len(unmatched) + len(stale)
     print("\nTOTAL FAILURES: %d" % total)
     return 1 if total else 0
 

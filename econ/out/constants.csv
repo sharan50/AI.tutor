@@ -24,7 +24,7 @@ seed,run_date,constant,value,what_it_is
 20260916,2026-09-16,P_TUTORING_ANCHOR,0.500000,probability a path lands in the tutoring-anchored price regime
 20260916,2026-09-16,SHOCK_BAD_THRESHOLD,0.800000,demand multiplier below which a month counts toward a bad run
 20260916,2026-09-16,APPSTORE_FEE,0.150000,"app store commission used by the app-store scenario, the small business rate"
-20260916,2026-09-16,POOL_REACQUISITION_MULTIPLE,3.000000,how many times over the reachable pool may be worked across the horizon
+20260916,2026-09-16,POOL_REACQUISITION_MULTIPLE,3.000000,"how many times over the reachable pool may be worked across the horizon; it is also the denominator of the saturation term, so it sets how fast acquisition gets dearer as a market is worked"
 20260916,2026-09-16,START_YEAR,2027.000000,calendar year of month zero
 20260916,2026-09-16,START_MONTH_IDX,2.000000,"calendar month index of month zero, zero being January"
 20260916,2026-09-16,FX_INR_USD_inverse,86.500000,"rupees per United States dollar, the inverse of FX_INR_USD"

@@ -145,18 +145,23 @@ and `market_reuse` is ranked @@sobol_peak_funding_requirement_rank_of_market_reu
 ### 8. A cost with no term at all: **not clean, @@omission_line_count|int@@ named and priced**
 
 Grepped for. `out/omissions.csv` names each absent line and prices it from a
-figure the model already carries: refunds, chargebacks and failed payments;
-insurance; recruitment fees; the night rota; penetration testing and vulnerability
-disclosure; intercompany markup and Indian tax on it; accessibility conformance;
-corporation tax; translation; regulatory enforcement exposure; and examiner
-supply as a quantity rather than a price.
+figure the model already carries. The list is rendered from the file rather than
+typed, because a hand-kept copy of it drifted from the file twice:
+@@omission_line_names|raw@@.
 
-@@omission_zero_line_count|int@@ of them are priced at zero and written down anyway, because a zero recorded
-is not the same as a line left out: corporation tax, because no scenario here
-returns a taxable trading profit; translation, because the expansion is across
-English-speaking curricula by decision; regulatory enforcement exposure, because
-nothing here puts a probability on it; and examiner supply, because the model
-prices examiner time and never asks whether it exists.
+@@omission_zero_line_count|int@@ of them are priced at zero and written down
+anyway, because a zero recorded is not the same as a line left out:
+@@omission_zero_line_names|raw@@. Four of those zeros are genuine — no scenario
+here returns a taxable trading profit, the expansion is across English-speaking
+curricula by decision, nothing here puts a probability on enforcement, and
+examiner supply is a quantity question rather than a cost. The other two are
+zero only as *cost* lines, because they are retention mechanics rather than
+costs, and their size is published separately in `out/sized_omissions.csv`:
+scaling both churn drivers by @@retention_stress_churn_pct|num0@@ per cent costs
+@@retention_stress_terminal_cash_cost|usd0@@ dollars of terminal cash, which is
+@@retention_stress_share_of_cost_pct|num1@@ per cent of the modelled cost base.
+That scale is a prior on how much of the book a reminder-and-easy-exit regime
+and involuntary churn move between them, not a measurement of either.
 
 **In total the absent lines are @@omission_total_of_every_absent_line_low|usd0@@ to
 @@omission_total_of_every_absent_line_high|usd0@@ dollars, or @@omission_total_of_every_absent_line_share_high_pct|num2@@ per cent of the modelled
@@ -187,21 +192,39 @@ what it moved.
 The plan of record is charged for every market and channel it opens, and the
 schedules that drive content cost are gated the same way.
 
-### 10. Like-for-like comparators: **clean now, twice**
+### 10. Like-for-like comparators: **clean in the file; it was the prose that was not, and it cost a headline conclusion**
 
 Every scenario in `out/variants.csv` shares one drawn driver dictionary and
 differs only in named switches. A scenario that carries a market or a channel is
 charged its entities, its counsel, its content build and its people.
 
-**It took two rounds to get here.** Round 1 found the United Kingdom-only
-comparator hiring sales representatives and paying for entities it never opens.
-Round 2 found the institution channel charged an India content bank that nothing
-in the model ever bills, which was most of what "the cost of Route B" appeared to
-be. Both are fixed and both are in `CHANGELOG.md`.
+**It took three rounds to get here, and the third was the expensive one.** Round
+1 found the United Kingdom-only comparator hiring sales representatives and
+paying for entities it never opens. Round 2 found the institution channel charged
+an India content bank that nothing in the model ever bills, which was most of
+what "the cost of Route B" appeared to be. Both were defects in the model.
+
+**Round 3 found the same defect one level up, in the prose rather than the
+code.** Owner decision 1 quoted a capital figure measured against the
+go-to-market minimum beside a terminal-cash figure measured against the United
+Kingdom-only scenario and read the pair as one finding about scope. Both scenarios
+are internally like for like; the *comparison between the two comparisons* was
+not. The conclusion that scope is dominant on capital and minor on return was an
+artefact of it, and it was set in bold and repeated. Section 12 now has the
+three-rung ladder, every rung measured on the same four statistics, and a
+conclusion that is neither the old one nor its mirror: scope is much the largest
+decision on capital and the third largest on terminal cash, and it is two
+decisions rather than one, because content schedule and market count behave
+differently on the two statistics. All three rounds are in `CHANGELOG.md`.
 
 **One comparator is still not like for like and is labelled where it is used.**
-The United Kingdom-only scenario drops three consumer markets AND the institution
-channel, so it cannot be read as a measure of market scope alone.
+The United Kingdom-only scenario drops two consumer markets — the United States
+and the rest of the English-speaking world, India being an institution market
+here rather than a consumer one — AND the institution channel, so it cannot be
+read as a measure of market scope alone. It also keeps the whole United Kingdom
+content escalation, which is the larger of the two things "scope" means in this
+document; section 12 of the write-up now puts all three rungs of the scope ladder
+side by side rather than reading this scenario as the scope reduction.
 
 One comparison in the write-up is **not** like for like and is labelled as such:
 the institution channel is charged its costs and credited its revenue, but not
@@ -286,7 +309,7 @@ a sampled summer lapse probability and a sampled progression rate.
 **The number the code actually uses is @@year10_to_year11_retained_months_ratio|num2@@, not two**
 (@@retained_months_pre_exam_mean|num2@@ months against @@retained_months_exam_year_mean|num2@@, measured by pinning the
 segment mix and re-running on the same random numbers). It reaches two or better
-on @@share_paths_year10_at_least_doubles|pct1@@ per cent of paths. docs/10's shape survives; its magnitude
+on @@share_paths_year10_at_least_doubles|pct2@@ per cent of paths. docs/10's shape survives; its magnitude
 does not, and docs/10's own caveat about the summer is why.
 
 Market ratios are all sampled, none asserted: price, acquisition cost and
@@ -318,6 +341,16 @@ is dominated by the few paths with large books that spread the fixed costs, and
 the median path is small with the same fixed costs on top of it. Both are in
 `out/cohorts.csv` and both are in the write-up, so neither can stand in for the
 other and neither can stand in for the gross figure.
+
+**The same trap has a second door, and a round-three review found the document
+walking through it.** The lifetime-value-against-acquisition-cost comparison was
+published on the gross basis only: lifetime value is below acquisition cost on
+@@share_paths_final_year_ltv_below_cac|pct1@@ per cent of paths, which reads as
+reassurance. On the all-in basis the same comparison fails on
+@@share_paths_final_year_ltv_allin_below_cac|pct1@@ per cent. Both are now in
+`out/cohorts.csv` and item 19 publishes them side by side. Publishing only the
+first is precisely this checklist item, committed by a document whose own answer
+to this checklist item was "clean".
 
 ---
 
@@ -372,16 +405,29 @@ the acquisition shock, is the thing worth worrying about.
 
 ### 19. Conclusions true only of an averaged line: **clean, each restated per path**
 
-Every averaged claim in the write-up is given its per-path share:
+Every averaged claim in the write-up is given its per-path share. The last
+column says whether the write-up asserts the proposition or denies it, because
+two of these rows are propositions the document exists to *refute* and reading
+their shares as support would invert them:
 
-| Averaged claim | Share of paths on which it holds |
-|---|---|
-| Content exceeds acquisition spend | @@share_paths_content_exceeds_acquisition|pct1@@ per cent |
-| Content exceeds both acquisition and people | @@share_paths_content_is_largest_line|pct1@@ per cent |
-| The Year 10 cohort retains at least twice the months | @@share_paths_year10_at_least_doubles|pct1@@ per cent |
-| Lifetime value is below acquisition cost in the final year | @@share_paths_final_year_ltv_below_cac|pct1@@ per cent |
-| Peak funding exceeds ten million dollars | @@share_paths_peak_funding_over_10m|pct1@@ per cent |
-| Terminal cumulative cash is positive | @@share_paths_terminal_cash_positive|pct1@@ per cent |
+| Proposition | Share of paths on which it holds | The write-up |
+|---|---|---|
+| Content exceeds acquisition spend | @@share_paths_content_exceeds_acquisition|pct1@@ per cent | asserts it |
+| Content exceeds both acquisition and people | @@share_paths_content_is_largest_line|pct1@@ per cent | asserts it |
+| The Year 10 cohort retains at least twice the months | @@share_paths_year10_at_least_doubles|pct2@@ per cent | **denies it**, against docs/10 |
+| Gross lifetime value is below acquisition cost in the final year | @@share_paths_final_year_ltv_below_cac|pct1@@ per cent | **denies it** on the gross basis |
+| All-in lifetime value is below acquisition cost in the final year | @@share_paths_final_year_ltv_allin_below_cac|pct1@@ per cent | asserts it on the all-in basis |
+| Peak funding exceeds ten million dollars | @@share_paths_peak_funding_over_10m|pct1@@ per cent | asserts it |
+| Terminal cumulative cash is positive | @@share_paths_terminal_cash_positive|pct1@@ per cent | **denies it** |
+
+**The two lifetime-value rows are the pair to read together, and an earlier
+draft published only the first.** On the gross basis, which charges a household
+inference, support, payments and age assurance and nothing else, lifetime value
+clears acquisition cost on almost every path. On the all-in basis, which also
+carries the content build and the people who make it, it fails on
+@@share_paths_final_year_ltv_allin_below_cac|pct1@@ per cent. Quoting the gross
+number alone is checklist item 16 — a gross margin presented as a net one — and
+it was being done here.
 
 ---
 
@@ -396,9 +442,13 @@ that sizing on the base case would underfund the plan actually described.
 
 ### 21. Staging against decisions: **not clean**
 
-Every commitment through month 18 has its spend starting inside the seed window,
-including both foreign entities, foreign counsel, the security certification,
-A-level content and the second and third United Kingdom boards. One commitment lands
+@@commitments_spend_starts_in_seed|int@@ of the file's
+@@commitments_total|int@@ commitments have their spend starting inside the seed
+window, including the United States entity and its market counsel, the security
+certification, A-level content and the second and third United Kingdom boards.
+The rest-of-English-speaking entity is the other of the two the file names, and
+it lands and is paid for in the Series A; an earlier draft called both of them
+seed-window. One commitment lands
 after the Series A opens with its spend starting before it: all four boards live
 at month 18, built from month 12. The rest-of-English-speaking market at month 24
 begins its build at month 18, exactly as the Series A opens, so the file's test
@@ -556,11 +606,25 @@ Total acquisitions across the horizon run to a median of @@por_total_acquisition
 ninety-ninth percentile of @@por_total_acquisitions_p99|usd0@@ and a maximum of @@por_total_acquisitions_max|usd0@@.
 @@por_share_paths_terminal_cash_above_100m|pct2@@ per cent of paths end the horizon above a hundred million dollars.
 
-There is now a ceiling, `POOL_REACQUISITION_MULTIPLE`, so no path acquires more
+There is now a ceiling, `POOL_REACQUISITION_MULTIPLE`, set at
+@@const_POOL_REACQUISITION_MULTIPLE|num1@@, so no path acquires more
 than that multiple of its own sampled pool in any market, and the largest ratio of
 acquisitions to that path's own United Kingdom pool is @@por_max_acquisitions_over_own_uk_pool|num2@@ across three
 open consumer markets. **That bounds the arithmetic; it does not make the top of
-the distribution believable.** The reachable-pool prior is log-uniform across a
+the distribution believable.**
+
+**And it is load-bearing, which the document did not say until a round-three
+review pointed it out.** The same constant is also the denominator of the
+saturation term, so it sets how fast the effective cost of acquisition rises as
+a market is worked — one number doing two jobs, neither of them measured. It is
+now a configuration key rather than a buried literal, and two scenarios price
+it: working the pool twice over rather than three times is worth
+@@delta_por_reacq_low_terminal_cash_mean|usd0@@ dollars of terminal cash, and
+five times over @@delta_por_reacq_high_terminal_cash_mean|usd0@@. Nothing in the
+vault sets this number. It is a prior, it is not in `out/drivers.csv` because it
+is a constant rather than a sampled driver, and a constant that moves the answer
+by that much while being invisible to the sensitivity analysis is a defect of
+this instrument rather than a property of the business. The reachable-pool prior is log-uniform across a
 thirtyfold range and the market relatives multiply it further, so the upper tail
 describes a business several times the size of the demand the vault has evidence
 for. Those paths are what makes the mean of terminal cash, which is why the
@@ -605,6 +669,20 @@ figure a mixture of two regimes; `POOL_BREADTH_EXPONENT` and
 `PLATFORM_PER_EXTRA_MARKET`, which between them set the ratio the write-up calls
 the owner's largest decision; and `OVERAGE_CAP_MULT` at @@const_OVERAGE_CAP_MULT|num1@@, which sets the
 one-sided asymmetry that checklist item 3 rests on.
+
+**One of them stopped being invisible in round 3, and the exercise shows what the
+rest are hiding.** `POOL_REACQUISITION_MULTIPLE`, at
+@@const_POOL_REACQUISITION_MULTIPLE|num1@@, does two jobs: it bounds cumulative
+acquisitions and it is the denominator of the saturation term, so it also sets
+how fast acquisition gets dearer as a market is worked. It is now a configuration
+key with two scenarios, and moving it from three to two is worth
+@@delta_por_reacq_low_terminal_cash_mean|usd0@@ dollars of terminal cash while
+moving it to five is worth @@delta_por_reacq_high_terminal_cash_mean|usd0@@. That
+is comparable with several of the sampled drivers that section 8 ranks, from a
+number nothing in the vault sets and no instrument in this directory could see
+until it was lifted out. **The other constants above have not had this done to
+them, and the presumption should be that some of them would behave the same
+way.**
 
 ### The retained book is far shorter than the product being sold
 
@@ -714,3 +792,94 @@ material fraction of gross churn.
 tens of millions a year, where the small-business rate does not apply and the
 headline rate is double. The app-store decision is priced at the lower rate
 throughout.
+
+---
+
+## What a third adversarial round found, which is about shape rather than figures
+
+The brief predicted that a third round would reach the structure, because the
+first two clear the surface. It did. These five are not arithmetic errors. Each
+is a place where the document drew a conclusion its own files do not support, and
+in three of them the conclusion was load-bearing.
+
+### The scope conclusion was an artefact of comparing against two different scopes
+
+Owner decision 1 put a capital figure computed against the go-to-market minimum
+beside a terminal-cash figure computed against the United Kingdom-only scenario,
+and concluded in bold that scope is dominant on one statistic and minor on the
+other. The United Kingdom-only scenario keeps the entire content escalation, so
+its content line is close to the plan of record's, and the second figure was not
+measuring scope. Section 12 now carries the three-rung ladder and the opposite
+conclusion.
+
+**The general form of this defect is worth naming, because it will recur.** Two
+comparisons against differently-shaped counterfactuals, each correct in
+isolation, set side by side and read as a single finding. Nothing in the
+verifier can see it: both figures existed on disk, both were rendered from
+tokens, both traced to `out/variants.csv` and `out/funding.csv`. **Every number
+in the sentence was right and the sentence was wrong.** That is the limit of
+Pass B and it is stated in section 13 of the write-up, but this is the first time
+the limit actually bit on a headline conclusion.
+
+### The sensitivity ordering is conditional on the scope and was quoted as unconditional
+
+Every first-order index in section 8 is computed on the plan of record.
+`out/sobol.csv` now carries the go-to-market minimum and the full-onshoring
+configuration beside it, and the capital ordering rearranges between them:
+content drivers hold
+@@sobol_peak_funding_requirement_content_drivers_in_top7|int@@ of the top seven
+on the plan of record and
+@@sobol_gtm_peak_funding_requirement_content_drivers_in_top7|int@@ on the
+go-to-market minimum. The instruction "work on content cost to make it fundable"
+is a consequence of a scope decision that has not been taken.
+
+**What is still not clean.** Only three configurations are decomposed. The
+ordering is presumably conditional on other choices too — the institution
+channel, the price regime, the launch date — and nothing here establishes which.
+The honest statement is that the ordering is known to move with scope, is not
+known to be stable under anything else, and was published as though it were a
+property of the business.
+
+### A break-even against a weak target read as a rescue
+
+The four solved break-evens target half of all paths stringing three
+cash-positive months together. `out/breakeven.csv` now carries, for each solved
+row, the median path's terminal cash and the eightieth-percentile funding
+requirement at that same value, and the share of the paths that meet the target
+and still end the horizon negative. On the plan of record that last share is
+@@breakeven_plan_of_record_price_uk_tut_gbp_share_reaching_profitability_at_be_hitting_paths_ending_negative_pct|num1@@
+per cent. The number was always in the file; the word attached to it was wrong.
+
+### Two mechanisms were tested by the wrong test, and the test said so in the right words
+
+The switched-off reproduction test is a test of the random streams. Section 3
+presented it under the heading of mechanism validation, and every one of round
+2's four mechanism defects passed it while wrong. It is now two-sided, which
+catches inert mechanisms, and is described for what it is. **There is still no
+mechanism correctness test in this instrument and there cannot easily be one:
+what would it compare against?** The four defects were found by reading the
+code, which is the only method that has worked, and which does not scale.
+
+### The gate covers two files of twenty-two
+
+`por_monthly.csv` and `por_paths.csv` are rebuilt character for character on
+every load. The other derived outputs are not rebuilt by anything, and the check
+that now exists — every generating script recording the SHA-256 of the `model.py`
+it ran against, and `verify.py` refusing a set whose hashes disagree — catches
+staleness and nothing else. A derived CSV can be generated by a buggy
+`sensitivity.py` against the right `model.py` and pass.
+
+### And one absence that is not about shape at all
+
+**Specification change.** `content_full_equivalents` is monotone in time. No item
+ever expires. Over a sixty-month horizon in a market whose awarding bodies reissue
+specifications on published timetables, part of the bank being built in year one
+is being written to a specification that will not exist in year five.
+`out/omissions.csv` prices it at
+@@omission_specification_change_and_curriculum_reform_low|usd0@@ to
+@@omission_specification_change_and_curriculum_reform_high|usd0@@ dollars, which
+is a prior on the rate of turnover and not a measurement. It acts on the largest
+cost line in the model and on the driver the capital requirement is most
+sensitive to. It was absent from the model, from this document, from the open
+items and from the omissions file until round three. It is open item X11 and the
+trigger is a morning's reading of public timetables.
