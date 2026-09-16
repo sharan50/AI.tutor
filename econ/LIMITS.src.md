@@ -1028,6 +1028,23 @@ mind when reading any unpaired difference in this document. The sampled
 foreign-exchange scenario is the case where it bites: its delta is not small, it
 is **zero** at this sample size.
 
+### The one prior with no bounds, and the file used to print it as if it had them
+
+`price_drift_yr` is the registry's only **normal** driver: N(@@driver_price_drift_yr_mean|num3@@, @@driver_price_drift_yr_sd|num3@@),
+unbounded in both directions. Real prices **fall** on
+@@price_drift_share_paths_negative|pct1@@ per cent of paths, and the cumulative
+real price multiplier at month 60 runs from
+@@price_drift_multiplier_at_horizon_p05|num2@@ at the fifth percentile to
+@@price_drift_multiplier_at_horizon_p95|num2@@ at the ninety-fifth. That is a wide
+prior on the quantity every revenue figure in this document compounds, and it is
+not one of the ranges the write-up quotes.
+
+`out/drivers.csv` printed that mean and standard deviation under a `low`/`high`
+header until round four, which said the driver was sampled between 1.5 and 3.0
+per cent. It was not, and `figures.py` was one token away from putting the wrong
+reading into the prose. The file now has `normal_mean` and `normal_sd` columns
+and emits no bounds for a driver that has none.
+
 ### A one-sided prior on the one cost the document says is well understood
 
 `infer_decline_yr` is sampled on a strictly positive range, so there is no path

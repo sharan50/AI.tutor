@@ -1002,6 +1002,18 @@ Change log entry 1b.11 still asserted the onshoring conclusion that 2.5 and 3.4
 retract. It is left in place as the record of what that round believed and is now
 marked superseded where it stands.
 
+### 4.15 Following the drivers.csv header fix to its consequence
+
+The header defect in 4.13 was reported as a presentation problem. Following it
+into the model makes it a finding about the priors. `price_drift_yr` is the
+registry's only normal driver, and it is unbounded: real prices **fall** on
+about thirty per cent of paths, and the cumulative real price multiplier at
+month 60 runs from about 0.84 at the fifth percentile to about 1.36 at the
+ninety-fifth. Every revenue figure in the document compounds that, and no
+section quoted the range, because the range does not exist — there are only a
+mean and a standard deviation, and the file had been printing them as bounds.
+Now in `out/cohorts.csv` and in LIMITS.
+
 ### 4.14 What held up
 
 Recorded because a round that only reports failures is not a review. The harness

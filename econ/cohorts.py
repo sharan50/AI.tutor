@@ -353,6 +353,18 @@ add("ltv_cap_realised_months", _realised, "months",
 add("ltv_cap_months_overstatement", _assumed / max(_realised, 1e-9), "ratio",
     "the first divided by the second. The budget cap inverts the saturation curve, so permitted spend scales as roughly the square of this", "14")
 
+# 0b. The one unbounded prior in the registry. price_drift_yr is normal, not
+#     uniform, so it has no low or high and out/drivers.csv used to print its
+#     mean and standard deviation under a low/high header. These are the
+#     quantities a reader actually wants from it.
+_pd = DRV["price_drift_yr"]
+add("price_drift_share_paths_negative", float((_pd < 0).mean()), "share",
+    "share of paths on which real price drift is negative: the prior is normal and unbounded, so prices fall on this share of paths", "the instrument")
+add("price_drift_multiplier_at_horizon_p05", float(np.percentile((1.0 + _pd) ** 5.0, 5)), "multiple",
+    "the cumulative real price multiplier at month 60 at the fifth percentile of paths", "the instrument")
+add("price_drift_multiplier_at_horizon_p95", float(np.percentile((1.0 + _pd) ** 5.0, 95)), "multiple",
+    "the same at the ninety-fifth percentile", "the instrument")
+
 # 1. Monte Carlo error. "A figure re-derived from a different seed is a
 #    different number" was stated and never sized. It is one line from the
 #    paths file, and it turns out one tabulated scenario is indistinguishable

@@ -3080,6 +3080,9 @@ por_total_cost_recomputed,38242309.651151,USD,cohorts.csv,"sum over paths and mo
 ltv_cap_assumed_months,5.811445,months,cohorts.csv,"the retained months ltv_estimate assumes, weighted by the acquisitions actually made in each month and using the United Kingdom examination calendar: what the only restraint on acquisition spend believes"
 ltv_cap_realised_months,3.546992,months,cohorts.csv,"the retained months the model delivers over the same run, right-censored by the horizon"
 ltv_cap_months_overstatement,1.638415,ratio,cohorts.csv,"the first divided by the second. The budget cap inverts the saturation curve, so permitted spend scales as roughly the square of this"
+price_drift_share_paths_negative,0.303000,share,cohorts.csv,"share of paths on which real price drift is negative: the prior is normal and unbounded, so prices fall on this share of paths"
+price_drift_multiplier_at_horizon_p05,0.841243,multiple,cohorts.csv,the cumulative real price multiplier at month 60 at the fifth percentile of paths
+price_drift_multiplier_at_horizon_p95,1.364286,multiple,cohorts.csv,the same at the ninety-fifth percentile
 por_terminal_cash_mc_se,533243.956808,USD,cohorts.csv,standard error of the mean of terminal_cash across paths: the sampling error on the headline level at this seed and this path count
 por_terminal_cash_mc_se_two_sigma,1066487.913616,USD,cohorts.csv,"twice that, which is the interval a figure quoted to the dollar actually carries"
 por_terminal_cash_npv_00,-10049079.627034,USD,cohorts.csv,"mean over paths of net cash discounted monthly at 0 per cent a year: the model discounts nothing, and this is what that is worth"
