@@ -483,6 +483,10 @@ por_trough_understatement_ratio,0.525163,ratio,por_monthly.csv and por_paths.csv
 por_trough_understatement_pct,47.483688,per cent,por_monthly.csv and por_paths.csv,"one minus that ratio, as a percentage: how much shallower the headline trough is"
 por_trough_p10,-33233771.708868,USD,por_paths.csv,10th percentile of the per-path trough
 por_trough_p90,-5857945.328638,USD,por_paths.csv,90th percentile of the per-path trough
+por_share_paths_trough_at_horizon,0.791150,share,por_paths.csv,"share of paths whose cumulative cash is at its minimum in the last month of the horizon, so the trough and the funding requirement are both right-censored"
+por_share_paths_trough_at_horizon_pct,79.115000,per cent,por_paths.csv,the same share as a percentage
+por_trough_month_median,59.000000,month,por_paths.csv,median over paths of trough_month
+por_trough_month_p10,30.000000,month,por_paths.csv,tenth percentile of trough_month
 por_mean_trough_month,53.605450,month index,por_paths.csv,mean of trough_month
 por_final_year_contrib_per_hh_month_median,27.946554,USD per household month,por_paths.csv,"median of final_year_contrib_per_hh_month, which is net revenue less inference, support, payment, hosting and app store fees only. The store fees are zero in the published run and are not zero in the app-store scenario, so leaving them out of this sentence described a different quantity from the one path_outcomes computes"
 por_final_year_contrib_per_hh_month_p05,6.784935,USD per household month,por_paths.csv,5th percentile of final_year_contrib_per_hh_month

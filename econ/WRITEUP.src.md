@@ -627,11 +627,28 @@ headline understates.
 | Ratio of the two | @@por_trough_understatement_ratio|num4@@ |
 | **The headline is shallower by** | **@@por_trough_understatement_pct|num1@@ per cent** |
 
-The per-path distribution beside it: tenth percentile @@por_trough_p10|usd0@@, ninetieth
-@@por_trough_p90|usd0@@, mean month of the trough @@por_mean_trough_month|num1@@. The averaged line reaches its
-low at month @@por_min_of_mean_cash_month|int@@; individual paths reach theirs, on average, at month
-@@por_mean_trough_month|num1@@. Planning to the averaged line plans to a trough that is
-@@por_trough_understatement_pct|num1@@ per cent shallower and later than the one a given path actually meets.
+The per-path distribution beside it: tenth percentile @@por_trough_p10|usd0@@,
+ninetieth @@por_trough_p90|usd0@@. Planning to the averaged line plans to a
+trough @@por_trough_understatement_pct|num1@@ per cent shallower than the one a
+given path actually meets.
+
+**The timing is worse than the depth, and an earlier draft of this paragraph
+missed it entirely by quoting a mean.** It said the averaged line troughs at
+month @@por_min_of_mean_cash_month|int@@ while individual paths trough on average
+at @@por_mean_trough_month|num1@@, and called the difference "later" — four tenths
+of a month, which is nothing. The mean was hiding the distribution. The **median**
+path troughs at month @@por_trough_month_median|int@@, the tenth percentile at
+month @@por_trough_month_p10|int@@, and
+**@@por_share_paths_trough_at_horizon_pct|num1@@ per cent of paths have their
+trough in the last month of the horizon** — that is, cash is still falling when
+the window closes and the trough has not happened yet.
+
+**For four paths in five the funding requirement in section 11 is therefore a
+floor, not a figure.** The peak drawdown is the negative of the trough, so
+right-censoring the trough right-censors the capital requirement with it. This is
+the same horizon effect that makes retained months a floor in section 4, acting
+on the number that sizes the rounds. Nothing in this instrument tells you how
+much more capital month 61 asks for, because there is no month 61.
 
 ### The sustained bad run
 
@@ -1104,6 +1121,13 @@ float, so adding the printed rows will differ from the printed sum by a dollar;
 **And read every figure in this section as an order of magnitude, not a number.**
 They are rendered to the dollar because that is what the file holds, not because
 they are known to the dollar. Nothing in this instrument is.
+
+**Read them as floors, too.** The peak funding requirement is the negative of a
+path's cash trough, and
+@@por_share_paths_trough_at_horizon_pct|num1@@ per cent of paths have their
+trough in the last month of the horizon — still falling when the window closes.
+Every figure in the table above is right-censored on that share of paths.
+Section 7 gives the distribution.
 
 @@share_paths_peak_funding_over_10m|pct1@@ per cent of individual paths need more than ten million dollars.
 

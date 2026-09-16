@@ -1014,6 +1014,29 @@ section quoted the range, because the range does not exist — there are only a
 mean and a standard deviation, and the file had been printing them as bounds.
 Now in `out/cohorts.csv` and in LIMITS.
 
+### 4.16 The trough section hid its own defect behind a mean
+
+Found by re-reading section 7 while round five ran, not by a reviewer.
+
+The section exists to make one point: the minimum of an average is shallower
+than the average of minimums. It made that point about DEPTH correctly and then
+made a timing claim out of a mean. It said the averaged line troughs at month 54
+while individual paths trough on average at 53.6, and called the averaged line
+"later" — four tenths of a month, which is nothing.
+
+The mean was hiding the distribution. The median path troughs at month **59 of
+60**, the tenth percentile at 30, and **79.1 per cent of paths have their trough
+in the last month of the horizon**: cash is still falling when the window
+closes. The trough has not happened yet on four paths in five.
+
+**The consequence is on the number that sizes the rounds.** The peak funding
+requirement is the negative of the trough, so every capital figure in section 11
+is a floor on that same share of paths. Section 7 now gives the distribution,
+section 11 says the table is censored, and LIMITS carries it as its own item.
+
+It is the checklist item 19 defect — a conclusion true only of an averaged line —
+committed inside the section whose entire subject is that defect.
+
 ### 4.14 What held up
 
 Recorded because a round that only reports failures is not a review. The harness

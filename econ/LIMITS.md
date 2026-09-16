@@ -1028,6 +1028,28 @@ mind when reading any unpaired difference in this document. The sampled
 foreign-exchange scenario is the case where it bites: its delta is not small, it
 is **zero** at this sample size.
 
+### The funding requirement is right-censored for four paths in five
+
+`out/por_paths.csv` records each path's trough month.
+79.1 per cent of paths have it in the
+**last month of the horizon**: cash is still falling when the window closes and
+the trough has not happened yet. The median path troughs at month
+59 of 60.
+
+The peak funding requirement is the negative of the trough, so every capital
+figure in section 11 — the 28,237,786
+headline, the staged sum, all four scopes — is a **floor** on the same four paths
+in five. The instrument has nothing to say about how much more month 61 asks for,
+because there is no month 61.
+
+This was hidden by a mean. The write-up quoted the mean trough month,
+53.6 against the averaged line's
+54, and concluded the averaged line troughs
+"later" — by four tenths of a month. The mean sits between a fifth of paths that
+trough early and four fifths that never trough at all, and describes neither.
+**It is the same defect as checklist item 19 and it was inside the section whose
+entire subject is that a mean of minimums is not the minimum of a mean.**
+
 ### The one prior with no bounds, and the file used to print it as if it had them
 
 `price_drift_yr` is the registry's only **normal** driver: N(0.015, 0.030),

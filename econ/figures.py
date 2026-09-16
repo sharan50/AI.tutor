@@ -162,6 +162,20 @@ add("por_trough_understatement_pct", 100.0 * (1.0 - min_of_mean / mean_of_min), 
     "one minus that ratio, as a percentage: how much shallower the headline trough is")
 add("por_trough_p10", float(np.percentile(trough, 10)), "USD", "por_paths.csv", "10th percentile of the per-path trough")
 add("por_trough_p90", float(np.percentile(trough, 90)), "USD", "por_paths.csv", "90th percentile of the per-path trough")
+# How many paths never reach their trough inside the horizon. A path whose
+# minimum cumulative cash is in the last month is still falling when the window
+# closes, so its peak funding requirement is a floor rather than a figure.
+_tm = col(paths, "trough_month")
+_H = len(monthly)
+add("por_share_paths_trough_at_horizon", float((_tm >= _H - 1).mean()), "share",
+    "por_paths.csv",
+    "share of paths whose cumulative cash is at its minimum in the last month of the horizon, so the trough and the funding requirement are both right-censored")
+add("por_share_paths_trough_at_horizon_pct", 100.0 * float((_tm >= _H - 1).mean()),
+    "per cent", "por_paths.csv", "the same share as a percentage")
+add("por_trough_month_median", float(np.median(_tm)), "month", "por_paths.csv",
+    "median over paths of trough_month")
+add("por_trough_month_p10", float(np.percentile(_tm, 10)), "month", "por_paths.csv",
+    "tenth percentile of trough_month")
 add("por_mean_trough_month", float(trough_month.mean()), "month index", "por_paths.csv", "mean of trough_month")
 
 # --------------------------------------------------------------------------

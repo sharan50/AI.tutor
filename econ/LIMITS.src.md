@@ -1028,6 +1028,28 @@ mind when reading any unpaired difference in this document. The sampled
 foreign-exchange scenario is the case where it bites: its delta is not small, it
 is **zero** at this sample size.
 
+### The funding requirement is right-censored for four paths in five
+
+`out/por_paths.csv` records each path's trough month.
+@@por_share_paths_trough_at_horizon_pct|num1@@ per cent of paths have it in the
+**last month of the horizon**: cash is still falling when the window closes and
+the trough has not happened yet. The median path troughs at month
+@@por_trough_month_median|int@@ of @@horizon_months|int@@.
+
+The peak funding requirement is the negative of the trough, so every capital
+figure in section 11 — the @@funding_plan_of_record_whole_horizon_round_size|usd0@@
+headline, the staged sum, all four scopes — is a **floor** on the same four paths
+in five. The instrument has nothing to say about how much more month 61 asks for,
+because there is no month 61.
+
+This was hidden by a mean. The write-up quoted the mean trough month,
+@@por_mean_trough_month|num1@@ against the averaged line's
+@@por_min_of_mean_cash_month|int@@, and concluded the averaged line troughs
+"later" — by four tenths of a month. The mean sits between a fifth of paths that
+trough early and four fifths that never trough at all, and describes neither.
+**It is the same defect as checklist item 19 and it was inside the section whose
+entire subject is that a mean of minimums is not the minimum of a mean.**
+
 ### The one prior with no bounds, and the file used to print it as if it had them
 
 `price_drift_yr` is the registry's only **normal** driver: N(@@driver_price_drift_yr_mean|num3@@, @@driver_price_drift_yr_sd|num3@@),
