@@ -14,9 +14,19 @@ dollar spread is a use of levels, so "read the ordering, not the levels" cannot
 be taken literally. What it means, and all it can mean, is: the **gaps** between
 levers are informative where they are large relative to both the sampling error
 and the priors' own width, and the **absolute** figures are not informative at
-all. Where two levers rank within a few per cent of each other, as scope and the
-price anchor do in section 12, the instrument is not ranking them; it is saying
-they are the same size. Section 12 says so where it happens.
+all. Where two levers rank within a few per cent of each other the instrument is
+not ranking them, it is saying they are the same size, and this document says so
+where that happens.
+
+**And a ranking is only meaningful within one statistic.** Section 12's first
+paragraph names the top two by putting a capital requirement beside a terminal
+cash spread. Those two happen to be close in magnitude, which makes the
+comparison look like one and it is not: a capital figure is bad when it is large
+and a cash spread is good when it is large, and nothing converts one into the
+other. Within each statistic separately the gap is wide — on capital scope leads
+the price anchor by about five to one, on terminal cash the anchor leads scope by
+about three to one — and those are the two orderings this instrument can support.
+The cross-statistic comparison is not a third ordering; it is the absence of one.
 
 A figure re-derived from a different seed is a different number, and until round
 four this document never said by how much. On the headline, terminal cash at the
@@ -1115,12 +1125,14 @@ now against the go-to-market minimum rather than against two different scope
 reductions. Both statistics are published so that the disagreement is visible
 rather than resolved by whichever one was quoted.
 
-**On terminal cash those two numbers are within a few per cent of each other,
-which means the instrument is not ranking them.** It is saying they are the same
-size, on a statistic that carries a
-1,066,488 sampling interval before any of the
-priors are argued with. Take the capital ordering, where the gap is large, as the
-one this instrument can actually support.
+**Do not read those two figures against each other.** One is a capital
+requirement and one is a cash spread; the first is bad when large and the second
+good when large, and they happen to be close in magnitude, which makes the
+comparison look meaningful. It is not. What the two lines above say is that scope
+leads on capital and the anchor leads on terminal cash, each by a wide margin
+within its own statistic, and that nothing here converts between them. Both
+statistics carry the 1,066,488 sampling interval
+from the preamble before any of the priors are argued with.
 
 Items 3 onward are grouped rather than ranked. An earlier draft said they were
 ordered by terminal cash at the mean; they are not, and they are not ordered by

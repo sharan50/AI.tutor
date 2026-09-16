@@ -912,7 +912,19 @@ E5, E2, E4's second half and C1. `verify.py` carried a dead `tol` variable.
 `provenance.csv` hashed `model.py` and not `harness.py`, leaving the file that
 splits, executes and gates the model outside the staleness check.
 
-### 4.12 What held up
+### 4.12 And one the author got wrong while fixing 4.11
+
+Writing the caveat about ranking by dollar spread, I put into the preamble that
+scope and the price anchor "rank within a few per cent of each other" on terminal
+cash. They do not: the anchor leads by about three to one there, and scope leads
+by about five to one on capital. What is close in magnitude is the
+CROSS-statistic pair section 12 puts side by side — a capital requirement against
+a cash spread — and that closeness is meaningless, which was the reviewer's
+actual point. Corrected in the preamble and in section 12. Recorded because a
+correction introduced while acting on a review is exactly the kind that goes
+unreviewed.
+
+### 4.13 What held up
 
 Recorded because a round that only reports failures is not a review. The harness
 gate and both its self-tests; the suffix discipline check; that no draw occurs
