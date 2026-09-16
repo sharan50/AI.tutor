@@ -999,7 +999,7 @@ mechanism correctness test in this instrument and there cannot easily be one:
 what would it compare against?** The four defects were found by reading the
 code, which is the only method that has worked, and which does not scale.
 
-### The gate covers two files of 25
+### The gate covers two files of 26
 
 `por_monthly.csv` and `por_paths.csv` are rebuilt character for character on
 every load. The other derived outputs are not rebuilt by anything, and the check

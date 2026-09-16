@@ -220,3 +220,4 @@ token,reason
 "-7,525,932","plan-of-record terminal cash with only the round 6.1 fix applied to the round 5 model, change log 6.1; an intermediate state that exists in no published run"
 "11,051","the paired standard error on the round 6.2 measurement, change log 6.2"
 "23,322","the paired standard error on the round 6.3 measurement, change log 6.3"
+6.19,"a change log section number"

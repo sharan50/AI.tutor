@@ -444,6 +444,22 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
             "USD", "variants.csv",
             "peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring: the extra capital the software-anchored regime needs")
     base = float(vr["por"]["terminal_cash_mean"])
+
+    # How many paired standard errors each scope delta sits from zero. The
+    # write-up says the mean and the median disagree in sign on the market drop;
+    # these are what make that a finding rather than an observation about noise.
+    if "ukonly" in vr:
+        _um = abs(float(vr["ukonly"]["terminal_cash_mean"]) - base)
+        _use = float(vr["ukonly"]["paired_mc_se"])
+        add("ukonly_mean_delta_sigma", _um / max(_use, 1e-9), "standard errors",
+            "variants.csv",
+            "the United Kingdom-only scenario's mean terminal-cash delta divided by its paired standard error")
+        _upm = abs(float(vr["ukonly"]["pathwise_p50_delta"]))
+        _upse = float(vr["ukonly"]["pathwise_p50_delta_se"])
+        add("ukonly_median_delta_sigma", _upm / max(_upse, 1e-9), "standard errors",
+            "variants.csv",
+            "the same scenario's per-path median delta divided by its bootstrap standard error")
+
     base_p50 = float(vr["por"]["terminal_cash_p50"])
     base_pf80 = float(vr["por"]["peak_funding_p80"])
     # The real range of the path-matching diagnostic, computed rather than
@@ -527,6 +543,10 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
         if _ukd:
             add("scope_gtm_over_ukonly_terminal_cash", _gtmd / _ukd, "ratio", "variants.csv",
                 "the go-to-market minimum's terminal-cash delta divided by the United Kingdom-only scenario's: how much larger the real scope reduction is than the one the document used to read it off")
+            # Kept for the file, not quoted in prose any more: the two
+            # quantities can differ in SIGN, and round 6 moved the denominator
+            # through zero, at which point the write-up rendered "a factor of
+            # -7". A ratio hides a sign. See CHANGELOG 6.19.
             add("scope_content_freeze_over_market_drop_terminal_cash", _frzd / _ukd, "ratio",
                 "variants.csv",
                 "freezing the content schedule divided by dropping the second and third markets, on terminal cash at the mean")

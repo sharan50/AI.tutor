@@ -1765,3 +1765,33 @@ the seed, ordinary decimals and negative millions before being applied.
 
 Found because the fix in 6.16 put a rendered decimal in front of a comma for the
 first time. It had been wrong for six rounds.
+
+### 6.19 A ratio hid a sign, and the round 6 fixes moved the sign
+
+Section 12 compared the two scope decisions on terminal cash by quoting a ratio
+between them. The round 6 mechanism fixes moved the United Kingdom-only delta
+through zero, and the sentence rendered as "a factor of" a negative number,
+which is not a statement about anything.
+
+The underlying change is worth more than the wording. Dropping the second and
+third markets now **costs** money at the mean and **saves** a great deal on the
+median path, and neither is noise: the mean sits a couple of paired standard
+errors below zero, the median a couple of hundred bootstrap errors above it. The
+extra markets pay for themselves only on the paths that get large, and those are
+the paths that carry the mean. The median path never reaches the book where a
+second and third market earn their content and entity costs back.
+
+So a plan justified on the mean and a plan justified on the median disagree about
+geography. That is a decision about risk appetite rather than something this
+instrument settles, but it can now say the question exists, which the ratio
+version could not: a ratio between two quantities that may differ in sign
+destroys exactly the information that matters.
+
+The figure is still computed and still in `out/figures.csv`. It is no longer
+quoted in prose.
+
+This is also the first defect caught by Pass 0c in anger. The fix above needed
+two new figures; a mistake in `figures.py` meant they were not emitted;
+`render.py` refused `WRITEUP.md`; and `verify.py` reported one failure naming the
+unrendered file, instead of reporting a clean run over a stale document, which is
+what it would have done an hour earlier.

@@ -1472,10 +1472,33 @@ requirement they are worth almost the same — freezing content
 @@delta_por_content_frozen_peak_funding_p80_abs|usd0@@, dropping markets
 @@delta_ukonly_peak_funding_p80_abs|usd0@@ — and together with the rest of the
 reduction they come to @@delta_gtm_minimum_peak_funding_p80_abs|usd0@@. On
-terminal cash they are not close: freezing content is worth
-@@delta_por_content_frozen_terminal_cash_mean|usd0@@ and dropping markets
-@@delta_ukonly_terminal_cash_mean|usd0@@, a factor of
-@@scope_content_freeze_over_market_drop_terminal_cash|num0@@.
+terminal cash they do not merely differ in size, they differ in **sign**, and
+this is the most interesting thing in the section. Freezing content is worth
+@@delta_por_content_frozen_terminal_cash_mean|usd0@@ at the mean and
+@@delta_por_content_frozen_terminal_cash_p50|usd0@@ on the median path: it helps
+on both. Dropping the second and third markets is worth
+@@delta_ukonly_terminal_cash_mean|usd0@@ at the mean — it **costs** money — and
+@@scenario_ukonly_pathwise_p50_delta|usd0@@ on the median path, where it is far
+the larger of the two decisions. Neither figure is noise: the mean sits
+@@ukonly_mean_delta_sigma|num1@@ paired standard errors below zero and the median
+sits @@ukonly_median_delta_sigma|num0@@ above it.
+
+**That is a real economic statement and not an artefact.** The extra markets pay
+for themselves only on the paths that get large, and those paths carry the mean.
+The median path never reaches the book where a second and third market earn
+their content and entity costs back, so it is straightforwardly better off
+without them. A plan justified on the mean and a plan justified on the median
+disagree about geography, and the disagreement is not small. Which one the owner
+should plan against is a decision about risk appetite, not a question this
+instrument answers — but the instrument can say that the question exists, which
+an earlier draft of this paragraph could not, because it quoted a ratio between
+the two and a ratio hides a sign.
+
+An earlier version of this passage said the two decisions were "not close" on
+terminal cash and gave a factor. When the round 6 mechanism fixes moved the
+United Kingdom-only delta through zero, that sentence rendered as "a factor of
+-7", which is not a statement about anything. A ratio between two quantities
+that can differ in sign should not have been the form in the first place.
 
 **The two decisions separate exactly on the content column, and that is checked
 rather than eyeballed — but read what the check covers.** Foreign content

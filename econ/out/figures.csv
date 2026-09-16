@@ -5,7 +5,7 @@ horizon_months,60,months,por_monthly.csv,row count
 n_paths,20000,paths,por_paths.csv,row count
 constants_row_count,29,count,constants.csv,row count
 selftest_count,3,count,out/,the self-test record files present on disk
-out_csv_count,25,count,out/,how many .csv files the out directory holds
+out_csv_count,26,count,out/,how many .csv files the out directory holds
 out_csv_gated_count,2,count,out/,how many of them the character-for-character harness gate rebuilds and compares
 n_drivers,80,count,drivers.csv,row count
 driver_anchor_u_low,0.000000,driver units,drivers.csv,the low column for anchor_u
@@ -1158,6 +1158,8 @@ allowance_enforced_median_basis_ratio,2.541690,ratio,variants.csv,"the differenc
 por_dependence_pathwise_spearman,0.300217,rank correlation,variants.csv,the per-path rank correlation against the base for the Iman-Conover reordered scenario: the pairing every other scenario has and this one does not
 anchor_tutoring_minus_software_terminal_cash_mean,31103443.415357,USD,variants.csv,"terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por_anchor_software: the spread between the two regimes, not either one's delta against the published mix"
 anchor_software_minus_tutoring_peak_funding_p80,4465584.414449,USD,variants.csv,peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring: the extra capital the software-anchored regime needs
+ukonly_mean_delta_sigma,2.443822,standard errors,variants.csv,the United Kingdom-only scenario's mean terminal-cash delta divided by its paired standard error
+ukonly_median_delta_sigma,218.445151,standard errors,variants.csv,the same scenario's per-path median delta divided by its bootstrap standard error
 pathwise_spearman_min,0.298622,rank correlation,variants.csv,the lowest pathwise_spearman_vs_base over every scenario
 pathwise_spearman_min_scenario,por_dependence_feedback,scenario name,variants.csv,the scenario carrying that lowest value
 pathwise_spearman_min_excluding_dependence,0.770667,rank correlation,variants.csv,the lowest pathwise_spearman_vs_base over scenarios that do not reorder driver values across paths
