@@ -1,95 +1,104 @@
 seed,run_date,name,value,unit,derivation,checklist_item
 20260916,2026-09-16,retained_months_exam_year_mean,3.634680,months per acquisition,every acquisition pinned into the examination-year segment; active households summed over months divided by acquisitions summed over months,15
-20260916,2026-09-16,retained_months_pre_exam_mean,3.706802,months per acquisition,"every acquisition pinned into the pre-examination-year segment, same arithmetic",15
-20260916,2026-09-16,retained_months_alevel_mean,4.085045,months per acquisition,"every acquisition pinned into the A-level segment, same arithmetic",15
-20260916,2026-09-16,year10_to_year11_retained_months_ratio,1.019843,ratio,"pre-examination-year retained months divided by examination-year retained months, as the code produces it",15
-20260916,2026-09-16,year10_to_year11_ratio_p10,0.974453,ratio,the same ratio at the tenth percentile of each,15
-20260916,2026-09-16,year10_to_year11_ratio_p90,1.058893,ratio,the same ratio at the ninetieth percentile of each,15
+20260916,2026-09-16,retained_months_pre_exam_mean,3.793169,months per acquisition,"every acquisition pinned into the pre-examination-year segment, same arithmetic",15
+20260916,2026-09-16,retained_months_alevel_mean,4.304422,months per acquisition,"every acquisition pinned into the A-level segment, same arithmetic",15
+20260916,2026-09-16,year10_to_year11_retained_months_ratio,1.043605,ratio,"pre-examination-year retained months divided by examination-year retained months, as the code produces it",15
+20260916,2026-09-16,year10_to_year11_ratio_p10,1.007379,ratio,the same ratio at the tenth percentile of each,15
+20260916,2026-09-16,year10_to_year11_ratio_p90,1.076455,ratio,the same ratio at the ninetieth percentile of each,15
 20260916,2026-09-16,share_paths_year10_at_least_doubles,0.000150,share,share of paths on which the pre-examination cohort retains at least twice as many months as the examination cohort,15 and 19
-20260916,2026-09-16,year10_ratio_with_no_summer_at_all,1.450914,ratio,the pre-to-examination retained-month ratio with the summer lapse pinned to zero and progression pinned to one: the summer removed entirely,15
-20260916,2026-09-16,year10_ratio_with_churn_at_its_floor,1.051127,ratio,the same ratio with in-term churn pinned to the bottom of its prior range and the summer left as sampled,15
-20260916,2026-09-16,year10_ratio_lift_from_removing_summer,0.431072,ratio points,"the Year 10 ratio with the summer removed entirely, less the ratio as sampled",15 and 19
-20260916,2026-09-16,year10_ratio_lift_from_flooring_churn,0.031284,ratio points,"the Year 10 ratio with in-term churn at its floor, less the ratio as sampled",15 and 19
-20260916,2026-09-16,year10_summer_lever_over_churn_lever,13.779310,ratio,the summer lever divided by the in-term churn lever: which of docs/10's two questions is the larger one,15 and 19
-20260916,2026-09-16,year10_ratio_with_no_summer_and_floor_churn,1.616931,ratio,"the same ratio with both pinned. An earlier version of this string called it the only combination that recovers the figure docs/10 reasons toward. It does not recover it: nothing in the prior ranges does, and saying otherwise was the same error the write-up made",15
+20260916,2026-09-16,year10_ratio_with_no_summer_at_all,1.450629,ratio,the pre-to-examination retained-month ratio with the summer lapse pinned to zero and progression pinned to one: the summer removed entirely,15
+20260916,2026-09-16,year10_ratio_with_churn_at_its_floor,1.072666,ratio,the same ratio with in-term churn pinned to the bottom of its prior range and the summer left as sampled,15
+20260916,2026-09-16,year10_ratio_lift_from_removing_summer,0.407025,ratio points,"the Year 10 ratio with the summer removed entirely, less the ratio as sampled",15 and 19
+20260916,2026-09-16,year10_ratio_lift_from_flooring_churn,0.029061,ratio points,"the Year 10 ratio with in-term churn at its floor, less the ratio as sampled",15 and 19
+20260916,2026-09-16,year10_summer_lever_over_churn_lever,14.005862,ratio,the summer lever divided by the in-term churn lever: which of docs/10's two questions is the larger one,15 and 19
+20260916,2026-09-16,year10_ratio_with_no_summer_and_floor_churn,1.613998,ratio,"the same ratio with both pinned. An earlier version of this string called it the only combination that recovers the figure docs/10 reasons toward. It does not recover it: nothing in the prior ranges does, and saying otherwise was the same error the write-up made",15
 20260916,2026-09-16,retained_months_exam_at_floor_churn,5.278662,months per acquisition,examination-year retained months with in-term churn at the bottom of its prior range,15
-20260916,2026-09-16,retained_months_pre_at_floor_churn,5.548542,months per acquisition,pre-examination retained months with in-term churn at the bottom of its prior range,15
+20260916,2026-09-16,retained_months_pre_at_floor_churn,5.662240,months per acquisition,pre-examination retained months with in-term churn at the bottom of its prior range,15
 20260916,2026-09-16,shock_longest_bad_run_mean,5.770750,months,"mean of longest_demand_shock_bad_run, a published column of por_paths.csv: the longest run of consecutive months with the demand multiplier below SHOCK_BAD_THRESHOLD",18
 20260916,2026-09-16,shock_longest_bad_run_p90,13.000000,months,the ninetieth percentile of longest_demand_shock_bad_run in por_paths.csv,18
 20260916,2026-09-16,shock_share_paths_bad_run_6plus,0.369350,share,share of por_paths.csv rows whose longest_demand_shock_bad_run is six or more,18
 20260916,2026-09-16,shock_share_paths_bad_run_12plus,0.121250,share,share of por_paths.csv rows whose longest_demand_shock_bad_run is twelve or more,18
 20260916,2026-09-16,shock_rho_median,0.701148,AR(1) coefficient,median of the shock_rho driver column,18
-20260916,2026-09-16,share_paths_content_exceeds_acquisition,0.849400,share,share of paths on which total content cost exceeds total acquisition and verification spend,19
-20260916,2026-09-16,share_paths_content_is_largest_line,0.601850,share,share of paths on which content is larger than both acquisition and people,19
-20260916,2026-09-16,share_paths_peak_funding_over_10m,0.844800,share,share of paths whose peak funding requirement exceeds ten million dollars,19 and 20
-20260916,2026-09-16,share_paths_terminal_cash_positive,0.105450,share,share of paths ending the horizon with cumulative cash above zero,19
-20260916,2026-09-16,final_year_hh_months_total,5496690653.201734,household months,active households summed over paths and over the final twelve months,16
-20260916,2026-09-16,share_paths_with_a_real_final_year,0.996050,share,"share of paths with at least twelve final-year household months, which is the set the per-path medians below are taken over",16 and 17
-20260916,2026-09-16,final_year_contrib_per_hh_month_gross_pooled,31.550815,USD per household month,"total net revenue less inference, support, payment, hosting and app store fees over the final year, divided by total final-year household months: a gross margin, not a net one",16
-20260916,2026-09-16,final_year_contrib_per_hh_month_gross_median,27.872115,USD per household month,median over paths with a real final year of the per-path gross contribution ratio,16
-20260916,2026-09-16,final_year_contrib_per_hh_month_allin_pooled,13.725855,USD per household month,"total net cash with acquisition and verification added back over the final year, divided by total final-year household months: net of engineering, content, overhead and compliance",16
-20260916,2026-09-16,final_year_contrib_per_hh_month_allin_median,-105.500763,USD per household month,median over paths with a real final year of the per-path all-in contribution ratio,16
-20260916,2026-09-16,allin_minus_gross_contrib_per_hh_month_pooled,-17.824960,USD per household month,the pooled all-in figure less the pooled gross one: what the gross margin leaves out,16
-20260916,2026-09-16,gross_minus_allin_contrib_per_hh_month_pooled,17.824960,USD per household month,the pooled gross figure less the pooled all-in one: how much lower the all-in figure is,16
-20260916,2026-09-16,allin_consumed_per_hh_month_median,105.500763,USD per household month,the median path's all-in contribution with the sign reversed: what a household month consumes on the median path,16
-20260916,2026-09-16,blended_retained_months_mean,3.721370,months,retained months weighted by the sampled segment mix,14
-20260916,2026-09-16,final_year_ltv_gross_pooled,117.412245,USD per household,pooled gross contribution per household month times blended retained months,14
-20260916,2026-09-16,final_year_effective_cac_pooled,54.379686,USD per acquisition,"total final-year acquisition and verification spend over total final-year acquisitions, pooled across paths",14
-20260916,2026-09-16,final_year_effective_cac_median,31.467756,USD per acquisition,median over paths with a real final year of the per-path effective acquisition cost,14
-20260916,2026-09-16,final_year_ltv_over_cac_pooled,2.159120,ratio,pooled gross lifetime value divided by pooled final-year effective cost per acquisition,14
-20260916,2026-09-16,final_year_cac_pooled_over_anchor_median,1.685496,ratio,pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled,12 and 13
-20260916,2026-09-16,retained_months_per_path_mean,3.546992,months,"per-path realised retained months: active household months over acquisitions, path by path",19
-20260916,2026-09-16,retained_months_per_path_p10,2.475966,months,tenth percentile of that per-path figure,19
-20260916,2026-09-16,retained_months_per_path_p90,4.882117,months,ninetieth percentile of that per-path figure,19
-20260916,2026-09-16,share_paths_final_year_ltv_below_cac,0.013905,share,"share of paths with a real final year on which gross lifetime value, computed on THAT PATH's realised retained months, is below the final-year effective cost per acquisition",14 and 19
-20260916,2026-09-16,share_paths_final_year_ltv_below_cac_scalar_months,0.024346,share,"the same share computed the way it used to be, with the sample-mean retained months applied to every path, published so the size of that error is on the record rather than only in the change log",19
-20260916,2026-09-16,share_paths_final_year_ltv_allin_below_cac,0.866924,share,"share of paths with a real final year on which ALL-IN lifetime value, which carries the demand-independent cost base, is below the final-year effective cost per acquisition","14, 16 and 19"
-20260916,2026-09-16,share_paths_final_year_ltv_allin_below_cac_pct,86.692435,per cent,the same share as a percentage,"14, 16 and 19"
-20260916,2026-09-16,share_paths_final_year_ltv_below_cac_pct,1.390492,per cent,"the gross share as a percentage, published beside the all-in one so the two are never quoted apart","14, 16 and 19"
-20260916,2026-09-16,shock_cost_terminal_cash_mean,56736.059908,USD,"terminal cash mean with the demand shock as sampled, less the same with shock_sd pinned to zero: what the whole persistent-shock apparatus is worth",18
-20260916,2026-09-16,shock_cost_terminal_cash_median,-27635.276917,USD,the same on the median path,18
-20260916,2026-09-16,shock_cost_peak_funding_p80,6590.246846,USD,the same on the eightieth-percentile peak funding requirement,18
-20260916,2026-09-16,shock_cost_on_worst_affected_mean,-3190194.813282,USD,"the same terminal-cash difference, over only the paths with a run of twelve or more bad months",18
-20260916,2026-09-16,shock_cost_on_worst_affected_median,-503543.646308,USD,the median of that difference over the same worst-affected paths,18
+20260916,2026-09-16,share_paths_content_exceeds_acquisition,0.844600,share,share of paths on which total content cost exceeds total acquisition and verification spend,19
+20260916,2026-09-16,share_paths_content_is_largest_line,0.598600,share,share of paths on which content is larger than both acquisition and people,19
+20260916,2026-09-16,share_paths_peak_funding_over_10m,0.833000,share,share of paths whose peak funding requirement exceeds ten million dollars,19 and 20
+20260916,2026-09-16,share_paths_terminal_cash_positive,0.115350,share,share of paths ending the horizon with cumulative cash above zero,19
+20260916,2026-09-16,final_year_hh_months_total,5997865143.177192,household months,active households summed over paths and over the final twelve months,16
+20260916,2026-09-16,share_paths_with_a_real_final_year,0.995300,share,"share of paths with at least twelve final-year household months, which is the set the per-path medians below are taken over",16 and 17
+20260916,2026-09-16,final_year_contrib_per_hh_month_gross_pooled,31.920122,USD per household month,"total net revenue less inference, support, payment, hosting and app store fees over the final year, divided by total final-year household months: a gross margin, not a net one",16
+20260916,2026-09-16,final_year_contrib_per_hh_month_gross_median,17.246657,USD per household month,median over paths with a real final year of the per-path gross contribution ratio,16
+20260916,2026-09-16,final_year_contrib_per_hh_month_allin_pooled,15.562100,USD per household month,"total net cash with acquisition and verification added back over the final year, divided by total final-year household months: net of engineering, content, overhead and compliance",16
+20260916,2026-09-16,final_year_contrib_per_hh_month_allin_median,-96.587047,USD per household month,median over paths with a real final year of the per-path all-in contribution ratio,16
+20260916,2026-09-16,allin_minus_gross_contrib_per_hh_month_pooled,-16.358021,USD per household month,the pooled all-in figure less the pooled gross one: what the gross margin leaves out,16
+20260916,2026-09-16,gross_minus_allin_contrib_per_hh_month_pooled,16.358021,USD per household month,the pooled gross figure less the pooled all-in one: how much lower the all-in figure is,16
+20260916,2026-09-16,allin_consumed_per_hh_month_median,96.587047,USD per household month,the median path's all-in contribution with the sign reversed: what a household month consumes on the median path,16
+20260916,2026-09-16,blended_retained_months_mean,3.772342,months,retained months weighted by the sampled segment mix,14
+20260916,2026-09-16,final_year_ltv_gross_pooled,120.413623,USD per household,pooled gross contribution per household month times blended retained months,14
+20260916,2026-09-16,final_year_effective_cac_pooled,55.354519,USD per acquisition,"total final-year acquisition and verification spend over total final-year acquisitions, pooled across paths",14
+20260916,2026-09-16,final_year_effective_cac_median,31.839923,USD per acquisition,median over paths with a real final year of the per-path effective acquisition cost,14
+20260916,2026-09-16,final_year_ltv_over_cac_pooled,2.175317,ratio,pooled gross lifetime value divided by pooled final-year effective cost per acquisition,14
+20260916,2026-09-16,final_year_cac_pooled_over_anchor_median,1.715711,ratio,pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled,12 and 13
+20260916,2026-09-16,retained_months_per_path_mean,3.715598,months,"per-path realised retained months: active household months over acquisitions, path by path",19
+20260916,2026-09-16,retained_months_per_path_p10,2.589438,months,tenth percentile of that per-path figure,19
+20260916,2026-09-16,retained_months_per_path_p90,5.099206,months,ninetieth percentile of that per-path figure,19
+20260916,2026-09-16,share_paths_final_year_ltv_below_cac,0.103687,share,"share of paths with a real final year on which gross lifetime value, computed on THAT PATH's realised retained months, is below the final-year effective cost per acquisition",14 and 19
+20260916,2026-09-16,share_paths_final_year_ltv_below_cac_scalar_months,0.099317,share,"the same share computed the way it used to be, with the sample-mean retained months applied to every path, published so the size of that error is on the record rather than only in the change log",19
+20260916,2026-09-16,share_paths_final_year_ltv_allin_below_cac,0.851753,share,"share of paths with a real final year on which ALL-IN lifetime value, which carries the demand-independent cost base, is below the final-year effective cost per acquisition","14, 16 and 19"
+20260916,2026-09-16,share_paths_final_year_ltv_allin_below_cac_pct,85.175324,per cent,the same share as a percentage,"14, 16 and 19"
+20260916,2026-09-16,share_paths_final_year_ltv_below_cac_pct,10.368733,per cent,"the gross share as a percentage, published beside the all-in one so the two are never quoted apart","14, 16 and 19"
+20260916,2026-09-16,shock_cost_terminal_cash_mean,33889.586070,USD,"terminal cash mean with the demand shock as sampled, less the same with shock_sd pinned to zero: what the whole persistent-shock apparatus is worth",18
+20260916,2026-09-16,shock_cost_terminal_cash_median,-13735.112875,USD,the same on the median path,18
+20260916,2026-09-16,shock_cost_peak_funding_p80,29101.284149,USD,the same on the eightieth-percentile peak funding requirement,18
+20260916,2026-09-16,shock_cost_on_worst_affected_mean,-3593795.025689,USD,"the same terminal-cash difference, over only the paths with a run of twelve or more bad months",18
+20260916,2026-09-16,shock_cost_on_worst_affected_median,-563979.103848,USD,the median of that difference over the same worst-affected paths,18
 20260916,2026-09-16,missing_night_rota_cost_per_year,149793.106707,USD per year,"three full-time posts at the median Bengaluru salary and overhead multiplier, with a thirty per cent night premium",5 and 8
 20260916,2026-09-16,missing_night_rota_cost_total,674068.980182,USD,that annual cost from the UK go-to-market month to the end of the horizon,5 and 8
-20260916,2026-09-16,missing_night_rota_share_of_total_cost,0.017626,share,the missing rota divided by the total modelled cost,5 and 8
-20260916,2026-09-16,por_total_cost_recomputed,38242309.651151,USD,"sum over paths and months of every modelled cost line, averaged over paths",5
-20260916,2026-09-16,ltv_cap_assumed_months,5.811445,months,"the retained months ltv_estimate assumes, weighted by the acquisitions actually made in each month and using the United Kingdom examination calendar: what the only restraint on acquisition spend believes",14
-20260916,2026-09-16,ltv_cap_realised_months,3.546992,months,"the retained months the model delivers over the same run, right-censored by the horizon",14
-20260916,2026-09-16,ltv_cap_months_overstatement,1.638415,ratio,"the first divided by the second. The budget cap inverts the saturation curve, so permitted spend scales as roughly the square of this",14
+20260916,2026-09-16,missing_night_rota_share_of_total_cost,0.017263,share,the missing rota divided by the total modelled cost,5 and 8
+20260916,2026-09-16,por_total_cost_recomputed,39046992.813900,USD,"sum over paths and months of every modelled cost line, averaged over paths",5
+20260916,2026-09-16,ltv_cap_assumed_months,5.867322,months,"the retained months ltv_estimate assumes, weighted by the acquisitions actually made in each month and using the United Kingdom examination calendar: what the only restraint on acquisition spend believes",14
+20260916,2026-09-16,ltv_cap_realised_months,3.715598,months,"the retained months the model delivers over the same run, right-censored by the horizon",14
+20260916,2026-09-16,ltv_cap_months_overstatement,1.579106,ratio,"the first divided by the second. The budget cap inverts the saturation curve, so permitted spend scales as roughly the square of this",14
 20260916,2026-09-16,price_drift_share_paths_negative,0.303000,share,"share of paths on which real price drift is negative: the prior is normal and unbounded, so prices fall on this share of paths",the instrument
 20260916,2026-09-16,price_drift_multiplier_at_horizon_p05,0.841243,multiple,the cumulative real price multiplier at month 60 at the fifth percentile of paths,the instrument
 20260916,2026-09-16,price_drift_multiplier_at_horizon_p95,1.364286,multiple,the same at the ninety-fifth percentile,the instrument
-20260916,2026-09-16,por_terminal_cash_mc_se,533243.956808,USD,standard error of the mean of terminal_cash across paths: the sampling error on the headline level at this seed and this path count,the instrument
-20260916,2026-09-16,por_terminal_cash_mc_se_two_sigma,1066487.913616,USD,"twice that, which is the interval a figure quoted to the dollar actually carries",the instrument
-20260916,2026-09-16,por_terminal_cash_npv_00,-10049079.627034,USD,"mean over paths of net cash discounted monthly at 0 per cent a year: the model discounts nothing, and this is what that is worth",the instrument
+20260916,2026-09-16,por_content_cost_mean_month,28.414398,month,the acquisition-weighted mean month of content spend,the instrument
+20260916,2026-09-16,por_cac_spend_mean_month,39.992204,month,the same for acquisition spend,the instrument
+20260916,2026-09-16,por_revenue_mean_month,40.197309,month,the same for net revenue,the instrument
+20260916,2026-09-16,por_negative_cash_mean_month,20.090784,month,the magnitude-weighted mean month of the NEGATIVE net cash months,the instrument
+20260916,2026-09-16,por_positive_cash_mean_month,47.753482,month,the same for the positive ones,the instrument
+20260916,2026-09-16,por_negative_cash_month_count,41.000000,months,how many of the months carry negative mean net cash,the instrument
+20260916,2026-09-16,retained_months_uncensored_mean,4.403377,months,"retained months with acquisition switched off after month 24, so every acquisition has at least three years to run out",19
+20260916,2026-09-16,retained_months_censoring_lift,0.687779,months,how many months the horizon is taking off the published figure,19
+20260916,2026-09-16,retained_months_censoring_lift_pct,18.510586,per cent,the same as a percentage of the published figure,19
+20260916,2026-09-16,por_terminal_cash_mc_se,613323.115108,USD,standard error of the mean of terminal_cash across paths: the sampling error on the headline level at this seed and this path count,the instrument
+20260916,2026-09-16,por_terminal_cash_mc_se_two_sigma,1226646.230217,USD,"twice that, which is the interval a figure quoted to the dollar actually carries",the instrument
+20260916,2026-09-16,por_terminal_cash_npv_00,-7880763.786700,USD,"mean over paths of net cash discounted monthly at 0 per cent a year: the model discounts nothing, and this is what that is worth",the instrument
 20260916,2026-09-16,por_npv_00_less_undiscounted,0.000000,USD,that present value less the undiscounted terminal cash mean,the instrument
-20260916,2026-09-16,por_discounted_content_cost_share_00_pct,36.519305,per cent,content_cost as a share of discounted total cost at 0 per cent a year,the instrument
-20260916,2026-09-16,por_discounted_cac_spend_share_00_pct,26.477265,per cent,cac_spend as a share of discounted total cost at 0 per cent a year,the instrument
-20260916,2026-09-16,por_discounted_cost_over_revenue_00,1.356436,ratio,discounted total cost over discounted net revenue at 0 per cent a year,the instrument
-20260916,2026-09-16,por_terminal_cash_npv_12,-8616256.533425,USD,"mean over paths of net cash discounted monthly at 12 per cent a year: the model discounts nothing, and this is what that is worth",the instrument
-20260916,2026-09-16,por_npv_12_less_undiscounted,1432823.093609,USD,that present value less the undiscounted terminal cash mean,the instrument
-20260916,2026-09-16,por_discounted_content_cost_share_12_pct,38.469114,per cent,content_cost as a share of discounted total cost at 12 per cent a year,the instrument
-20260916,2026-09-16,por_discounted_cac_spend_share_12_pct,24.955039,per cent,cac_spend as a share of discounted total cost at 12 per cent a year,the instrument
-20260916,2026-09-16,por_discounted_cost_over_revenue_12,1.443097,ratio,discounted total cost over discounted net revenue at 12 per cent a year,the instrument
-20260916,2026-09-16,por_terminal_cash_npv_25,-7484668.158638,USD,"mean over paths of net cash discounted monthly at 25 per cent a year: the model discounts nothing, and this is what that is worth",the instrument
-20260916,2026-09-16,por_npv_25_less_undiscounted,2564411.468397,USD,that present value less the undiscounted terminal cash mean,the instrument
-20260916,2026-09-16,por_discounted_content_cost_share_25_pct,40.429476,per cent,content_cost as a share of discounted total cost at 25 per cent a year,the instrument
-20260916,2026-09-16,por_discounted_cac_spend_share_25_pct,23.414959,per cent,cac_spend as a share of discounted total cost at 25 per cent a year,the instrument
-20260916,2026-09-16,por_discounted_cost_over_revenue_25,1.544396,ratio,discounted total cost over discounted net revenue at 25 per cent a year,the instrument
-20260916,2026-09-16,por_inference_over_gross_revenue_pooled,0.030744,share,"total inference cost over total gross consumer revenue, pooled across paths: docs/10's row is variable cost against PRICE, not against total cost",19
-20260916,2026-09-16,por_inference_over_gross_revenue_median,0.042981,share,the same ratio on the median path,19
-20260916,2026-09-16,por_variable_over_gross_revenue_median,0.126075,share,"all four variable cost lines over gross consumer revenue, on the median path",19
-20260916,2026-09-16,por_variable_over_gross_revenue_p90,0.398379,share,the same at the ninetieth percentile of paths,19
-20260916,2026-09-16,share_paths_variable_cost_over_half_of_revenue,0.072657,share,"share of live paths on which variable cost exceeds half of gross consumer revenue, which is where docs/10 says its sensitivity row reverses",19
-20260916,2026-09-16,share_paths_variable_cost_over_revenue,0.036754,share,share of live paths on which variable cost exceeds gross consumer revenue outright,19
-20260916,2026-09-16,demand_independent_spent_months_0_18,6092655.811522,USD,the demand-independent block spent in months 0 to 18,the instrument
-20260916,2026-09-16,demand_independent_share_months_0_18,0.244130,share,that as a share of the whole block,the instrument
-20260916,2026-09-16,demand_independent_spent_months_18_36,7865410.220802,USD,the demand-independent block spent in months 18 to 36,the instrument
-20260916,2026-09-16,demand_independent_share_months_18_36,0.315163,share,that as a share of the whole block,the instrument
-20260916,2026-09-16,demand_independent_spent_months_36_60,10998576.915754,USD,the demand-independent block spent in months 36 to 60,the instrument
-20260916,2026-09-16,demand_independent_share_months_36_60,0.440707,share,that as a share of the whole block,the instrument
-20260916,2026-09-16,demand_independent_spent_months_24_60,16206511.652334,USD,the demand-independent block spent in months 24 to 60,the instrument
-20260916,2026-09-16,demand_independent_share_months_24_60,0.649387,share,that as a share of the whole block,the instrument
-20260916,2026-09-16,demand_independent_share_after_gtm,0.942456,share,the share of the demand-independent block spent AFTER the United Kingdom go-to-market month,the instrument
+20260916,2026-09-16,por_discounted_content_cost_share_00_pct,35.766713,per cent,content_cost as a share of discounted total cost at 0 per cent a year,the instrument
+20260916,2026-09-16,por_discounted_cac_spend_share_00_pct,27.288031,per cent,cac_spend as a share of discounted total cost at 0 per cent a year,the instrument
+20260916,2026-09-16,por_discounted_cost_over_revenue_00,1.252862,ratio,discounted total cost over discounted net revenue at 0 per cent a year,the instrument
+20260916,2026-09-16,por_terminal_cash_npv_12,-7141538.979734,USD,"mean over paths of net cash discounted monthly at 12 per cent a year: the model discounts nothing, and this is what that is worth",the instrument
+20260916,2026-09-16,por_npv_12_less_undiscounted,739224.806966,USD,that present value less the undiscounted terminal cash mean,the instrument
+20260916,2026-09-16,por_discounted_content_cost_share_12_pct,37.739060,per cent,content_cost as a share of discounted total cost at 12 per cent a year,the instrument
+20260916,2026-09-16,por_discounted_cac_spend_share_12_pct,25.721704,per cent,cac_spend as a share of discounted total cost at 12 per cent a year,the instrument
+20260916,2026-09-16,por_discounted_cost_over_revenue_12,1.332736,ratio,discounted total cost over discounted net revenue at 12 per cent a year,the instrument
+20260916,2026-09-16,por_terminal_cash_npv_25,-6459641.551461,USD,"mean over paths of net cash discounted monthly at 25 per cent a year: the model discounts nothing, and this is what that is worth",the instrument
+20260916,2026-09-16,por_npv_25_less_undiscounted,1421122.235239,USD,that present value less the undiscounted terminal cash mean,the instrument
+20260916,2026-09-16,por_discounted_content_cost_share_25_pct,39.729951,per cent,content_cost as a share of discounted total cost at 25 per cent a year,the instrument
+20260916,2026-09-16,por_discounted_cac_spend_share_25_pct,24.132083,per cent,cac_spend as a share of discounted total cost at 25 per cent a year,the instrument
+20260916,2026-09-16,por_discounted_cost_over_revenue_25,1.426451,ratio,discounted total cost over discounted net revenue at 25 per cent a year,the instrument
+20260916,2026-09-16,por_inference_over_gross_revenue_pooled,0.029374,share,"total inference cost over total gross consumer revenue, pooled across paths: docs/10's row is variable cost against PRICE, not against total cost",19
+20260916,2026-09-16,por_inference_over_gross_revenue_median,0.034083,share,the same ratio on the median path,19
+20260916,2026-09-16,por_variable_over_gross_revenue_median,0.116122,share,"all four variable cost lines over gross consumer revenue, on the median path",19
+20260916,2026-09-16,por_variable_over_gross_revenue_p90,0.278497,share,the same at the ninetieth percentile of paths,19
+20260916,2026-09-16,share_paths_variable_cost_over_half_of_revenue,0.014251,share,"share of live paths on which variable cost exceeds half of gross consumer revenue, which is where docs/10 says its sensitivity row reverses",19
+20260916,2026-09-16,share_paths_variable_cost_over_revenue,0.000000,share,share of live paths on which variable cost exceeds gross consumer revenue outright,19
+20260916,2026-09-16,demand_independent_spent_months_0_18,6092899.136474,USD,the demand-independent block spent in months 0 to 18,the instrument
+20260916,2026-09-16,demand_independent_share_months_0_18,0.243945,share,that as a share of the whole block,the instrument
+20260916,2026-09-16,demand_independent_spent_months_18_36,7871879.749280,USD,the demand-independent block spent in months 18 to 36,the instrument
+20260916,2026-09-16,demand_independent_share_months_18_36,0.315171,share,that as a share of the whole block,the instrument
+20260916,2026-09-16,demand_independent_spent_months_36_60,11011778.686639,USD,the demand-independent block spent in months 36 to 60,the instrument
+20260916,2026-09-16,demand_independent_share_months_36_60,0.440885,share,that as a share of the whole block,the instrument
+20260916,2026-09-16,demand_independent_spent_months_24_60,16224879.618951,USD,the demand-independent block spent in months 24 to 60,the instrument
+20260916,2026-09-16,demand_independent_share_months_24_60,0.649604,share,that as a share of the whole block,the instrument
+20260916,2026-09-16,demand_independent_share_after_gtm,0.942502,share,the share of the demand-independent block spent AFTER the United Kingdom go-to-market month,the instrument

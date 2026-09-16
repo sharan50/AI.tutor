@@ -1276,6 +1276,34 @@ the code below them. The change log asserted "2.6 times" over its own 8.351 and
 brackets while ranking sixth on that target, and the real reason is the pinning,
 which the write-up says two paragraphs later.
 
+### 5.14 What the round 5 fixes moved, and one of them changed a headline
+
+Plan-of-record terminal cash at the mean moved from -10,049,080 to
+-7,880,764 across 5.1, 5.2 and 5.4 together, most of it the sitting-month
+arrivals.
+
+**And section 10's central claim changed.** Until these fixes, no value of any
+single driver anywhere in its prior range got the median path whole on either
+scope. A price on the go-to-market minimum now does, at about 42 pounds a
+month with condition C1 passing, and at that price the run needs about 4.8m of
+capital at the eightieth percentile and 71 per cent of paths reach
+profitability. It is the only place in the document where one driver inside its
+own prior produces a plan that returns the cash it consumes on the median path
+and stays inside the capital ceiling at once. It is conditional on the narrow
+scope, on the tutoring anchor and on a price near the top of its prior, and the
+section says so.
+
+**The name-collision guard added in round 1a earned its keep.** With a price
+bracketing against two different targets on the same scope, two figures tried to
+take the same name. The guard refused the run instead of silently overwriting,
+which is what it was built for and the first time it has fired on anything real.
+The hours-of-tutoring figures are keyed by metric now.
+
+**And the currency-tag pass added earlier in round 5 caught two of its own.** The
+support-end break-even figures carried a generic "metric units", so a dollar
+figure and a share were indistinguishable to the check. The unit follows the
+metric now.
+
 ### 5.13 What held up
 
 Recorded because a round that only reports failures is not a review.

@@ -517,7 +517,15 @@ window, including the United States entity and its market counsel, the security
 certification, A-level content and the second and third United Kingdom boards.
 The rest-of-English-speaking entity is the other of the two the file names, and
 it lands and is paid for in the Series A; an earlier draft called both of them
-seed-window. One commitment lands
+seed-window.
+
+**The list itself was the defect for four rounds.** It is hand-typed, and until
+round 5 every entry landed at month 30 or earlier in a sixty-month horizon, so
+six of the model's own content steps were missing and the count was 10 of 14.
+One of the six is a second violation of the section's own test. An instrument
+that measures whether staging matches decisions, built as a hand-kept list of
+half the decisions, is the failure class this document spends most of its change
+log converting away from. One commitment lands
 after the Series A opens with its spend starting before it: all four boards live
 at month 18, built from month 12. The rest-of-English-speaking market at month 24
 begins its build at month 18, exactly as the Series A opens, so the file's test
@@ -1152,3 +1160,51 @@ months of the horizon are never recognised at all. Both are in
 and its revenue at once. It is small either way — the channel is
 @@por_schools_share_of_net_revenue_pct|num2@@ per cent of net revenue — but the
 figure is not a clean measure of anything.
+
+---
+
+## What five rounds of review say about the gates in this directory
+
+This is the most important limit in the document and it is an empirical one, so
+it goes last rather than among the checklist items.
+
+Seven mechanism defects have been found in `model.py` across rounds 2, 4 and 5:
+a churn reference in the wrong place, an allowance that truncated at the wrong
+number and kept the revenue anyway, saturation measured on the wrong quantity,
+an onshoring switch that moved the wrong people, a sitting-month exit applied to
+a cohort in the month it arrived — twice, on two different paths into the
+segment — and a lifetime-value estimate using a calendar the loop does not have.
+
+**Every one of them passed every automated check in this directory, on every
+run, while it was wrong.** Not by accident: the checks cannot see this class of
+defect by construction.
+
+- The **character-for-character harness gate** compares the published CSVs
+  against a rebuild from the same source. A defect that is *in* the published
+  run reproduces perfectly. The gate proves the file matches the code; it says
+  nothing about whether the code is right.
+- The **two-sided off-test** applies only to switchable mechanisms. Five of the
+  seven defects were in the base loop, which has no switch.
+- The **five accounting identities** check that cash adds up. Five of the seven
+  moved households, ratios or a spend cap — quantities that do not appear in a
+  cash identity.
+- **`verify.py` Pass B** checks that a number in the prose exists on disk at the
+  precision printed. A wrong number computed consistently is on disk.
+- The **staleness check** proves the outputs were generated against the current
+  code. Against the current *wrong* code, they were.
+
+All seven were found by a reader going through the month loop line by line.
+That is the only method that has worked here, it does not scale, and it is not
+guaranteed to have finished. **The honest position after five rounds is not that
+the mechanisms are correct; it is that a defect of this class survives until
+somebody reads the code, and five readings have found seven.** A sixth reading
+should be assumed to find more.
+
+**What would actually close it** is not another gate of the kind above. It is a
+second implementation of the month loop by a different route — a cohort-level
+accounting that tracks each acquisition's own months and cash and reconciles to
+the aggregate series — which would catch every one of the seven, because all
+seven put a household in the wrong place or at the wrong time. That is a day of
+work and it has not been done. It is the largest single improvement available to
+this instrument and it is not in the open items, because it is a question about
+this directory rather than about the business.

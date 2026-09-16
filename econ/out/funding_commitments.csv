@@ -1,15 +1,21 @@
 seed,run_date,commitment,month_it_lands,month_spend_starts,stage_it_lands_in,that_stage_opens_month,stage_that_actually_pays,decision_taken_after_its_round_closed,content_cost_that_month_mean,step_cost_that_month_mean
 20260916,2026-09-16,content build for the go-to-market scope begins,0,0,seed,0,seed,yes,149501.999543,22933.524038
 20260916,2026-09-16,"first content delivered, UK go-to-market",6,0,seed,0,seed,yes,47990.787621,10831.216454
-20260916,2026-09-16,second UK board content live,10,4,seed,0,seed,yes,382799.330009,54836.426222
-20260916,2026-09-16,A-level content live,13,7,seed,0,seed,yes,282648.580912,44264.786260
-20260916,2026-09-16,information security certification for the institution channel,10,10,seed,0,seed,yes,382799.330009,54836.426222
-20260916,2026-09-16,"institution channel opens, first sales rep",12,12,seed,0,seed,yes,469362.607500,14859.408142
-20260916,2026-09-16,United States entity set-up and market counsel,13,13,seed,0,seed,yes,282648.580912,44264.786260
-20260916,2026-09-16,US consumer market opens,15,9,seed,0,seed,yes,188335.168582,15718.437513
-20260916,2026-09-16,third UK board content live,16,10,seed,0,seed,yes,104492.816740,15299.013609
-20260916,2026-09-16,all four UK boards live,18,12,series_a,18,seed,no,271684.398727,16066.548571
-20260916,2026-09-16,rest-of-English-speaking entity set-up and market counsel,22,22,series_a,18,series_a,yes,271684.398727,47093.902504
-20260916,2026-09-16,rest-of-English-speaking market opens,24,18,series_a,18,series_a,yes,252037.566641,18720.621653
-20260916,2026-09-16,second sales rep cohort,24,24,series_a,18,series_a,yes,252037.566641,18720.621653
-20260916,2026-09-16,seven UK subjects live,30,24,series_a,18,series_a,yes,189243.595196,19712.299305
+20260916,2026-09-16,second UK board content live,10,4,seed,0,seed,yes,382799.330009,54836.187464
+20260916,2026-09-16,A-level content live,13,7,seed,0,seed,yes,282648.580912,44263.439298
+20260916,2026-09-16,information security certification for the institution channel,10,10,seed,0,seed,yes,382799.330009,54836.187464
+20260916,2026-09-16,"institution channel opens, first sales rep",12,12,seed,0,seed,yes,469362.607500,14858.615802
+20260916,2026-09-16,United States entity set-up and market counsel,13,13,seed,0,seed,yes,282648.580912,44263.439298
+20260916,2026-09-16,US consumer market opens,15,9,seed,0,seed,yes,188335.168582,15715.320432
+20260916,2026-09-16,third UK board content live,16,10,seed,0,seed,yes,104492.816740,15305.926305
+20260916,2026-09-16,all four UK boards live,18,12,series_a,18,seed,no,271684.398727,16071.821011
+20260916,2026-09-16,rest-of-English-speaking entity set-up and market counsel,22,22,series_a,18,series_a,yes,271684.398727,47097.769637
+20260916,2026-09-16,rest-of-English-speaking market opens,24,18,series_a,18,series_a,yes,252037.566641,18722.745376
+20260916,2026-09-16,second sales rep cohort,24,24,series_a,18,series_a,yes,252037.566641,18722.745376
+20260916,2026-09-16,seven UK subjects live,30,24,series_a,18,series_a,yes,189243.595196,19724.883300
+20260916,2026-09-16,US second board and A-level content live,24,18,series_a,18,series_a,yes,252037.566641,18722.745376
+20260916,2026-09-16,rest-of-English-speaking second board and A-level content live,34,28,series_a,18,series_a,yes,140846.216348,19144.216565
+20260916,2026-09-16,US seven subjects live,40,34,series_b,36,series_a,no,267074.003087,20334.304169
+20260916,2026-09-16,nine UK subjects live,42,36,series_b,36,series_b,yes,229818.134150,20519.342111
+20260916,2026-09-16,"rest-of-English-speaking seven subjects, third board",48,42,series_b,36,series_b,yes,279749.364820,20624.106083
+20260916,2026-09-16,eleven UK subjects live,54,48,series_b,36,series_b,yes,63304.262075,19630.321621

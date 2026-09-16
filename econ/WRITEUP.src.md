@@ -1016,8 +1016,10 @@ product launches.
 
 ## 10. What the break-evens say
 
-**On the cash targets, there are none. On the profitability target, there are
-four, and they are the most actionable numbers in this document.**
+**One cash target is now reachable, on one scope, by one driver — and that is new
+in round 5.** Until the two month-loop defects in CHANGELOG 5.1 and 5.2 were
+fixed, nothing in the prior ranges got the median path whole on either scope.
+A price on the go-to-market minimum now does.
 
 @@breakeven_distinct_metrics|int@@ targets were solved by bisection on a pinned driver, each across that
 driver's entire prior range: the median path ending the horizon whole, the plan
@@ -1026,11 +1028,25 @@ all paths running three consecutive cash-positive months.
 @@breakeven_plan_of_record_questions|int@@ questions per scope, @@breakeven_rows_total|int@@ rows in all.
 @@breakeven_rows_unbracketed|int@@ are unbracketed and @@breakeven_rows_bracketed|int@@ bracket.
 
-**Nothing rescues the cash targets.** No value of the reachable pool, the
-acquisition anchor, age assurance cost, validation minutes, item count, sessions
-per household, churn or price, anywhere in its prior range, gets the median path
-whole on either scope. The other six of those eight were solved against the
-median-path target only.
+**Almost nothing rescues the cash targets, and the exception is worth the whole
+section.** No value of the reachable pool, the acquisition anchor, age assurance
+cost, validation minutes, item count, sessions per household or churn, anywhere
+in its prior range, gets the median path whole on either scope. **Price on the
+go-to-market minimum does**, at
+@@breakeven_at_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median|num2@@
+pounds a month with condition C1 passing — and at that price the same run needs
+@@breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_at_be_peak_funding_p80|usd0@@
+of capital at the eightieth percentile and
+@@breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_at_be_share_reaching_profitability_pct|num1@@
+per cent of paths reach profitability. That is the only combination anywhere in
+this document where a single driver, inside its own prior range, produces a plan
+that returns the cash it consumes on the median path and stays inside the capital
+ceiling at the same time.
+
+It is a **conditional** result and the conditions are the point: the narrow
+scope, the tutoring anchor holding, and a price near the top of its prior. Read
+it as what the instrument says the narrow scope would have to be true for, not as
+a plan.
 
 **But two of them were also solved against the ten-million-dollar capital
 ceiling, and there the answer is the opposite of what this paragraph used to
@@ -1063,12 +1079,13 @@ touch. (The one qualification: the United Kingdom safeguarding rota steps on
 active households, so part of that people line does respond to demand. See
 LIMITS.md item 5.)
 
-### The four that do solve
+### The @@breakeven_rows_bracketed|int@@ that do solve
 
-All four are on the same target, half of all paths running three consecutive
-cash-positive months, and all four are on the two drivers section 8 says decide
-whether the venture exists at all — and **two drafts running have got the reason
-for that wrong in opposite directions.** The first called it "the instrument
+@@breakeven_rows_bracketed_on_profitability|int@@ of them are on the same target,
+half of all paths running three consecutive cash-positive months; the remaining
+one is the median-path cash target above. All of them are on the two drivers
+section 8 says decide whether the venture exists at all — and **two drafts
+running have got the reason for that wrong in opposite directions.** The first called it "the instrument
 agreeing with itself", as though it were corroboration. The second called it a
 tautology, on the argument that a bisection can only bracket on a driver the
 index ranks highly. That argument fails on this file: the price driver brackets
@@ -1103,11 +1120,11 @@ The price rows are the ones to look at, because docs/07 already has the
 comparator. Against the verified £25 to £45 an hour GCSE tutoring rate, the
 narrow scope's break-even price of
 @@breakeven_at_gtm_minimum_uk_one_board_price_uk_tut_gbp_share_reaching_profitability|num2@@ a month is
-@@breakeven_gtm_minimum_uk_one_board_price_hours_at_25|num2@@ hours of human tutoring at the bottom of that band and
-@@breakeven_gtm_minimum_uk_one_board_price_hours_at_45|num2@@ hours at the top. **That is inside docs/07's own substitution
+@@breakeven_gtm_minimum_uk_one_board_share_reaching_profitability_price_hours_at_25|num2@@ hours of human tutoring at the bottom of that band and
+@@breakeven_gtm_minimum_uk_one_board_share_reaching_profitability_price_hours_at_45|num2@@ hours at the top. **That is inside docs/07's own substitution
 table, not outside it.** The plan of record needs
 @@breakeven_at_plan_of_record_price_uk_tut_gbp_share_reaching_profitability|num2@@ a month, which is
-@@breakeven_plan_of_record_price_hours_at_25|num2@@ hours at the bottom of the band, near the top of that table.
+@@breakeven_plan_of_record_share_reaching_profitability_price_hours_at_25|num2@@ hours at the bottom of the band, near the top of that table.
 
 Both price figures are conditional on condition C1 passing, because they are
 solved with the anchor regime pinned to tutoring. If C1 fails there is no price
@@ -1238,11 +1255,20 @@ file names @@commitments_entity_count|int@@ entity set-ups —
 @@commitments_entities_paid_by_seed|int@@ is paid for out of the seed window; an
 earlier draft named an India entity, which this model never stands up because
 India is an institution market here, and called both entities seed-window.
-@@commitments_paid_by_an_earlier_round_than_they_land_in|int@@ commitment lands in the
-Series A window with its spend starting before that round opens: all four United
-Kingdom boards live at month 18, built from month 12.
-The rest-of-English-speaking market at month 24 starts its build at month 18,
-exactly when the Series A opens, so by the file's own test it does not qualify.
+@@commitments_paid_by_an_earlier_round_than_they_land_in|int@@ commitments land in
+a later window than the one their spend starts in: all four United Kingdom boards
+live at month 18 and built from month 12, and the United States seven-subject
+step live at month 40 and built from month 34, inside the Series A. The
+rest-of-English-speaking market at month 24 starts its build at month 18, exactly
+when the Series A opens, so by the file's own test it does not qualify.
+
+**The second of those two was invisible until round 5**, because the commitments
+list was hand-typed and every entry stopped at month 30 of a sixty-month horizon.
+Six of the model's own content steps were missing from it, so the count this
+section reasons from was 10 of 14 rather than
+@@commitments_spend_starts_in_seed|int@@ of @@commitments_total|int@@. The
+instrument that measures whether staging matches decisions was itself a
+hand-typed list that covered the first half of the plan.
 
 **A round of @@funding_plan_of_record_seed_round_size|usd0@@ dollars is not a seed round.** Calling it one and
 then discovering at month 18 that the Series A is paying for choices made at month
@@ -1530,8 +1556,17 @@ absent cost lines, off-tests, entity set-ups and driver ranks rather than leavin
 them to prose, and renders two of the lists verbatim from the file that holds
 them. Run the verifier anyway, because it catches the other kind of error.
 
-**The third review round found the failure mode this pass cannot reach, and it is
-worth stating because it was the worst defect in the document.** Owner decision 1
+**And there is a whole class of defect no pass here can reach.** Seven
+mechanism errors have been found in `model.py` across rounds 2, 4 and 5, and
+every one passed every automated check in this directory on every run while it
+was wrong — the gate because the defect was in the published run, the off-test
+because most were in the base loop, the identities because they moved households
+rather than cash, this scrape because a wrong number computed consistently is
+still on disk. All seven were found by reading the month loop. LIMITS.md sets out
+why that is structural and what would actually close it.
+
+**The third review round found a different failure mode this pass cannot reach,
+and it is worth stating because it was the worst defect in the document.** Owner decision 1
 set a capital figure measured against one scope reduction beside a terminal-cash
 figure measured against a different one, and drew a conclusion from the pair.
 Every number in that sentence existed on disk, was rendered from a token, and

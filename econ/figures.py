@@ -622,6 +622,14 @@ if os.path.exists(os.path.join(OUT, "breakeven.csv")):
         "count", "breakeven.csv", "rows whose status is not bracketed")
     # Which side the unbracketed rows sit on. Reading them all as failures
     # inverted the most actionable positive result in the file.
+    add("breakeven_rows_bracketed_on_profitability",
+        len([r for r in berows if r["status"] == "bracketed"
+             and r["metric"] == "share_reaching_profitability"]),
+        "count", "breakeven.csv", "bracketed rows solved against the profitability target")
+    add("breakeven_rows_bracketed_on_cash",
+        len([r for r in berows if r["status"] == "bracketed"
+             and r["metric"] != "share_reaching_profitability"]),
+        "count", "breakeven.csv", "bracketed rows solved against a cash target")
     add("breakeven_rows_unbracketed_met",
         len([r for r in berows if r["status"].startswith("not bracketed: met")]),
         "count", "breakeven.csv",
@@ -647,11 +655,16 @@ if os.path.exists(os.path.join(OUT, "breakeven.csv")):
                 "driver units", "breakeven.csv",
                 "the bracketed break-even value for %s on %s against %s" % (r["driver"], r["scope"], r["metric"]))
             if r["driver"] == "price_uk_tut_gbp":
-                add("breakeven_%s_price_hours_at_25" % r["scope"], v / 25.0, "hours",
-                    "breakeven.csv",
+                # Keyed by metric as well as scope. A price now brackets against
+                # two different targets on the same scope, and without the
+                # metric in the name the two collided — which the collision
+                # guard caught rather than silently overwriting, which is what
+                # it was added for in round 1a.
+                add("breakeven_%s_%s_price_hours_at_25" % (r["scope"], r["metric"]), v / 25.0,
+                    "hours", "breakeven.csv",
                     "that monthly price as hours of GCSE tutoring at the bottom of the verified 25 to 45 pound hourly band")
-                add("breakeven_%s_price_hours_at_45" % r["scope"], v / 45.0, "hours",
-                    "breakeven.csv", "the same at the top of that band")
+                add("breakeven_%s_%s_price_hours_at_45" % (r["scope"], r["metric"]), v / 45.0,
+                    "hours", "breakeven.csv", "the same at the top of that band")
     for r in berows:
         key = "breakeven_%s_%s_%s" % (r["scope"], r["driver"], r["metric"])
         if r["status"] == "bracketed" and r["breakeven_value"]:
@@ -663,9 +676,13 @@ if os.path.exists(os.path.join(OUT, "breakeven.csv")):
         # The metric at each end of the driver's own prior range. On an
         # unbracketed row these are the whole answer: they say which side of the
         # target the plan sits on, which "not bracketed" alone does not.
-        add(key + "_metric_at_support_low", float(r["metric_at_support_low"]), "metric units",
+        # The unit follows the metric: two of the three targets are dollars and
+        # one is a share, and a generic "metric units" made the currency-tag
+        # check unable to tell a dollar figure from a percentage.
+        _munit = "share" if r["metric"] == "share_reaching_profitability" else "USD"
+        add(key + "_metric_at_support_low", float(r["metric_at_support_low"]), _munit,
             "breakeven.csv", "the metric with the driver pinned at the bottom of its prior range")
-        add(key + "_metric_at_support_high", float(r["metric_at_support_high"]), "metric units",
+        add(key + "_metric_at_support_high", float(r["metric_at_support_high"]), _munit,
             "breakeven.csv", "the metric with it pinned at the top")
         # What the plan looks like AT the solved value, on the statistics the
         # solve did not target. Without these a break-even reads as a rescue.
