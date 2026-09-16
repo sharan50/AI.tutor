@@ -200,10 +200,11 @@ correlation runs from @@scenario_por_anchor_software_pathwise_spearman_vs_base|n
 ### 12. Anchor or effective cost: **clean**
 
 Both published. The anchor is a driver with median @@por_cac_anchor_median|num2@@ dollars. The
-effective cost at the spend actually modelled is @@final_year_effective_cac_mean|num2@@ in the final
-year, @@por_cac_effective_over_anchor|num2@@ times the anchor, and it is published month by month as
-`cac_effective_blended_mean` in `out/por_monthly.csv`, with the non-creator channel
-beside it.
+effective cost at the spend actually modelled is @@final_year_effective_cac_pooled|num2@@ in the final
+year, pooled across paths, which is @@final_year_cac_pooled_over_anchor_median|num2@@ times the anchor. On the median
+path it is @@final_year_effective_cac_median|num2@@, because the median path never spends enough to
+saturate anything. It is published month by month as `cac_effective_blended_mean`
+in `out/por_monthly.csv`, with the non-creator channel beside it.
 
 ### 13. Break-even struck on the anchor rather than the effective cost: **clean**
 
@@ -223,10 +224,10 @@ for all sixty months. It now holds for @@const_ACQ_RAMP_HOLD_MONTHS|int@@ months
 to nothing over the next @@const_ACQ_RAMP_TAPER_MONTHS|int@@. See `CHANGELOG.md` 0.4.
 
 **Does lifetime value exceed cost per acquisition in the final year?** On the mean,
-yes: @@final_year_ltv_gross_mean|num2@@ against @@final_year_effective_cac_mean|num2@@, a ratio of
-@@final_year_ltv_over_cac_mean|num2@@. **On @@share_paths_final_year_ltv_below_cac|pct1@@ per cent of individual paths, no.** And the
+pooled, yes: @@final_year_ltv_gross_pooled|num2@@ against @@final_year_effective_cac_pooled|num2@@, a ratio of
+@@final_year_ltv_over_cac_pooled|num2@@. **On @@share_paths_final_year_ltv_below_cac|pct1@@ per cent of individual paths, no.** And the
 lifetime value in that ratio is the **gross** one; against the all-in contribution
-the ratio is far worse, which is item 16.
+the ratio is far worse, and on the median path it is negative, which is item 16.
 
 ### 15. A ratio between markets asserted as measured: **clean, and the code disagrees with the prose**
 
@@ -250,13 +251,25 @@ driver registry.
 
 ### 16. A gross margin presented as a net one: **clean, both published**
 
-@@final_year_contrib_per_hh_month_gross_mean|num2@@ dollars per active household month is a **gross**
-contribution: net revenue less inference, support, payment and hosting.
+The mean of this ratio is not a usable number and is published nowhere: its
+denominator collapses on paths whose book has collapsed, so a handful of paths
+carry it to millions. Two defensible figures are published instead, the pooled
+ratio and the median path's.
+
+@@final_year_contrib_per_hh_month_gross_pooled|num2@@ dollars per household month pooled, and
+@@final_year_contrib_per_hh_month_gross_median|num2@@ on the median path, is a **gross**
+contribution: net revenue less inference, support, payment, hosting and store fees.
 
 The all-in figure, net of engineering, content, overhead, compliance and payment
-fees, is @@final_year_contrib_per_hh_month_allin_mean|num2@@ dollars per household month. The two differ by
-@@allin_minus_gross_contrib_per_hh_month|num2@@. Both are in `out/cohorts.csv` and both are in the write-up,
-side by side, so neither can stand in for the other.
+fees, is @@final_year_contrib_per_hh_month_allin_pooled|num2@@ dollars per household month pooled and
+@@final_year_contrib_per_hh_month_allin_median|num2@@ on the median path. Pooled, the two differ by
+@@allin_minus_gross_contrib_per_hh_month_pooled|num2@@.
+
+**The pooled and median all-in figures disagree in sign**, because the pooled one
+is dominated by the few paths with large books that spread the fixed costs, and
+the median path is small with the same fixed costs on top of it. Both are in
+`out/cohorts.csv` and both are in the write-up, so neither can stand in for the
+other and neither can stand in for the gross figure.
 
 ---
 

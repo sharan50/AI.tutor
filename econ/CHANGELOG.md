@@ -158,3 +158,71 @@ pass. A gate that has never refused is not evidence of anything.
 file by one unit in its last decimal place, requires the harness to refuse,
 restores the file and requires it to verify again. The result, including the
 sha256 of the restored file, is written to `out/harness_selftest.txt`.
+
+---
+
+## Round 1a: found by pulling every figure the write-up quotes, before the reviewers reported
+
+### 1a.1 The mean contribution per household month was not a number
+
+**Found.** `final_year_contrib_per_hh_month` is a ratio whose denominator, final-year
+household months, goes to zero on paths whose book has collapsed. 84 of 20,000
+paths exceeded a thousand dollars a household month and the maximum was 3.2e10, so
+the **mean** of that column was 2,314,540 dollars per household month. The all-in
+version was worse: 3,245 paths beyond a thousand, and a mean of -96,521,075. The
+lifetime value to acquisition cost ratio inherited it and read 193,413.
+
+The medians were sane throughout, which is why this survived a first reading: the
+figure looks fine until you ask for the mean.
+
+**Fixed.** The mean is published nowhere. Two figures are published instead: the
+pooled ratio, total contribution over total household months across every path and
+month of the final year, and the median path's own ratio over the paths that have
+a final year at all. Both are computed in `cohorts.py` from the verified monthly
+arrays, so the published CSVs did not have to be regenerated.
+
+**Moved.** Gross contribution per household month from a meaningless 2,314,540 to
+32.89 pooled and 27.33 on the median path. All-in from -96,521,075 to 19.85 pooled
+and -109.95 on the median path. Lifetime value over acquisition cost from 193,413
+to 2.00.
+
+**And it exposed something worth having.** The pooled and median all-in figures
+disagree in sign. Pooled, a household month contributes 19.85 dollars all-in; on
+the median path it consumes 109.95. The pooled figure is dominated by the few
+paths with large books, which carry most of the household months and spread the
+fixed costs across them. Both are now published, because quoting only the pooled
+one describes a business that most paths are not running.
+
+### 1a.2 "The model is interaction-dominated" was true of one target in four
+
+**Found.** The write-up asserted it flatly. The first-order Sobol sums are 0.138 on
+terminal cash, 0.772 on its rank transform, 0.742 on the peak funding requirement
+and 0.507 on whether a path reaches profitability. The claim holds only for raw
+terminal cash, and there it is a property of the tail rather than of the model.
+
+**Fixed.** The write-up now says which target is interaction-dominated and why, and
+says plainly that on the robust targets the ordering can be read as an ordering.
+The correction makes the document's central claim stronger, not weaker.
+
+### 1a.3 The price-anchor figure was the wrong quantity
+
+**Found.** The write-up said the price anchor is worth
+`delta_por_anchor_software_terminal_cash_mean` "between its two states". That figure
+is the software-anchored scenario against the published run, and the published run
+is a fifty-fifty mix of the two regimes. The spread between the regimes is a
+different and larger number.
+
+**Fixed.** `anchor_tutoring_minus_software_terminal_cash_mean` is now computed in
+`figures.py` and quoted at all four sites, with the mix explained where the
+scenario table shows both columns.
+
+### 1a.4 figures.csv could silently overwrite a figure
+
+**Found.** `figures.py` wrote 1,283 rows which loaded as 1,163 unique names. The
+duplicates were identical values from the rescue grid re-adding its axis labels,
+so nothing was wrong. But a name collision carrying two different values would
+have let a later row overwrite an earlier one, and every figure in that file is
+quoted somewhere by name.
+
+**Fixed.** `add()` now refuses a name collision that carries a different value, and
+drops an exact repeat. 1,163 written, 1,163 loaded.

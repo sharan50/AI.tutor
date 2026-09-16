@@ -397,10 +397,13 @@ por_trough_understatement_pct,42.835818,per cent,por_monthly.csv and por_paths.c
 por_trough_p10,-38384994.448277,USD,por_paths.csv,10th percentile of the per-path trough
 por_trough_p90,-8066912.326532,USD,por_paths.csv,90th percentile of the per-path trough
 por_mean_trough_month,54.036850,month index,por_paths.csv,mean of trough_month
-por_final_year_contrib_per_hh_month_mean,2314540.720036,USD per household month,por_paths.csv,"mean of final_year_contrib_per_hh_month, which is net revenue less inference, support, payment and hosting only"
+por_final_year_contrib_per_hh_month_median,27.356639,USD per household month,por_paths.csv,"median of final_year_contrib_per_hh_month, which is net revenue less inference, support, payment and hosting only"
+por_final_year_contrib_per_hh_month_p05,6.675059,USD per household month,por_paths.csv,5th percentile of final_year_contrib_per_hh_month
+por_final_year_contrib_per_hh_month_p95,77.035419,USD per household month,por_paths.csv,95th percentile of final_year_contrib_per_hh_month
 por_final_year_effective_cac_mean,39.328638,USD per acquisition,por_paths.csv,mean of final_year_effective_cac: final twelve months of acquisition and verification spend divided by final twelve months of acquisitions
+por_final_year_effective_cac_median,31.929547,USD per acquisition,por_paths.csv,median of final_year_effective_cac
 por_cac_anchor_median,32.263316,USD per acquisition,por_paths.csv,"median of the cac_anchor_usd driver column, which is the low-volume anchor and not a cost at scale"
-por_cac_effective_over_anchor,1.218989,ratio,por_paths.csv,mean final-year effective CAC divided by the median anchor
+por_cac_effective_over_anchor,0.989655,ratio,por_paths.csv,"median final-year effective CAC divided by the median anchor, both medians so the ratio is on one basis"
 por_effective_cac_all_in_mean,44.378385,USD per acquisition,por_paths.csv,mean of effective_cac_all_in over the whole horizon
 por_mean_share_over_allowance,0.236143,share,por_paths.csv,mean of mean_share_over_allowance: the household-weighted share of active households exceeding the sold session allowance
 por_mean_share_over_allowance_pct,23.614296,per cent,por_paths.csv,the same share as a percentage
@@ -770,6 +773,8 @@ scenario_por_launch_plus6_total_net_revenue_mean,27225528.637690,USD or share,va
 scenario_por_launch_plus6_pathwise_spearman_vs_base,0.998274,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_launch_plus6
 scenario_por_launch_plus6_pathwise_mean_abs_delta,4999882.802742,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_launch_plus6
 scenario_por_launch_plus6_abs_mean_delta,793872.483849,USD or share,variants.csv,column abs_mean_delta for scenario por_launch_plus6
+anchor_tutoring_minus_software_terminal_cash_mean,30769800.355361,USD,variants.csv,"terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por_anchor_software: the spread between the two regimes, not either one's delta against the published mix"
+anchor_tutoring_minus_software_peak_funding_p80,4441824.028506,USD,variants.csv,peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring
 delta_por_feedback_off_terminal_cash_mean,0.000000,USD,variants.csv,terminal_cash_mean for por_feedback_off less terminal_cash_mean for por
 delta_por_feedback_off_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_feedback_off less the same for por
 delta_por_feedback_on_terminal_cash_mean,-8320187.299539,USD,variants.csv,terminal_cash_mean for por_feedback_on less terminal_cash_mean for por
@@ -991,110 +996,50 @@ rescue_gtm_minimum_uk_one_board_cac_q5_price_q5_median,2002936.587867,USD,rescue
 rescue_gtm_minimum_uk_one_board_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_gtm_minimum_uk_one_board_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_gtm_minimum_uk_one_board_cac_q5_price_q20_median,5939050.014235,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q5 and price_uk_tut_gbp q20 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_gtm_minimum_uk_one_board_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_gtm_minimum_uk_one_board_cac_q5_price_q40_median,9757543.148918,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q5 and price_uk_tut_gbp q40 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_gtm_minimum_uk_one_board_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_gtm_minimum_uk_one_board_cac_q5_price_q60_median,14456289.312875,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q5 and price_uk_tut_gbp q60 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_gtm_minimum_uk_one_board_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_gtm_minimum_uk_one_board_cac_q5_price_q80_median,21207856.973062,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q5 and price_uk_tut_gbp q80 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_gtm_minimum_uk_one_board_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_gtm_minimum_uk_one_board_cac_q5_price_q95_median,30178023.966905,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q5 and price_uk_tut_gbp q95 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_gtm_minimum_uk_one_board_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_gtm_minimum_uk_one_board_cac_q20_price_q5_median,-2152001.193146,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q5 for gtm_minimum_uk_one_board
 rescue_gtm_minimum_uk_one_board_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_gtm_minimum_uk_one_board_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_gtm_minimum_uk_one_board_cac_q20_price_q20_median,-39952.612080,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q20 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_gtm_minimum_uk_one_board_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_gtm_minimum_uk_one_board_cac_q20_price_q40_median,2112341.168556,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q40 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_gtm_minimum_uk_one_board_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_gtm_minimum_uk_one_board_cac_q20_price_q60_median,4829466.051002,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q60 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_gtm_minimum_uk_one_board_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_gtm_minimum_uk_one_board_cac_q20_price_q80_median,8710926.877208,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q80 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_gtm_minimum_uk_one_board_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_gtm_minimum_uk_one_board_cac_q20_price_q95_median,13980803.913055,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q95 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_gtm_minimum_uk_one_board_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_gtm_minimum_uk_one_board_cac_q40_price_q5_median,-4649180.284084,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q5 for gtm_minimum_uk_one_board
 rescue_gtm_minimum_uk_one_board_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_gtm_minimum_uk_one_board_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_gtm_minimum_uk_one_board_cac_q40_price_q20_median,-3909296.681289,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q20 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_gtm_minimum_uk_one_board_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_gtm_minimum_uk_one_board_cac_q40_price_q40_median,-3170831.083858,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q40 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_gtm_minimum_uk_one_board_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_gtm_minimum_uk_one_board_cac_q40_price_q60_median,-2162376.083012,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q60 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_gtm_minimum_uk_one_board_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_gtm_minimum_uk_one_board_cac_q40_price_q80_median,-613965.621040,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q80 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_gtm_minimum_uk_one_board_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_gtm_minimum_uk_one_board_cac_q40_price_q95_median,1577699.919034,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q95 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_gtm_minimum_uk_one_board_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_gtm_minimum_uk_one_board_cac_q60_price_q5_median,-5646930.940228,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q5 for gtm_minimum_uk_one_board
 rescue_gtm_minimum_uk_one_board_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_gtm_minimum_uk_one_board_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_gtm_minimum_uk_one_board_cac_q60_price_q20_median,-5315743.629552,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q20 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_gtm_minimum_uk_one_board_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_gtm_minimum_uk_one_board_cac_q60_price_q40_median,-5002929.393012,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q40 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_gtm_minimum_uk_one_board_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_gtm_minimum_uk_one_board_cac_q60_price_q60_median,-4627726.987261,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q60 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_gtm_minimum_uk_one_board_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_gtm_minimum_uk_one_board_cac_q60_price_q80_median,-4093960.134917,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q80 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_gtm_minimum_uk_one_board_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_gtm_minimum_uk_one_board_cac_q60_price_q95_median,-3366747.752954,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q95 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_gtm_minimum_uk_one_board_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_gtm_minimum_uk_one_board_cac_q80_price_q5_median,-6033045.335913,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q5 for gtm_minimum_uk_one_board
 rescue_gtm_minimum_uk_one_board_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_gtm_minimum_uk_one_board_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_gtm_minimum_uk_one_board_cac_q80_price_q20_median,-5918541.204261,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q20 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_gtm_minimum_uk_one_board_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_gtm_minimum_uk_one_board_cac_q80_price_q40_median,-5792275.567725,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q40 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_gtm_minimum_uk_one_board_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_gtm_minimum_uk_one_board_cac_q80_price_q60_median,-5620640.125180,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q60 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_gtm_minimum_uk_one_board_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_gtm_minimum_uk_one_board_cac_q80_price_q80_median,-5376764.127669,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q80 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_gtm_minimum_uk_one_board_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_gtm_minimum_uk_one_board_cac_q80_price_q95_median,-5050711.046203,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q95 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_gtm_minimum_uk_one_board_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_gtm_minimum_uk_one_board_cac_q95_price_q5_median,-6098831.977704,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q5 for gtm_minimum_uk_one_board
 rescue_gtm_minimum_uk_one_board_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_gtm_minimum_uk_one_board_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_gtm_minimum_uk_one_board_cac_q95_price_q20_median,-6075689.619997,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q20 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_gtm_minimum_uk_one_board_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_gtm_minimum_uk_one_board_cac_q95_price_q40_median,-6037604.565732,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q40 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_gtm_minimum_uk_one_board_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_gtm_minimum_uk_one_board_cac_q95_price_q60_median,-5971030.510152,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q60 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_gtm_minimum_uk_one_board_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_gtm_minimum_uk_one_board_cac_q95_price_q80_median,-5865615.597992,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q80 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_gtm_minimum_uk_one_board_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_gtm_minimum_uk_one_board_cac_q95_price_q95_median,-5713834.357883,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q95 for gtm_minimum_uk_one_board
-rescue_gtm_minimum_uk_one_board_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_gtm_minimum_uk_one_board_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_plan_of_record_cells_total,36,count,rescue_grid.csv,cells in the grid for scope plan_of_record
 rescue_plan_of_record_cells_clearing,6,count,rescue_grid.csv,cells whose terminal_cash_median is above zero for scope plan_of_record
 rescue_plan_of_record_best_median,57920641.187178,USD,rescue_grid.csv,highest terminal_cash_median in the grid for plan_of_record
@@ -1105,110 +1050,50 @@ rescue_plan_of_record_cac_q5_price_q5_median,-8343935.767879,USD,rescue_grid.csv
 rescue_plan_of_record_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_plan_of_record_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_plan_of_record_cac_q5_price_q20_median,-332917.105998,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q5 and price_uk_tut_gbp q20 for plan_of_record
-rescue_plan_of_record_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_plan_of_record_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_plan_of_record_cac_q5_price_q40_median,8391914.627995,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q5 and price_uk_tut_gbp q40 for plan_of_record
-rescue_plan_of_record_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_plan_of_record_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_plan_of_record_cac_q5_price_q60_median,19337708.547661,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q5 and price_uk_tut_gbp q60 for plan_of_record
-rescue_plan_of_record_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_plan_of_record_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_plan_of_record_cac_q5_price_q80_median,35403632.469205,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q5 and price_uk_tut_gbp q80 for plan_of_record
-rescue_plan_of_record_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_plan_of_record_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_plan_of_record_cac_q5_price_q95_median,57920641.187178,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q5 and price_uk_tut_gbp q95 for plan_of_record
-rescue_plan_of_record_cac_q5_value,9.221902,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q5
 rescue_plan_of_record_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_plan_of_record_cac_q20_price_q5_median,-16812287.709261,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q5 for plan_of_record
 rescue_plan_of_record_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_plan_of_record_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_plan_of_record_cac_q20_price_q20_median,-13084409.044954,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q20 for plan_of_record
-rescue_plan_of_record_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_plan_of_record_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_plan_of_record_cac_q20_price_q40_median,-9404903.538965,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q40 for plan_of_record
-rescue_plan_of_record_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_plan_of_record_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_plan_of_record_cac_q20_price_q60_median,-4431661.168947,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q60 for plan_of_record
-rescue_plan_of_record_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_plan_of_record_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_plan_of_record_cac_q20_price_q80_median,3386808.524112,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q80 for plan_of_record
-rescue_plan_of_record_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_plan_of_record_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_plan_of_record_cac_q20_price_q95_median,14575335.577767,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q20 and price_uk_tut_gbp q95 for plan_of_record
-rescue_plan_of_record_cac_q20_value,13.995872,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q20
-rescue_plan_of_record_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_plan_of_record_cac_q40_price_q5_median,-22252536.212043,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q5 for plan_of_record
 rescue_plan_of_record_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_plan_of_record_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_plan_of_record_cac_q40_price_q20_median,-20544904.015821,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q20 for plan_of_record
-rescue_plan_of_record_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_plan_of_record_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_plan_of_record_cac_q40_price_q40_median,-18966372.847273,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q40 for plan_of_record
-rescue_plan_of_record_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_plan_of_record_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_plan_of_record_cac_q40_price_q60_median,-17136456.048948,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q60 for plan_of_record
-rescue_plan_of_record_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_plan_of_record_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_plan_of_record_cac_q40_price_q80_median,-14497568.876757,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q80 for plan_of_record
-rescue_plan_of_record_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_plan_of_record_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_plan_of_record_cac_q40_price_q95_median,-10924088.811930,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q40 and price_uk_tut_gbp q95 for plan_of_record
-rescue_plan_of_record_cac_q40_value,24.401178,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q40
-rescue_plan_of_record_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_plan_of_record_cac_q60_price_q5_median,-24854660.924992,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q5 for plan_of_record
 rescue_plan_of_record_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_plan_of_record_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_plan_of_record_cac_q60_price_q20_median,-24149258.615361,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q20 for plan_of_record
-rescue_plan_of_record_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_plan_of_record_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_plan_of_record_cac_q60_price_q40_median,-23408926.139498,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q40 for plan_of_record
-rescue_plan_of_record_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_plan_of_record_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_plan_of_record_cac_q60_price_q60_median,-22441228.541251,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q60 for plan_of_record
-rescue_plan_of_record_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_plan_of_record_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_plan_of_record_cac_q60_price_q80_median,-21211604.479684,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q80 for plan_of_record
-rescue_plan_of_record_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_plan_of_record_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_plan_of_record_cac_q60_price_q95_median,-19686388.861948,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q60 and price_uk_tut_gbp q95 for plan_of_record
-rescue_plan_of_record_cac_q60_value,42.593896,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q60
-rescue_plan_of_record_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_plan_of_record_cac_q80_price_q5_median,-25723761.410073,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q5 for plan_of_record
 rescue_plan_of_record_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_plan_of_record_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_plan_of_record_cac_q80_price_q20_median,-25479364.269032,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q20 for plan_of_record
-rescue_plan_of_record_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_plan_of_record_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_plan_of_record_cac_q80_price_q40_median,-25209898.561747,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q40 for plan_of_record
-rescue_plan_of_record_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_plan_of_record_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_plan_of_record_cac_q80_price_q60_median,-24851479.624240,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q60 for plan_of_record
-rescue_plan_of_record_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_plan_of_record_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_plan_of_record_cac_q80_price_q80_median,-24365365.550658,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q80 for plan_of_record
-rescue_plan_of_record_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_plan_of_record_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_plan_of_record_cac_q80_price_q95_median,-23645879.827353,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q80 and price_uk_tut_gbp q95 for plan_of_record
-rescue_plan_of_record_cac_q80_value,73.134412,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q80
-rescue_plan_of_record_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 rescue_plan_of_record_cac_q95_price_q5_median,-25938969.347739,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q5 for plan_of_record
 rescue_plan_of_record_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_plan_of_record_price_q5_value,17.304886,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q5
 rescue_plan_of_record_cac_q95_price_q20_median,-25846172.155352,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q20 for plan_of_record
-rescue_plan_of_record_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_plan_of_record_price_q20_value,20.687352,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q20
 rescue_plan_of_record_cac_q95_price_q40_median,-25749468.401426,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q40 for plan_of_record
-rescue_plan_of_record_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_plan_of_record_price_q40_value,23.649951,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q40
 rescue_plan_of_record_cac_q95_price_q60_median,-25615751.429399,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q60 for plan_of_record
-rescue_plan_of_record_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_plan_of_record_price_q60_value,27.007827,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q60
 rescue_plan_of_record_cac_q95_price_q80_median,-25404411.859967,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q80 for plan_of_record
-rescue_plan_of_record_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_plan_of_record_price_q80_value,31.351533,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q80
 rescue_plan_of_record_cac_q95_price_q95_median,-25061737.201318,USD,rescue_grid.csv,terminal_cash_median at cac_anchor_usd q95 and price_uk_tut_gbp q95 for plan_of_record
-rescue_plan_of_record_cac_q95_value,112.630952,USD per acquisition,rescue_grid.csv,the pinned acquisition anchor at q95
-rescue_plan_of_record_price_q95_value,36.590349,GBP per month,rescue_grid.csv,the pinned tutoring-anchored price at q95
 retained_months_exam_year_mean,2.961747,months per acquisition,cohorts.csv,every acquisition pinned into the examination-year segment; active households summed over months divided by acquisitions summed over months
 retained_months_pre_exam_mean,3.658446,months per acquisition,cohorts.csv,"every acquisition pinned into the pre-examination-year segment, same arithmetic"
 retained_months_alevel_mean,4.064754,months per acquisition,cohorts.csv,"every acquisition pinned into the A-level segment, same arithmetic"
@@ -1225,14 +1110,21 @@ share_paths_content_exceeds_acquisition,0.854400,share,cohorts.csv,share of path
 share_paths_content_is_largest_line,0.655700,share,cohorts.csv,share of paths on which content is larger than both acquisition and people
 share_paths_peak_funding_over_10m,0.876950,share,cohorts.csv,share of paths whose peak funding requirement exceeds ten million dollars
 share_paths_terminal_cash_positive,0.096750,share,cohorts.csv,share of paths ending the horizon with cumulative cash above zero
-final_year_contrib_per_hh_month_gross_mean,2314540.720036,USD per household month,cohorts.csv,"net revenue less inference, support, payment and hosting only: a gross margin, not a net one"
-final_year_contrib_per_hh_month_allin_mean,-96521075.291445,USD per household month,cohorts.csv,"net cash per active household month with acquisition and verification added back, so net of engineering, content, overhead, compliance and payment fees"
-allin_minus_gross_contrib_per_hh_month,-98835616.011482,USD per household month,cohorts.csv,the all-in figure less the gross one: what the gross margin leaves out
+final_year_hh_months_total,7835373422.255140,household months,cohorts.csv,active households summed over paths and over the final twelve months
+share_paths_with_a_real_final_year,0.998150,share,cohorts.csv,"share of paths with at least twelve final-year household months, which is the set the per-path medians below are taken over"
+final_year_contrib_per_hh_month_gross_pooled,32.894699,USD per household month,cohorts.csv,"total net revenue less inference, support, payment, hosting and app store fees over the final year, divided by total final-year household months: a gross margin, not a net one"
+final_year_contrib_per_hh_month_gross_median,27.331019,USD per household month,cohorts.csv,median over paths with a real final year of the per-path gross contribution ratio
+final_year_contrib_per_hh_month_allin_pooled,19.854833,USD per household month,cohorts.csv,"total net cash with acquisition and verification added back over the final year, divided by total final-year household months: net of engineering, content, overhead and compliance"
+final_year_contrib_per_hh_month_allin_median,-109.947564,USD per household month,cohorts.csv,median over paths with a real final year of the per-path all-in contribution ratio
+allin_minus_gross_contrib_per_hh_month_pooled,-13.039866,USD per household month,cohorts.csv,the pooled all-in figure less the pooled gross one: what the gross margin leaves out
 blended_retained_months_mean,3.286480,months,cohorts.csv,retained months weighted by the sampled segment mix
-final_year_ltv_gross_mean,7606691.415337,USD per household,cohorts.csv,gross contribution per household month times blended retained months
-final_year_effective_cac_mean,39.328638,USD per acquisition,cohorts.csv,final twelve months of acquisition and verification spend divided by final twelve months of acquisitions
-final_year_ltv_over_cac_mean,193413.549122,ratio,cohorts.csv,mean gross lifetime value divided by mean final-year effective cost per acquisition
-share_paths_final_year_ltv_below_cac,0.045500,share,cohorts.csv,share of paths on which gross lifetime value is below the final-year effective cost per acquisition
+final_year_ltv_gross_pooled,108.107766,USD per household,cohorts.csv,pooled gross contribution per household month times blended retained months
+final_year_effective_cac_pooled,54.020355,USD per acquisition,cohorts.csv,"total final-year acquisition and verification spend over total final-year acquisitions, pooled across paths"
+final_year_effective_cac_median,31.932112,USD per acquisition,cohorts.csv,median over paths with a real final year of the per-path effective acquisition cost
+final_year_ltv_over_cac_pooled,2.001241,ratio,cohorts.csv,pooled gross lifetime value divided by pooled final-year effective cost per acquisition
+final_year_cac_pooled_over_anchor_median,1.674358,ratio,cohorts.csv,pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled
+cac_anchor_median,32.263315,USD per acquisition,cohorts.csv,"median of the cac_anchor_usd driver column, which is the low-volume anchor and not a cost at scale"
+share_paths_final_year_ltv_below_cac,0.045334,share,cohorts.csv,share of paths with a real final year on which gross lifetime value is below the final-year effective cost per acquisition
 missing_night_rota_cost_per_year,149793.106707,USD per year,cohorts.csv,"three full-time posts at the median Bengaluru salary and overhead multiplier, with a thirty per cent night premium"
 missing_night_rota_cost_total,674068.980182,USD,cohorts.csv,that annual cost from the UK go-to-market month to the end of the horizon
 missing_night_rota_share_of_total_cost,0.014697,share,cohorts.csv,the missing rota divided by the total modelled cost

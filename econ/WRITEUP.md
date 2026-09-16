@@ -146,38 +146,60 @@ tax line: 4,338,652 dollars over the horizon.
 
 ### Contribution per household, two ways round
 
-| | USD per active household month |
-|---|---|
-| Gross contribution: net revenue less inference, support, payment and hosting | 2,314,540.72 |
-| All-in: the same thing net of engineering, content, overhead and compliance | -96,521,075.29 |
-| The difference | -98,835,616.01 |
+Contribution per household month is a ratio, and its denominator collapses on
+paths whose book has collapsed, so **the mean of the per-path ratio is not a
+number** and is not published anywhere. Two defensible figures are given instead:
+the pooled ratio, which is total contribution over total household-months across
+every path and every month of the final year, and the median path's own ratio,
+over the 99.8 per cent of paths that have a final year to speak of.
 
-The first figure is a **gross margin**. Quoting it as the value of a customer,
-which is the conventional thing to do, overstates by
--98,835,616.01 dollars a household-month. Both are published here so that neither
-can be passed off as the other.
+| | Pooled | Median path |
+|---|---|---|
+| Gross: net revenue less inference, support, payment, hosting and store fees | 32.89 | 27.33 |
+| All-in: the same, net of engineering, content, overhead and compliance | 19.85 | -109.95 |
+
+The first row is a **gross margin**. Quoting it as the value of a customer, which
+is the conventional thing to do, overstates: pooled, the all-in figure is
+-13.04 dollars lower.
+
+**The two columns disagree in sign on the all-in row, and that disagreement is
+the finding.** Pooled, a household month contributes
+19.85 dollars all-in. On the median path it consumes
+-109.95. The pooled figure is dominated by the few paths with
+large books, which carry most of the household-months and spread the fixed costs
+over them; the median path is small and the same fixed costs sit on top of it.
+Neither is wrong. Quoting only the pooled one would describe a business that most
+paths are not running.
 
 ### Acquisition cost: the anchor is not the cost
 
 | | USD per acquisition |
 |---|---|
 | The low-volume anchor, median of the driver | 32.26 |
-| Effective cost in the final year, at the spend actually modelled | 39.33 |
-| Effective over anchor | 1.22 times |
+| Effective cost in the final year, pooled at the spend actually modelled | 54.02 |
+| Effective cost on the median path | 31.93 |
+| Pooled effective over anchor | 1.67 times |
 
 Channels saturate. The effective cost rises as the square-root-ish power of spend
 over a sampled reference spend, and again as the reachable pool is penetrated.
 Quoting the anchor as the cost at scale would understate by a factor of
-1.22. The effective cost is published by month in `out/por_monthly.csv`
-as `cac_effective_blended_mean`, and split from the non-creator channel beside it.
+1.67 at the spend actually modelled. The median path is a different
+story, at 31.93, because the median path never spends enough to
+saturate anything; that is why the pooled figure is the one to plan against. The
+effective cost is published by month in `out/por_monthly.csv` as
+`cac_effective_blended_mean`, with the non-creator channel beside it.
 
-**Lifetime value against cost per acquisition in the final year.** Gross lifetime
-value averages 7,606,691.42 dollars against an effective acquisition cost of
-39.33, a ratio of 193,413.55. On 4.5 per cent of
-individual paths that ratio is below one: the business is buying households for
-more than they are worth, in the final year, on that share of paths. The
-acquisition budget is capped at 0.75 times lifetime value, which is what keeps
-that share as low as it is.
+**Lifetime value against cost per acquisition in the final year.** Pooled gross
+lifetime value is 108.11 dollars against a pooled effective acquisition
+cost of 54.02, a ratio of 2.00. On
+4.5 per cent of individual paths that ratio is below one: the business
+is buying households for more than they are worth, in the final year, on that
+share of paths. The acquisition budget is capped at 0.75 times lifetime value,
+which is what keeps that share as low as it is.
+
+Note the lifetime value in that ratio is the **gross** one. Against the all-in
+contribution the ratio is very much worse, and on the median path it is
+negative.
 
 ### Retained months, and the Year 10 result from docs/10
 
@@ -323,8 +345,15 @@ over the path count and a driver that does nothing looks like it does something.
 **Read the sum before reading the ordering.** First-order indices sum to
 0.138 on terminal cash, 0.772 on its rank transform,
 0.742 on peak funding and 0.507 on whether a path
-reaches profitability. **The model is interaction-dominated.** A tornado read on
-its own would mislead, and that is why the two-way grid in section 9 is here.
+reaches profitability.
+
+**Only the raw terminal-cash decomposition is interaction-dominated**, and that is
+a property of its tail rather than of the model: terminal cash is heavy enough
+that its variance is largely a handful of paths. On the rank transform and on the
+capital requirement, first-order effects explain most of the variance, so the
+ordering on those targets can be read as an ordering. It is still worth having
+the two-way grid in section 9, because the interaction that remains is
+concentrated in exactly the two drivers that matter most.
 
 ### Whether the venture ever makes money
 
@@ -429,8 +458,10 @@ switches named. Every scenario that opens a market or a channel is charged for i
 
 Five readings.
 
-**The price anchor is worth -15,500,849 dollars between its two states**, and it is a
-landing page and a few days of spend to test. It is condition C1 in docs/09 and
+**The price anchor is worth 30,769,800 dollars between its two states**, and
+it is a landing page and a few days of spend to test. (The column beside it shows
+each regime against the published run, which is a fifty-fifty mix of the two; the
+spread between the regimes is the larger number and it is the one that matters.) It is condition C1 in docs/09 and
 nothing else in this instrument comes close to it on cost of information.
 
 **The institution channel destroys 5,435,967 dollars.** Field sales
@@ -554,8 +585,8 @@ entirely yours: the model has no view on how much ambition is correct, only on
 what each amount costs. Nothing else on this list comes close.
 
 **2. Whether to test the price anchor before building anything.** Worth
--15,500,849 between its two states, and it costs a landing page. It is
-already condition C1 in docs/09 and already milestone M1 in docs/11. The decision
+30,769,800 between its two states, and it costs a landing page.
+It is already condition C1 in docs/09 and already milestone M1 in docs/11. The decision
 is whether you will actually stop if it fails.
 
 **3. Whether to run the institution channel at all inside this horizon.** Costs

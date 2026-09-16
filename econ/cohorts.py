@@ -120,28 +120,72 @@ add("share_paths_terminal_cash_positive", float((OUTC["terminal_cash"] > 0).mean
 # ---------------------------------------------------------------------------
 # Lifetime value against cost per acquisition, in the final year.
 # ---------------------------------------------------------------------------
+# Contribution per household month is a RATIO whose denominator goes to zero on
+# paths whose book has collapsed, so the mean of the per-path ratio is not a
+# number: a handful of paths with almost no final-year household-months carry it
+# to millions. It is therefore reported two defensible ways instead, and the
+# mean is not published at all.
+#
+#   pooled  total contribution over total household-months, summed across every
+#           path and every month of the final year. The right figure for "what
+#           does a household month contribute".
+#   median  the middle path's own ratio, over paths that actually have a final
+#           year to speak of.
+FY = slice(NS["HORIZON"] - 12, NS["HORIZON"])
+hh_months = float(MOUT["active_hh"][:, FY].sum())
+contrib_pooled_total = float((MOUT["net_rev_consumer"][:, FY] + MOUT["net_rev_schools"][:, FY]
+                              - MOUT["inference_cost"][:, FY] - MOUT["support_cost"][:, FY]
+                              - MOUT["payment_cost"][:, FY] - MOUT["hosting_cost"][:, FY]
+                              - MOUT["appstore_fee"][:, FY]).sum())
+allin_pooled_total = float((MOUT["net_cash"][:, FY] + MOUT["cac_spend"][:, FY]
+                            + MOUT["verif_cost"][:, FY]).sum())
+gross_pooled = contrib_pooled_total / hh_months
+allin_pooled = allin_pooled_total / hh_months
+
+fy_hh_months_path = MOUT["active_hh"][:, FY].sum(axis=1)
+REAL = fy_hh_months_path >= 12.0        # at least one household for the final year
 fy_contrib = OUTC["final_year_contrib_per_hh_month"]
 fy_allin = OUTC["final_year_allin_contrib_per_hh_month"]
 fy_cac = OUTC["final_year_effective_cac"]
+
+add("final_year_hh_months_total", hh_months, "household months",
+    "active households summed over paths and over the final twelve months", "16")
+add("share_paths_with_a_real_final_year", float(REAL.mean()), "share",
+    "share of paths with at least twelve final-year household months, which is the set the per-path medians below are taken over", "16 and 17")
+add("final_year_contrib_per_hh_month_gross_pooled", gross_pooled, "USD per household month",
+    "total net revenue less inference, support, payment, hosting and app store fees over the final year, divided by total final-year household months: a gross margin, not a net one", "16")
+add("final_year_contrib_per_hh_month_gross_median", float(np.median(fy_contrib[REAL])), "USD per household month",
+    "median over paths with a real final year of the per-path gross contribution ratio", "16")
+add("final_year_contrib_per_hh_month_allin_pooled", allin_pooled, "USD per household month",
+    "total net cash with acquisition and verification added back over the final year, divided by total final-year household months: net of engineering, content, overhead and compliance", "16")
+add("final_year_contrib_per_hh_month_allin_median", float(np.median(fy_allin[REAL])), "USD per household month",
+    "median over paths with a real final year of the per-path all-in contribution ratio", "16")
+add("allin_minus_gross_contrib_per_hh_month_pooled", allin_pooled - gross_pooled, "USD per household month",
+    "the pooled all-in figure less the pooled gross one: what the gross margin leaves out", "16")
+
 blended_months = float((DRV["seg_mix_exam"] * exam_months + DRV["seg_mix_alevel"] * al_months
                         + np.maximum(1 - DRV["seg_mix_exam"] - DRV["seg_mix_alevel"], 0) * pre_months).mean())
-ltv_gross = fy_contrib * blended_months
-add("final_year_contrib_per_hh_month_gross_mean", float(fy_contrib.mean()), "USD per household month",
-    "net revenue less inference, support, payment and hosting only: a gross margin, not a net one", "16")
-add("final_year_contrib_per_hh_month_allin_mean", float(fy_allin.mean()), "USD per household month",
-    "net cash per active household month with acquisition and verification added back, so net of engineering, content, overhead, compliance and payment fees", "16")
-add("allin_minus_gross_contrib_per_hh_month", float(fy_allin.mean() - fy_contrib.mean()), "USD per household month",
-    "the all-in figure less the gross one: what the gross margin leaves out", "16")
 add("blended_retained_months_mean", blended_months, "months",
     "retained months weighted by the sampled segment mix", "14")
-add("final_year_ltv_gross_mean", float(ltv_gross.mean()), "USD per household",
-    "gross contribution per household month times blended retained months", "14")
-add("final_year_effective_cac_mean", float(fy_cac.mean()), "USD per acquisition",
-    "final twelve months of acquisition and verification spend divided by final twelve months of acquisitions", "14")
-add("final_year_ltv_over_cac_mean", float(ltv_gross.mean() / fy_cac.mean()), "ratio",
-    "mean gross lifetime value divided by mean final-year effective cost per acquisition", "14")
-add("share_paths_final_year_ltv_below_cac", float((ltv_gross < fy_cac).mean()), "share",
-    "share of paths on which gross lifetime value is below the final-year effective cost per acquisition", "14 and 19")
+
+cac_pooled = float((MOUT["cac_spend"][:, FY].sum() + MOUT["verif_cost"][:, FY].sum())
+                   / max(MOUT["acquisitions"][:, FY].sum(), 1e-9))
+ltv_pooled = gross_pooled * blended_months
+add("final_year_ltv_gross_pooled", ltv_pooled, "USD per household",
+    "pooled gross contribution per household month times blended retained months", "14")
+add("final_year_effective_cac_pooled", cac_pooled, "USD per acquisition",
+    "total final-year acquisition and verification spend over total final-year acquisitions, pooled across paths", "14")
+add("final_year_effective_cac_median", float(np.median(fy_cac[REAL])), "USD per acquisition",
+    "median over paths with a real final year of the per-path effective acquisition cost", "14")
+add("final_year_ltv_over_cac_pooled", ltv_pooled / cac_pooled, "ratio",
+    "pooled gross lifetime value divided by pooled final-year effective cost per acquisition", "14")
+add("final_year_cac_pooled_over_anchor_median", cac_pooled / float(np.median(DRV["cac_anchor_usd"])), "ratio",
+    "pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled", "12 and 13")
+add("cac_anchor_median", float(np.median(DRV["cac_anchor_usd"])), "USD per acquisition",
+    "median of the cac_anchor_usd driver column, which is the low-volume anchor and not a cost at scale", "12")
+ltv_path = fy_contrib * blended_months
+add("share_paths_final_year_ltv_below_cac", float((ltv_path[REAL] < fy_cac[REAL]).mean()), "share",
+    "share of paths with a real final year on which gross lifetime value is below the final-year effective cost per acquisition", "14 and 19")
 
 # ---------------------------------------------------------------------------
 # The night rota that is not in the cost base. Priced rather than waved at.

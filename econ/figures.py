@@ -21,7 +21,24 @@ OUT = os.path.join(HERE, "out")
 FIGS = []
 
 
+def _fmt(v):
+    return ("%.6f" % v) if isinstance(v, float) else str(v)
+
+
 def add(name, value, unit, source, derivation):
+    """
+    Record a figure. A name may be added more than once only if it carries the
+    same value each time; a name collision with two different values would let a
+    later row silently overwrite an earlier one, and every figure in this file is
+    quoted somewhere by name.
+    """
+    for f in FIGS:
+        if f["name"] == name:
+            if _fmt(f["value"]) != _fmt(value):
+                raise AssertionError(
+                    "figure name collision: %r already recorded as %s from %s, now %s from %s"
+                    % (name, _fmt(f["value"]), f["source"], _fmt(value), source))
+            return
     FIGS.append(dict(name=name, value=value, unit=unit, source=source, derivation=derivation))
 
 
@@ -121,14 +138,25 @@ add("por_mean_trough_month", float(trough_month.mean()), "month index", "por_pat
 # --------------------------------------------------------------------------
 # Unit economics
 # --------------------------------------------------------------------------
-add("por_final_year_contrib_per_hh_month_mean", float(fy_contrib.mean()), "USD per household month", "por_paths.csv",
-    "mean of final_year_contrib_per_hh_month, which is net revenue less inference, support, payment and hosting only")
+# The mean of this per-path ratio is not a usable number: its denominator goes
+# to zero on paths whose book has collapsed, so a handful of paths carry the
+# mean to millions. The median is published here and cohorts.csv carries the
+# pooled figure, which is the one to quote.
+add("por_final_year_contrib_per_hh_month_median", float(np.median(fy_contrib)), "USD per household month",
+    "por_paths.csv",
+    "median of final_year_contrib_per_hh_month, which is net revenue less inference, support, payment and hosting only")
+add("por_final_year_contrib_per_hh_month_p05", float(np.percentile(fy_contrib, 5)), "USD per household month",
+    "por_paths.csv", "5th percentile of final_year_contrib_per_hh_month")
+add("por_final_year_contrib_per_hh_month_p95", float(np.percentile(fy_contrib, 95)), "USD per household month",
+    "por_paths.csv", "95th percentile of final_year_contrib_per_hh_month")
 add("por_final_year_effective_cac_mean", float(fy_cac.mean()), "USD per acquisition", "por_paths.csv",
     "mean of final_year_effective_cac: final twelve months of acquisition and verification spend divided by final twelve months of acquisitions")
+add("por_final_year_effective_cac_median", float(np.median(fy_cac)), "USD per acquisition", "por_paths.csv",
+    "median of final_year_effective_cac")
 add("por_cac_anchor_median", float(np.median(cac_anchor)), "USD per acquisition", "por_paths.csv",
     "median of the cac_anchor_usd driver column, which is the low-volume anchor and not a cost at scale")
-add("por_cac_effective_over_anchor", float(fy_cac.mean() / np.median(cac_anchor)), "ratio", "por_paths.csv",
-    "mean final-year effective CAC divided by the median anchor")
+add("por_cac_effective_over_anchor", float(np.median(fy_cac) / np.median(cac_anchor)), "ratio", "por_paths.csv",
+    "median final-year effective CAC divided by the median anchor, both medians so the ratio is on one basis")
 add("por_effective_cac_all_in_mean", float(eff_cac_all.mean()), "USD per acquisition", "por_paths.csv",
     "mean of effective_cac_all_in over the whole horizon")
 add("por_mean_share_over_allowance", float(share_over.mean()), "share", "por_paths.csv",
@@ -198,6 +226,19 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
             if k in r:
                 add("scenario_%s_%s" % (name, k), float(r[k]), "USD or share", "variants.csv",
                     "column %s for scenario %s" % (k, name))
+    # The spread between the two price-anchor regimes is a different quantity
+    # from either one's delta against the published run, which is a mix of them.
+    if "por_anchor_tutoring" in vr and "por_anchor_software" in vr:
+        add("anchor_tutoring_minus_software_terminal_cash_mean",
+            float(vr["por_anchor_tutoring"]["terminal_cash_mean"])
+            - float(vr["por_anchor_software"]["terminal_cash_mean"]),
+            "USD", "variants.csv",
+            "terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por_anchor_software: the spread between the two regimes, not either one's delta against the published mix")
+        add("anchor_tutoring_minus_software_peak_funding_p80",
+            float(vr["por_anchor_software"]["peak_funding_p80"])
+            - float(vr["por_anchor_tutoring"]["peak_funding_p80"]),
+            "USD", "variants.csv",
+            "peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring")
     base = float(vr["por"]["terminal_cash_mean"])
     for name, r in vr.items():
         if name == "por":
