@@ -1,0 +1,435 @@
+name,value,unit,source,derivation
+seed,20260916,integer,por_monthly.csv,"the seed column, constant down the file"
+run_date,2026-09-16,date,por_monthly.csv,"the run_date column, constant down the file"
+horizon_months,60,months,por_monthly.csv,row count
+n_paths,20000,paths,por_paths.csv,row count
+por_terminal_cash_mean,-12361320.727120,USD,por_paths.csv,mean of terminal_cash
+por_terminal_cash_p50,-23076987.430796,USD,por_paths.csv,50th percentile of terminal_cash
+por_terminal_cash_p10,-38595521.327470,USD,por_paths.csv,10th percentile of terminal_cash
+por_terminal_cash_p90,-1786131.142419,USD,por_paths.csv,90th percentile of terminal_cash
+por_share_reaching_profitability,0.183950,share,por_paths.csv,"share of rows with month_rev_passes_cost >= 0, which marks the first of three consecutive cash-positive months"
+por_share_reaching_profitability_pct,18.395000,per cent,por_paths.csv,the same share expressed as a percentage
+por_median_month_rev_passes_cost,24.000000,month index,por_paths.csv,median of month_rev_passes_cost over the rows that reach it
+por_peak_funding_mean,23817936.696617,USD,por_paths.csv,mean of peak_funding_requirement
+por_peak_funding_p50,23132518.538743,USD,por_paths.csv,50th percentile of peak_funding_requirement
+por_peak_funding_p80,32797309.542676,USD,por_paths.csv,80th percentile of peak_funding_requirement
+por_peak_funding_p95,43906448.378095,USD,por_paths.csv,95th percentile of peak_funding_requirement
+por_min_of_mean_cash_line,-13756043.956559,USD,por_monthly.csv,minimum over months of cum_cash_mean
+por_min_of_mean_cash_month,54,month index,por_monthly.csv,argmin over months of cum_cash_mean
+por_mean_of_per_path_min,-23817936.696617,USD,por_paths.csv,"mean of the trough column, which is each path's own minimum"
+por_trough_understatement_ratio,0.577550,ratio,por_monthly.csv and por_paths.csv,min of cum_cash_mean divided by mean of the per-path trough
+por_trough_understatement_pct,42.245023,per cent,por_monthly.csv and por_paths.csv,"one minus that ratio, as a percentage: how much shallower the headline trough is"
+por_trough_p10,-38601509.201148,USD,por_paths.csv,10th percentile of the per-path trough
+por_trough_p90,-8066857.121538,USD,por_paths.csv,90th percentile of the per-path trough
+por_mean_trough_month,54.120250,month index,por_paths.csv,mean of trough_month
+por_final_year_contrib_per_hh_month_mean,2314540.738000,USD per household month,por_paths.csv,"mean of final_year_contrib_per_hh_month, which is net revenue less inference, support, payment and hosting only"
+por_final_year_effective_cac_mean,39.552986,USD per acquisition,por_paths.csv,mean of final_year_effective_cac: final twelve months of acquisition and verification spend divided by final twelve months of acquisitions
+por_cac_anchor_median,32.263316,USD per acquisition,por_paths.csv,"median of the cac_anchor_usd driver column, which is the low-volume anchor and not a cost at scale"
+por_cac_effective_over_anchor,1.225943,ratio,por_paths.csv,mean final-year effective CAC divided by the median anchor
+por_effective_cac_all_in_mean,44.463756,USD per acquisition,por_paths.csv,mean of effective_cac_all_in over the whole horizon
+por_mean_share_over_allowance,0.236157,share,por_paths.csv,mean of mean_share_over_allowance: the household-weighted share of active households exceeding the sold session allowance
+por_mean_share_over_allowance_pct,23.615725,per cent,por_paths.csv,the same share as a percentage
+por_total_cost_mean,44868432.560364,USD,por_monthly.csv,sum over months of the mean of every cost line
+por_total_inference_cost_mean,1078927.887803,USD,por_monthly.csv,sum over months of inference_cost_mean
+por_share_inference_cost,0.024046,share,por_monthly.csv,"inference_cost_mean summed over months, divided by the sum of every cost line"
+por_share_inference_cost_pct,2.404648,per cent,por_monthly.csv,the same share as a percentage
+por_total_support_cost_mean,329024.438168,USD,por_monthly.csv,sum over months of support_cost_mean
+por_share_support_cost,0.007333,share,por_monthly.csv,"support_cost_mean summed over months, divided by the sum of every cost line"
+por_share_support_cost_pct,0.733309,per cent,por_monthly.csv,the same share as a percentage
+por_total_payment_cost_mean,1324620.524285,USD,por_monthly.csv,sum over months of payment_cost_mean
+por_share_payment_cost,0.029522,share,por_monthly.csv,"payment_cost_mean summed over months, divided by the sum of every cost line"
+por_share_payment_cost_pct,2.952233,per cent,por_monthly.csv,the same share as a percentage
+por_total_hosting_cost_mean,306447.269744,USD,por_monthly.csv,sum over months of hosting_cost_mean
+por_share_hosting_cost,0.006830,share,por_monthly.csv,"hosting_cost_mean summed over months, divided by the sum of every cost line"
+por_share_hosting_cost_pct,0.682991,per cent,por_monthly.csv,the same share as a percentage
+por_total_verif_cost_mean,488642.791936,USD,por_monthly.csv,sum over months of verif_cost_mean
+por_share_verif_cost,0.010891,share,por_monthly.csv,"verif_cost_mean summed over months, divided by the sum of every cost line"
+por_share_verif_cost_pct,1.089057,per cent,por_monthly.csv,the same share as a percentage
+por_total_cac_spend_mean,12926591.294082,USD,por_monthly.csv,sum over months of cac_spend_mean
+por_share_cac_spend,0.288100,share,por_monthly.csv,"cac_spend_mean summed over months, divided by the sum of every cost line"
+por_share_cac_spend_pct,28.809991,per cent,por_monthly.csv,the same share as a percentage
+por_total_content_cost_mean,16461584.031679,USD,por_monthly.csv,sum over months of content_cost_mean
+por_share_content_cost,0.366886,share,por_monthly.csv,"content_cost_mean summed over months, divided by the sum of every cost line"
+por_share_content_cost_pct,36.688565,per cent,por_monthly.csv,the same share as a percentage
+por_total_people_beng_cost_mean,7140230.725037,USD,por_monthly.csv,sum over months of people_beng_cost_mean
+por_share_people_beng_cost,0.159137,share,por_monthly.csv,"people_beng_cost_mean summed over months, divided by the sum of every cost line"
+por_share_people_beng_cost_pct,15.913707,per cent,por_monthly.csv,the same share as a percentage
+por_total_people_uk_cost_mean,3284920.164890,USD,por_monthly.csv,sum over months of people_uk_cost_mean
+por_share_people_uk_cost,0.073212,share,por_monthly.csv,"people_uk_cost_mean summed over months, divided by the sum of every cost line"
+por_share_people_uk_cost_pct,7.321228,per cent,por_monthly.csv,the same share as a percentage
+por_total_step_cost_mean,1462019.777684,USD,por_monthly.csv,sum over months of step_cost_mean
+por_share_step_cost,0.032585,share,por_monthly.csv,"step_cost_mean summed over months, divided by the sum of every cost line"
+por_share_step_cost_pct,3.258460,per cent,por_monthly.csv,the same share as a percentage
+por_total_school_onboard_cost_mean,65423.655056,USD,por_monthly.csv,sum over months of school_onboard_cost_mean
+por_share_school_onboard_cost,0.001458,share,por_monthly.csv,"school_onboard_cost_mean summed over months, divided by the sum of every cost line"
+por_share_school_onboard_cost_pct,0.145812,per cent,por_monthly.csv,the same share as a percentage
+por_total_appstore_fee_mean,0.000000,USD,por_monthly.csv,sum over months of appstore_fee_mean
+por_share_appstore_fee,0.000000,share,por_monthly.csv,"appstore_fee_mean summed over months, divided by the sum of every cost line"
+por_share_appstore_fee_pct,0.000000,per cent,por_monthly.csv,the same share as a percentage
+por_total_net_revenue_mean,32507111.833246,USD,por_monthly.csv,sum over months of net_rev_consumer_mean plus net_rev_schools_mean
+por_total_gross_consumer_revenue_mean,36353096.301807,USD,por_monthly.csv,sum over months of gross_rev_consumer_mean
+por_total_tax_collected_mean,4017149.379345,USD,por_monthly.csv,sum over months of tax_collected_mean
+por_tax_share_of_gross,0.110504,share,por_monthly.csv,tax collected divided by gross consumer revenue: the part of a gross-quoted price that is not revenue
+por_tax_share_of_gross_pct,11.050364,per cent,por_monthly.csv,the same as a percentage
+por_schools_share_of_net_revenue_pct,0.526546,per cent,por_monthly.csv,"net_rev_schools_mean summed, over total net revenue summed"
+por_band_central_placement_terminal,0.497100,percentile as a share,por_monthly.csv,cum_cash_bandcentral_placement in the final row: the percentile of the real per-path distribution the central band line sits at
+por_band_central_placement_min,0.496650,percentile as a share,por_monthly.csv,minimum of cum_cash_bandcentral_placement from month 6 onward
+por_band_central_placement_max,0.562650,percentile as a share,por_monthly.csv,maximum of cum_cash_bandcentral_placement from month 6 onward
+band_placement_por_low_terminal,0.192700,percentile as a share,variants_bands.csv,placement_terminal for scenario por band low
+band_placement_por_central_terminal,0.497100,percentile as a share,variants_bands.csv,placement_terminal for scenario por band central
+band_placement_por_high_terminal,0.824250,percentile as a share,variants_bands.csv,placement_terminal for scenario por band high
+band_placement_por_feedback_off_low_terminal,0.192700,percentile as a share,variants_bands.csv,placement_terminal for scenario por_feedback_off band low
+band_placement_por_feedback_off_central_terminal,0.497100,percentile as a share,variants_bands.csv,placement_terminal for scenario por_feedback_off band central
+band_placement_por_feedback_off_high_terminal,0.824250,percentile as a share,variants_bands.csv,placement_terminal for scenario por_feedback_off band high
+band_placement_por_feedback_on_low_terminal,0.193050,percentile as a share,variants_bands.csv,placement_terminal for scenario por_feedback_on band low
+band_placement_por_feedback_on_central_terminal,0.498400,percentile as a share,variants_bands.csv,placement_terminal for scenario por_feedback_on band central
+band_placement_por_feedback_on_high_terminal,0.810000,percentile as a share,variants_bands.csv,placement_terminal for scenario por_feedback_on band high
+band_placement_por_dependence_low_terminal,0.191250,percentile as a share,variants_bands.csv,placement_terminal for scenario por_dependence band low
+band_placement_por_dependence_central_terminal,0.498750,percentile as a share,variants_bands.csv,placement_terminal for scenario por_dependence band central
+band_placement_por_dependence_high_terminal,0.821200,percentile as a share,variants_bands.csv,placement_terminal for scenario por_dependence band high
+band_placement_por_dependence_feedback_low_terminal,0.191900,percentile as a share,variants_bands.csv,placement_terminal for scenario por_dependence_feedback band low
+band_placement_por_dependence_feedback_central_terminal,0.497800,percentile as a share,variants_bands.csv,placement_terminal for scenario por_dependence_feedback band central
+band_placement_por_dependence_feedback_high_terminal,0.809600,percentile as a share,variants_bands.csv,placement_terminal for scenario por_dependence_feedback band high
+band_placement_por_fx_sampled_low_terminal,0.192500,percentile as a share,variants_bands.csv,placement_terminal for scenario por_fx_sampled band low
+band_placement_por_fx_sampled_central_terminal,0.498450,percentile as a share,variants_bands.csv,placement_terminal for scenario por_fx_sampled band central
+band_placement_por_fx_sampled_high_terminal,0.823800,percentile as a share,variants_bands.csv,placement_terminal for scenario por_fx_sampled band high
+band_placement_por_india_d2c_low_terminal,0.193050,percentile as a share,variants_bands.csv,placement_terminal for scenario por_india_d2c band low
+band_placement_por_india_d2c_central_terminal,0.497900,percentile as a share,variants_bands.csv,placement_terminal for scenario por_india_d2c band central
+band_placement_por_india_d2c_high_terminal,0.823900,percentile as a share,variants_bands.csv,placement_terminal for scenario por_india_d2c band high
+band_placement_por_appstore_low_terminal,0.192750,percentile as a share,variants_bands.csv,placement_terminal for scenario por_appstore band low
+band_placement_por_appstore_central_terminal,0.496600,percentile as a share,variants_bands.csv,placement_terminal for scenario por_appstore band central
+band_placement_por_appstore_high_terminal,0.819350,percentile as a share,variants_bands.csv,placement_terminal for scenario por_appstore band high
+band_placement_por_allowance_enforced_low_terminal,0.192700,percentile as a share,variants_bands.csv,placement_terminal for scenario por_allowance_enforced band low
+band_placement_por_allowance_enforced_central_terminal,0.497400,percentile as a share,variants_bands.csv,placement_terminal for scenario por_allowance_enforced band central
+band_placement_por_allowance_enforced_high_terminal,0.824450,percentile as a share,variants_bands.csv,placement_terminal for scenario por_allowance_enforced band high
+band_placement_ukonly_low_terminal,0.191750,percentile as a share,variants_bands.csv,placement_terminal for scenario ukonly band low
+band_placement_ukonly_central_terminal,0.499700,percentile as a share,variants_bands.csv,placement_terminal for scenario ukonly band central
+band_placement_ukonly_high_terminal,0.819900,percentile as a share,variants_bands.csv,placement_terminal for scenario ukonly band high
+band_placement_por_no_schools_low_terminal,0.192800,percentile as a share,variants_bands.csv,placement_terminal for scenario por_no_schools band low
+band_placement_por_no_schools_central_terminal,0.498350,percentile as a share,variants_bands.csv,placement_terminal for scenario por_no_schools band central
+band_placement_por_no_schools_high_terminal,0.825350,percentile as a share,variants_bands.csv,placement_terminal for scenario por_no_schools band high
+band_placement_por_anchor_tutoring_low_terminal,0.193800,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_tutoring band low
+band_placement_por_anchor_tutoring_central_terminal,0.500550,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_tutoring band central
+band_placement_por_anchor_tutoring_high_terminal,0.822250,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_tutoring band high
+band_placement_por_anchor_software_low_terminal,0.192650,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_software band low
+band_placement_por_anchor_software_central_terminal,0.499100,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_software band central
+band_placement_por_anchor_software_high_terminal,0.803150,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_software band high
+band_placement_por_launch_plus3_low_terminal,0.192500,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus3 band low
+band_placement_por_launch_plus3_central_terminal,0.496600,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus3 band central
+band_placement_por_launch_plus3_high_terminal,0.820350,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus3 band high
+band_placement_por_launch_plus6_low_terminal,0.193100,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus6 band low
+band_placement_por_launch_plus6_central_terminal,0.497100,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus6 band central
+band_placement_por_launch_plus6_high_terminal,0.819950,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus6 band high
+scenario_por_terminal_cash_mean,-12361320.727120,USD or share,variants.csv,column terminal_cash_mean for scenario por
+scenario_por_terminal_cash_p50,-23076987.430796,USD or share,variants.csv,column terminal_cash_p50 for scenario por
+scenario_por_peak_funding_mean,23817936.696617,USD or share,variants.csv,column peak_funding_mean for scenario por
+scenario_por_peak_funding_p90,38601509.201148,USD or share,variants.csv,column peak_funding_p90 for scenario por
+scenario_por_share_reaching_profitability,0.183950,USD or share,variants.csv,column share_reaching_profitability for scenario por
+scenario_por_final_year_effective_cac_mean,39.552986,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por
+scenario_por_final_year_contrib_per_hh_month_mean,2314540.738000,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por
+scenario_por_mean_share_over_allowance,0.236157,USD or share,variants.csv,column mean_share_over_allowance for scenario por
+scenario_por_understatement_ratio,0.577550,USD or share,variants.csv,column understatement_ratio for scenario por
+scenario_por_band_central_placement_terminal,0.497100,USD or share,variants.csv,column band_central_placement_terminal for scenario por
+scenario_por_feedback_off_terminal_cash_mean,-12361320.727120,USD or share,variants.csv,column terminal_cash_mean for scenario por_feedback_off
+scenario_por_feedback_off_terminal_cash_p50,-23076987.430796,USD or share,variants.csv,column terminal_cash_p50 for scenario por_feedback_off
+scenario_por_feedback_off_peak_funding_mean,23817936.696617,USD or share,variants.csv,column peak_funding_mean for scenario por_feedback_off
+scenario_por_feedback_off_peak_funding_p90,38601509.201148,USD or share,variants.csv,column peak_funding_p90 for scenario por_feedback_off
+scenario_por_feedback_off_share_reaching_profitability,0.183950,USD or share,variants.csv,column share_reaching_profitability for scenario por_feedback_off
+scenario_por_feedback_off_final_year_effective_cac_mean,39.552986,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_feedback_off
+scenario_por_feedback_off_final_year_contrib_per_hh_month_mean,2314540.738000,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_feedback_off
+scenario_por_feedback_off_mean_share_over_allowance,0.236157,USD or share,variants.csv,column mean_share_over_allowance for scenario por_feedback_off
+scenario_por_feedback_off_understatement_ratio,0.577550,USD or share,variants.csv,column understatement_ratio for scenario por_feedback_off
+scenario_por_feedback_off_band_central_placement_terminal,0.497100,USD or share,variants.csv,column band_central_placement_terminal for scenario por_feedback_off
+scenario_por_feedback_on_terminal_cash_mean,-20142506.082189,USD or share,variants.csv,column terminal_cash_mean for scenario por_feedback_on
+scenario_por_feedback_on_terminal_cash_p50,-24417630.304064,USD or share,variants.csv,column terminal_cash_p50 for scenario por_feedback_on
+scenario_por_feedback_on_peak_funding_mean,25392420.119094,USD or share,variants.csv,column peak_funding_mean for scenario por_feedback_on
+scenario_por_feedback_on_peak_funding_p90,39701054.405673,USD or share,variants.csv,column peak_funding_p90 for scenario por_feedback_on
+scenario_por_feedback_on_share_reaching_profitability,0.126450,USD or share,variants.csv,column share_reaching_profitability for scenario por_feedback_on
+scenario_por_feedback_on_final_year_effective_cac_mean,33.444322,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_feedback_on
+scenario_por_feedback_on_final_year_contrib_per_hh_month_mean,2046242.733205,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_feedback_on
+scenario_por_feedback_on_mean_share_over_allowance,0.236159,USD or share,variants.csv,column mean_share_over_allowance for scenario por_feedback_on
+scenario_por_feedback_on_understatement_ratio,0.797629,USD or share,variants.csv,column understatement_ratio for scenario por_feedback_on
+scenario_por_feedback_on_band_central_placement_terminal,0.498400,USD or share,variants.csv,column band_central_placement_terminal for scenario por_feedback_on
+scenario_por_dependence_terminal_cash_mean,-8312982.040667,USD or share,variants.csv,column terminal_cash_mean for scenario por_dependence
+scenario_por_dependence_terminal_cash_p50,-23131158.634053,USD or share,variants.csv,column terminal_cash_p50 for scenario por_dependence
+scenario_por_dependence_peak_funding_mean,23962195.139144,USD or share,variants.csv,column peak_funding_mean for scenario por_dependence
+scenario_por_dependence_peak_funding_p90,39028219.352937,USD or share,variants.csv,column peak_funding_p90 for scenario por_dependence
+scenario_por_dependence_share_reaching_profitability,0.176250,USD or share,variants.csv,column share_reaching_profitability for scenario por_dependence
+scenario_por_dependence_final_year_effective_cac_mean,39.424484,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_dependence
+scenario_por_dependence_final_year_contrib_per_hh_month_mean,1060.188623,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_dependence
+scenario_por_dependence_mean_share_over_allowance,0.235793,USD or share,variants.csv,column mean_share_over_allowance for scenario por_dependence
+scenario_por_dependence_understatement_ratio,0.497371,USD or share,variants.csv,column understatement_ratio for scenario por_dependence
+scenario_por_dependence_band_central_placement_terminal,0.498750,USD or share,variants.csv,column band_central_placement_terminal for scenario por_dependence
+scenario_por_dependence_feedback_terminal_cash_mean,-18171808.975696,USD or share,variants.csv,column terminal_cash_mean for scenario por_dependence_feedback
+scenario_por_dependence_feedback_terminal_cash_p50,-24392047.628808,USD or share,variants.csv,column terminal_cash_p50 for scenario por_dependence_feedback
+scenario_por_dependence_feedback_peak_funding_mean,25480728.703594,USD or share,variants.csv,column peak_funding_mean for scenario por_dependence_feedback
+scenario_por_dependence_feedback_peak_funding_p90,40207310.962652,USD or share,variants.csv,column peak_funding_p90 for scenario por_dependence_feedback
+scenario_por_dependence_feedback_share_reaching_profitability,0.122350,USD or share,variants.csv,column share_reaching_profitability for scenario por_dependence_feedback
+scenario_por_dependence_feedback_final_year_effective_cac_mean,33.338042,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_dependence_feedback
+scenario_por_dependence_feedback_final_year_contrib_per_hh_month_mean,1011.036305,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_dependence_feedback
+scenario_por_dependence_feedback_mean_share_over_allowance,0.235789,USD or share,variants.csv,column mean_share_over_allowance for scenario por_dependence_feedback
+scenario_por_dependence_feedback_understatement_ratio,0.731135,USD or share,variants.csv,column understatement_ratio for scenario por_dependence_feedback
+scenario_por_dependence_feedback_band_central_placement_terminal,0.497800,USD or share,variants.csv,column band_central_placement_terminal for scenario por_dependence_feedback
+scenario_por_fx_sampled_terminal_cash_mean,-12277221.972858,USD or share,variants.csv,column terminal_cash_mean for scenario por_fx_sampled
+scenario_por_fx_sampled_terminal_cash_p50,-23088358.115802,USD or share,variants.csv,column terminal_cash_p50 for scenario por_fx_sampled
+scenario_por_fx_sampled_peak_funding_mean,23825315.702034,USD or share,variants.csv,column peak_funding_mean for scenario por_fx_sampled
+scenario_por_fx_sampled_peak_funding_p90,38603328.238655,USD or share,variants.csv,column peak_funding_p90 for scenario por_fx_sampled
+scenario_por_fx_sampled_share_reaching_profitability,0.183550,USD or share,variants.csv,column share_reaching_profitability for scenario por_fx_sampled
+scenario_por_fx_sampled_final_year_effective_cac_mean,39.518273,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_fx_sampled
+scenario_por_fx_sampled_final_year_contrib_per_hh_month_mean,2501059.217869,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_fx_sampled
+scenario_por_fx_sampled_mean_share_over_allowance,0.236157,USD or share,variants.csv,column mean_share_over_allowance for scenario por_fx_sampled
+scenario_por_fx_sampled_understatement_ratio,0.574455,USD or share,variants.csv,column understatement_ratio for scenario por_fx_sampled
+scenario_por_fx_sampled_band_central_placement_terminal,0.498450,USD or share,variants.csv,column band_central_placement_terminal for scenario por_fx_sampled
+scenario_por_india_d2c_terminal_cash_mean,-12274259.160117,USD or share,variants.csv,column terminal_cash_mean for scenario por_india_d2c
+scenario_por_india_d2c_terminal_cash_p50,-23207292.649711,USD or share,variants.csv,column terminal_cash_p50 for scenario por_india_d2c
+scenario_por_india_d2c_peak_funding_mean,23969496.216670,USD or share,variants.csv,column peak_funding_mean for scenario por_india_d2c
+scenario_por_india_d2c_peak_funding_p90,38748855.075513,USD or share,variants.csv,column peak_funding_p90 for scenario por_india_d2c
+scenario_por_india_d2c_share_reaching_profitability,0.181750,USD or share,variants.csv,column share_reaching_profitability for scenario por_india_d2c
+scenario_por_india_d2c_final_year_effective_cac_mean,29.426936,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_india_d2c
+scenario_por_india_d2c_final_year_contrib_per_hh_month_mean,2314534.265643,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_india_d2c
+scenario_por_india_d2c_mean_share_over_allowance,0.233003,USD or share,variants.csv,column mean_share_over_allowance for scenario por_india_d2c
+scenario_por_india_d2c_understatement_ratio,0.576897,USD or share,variants.csv,column understatement_ratio for scenario por_india_d2c
+scenario_por_india_d2c_band_central_placement_terminal,0.497900,USD or share,variants.csv,column band_central_placement_terminal for scenario por_india_d2c
+scenario_por_appstore_terminal_cash_mean,-14752675.194566,USD or share,variants.csv,column terminal_cash_mean for scenario por_appstore
+scenario_por_appstore_terminal_cash_p50,-23481392.876278,USD or share,variants.csv,column terminal_cash_p50 for scenario por_appstore
+scenario_por_appstore_peak_funding_mean,24309465.745817,USD or share,variants.csv,column peak_funding_mean for scenario por_appstore
+scenario_por_appstore_peak_funding_p90,38894979.483292,USD or share,variants.csv,column peak_funding_p90 for scenario por_appstore
+scenario_por_appstore_share_reaching_profitability,0.169050,USD or share,variants.csv,column share_reaching_profitability for scenario por_appstore
+scenario_por_appstore_final_year_effective_cac_mean,39.552986,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_appstore
+scenario_por_appstore_final_year_contrib_per_hh_month_mean,2314539.026510,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_appstore
+scenario_por_appstore_mean_share_over_allowance,0.236157,USD or share,variants.csv,column mean_share_over_allowance for scenario por_appstore
+scenario_por_appstore_understatement_ratio,0.647483,USD or share,variants.csv,column understatement_ratio for scenario por_appstore
+scenario_por_appstore_band_central_placement_terminal,0.496600,USD or share,variants.csv,column band_central_placement_terminal for scenario por_appstore
+scenario_por_allowance_enforced_terminal_cash_mean,-12267077.208531,USD or share,variants.csv,column terminal_cash_mean for scenario por_allowance_enforced
+scenario_por_allowance_enforced_terminal_cash_p50,-23057445.858309,USD or share,variants.csv,column terminal_cash_p50 for scenario por_allowance_enforced
+scenario_por_allowance_enforced_peak_funding_mean,23785808.846501,USD or share,variants.csv,column peak_funding_mean for scenario por_allowance_enforced
+scenario_por_allowance_enforced_peak_funding_p90,38580943.646802,USD or share,variants.csv,column peak_funding_p90 for scenario por_allowance_enforced
+scenario_por_allowance_enforced_share_reaching_profitability,0.184300,USD or share,variants.csv,column share_reaching_profitability for scenario por_allowance_enforced
+scenario_por_allowance_enforced_final_year_effective_cac_mean,39.552986,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_allowance_enforced
+scenario_por_allowance_enforced_final_year_contrib_per_hh_month_mean,2314540.805577,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_allowance_enforced
+scenario_por_allowance_enforced_mean_share_over_allowance,0.236157,USD or share,variants.csv,column mean_share_over_allowance for scenario por_allowance_enforced
+scenario_por_allowance_enforced_understatement_ratio,0.574790,USD or share,variants.csv,column understatement_ratio for scenario por_allowance_enforced
+scenario_por_allowance_enforced_band_central_placement_terminal,0.497400,USD or share,variants.csv,column band_central_placement_terminal for scenario por_allowance_enforced
+scenario_ukonly_terminal_cash_mean,-9690097.096505,USD or share,variants.csv,column terminal_cash_mean for scenario ukonly
+scenario_ukonly_terminal_cash_p50,-13636994.771395,USD or share,variants.csv,column terminal_cash_p50 for scenario ukonly
+scenario_ukonly_peak_funding_mean,13837686.080029,USD or share,variants.csv,column peak_funding_mean for scenario ukonly
+scenario_ukonly_peak_funding_p90,22027533.303602,USD or share,variants.csv,column peak_funding_p90 for scenario ukonly
+scenario_ukonly_share_reaching_profitability,0.175700,USD or share,variants.csv,column share_reaching_profitability for scenario ukonly
+scenario_ukonly_final_year_effective_cac_mean,33.935908,USD or share,variants.csv,column final_year_effective_cac_mean for scenario ukonly
+scenario_ukonly_final_year_contrib_per_hh_month_mean,20.135275,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario ukonly
+scenario_ukonly_mean_share_over_allowance,0.234667,USD or share,variants.csv,column mean_share_over_allowance for scenario ukonly
+scenario_ukonly_understatement_ratio,0.705416,USD or share,variants.csv,column understatement_ratio for scenario ukonly
+scenario_ukonly_band_central_placement_terminal,0.499700,USD or share,variants.csv,column band_central_placement_terminal for scenario ukonly
+scenario_por_no_schools_terminal_cash_mean,-7298650.255266,USD or share,variants.csv,column terminal_cash_mean for scenario por_no_schools
+scenario_por_no_schools_terminal_cash_p50,-18534379.624319,USD or share,variants.csv,column terminal_cash_p50 for scenario por_no_schools
+scenario_por_no_schools_peak_funding_mean,19168942.519091,USD or share,variants.csv,column peak_funding_mean for scenario por_no_schools
+scenario_por_no_schools_peak_funding_p90,31807303.197895,USD or share,variants.csv,column peak_funding_p90 for scenario por_no_schools
+scenario_por_no_schools_share_reaching_profitability,0.210100,USD or share,variants.csv,column share_reaching_profitability for scenario por_no_schools
+scenario_por_no_schools_final_year_effective_cac_mean,34.124339,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_no_schools
+scenario_por_no_schools_final_year_contrib_per_hh_month_mean,21.096211,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_no_schools
+scenario_por_no_schools_mean_share_over_allowance,0.235764,USD or share,variants.csv,column mean_share_over_allowance for scenario por_no_schools
+scenario_por_no_schools_understatement_ratio,0.509670,USD or share,variants.csv,column understatement_ratio for scenario por_no_schools
+scenario_por_no_schools_band_central_placement_terminal,0.498350,USD or share,variants.csv,column band_central_placement_terminal for scenario por_no_schools
+scenario_por_anchor_tutoring_terminal_cash_mean,1950079.146309,USD or share,variants.csv,column terminal_cash_mean for scenario por_anchor_tutoring
+scenario_por_anchor_tutoring_terminal_cash_p50,-19979302.793724,USD or share,variants.csv,column terminal_cash_p50 for scenario por_anchor_tutoring
+scenario_por_anchor_tutoring_peak_funding_mean,20647132.293906,USD or share,variants.csv,column peak_funding_mean for scenario por_anchor_tutoring
+scenario_por_anchor_tutoring_peak_funding_p90,36224246.057543,USD or share,variants.csv,column peak_funding_p90 for scenario por_anchor_tutoring
+scenario_por_anchor_tutoring_share_reaching_profitability,0.325900,USD or share,variants.csv,column share_reaching_profitability for scenario por_anchor_tutoring
+scenario_por_anchor_tutoring_final_year_effective_cac_mean,54.621250,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_anchor_tutoring
+scenario_por_anchor_tutoring_final_year_contrib_per_hh_month_mean,39.989583,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_anchor_tutoring
+scenario_por_anchor_tutoring_mean_share_over_allowance,0.236148,USD or share,variants.csv,column mean_share_over_allowance for scenario por_anchor_tutoring
+scenario_por_anchor_tutoring_understatement_ratio,0.434498,USD or share,variants.csv,column understatement_ratio for scenario por_anchor_tutoring
+scenario_por_anchor_tutoring_band_central_placement_terminal,0.500550,USD or share,variants.csv,column band_central_placement_terminal for scenario por_anchor_tutoring
+scenario_por_anchor_software_terminal_cash_mean,-26870754.740018,USD or share,variants.csv,column terminal_cash_mean for scenario por_anchor_software
+scenario_por_anchor_software_terminal_cash_p50,-25642643.831741,USD or share,variants.csv,column terminal_cash_p50 for scenario por_anchor_software
+scenario_por_anchor_software_peak_funding_mean,27144722.810345,USD or share,variants.csv,column peak_funding_mean for scenario por_anchor_software
+scenario_por_anchor_software_peak_funding_p90,40423305.952803,USD or share,variants.csv,column peak_funding_p90 for scenario por_anchor_software
+scenario_por_anchor_software_share_reaching_profitability,0.033250,USD or share,variants.csv,column share_reaching_profitability for scenario por_anchor_software
+scenario_por_anchor_software_final_year_effective_cac_mean,24.183250,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_anchor_software
+scenario_por_anchor_software_final_year_contrib_per_hh_month_mean,2236588.879622,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_anchor_software
+scenario_por_anchor_software_mean_share_over_allowance,0.236089,USD or share,variants.csv,column mean_share_over_allowance for scenario por_anchor_software
+scenario_por_anchor_software_understatement_ratio,0.989907,USD or share,variants.csv,column understatement_ratio for scenario por_anchor_software
+scenario_por_anchor_software_band_central_placement_terminal,0.499100,USD or share,variants.csv,column band_central_placement_terminal for scenario por_anchor_software
+scenario_por_launch_plus3_terminal_cash_mean,-13836974.694097,USD or share,variants.csv,column terminal_cash_mean for scenario por_launch_plus3
+scenario_por_launch_plus3_terminal_cash_p50,-22798631.716838,USD or share,variants.csv,column terminal_cash_p50 for scenario por_launch_plus3
+scenario_por_launch_plus3_peak_funding_mean,23652984.798992,USD or share,variants.csv,column peak_funding_mean for scenario por_launch_plus3
+scenario_por_launch_plus3_peak_funding_p90,38036461.351952,USD or share,variants.csv,column peak_funding_p90 for scenario por_launch_plus3
+scenario_por_launch_plus3_share_reaching_profitability,0.183450,USD or share,variants.csv,column share_reaching_profitability for scenario por_launch_plus3
+scenario_por_launch_plus3_final_year_effective_cac_mean,38.770355,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_launch_plus3
+scenario_por_launch_plus3_final_year_contrib_per_hh_month_mean,1888837.747639,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_launch_plus3
+scenario_por_launch_plus3_mean_share_over_allowance,0.236345,USD or share,variants.csv,column mean_share_over_allowance for scenario por_launch_plus3
+scenario_por_launch_plus3_understatement_ratio,0.625953,USD or share,variants.csv,column understatement_ratio for scenario por_launch_plus3
+scenario_por_launch_plus3_band_central_placement_terminal,0.496600,USD or share,variants.csv,column band_central_placement_terminal for scenario por_launch_plus3
+scenario_por_launch_plus6_terminal_cash_mean,-13135339.093346,USD or share,variants.csv,column terminal_cash_mean for scenario por_launch_plus6
+scenario_por_launch_plus6_terminal_cash_p50,-21108402.743411,USD or share,variants.csv,column terminal_cash_p50 for scenario por_launch_plus6
+scenario_por_launch_plus6_peak_funding_mean,21973904.715116,USD or share,variants.csv,column peak_funding_mean for scenario por_launch_plus6
+scenario_por_launch_plus6_peak_funding_p90,34961127.207489,USD or share,variants.csv,column peak_funding_p90 for scenario por_launch_plus6
+scenario_por_launch_plus6_share_reaching_profitability,0.184700,USD or share,variants.csv,column share_reaching_profitability for scenario por_launch_plus6
+scenario_por_launch_plus6_final_year_effective_cac_mean,38.140736,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_launch_plus6
+scenario_por_launch_plus6_final_year_contrib_per_hh_month_mean,1580798.801780,USD or share,variants.csv,column final_year_contrib_per_hh_month_mean for scenario por_launch_plus6
+scenario_por_launch_plus6_mean_share_over_allowance,0.236091,USD or share,variants.csv,column mean_share_over_allowance for scenario por_launch_plus6
+scenario_por_launch_plus6_understatement_ratio,0.655853,USD or share,variants.csv,column understatement_ratio for scenario por_launch_plus6
+scenario_por_launch_plus6_band_central_placement_terminal,0.497100,USD or share,variants.csv,column band_central_placement_terminal for scenario por_launch_plus6
+delta_por_feedback_off_terminal_cash_mean,0.000000,USD,variants.csv,terminal_cash_mean for por_feedback_off less terminal_cash_mean for por
+delta_por_feedback_on_terminal_cash_mean,-7781185.355069,USD,variants.csv,terminal_cash_mean for por_feedback_on less terminal_cash_mean for por
+delta_por_dependence_terminal_cash_mean,4048338.686453,USD,variants.csv,terminal_cash_mean for por_dependence less terminal_cash_mean for por
+delta_por_dependence_feedback_terminal_cash_mean,-5810488.248576,USD,variants.csv,terminal_cash_mean for por_dependence_feedback less terminal_cash_mean for por
+delta_por_fx_sampled_terminal_cash_mean,84098.754262,USD,variants.csv,terminal_cash_mean for por_fx_sampled less terminal_cash_mean for por
+delta_por_india_d2c_terminal_cash_mean,87061.567003,USD,variants.csv,terminal_cash_mean for por_india_d2c less terminal_cash_mean for por
+delta_por_appstore_terminal_cash_mean,-2391354.467446,USD,variants.csv,terminal_cash_mean for por_appstore less terminal_cash_mean for por
+delta_por_allowance_enforced_terminal_cash_mean,94243.518589,USD,variants.csv,terminal_cash_mean for por_allowance_enforced less terminal_cash_mean for por
+delta_ukonly_terminal_cash_mean,2671223.630615,USD,variants.csv,terminal_cash_mean for ukonly less terminal_cash_mean for por
+delta_por_no_schools_terminal_cash_mean,5062670.471854,USD,variants.csv,terminal_cash_mean for por_no_schools less terminal_cash_mean for por
+delta_por_anchor_tutoring_terminal_cash_mean,14311399.873429,USD,variants.csv,terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por
+delta_por_anchor_software_terminal_cash_mean,-14509434.012898,USD,variants.csv,terminal_cash_mean for por_anchor_software less terminal_cash_mean for por
+delta_por_launch_plus3_terminal_cash_mean,-1475653.966977,USD,variants.csv,terminal_cash_mean for por_launch_plus3 less terminal_cash_mean for por
+delta_por_launch_plus6_terminal_cash_mean,-774018.366226,USD,variants.csv,terminal_cash_mean for por_launch_plus6 less terminal_cash_mean for por
+sobol_peak_funding_requirement_sum_first_order,0.755545,share of variance,sobol.csv,sum of sobol_first_order over every driver for target peak_funding_requirement
+sobol_peak_funding_requirement_rank1_driver,items_per_unit,driver name,sobol.csv,driver at rank 1 by sobol_first_order for target peak_funding_requirement
+sobol_peak_funding_requirement_rank1_value,0.166346,share of variance,sobol.csv,sobol_first_order at rank 1 for target peak_funding_requirement
+sobol_peak_funding_requirement_rank2_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 2 by sobol_first_order for target peak_funding_requirement
+sobol_peak_funding_requirement_rank2_value,0.087711,share of variance,sobol.csv,sobol_first_order at rank 2 for target peak_funding_requirement
+sobol_peak_funding_requirement_rank3_driver,writer_gbp_item,driver name,sobol.csv,driver at rank 3 by sobol_first_order for target peak_funding_requirement
+sobol_peak_funding_requirement_rank3_value,0.083060,share of variance,sobol.csv,sobol_first_order at rank 3 for target peak_funding_requirement
+sobol_peak_funding_requirement_rank4_driver,minutes_per_item,driver name,sobol.csv,driver at rank 4 by sobol_first_order for target peak_funding_requirement
+sobol_peak_funding_requirement_rank4_value,0.083059,share of variance,sobol.csv,sobol_first_order at rank 4 for target peak_funding_requirement
+sobol_peak_funding_requirement_rank5_driver,anchor_u,driver name,sobol.csv,driver at rank 5 by sobol_first_order for target peak_funding_requirement
+sobol_peak_funding_requirement_rank5_value,0.081666,share of variance,sobol.csv,sobol_first_order at rank 5 for target peak_funding_requirement
+sobol_peak_funding_requirement_rank6_driver,board_reuse,driver name,sobol.csv,driver at rank 6 by sobol_first_order for target peak_funding_requirement
+sobol_peak_funding_requirement_rank6_value,0.060227,share of variance,sobol.csv,sobol_first_order at rank 6 for target peak_funding_requirement
+sobol_peak_funding_requirement_rank7_driver,examiner_rate_gbp_hr,driver name,sobol.csv,driver at rank 7 by sobol_first_order for target peak_funding_requirement
+sobol_peak_funding_requirement_rank7_value,0.043361,share of variance,sobol.csv,sobol_first_order at rank 7 for target peak_funding_requirement
+sobol_peak_funding_requirement_rank8_driver,market_reuse,driver name,sobol.csv,driver at rank 8 by sobol_first_order for target peak_funding_requirement
+sobol_peak_funding_requirement_rank8_value,0.029672,share of variance,sobol.csv,sobol_first_order at rank 8 for target peak_funding_requirement
+sobol_reaches_profitability_sum_first_order,0.498981,share of variance,sobol.csv,sum of sobol_first_order over every driver for target reaches_profitability
+sobol_reaches_profitability_rank1_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 1 by sobol_first_order for target reaches_profitability
+sobol_reaches_profitability_rank1_value,0.214504,share of variance,sobol.csv,sobol_first_order at rank 1 for target reaches_profitability
+sobol_reaches_profitability_rank2_driver,anchor_u,driver name,sobol.csv,driver at rank 2 by sobol_first_order for target reaches_profitability
+sobol_reaches_profitability_rank2_value,0.153696,share of variance,sobol.csv,sobol_first_order at rank 2 for target reaches_profitability
+sobol_reaches_profitability_rank3_driver,cac_ref_spend_usd,driver name,sobol.csv,driver at rank 3 by sobol_first_order for target reaches_profitability
+sobol_reaches_profitability_rank3_value,0.044072,share of variance,sobol.csv,sobol_first_order at rank 3 for target reaches_profitability
+sobol_reaches_profitability_rank4_driver,sat_kappa,driver name,sobol.csv,driver at rank 4 by sobol_first_order for target reaches_profitability
+sobol_reaches_profitability_rank4_value,0.018689,share of variance,sobol.csv,sobol_first_order at rank 4 for target reaches_profitability
+sobol_reaches_profitability_rank5_driver,price_uk_tut_gbp,driver name,sobol.csv,driver at rank 5 by sobol_first_order for target reaches_profitability
+sobol_reaches_profitability_rank5_value,0.012348,share of variance,sobol.csv,sobol_first_order at rank 5 for target reaches_profitability
+sobol_reaches_profitability_rank6_driver,churn_base,driver name,sobol.csv,driver at rank 6 by sobol_first_order for target reaches_profitability
+sobol_reaches_profitability_rank6_value,0.012233,share of variance,sobol.csv,sobol_first_order at rank 6 for target reaches_profitability
+sobol_reaches_profitability_rank7_driver,sessions_mean,driver name,sobol.csv,driver at rank 7 by sobol_first_order for target reaches_profitability
+sobol_reaches_profitability_rank7_value,0.003542,share of variance,sobol.csv,sobol_first_order at rank 7 for target reaches_profitability
+sobol_reaches_profitability_rank8_driver,creator_share,driver name,sobol.csv,driver at rank 8 by sobol_first_order for target reaches_profitability
+sobol_reaches_profitability_rank8_value,0.003412,share of variance,sobol.csv,sobol_first_order at rank 8 for target reaches_profitability
+sobol_terminal_cash_sum_first_order,0.146003,share of variance,sobol.csv,sum of sobol_first_order over every driver for target terminal_cash
+sobol_terminal_cash_rank1_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 1 by sobol_first_order for target terminal_cash
+sobol_terminal_cash_rank1_value,0.049073,share of variance,sobol.csv,sobol_first_order at rank 1 for target terminal_cash
+sobol_terminal_cash_rank2_driver,sat_kappa,driver name,sobol.csv,driver at rank 2 by sobol_first_order for target terminal_cash
+sobol_terminal_cash_rank2_value,0.025511,share of variance,sobol.csv,sobol_first_order at rank 2 for target terminal_cash
+sobol_terminal_cash_rank3_driver,anchor_u,driver name,sobol.csv,driver at rank 3 by sobol_first_order for target terminal_cash
+sobol_terminal_cash_rank3_value,0.022469,share of variance,sobol.csv,sobol_first_order at rank 3 for target terminal_cash
+sobol_terminal_cash_rank4_driver,price_uk_tut_gbp,driver name,sobol.csv,driver at rank 4 by sobol_first_order for target terminal_cash
+sobol_terminal_cash_rank4_value,0.006981,share of variance,sobol.csv,sobol_first_order at rank 4 for target terminal_cash
+sobol_terminal_cash_rank5_driver,cac_ref_spend_usd,driver name,sobol.csv,driver at rank 5 by sobol_first_order for target terminal_cash
+sobol_terminal_cash_rank5_value,0.005534,share of variance,sobol.csv,sobol_first_order at rank 5 for target terminal_cash
+sobol_terminal_cash_rank6_driver,churn_base,driver name,sobol.csv,driver at rank 6 by sobol_first_order for target terminal_cash
+sobol_terminal_cash_rank6_value,0.003395,share of variance,sobol.csv,sobol_first_order at rank 6 for target terminal_cash
+sobol_terminal_cash_rank7_driver,pool_uk,driver name,sobol.csv,driver at rank 7 by sobol_first_order for target terminal_cash
+sobol_terminal_cash_rank7_value,0.003246,share of variance,sobol.csv,sobol_first_order at rank 7 for target terminal_cash
+sobol_terminal_cash_rank8_driver,acq_pct_of_rev,driver name,sobol.csv,driver at rank 8 by sobol_first_order for target terminal_cash
+sobol_terminal_cash_rank8_value,0.002748,share of variance,sobol.csv,sobol_first_order at rank 8 for target terminal_cash
+sobol_terminal_cash_rank_sum_first_order,0.773097,share of variance,sobol.csv,sum of sobol_first_order over every driver for target terminal_cash_rank
+sobol_terminal_cash_rank_rank1_driver,items_per_unit,driver name,sobol.csv,driver at rank 1 by sobol_first_order for target terminal_cash_rank
+sobol_terminal_cash_rank_rank1_value,0.166758,share of variance,sobol.csv,sobol_first_order at rank 1 for target terminal_cash_rank
+sobol_terminal_cash_rank_rank2_driver,cac_anchor_usd,driver name,sobol.csv,driver at rank 2 by sobol_first_order for target terminal_cash_rank
+sobol_terminal_cash_rank_rank2_value,0.098186,share of variance,sobol.csv,sobol_first_order at rank 2 for target terminal_cash_rank
+sobol_terminal_cash_rank_rank3_driver,anchor_u,driver name,sobol.csv,driver at rank 3 by sobol_first_order for target terminal_cash_rank
+sobol_terminal_cash_rank_rank3_value,0.090354,share of variance,sobol.csv,sobol_first_order at rank 3 for target terminal_cash_rank
+sobol_terminal_cash_rank_rank4_driver,writer_gbp_item,driver name,sobol.csv,driver at rank 4 by sobol_first_order for target terminal_cash_rank
+sobol_terminal_cash_rank_rank4_value,0.082656,share of variance,sobol.csv,sobol_first_order at rank 4 for target terminal_cash_rank
+sobol_terminal_cash_rank_rank5_driver,minutes_per_item,driver name,sobol.csv,driver at rank 5 by sobol_first_order for target terminal_cash_rank
+sobol_terminal_cash_rank_rank5_value,0.078684,share of variance,sobol.csv,sobol_first_order at rank 5 for target terminal_cash_rank
+sobol_terminal_cash_rank_rank6_driver,board_reuse,driver name,sobol.csv,driver at rank 6 by sobol_first_order for target terminal_cash_rank
+sobol_terminal_cash_rank_rank6_value,0.054491,share of variance,sobol.csv,sobol_first_order at rank 6 for target terminal_cash_rank
+sobol_terminal_cash_rank_rank7_driver,examiner_rate_gbp_hr,driver name,sobol.csv,driver at rank 7 by sobol_first_order for target terminal_cash_rank
+sobol_terminal_cash_rank_rank7_value,0.040645,share of variance,sobol.csv,sobol_first_order at rank 7 for target terminal_cash_rank
+sobol_terminal_cash_rank_rank8_driver,eng_usd_yr,driver name,sobol.csv,driver at rank 8 by sobol_first_order for target terminal_cash_rank
+sobol_terminal_cash_rank_rank8_value,0.031199,share of variance,sobol.csv,sobol_first_order at rank 8 for target terminal_cash_rank
+pinned_anchor_u_terminal_cash_q5,1950079.146309,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 5 for anchor_u
+pinned_anchor_u_terminal_cash_q95,-26870754.740018,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 95 for anchor_u
+pinned_anchor_u_swing,-28820833.886327,USD,pinned_sweeps.csv,terminal_cash_mean at q95 less terminal_cash_mean at q5 for anchor_u
+pinned_anchor_u_swing_abs,28820833.886327,USD,pinned_sweeps.csv,absolute value of that swing
+pinned_board_reuse_terminal_cash_q5,-17224569.239545,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 5 for board_reuse
+pinned_board_reuse_terminal_cash_q95,-7531740.644298,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 95 for board_reuse
+pinned_board_reuse_swing,9692828.595247,USD,pinned_sweeps.csv,terminal_cash_mean at q95 less terminal_cash_mean at q5 for board_reuse
+pinned_board_reuse_swing_abs,9692828.595247,USD,pinned_sweeps.csv,absolute value of that swing
+pinned_cac_anchor_usd_terminal_cash_q5,34825996.755044,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 5 for cac_anchor_usd
+pinned_cac_anchor_usd_terminal_cash_q95,-27626716.234255,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 95 for cac_anchor_usd
+pinned_cac_anchor_usd_swing,-62452712.989299,USD,pinned_sweeps.csv,terminal_cash_mean at q95 less terminal_cash_mean at q5 for cac_anchor_usd
+pinned_cac_anchor_usd_swing_abs,62452712.989299,USD,pinned_sweeps.csv,absolute value of that swing
+pinned_items_per_unit_terminal_cash_q5,-4370691.311614,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 5 for items_per_unit
+pinned_items_per_unit_terminal_cash_q95,-20311673.639479,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 95 for items_per_unit
+pinned_items_per_unit_swing,-15940982.327865,USD,pinned_sweeps.csv,terminal_cash_mean at q95 less terminal_cash_mean at q5 for items_per_unit
+pinned_items_per_unit_swing_abs,15940982.327865,USD,pinned_sweeps.csv,absolute value of that swing
+pinned_minutes_per_item_terminal_cash_q5,-6575728.519726,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 5 for minutes_per_item
+pinned_minutes_per_item_terminal_cash_q95,-18148649.891432,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 95 for minutes_per_item
+pinned_minutes_per_item_swing,-11572921.371706,USD,pinned_sweeps.csv,terminal_cash_mean at q95 less terminal_cash_mean at q5 for minutes_per_item
+pinned_minutes_per_item_swing_abs,11572921.371706,USD,pinned_sweeps.csv,absolute value of that swing
+pinned_writer_gbp_item_terminal_cash_q5,-6877222.646883,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 5 for writer_gbp_item
+pinned_writer_gbp_item_terminal_cash_q95,-17798168.713921,USD,pinned_sweeps.csv,terminal_cash_mean at pin_quantile 95 for writer_gbp_item
+pinned_writer_gbp_item_swing,-10920946.067038,USD,pinned_sweeps.csv,terminal_cash_mean at q95 less terminal_cash_mean at q5 for writer_gbp_item
+pinned_writer_gbp_item_swing_abs,10920946.067038,USD,pinned_sweeps.csv,absolute value of that swing
+twoway_driver1,items_per_unit,driver name,twoway_grid.csv,the driver1 column
+twoway_driver2,cac_anchor_usd,driver name,twoway_grid.csv,the driver2 column
+twoway_best_terminal_cash_mean,29385107.119448,USD,twoway_grid.csv,maximum of terminal_cash_mean over the grid
+twoway_worst_terminal_cash_mean,-34619537.234431,USD,twoway_grid.csv,minimum of terminal_cash_mean over the grid
+twoway_range,64004644.353879,USD,twoway_grid.csv,that maximum less that minimum
+breakeven_pool_uk_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_pool_uk_terminal_cash_median_prior_median,219049.577965,driver units,breakeven.csv,the prior_median column
+breakeven_pool_uk_peak_funding_p80_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_pool_uk_peak_funding_p80_prior_median,219049.577965,driver units,breakeven.csv,the prior_median column
+breakeven_cac_anchor_usd_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_cac_anchor_usd_terminal_cash_median_prior_median,32.263315,driver units,breakeven.csv,the prior_median column
+breakeven_cac_anchor_usd_peak_funding_p80_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_cac_anchor_usd_peak_funding_p80_prior_median,32.263315,driver units,breakeven.csv,the prior_median column
+breakeven_verif_cost_usd_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_verif_cost_usd_terminal_cash_median_prior_median,0.929795,driver units,breakeven.csv,the prior_median column
+breakeven_minutes_per_item_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_minutes_per_item_terminal_cash_median_prior_median,17.035431,driver units,breakeven.csv,the prior_median column
+breakeven_items_per_unit_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_items_per_unit_terminal_cash_median_prior_median,3902.370574,driver units,breakeven.csv,the prior_median column
+breakeven_sessions_mean_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_sessions_mean_terminal_cash_median_prior_median,10.724003,driver units,breakeven.csv,the prior_median column
+breakeven_churn_base_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_churn_base_terminal_cash_median_prior_median,0.104764,driver units,breakeven.csv,the prior_median column
+breakeven_price_uk_tut_gbp_terminal_cash_median_status,not bracketed by the prior range,text,breakeven.csv,the status column
+breakeven_price_uk_tut_gbp_terminal_cash_median_prior_median,25.209647,driver units,breakeven.csv,the prior_median column
+funding_plan_of_record_seed_round_size,12886272.767128,USD,funding.csv,round_size for scenario plan_of_record stage seed
+funding_plan_of_record_seed_need_p80,9664395.738908,USD,funding.csv,need_p80 for scenario plan_of_record stage seed
+funding_plan_of_record_series_a_round_size,13071355.324611,USD,funding.csv,round_size for scenario plan_of_record stage series_a
+funding_plan_of_record_series_a_need_p80,9802551.494318,USD,funding.csv,need_p80 for scenario plan_of_record stage series_a
+funding_plan_of_record_series_b_round_size,17142852.271192,USD,funding.csv,round_size for scenario plan_of_record stage series_b
+funding_plan_of_record_series_b_need_p80,13709854.940095,USD,funding.csv,need_p80 for scenario plan_of_record stage series_b
+funding_plan_of_record_whole_horizon_round_size,32797309.542676,USD,funding.csv,round_size for scenario plan_of_record stage whole_horizon
+funding_plan_of_record_whole_horizon_need_p80,32797309.542676,USD,funding.csv,need_p80 for scenario plan_of_record stage whole_horizon
+funding_base_case_uk_only_seed_round_size,8570392.817637,USD,funding.csv,round_size for scenario base_case_uk_only stage seed
+funding_base_case_uk_only_seed_need_p80,6427029.036991,USD,funding.csv,need_p80 for scenario base_case_uk_only stage seed
+funding_base_case_uk_only_series_a_round_size,5951091.926495,USD,funding.csv,round_size for scenario base_case_uk_only stage series_a
+funding_base_case_uk_only_series_a_need_p80,4461618.064241,USD,funding.csv,need_p80 for scenario base_case_uk_only stage series_a
+funding_base_case_uk_only_series_b_round_size,10246110.419598,USD,funding.csv,round_size for scenario base_case_uk_only stage series_b
+funding_base_case_uk_only_series_b_need_p80,8191834.504014,USD,funding.csv,need_p80 for scenario base_case_uk_only stage series_b
+funding_base_case_uk_only_whole_horizon_round_size,18851952.916799,USD,funding.csv,round_size for scenario base_case_uk_only stage whole_horizon
+funding_base_case_uk_only_whole_horizon_need_p80,18851952.916799,USD,funding.csv,need_p80 for scenario base_case_uk_only stage whole_horizon
+funding_gtm_minimum_uk_one_board_seed_round_size,3458290.642780,USD,funding.csv,round_size for scenario gtm_minimum_uk_one_board stage seed
+funding_gtm_minimum_uk_one_board_seed_need_p80,2591305.128896,USD,funding.csv,need_p80 for scenario gtm_minimum_uk_one_board stage seed
+funding_gtm_minimum_uk_one_board_series_a_round_size,2799127.626150,USD,funding.csv,round_size for scenario gtm_minimum_uk_one_board stage series_a
+funding_gtm_minimum_uk_one_board_series_a_need_p80,2097023.941920,USD,funding.csv,need_p80 for scenario gtm_minimum_uk_one_board stage series_a
+funding_gtm_minimum_uk_one_board_series_b_round_size,4557284.531915,USD,funding.csv,round_size for scenario gtm_minimum_uk_one_board stage series_b
+funding_gtm_minimum_uk_one_board_series_b_need_p80,3639601.941418,USD,funding.csv,need_p80 for scenario gtm_minimum_uk_one_board stage series_b
+funding_gtm_minimum_uk_one_board_whole_horizon_round_size,8141293.826769,USD,funding.csv,round_size for scenario gtm_minimum_uk_one_board stage whole_horizon
+funding_gtm_minimum_uk_one_board_whole_horizon_need_p80,8141293.826769,USD,funding.csv,need_p80 for scenario gtm_minimum_uk_one_board stage whole_horizon
+funding_one_subject_uk_one_board_seed_round_size,2157583.579260,USD,funding.csv,round_size for scenario one_subject_uk_one_board stage seed
+funding_one_subject_uk_one_board_seed_need_p80,1616965.839849,USD,funding.csv,need_p80 for scenario one_subject_uk_one_board stage seed
+funding_one_subject_uk_one_board_series_a_round_size,2706588.386659,USD,funding.csv,round_size for scenario one_subject_uk_one_board stage series_a
+funding_one_subject_uk_one_board_series_a_need_p80,2027091.265116,USD,funding.csv,need_p80 for scenario one_subject_uk_one_board stage series_a
+funding_one_subject_uk_one_board_series_b_round_size,4444172.086631,USD,funding.csv,round_size for scenario one_subject_uk_one_board stage series_b
+funding_one_subject_uk_one_board_series_b_need_p80,3549389.083687,USD,funding.csv,need_p80 for scenario one_subject_uk_one_board stage series_b
+funding_one_subject_uk_one_board_whole_horizon_round_size,7123486.704232,USD,funding.csv,round_size for scenario one_subject_uk_one_board stage whole_horizon
+funding_one_subject_uk_one_board_whole_horizon_need_p80,7123486.704232,USD,funding.csv,need_p80 for scenario one_subject_uk_one_board stage whole_horizon

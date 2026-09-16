@@ -1,0 +1,65 @@
+seed 20260916 run_date 2026-09-16
+target terminal_cash
+  cac_anchor_usd                 0.049073
+  sat_kappa                      0.025511
+  anchor_u                       0.022469
+  price_uk_tut_gbp               0.006981
+  cac_ref_spend_usd              0.005534
+  churn_base                     0.003395
+  pool_uk                        0.003246
+  acq_pct_of_rev                 0.002748
+  items_per_unit                 0.002636
+  writer_gbp_item                0.002632
+  board_reuse                    0.001495
+  minutes_per_item               0.001401
+  sessions_mean                  0.001201
+  acq_launch_ramp                0.001129
+  cac_rel_us                     0.001079
+target terminal_cash_rank
+  items_per_unit                 0.166758
+  cac_anchor_usd                 0.098186
+  anchor_u                       0.090354
+  writer_gbp_item                0.082656
+  minutes_per_item               0.078684
+  board_reuse                    0.054491
+  examiner_rate_gbp_hr           0.040645
+  eng_usd_yr                     0.031199
+  market_reuse                   0.027730
+  cac_ref_spend_usd              0.021092
+  units_per_content_head         0.017800
+  reval_frac_yr                  0.012451
+  churn_base                     0.007284
+  sat_kappa                      0.006557
+  price_uk_tut_gbp               0.004791
+target peak_funding_requirement
+  items_per_unit                 0.166346
+  cac_anchor_usd                 0.087711
+  writer_gbp_item                0.083060
+  minutes_per_item               0.083059
+  anchor_u                       0.081666
+  board_reuse                    0.060227
+  examiner_rate_gbp_hr           0.043361
+  market_reuse                   0.029672
+  eng_usd_yr                     0.027821
+  cac_ref_spend_usd              0.018873
+  units_per_content_head         0.017226
+  reval_frac_yr                  0.012748
+  churn_base                     0.006662
+  sat_kappa                      0.005586
+  price_uk_tut_gbp               0.004874
+target reaches_profitability
+  cac_anchor_usd                 0.214504
+  anchor_u                       0.153696
+  cac_ref_spend_usd              0.044072
+  sat_kappa                      0.018689
+  price_uk_tut_gbp               0.012348
+  churn_base                     0.012233
+  sessions_mean                  0.003542
+  creator_share                  0.003412
+  acq_pct_of_rev                 0.003377
+  price_drift_yr                 0.003005
+  churn_m1_extra                 0.002961
+  cac_rel_us                     0.002861
+  creator_cac_rel                0.002603
+  overage_price_frac             0.001862
+  reval_frac_yr                  0.001715

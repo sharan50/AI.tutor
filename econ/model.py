@@ -21,7 +21,7 @@ import math
 import os
 
 import numpy as np
-from scipy import stats
+from scipy import special, stats
 
 SEED = 20260916
 RUN_DATE = "2026-09-16"
@@ -36,6 +36,7 @@ SEED_AUX_DEPENDENCE = 771120260916
 SEED_AUX_FX = 771220260916
 SEED_AUX_INDIA = 771320260916
 SEED_AUX_APPSTORE = 771420260916
+SEED_AUX_CREATOR = 771520260916
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out")
 
@@ -110,7 +111,9 @@ def ms(m, s):
 EXAM_CAL_MONTH = {M_UK: 5, M_US: 4, M_IN: 2, M_ROW: 5}
 
 # Consumer market opening months in the plan of record.
-CONSUMER_OPEN = {M_UK: 6, M_US: 15, M_IN: 10**9, M_ROW: 24}
+# India's month is real, not infinity: the india_d2c switch is what closes it in
+# the published run, so that turning the switch on actually opens the market.
+CONSUMER_OPEN = {M_UK: 6, M_US: 15, M_IN: 15, M_ROW: 24}
 
 # Institution (Route B) channel opening months.
 SCHOOL_OPEN = {M_UK: 12, M_US: 18, M_IN: 15, M_ROW: 30}
@@ -156,6 +159,21 @@ OVERAGE_CAP_MULT = 2.5     # billed overage capped at this multiple of allowance
 # Acquisition budget rule. A cap is mandatory: uncapped spend through a
 # saturating channel eventually buys customers for more than they are worth.
 CAC_LTV_CAP = 0.75         # never spend so that effective CAC exceeds this x LTV
+
+# The launch acquisition subsidy is not revenue-linked, so it must switch off.
+# It holds for a year after go-to-market and tapers to nothing over the second,
+# after which acquisition is funded only from trailing revenue. A standing
+# subsidy that never switches off is not a budget rule, and it was one until
+# this was added.
+ACQ_RAMP_HOLD_MONTHS = 12
+ACQ_RAMP_TAPER_MONTHS = 12
+
+# Signed creators, under D14, which requires named presets shipped from day one.
+# The published run carries NO creator cost, because D5 describes a one-page
+# name-and-likeness agreement and the vault has never tested whether a creator
+# signs one for nothing. That is an assumption, not a finding, and
+# variant_creator_fees() prices what it costs if they want money.
+CREATOR_RAMP = [(6, 3.0), (18, 8.0), (30, 15.0), (48, 25.0)]
 
 # Safeguarding rota thresholds, in active consumer households.
 ROTA_EXTENDED_AT = 3000
@@ -263,7 +281,8 @@ DRIVERS = [
      "share of acquisitions landing in the examination year; docs/07 says the two cohorts must never be blended, so the mix is a driver"),
     ("seg_mix_alevel", "u", (0.03, 0.25), "share of acquisitions landing directly in A-level, prior"),
     ("acq_pct_of_rev", "u", (0.12, 0.65), "acquisition budget as a share of trailing net revenue once revenue exists, prior"),
-    ("acq_preseed_ramp", "lu", (6000.0, 120000.0), "monthly acquisition budget at launch before revenue funds it, prior"),
+    ("acq_launch_ramp", "lu", (6000.0, 120000.0),
+     "monthly acquisition budget at launch, before there is revenue to fund it; tapered off over the second year after launch by ACQ_RAMP_* below, because a standing subsidy that never switches off is not a budget rule"),
 
     # --- persistent demand shock (checklist item 18) -----------------------
     ("shock_rho", "u", (0.45, 0.95), "AR(1) persistence of the demand shock, prior"),
@@ -358,7 +377,7 @@ def units_target(m, t):
     return total
 
 
-def units_cost_weight(m, t):
+def units_cost_weight(m, t, schedules=None):
     """
     Content units weighted by what they actually cost to build, which is not one
     unit each. The first board of a subject and level costs a full bank; further
@@ -367,15 +386,15 @@ def units_cost_weight(m, t):
     levels) so the caller can price the reuse terms itself.
     """
     subj = lev = boards = 0
-    for month, s, l, b in UNIT_SCHEDULES[m]:
+    for month, s, l, b in (schedules or UNIT_SCHEDULES)[m]:
         if t >= month:
             subj, lev, boards = s, l, b
     return subj, lev, boards
 
 
-def content_full_equivalents(drv, m, t):
+def content_full_equivalents(drv, m, t, schedules=None):
     """Full item-bank equivalents of content built by month t in market m."""
-    subj, lev, boards = units_cost_weight(m, t)
+    subj, lev, boards = units_cost_weight(m, t, schedules)
     if subj == 0:
         return np.zeros_like(drv["board_reuse"])
     first_board = subj * lev
@@ -434,8 +453,11 @@ def _gamma_tail(mu, cv, thresh):
     k = 1.0 / np.maximum(cv, 1e-6) ** 2
     theta = mu / k
     z = thresh / np.maximum(theta, 1e-12)
-    sf_k = stats.gamma.sf(z, k)
-    sf_k1 = stats.gamma.sf(z, k + 1.0)
+    # special.gammaincc is what stats.gamma.sf calls underneath; using it
+    # directly is bit-identical and avoids the distribution-object overhead,
+    # which was four fifths of the run time.
+    sf_k = special.gammaincc(k, z)
+    sf_k1 = special.gammaincc(k + 1.0, z)
     excess = mu * sf_k1 - thresh * sf_k
     return sf_k, np.maximum(excess, 0.0)
 
@@ -569,7 +591,7 @@ def step_costs_usd(drv, cfg, t, heads_total, active_consumer):
     return c
 
 
-def expected_contrib_pm(drv, m, t, cps):
+def expected_contrib_pm(drv, m, t, cps, billed=None):
     """
     The contribution per active household per month that the company would
     forecast for a market at month t, from its own drivers rather than from the
@@ -580,7 +602,8 @@ def expected_contrib_pm(drv, m, t, cps):
     price_g = gross_price_usd(drv, m, t)
     trate = tax_rate(drv, m)
     mu = drv["sessions_mean"]
-    _share, billed = overage_terms(drv, mu)
+    if billed is None:
+        _share, billed = overage_terms(drv, mu)
     gross = price_g + billed * price_g / SESSION_ALLOWANCE * drv["overage_price_frac"]
     net = gross / (1.0 + trate)
     var = (mu * cps
@@ -659,6 +682,8 @@ def base_config():
         appstore=None,            # dict with share and fee, drawn outside the published stream
         enforce_allowance=False,
         launch_shift=0,           # months added to every market opening
+        unit_schedules=None,      # None means the published schedules in CONSTANTS
+        creator=None,             # None means no creator licence cost, which is the published run
     )
 
 
@@ -685,6 +710,7 @@ def content_build_plan(drv, cfg):
     the six months before it is delivered, not charged in the month it lands.
     """
     P = drv["anchor_u"].shape[0]
+    schedules = cfg.get("unit_schedules") or UNIT_SCHEDULES
     plan = [np.zeros(P) for _ in range(HORIZON)]
     live = [np.zeros(P) for _ in range(HORIZON)]
     for m in range(NM):
@@ -693,11 +719,11 @@ def content_build_plan(drv, cfg):
         if m == M_IN and not cfg["india_d2c"] and not cfg["schools"]:
             continue
         prev = np.zeros(P)
-        for month, _s, _l, _b in UNIT_SCHEDULES[m]:
+        for month, _s, _l, _b in schedules[m]:
             month = month + cfg["launch_shift"]
             if month >= HORIZON:
                 continue
-            fe = content_full_equivalents(drv, m, month - cfg["launch_shift"])
+            fe = content_full_equivalents(drv, m, month - cfg["launch_shift"], schedules)
             delta = np.maximum(fe - prev, 0.0)
             start = max(month - CONTENT_BUILD_WINDOW, 0)
             span = max(month - start, 1)
@@ -741,6 +767,10 @@ def run(drv, cfg=None):
     item_cost = cost_per_item_usd(drv)
     items_per_unit = drv["items_per_unit"]
 
+    # The unseasoned overage terms do not depend on the month or the market, so
+    # they are computed once rather than per market per month.
+    _share_flat, billed_flat = overage_terms(drv, drv["sessions_mean"])
+
     shock_state = np.zeros(P)
     shock_var = drv["shock_sd"] ** 2 / np.maximum(1.0 - drv["shock_rho"] ** 2, 1e-3)
 
@@ -774,6 +804,9 @@ def run(drv, cfg=None):
         active_total = np.zeros(P)
         active_by_market = [np.zeros(P) for _ in range(NM)]
 
+        # Markets that share a seasonal phase share their usage distribution, so
+        # the overage integral is computed once per (phase, segment) per month.
+        over_cache = {}
         for m in range(NM):
             price_g = gross_price_usd(drv, m, t) * (fx_scale if m != M_US else 1.0)
             trate = tax_rate(drv, m)
@@ -784,7 +817,10 @@ def run(drv, cfg=None):
                 if not np.any(st > 0):
                     continue
                 mu = drv["sessions_mean"] * use_season * SEG_USAGE_REL[s]
-                share_over, billed = overage_terms(drv, mu)
+                key = (SEASON_SHIFT[m], s)
+                if key not in over_cache:
+                    over_cache[key] = overage_terms(drv, mu)
+                share_over, billed = over_cache[key]
                 if cfg["enforce_allowance"]:
                     _, exc_cap = _gamma_tail(mu, drv["sessions_cv"], OVERAGE_CAP_MULT * SESSION_ALLOWANCE)
                     delivered = mu - exc_cap
@@ -822,9 +858,14 @@ def run(drv, cfg=None):
                                - out["appstore_fee"][:, t]) / np.maximum(active_total, 1e-9),
                               0.0)
 
-        any_open = any(t >= _open_month(cfg, m) for m in range(NM))
-        if any_open:
-            envelope = drv["acq_preseed_ramp"] + drv["acq_pct_of_rev"] * trailing_net
+        first_open = min((_open_month(cfg, m) for m in range(NM)), default=10 ** 9)
+        if t >= first_open:
+            since = t - first_open
+            if since < ACQ_RAMP_HOLD_MONTHS:
+                ramp_on = 1.0
+            else:
+                ramp_on = max(0.0, 1.0 - (since - ACQ_RAMP_HOLD_MONTHS) / ACQ_RAMP_TAPER_MONTHS)
+            envelope = drv["acq_launch_ramp"] * ramp_on + drv["acq_pct_of_rev"] * trailing_net
         else:
             envelope = np.zeros(P)
 
@@ -840,7 +881,7 @@ def run(drv, cfg=None):
             pool = drv["pool_uk"] * {M_UK: 1.0, M_US: drv["pool_rel_us"],
                                      M_IN: drv["pool_rel_in"], M_ROW: drv["pool_rel_row"]}[m]
             pen = np.clip(active_by_market[m] / np.maximum(pool, 1.0), 0.0, 0.97)
-            ltv_m = ltv_estimate(drv, expected_contrib_pm(drv, m, t, cps), m)
+            ltv_m = ltv_estimate(drv, expected_contrib_pm(drv, m, t, cps, billed_flat), m)
             cap = budget_cap_from_ltv(drv, m, ltv_m, pen)
             season = season_factor(_ACQ_SHAPE, m, t, drv["acq_season_amp"])
             want = envelope * MARKET_BUDGET_WEIGHT[m] / wsum * season
@@ -908,6 +949,17 @@ def run(drv, cfg=None):
         out["people_beng_cost"][:, t] = beng * drv["eng_usd_yr"] * drv["overhead_mult"] / 12.0
         out["people_uk_cost"][:, t] = uk * drv["uk_gbp_yr"] * FX_GBP_USD * fx_scale * drv["overhead_mult"] / 12.0
         out["step_cost"][:, t] = step_costs_usd(drv, cfg, t, beng + uk, active_total)
+
+        # The creator licence, which the published run costs at zero. Both limbs
+        # of a name-and-likeness deal: a fixed minimum per signed creator, and a
+        # share of the revenue from households their audience brought.
+        if cfg["creator"]:
+            n_creators = 0.0
+            for month, v in CREATOR_RAMP:
+                if t >= month + cfg["launch_shift"]:
+                    n_creators = v
+            out["step_cost"][:, t] += (n_creators * cfg["creator"]["fee_per_creator_yr"] / 12.0
+                                       + gross_c * drv["creator_share"] * cfg["creator"]["rev_share"])
 
         cost_t = sum(out[k][:, t] for k in [
             "inference_cost", "support_cost", "payment_cost", "hosting_cost", "verif_cost",
