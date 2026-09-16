@@ -1457,10 +1457,18 @@ lapse before its first invoice. One acquired two months after lost the lapse and
 was then either moved into the examination segment or deleted outright: about
 44 per cent of it gone in the month it arrived.
 
-**Moved.** Paired against the same random numbers: terminal cash mean
--8,049,733 to -7,525,932, **+523,800**, against a paired standard error of
-20,312 — 25.8 sigma. Terminal active households +870.6. Acquisitions +3,139.
-Peak funding mean -66,770.
+**Moved.** Paired against the same random numbers, fixing this and nothing
+else, on the round 5 model: terminal cash mean -8,049,733 to -7,525,932,
+**+523,800**, against a paired standard error of 20,312 — 25.8 sigma. Terminal
+active households +870.6. Acquisitions +3,139. Peak funding mean -66,770.
+
+`out/invariant_defect_costs.csv` reports **524,796** for the same pair of exits.
+That is not a discrepancy and the difference is not rounding: it measures the
+defect against the model as it stands now, with 6.2, 6.3 and 6.4 also fixed,
+rather than against the model as it stood when the defect was found. Both are
+paired measurements and neither is the "true" one; what a defect costs depends
+on what else is wrong at the time. The file's version is the one the documents
+quote, because it is the one a reader can reproduce from the code on disk.
 
 **And the check that was supposed to catch it read zero in all sixty months.**
 `arrivals_removed_same_month` compared what the two sitting exits removed
