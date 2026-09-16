@@ -337,8 +337,8 @@ overhead and compliance. It is the only restraint on acquisition spend anywhere 
 the model, and it is a loose one.
 
 **Does lifetime value exceed cost per acquisition in the final year?** On the mean,
-pooled, yes: 122.24 against 58.27, a ratio of
-2.10. **On 10.5 per cent of individual paths, no.** And the
+pooled, yes: 122.04 against 58.27, a ratio of
+2.09. **On 10.5 per cent of individual paths, no.** And the
 lifetime value in that ratio is the **gross** one; against the all-in contribution
 the ratio is far worse, and on the median path it is negative, which is item 16.
 
@@ -479,7 +479,7 @@ strongly across paths and correlates with churn, so the published share was a
 hybrid presented as a per-path statistic, in the answer to the item about exactly
 that. Using each path's own realised retention gives
 10.5 per cent against the old
-10.2; both are in
+10.3; both are in
 `out/cohorts.csv` so the size of the error is on the record. The second: the
 docs/10 variable-cost row was answered with a mean and is now given per path in
 section 5 of the write-up, where variable cost exceeds half of revenue on
@@ -1314,7 +1314,7 @@ defect of a shape nobody has met yet will pass it.
 **The stronger thing still has not been built**: a second implementation of the
 month loop by a different route, a cohort-level accounting that tracks each
 acquisition's own months and cash and reconciles to the aggregate series. That
-would catch all 10 without having been told about any of them. It is a day of
+would catch all 11 without having been told about any of them. It is a day of
 work, it is the largest single improvement available to this instrument, and it
 is not in the open items because it is a question about this directory rather
 than about the business.
@@ -1449,3 +1449,77 @@ in the acquisition line and therefore outside the content-people-step sum the
 document calls demand-independent. Including it raises that share by about one
 percentage point, which pushes the document's own argument further in its own
 direction and is recorded here rather than folded in silently.
+
+---
+
+## What a seventh adversarial round found, which was a defect that had already been fixed to the wrong answer
+
+Round 7 is the seventh paired review. It found one live mechanism defect, one
+duplicated arithmetic fix that had not reached the third site, and two sizings
+that change what a headline number means. The count of mechanism defects found
+by reading the month loop is now 11.
+
+### The correction that was made to the wrong answer
+
+The round 7 coherence pass found the write-up saying "on the mean, both delays
+cost money" over a table in which the six-month delay gained. The sentence was
+corrected to say the six-month delay makes money. **That correction was wrong.**
+
+The reachable pool reads its subject catalogue from the raw schedule at month
+`t`, while `content_build_plan` delivers every step at `t + launch_shift`. Under
+a launch delay the pool is therefore credited breadth — and with it the
+saturation denominator, the acquisition budget cap and the standing-book room —
+for item banks that have not been built. `launch_shift` is zero in the published
+run and in every scenario except the two delays, so the defect bit in exactly the
+place it mattered and nowhere else. Correcting it moves the six-month delay's
+mean delta from a gain of about three hundred thousand dollars to a loss of about
+a hundred and ninety thousand: a difference of sign, about fifteen paired
+standard errors wide.
+
+The lesson is not about launch delays. **A document that corrects its prose
+against its own outputs will follow its outputs into an error**, and it will do
+so with more confidence than before, because the sentence now matches the file.
+Nothing in this directory could have caught that. The month loop had to be read.
+
+### Two sizings that change what a number means
+
+**About 29 per cent of the feedback bundle's cost is a level shift rather than an
+elasticity.** `variants.py` references the price-to-churn elasticity on the
+**mode** of the tutoring price prior, a triangular whose mean and median are both
+well above its mode. So the multiplier is not centred on one: it averages about
+1.12, and roughly 68 per cent of paths take a churn penalty before any price
+effect is considered. The quality limb is one-sided by construction. Together the
+scenario runs the book at about a third more churn than the base, which is why
+its cost sits close to the pure churn stress in `out/sized_omissions.csv`.
+Re-centring the reference on each regime's own median sampled price cuts the
+price limb by about 1.7m dollars of the quoted 5.9m. The scenario is still worth
+having — it is the only place the instrument prices any feedback at all — but
+what it measures is mostly the cost of a book that churns faster, not the cost of
+a price elasticity.
+
+This round also ran the limb-by-limb decomposition that an earlier version of
+this document said had never been done: price to churn about -3.0m, build pace
+to quality to churn about -2.8m, automation to engineering heads about -0.4m,
+against -5.9m for all three together.
+
+**The demand-independent share is about 1.2 percentage points too high, and the
+acquisition-ramp correction beside it is about a point in the other direction.**
+The safeguarding rota steps on active consumer households, which is demand, and
+it sits inside the United Kingdom people line that the share counts as
+demand-independent. Removing both steps takes roughly 492,000 dollars out of that
+line, 1.22 per cent of the cost base. Item 5 has named the rota as a genuine step
+for several rounds without ever putting a number on it; this is that number. It
+runs the opposite way from the launch-subsidy correction recorded above, and the
+two roughly cancel, which is worth saying rather than stating one and not the
+other.
+
+### Left, and now sized properly
+
+The acquisition budget cap is still blind to the switch each scenario throws, and
+round 7 measured what that is worth rather than estimating it: about 2.8 per cent
+of the enforced-allowance cost, about 5.1 per cent of the app-store cost, and
+about 122,000 dollars of the feedback cost. Each inflates the cost of the very
+decision it belongs to. It is left rather than fixed because whether the operator's
+own budget rule knows about a switch the operator has thrown is a modelling
+decision rather than an arithmetic one, and it is the owner's to make; the sizes
+are here so that it can be made with the numbers in view.

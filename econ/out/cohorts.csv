@@ -32,17 +32,17 @@ seed,run_date,name,value,unit,derivation,checklist_item
 20260916,2026-09-16,allin_minus_gross_contrib_per_hh_month_pooled,-14.672797,USD per household month,the pooled all-in figure less the pooled gross one: what the gross margin leaves out,16
 20260916,2026-09-16,gross_minus_allin_contrib_per_hh_month_pooled,14.672797,USD per household month,the pooled gross figure less the pooled all-in one: how much lower the all-in figure is,16
 20260916,2026-09-16,allin_consumed_per_hh_month_median,86.912261,USD per household month,the median path's all-in contribution with the sign reversed: what a household month consumes on the median path,16
-20260916,2026-09-16,blended_retained_months_mean,3.917098,months,retained months weighted by the sampled segment mix,14
-20260916,2026-09-16,final_year_ltv_gross_pooled,122.239808,USD per household,pooled gross contribution per household month times blended retained months,14
+20260916,2026-09-16,blended_retained_months_mean,3.910588,months,retained months weighted by the sampled segment mix,14
+20260916,2026-09-16,final_year_ltv_gross_pooled,122.036641,USD per household,pooled gross contribution per household month times blended retained months,14
 20260916,2026-09-16,final_year_effective_cac_pooled,58.265006,USD per acquisition,"total final-year acquisition and verification spend over total final-year acquisitions, pooled across paths",14
 20260916,2026-09-16,final_year_effective_cac_median,33.117962,USD per acquisition,median over paths with a real final year of the per-path effective acquisition cost,14
-20260916,2026-09-16,final_year_ltv_over_cac_pooled,2.097997,ratio,pooled gross lifetime value divided by pooled final-year effective cost per acquisition,14
+20260916,2026-09-16,final_year_ltv_over_cac_pooled,2.094510,ratio,pooled gross lifetime value divided by pooled final-year effective cost per acquisition,14
 20260916,2026-09-16,final_year_cac_pooled_over_anchor_median,1.805921,ratio,pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled,12 and 13
 20260916,2026-09-16,retained_months_per_path_mean,3.799779,months,"per-path realised retained months: active household months over acquisitions, path by path",19
 20260916,2026-09-16,retained_months_per_path_p10,2.639646,months,tenth percentile of that per-path figure,19
 20260916,2026-09-16,retained_months_per_path_p90,5.239787,months,ninetieth percentile of that per-path figure,19
 20260916,2026-09-16,share_paths_final_year_ltv_below_cac,0.104925,share,"share of paths with a real final year on which gross lifetime value, computed on THAT PATH's realised retained months, is below the final-year effective cost per acquisition",14 and 19
-20260916,2026-09-16,share_paths_final_year_ltv_below_cac_scalar_months,0.102365,share,"the same share computed the way it used to be, with the sample-mean retained months applied to every path, published so the size of that error is on the record rather than only in the change log",19
+20260916,2026-09-16,share_paths_final_year_ltv_below_cac_scalar_months,0.102766,share,"the same share computed the way it used to be, with the sample-mean retained months applied to every path, published so the size of that error is on the record rather than only in the change log",19
 20260916,2026-09-16,share_paths_final_year_ltv_allin_below_cac,0.849842,share,"share of paths with a real final year on which ALL-IN lifetime value, which carries the demand-independent cost base, is below the final-year effective cost per acquisition","14, 16 and 19"
 20260916,2026-09-16,share_paths_final_year_ltv_allin_below_cac_pct,84.984186,per cent,the same share as a percentage,"14, 16 and 19"
 20260916,2026-09-16,share_paths_final_year_ltv_below_cac_pct,10.492495,per cent,"the gross share as a percentage, published beside the all-in one so the two are never quoted apart","14, 16 and 19"

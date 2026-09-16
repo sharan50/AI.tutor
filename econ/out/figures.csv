@@ -643,12 +643,12 @@ band_placement_por_anchor_tutoring_high_terminal,0.819500,percentile as a share,
 band_placement_por_anchor_software_low_terminal,0.193050,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_software band low
 band_placement_por_anchor_software_central_terminal,0.498000,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_software band central
 band_placement_por_anchor_software_high_terminal,0.804800,percentile as a share,variants_bands.csv,placement_terminal for scenario por_anchor_software band high
-band_placement_por_launch_plus3_low_terminal,0.192600,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus3 band low
-band_placement_por_launch_plus3_central_terminal,0.498750,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus3 band central
-band_placement_por_launch_plus3_high_terminal,0.825650,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus3 band high
-band_placement_por_launch_plus6_low_terminal,0.192550,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus6 band low
-band_placement_por_launch_plus6_central_terminal,0.499750,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus6 band central
-band_placement_por_launch_plus6_high_terminal,0.826050,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus6 band high
+band_placement_por_launch_plus3_low_terminal,0.192550,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus3 band low
+band_placement_por_launch_plus3_central_terminal,0.498600,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus3 band central
+band_placement_por_launch_plus3_high_terminal,0.825400,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus3 band high
+band_placement_por_launch_plus6_low_terminal,0.192500,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus6 band low
+band_placement_por_launch_plus6_central_terminal,0.499650,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus6 band central
+band_placement_por_launch_plus6_high_terminal,0.826000,percentile as a share,variants_bands.csv,placement_terminal for scenario por_launch_plus6 band high
 scenario_por_terminal_cash_mean,-7278633.155541,USD or share,variants.csv,column terminal_cash_mean for scenario por
 scenario_por_terminal_cash_p50,-19695381.813330,USD or share,variants.csv,column terminal_cash_p50 for scenario por
 scenario_por_peak_funding_mean,20015439.700002,USD or share,variants.csv,column peak_funding_mean for scenario por
@@ -1111,50 +1111,50 @@ scenario_por_anchor_software_pathwise_p50_delta_se,1095.046323,USD or share,vari
 scenario_por_anchor_software_final_year_allin_contrib_pooled,-25.138061,USD or share,variants.csv,column final_year_allin_contrib_pooled for scenario por_anchor_software
 scenario_por_anchor_software_final_year_allin_contrib_median,-186.081634,USD or share,variants.csv,column final_year_allin_contrib_median for scenario por_anchor_software
 scenario_por_anchor_software_final_year_gross_contrib_pooled,10.289976,USD or share,variants.csv,column final_year_gross_contrib_pooled for scenario por_anchor_software
-scenario_por_launch_plus3_terminal_cash_mean,-7884337.414262,USD or share,variants.csv,column terminal_cash_mean for scenario por_launch_plus3
-scenario_por_launch_plus3_terminal_cash_p50,-19364915.923929,USD or share,variants.csv,column terminal_cash_p50 for scenario por_launch_plus3
-scenario_por_launch_plus3_peak_funding_mean,19786720.601533,USD or share,variants.csv,column peak_funding_mean for scenario por_launch_plus3
-scenario_por_launch_plus3_peak_funding_p80,27558994.377045,USD or share,variants.csv,column peak_funding_p80 for scenario por_launch_plus3
-scenario_por_launch_plus3_peak_funding_p90,32469704.836742,USD or share,variants.csv,column peak_funding_p90 for scenario por_launch_plus3
-scenario_por_launch_plus3_share_reaching_profitability,0.218300,USD or share,variants.csv,column share_reaching_profitability for scenario por_launch_plus3
-scenario_por_launch_plus3_final_year_effective_cac_mean,42.149791,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_launch_plus3
+scenario_por_launch_plus3_terminal_cash_mean,-8240271.790977,USD or share,variants.csv,column terminal_cash_mean for scenario por_launch_plus3
+scenario_por_launch_plus3_terminal_cash_p50,-19371302.122417,USD or share,variants.csv,column terminal_cash_p50 for scenario por_launch_plus3
+scenario_por_launch_plus3_peak_funding_mean,19794062.137659,USD or share,variants.csv,column peak_funding_mean for scenario por_launch_plus3
+scenario_por_launch_plus3_peak_funding_p80,27563112.369242,USD or share,variants.csv,column peak_funding_p80 for scenario por_launch_plus3
+scenario_por_launch_plus3_peak_funding_p90,32473116.113438,USD or share,variants.csv,column peak_funding_p90 for scenario por_launch_plus3
+scenario_por_launch_plus3_share_reaching_profitability,0.217550,USD or share,variants.csv,column share_reaching_profitability for scenario por_launch_plus3
+scenario_por_launch_plus3_final_year_effective_cac_mean,42.141930,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_launch_plus3
 scenario_por_launch_plus3_mean_share_over_allowance,0.233920,USD or share,variants.csv,column mean_share_over_allowance for scenario por_launch_plus3
-scenario_por_launch_plus3_understatement_ratio,0.467935,USD or share,variants.csv,column understatement_ratio for scenario por_launch_plus3
-scenario_por_launch_plus3_band_central_placement_terminal,0.498750,USD or share,variants.csv,column band_central_placement_terminal for scenario por_launch_plus3
+scenario_por_launch_plus3_understatement_ratio,0.470970,USD or share,variants.csv,column understatement_ratio for scenario por_launch_plus3
+scenario_por_launch_plus3_band_central_placement_terminal,0.498600,USD or share,variants.csv,column band_central_placement_terminal for scenario por_launch_plus3
 scenario_por_launch_plus3_total_content_cost_mean,13775913.024423,USD or share,variants.csv,column total_content_cost_mean for scenario por_launch_plus3
-scenario_por_launch_plus3_total_cost_mean,38600310.958766,USD or share,variants.csv,column total_cost_mean for scenario por_launch_plus3
-scenario_por_launch_plus3_total_net_revenue_mean,30715973.544504,USD or share,variants.csv,column total_net_revenue_mean for scenario por_launch_plus3
-scenario_por_launch_plus3_pathwise_spearman_vs_base,0.999383,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_launch_plus3
-scenario_por_launch_plus3_pathwise_mean_abs_delta,1408118.347308,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_launch_plus3
-scenario_por_launch_plus3_abs_mean_delta,605704.258721,USD or share,variants.csv,column abs_mean_delta for scenario por_launch_plus3
-scenario_por_launch_plus3_paired_mc_se,48922.461390,USD or share,variants.csv,column paired_mc_se for scenario por_launch_plus3
-scenario_por_launch_plus3_pathwise_p50_delta,343203.594102,USD or share,variants.csv,column pathwise_p50_delta for scenario por_launch_plus3
-scenario_por_launch_plus3_pathwise_p50_delta_se,2235.736647,USD or share,variants.csv,column pathwise_p50_delta_se for scenario por_launch_plus3
-scenario_por_launch_plus3_final_year_allin_contrib_pooled,15.385518,USD or share,variants.csv,column final_year_allin_contrib_pooled for scenario por_launch_plus3
-scenario_por_launch_plus3_final_year_allin_contrib_median,-100.855930,USD or share,variants.csv,column final_year_allin_contrib_median for scenario por_launch_plus3
-scenario_por_launch_plus3_final_year_gross_contrib_pooled,31.341954,USD or share,variants.csv,column final_year_gross_contrib_pooled for scenario por_launch_plus3
-scenario_por_launch_plus6_terminal_cash_mean,-6981151.783771,USD or share,variants.csv,column terminal_cash_mean for scenario por_launch_plus6
-scenario_por_launch_plus6_terminal_cash_p50,-17744453.327354,USD or share,variants.csv,column terminal_cash_p50 for scenario por_launch_plus6
-scenario_por_launch_plus6_peak_funding_mean,18164650.933674,USD or share,variants.csv,column peak_funding_mean for scenario por_launch_plus6
-scenario_por_launch_plus6_peak_funding_p80,25065299.705344,USD or share,variants.csv,column peak_funding_p80 for scenario por_launch_plus6
-scenario_por_launch_plus6_peak_funding_p90,29489386.359428,USD or share,variants.csv,column peak_funding_p90 for scenario por_launch_plus6
-scenario_por_launch_plus6_share_reaching_profitability,0.221150,USD or share,variants.csv,column share_reaching_profitability for scenario por_launch_plus6
-scenario_por_launch_plus6_final_year_effective_cac_mean,41.500890,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_launch_plus6
-scenario_por_launch_plus6_mean_share_over_allowance,0.233696,USD or share,variants.csv,column mean_share_over_allowance for scenario por_launch_plus6
-scenario_por_launch_plus6_understatement_ratio,0.512868,USD or share,variants.csv,column understatement_ratio for scenario por_launch_plus6
-scenario_por_launch_plus6_band_central_placement_terminal,0.499750,USD or share,variants.csv,column band_central_placement_terminal for scenario por_launch_plus6
+scenario_por_launch_plus3_total_cost_mean,38410609.749830,USD or share,variants.csv,column total_cost_mean for scenario por_launch_plus3
+scenario_por_launch_plus3_total_net_revenue_mean,30170337.958853,USD or share,variants.csv,column total_net_revenue_mean for scenario por_launch_plus3
+scenario_por_launch_plus3_pathwise_spearman_vs_base,0.999347,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_launch_plus3
+scenario_por_launch_plus3_pathwise_mean_abs_delta,1638743.104378,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_launch_plus3
+scenario_por_launch_plus3_abs_mean_delta,961638.635436,USD or share,variants.csv,column abs_mean_delta for scenario por_launch_plus3
+scenario_por_launch_plus3_paired_mc_se,58784.446087,USD or share,variants.csv,column paired_mc_se for scenario por_launch_plus3
+scenario_por_launch_plus3_pathwise_p50_delta,335764.978721,USD or share,variants.csv,column pathwise_p50_delta for scenario por_launch_plus3
+scenario_por_launch_plus3_pathwise_p50_delta_se,2082.127815,USD or share,variants.csv,column pathwise_p50_delta_se for scenario por_launch_plus3
+scenario_por_launch_plus3_final_year_allin_contrib_pooled,15.029428,USD or share,variants.csv,column final_year_allin_contrib_pooled for scenario por_launch_plus3
+scenario_por_launch_plus3_final_year_allin_contrib_median,-101.108722,USD or share,variants.csv,column final_year_allin_contrib_median for scenario por_launch_plus3
+scenario_por_launch_plus3_final_year_gross_contrib_pooled,31.310272,USD or share,variants.csv,column final_year_gross_contrib_pooled for scenario por_launch_plus3
+scenario_por_launch_plus6_terminal_cash_mean,-7468364.490111,USD or share,variants.csv,column terminal_cash_mean for scenario por_launch_plus6
+scenario_por_launch_plus6_terminal_cash_p50,-17754987.327804,USD or share,variants.csv,column terminal_cash_p50 for scenario por_launch_plus6
+scenario_por_launch_plus6_peak_funding_mean,18175158.971579,USD or share,variants.csv,column peak_funding_mean for scenario por_launch_plus6
+scenario_por_launch_plus6_peak_funding_p80,25071638.240985,USD or share,variants.csv,column peak_funding_p80 for scenario por_launch_plus6
+scenario_por_launch_plus6_peak_funding_p90,29510269.207168,USD or share,variants.csv,column peak_funding_p90 for scenario por_launch_plus6
+scenario_por_launch_plus6_share_reaching_profitability,0.219850,USD or share,variants.csv,column share_reaching_profitability for scenario por_launch_plus6
+scenario_por_launch_plus6_final_year_effective_cac_mean,41.473234,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_launch_plus6
+scenario_por_launch_plus6_mean_share_over_allowance,0.233681,USD or share,variants.csv,column mean_share_over_allowance for scenario por_launch_plus6
+scenario_por_launch_plus6_understatement_ratio,0.521034,USD or share,variants.csv,column understatement_ratio for scenario por_launch_plus6
+scenario_por_launch_plus6_band_central_placement_terminal,0.499650,USD or share,variants.csv,column band_central_placement_terminal for scenario por_launch_plus6
 scenario_por_launch_plus6_total_content_cost_mean,12245135.042459,USD or share,variants.csv,column total_content_cost_mean for scenario por_launch_plus6
-scenario_por_launch_plus6_total_cost_mean,35381413.150360,USD or share,variants.csv,column total_cost_mean for scenario por_launch_plus6
-scenario_por_launch_plus6_total_net_revenue_mean,28400261.366589,USD or share,variants.csv,column total_net_revenue_mean for scenario por_launch_plus6
-scenario_por_launch_plus6_pathwise_spearman_vs_base,0.998821,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_launch_plus6
-scenario_por_launch_plus6_pathwise_mean_abs_delta,3824496.982312,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_launch_plus6
-scenario_por_launch_plus6_abs_mean_delta,297481.371770,USD or share,variants.csv,column abs_mean_delta for scenario por_launch_plus6
-scenario_por_launch_plus6_paired_mc_se,96849.451919,USD or share,variants.csv,column paired_mc_se for scenario por_launch_plus6
-scenario_por_launch_plus6_pathwise_p50_delta,1995908.657206,USD or share,variants.csv,column pathwise_p50_delta for scenario por_launch_plus6
-scenario_por_launch_plus6_pathwise_p50_delta_se,11545.763952,USD or share,variants.csv,column pathwise_p50_delta_se for scenario por_launch_plus6
-scenario_por_launch_plus6_final_year_allin_contrib_pooled,18.633646,USD or share,variants.csv,column final_year_allin_contrib_pooled for scenario por_launch_plus6
-scenario_por_launch_plus6_final_year_allin_contrib_median,-78.241536,USD or share,variants.csv,column final_year_allin_contrib_median for scenario por_launch_plus6
-scenario_por_launch_plus6_final_year_gross_contrib_pooled,31.473451,USD or share,variants.csv,column final_year_gross_contrib_pooled for scenario por_launch_plus6
+scenario_por_launch_plus6_total_cost_mean,34969273.158463,USD or share,variants.csv,column total_cost_mean for scenario por_launch_plus6
+scenario_por_launch_plus6_total_net_revenue_mean,27500908.668352,USD or share,variants.csv,column total_net_revenue_mean for scenario por_launch_plus6
+scenario_por_launch_plus6_pathwise_spearman_vs_base,0.998820,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_launch_plus6
+scenario_por_launch_plus6_pathwise_mean_abs_delta,4138512.139738,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_launch_plus6
+scenario_por_launch_plus6_abs_mean_delta,189731.334570,USD or share,variants.csv,column abs_mean_delta for scenario por_launch_plus6
+scenario_por_launch_plus6_paired_mc_se,109132.819657,USD or share,variants.csv,column paired_mc_se for scenario por_launch_plus6
+scenario_por_launch_plus6_pathwise_p50_delta,1964037.407309,USD or share,variants.csv,column pathwise_p50_delta for scenario por_launch_plus6
+scenario_por_launch_plus6_pathwise_p50_delta_se,11273.903840,USD or share,variants.csv,column pathwise_p50_delta_se for scenario por_launch_plus6
+scenario_por_launch_plus6_final_year_allin_contrib_pooled,18.074714,USD or share,variants.csv,column final_year_allin_contrib_pooled for scenario por_launch_plus6
+scenario_por_launch_plus6_final_year_allin_contrib_median,-78.546849,USD or share,variants.csv,column final_year_allin_contrib_median for scenario por_launch_plus6
+scenario_por_launch_plus6_final_year_gross_contrib_pooled,31.415358,USD or share,variants.csv,column final_year_gross_contrib_pooled for scenario por_launch_plus6
 allowance_enforced_median_basis_ratio,2.541690,ratio,variants.csv,"the difference of marginal medians divided by the median of the per-path differences, for the enforced-allowance scenario"
 por_dependence_pathwise_spearman,0.300217,rank correlation,variants.csv,the per-path rank correlation against the base for the Iman-Conover reordered scenario: the pairing every other scenario has and this one does not
 anchor_tutoring_minus_software_terminal_cash_mean,31103443.415357,USD,variants.csv,"terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por_anchor_software: the spread between the two regimes, not either one's delta against the published mix"
@@ -1366,24 +1366,24 @@ delta_por_anchor_software_sign_agrees_mean_and_median,1.000000,boolean,variants.
 delta_por_anchor_software_terminal_cash_abs,15638332.376560,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_anchor_software_terminal_cash_mean
 delta_por_anchor_software_total_content_cost_mean,0.000000,USD,variants.csv,total_content_cost_mean for por_anchor_software less the same for por
 delta_por_anchor_software_total_content_cost_abs,0.000000,USD,variants.csv,the absolute value of that difference
-delta_por_launch_plus3_terminal_cash_mean,-605704.258721,USD,variants.csv,terminal_cash_mean for por_launch_plus3 less terminal_cash_mean for por
-delta_por_launch_plus3_terminal_cash_p50,330465.889401,USD,variants.csv,terminal_cash_p50 for por_launch_plus3 less terminal_cash_p50 for por
-delta_por_launch_plus3_terminal_cash_p50_abs,330465.889401,USD,variants.csv,the absolute value of that median difference
-delta_por_launch_plus3_peak_funding_p80,-480079.429222,USD,variants.csv,peak_funding_p80 for por_launch_plus3 less peak_funding_p80 for por
-delta_por_launch_plus3_peak_funding_p80_abs,480079.429222,USD,variants.csv,the absolute value of that difference
-delta_por_launch_plus3_t_stat,12.380903,ratio,variants.csv,the absolute terminal-cash delta for por_launch_plus3 divided by the paired standard error of that delta
+delta_por_launch_plus3_terminal_cash_mean,-961638.635436,USD,variants.csv,terminal_cash_mean for por_launch_plus3 less terminal_cash_mean for por
+delta_por_launch_plus3_terminal_cash_p50,324079.690913,USD,variants.csv,terminal_cash_p50 for por_launch_plus3 less terminal_cash_p50 for por
+delta_por_launch_plus3_terminal_cash_p50_abs,324079.690913,USD,variants.csv,the absolute value of that median difference
+delta_por_launch_plus3_peak_funding_p80,-475961.437025,USD,variants.csv,peak_funding_p80 for por_launch_plus3 less peak_funding_p80 for por
+delta_por_launch_plus3_peak_funding_p80_abs,475961.437025,USD,variants.csv,the absolute value of that difference
+delta_por_launch_plus3_t_stat,16.358726,ratio,variants.csv,the absolute terminal-cash delta for por_launch_plus3 divided by the paired standard error of that delta
 delta_por_launch_plus3_sign_agrees_mean_and_median,0.000000,boolean,variants.csv,"1 when the mean delta and the median delta for por_launch_plus3 have the same sign, 0 when they disagree"
-delta_por_launch_plus3_terminal_cash_abs,605704.258721,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_launch_plus3_terminal_cash_mean
+delta_por_launch_plus3_terminal_cash_abs,961638.635436,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_launch_plus3_terminal_cash_mean
 delta_por_launch_plus3_total_content_cost_mean,-189912.786227,USD,variants.csv,total_content_cost_mean for por_launch_plus3 less the same for por
 delta_por_launch_plus3_total_content_cost_abs,189912.786227,USD,variants.csv,the absolute value of that difference
-delta_por_launch_plus6_terminal_cash_mean,297481.371770,USD,variants.csv,terminal_cash_mean for por_launch_plus6 less terminal_cash_mean for por
-delta_por_launch_plus6_terminal_cash_p50,1950928.485976,USD,variants.csv,terminal_cash_p50 for por_launch_plus6 less terminal_cash_p50 for por
-delta_por_launch_plus6_terminal_cash_p50_abs,1950928.485976,USD,variants.csv,the absolute value of that median difference
-delta_por_launch_plus6_peak_funding_p80,-2973774.100923,USD,variants.csv,peak_funding_p80 for por_launch_plus6 less peak_funding_p80 for por
-delta_por_launch_plus6_peak_funding_p80_abs,2973774.100923,USD,variants.csv,the absolute value of that difference
-delta_por_launch_plus6_t_stat,3.071585,ratio,variants.csv,the absolute terminal-cash delta for por_launch_plus6 divided by the paired standard error of that delta
-delta_por_launch_plus6_sign_agrees_mean_and_median,1.000000,boolean,variants.csv,"1 when the mean delta and the median delta for por_launch_plus6 have the same sign, 0 when they disagree"
-delta_por_launch_plus6_terminal_cash_abs,297481.371770,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_launch_plus6_terminal_cash_mean
+delta_por_launch_plus6_terminal_cash_mean,-189731.334570,USD,variants.csv,terminal_cash_mean for por_launch_plus6 less terminal_cash_mean for por
+delta_por_launch_plus6_terminal_cash_p50,1940394.485526,USD,variants.csv,terminal_cash_p50 for por_launch_plus6 less terminal_cash_p50 for por
+delta_por_launch_plus6_terminal_cash_p50_abs,1940394.485526,USD,variants.csv,the absolute value of that median difference
+delta_por_launch_plus6_peak_funding_p80,-2967435.565282,USD,variants.csv,peak_funding_p80 for por_launch_plus6 less peak_funding_p80 for por
+delta_por_launch_plus6_peak_funding_p80_abs,2967435.565282,USD,variants.csv,the absolute value of that difference
+delta_por_launch_plus6_t_stat,1.738536,ratio,variants.csv,the absolute terminal-cash delta for por_launch_plus6 divided by the paired standard error of that delta
+delta_por_launch_plus6_sign_agrees_mean_and_median,0.000000,boolean,variants.csv,"1 when the mean delta and the median delta for por_launch_plus6 have the same sign, 0 when they disagree"
+delta_por_launch_plus6_terminal_cash_abs,189731.334570,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_launch_plus6_terminal_cash_mean
 delta_por_launch_plus6_total_content_cost_mean,-1720690.768191,USD,variants.csv,total_content_cost_mean for por_launch_plus6 less the same for por
 delta_por_launch_plus6_total_content_cost_abs,1720690.768191,USD,variants.csv,the absolute value of that difference
 scope_ladder_foreign_content_mean,5369727.484446,USD,variants.csv,total_content_cost_mean for por less the same for ukonly: the content built for markets other than the United Kingdom
@@ -3314,17 +3314,17 @@ final_year_contrib_per_hh_month_allin_median,-86.912261,USD per household month,
 allin_minus_gross_contrib_per_hh_month_pooled,-14.672797,USD per household month,cohorts.csv,the pooled all-in figure less the pooled gross one: what the gross margin leaves out
 gross_minus_allin_contrib_per_hh_month_pooled,14.672797,USD per household month,cohorts.csv,the pooled gross figure less the pooled all-in one: how much lower the all-in figure is
 allin_consumed_per_hh_month_median,86.912261,USD per household month,cohorts.csv,the median path's all-in contribution with the sign reversed: what a household month consumes on the median path
-blended_retained_months_mean,3.917098,months,cohorts.csv,retained months weighted by the sampled segment mix
-final_year_ltv_gross_pooled,122.239808,USD per household,cohorts.csv,pooled gross contribution per household month times blended retained months
+blended_retained_months_mean,3.910588,months,cohorts.csv,retained months weighted by the sampled segment mix
+final_year_ltv_gross_pooled,122.036641,USD per household,cohorts.csv,pooled gross contribution per household month times blended retained months
 final_year_effective_cac_pooled,58.265006,USD per acquisition,cohorts.csv,"total final-year acquisition and verification spend over total final-year acquisitions, pooled across paths"
 final_year_effective_cac_median,33.117962,USD per acquisition,cohorts.csv,median over paths with a real final year of the per-path effective acquisition cost
-final_year_ltv_over_cac_pooled,2.097997,ratio,cohorts.csv,pooled gross lifetime value divided by pooled final-year effective cost per acquisition
+final_year_ltv_over_cac_pooled,2.094510,ratio,cohorts.csv,pooled gross lifetime value divided by pooled final-year effective cost per acquisition
 final_year_cac_pooled_over_anchor_median,1.805921,ratio,cohorts.csv,pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled
 retained_months_per_path_mean,3.799779,months,cohorts.csv,"per-path realised retained months: active household months over acquisitions, path by path"
 retained_months_per_path_p10,2.639646,months,cohorts.csv,tenth percentile of that per-path figure
 retained_months_per_path_p90,5.239787,months,cohorts.csv,ninetieth percentile of that per-path figure
 share_paths_final_year_ltv_below_cac,0.104925,share,cohorts.csv,"share of paths with a real final year on which gross lifetime value, computed on THAT PATH's realised retained months, is below the final-year effective cost per acquisition"
-share_paths_final_year_ltv_below_cac_scalar_months,0.102365,share,cohorts.csv,"the same share computed the way it used to be, with the sample-mean retained months applied to every path, published so the size of that error is on the record rather than only in the change log"
+share_paths_final_year_ltv_below_cac_scalar_months,0.102766,share,cohorts.csv,"the same share computed the way it used to be, with the sample-mean retained months applied to every path, published so the size of that error is on the record rather than only in the change log"
 share_paths_final_year_ltv_allin_below_cac,0.849842,share,cohorts.csv,"share of paths with a real final year on which ALL-IN lifetime value, which carries the demand-independent cost base, is below the final-year effective cost per acquisition"
 share_paths_final_year_ltv_allin_below_cac_pct,84.984186,per cent,cohorts.csv,the same share as a percentage
 share_paths_final_year_ltv_below_cac_pct,10.492495,per cent,cohorts.csv,"the gross share as a percentage, published beside the all-in one so the two are never quoted apart"
@@ -3485,7 +3485,7 @@ imanconover_worst_corr_error,0.016000,rank correlation,imanconover_check.csv,lar
 imanconover_all_marginals_preserved,True,boolean,imanconover_check.csv,every marginal_preserved column is True
 invariant_check_count,8,count,invariants.csv,distinct invariant names
 invariant_run_count,2,count,invariants.csv,distinct configurations they are run on
-mechanism_defect_count,10,count,mechanism_defects.csv,"rows: the mechanism defects found in model.py by reading the month loop, one per row"
+mechanism_defect_count,11,count,mechanism_defects.csv,"rows: the mechanism defects found in model.py by reading the month loop, one per row"
 invariant_reintroduction_case_count,8,count,invariant_defect_costs.csv,historical defects reintroduced and refused by the check written for them
 invariant_proved_count,5,count,invariant_defect_costs.csv,DISTINCT invariants proved to refuse at least one real defect
 invariant_defects_costing_no_cash,2,count,invariant_defect_costs.csv,"reintroduced defects whose terminal cash mean is identical to the correct model's: they move a decomposition, not cash"

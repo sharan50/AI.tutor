@@ -454,8 +454,8 @@ does a household cost at the spend actually modelled" and it is still a
 tail-influenced statistic; the median path's figure is beside it for that reason.
 
 **Lifetime value against cost per acquisition in the final year.** Pooled gross
-lifetime value is 122.24 dollars against a pooled effective acquisition
-cost of 58.27, a ratio of 2.10. On
+lifetime value is 122.04 dollars against a pooled effective acquisition
+cost of 58.27, a ratio of 2.09. On
 10.5 per cent of individual paths that ratio is below one: the business
 is buying households for more than they are worth, in the final year, on that
 share of paths. The acquisition budget is capped at 0.75 times lifetime value,
@@ -1037,8 +1037,8 @@ paired standard error; for those two, there is no paired error to use.
 | Dependence and feedback together | -3,441,606 | -1,080,257 | 1,224,627 | 1 |
 | Creators want money | -2,146,404 | -1,340,370 | 1,368,371 | 1 |
 | A share of billing through an app store | -2,415,562 | -334,115 | 267,262 | 1 |
-| Go-to-market three months later | -605,704 | 330,466 | -480,079 | 0 |
-| Go-to-market six months later | 297,481 | 1,950,928 | -2,973,774 | 1 |
+| Go-to-market three months later | -961,639 | 324,080 | -475,961 | 0 |
+| Go-to-market six months later | -189,731 | 1,940,394 | -2,967,436 | 0 |
 | Foreign exchange sampled rather than fixed — **not distinguishable from zero**, see below | 48,899 | 89,568 | 50,244 | 1 |
 | India opened direct to parents | -2,995,053 | -2,909,673 | 4,329,490 | 1 |
 | The allowance enforced | -5,272,575 | -547,768 | 413,137 | 1 |
@@ -1112,16 +1112,37 @@ cancel. Together they are -3,441,606.
 
 **The launch-delay scenarios do not support any conclusion at all, and the honest
 thing is to say so rather than to quote the one column that agrees with
-intuition.** On the mean the three-month delay costs money and the six-month
-delay **makes** money — all three of its statistics favour delaying. On the
-median path and on the capital requirement, both delays HELP:
+intuition.** On the mean both delays cost money. On the median path and on the
+capital requirement, both delays HELP:
 
 | | Delta, mean | Delta, median path | Delta, peak funding p80 |
 |---|---|---|---|
-| Three months late | -605,704 | 330,466 | -480,079 |
-| Six months late | 297,481 | 1,950,928 | -2,973,774 |
+| Three months late | -961,639 | 324,080 | -475,961 |
+| Six months late | -189,731 | 1,940,394 | -2,967,436 |
 
-Two things are wrong with these scenarios and both run the same way.
+**Three** things are wrong with these scenarios and all three run the same way,
+which is the only reason to report them at all.
+
+The third was found in round 7 and it is the one that should worry a reader of
+earlier drafts. The reachable pool's catalogue was read on the **undelayed**
+calendar while the content it stands for was built on the delayed one, so a
+delayed launch was credited reach for item banks it had not paid for yet. That
+inflated the delay scenarios and nothing else: `launch_shift` is zero everywhere
+in the published run, which is why the base run reproduces character for
+character with the fix in. Before it was fixed the six-month delay showed a
+**gain** on the mean rather than the loss the table above now shows — a
+difference of sign, fifteen paired standard errors wide. CHANGELOG 7.9 records
+the measurement and how it was taken; it is not quoted here as a figure because
+it is a counterfactual against a model that no longer exists, and this document
+does not put those in the prose as though they were outputs.
+
+The round 7 coherence pass found the prose saying "on the mean, both delays cost
+money" over a table in which one of them gained, and the sentence was duly
+corrected to say the six-month delay makes money. That correction was wrong: it
+matched the prose to a number that was itself an artefact, and it stood for about
+an hour. A document that fixes its sentences against its own outputs will follow
+its outputs into an error, and the only thing that caught this was somebody
+reading the month loop.
 
 `launch_shift` moves the content schedule along with the market openings, so a
 six-month shift pushes the month-54 content step past the end of the horizon and
@@ -1773,7 +1794,7 @@ them to prose, and renders two of the lists verbatim from the file that holds
 them. Run the verifier anyway, because it catches the other kind of error.
 
 **And there is a whole class of defect no pass here can reach.**
-10
+11
 mechanism errors have been found in `model.py` across rounds 2, 4, 5 and 6, and
 every one passed every automated check in this directory on every run while it
 was wrong — the gate because the defect was in the published run, the off-test
