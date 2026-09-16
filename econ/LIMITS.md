@@ -1,7 +1,11 @@
 # Limits: the checklist, item by item
 
-**Seed 20260916, run date 2026-09-16.** Every item from part 4 of the brief, answered
-explicitly, including where the answer is clean. Items that are not clean carry
+**Seed 20260916, run date 2026-09-16.** Every item of the twenty-four-point review
+checklist the owner supplied with the instruction for this work, answered
+explicitly, including where the answer is clean. That checklist is not in
+`BUILD_BRIEF.md`, whose part 4 is a different list, of nine unverified legal and
+commercial assumptions; it came with the request and is reproduced by its item
+numbers here. Items that are not clean carry
 the number they would move and by how much.
 
 Three verdicts are used. **Clean** means the defect is not present. **Clean now**
@@ -24,12 +28,12 @@ prior, not a rate.
 
 **Quoted prices are read as gross, that is, tax-inclusive.** Net revenue is the
 gross price divided by one plus the rate. Over the horizon that removes
-4,338,652 dollars, or 11.2 per cent of gross consumer
+3,774,665 dollars, or 11.0 per cent of gross consumer
 revenue. On the United Kingdom alone at 20 per cent it removes a sixth.
 
 **The other reading, quantified.** If the quoted prices were net and tax were added
 on top, revenue over the horizon would be higher by that whole line,
-4,338,652 dollars, which is 11.2 per cent more revenue and would
+3,774,665 dollars, which is 11.0 per cent more revenue and would
 reduce the mean peak funding requirement by approximately the same amount.
 
 Institution prices are treated the other way round, as net of VAT, because that is
@@ -54,7 +58,7 @@ one side only and its sign is known.
 
 23.6 per cent of active households exceed the allowance being sold to
 them, household-month weighted. Enforcing it instead is worth
-98,661 dollars of terminal cash.
+91,453 dollars of terminal cash.
 
 ### 4. Foreign exchange: **not clean, by instruction**
 
@@ -64,9 +68,9 @@ this item cannot be clean.
 
 **What it would move.** The `por_fx_sampled` scenario replaces the sterling rate
 with a sampled one, drawn outside the published stream so the paths stay matched.
-Terminal cash moves by 93,070 dollars on the mean, which is small,
+Terminal cash moves by 42,566 dollars on the mean, which is small,
 and the peak funding requirement at the eightieth percentile moves from
-32,611,126 to 32,624,546. **The exposure is in the width, not the
+28,435,028 to 28,439,647. **The exposure is in the width, not the
 centre**, which is exactly what fixing a rate hides: fixed rates do not remove the
 risk, they remove the evidence of it. The rupee exposure is not sampled at all in
 that scenario, so even this understates.
@@ -101,8 +105,9 @@ sustains. Real hiring is lumpy and lags. This understates the cost of a fast ram
 21:00, which is 21:30 to 02:30 in Bengaluru. The product's busiest hours are the
 build base's night, and there is no shift premium anywhere in the cost base.
 Priced in `out/omissions.csv` at 449,379 to
-898,759 dollars over the horizon, which is up to
-1.96 per cent of the modelled cost base.
+898,759 dollars from the United Kingdom go-to-market month to
+the end of the horizon, four and a half years rather than five, which is up to
+2.28 per cent of the modelled cost base.
 
 ### 6. A cost that scales per market, per shift or per institution: **clean, except the shift**
 
@@ -119,8 +124,8 @@ curriculum reuses only 10 to 60 per cent. Neither is near one, so the expansion 
 being granted for free the thing it is asking to buy.
 
 That this matters is visible in the sweep: pinning `board_reuse` from its fifth to
-its ninety-fifth percentile swings terminal cash by 9,692,829 dollars,
-and `market_reuse` is the ninth-ranked driver on the capital target.
+its ninety-fifth percentile swings terminal cash by 8,824,276 dollars,
+and `market_reuse` is ranked 10 on the capital target.
 
 ### 8. A cost with no term at all: **not clean, nine named and priced**
 
@@ -135,8 +140,8 @@ is not the same as a line left out: corporation tax because no scenario here
 returns a taxable trading profit, translation because the expansion is across
 English-speaking curricula by decision.
 
-**In total the absent lines are 1,417,558 to
-3,252,942 dollars, or 7.09 per cent of the modelled
+**In total the absent lines are 1,358,410 to
+3,095,023 dollars, or 7.87 per cent of the modelled
 cost base at the top of the range.** They deepen the hole; they do not change the
 ordering in section 8 of the write-up.
 
@@ -146,7 +151,7 @@ run charges nothing for them, because D5 describes a one-page name-and-likeness
 agreement and the vault has never established what a creator charges to sign it.
 Rather than invent the figure, the `por_creator_fees` scenario prices both limbs,
 a fixed annual minimum per creator and a share of the revenue their audience
-brought: -2,204,366 dollars of terminal cash. **The published run
+brought: -2,082,643 dollars of terminal cash. **The published run
 assumes creators sign for nothing.** That assumption is now visible.
 
 ---
@@ -189,9 +194,17 @@ character for character. All four pass on every run of `variants.py`.
 Matching is also measured, not just argued. `out/variants.csv` carries for every
 scenario the rank correlation of per-path terminal cash against the base and the
 mean absolute per-path change beside the change in the mean. Unmatched paths
-would collapse the first and inflate the second. Across every scenario the
-correlation runs from 0.7948 at the loosest to
-0.9999 at the tightest.
+would collapse the first and inflate the second.
+
+**This is where an earlier draft was wrong, in the passage whose whole point was
+that matching is measured.** It named two scenarios as the loosest and the
+tightest and neither bound was the bound in the file. Across the scenarios that
+only flip a switch the correlation runs from 0.7811 to 1.0000.
+The two dependence scenarios sit at 0.2765 and above, and that is correct
+behaviour rather than a defect: Iman-Conover reordering changes which path holds
+which driver value, so it preserves the marginals exactly and path identity not
+at all. They are comparable to the base in distribution, not path by path, and
+the write-up says so where it uses them.
 
 ---
 
@@ -200,9 +213,9 @@ correlation runs from 0.7948 at the loosest to
 ### 12. Anchor or effective cost: **clean**
 
 Both published. The anchor is a driver with median 32.26 dollars. The
-effective cost at the spend actually modelled is 54.02 in the final
-year, pooled across paths, which is 1.67 times the anchor. On the median
-path it is 31.93, because the median path never spends enough to
+effective cost at the spend actually modelled is 47.30 in the final
+year, pooled across paths, which is 1.47 times the anchor. On the median
+path it is 32.25, because the median path never spends enough to
 saturate anything. It is published month by month as `cac_effective_blended_mean`
 in `out/por_monthly.csv`, with the non-creator channel beside it.
 
@@ -224,8 +237,8 @@ for all sixty months. It now holds for 12 months after go-to-market and tapers
 to nothing over the next 12. See `CHANGELOG.md` 0.4.
 
 **Does lifetime value exceed cost per acquisition in the final year?** On the mean,
-pooled, yes: 108.11 against 54.02, a ratio of
-2.00. **On 4.5 per cent of individual paths, no.** And the
+pooled, yes: 104.26 against 47.30, a ratio of
+2.20. **On 5.0 per cent of individual paths, no.** And the
 lifetime value in that ratio is the **gross** one; against the all-in contribution
 the ratio is far worse, and on the median path it is negative, which is item 16.
 
@@ -236,7 +249,7 @@ cost of a Year 11 household. The model asserts no such ratio; it produces one fr
 a sampled summer lapse probability and a sampled progression rate.
 
 **The number the code actually uses is 1.24, not two**
-(3.66 months against 2.96, measured by pinning the
+(3.67 months against 2.97, measured by pinning the
 segment mix and re-running on the same random numbers). It reaches two or better
 on 0.0 per cent of paths. docs/10's shape survives; its magnitude
 does not, and docs/10's own caveat about the summer is why.
@@ -256,14 +269,14 @@ denominator collapses on paths whose book has collapsed, so a handful of paths
 carry it to millions. Two defensible figures are published instead, the pooled
 ratio and the median path's.
 
-32.89 dollars per household month pooled, and
-27.33 on the median path, is a **gross**
+31.65 dollars per household month pooled, and
+27.36 on the median path, is a **gross**
 contribution: net revenue less inference, support, payment, hosting and store fees.
 
 The all-in figure, net of engineering, content, overhead, compliance and payment
-fees, is 19.85 dollars per household month pooled and
--109.95 on the median path. Pooled, the all-in figure is
-13.04 dollars a household month lower than the gross one.
+fees, is 16.54 dollars per household month pooled and
+-104.65 on the median path. Pooled, the all-in figure is
+15.11 dollars a household month lower than the gross one.
 
 **The pooled and median all-in figures disagree in sign**, because the pooled one
 is dominated by the few paths with large books that spread the fixed costs, and
@@ -288,10 +301,10 @@ No figure in the write-up divides a `_mean` by a `_band`.
 ### 18. Sustained bad runs: **clean**
 
 The demand shock is AR(1), not independent. Persistence is sampled between
-0.45 and 0.95, median 0.70. The longest run of consecutive months with demand at
-or below 0.80 averages 5.8 months and is 13.0 at the
-ninetieth percentile; 36.9 per cent of paths contain a run of six or
-more and 12.1 per cent a run of twelve or more.
+0.45 and 0.95, median 0.70. The longest run of consecutive months with the
+demand multiplier below 0.80 averages 5.8 months and is
+13.0 at the ninetieth percentile; 36.9 per cent of paths contain a run
+of six or more and 12.1 per cent a run of twelve or more.
 
 **What is still missing.** The shock acts on acquisition only. There is no
 correlated shock to retention, to vendor prices, or to the examiner labour market,
@@ -304,12 +317,12 @@ Every averaged claim in the write-up is given its per-path share:
 
 | Averaged claim | Share of paths on which it holds |
 |---|---|
-| Content exceeds acquisition spend | 85.4 per cent |
-| Content is the single largest line | 65.6 per cent |
+| Content exceeds acquisition spend | 84.0 per cent |
+| Content exceeds both acquisition and people | 59.7 per cent |
 | The Year 10 cohort retains at least twice the months | 0.0 per cent |
-| Lifetime value is below acquisition cost in the final year | 4.5 per cent |
-| Peak funding exceeds ten million dollars | 87.7 per cent |
-| Terminal cumulative cash is positive | 9.7 per cent |
+| Lifetime value is below acquisition cost in the final year | 5.0 per cent |
+| Peak funding exceeds ten million dollars | 84.8 per cent |
+| Terminal cumulative cash is positive | 10.8 per cent |
 
 ---
 
@@ -317,26 +330,27 @@ Every averaged claim in the write-up is given its per-path share:
 
 ### 20. Sized on the base case or the plan of record: **clean**
 
-Sized on the **plan of record**, at 32,611,126 dollars across the
+Sized on the **plan of record**, at 28,435,028 dollars across the
 horizon at the eightieth percentile. The base case is stated beside it at
-17,691,569, along with two narrower scopes. They differ enough
+17,664,272, along with two narrower scopes. They differ enough
 that sizing on the base case would underfund the plan actually described.
 
 ### 21. Staging against decisions: **not clean**
 
 Every commitment through month 18 has its spend starting inside the seed window,
 including both foreign entities, foreign counsel, the security certification,
-A-level content and the second and third United Kingdom boards. Two commitments
-land after the Series A opens with their spend starting before it: all four boards
-live at month 18, built from month 12, and the rest-of-English-speaking market at
-month 24, built from month 18.
+A-level content and the second and third United Kingdom boards. One commitment lands
+after the Series A opens with its spend starting before it: all four boards live
+at month 18, built from month 12. The rest-of-English-speaking market at month 24
+begins its build at month 18, exactly as the Series A opens, so the file's test
+puts it on the right side of the line.
 
 **The Series A does not buy those decisions. It refinances them.** `out/funding_commitments.csv`
 holds the landing month and the spend-start month for each.
 
 **What it would move.** Nothing in the cash flow; the spend happens either way.
 What it moves is the round sizing: the seed for the plan of record is
-12,935,477 dollars, and a round of that size described as a seed will
+10,326,427 dollars, and a round of that size described as a seed will
 be raised on seed terms against a Series A-sized commitment.
 
 ---
@@ -355,14 +369,17 @@ in the pricing decision, since the allowance cannot be set without it.
 **No instrument in docs/11 produces it before M5.** M1 is counsel, board policies,
 three age-assurance quotes, a landing page and thirty school conversations. M2
 produces cost per session from a frozen battery, which gives cost per session but
-not sessions per household. M4 instruments return rate and sessions per learner
-per fourteen days, which is the first thing that touches it, and M4 requires a
-signed creator and a built product.
+not sessions per household. M4 instruments return rate and sessions per learner per
+fourteen days, and that secondary metric is the first instrument in the roadmap
+that touches the quantity at all. M4 is not before M5, and it requires a signed
+creator and a built product, so the quantity is not available cheaply or early
+either way.
 
 **Volume per customer is the factor nothing measures**, exactly as the brief
-predicts. `sessions_mean` is sampled between 3.5 and 18 a month, a fivefold range,
-and the top of that range is what docs/03's own usage arithmetic implies for a
-revising Year 11.
+predicts. `sessions_per_hh_month` is sampled between 3.5 and 18 a month, a fivefold
+range. docs/03's own arithmetic, three sessions a week for a Year 11 revising one
+strand, is about thirteen a month, which sits inside the range rather than at its
+top; the range is wider in both directions because nothing measures it.
 
 **What it would move.** `out/breakeven.csv` records the solve. What can be said now
 is that the allowance of sixteen sessions, which is a commercial decision already
@@ -373,7 +390,7 @@ of households exceed it or almost none do is not determined by anything measured
 
 docs/03's validation pilot is two examiners validating the same twenty items. The
 cost base applies `minutes_per_item` across 5 to 11 subjects, two levels and up to
-four boards, and `minutes_per_item` is the fourth-ranked driver on the capital
+four boards, and `minutes_per_item` is ranked 5 on the capital
 target.
 
 Twenty items of one kind, in one strand, of one subject, at one tier, is not a
@@ -405,11 +422,18 @@ open item OI-10. Nothing in M1 exercises that path.
 ## Limits of the instrument itself, beyond the checklist
 
 **It cannot value evidence.** docs/09's strongest argument for the institution
-channel is that outcome evidence is the only durable moat and that every comparator
-that carries weight in education is school-based. This model charges Route B its
-costs, credits it its revenue, and gives it nothing for evidence. The
-5,435,967 dollar figure is therefore a lower bound on Route B's
-worth, not an estimate of it.
+channel is that outcome evidence is the only durable moat; docs/08 supplies the
+supporting fact, that the comparators carrying weight in education are all
+school-based, ASSISTments at 0.18 to 0.29 standard deviations with an ESSA Tier 1
+rating and Carnegie Learning MATHia at 0.21 to 0.38. This model charges Route B
+its costs, credits it its revenue, and gives it nothing for evidence.
+
+**It is a lower bound in one direction and was an overstatement in the other.**
+An earlier run tied the India content build to the institution switch, so the
+figure carried an India item bank the channel never bills. That is fixed and the
+number here is the corrected one. What remains is that the instrument still
+gives Route B no credit for evidence, so the figure is an upper bound on what
+dropping the channel is worth, not a settled estimate of it.
 
 **It has no competitive response.** Free general tools sit in front of the same
 parent and Google has committed capital at national scale. Nothing here represents
@@ -420,7 +444,7 @@ curriculum specifically.
 failing, beyond the lifetime-value cap on acquisition. The peak funding
 requirement is therefore the requirement of the plan as stated, not of a company
 that notices and reacts. A real team would cut, and the honest reading of
-32,611,126 dollars is "this is what it costs to execute the plan of
+28,435,028 dollars is "this is what it costs to execute the plan of
 record without flinching", which is not the same as what it would actually cost.
 
 **The institution channel is one blended channel.** Route B is modelled as a single
@@ -434,3 +458,127 @@ nothing in particular.
 
 **A-level is one pooled segment**, not two years, with an exit rate sampled between
 0.35 and 0.72 standing in for the cohort structure.
+
+---
+
+## Limits an adversarial reading found that the sections above did not admit
+
+These were added after a reviewer with no knowledge of how the instrument was
+built went looking for them. Each is stated at the strength the evidence supports,
+which in several cases is stronger than comfortable.
+
+### The base model has no price elasticity at all, so a higher price buys more customers
+
+Price enters revenue, then lifetime value, then the acquisition budget cap, then
+spend, then acquisitions. It appears nowhere in `effective_cac()` and nowhere in
+the churn calculation. **In the published run, raising the price raises the number
+of households acquired.** That is not a subtle artefact; it is the direction of
+the mechanism.
+
+The feedback scenario adds a price-to-churn penalty, but only inside a bundle
+with the quality and automation loops, so the price penalty is never priced on its
+own. The whole of the price-anchor conclusion, which is the second-ranked decision
+in the write-up, rests on a mechanism with no demand-side cost of price anywhere
+in it.
+
+**What it would move.** The anchor spread of 29,107,825 dollars is an
+upper bound. docs/07 states the competing anchor explicitly: the free tools are
+the alternative, and a threefold price difference against a free substitute
+cannot plausibly leave conversion untouched. Splitting the feedback bundle so the
+price loop can be run alone is a half-day of work and has not been done.
+
+### The largest paths are not plausible and nothing in the instrument says so
+
+Total acquisitions across the horizon run to a median of 48,672, a
+ninety-ninth percentile of 4,014,194 and a maximum of 30,230,487.
+2.61 per cent of paths end the horizon above a hundred million dollars.
+
+There is now a ceiling, `POOL_REACQUISITION_MULTIPLE`, so no path acquires more
+than that multiple of its own sampled pool in any market, and the largest ratio of
+acquisitions to that path's own United Kingdom pool is 42.27 across three
+open consumer markets. **That bounds the arithmetic; it does not make the top of
+the distribution believable.** The reachable-pool prior is log-uniform across a
+thirtyfold range and the market relatives multiply it further, so the upper tail
+describes a business several times the size of the demand the vault has evidence
+for. Those paths are what makes the mean of terminal cash, which is why the
+scenario table in the write-up now gives the median beside it.
+
+### "Content is the largest line" is partly a property of the budget rule
+
+On the median path, content costs 12,448,547 over the horizon and
+acquisition and verification together cost 1,730,928, a ratio of
+7.2 to one. Content is almost entirely exogenous: a fixed schedule
+times a sampled item cost, with no demand feedback at all. Acquisition is
+throttled by the lifetime-value cap and the launch-subsidy taper.
+
+So the claim is true, and part of the reason it is true is that on most paths the
+company barely markets. A plan that spends that ratio on content against customers
+is not a plan anyone would execute, and the instruction the write-up draws from
+it, that content cost is what makes the venture fundable, should be read with
+that in view.
+
+### The lifetime-value cap is struck on a gross figure
+
+`CAC_LTV_CAP` limits acquisition spend to 0.75 times lifetime value, and the
+lifetime value it uses subtracts nothing but verification. It is the gross margin,
+not the all-in one, and the all-in figure is negative on the median path. The cap
+is therefore looser than it sounds, and it is the only thing in the model
+restraining acquisition spend.
+
+### Decided constants are not in the sensitivity at all
+
+`out/sobol.csv` and `out/tornado.csv` cover the 80 sampled drivers. They cover
+none of the constants in `out/constants.csv`, and `out/constants.csv` is itself
+incomplete: it omits the two seasonality shapes, the examination-month and
+season-shift maps, the market opening months, all four content schedules, the
+market budget weights, the segment usage relatives, the sales and creator ramps,
+the platform headcount floor and the general and administrative schedule. Those
+are invented numbers that drive every calendar statement in the document, and
+nothing sweeps them.
+
+The four that carry the most weight, and are named as decisions rather than
+findings: `P_TUTORING_ANCHOR` at 0.50, which makes every plan-of-record
+figure a mixture of two regimes; `POOL_BREADTH_EXPONENT` and
+`PLATFORM_PER_EXTRA_MARKET`, which between them set the ratio the write-up calls
+the owner's largest decision; and `OVERAGE_CAP_MULT` at 2.5, which sets the
+one-sided asymmetry that checklist item 3 rests on.
+
+### The retained book is far shorter than the product being sold
+
+An examination-year household is retained 2.97 months. The commercial unit
+is an examination-cycle plan billed monthly to the last paper, which docs/07 puts
+at nine months for a September acquisition and five or six for a January one. **The
+average customer in this model never completes a cycle.** That follows entirely
+from the in-term churn prior, which nothing has measured, and it means the pricing
+decision and the retention prior are describing different products.
+
+### The foreign markets are the United Kingdom calendar copied
+
+The United Kingdom calendar in the model is right: a June exit, a July and August
+lapse, September and January acquisition peaks, a March to May usage peak. The
+others are that year with a shift applied.
+
+- **The rest-of-English-speaking bucket is given a June sitting and a
+  July-to-August summer lapse.** Australia, New Zealand and Singapore run a
+  January academic year with terminal examinations in October and November and
+  their long holiday across December and January. The model lapses their
+  pre-examination cohort during their term and empties their examination cohort
+  mid-year. There is one seasonal phase shift for the whole bucket and it is zero.
+- **That bucket is also one price, one tax rate, one acquisition cost and one
+  pool** for Ireland's Leaving Certificate, eight Australian state certificates,
+  thirteen Canadian provincial curricula, New Zealand's NCEA and Cambridge
+  qualifications in Singapore. `ROW_TAX` is a single blended 13 per cent against
+  rates from 5 to 23 per cent.
+- **The United States is given levels and boards, and a terminal May sitting.** It
+  has neither. The pre-examination to examination to lapse machinery is a
+  terminal-high-stakes-sitting structure, and the mass United States tutoring
+  drivers are year-round: SAT and ACT across seven sittings, and grade
+  maintenance. The May sitting modelled is an Advanced Placement analogue taken by
+  a minority.
+- **India is given one board rising to two**, against CBSE, ICSE and roughly
+  thirty state boards.
+
+None of this changes the ordering of the levers, because the ordering is set by
+acquisition cost and content cost and both are market-agnostic in this model. It
+does mean **every foreign-market level in this document is weaker than the United
+Kingdom ones**, and the expansion case should not be argued from them.

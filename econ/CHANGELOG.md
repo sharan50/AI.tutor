@@ -163,6 +163,11 @@ sha256 of the restored file, is written to `out/harness_selftest.txt`.
 
 ## Round 1a: found by pulling every figure the write-up quotes, before the reviewers reported
 
+**Figures in this round are from the model as it stood at the time, before the
+round 1b model fixes changed them.** They are recorded because a change log that
+restates itself after every later change is not a record of anything. The current
+values are in `out/figures.csv`.
+
 ### 1a.1 The mean contribution per household month was not a number
 
 **Found.** `final_year_contrib_per_hh_month` is a ratio whose denominator, final-year

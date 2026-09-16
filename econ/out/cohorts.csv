@@ -1,38 +1,43 @@
 seed,run_date,name,value,unit,derivation,checklist_item
-20260916,2026-09-16,retained_months_exam_year_mean,2.961747,months per acquisition,every acquisition pinned into the examination-year segment; active households summed over months divided by acquisitions summed over months,15
-20260916,2026-09-16,retained_months_pre_exam_mean,3.658446,months per acquisition,"every acquisition pinned into the pre-examination-year segment, same arithmetic",15
-20260916,2026-09-16,retained_months_alevel_mean,4.064754,months per acquisition,"every acquisition pinned into the A-level segment, same arithmetic",15
-20260916,2026-09-16,year10_to_year11_retained_months_ratio,1.235233,ratio,"pre-examination-year retained months divided by examination-year retained months, as the code produces it",15
-20260916,2026-09-16,year10_to_year11_ratio_p10,1.143993,ratio,the same ratio at the tenth percentile of each,15
-20260916,2026-09-16,year10_to_year11_ratio_p90,1.315433,ratio,the same ratio at the ninetieth percentile of each,15
+20260916,2026-09-16,retained_months_exam_year_mean,2.967303,months per acquisition,every acquisition pinned into the examination-year segment; active households summed over months divided by acquisitions summed over months,15
+20260916,2026-09-16,retained_months_pre_exam_mean,3.670806,months per acquisition,"every acquisition pinned into the pre-examination-year segment, same arithmetic",15
+20260916,2026-09-16,retained_months_alevel_mean,4.076113,months per acquisition,"every acquisition pinned into the A-level segment, same arithmetic",15
+20260916,2026-09-16,year10_to_year11_retained_months_ratio,1.237085,ratio,"pre-examination-year retained months divided by examination-year retained months, as the code produces it",15
+20260916,2026-09-16,year10_to_year11_ratio_p10,1.144385,ratio,the same ratio at the tenth percentile of each,15
+20260916,2026-09-16,year10_to_year11_ratio_p90,1.318837,ratio,the same ratio at the ninetieth percentile of each,15
 20260916,2026-09-16,share_paths_year10_at_least_doubles,0.000350,share,share of paths on which the pre-examination cohort retains at least twice as many months as the examination cohort,15 and 19
-20260916,2026-09-16,shock_longest_bad_run_mean,5.770750,months,"longest run of consecutive months with the demand multiplier below 0.80, reconstructed from shock_rho, shock_sd and the published innovations",18
-20260916,2026-09-16,shock_longest_bad_run_p90,13.000000,months,the ninetieth percentile of that run length,18
-20260916,2026-09-16,shock_share_paths_bad_run_6plus,0.369350,share,share of paths with at least six consecutive months of demand at or below 0.80,18
-20260916,2026-09-16,shock_share_paths_bad_run_12plus,0.121250,share,share of paths with at least twelve consecutive such months,18
+20260916,2026-09-16,year10_ratio_with_no_summer_at_all,1.752224,ratio,the pre-to-examination retained-month ratio with the summer lapse pinned to zero and progression pinned to one: the summer removed entirely,15
+20260916,2026-09-16,year10_ratio_with_churn_at_its_floor,1.310868,ratio,the same ratio with in-term churn pinned to the bottom of its prior range and the summer left as sampled,15
+20260916,2026-09-16,year10_ratio_with_no_summer_and_floor_churn,2.008020,ratio,the same ratio with both pinned: this is the only combination that recovers the figure docs/10 reasons toward,15
+20260916,2026-09-16,retained_months_exam_at_floor_churn,4.126947,months per acquisition,examination-year retained months with in-term churn at the bottom of its prior range,15
+20260916,2026-09-16,retained_months_pre_at_floor_churn,5.409883,months per acquisition,pre-examination retained months with in-term churn at the bottom of its prior range,15
+20260916,2026-09-16,shock_longest_bad_run_mean,5.770750,months,"mean of longest_demand_shock_bad_run, a published column of por_paths.csv: the longest run of consecutive months with the demand multiplier below SHOCK_BAD_THRESHOLD",18
+20260916,2026-09-16,shock_longest_bad_run_p90,13.000000,months,the ninetieth percentile of longest_demand_shock_bad_run in por_paths.csv,18
+20260916,2026-09-16,shock_share_paths_bad_run_6plus,0.369350,share,share of por_paths.csv rows whose longest_demand_shock_bad_run is six or more,18
+20260916,2026-09-16,shock_share_paths_bad_run_12plus,0.121250,share,share of por_paths.csv rows whose longest_demand_shock_bad_run is twelve or more,18
 20260916,2026-09-16,shock_rho_median,0.701148,AR(1) coefficient,median of the shock_rho driver column,18
-20260916,2026-09-16,share_paths_content_exceeds_acquisition,0.854400,share,share of paths on which total content cost exceeds total acquisition and verification spend,19
-20260916,2026-09-16,share_paths_content_is_largest_line,0.655700,share,share of paths on which content is larger than both acquisition and people,19
-20260916,2026-09-16,share_paths_peak_funding_over_10m,0.876950,share,share of paths whose peak funding requirement exceeds ten million dollars,19 and 20
-20260916,2026-09-16,share_paths_terminal_cash_positive,0.096750,share,share of paths ending the horizon with cumulative cash above zero,19
-20260916,2026-09-16,final_year_hh_months_total,7835373422.255140,household months,active households summed over paths and over the final twelve months,16
+20260916,2026-09-16,share_paths_content_exceeds_acquisition,0.840050,share,share of paths on which total content cost exceeds total acquisition and verification spend,19
+20260916,2026-09-16,share_paths_content_is_largest_line,0.596550,share,share of paths on which content is larger than both acquisition and people,19
+20260916,2026-09-16,share_paths_peak_funding_over_10m,0.848100,share,share of paths whose peak funding requirement exceeds ten million dollars,19 and 20
+20260916,2026-09-16,share_paths_terminal_cash_positive,0.107600,share,share of paths ending the horizon with cumulative cash above zero,19
+20260916,2026-09-16,final_year_hh_months_total,6476911888.812998,household months,active households summed over paths and over the final twelve months,16
 20260916,2026-09-16,share_paths_with_a_real_final_year,0.998150,share,"share of paths with at least twelve final-year household months, which is the set the per-path medians below are taken over",16 and 17
-20260916,2026-09-16,final_year_contrib_per_hh_month_gross_pooled,32.894699,USD per household month,"total net revenue less inference, support, payment, hosting and app store fees over the final year, divided by total final-year household months: a gross margin, not a net one",16
-20260916,2026-09-16,final_year_contrib_per_hh_month_gross_median,27.331019,USD per household month,median over paths with a real final year of the per-path gross contribution ratio,16
-20260916,2026-09-16,final_year_contrib_per_hh_month_allin_pooled,19.854833,USD per household month,"total net cash with acquisition and verification added back over the final year, divided by total final-year household months: net of engineering, content, overhead and compliance",16
-20260916,2026-09-16,final_year_contrib_per_hh_month_allin_median,-109.947564,USD per household month,median over paths with a real final year of the per-path all-in contribution ratio,16
-20260916,2026-09-16,allin_minus_gross_contrib_per_hh_month_pooled,-13.039866,USD per household month,the pooled all-in figure less the pooled gross one: what the gross margin leaves out,16
-20260916,2026-09-16,gross_minus_allin_contrib_per_hh_month_pooled,13.039866,USD per household month,the pooled gross figure less the pooled all-in one: how much lower the all-in figure is,16
-20260916,2026-09-16,allin_consumed_per_hh_month_median,109.947564,USD per household month,the median path's all-in contribution with the sign reversed: what a household month consumes on the median path,16
-20260916,2026-09-16,blended_retained_months_mean,3.286480,months,retained months weighted by the sampled segment mix,14
-20260916,2026-09-16,final_year_ltv_gross_pooled,108.107766,USD per household,pooled gross contribution per household month times blended retained months,14
-20260916,2026-09-16,final_year_effective_cac_pooled,54.020355,USD per acquisition,"total final-year acquisition and verification spend over total final-year acquisitions, pooled across paths",14
-20260916,2026-09-16,final_year_effective_cac_median,31.932112,USD per acquisition,median over paths with a real final year of the per-path effective acquisition cost,14
-20260916,2026-09-16,final_year_ltv_over_cac_pooled,2.001241,ratio,pooled gross lifetime value divided by pooled final-year effective cost per acquisition,14
-20260916,2026-09-16,final_year_cac_pooled_over_anchor_median,1.674358,ratio,pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled,12 and 13
+20260916,2026-09-16,final_year_contrib_per_hh_month_gross_pooled,31.647375,USD per household month,"total net revenue less inference, support, payment, hosting and app store fees over the final year, divided by total final-year household months: a gross margin, not a net one",16
+20260916,2026-09-16,final_year_contrib_per_hh_month_gross_median,27.355425,USD per household month,median over paths with a real final year of the per-path gross contribution ratio,16
+20260916,2026-09-16,final_year_contrib_per_hh_month_allin_pooled,16.535758,USD per household month,"total net cash with acquisition and verification added back over the final year, divided by total final-year household months: net of engineering, content, overhead and compliance",16
+20260916,2026-09-16,final_year_contrib_per_hh_month_allin_median,-104.651425,USD per household month,median over paths with a real final year of the per-path all-in contribution ratio,16
+20260916,2026-09-16,allin_minus_gross_contrib_per_hh_month_pooled,-15.111617,USD per household month,the pooled all-in figure less the pooled gross one: what the gross margin leaves out,16
+20260916,2026-09-16,gross_minus_allin_contrib_per_hh_month_pooled,15.111617,USD per household month,the pooled gross figure less the pooled all-in one: how much lower the all-in figure is,16
+20260916,2026-09-16,allin_consumed_per_hh_month_median,104.651425,USD per household month,the median path's all-in contribution with the sign reversed: what a household month consumes on the median path,16
+20260916,2026-09-16,blended_retained_months_mean,3.294474,months,retained months weighted by the sampled segment mix,14
+20260916,2026-09-16,final_year_ltv_gross_pooled,104.261466,USD per household,pooled gross contribution per household month times blended retained months,14
+20260916,2026-09-16,final_year_effective_cac_pooled,47.297614,USD per acquisition,"total final-year acquisition and verification spend over total final-year acquisitions, pooled across paths",14
+20260916,2026-09-16,final_year_effective_cac_median,32.248650,USD per acquisition,median over paths with a real final year of the per-path effective acquisition cost,14
+20260916,2026-09-16,final_year_ltv_over_cac_pooled,2.204371,ratio,pooled gross lifetime value divided by pooled final-year effective cost per acquisition,14
+20260916,2026-09-16,final_year_cac_pooled_over_anchor_median,1.465987,ratio,pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled,12 and 13
 20260916,2026-09-16,cac_anchor_median,32.263315,USD per acquisition,"median of the cac_anchor_usd driver column, which is the low-volume anchor and not a cost at scale",12
-20260916,2026-09-16,share_paths_final_year_ltv_below_cac,0.045334,share,share of paths with a real final year on which gross lifetime value is below the final-year effective cost per acquisition,14 and 19
+20260916,2026-09-16,share_paths_final_year_ltv_below_cac,0.050343,share,share of paths with a real final year on which gross lifetime value is below the final-year effective cost per acquisition,14 and 19
 20260916,2026-09-16,missing_night_rota_cost_per_year,149793.106707,USD per year,"three full-time posts at the median Bengaluru salary and overhead multiplier, with a thirty per cent night premium",5 and 8
 20260916,2026-09-16,missing_night_rota_cost_total,674068.980182,USD,that annual cost from the UK go-to-market month to the end of the horizon,5 and 8
-20260916,2026-09-16,missing_night_rota_share_of_total_cost,0.014697,share,the missing rota divided by the total modelled cost,5 and 8
-20260916,2026-09-16,por_total_cost_recomputed,45865389.177308,USD,"sum over paths and months of every modelled cost line, averaged over paths",5
+20260916,2026-09-16,missing_night_rota_share_of_total_cost,0.017134,share,the missing rota divided by the total modelled cost,5 and 8
+20260916,2026-09-16,por_total_cost_recomputed,39341949.938133,USD,"sum over paths and months of every modelled cost line, averaged over paths",5

@@ -439,10 +439,13 @@ number and the difference is that driver's alone.
 | minutes_per_item | @@pinned_minutes_per_item_terminal_cash_q5|usd0@@ | @@pinned_minutes_per_item_terminal_cash_q95|usd0@@ | @@pinned_minutes_per_item_swing_abs|usd0@@ |
 | board_reuse | @@pinned_board_reuse_terminal_cash_q5|usd0@@ | @@pinned_board_reuse_terminal_cash_q95|usd0@@ | @@pinned_board_reuse_swing_abs|usd0@@ |
 
-The `anchor_u` row is degenerate and is reported as such: that driver is a uniform
-compared against a threshold, so pinning it is not a sweep but a switch between
-two regimes. Its two values are the whole of its effect, and section 9 restates it
-as the scenario pair it actually is.
+Two notes on that table. The `anchor_u` row is degenerate and is reported as such:
+that driver is a uniform compared against a threshold, so pinning it is not a
+sweep but a switch between two regimes. Its two values are the whole of its
+effect, and section 9 restates it as the scenario pair it actually is. And the
+three columns are each rounded from their own float, so subtracting the printed
+endpoints will occasionally differ from the printed swing by one dollar;
+`out/pinned_sweeps.csv` carries the unrounded values.
 
 ---
 

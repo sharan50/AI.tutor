@@ -114,26 +114,17 @@ add("retained_months_pre_at_floor_churn", _p2, "months per acquisition",
 # Demand shock persistence. Independent monthly shocks would mean no sustained
 # bad run, which is the failure mode that ends companies.
 # ---------------------------------------------------------------------------
-state = np.zeros(P)
-mult = np.zeros((P, T))
-var = DRV["shock_sd"] ** 2 / np.maximum(1.0 - DRV["shock_rho"] ** 2, 1e-3)
-for t in range(T):
-    state = DRV["shock_rho"] * state + DRV["shock_sd"] * DRV["_shock_eps"][:, t]
-    mult[:, t] = np.exp(state - 0.5 * var)
-
-bad = mult < 0.80
-longest = np.zeros(P, dtype=int)
-current = np.zeros(P, dtype=int)
-for t in range(T):
-    current = np.where(bad[:, t], current + 1, 0)
-    longest = np.maximum(longest, current)
+# Read from the published per-path column rather than reconstructed from the
+# innovations. The innovations are not written to any file, so a figure claiming
+# to be reconstructed from them was not checkable by a reader.
+longest = OUTC["longest_demand_shock_bad_run"]
 add("shock_longest_bad_run_mean", float(longest.mean()), "months",
-    "longest run of consecutive months with the demand multiplier below 0.80, reconstructed from shock_rho, shock_sd and the published innovations", "18")
-add("shock_longest_bad_run_p90", float(np.percentile(longest, 90)), "months", "the ninetieth percentile of that run length", "18")
+    "mean of longest_demand_shock_bad_run, a published column of por_paths.csv: the longest run of consecutive months with the demand multiplier below SHOCK_BAD_THRESHOLD", "18")
+add("shock_longest_bad_run_p90", float(np.percentile(longest, 90)), "months", "the ninetieth percentile of longest_demand_shock_bad_run in por_paths.csv", "18")
 add("shock_share_paths_bad_run_6plus", float((longest >= 6).mean()), "share",
-    "share of paths with at least six consecutive months of demand at or below 0.80", "18")
+    "share of por_paths.csv rows whose longest_demand_shock_bad_run is six or more", "18")
 add("shock_share_paths_bad_run_12plus", float((longest >= 12).mean()), "share",
-    "share of paths with at least twelve consecutive such months", "18")
+    "share of por_paths.csv rows whose longest_demand_shock_bad_run is twelve or more", "18")
 add("shock_rho_median", float(np.median(DRV["shock_rho"])), "AR(1) coefficient", "median of the shock_rho driver column", "18")
 
 # ---------------------------------------------------------------------------
@@ -176,7 +167,7 @@ allin_pooled_total = float((MOUT["net_cash"][:, FY] + MOUT["cac_spend"][:, FY]
 gross_pooled = contrib_pooled_total / hh_months
 allin_pooled = allin_pooled_total / hh_months
 
-fy_hh_months_path = MOUT["active_hh"][:, FY].sum(axis=1)
+fy_hh_months_path = OUTC["final_year_hh_months"]   # a published column of por_paths.csv
 REAL = fy_hh_months_path >= 12.0        # at least one household for the final year
 fy_contrib = OUTC["final_year_contrib_per_hh_month"]
 fy_allin = OUTC["final_year_allin_contrib_per_hh_month"]
