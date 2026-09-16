@@ -213,9 +213,26 @@ add("final_year_ltv_over_cac_pooled", ltv_pooled / cac_pooled, "ratio",
 add("final_year_cac_pooled_over_anchor_median", cac_pooled / float(np.median(DRV["cac_anchor_usd"])), "ratio",
     "pooled final-year effective acquisition cost divided by the median low-volume anchor: what the anchor understates by at the spend actually modelled", "12 and 13")
 
-ltv_path = fy_contrib * blended_months
+# Per-path retention, not the sample mean. blended_months above is a SCALAR
+# averaged over every path, and multiplying a per-path contribution by it
+# produced a hybrid that was then published as the per-path restatement
+# checklist item 19 demands. Retention varies strongly across paths and
+# correlates with churn_base, so the hybrid was not close: it roughly doubled
+# the share. See CHANGELOG 4.7.
+months_path = MOUT["active_hh"].sum(axis=1) / np.maximum(MOUT["acquisitions"].sum(axis=1), 1e-9)
+add("retained_months_per_path_mean", float(months_path.mean()), "months",
+    "per-path realised retained months: active household months over acquisitions, path by path", "19")
+add("retained_months_per_path_p10", float(np.percentile(months_path, 10)), "months",
+    "tenth percentile of that per-path figure", "19")
+add("retained_months_per_path_p90", float(np.percentile(months_path, 90)), "months",
+    "ninetieth percentile of that per-path figure", "19")
+
+ltv_path = fy_contrib * months_path
 add("share_paths_final_year_ltv_below_cac", float((ltv_path[REAL] < fy_cac[REAL]).mean()), "share",
-    "share of paths with a real final year on which gross lifetime value is below the final-year effective cost per acquisition", "14 and 19")
+    "share of paths with a real final year on which gross lifetime value, computed on THAT PATH's realised retained months, is below the final-year effective cost per acquisition", "14 and 19")
+add("share_paths_final_year_ltv_below_cac_scalar_months",
+    float(((fy_contrib * blended_months)[REAL] < fy_cac[REAL]).mean()), "share",
+    "the same share computed the way it used to be, with the sample-mean retained months applied to every path, published so the size of that error is on the record rather than only in the change log", "19")
 
 # The same share on the all-in basis. Checklist item 16 is about a gross margin
 # presented as a net one, and publishing only the gross share commits the very
@@ -223,7 +240,7 @@ add("share_paths_final_year_ltv_below_cac", float((ltv_path[REAL] < fy_cac[REAL]
 # the all-in share is the one that decides whether a household pays for the
 # business that serves it. Both are published, on the same paths, and the
 # write-up quotes the second whenever it quotes the first.
-ltv_path_allin = fy_allin * blended_months
+ltv_path_allin = fy_allin * months_path
 add("share_paths_final_year_ltv_allin_below_cac",
     float((ltv_path_allin[REAL] < fy_cac[REAL]).mean()), "share",
     "share of paths with a real final year on which ALL-IN lifetime value, which carries the demand-independent cost base, is below the final-year effective cost per acquisition", "14, 16 and 19")
@@ -290,6 +307,81 @@ add("missing_night_rota_share_of_total_cost", rota_total / total_cost, "share",
     "the missing rota divided by the total modelled cost", "5 and 8")
 add("por_total_cost_recomputed", total_cost, "USD",
     "sum over paths and months of every modelled cost line, averaged over paths", "5")
+
+# ---------------------------------------------------------------------------
+# Five quantities a round-four adversarial review showed the document was
+# asserting without a number behind it. Each is cheap to compute from the
+# published outputs and each corrects or qualifies a claim in the write-up.
+# ---------------------------------------------------------------------------
+
+# 1. Monte Carlo error. "A figure re-derived from a different seed is a
+#    different number" was stated and never sized. It is one line from the
+#    paths file, and it turns out one tabulated scenario is indistinguishable
+#    from zero at this sample size.
+tc = OUTC["terminal_cash"]
+mc_se = float(tc.std(ddof=1) / np.sqrt(tc.shape[0]))
+add("por_terminal_cash_mc_se", mc_se, "USD",
+    "standard error of the mean of terminal_cash across paths: the sampling error on the headline level at this seed and this path count", "the instrument")
+add("por_terminal_cash_mc_se_two_sigma", 2.0 * mc_se, "USD",
+    "twice that, which is the interval a figure quoted to the dollar actually carries", "the instrument")
+
+# 2. Discounting. There is none anywhere in the model: terminal cash, peak
+#    funding, every break-even and the residual are all undiscounted nominal
+#    sums over sixty months. Content spend is front- and mid-loaded against
+#    revenue that arrives late, so this is not neutral. Computed post hoc from
+#    the monthly net cash line, which is exact.
+net_month = MOUT["net_cash"]
+months = np.arange(net_month.shape[1])
+for rate in (0.12, 0.25):
+    disc = (1.0 + rate) ** (-(months / 12.0))
+    npv = float((net_month * disc[None, :]).sum(axis=1).mean())
+    tag = "%02d" % int(round(rate * 100))
+    add("por_terminal_cash_npv_%s" % tag, npv, "USD",
+        "mean over paths of net cash discounted monthly at %d per cent a year: the model discounts nothing, and this is what that is worth" % int(round(rate * 100)),
+        "the instrument")
+    add("por_npv_%s_less_undiscounted" % tag, npv - float(tc.mean()), "USD",
+        "that present value less the undiscounted terminal cash mean", "the instrument")
+
+# 3. Variable cost against PRICE, which is the quantity docs/10's load-bearing
+#    row is about. The write-up answered it with inference over TOTAL COST, a
+#    denominator dominated by the content build, which is a different question.
+gross_rev = MOUT["gross_rev_consumer"].sum(axis=1)
+var_lines = ["inference_cost", "support_cost", "payment_cost", "hosting_cost"]
+inf_tot = MOUT["inference_cost"].sum(axis=1)
+var_tot = sum(MOUT[c].sum(axis=1) for c in var_lines)
+LIVE = gross_rev > 0
+add("por_inference_over_gross_revenue_pooled", float(inf_tot.sum() / gross_rev.sum()), "share",
+    "total inference cost over total gross consumer revenue, pooled across paths: docs/10's row is variable cost against PRICE, not against total cost", "19")
+add("por_inference_over_gross_revenue_median", float(np.median((inf_tot[LIVE] / gross_rev[LIVE]))), "share",
+    "the same ratio on the median path", "19")
+add("por_variable_over_gross_revenue_median", float(np.median((var_tot[LIVE] / gross_rev[LIVE]))), "share",
+    "all four variable cost lines over gross consumer revenue, on the median path", "19")
+add("por_variable_over_gross_revenue_p90", float(np.percentile((var_tot[LIVE] / gross_rev[LIVE]), 90)), "share",
+    "the same at the ninetieth percentile of paths", "19")
+add("share_paths_variable_cost_over_half_of_revenue",
+    float((var_tot[LIVE] / gross_rev[LIVE] > 0.50).mean()), "share",
+    "share of live paths on which variable cost exceeds half of gross consumer revenue, which is where docs/10 says its sensitivity row reverses", "19")
+add("share_paths_variable_cost_over_revenue",
+    float((var_tot[LIVE] / gross_rev[LIVE] > 1.00).mean()), "share",
+    "share of live paths on which variable cost exceeds gross consumer revenue outright", "19")
+
+# 4. When the demand-independent block is actually spent. "Committed before
+#    demand can say much about it" was read as a statement about timing and it
+#    is not one: it is a statement about the model having no rule that stops
+#    building.
+BLOCK = ["content_cost", "people_beng_cost", "people_uk_cost", "step_cost"]
+blk = sum(MOUT[c] for c in BLOCK)
+blk_total = float(blk.sum(axis=1).mean())
+gtm = NS["CONSUMER_OPEN"][NS["M_UK"]]
+for lo, hi, label in ((0, 18, "0_18"), (18, 36, "18_36"), (36, 60, "36_60"), (24, 60, "24_60")):
+    v = float(blk[:, lo:hi].sum(axis=1).mean())
+    add("demand_independent_spent_months_%s" % label, v, "USD",
+        "the demand-independent block spent in months %d to %d" % (lo, hi), "the instrument")
+    add("demand_independent_share_months_%s" % label, v / blk_total, "share",
+        "that as a share of the whole block", "the instrument")
+add("demand_independent_share_after_gtm",
+    float(blk[:, gtm:].sum(axis=1).mean()) / blk_total, "share",
+    "the share of the demand-independent block spent AFTER the United Kingdom go-to-market month", "the instrument")
 
 if __name__ == "__main__":
     path = os.path.join(OUT, "cohorts.csv")

@@ -44,13 +44,20 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "out")
 # === SECTION: CONSTANTS ===
 # ---------------------------------------------------------------------------
 # Fixed FX. The owner's instruction is a USD model with fixed rates where an
-# item was originally quoted in GBP or INR. These two numbers are therefore
-# decisions, not draws, and checklist item 4 is not clean by construction.
-# variant_fx() re-runs with both rates sampled and the write-up publishes the
-# delta rather than claiming the exposure away.
+# item was originally quoted in GBP or INR. FX_GBP_USD is therefore a decision,
+# not a draw, and checklist item 4 is not clean by construction. The
+# por_fx_sampled scenario in variants.py re-runs with the POUND rate sampled and
+# the write-up publishes the delta rather than claiming the exposure away.
+#
+# FX_INR_USD is a DEAD CONSTANT and is kept only because out/constants.csv
+# publishes it and the write-up's own description of the model refers to it. No
+# line in this file reads it: Bengaluru salaries and support are drawn directly
+# in dollars from their own priors, so the rupee exposure has no term at all
+# rather than a fixed one. An earlier comment here claimed both rates were
+# sampled in the scenario. Neither statement was true. See CHANGELOG 4.4.
 # ---------------------------------------------------------------------------
 FX_GBP_USD = 1.27          # USD per GBP
-FX_INR_USD = 1.0 / 86.5    # USD per INR
+FX_INR_USD = 1.0 / 86.5    # USD per INR, read by nothing in this file
 
 # ---------------------------------------------------------------------------
 # Consumption tax. Quoted consumer prices are read as GROSS, i.e. tax-inclusive,
@@ -588,7 +595,7 @@ def headcount(drv, cfg, t, active_consumer, units_fe_total, units_fe_ahead, reps
     # Route B field sales. A fixed cost that cannot be turned down quickly, and
     # one a scenario that does not open the institution channel must not carry.
     uk = uk + reps_live
-    return beng, uk, plat_heads
+    return beng, uk, plat_heads, content
 
 
 def step_costs_usd(drv, cfg, t, heads_total, active_consumer):
@@ -691,23 +698,48 @@ def verification_cost(drv, m):
     return drv["verif_cost_usd"] * (2.0 if m == M_IN else 1.0)
 
 
-def ltv_estimate(drv, contrib_pm, m):
+def ltv_estimate(drv, contrib_pm, m, t):
     """
     The company's own running estimate of what a household is worth, used only
     to cap the acquisition budget. Gross of every fixed cost, and the write-up
     publishes the all-in contribution beside it rather than passing this off as
     a net figure.
+
+    It must agree with the survival the month loop actually applies, because it
+    is the only restraint on acquisition spend anywhere in the model and the cap
+    it sets scales as roughly the square of it. It did not. Two things were
+    missing and between them they made the estimate 2.6 times the retention the
+    same model delivers:
+
+      1. First-month attrition. An acquisition enters as `add * keep` and is
+         then hit by `churn` in the same month, before it is ever billed. About
+         a quarter of every acquisition is gone before the first invoice. The
+         estimate credited all of it.
+      2. The examination calendar. An examination-year household is wiped at
+         the sitting whatever its churn rate. A geometric life capped at a
+         constant seven months credited it up to seven months wherever in the
+         year it was acquired, including the month before a sitting.
+
+    Both are now taken from the loop's own quantities rather than from a
+    constant. See CHANGELOG 4.3.
     """
     ch = np.clip(drv["churn_base"], 1e-3, 0.95)
-    m_exam = np.minimum(1.0 / ch, 7.0)
-    m_pre_first = np.minimum(1.0 / ch, 10.0)
+    # What survives to be billed at all.
+    keep_first = (1.0 - drv["churn_m1_extra"]) * (1.0 - ch)
+    # Months from here to the next sitting in this market, which is the hard
+    # ceiling on an examination-year household however slowly it churns.
+    to_sitting = float((EXAM_CAL_MONTH[m] - cal_month(t)) % 12)
+    m_exam = np.minimum(1.0 / ch, to_sitting)
+    m_pre_first = np.minimum(1.0 / ch, to_sitting + 10.0)
     m_pre = m_pre_first + (1.0 - drv["summer_lapse_pre"]) * drv["progress_continue"] * m_exam
-    m_al = np.minimum(1.0 / ch, 15.0)
+    m_al = np.minimum(1.0 / ch, to_sitting + 12.0)
     mix_e = drv["seg_mix_exam"]
     mix_a = drv["seg_mix_alevel"]
     mix_p = np.maximum(1.0 - mix_e - mix_a, 0.0)
     months = mix_e * m_exam + mix_p * m_pre + mix_a * m_al
-    return np.maximum(contrib_pm * months - verification_cost(drv, m), 0.0)
+    # Verification is paid on every acquisition whether or not it survives, so
+    # it is not scaled by keep_first.
+    return np.maximum(keep_first * contrib_pm * months - verification_cost(drv, m), 0.0)
 
 
 def effective_cac(drv, m, spend, penetration):
@@ -837,16 +869,22 @@ def run(drv, cfg=None):
         "net_rev_schools", "school_contracts", "inference_cost", "support_cost",
         "payment_cost", "hosting_cost", "verif_cost", "cac_spend", "content_cost",
         "people_beng_cost", "people_uk_cost", "step_cost", "school_onboard_cost",
-        "appstore_fee", "sessions_delivered", "share_over_allowance",
+        "appstore_fee", "people_beng_content_cost",
+        "sessions_delivered", "share_over_allowance",
         "cac_effective_blended", "cac_effective_noncreator", "net_cash", "demand_shock",
         "terminal_value",
     ]}
 
     stock = np.zeros((P, MS, N_COHORT_YEARS))
-    acq_cum = np.zeros((P, MS, N_COHORT_YEARS))
-    cac_cum = np.zeros((P, MS, N_COHORT_YEARS))
-    contrib_cum = np.zeros((P, MS, N_COHORT_YEARS))
-    months_cum = np.zeros((P, MS, N_COHORT_YEARS))
+    # acq_cum, cac_cum, contrib_cum and months_cum lived here. They were
+    # populated every month, returned in the summary, and read by nothing in the
+    # directory. contrib_cum in particular accumulated the WHOLE-BOOK blended
+    # contribution against each cohort, so anything that had ever computed a
+    # cohort payback from it would have credited an Indian pre-examination
+    # cohort the United Kingdom examination-year average; and months_cum counted
+    # the acquisition month while active_hh does not, so two household-month
+    # counts differing by about a quarter sat in the same dict. Removed rather
+    # than fixed. See CHANGELOG 4.6.
 
     build_plan, build_live = content_build_plan(drv, cfg)
     item_cost = cost_per_item_usd(drv)
@@ -885,9 +923,16 @@ def run(drv, cfg=None):
         # --- content spend this month ------------------------------------
         built = build_plan[t]
         live_fe = build_live[t]
-        content_c = built * items_per_unit * item_cost
+        # Content is wholly pound-denominated: examiner contract rates in pounds
+        # per hour and authoring in pounds per item. It is the largest pound
+        # cost in the model and it used to sit OUTSIDE the foreign-exchange
+        # exposure while the much smaller United Kingdom people line sat inside
+        # it, so the sampled-rate scenario priced the exposure without its
+        # largest natural hedge. fx_scale is 1.0 exactly when the rate is fixed,
+        # which is the published run. See CHANGELOG 4.4.
+        content_c = built * items_per_unit * item_cost * fx_scale
         content_c = content_c + live_fe * items_per_unit * (
-            drv["minutes_per_item"] / 60.0 * drv["examiner_rate_gbp_hr"] * FX_GBP_USD
+            drv["minutes_per_item"] / 60.0 * drv["examiner_rate_gbp_hr"] * FX_GBP_USD * fx_scale
         ) * drv["reval_frac_yr"] / 12.0
         out["content_cost"][:, t] = content_c
 
@@ -995,7 +1040,7 @@ def run(drv, cfg=None):
             # model was not doing.
             reach = cum_acq[m] / np.maximum(pool * pool_reacq, 1.0)
             pen = np.clip(reach, 0.0, 0.97)
-            ltv_m = ltv_estimate(drv, expected_contrib_pm(drv, m, t, cps, billed_flat), m)
+            ltv_m = ltv_estimate(drv, expected_contrib_pm(drv, m, t, cps, billed_flat), m, t)
             cap = budget_cap_from_ltv(drv, m, ltv_m, pen)
             season = season_factor(_ACQ_SHAPE, m, t, drv["acq_season_amp"])
             want = envelope * MARKET_BUDGET_WEIGHT[m] / wsum * season
@@ -1031,8 +1076,6 @@ def run(drv, cfg=None):
             for s, mix in ((S_PRE, mix_p), (S_EXAM, mix_e), (S_ALEVEL, mix_a)):
                 add = acq * mix
                 stock[:, ms(m, s), cy] += add * keep
-                acq_cum[:, ms(m, s), cy] += add
-                cac_cum[:, ms(m, s), cy] += add * cac_b + add * v
 
         out["cac_spend"][:, t] = spend_total
         out["verif_cost"][:, t] = verif_total
@@ -1064,11 +1107,15 @@ def run(drv, cfg=None):
         out["inference_cost"][:, t] += school_sessions * cps
         out["sessions_delivered"][:, t] += school_sessions
         new_schools = school_pending[:, t] if reps_live > 0 else np.zeros(P)
-        out["school_onboard_cost"][:, t] = new_schools * drv["uk_gbp_yr"] * FX_GBP_USD * fx_scale / 52.0 * SCHOOL_ONBOARD_WEEKS
+        # Carries overhead_mult like every other people cost. It did not, which
+        # made an onboarding person-week cheaper than the same person-week
+        # anywhere else in the model. See CHANGELOG 4.5.
+        out["school_onboard_cost"][:, t] = (new_schools * drv["uk_gbp_yr"] * FX_GBP_USD * fx_scale
+                                            * drv["overhead_mult"] / 52.0 * SCHOOL_ONBOARD_WEEKS)
 
         # --- people and steps --------------------------------------------
         live_fe_ahead = build_live[min(t + 12, HORIZON - 1)]
-        beng, uk, plat_heads = headcount(drv, cfg, t, active_total, live_fe, live_fe_ahead, reps_live)
+        beng, uk, plat_heads, content_heads = headcount(drv, cfg, t, active_total, live_fe, live_fe_ahead, reps_live)
         if fb:
             beng = beng + fb["eng_heads_extra"]
         # docs/05 flags the restricted transfer of United Kingdom children's data
@@ -1087,6 +1134,15 @@ def run(drv, cfg=None):
         onshore = cfg["onshore_share"] or 0.0
         moved = plat_heads * onshore
         out["people_beng_cost"][:, t] = (beng - moved) * drv["eng_usd_yr"] * drv["overhead_mult"] / 12.0
+        # The content heads inside that line, published separately. They are
+        # salaried people whose whole job is the content schedule, so they are a
+        # content cost wearing a people label, and the cost-split table read as
+        # though content were only the contracted authoring and validation. A
+        # round-four review found the write-up understating content-driven cost
+        # by this amount. It is NOT added to content_cost, because that would
+        # double it in every total; it is published beside it. See CHANGELOG 4.8.
+        out["people_beng_content_cost"][:, t] = (content_heads * drv["eng_usd_yr"]
+                                                 * drv["overhead_mult"] / 12.0)
         out["people_uk_cost"][:, t] = ((uk + moved) * drv["uk_gbp_yr"] * FX_GBP_USD
                                        * fx_scale * drv["overhead_mult"] / 12.0)
         if onshore > 0.0:
@@ -1130,12 +1186,9 @@ def run(drv, cfg=None):
         out["net_cash"][:, t] = rev_t - cost_t + out["terminal_value"][:, t]
         trailing_net = 0.5 * trailing_net + 0.5 * rev_t
 
-        contrib_cum_add = contrib_pm
         for m in range(NM):
             for s in range(NS):
                 st = stock[:, ms(m, s), :]
-                months_cum[:, ms(m, s), :] += st
-                contrib_cum[:, ms(m, s), :] += st * contrib_cum_add[:, None]
 
         # --- survival and the examination calendar ------------------------
         churn = drv["churn_base"]
@@ -1149,8 +1202,14 @@ def run(drv, cfg=None):
             if cm == em:
                 leaving = stock[:, ms(m, S_EXAM), :] * (1.0 - drv["exam_carryover"])[:, None]
                 stock[:, ms(m, S_EXAM), :] -= leaving
-                stock[:, ms(m, S_ALEVEL), :] += leaving * drv["alevel_continue"][:, None]
+                # The exit fires on the STANDING A-level stock, before this
+                # year's arrivals are added. The two lines used to be the other
+                # way round, which subjected a household that had just
+                # progressed from GCSE to the A-level sitting exit in the same
+                # month it arrived, two years before its own sitting. Worth
+                # 1,049,552 of terminal cash at the mean. See CHANGELOG 4.2.
                 stock[:, ms(m, S_ALEVEL), :] *= (1.0 - drv["alevel_exit_rate"])[:, None]
+                stock[:, ms(m, S_ALEVEL), :] += leaving * drv["alevel_continue"][:, None]
             if cm in ((em + 1) % 12, (em + 2) % 12):
                 per_month = 1.0 - np.sqrt(1.0 - drv["summer_lapse_pre"])
                 stock[:, ms(m, S_PRE), :] *= (1.0 - per_month)[:, None]
@@ -1159,8 +1218,7 @@ def run(drv, cfg=None):
                 stock[:, ms(m, S_PRE), :] = 0.0
                 stock[:, ms(m, S_EXAM), :] += moving
 
-    summary = dict(stock=stock, acq_cum=acq_cum, cac_cum=cac_cum,
-                   contrib_cum=contrib_cum, months_cum=months_cum,
+    summary = dict(stock=stock,
                    bad_run_longest=bad_run_longest, cum_acq=cum_acq)
     return out, summary
 # === SECTION: AGGREGATE ===
@@ -1371,7 +1429,8 @@ MONTHLY_SERIES = [
     "gross_rev_consumer", "net_rev_consumer", "tax_collected", "net_rev_schools",
     "school_contracts", "inference_cost", "support_cost", "payment_cost", "hosting_cost",
     "verif_cost", "cac_spend", "content_cost", "people_beng_cost", "people_uk_cost",
-    "step_cost", "school_onboard_cost", "appstore_fee", "sessions_delivered",
+    "step_cost", "school_onboard_cost", "appstore_fee", "people_beng_content_cost",
+    "sessions_delivered",
     "share_over_allowance", "cac_effective_blended", "cac_effective_noncreator", "net_cash",
     "demand_shock", "terminal_value",
 ]

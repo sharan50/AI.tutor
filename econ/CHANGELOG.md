@@ -730,3 +730,194 @@ invalidated every derived output and forced a full regeneration. That is the
 intended behaviour and it is not free; `econ/README.md` says so, and says why a
 check that tried to hash only the code would be the wrong trade in a repository
 where a misleading comment is a defect these reviews keep finding.
+
+---
+
+## Round 4: back into the month loop, and it found two live defects and a sign
+
+Round 3 reached the structure of the argument. Round 4 went back into the code
+and found two mechanisms wrong in the published run, plus an owner decision
+published with its sign inverted. Every finding was checked against the model
+before being accepted; the two mechanism defects reproduced to the dollar.
+
+### 4.1 An owner decision was published with its sign inverted
+
+**Found.** Section 12's decision 6 read "Direct to parents is **worth**
+3,239,977 over five years against DPDP section 9(3)", and section 2 said the same.
+`out/variants.csv` says `por_india_d2c` terminal cash is -14,951,046 against the
+plan of record's -11,711,069. Opening India direct to parents **destroys** that
+much cash and **raises** the capital requirement by 4,450,728.
+
+**How it survived four documents and a verifier.** The sentence renders
+`delta_por_india_d2c_terminal_cash_abs`, whose own derivation note in
+`out/figures.csv` says the direction lives in the sign of the other token. Every
+other negative scenario in the document is written as "costs"; India was the only
+one written as "worth". `verify.py` Pass B passed it on every run, because the
+absolute value did exist on disk to the precision printed. This is the limit
+section 13 describes, biting on a decision rather than a detail.
+
+**Fixed.** Both sites now say "costs", give the median and the capital figures
+beside the mean, and state the conclusion that follows: on these priors DPDP
+section 9(3) is not a prohibition the owner is paying for.
+
+### 4.2 The A-level exit fired on the cohort in the month it arrived
+
+**Found.** In the examination-calendar block, arrivals from GCSE were added to
+the A-level stock and the A-level *sitting* exit rate — sampled 0.35 to 0.72 —
+was then applied to the whole stock including them, two years before their own
+sitting. The two lines were in the wrong order.
+
+**Verified.** Swapping them and re-running: terminal cash at the mean
+-10,661,517 against the published -11,711,069.
+
+**Moved.** +1,049,552 on the mean, larger than the entire persistent-demand-shock
+apparatus and comparable to the creator-fee and app-store scenarios that have
+their own rows in the scenario table. It passed the harness gate (it was in the
+published run, so byte-exactness confirmed it), the off/on test (it is not a
+switchable mechanism) and every accounting identity (it moves stock, not cash).
+
+### 4.3 The acquisition budget cap believed in a household 2.6 times longer-lived than the model delivers
+
+**Found.** `ltv_estimate` is the company's own running estimate of what a
+household is worth and the only restraint on acquisition spend anywhere in the
+model. It computed a geometric life from `churn_base` with constant caps, and
+ignored two things the loop does: an acquisition is hit by `churn_m1_extra` and
+then by `churn_base` in the month it arrives, before it is ever billed; and an
+examination-year household is wiped at the sitting whatever its churn rate.
+
+**Verified.** Assumed months: mean 8.351. Realised months in the same run: 3.309.
+`budget_cap_from_ltv` inverts the saturation curve, so permitted spend scales as
+roughly the square of the estimate.
+
+**Fixed.** Both are now taken from the loop's own quantities: a first-month
+survival factor, and a cap at the months remaining to that market's next sitting
+rather than at a constant. **Not closed.** The estimate still runs ahead of
+realised retention, partly because a geometric life ignores the other exits and
+partly because realised retention is itself right-censored by the horizon (4.9).
+`out/cohorts.csv` publishes both numbers and LIMITS.md says the cap remains loose.
+
+### 4.4 The largest pound-denominated cost in the model sat outside the foreign-exchange exposure
+
+**Found.** `fx_scale` reached consumer prices, the school seat price, school
+onboarding, United Kingdom people and onshore support. It did not reach content,
+which is wholly pound-quoted — examiner contract rates in pounds an hour,
+authoring in pounds an item — and which is four times the size of the United
+Kingdom people line. The sampled-rate scenario priced sterling risk without its
+largest natural hedge.
+
+**Also.** The comment above the rates claimed the scenario sampled both. It
+samples one. `FX_INR_USD` is read by no line in `model.py` at all: Bengaluru
+salaries and support are drawn directly in dollars, so the rupee exposure has no
+term rather than a fixed one, while `out/constants.csv` publishes the constant
+and the write-up described it as a rate the model uses.
+
+**Fixed.** Content carries `fx_scale`. The comment says what is true, and
+`FX_INR_USD` is labelled dead where it is defined rather than deleted, because
+two documents describe it.
+
+### 4.5 Smaller, in the model
+
+`school_onboard_cost` omitted `overhead_mult`, which every other people cost
+carries, making an onboarding person-week cheaper than the same person-week
+anywhere else. Fixed.
+
+### 4.6 Dead machinery, one piece of which would have been wrong if read
+
+`acq_cum`, `cac_cum`, `contrib_cum` and `months_cum` were populated every month,
+returned in the summary and read by nothing. `contrib_cum` accumulated the
+whole-book blended contribution against each cohort, so any future cohort payback
+computed from it would have credited an Indian pre-examination cohort the United
+Kingdom examination-year average; and `months_cum` counted the acquisition month
+while `active_hh` does not, so two household-month counts differing by about a
+quarter sat in the same dict. Removed, as `units_target()` was in round 3, for
+the same reason.
+
+### 4.7 A per-path statistic that was not one, in the answer to the item about exactly that
+
+**Found.** `cohorts.py` computed lifetime value as each path's own contribution
+times the SAMPLE MEAN retained months, a scalar, and published the resulting
+share as the per-path restatement checklist item 19 demands. Retention varies
+strongly across paths and correlates with churn.
+
+**Fixed.** Each path's own realised retention. Both shares are published, so the
+size of the error is on the record rather than only here. Checklist item 19 is no
+longer marked clean.
+
+### 4.8 The cost-split table understated content, because some of it is filed under people
+
+**Found.** The salaried content heads sit inside `people_beng_cost` and their
+whole job is the content schedule. The cost table's content row counts only the
+contracted authoring and validation, and section 12's argument about content
+schedule versus market count runs off that table.
+
+**Fixed.** `model.py` emits `people_beng_content_cost` as its own monthly series
+— a decomposition of the people line, never added to any total — and section 5
+gives content-driven cost beside the content line.
+
+**Left, and opened as X12.** `units_per_content_head` charges a salaried head to
+"build and maintain" content units while `writer_gbp_item` charges an authoring
+cost for the same items. Either both are real or one is a double count. Nothing
+in the model, the vault or this document distinguishes them, and it is not the
+model's question to settle.
+
+### 4.9 Three claims that were true of a mean and asserted of the plan
+
+**docs/10's load-bearing row** was answered with inference over *total cost*, a
+denominator dominated by the content build. Against the denominator the claim
+needs — variable cost against price — the row holds on the median path and
+reverses on a minority of them. Both are now published.
+
+**"64.9 per cent of the cost base is committed before demand can say much about
+it"** is not about timing: two thirds of that block is spent more than eighteen
+months after the first customer. What makes it demand-independent is that the
+model has no rule that stops building. The word "committed" is gone and the
+timing split is published.
+
+**Retained months are right-censored by the horizon.** Acquisitions are still
+ramping at month 58, so a large share have their retention cut off by the window
+rather than by churn. The level is a floor; the ratio between year groups, which
+is what refutes docs/10, survives the correction and was checked deliberately.
+
+### 4.10 Things the document asserted without a number, now with one
+
+Monte Carlo error was never sized. It is now, in `out/cohorts.csv` as
+`por_terminal_cash_mc_se`, and the write-up's preamble quotes it. At that size the
+sampled-foreign-exchange scenario — tabulated to the dollar and discussed in three
+places as "small" — is **indistinguishable from zero**.
+
+Discounting is absent entirely and was in no limits section and no omissions
+file. It is now sized at two rates. The direction sharpens this document's own
+conclusion and shrinks the residual scenario, the largest item in the scenario
+table.
+
+Registry granularity: a count of "how many content drivers in the top seven" is
+a fact about how finely the registry splits each cost. `out/sobol_grouped.csv`
+computes indices on grouped scalars instead, and section 8 quotes those. The
+conclusion survives the regrouping; nothing in the directory would have told us
+if it had not.
+
+### 4.11 Smaller, in the documents
+
+Section 10 called the four break-evens landing on the two drivers section 8 ranks
+first "the instrument agreeing with itself"; it is a tautology, since a bisection
+can only bracket on a driver that moves the target and the index ranks by exactly
+that. Section 13 said three identities run down every row of the monthly file;
+two do. The net-cash identity omitted the terminal-value term and passed only
+because the published run credits no residual. The scope-ladder separability
+check added in round 3 cannot fail, because content sums over markets in an
+independent loop — it is a regression test, not evidence, and section 12 now says
+so and gives the two-per-cent gap on the columns that do not decompose. Four open
+items named triggers that cannot produce their quantity at the precision claimed:
+E5, E2, E4's second half and C1. `verify.py` carried a dead `tol` variable.
+`provenance.csv` hashed `model.py` and not `harness.py`, leaving the file that
+splits, executes and gates the model outside the staleness check.
+
+### 4.12 What held up
+
+Recorded because a round that only reports failures is not a review. The harness
+gate and both its self-tests; the suffix discipline check; that no draw occurs
+inside the month loop; that the funding section's staged-versus-headline gap is
+buffer rather than quantile arithmetic; that the shared market budget pot does
+not penalise the plan of record; that the pre-to-exam retained-month ratio
+survives horizon censoring; that the Sobol ANOVA estimator is correctly
+specified; and that the launch-delay deltas are not Monte Carlo noise.

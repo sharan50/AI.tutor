@@ -81,14 +81,30 @@ Rates are **fixed**: @@const_FX_GBP_USD|num2@@ dollars to the pound and @@const_
 at the owner's explicit instruction. That is a decision, not a draw, and it means
 this item cannot be clean.
 
-**What it would move.** The `por_fx_sampled` scenario replaces the sterling rate
-with a sampled one, drawn outside the published stream so the paths stay matched.
-Terminal cash moves by @@delta_por_fx_sampled_terminal_cash_mean|usd0@@ dollars on the mean, which is small,
-and the peak funding requirement at the eightieth percentile moves from
-@@por_peak_funding_p80|usd0@@ to @@scenario_por_fx_sampled_peak_funding_p80|usd0@@. **The exposure is in the width, not the
-centre**, which is exactly what fixing a rate hides: fixed rates do not remove the
-risk, they remove the evidence of it. The rupee exposure is not sampled at all in
-that scenario, so even this understates.
+**What it would move, and the honest answer is "nothing measurable, and that is
+partly the scenario's fault".** The `por_fx_sampled` scenario replaces the
+sterling rate with a sampled one, drawn outside the published stream so the paths
+stay matched. Terminal cash moves by
+@@delta_por_fx_sampled_terminal_cash_mean|usd0@@ dollars on the mean. **That is
+not "small", it is zero**: a round-four review showed the delta is
+indistinguishable from zero at this sample size, and at another seed it would
+carry a different sign. The peak funding requirement at the eightieth percentile
+moves from @@por_peak_funding_p80|usd0@@ to
+@@scenario_por_fx_sampled_peak_funding_p80|usd0@@. **The exposure is in the
+width, not the centre**, which is exactly what fixing a rate hides: fixed rates do
+not remove the risk, they remove the evidence of it.
+
+**Two reasons the scenario understates even so, one of which round four fixed.**
+Content is the largest pound-denominated cost in the model — examiner rates in
+pounds an hour, authoring in pounds an item — and it used to sit **outside** the
+exposure while the much smaller United Kingdom people line sat inside it, so the
+scenario priced sterling risk without its largest natural hedge. It is inside now.
+What remains: the rupee exposure is not sampled at all, and in fact `FX_INR_USD`
+is a **dead constant** — no line in `model.py` reads it, because Bengaluru
+salaries and support are drawn directly in dollars from their own priors. So the
+rupee exposure does not have a fixed rate; it has no term whatever. The constant
+is still published in `out/constants.csv` and still described in this document,
+which is why it is named here rather than quietly deleted.
 
 **A second simplification sits inside the same line.** United States prices are
 set in dollars and do not move when sterling moves, which is right. India and the
@@ -409,7 +425,7 @@ and no regime in which several go wrong together for the same reason. A recessio
 would do all of those at once and this model cannot represent it, and that, not
 the acquisition shock, is the thing worth worrying about.
 
-### 19. Conclusions true only of an averaged line: **clean, each restated per path**
+### 19. Conclusions true only of an averaged line: **not clean, and round four found two the table had missed**
 
 Every averaged claim in the write-up is given its per-path share. The last
 column says whether the write-up asserts the proposition or denies it, because
@@ -422,9 +438,23 @@ their shares as support would invert them:
 | Content exceeds both acquisition and people | @@share_paths_content_is_largest_line|pct1@@ per cent | asserts it |
 | The Year 10 cohort retains at least twice the months | @@share_paths_year10_at_least_doubles|pct2@@ per cent | **denies it**, against docs/10 |
 | Gross lifetime value is below acquisition cost in the final year | @@share_paths_final_year_ltv_below_cac|pct1@@ per cent | **denies it** on the gross basis |
+| Variable cost exceeds half of gross consumer revenue, which is where docs/10's row reverses | @@share_paths_variable_cost_over_half_of_revenue|pct1@@ per cent | **denies it** for the plan, concedes it for these paths |
 | All-in lifetime value is below acquisition cost in the final year | @@share_paths_final_year_ltv_allin_below_cac|pct1@@ per cent | asserts it on the all-in basis |
 | Peak funding exceeds ten million dollars | @@share_paths_peak_funding_over_10m|pct1@@ per cent | asserts it |
 | Terminal cumulative cash is positive | @@share_paths_terminal_cash_positive|pct1@@ per cent | **denies it** |
+
+**Two failures of this item were found in round four and both are fixed above.**
+The first: the lifetime-value share was computed by multiplying each path's own
+contribution by the SAMPLE MEAN retained months, a scalar. Retention varies
+strongly across paths and correlates with churn, so the published share was a
+hybrid presented as a per-path statistic, in the answer to the item about exactly
+that. Using each path's own realised retention gives
+@@share_paths_final_year_ltv_below_cac|pct1@@ per cent against the old
+@@share_paths_final_year_ltv_below_cac_scalar_months|pct1@@; both are in
+`out/cohorts.csv` so the size of the error is on the record. The second: the
+docs/10 variable-cost row was answered with a mean and is now given per path in
+section 5 of the write-up, where variable cost exceeds half of revenue on
+@@share_paths_variable_cost_over_half_of_revenue|pct1@@ per cent of live paths.
 
 **The two lifetime-value rows are the pair to read together, and an earlier
 draft published only the first.** On the gross basis, which charges a household
@@ -658,6 +688,23 @@ not the all-in one, and the all-in figure is negative on the median path. The ca
 is therefore looser than it sounds, and it is the only thing in the model
 restraining acquisition spend.
 
+### How finely a cost is split decides how high it ranks, and no instrument sees that
+
+`out/sobol.csv` ranks the @@n_drivers|int@@ registry entries. A count of how many
+of them in a top seven belong to one cost is therefore a fact about the registry,
+not about the business. Content cost per item is three entries because that is
+how it decomposes; one timed pilot measures all three at once. Acquisition is
+nine entries acting through effectively one anchor. Split a cost finely and its
+entries individually rank lower while its block ranks higher; split it coarsely
+and the reverse.
+
+`out/sobol_grouped.csv` computes indices on the grouped scalars — cost per item,
+the cost of one bank, the blended acquisition anchor — and section 8 of the
+write-up quotes those beside the registry ranking. It does **not** sum individual
+indices to make a group index, which would be wrong. The conclusion happens to
+survive the regrouping in this case; that is luck rather than method, and there
+is no instrument here that would have told us if it had not.
+
 ### Decided constants are not in the sensitivity at all
 
 `out/sobol.csv` and `out/tornado.csv` cover the @@n_drivers|int@@ sampled drivers. They cover
@@ -889,3 +936,93 @@ cost line in the model and on the driver the capital requirement is most
 sensitive to. It was absent from the model, from this document, from the open
 items and from the omissions file until round three. It is open item X11 and the
 trigger is a morning's reading of public timetables.
+
+---
+
+## What a fourth adversarial round found, which was two live mechanism defects and a sign
+
+Three rounds had cleared the surface and then the structure. The fourth went
+back into the month loop and found two things wrong in it, plus a conclusion
+published with its sign inverted. All three are fixed; what follows is what is
+still not clean after them.
+
+### There is no discounting anywhere, and the largest scenario in the file is the one it would shrink
+
+Terminal cash, the peak funding requirement, every break-even, the rescue grid
+and the residual are undiscounted nominal sums over sixty months. There is no
+cost of capital, no present value, and no financing cost on the
+@@funding_plan_of_record_whole_horizon_round_size|usd0@@ the plan raises — no
+interest, no fees, and nothing for the cash sitting idle between rounds.
+
+`out/cohorts.csv` now prices the first half of that: the same net cash line
+discounted at twelve per cent a year is @@por_terminal_cash_npv_12|usd0@@ and at
+twenty-five per cent @@por_terminal_cash_npv_25|usd0@@, against
+@@por_terminal_cash_mean|usd0@@ undiscounted. **The direction matters more than
+the level.** Content spend is front- and mid-loaded and revenue arrives late, so
+discounting makes content relatively dearer and sharpens the ordering this
+document reports; and the residual scenario, the largest single item in the
+scenario table at @@delta_por_residual_terminal_cash_mean|usd0@@, sits entirely
+at month 60 and would shrink by more than anything else. Nothing in the write-up
+is restated on a discounted basis. A reader who would discount should assume
+every level here is optimistic about late money and that the residual in
+particular is the most optimistic thing in the file.
+
+### The acquisition budget cap still believes in a longer-lived household than the model delivers
+
+Round four found `ltv_estimate` — the company's own running estimate, and the
+only restraint on acquisition spend anywhere in the model — assuming
+**8.35 retained months against the 3.31 the same model delivered**, because it
+ignored first-month attrition and the examination calendar. Both are now taken
+from the loop's own quantities and the gap is much smaller. It is not closed:
+the estimate still runs ahead of realised retention, partly because a geometric
+life ignores the other exits and partly because realised retention is itself
+right-censored by the horizon. `out/cohorts.csv` publishes both numbers.
+
+**Why it matters more than the dollars.** `budget_cap_from_ltv` inverts the
+saturation curve, so permitted spend scales as roughly the square of the
+estimate. An estimate that is half right permits four times the spend wherever
+the cap binds, and this cap is the only brake the model has other than the pool
+multiple that nothing sets.
+
+### Retained months are right-censored and the write-up blamed churn for all of it
+
+`cohorts.py` computes retained months as active household months over
+acquisitions across the whole horizon. Acquisitions are still ramping at month
+58, so a large share of them have their retention cut off by the end of the
+window rather than by churn. The examination-year figure is therefore a floor.
+The **ratio** between year groups, which is what refutes docs/10's assumption,
+is not affected — a fourth-round reviewer checked that specifically and it
+survives — but "that follows entirely from the in-term churn prior" was too
+strong about the level, and the lifetime-value ratio built on it is a floor too.
+
+### The demand shock's cost is smaller than the Monte Carlo error on the mean
+
+`shock_cost_terminal_cash_mean` in `out/cohorts.csv` is a small number, and the
+sampling error on the headline mean is @@por_terminal_cash_mc_se|usd0@@. The
+shock's cost is measured on a PAIRED run, which is far tighter than that, so the
+comparison is not quite apples to apples — but it is the right thing to hold in
+mind when reading any unpaired difference in this document. The sampled
+foreign-exchange scenario is the case where it bites: its delta is not small, it
+is **zero** at this sample size.
+
+### A one-sided prior on the one cost the document says is well understood
+
+`infer_decline_yr` is sampled on a strictly positive range, so there is no path
+in @@n_paths|int@@ on which the unit price of inference rises. Every other
+uncertain quantity here is two-sided. This one encodes a view — that model
+prices only fall — which has held recently and is not a law. It is not in the
+list of priors this document flags, and it should be.
+
+### The institution channel is a lower bound at both ends
+
+School seats consume inference and nothing else: support, hosting, payment
+processing and age assurance are all driven by active **consumer** households, so
+a seat costs nothing to support, host, bill or verify. And institution revenue is
+recognised only in the annual renewal month, so a contract signed in any other
+month earns nothing until the following one, and contracts landing in the last
+months of the horizon are never recognised at all. Both are in
+`out/omissions.csv`. Together they mean
+"@@delta_por_no_schools_terminal_cash_mean|usd0@@" understates the channel's cost
+and its revenue at once. It is small either way — the channel is
+@@por_schools_share_of_net_revenue_pct|num2@@ per cent of net revenue — but the
+figure is not a clean measure of anything.

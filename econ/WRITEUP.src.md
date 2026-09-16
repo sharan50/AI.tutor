@@ -7,8 +7,44 @@ prior. Not one input is a measurement. Nothing here is a forecast, and the level
 are not evidence. What a simulation on priors is good for is the **ordering of
 the levers**, and that ordering is what this document is for.
 
-A figure re-derived from a different seed is a different number. The seed and the
-date are quoted wherever a number appears for that reason.
+**There is a tension in that sentence and it is better named than hidden.** The
+orderings here are largely orderings of dollar spreads — the price anchor is
+ranked above scope on terminal cash because its spread is larger. A ranking by
+dollar spread is a use of levels, so "read the ordering, not the levels" cannot
+be taken literally. What it means, and all it can mean, is: the **gaps** between
+levers are informative where they are large relative to both the sampling error
+and the priors' own width, and the **absolute** figures are not informative at
+all. Where two levers rank within a few per cent of each other, as scope and the
+price anchor do in section 12, the instrument is not ranking them; it is saying
+they are the same size. Section 12 says so where it happens.
+
+A figure re-derived from a different seed is a different number, and until round
+four this document never said by how much. On the headline, terminal cash at the
+mean, the sampling error is
+**@@por_terminal_cash_mc_se|usd0@@ at one standard error and
+@@por_terminal_cash_mc_se_two_sigma|usd0@@ at two**, at this path count. Every
+level in this document is rendered to the dollar because that is the precision
+the file holds, not because it is known to the dollar; read roughly a million
+either side of any terminal-cash figure before you read anything else about it.
+The scenario deltas are far tighter than that because the scenarios share their
+random numbers path by path, which is the point of the paired construction — but
+one of them, the sampled foreign exchange rate, is **indistinguishable from zero
+at this sample size**, and section 9 says so where it is tabulated.
+
+The seed and the date are quoted wherever a number appears for the same reason.
+
+**Two conventions that are load-bearing, and the second is an absence.** Nothing
+in this instrument is discounted: terminal cash, the peak funding requirement,
+every break-even and the residual are undiscounted nominal sums over sixty
+months. At twelve per cent a year the same net cash line is worth
+@@por_terminal_cash_npv_12|usd0@@ against the undiscounted
+@@por_terminal_cash_mean|usd0@@; at twenty-five per cent,
+@@por_terminal_cash_npv_25|usd0@@. Content spend is front- and mid-loaded against
+revenue that arrives late, so discounting makes content relatively more expensive
+and sharpens the ordering this document reports — while shrinking the residual
+scenario, which sits entirely at month 60 and is the largest single item in the
+scenario table. Nothing here is restated on a discounted basis; the two figures
+above are published so that the omission has a size.
 
 ---
 
@@ -24,27 +60,49 @@ go-to-market minimum: five GCSE subjects, one board, one market, no institution
 channel. The first eighteen months of the plan of record alone need
 @@funding_plan_of_record_seed_round_size|usdm@@ million.
 
-**That headline is the smaller of the two numbers in this document, and section
-11 explains why.** It assumes every round closes exactly as the last one runs
+**None of the three numbers in that paragraph is a forecast, and this is the
+paragraph most likely to be quoted as one.** Each carries the
+@@por_terminal_cash_mc_se_two_sigma|usd0@@ sampling interval from the preamble
+before anything else; each is undiscounted; and each is the output of priors, not
+of measurement. A fourth-round review observed that the caveats in this document
+live in sections 11 and 13 while section 1 is the part that gets pasted into a
+deck, and it was right. The caveat is here now.
+
+**And that headline is the smaller of the two funding numbers in this document,
+which section 11 explains.** It assumes every round closes exactly as the last one runs
 out. Staged with six months of buffer on each round, which is what raising
 against a plan actually looks like, the same plan of record comes to
 @@funding_plan_of_record_staged_sum|usdm@@ million. Quote whichever you like, but
 quote which one.
 
-**Two. About @@por_share_demand_independent_pct|num1@@ per cent of the cost base is committed before demand can say
-much about it.** Content is @@por_share_content_cost_pct|num1@@ per cent of total modelled cost, people
+**Two. About @@por_share_demand_independent_pct|num1@@ per cent of the cost base does not respond to demand at all.** Content is @@por_share_content_cost_pct|num1@@ per cent of total modelled cost, people
 @@por_share_people_beng_cost_pct|num1@@ per cent in Bengaluru plus @@por_share_people_uk_cost_pct|num1@@ in the United Kingdom, and step
 costs @@por_share_step_cost_pct|num1@@ per cent. Acquisition, which does depend on demand, is
 @@por_share_cac_spend_pct|num1@@ per cent. Inference, the cost docs/06 builds up so carefully, is
 @@por_share_inference_cost_pct|num1@@ per cent.
 
-"About" is doing work in that sentence and it is meant to. Part of the United
+**"Committed" used to be the word in that sentence and it was the wrong one.**
+This block is not spent early. @@demand_independent_share_months_24_60|pct1@@ per
+cent of it is spent after month 24, and
+@@demand_independent_share_months_36_60|pct1@@ per cent after month 36, against a
+go-to-market at month @@const_GTM_MONTH|int@@. Nothing about it is locked in
+before the first customer arrives. What makes it demand-independent is that
+`model.py` contains no rule that stops building when the plan is failing — the
+content schedule, the headcount ramp and the step costs run to month 60 on every
+path, including the ones with no book. That is a property of the instrument, not
+of the business, and LIMITS.md states it under "the company never adapts". A real
+company facing month 30 of these medians would cut the schedule; this one cannot,
+and that is the single largest reason no break-even against a cash target
+brackets.
+
+"About" is doing work in that sentence too, and it is meant to. Part of the United
 Kingdom people line is not demand-independent: the safeguarding rota steps at
 @@const_ROTA_EXTENDED_AT|usd0@@ and again at @@const_ROTA_24_7_AT|usd0@@ active households, and those steps fire on
 most paths. The overwhelming majority of the @@por_share_demand_independent_pct|num1@@ per cent is fixed; a
 slice of it is not, and LIMITS.md item 5 says which. This is why **no single driver gets the median path whole**: every break-even
 solved in section 10 against a cash target is unbracketed, because the money is
-spent whether or not anyone buys. Four solves against the profitability target do
+spent whether or not anyone buys — not because it was committed early, but
+because nothing in the model ever decides to stop. Four solves against the profitability target do
 bracket, and section 10 gives them.
 
 **Three. Two different questions have two different answers, and conflating them
@@ -105,8 +163,9 @@ Kingdom-priced motion with no market index on its seat price, so the published r
 has no India revenue, no India content build and no India entity: `active_in_mean`
 is zero in all @@horizon_months|int@@ rows of `out/por_monthly.csv`.
 
-So the direct-to-parent variant, worth @@delta_por_india_d2c_terminal_cash_abs|usd0@@ dollars of terminal cash on
-the mean, is compared against **no India business at all** rather than against an
+So the direct-to-parent variant, which **costs**
+@@delta_por_india_d2c_terminal_cash_abs|usd0@@ dollars of terminal cash on the
+mean, is compared against **no India business at all** rather than against an
 institutional one. It prices the prohibition, not the choice between the two
 routes in. An Indian institution motion is neither modelled nor costed here, and
 the plan of record should not be read as containing one.
@@ -346,8 +405,18 @@ owner to measure the wrong thing first.
 There is a larger problem sitting underneath those numbers, and it is in
 LIMITS.md: an examination-year household is retained @@retained_months_exam_year_mean|num2@@ months in this
 model, against a product sold as a cycle plan running to the last paper. The
-average customer of a nine-month plan does not finish a cycle. That follows from
-the churn prior, which nothing has measured.
+average customer of a nine-month plan does not finish a cycle.
+
+**That figure is a floor, not an estimate, and an earlier draft blamed the churn
+prior for all of it.** Retained months are computed as active household months
+over acquisitions across the whole horizon, and acquisitions are still ramping in
+the last months of it, so a large share of them have their retention cut off by
+the end of the window rather than by churn. A round-four review re-ran the model
+with acquisition switched off after month 24, so every acquisition had at least
+three years to run out, and the level rose by about a sixth. **The ratio between
+year groups, which is what refutes docs/10, survives the correction intact** —
+that was checked deliberately. The level does not, and every figure built on it,
+including the lifetime-value ratio above, is a floor for the same reason.
 
 ### The allowance is sold but not enforced
 
@@ -398,17 +467,65 @@ modelled cost.
 Three readings, each of which contradicts something in the vault or in the usual
 telling.
 
-**Content is the largest line, not acquisition.** docs/10 is right that content
-does not enter the payback ratio, because it does not scale with learners. It is
-nonetheless the largest single call on cash in a plan that builds this much of it.
-On @@share_paths_content_exceeds_acquisition|pct1@@ per cent of individual paths content exceeds acquisition, and on
-@@share_paths_content_is_largest_line|pct1@@ per cent it exceeds both acquisition and people, so this is not an
-artefact of averaging.
+**Content is the largest line, not acquisition — and the table above understates
+it, because some of the content cost is filed under people.**
+@@por_content_head_share_of_beng_people_pct|num1@@ per cent of the Bengaluru
+people row is salaried content heads, whose whole job is the content schedule:
+@@por_total_people_beng_content_cost_mean|usd0@@ over the horizon, or
+@@por_share_people_beng_content_cost_pct|num1@@ per cent of the whole modelled
+base. Content-driven cost is therefore
+@@por_content_driven_cost_mean|usd0@@, **@@por_share_content_driven_pct|num1@@
+per cent of the base rather than the @@por_share_content_cost_pct|num1@@ per cent
+the content row shows.** A round-four review found this; the split is now emitted
+by `model.py` as its own monthly series rather than reconstructed, and it is a
+decomposition of the people line, never added to any total.
 
-**The load-bearing assumption in docs/10 holds.** That document assumes variable
-cost per month is small relative to price, and says plainly that if it is not, the
-sensitivity ordering reverses and cost engineering becomes the priority. Inference
-is @@por_share_inference_cost_pct|num1@@ per cent of total cost under these priors. The row does not reverse.
+docs/10 is right that content does not enter the payback ratio, because it does
+not scale with learners. It is nonetheless the largest single call on cash in a
+plan that builds this much of it. On
+@@share_paths_content_exceeds_acquisition|pct1@@ per cent of individual paths the
+contracted content line alone exceeds acquisition, and on
+@@share_paths_content_is_largest_line|pct1@@ per cent it exceeds both acquisition
+and people, so this is not an artefact of averaging. Those two shares are
+computed on the contracted line, so they are lower bounds once the heads are
+counted.
+
+**And there is an unresolved question inside that number, which is the honest
+finding rather than the figure.** `units_per_content_head`'s own note says a
+content head "builds and maintains" content units; `writer_gbp_item` charges an
+authoring cost for the same items. Either the salaried head manages a contracted
+writer, in which case both are real, or the two are the same work charged twice,
+in which case @@por_total_people_beng_content_cost_mean|usd0@@ is a double count
+worth @@por_share_people_beng_content_cost_pct|num1@@ per cent of the base.
+Nothing in `model.py`, in the vault or in this document distinguishes them.
+**Nothing here decides it, because it is not the model's to decide** — it is a
+question about how the content function is actually staffed, and it is open item
+X12.
+
+**The load-bearing assumption in docs/10 holds on the median path and fails on
+about one path in sixteen, and an earlier draft answered it with the wrong
+denominator.** That document assumes variable cost per month is small **relative
+to price**, and says plainly that if it is not, the sensitivity ordering reverses
+and cost engineering becomes the priority. This section used to answer it with
+inference over **total cost** — a denominator dominated by the content build,
+which has nothing to do with the row being tested. Against the denominator the
+claim actually needs:
+
+| | median path | p90 of paths |
+|---|---|---|
+| Inference over gross consumer revenue | @@por_inference_over_gross_revenue_median|pct1@@% | — |
+| All variable cost over gross consumer revenue | @@por_variable_over_gross_revenue_median|pct1@@% | @@por_variable_over_gross_revenue_p90|pct1@@% |
+
+Pooled, inference is @@por_inference_over_gross_revenue_pooled|pct2@@ per cent of
+gross consumer revenue. But **variable cost exceeds half of revenue on
+@@share_paths_variable_cost_over_half_of_revenue|pct1@@ per cent of live paths and
+exceeds revenue outright on @@share_paths_variable_cost_over_revenue|pct1@@ per
+cent**, which is where docs/10 says its row reverses. So the row does not reverse
+on the plan as a whole and it does reverse on a minority of paths, and the honest
+statement is the second one as well as the first. The mean of the per-path ratio
+is unusable — its denominator collapses on paths whose book collapsed — which is
+the same trap this document names correctly for contribution per household and
+missed here until round four.
 
 **Age assurance, the condition the route decision turns on, is
 @@por_share_verif_cost_pct|num1@@ per cent of cost.** That is not an argument that condition C2 does not
@@ -541,6 +658,31 @@ examiner rate decide how much. Content-cost drivers take
 Acquisition drivers take @@sobol_reaches_profitability_acq_drivers_in_top3|int@@ of that top three. All three counts are
 computed in `figures.py` from `out/sobol.csv` rather than counted by eye.
 
+**Do not lean on those counts, and an earlier draft did.** A count of how many
+content drivers appear in a top seven is a fact about how finely the registry
+splits each cost, not about the business. Content cost per item is three priors
+here — validation minutes, the examiner rate, the authoring rate — because that
+is how it decomposes; but one timed pilot measures all three at once, so as an
+object of decision it is **one** quantity. Acquisition is split across nine.
+Rank the registry entries and content wins on count; group them the way the
+instruments that would measure them group them and the ranking changes.
+`out/sobol_grouped.csv` does that, on genuine scalars rather than by summing
+individual indices, which is not a group index:
+
+| Quantity | First-order index on the capital requirement |
+|---|---|
+| `items_per_unit` alone, rank 1 in the table above | @@sobol_peak_funding_requirement_value_of_items_per_unit|num4@@ |
+| Cost per item, as one timed pilot would measure it | @@sobol_grouped_peak_funding_requirement_cost_per_item_usd|num4@@ |
+| The cost of one full item bank, items times cost per item | @@sobol_grouped_peak_funding_requirement_cost_of_one_bank_usd|num4@@ |
+| The blended acquisition anchor | @@sobol_grouped_peak_funding_requirement_cac_anchor_blended_usd|num4@@ |
+
+Read that table rather than the count. **The finding survives and is stronger
+stated this way**: the cost of one item bank owns more of the variance in the
+capital requirement than any single registry entry does, and more than the
+acquisition anchor. The count of five was never the evidence, and no instrument
+in this directory can see registry granularity — it is a defect of the
+measurement, named in LIMITS.md.
+
 The practical reading: **work on acquisition and the price anchor to make the
 business exist; work on content cost to make it fundable.** They are different
 programmes of work and this instrument says they are not substitutes.
@@ -657,7 +799,7 @@ section 11 sizes the rounds on.
 | A share of billing through an app store | @@delta_por_appstore_terminal_cash_mean|usd0@@ | @@delta_por_appstore_terminal_cash_p50|usd0@@ | @@delta_por_appstore_peak_funding_p80|usd0@@ | @@delta_por_appstore_sign_agrees_mean_and_median|int@@ |
 | Go-to-market three months later | @@delta_por_launch_plus3_terminal_cash_mean|usd0@@ | @@delta_por_launch_plus3_terminal_cash_p50|usd0@@ | @@delta_por_launch_plus3_peak_funding_p80|usd0@@ | @@delta_por_launch_plus3_sign_agrees_mean_and_median|int@@ |
 | Go-to-market six months later | @@delta_por_launch_plus6_terminal_cash_mean|usd0@@ | @@delta_por_launch_plus6_terminal_cash_p50|usd0@@ | @@delta_por_launch_plus6_peak_funding_p80|usd0@@ | @@delta_por_launch_plus6_sign_agrees_mean_and_median|int@@ |
-| Foreign exchange sampled rather than fixed | @@delta_por_fx_sampled_terminal_cash_mean|usd0@@ | @@delta_por_fx_sampled_terminal_cash_p50|usd0@@ | @@delta_por_fx_sampled_peak_funding_p80|usd0@@ | @@delta_por_fx_sampled_sign_agrees_mean_and_median|int@@ |
+| Foreign exchange sampled rather than fixed — **not distinguishable from zero**, see below | @@delta_por_fx_sampled_terminal_cash_mean|usd0@@ | @@delta_por_fx_sampled_terminal_cash_p50|usd0@@ | @@delta_por_fx_sampled_peak_funding_p80|usd0@@ | @@delta_por_fx_sampled_sign_agrees_mean_and_median|int@@ |
 | India opened direct to parents | @@delta_por_india_d2c_terminal_cash_mean|usd0@@ | @@delta_por_india_d2c_terminal_cash_p50|usd0@@ | @@delta_por_india_d2c_peak_funding_p80|usd0@@ | @@delta_por_india_d2c_sign_agrees_mean_and_median|int@@ |
 | The allowance enforced | @@delta_por_allowance_enforced_terminal_cash_mean|usd0@@ | @@delta_por_allowance_enforced_terminal_cash_p50|usd0@@ | @@delta_por_allowance_enforced_peak_funding_p80|usd0@@ | @@delta_por_allowance_enforced_sign_agrees_mean_and_median|int@@ |
 | United Kingdom content frozen at the go-to-market five subjects | @@delta_por_content_frozen_terminal_cash_mean|usd0@@ | @@delta_por_content_frozen_terminal_cash_p50|usd0@@ | @@delta_por_content_frozen_peak_funding_p80|usd0@@ | @@delta_por_content_frozen_sign_agrees_mean_and_median|int@@ |
@@ -789,8 +931,12 @@ LIMITS.md item 5.)
 
 All four are on the same target, half of all paths running three consecutive
 cash-positive months, and all four are on the two drivers section 8 says decide
-whether the venture exists at all. **That is not a coincidence; it is the
-instrument agreeing with itself.**
+whether the venture exists at all. **That is a tautology, not corroboration, and
+an earlier draft called it "the instrument agreeing with itself" as though it
+were evidence.** A bisection can only bracket a target on a driver that moves
+that target a lot, and the Sobol index ranks drivers by exactly how much they
+move it. Both are computed on the same metric. There is no information in the
+agreement; it would have been alarming only if it had failed.
 
 | Scope | Driver | Break-even | Prior median | Prior mode |
 |---|---|---|---|---|
@@ -959,6 +1105,13 @@ now against the go-to-market minimum rather than against two different scope
 reductions. Both statistics are published so that the disagreement is visible
 rather than resolved by whichever one was quoted.
 
+**On terminal cash those two numbers are within a few per cent of each other,
+which means the instrument is not ranking them.** It is saying they are the same
+size, on a statistic that carries a
+@@por_terminal_cash_mc_se_two_sigma|usd0@@ sampling interval before any of the
+priors are argued with. Take the capital ordering, where the gap is large, as the
+one this instrument can actually support.
+
 Items 3 onward are grouped rather than ranked. An earlier draft said they were
 ordered by terminal cash at the mean; they are not, and they are not ordered by
 anything else either. Each carries its own figure, and the same caution about
@@ -1019,11 +1172,21 @@ terminal cash they are not close: freezing content is worth
 @@delta_por_content_frozen_terminal_cash_mean|usd0@@ and dropping markets
 @@delta_ukonly_terminal_cash_mean|usd0@@, a factor of five.
 
-**The two decisions separate exactly, and that is checked rather than eyeballed.**
-Foreign content computed as the plan of record less the United Kingdom-only
-scenario is @@scope_ladder_foreign_content_mean|usd0@@; computed as content-frozen
-less the go-to-market minimum it is the same figure to the dollar, and
-`verify.py` fails the run if the two ever disagree. So the content column really
+**The two decisions separate exactly on the content column, and that is checked
+rather than eyeballed — but read what the check covers.** Foreign content
+computed as the plan of record less the United Kingdom-only scenario is
+@@scope_ladder_foreign_content_mean|usd0@@; computed as content-frozen less the
+go-to-market minimum it is the same figure to the dollar, and `verify.py` fails
+the run if the two ever disagree. A round-four review pointed out that this
+identity holds **by construction** — `content_build_plan()` sums over markets in
+an independent loop, so United Kingdom and foreign content are disjoint additive
+terms and the check cannot fail. It is a regression test against someone
+introducing an interaction later, not evidence of anything today. On the two
+columns this section actually reasons from, terminal cash and the capital
+requirement, the decisions do **not** decompose exactly: the two separate effects
+sum to about two per cent more than the combined scenario. Two per cent does not
+disturb the conclusion, and the conclusion is stated knowing it rather than
+claiming an exactness that belongs to a different column. So the content column really
 does decompose into @@scope_ladder_frozen_uk_content_mean|usd0@@ of content you
 must build to go to market at all, @@scope_ladder_uk_escalation_mean|usd0@@ of
 United Kingdom catalogue widening, and @@scope_ladder_foreign_content_mean|usd0@@
@@ -1068,11 +1231,30 @@ distribution the model does not credit. docs/04 identifies app stores and paymen
 processors as the real chokepoint, which is an argument for a second relationship
 rather than for or against the fee.
 
-**6. Whether India is worth a statutory prohibition.** Direct to parents is worth
-@@delta_por_india_d2c_terminal_cash_abs|usd0@@ over five years against DPDP section 9(3). The institution
-route in India carries no such conflict, and **this instrument does not model it**,
-so the figure is the prohibition's price and not a comparison between the two
-routes in. See section 2.
+**6. Whether India is worth a statutory prohibition — and on these priors it is
+not, which is the opposite of what this paragraph used to say.** Opening India
+direct to parents **costs** @@delta_por_india_d2c_terminal_cash_abs|usd0@@ of
+terminal cash over five years, @@delta_por_india_d2c_terminal_cash_p50_abs|usd0@@
+on the median path, and **raises** the capital requirement at the eightieth
+percentile by @@delta_por_india_d2c_peak_funding_p80|usd0@@. It loses money
+because it carries an entity, market counsel, a content bank
+(@@delta_por_india_d2c_total_content_cost_abs|usd0@@ of additional content cost),
+a platform head and double age assurance, against prices sampled at a fraction of
+the United Kingdom's.
+
+Two earlier drafts wrote that figure as "worth". It is rendered from a token
+whose name ends in `_abs`, and `out/figures.csv` says in its own derivation note
+that the direction lives in the sign of the other token. Every other negative
+scenario in this document is written as "costs". India was the only one written
+as "worth", and the sentence inverted an owner decision as a result. Section 13's
+warning about what the verifier cannot see is this, exactly: the absolute value
+did exist on disk to the precision printed, so every automated check passed.
+
+The institution route in India carries no such conflict, and **this instrument
+does not model it**, so none of these figures is a comparison between the two
+routes in. What they say is narrower and still useful: on these priors DPDP
+section 9(3) is not a prohibition the owner is paying for. It is one that saves
+money. See section 2.
 
 **7. Where to launch in the calendar. The instrument has nothing usable to say
 about this, and it is on the list so that nobody reads its silence as agreement.**
@@ -1145,11 +1327,15 @@ OPEN_ITEMS.md.
 run against the current `model.py` — a check that has already bitten, on a
 comment-only edit to `model.py` that left every published CSV byte-identical —
 then re-derives the core figures from the raw CSVs by a different code path from
-`figures.py`, checks five identities — three of them down every
-row of the monthly file, one a point check that terminal cash at the horizon
-agrees with the cumulative monthly line, and one that the scope ladder in section
-12 decomposes exactly — and then scrapes every number in this document and
-matches it against a figure on disk.
+`figures.py`, checks five identities — **two** of them down every row of the
+monthly file (net revenue equals gross less tax; net cash equals revenue less
+every cost line), one a point check that terminal cash at the horizon agrees with
+the cumulative monthly line, one that the cumulative line is the running sum of
+the monthly one, and one that the scope ladder in section 12 decomposes on its
+content column — and then scrapes every number in this document and matches it
+against a figure on disk. An earlier draft said three ran down every row. Two do.
+This is the third time a hand-typed count in this document has been wrong, which
+is the argument of the next two paragraphs.
 
 **Be clear about what that second pass does and does not do.** It checks that
 every number printed here exists on disk to the precision it is printed at. It

@@ -1,7 +1,7 @@
 seed,run_date,quantity,value,unit,basis
 20260916,2026-09-16,retention_stress_churn_scale,1.250000,multiple,the multiple applied to both churn drivers
-20260916,2026-09-16,retention_stress_terminal_cash_cost,3705130.901185,USD,"the two retention omissions above are priced at zero as cost lines because they are not costs; this is what the book being that much worse is worth in terminal cash, and it is a prior on the size of the effect, not a measurement of it"
-20260916,2026-09-16,retention_stress_share_of_total_cost,0.096380,share,that cost against the modelled cost base
+20260916,2026-09-16,retention_stress_terminal_cash_cost,4144583.822813,USD,"the two retention omissions above are priced at zero as cost lines because they are not costs; this is what the book being that much worse is worth in terminal cash, and it is a prior on the size of the effect, not a measurement of it"
+20260916,2026-09-16,retention_stress_share_of_total_cost,0.108377,share,that cost against the modelled cost base
 20260916,2026-09-16,examiner_full_equivalents_month18,18.690337,full item-bank equivalents,"median full item-bank equivalents of United Kingdom content at month 18, after board reuse, from the model's own content function"
 20260916,2026-09-16,penalty_smallest_usd,2476500.000000,USD,"the smallest penalty in the vault's verified United Kingdom set, 1.95m pounds to Snap, at the fixed rate"
 20260916,2026-09-16,penalty_largest_usd,18376900.000000,USD,"the largest, 14.47m pounds to Reddit in February 2026, at the fixed rate"

@@ -98,6 +98,13 @@ if os.path.exists(os.path.join(OUT, "drivers.csv")):
         add("driver_%s_high_pct" % r["driver"], 100.0 * float(r["high"]), "per cent", "drivers.csv",
             "the high column for %s, as a percentage" % r["driver"])
 
+    # The width of each prior range, so prose comparing an instrument's
+    # precision against the range it would narrow has a file behind it.
+    for r in read_csv("drivers.csv"):
+        lo, hi = float(r["low"]), float(r["high"])
+        add("driver_%s_range" % r["driver"], hi - lo, "driver units", "drivers.csv",
+            "the high column less the low column for %s" % r["driver"])
+
 if os.path.exists(os.path.join(OUT, "constants.csv")):
     for r in read_csv("constants.csv"):
         add("const_%s" % r["constant"], float(r["value"]), "model units", "constants.csv", r["what_it_is"])
@@ -221,6 +228,26 @@ add("por_share_demand_independent", _di / grand if grand else 0.0, "share", "por
     "that sum divided by the sum of every cost line")
 add("por_share_demand_independent_pct", 100.0 * (_di / grand if grand else 0.0), "per cent",
     "por_monthly.csv", "the same share as a percentage")
+
+# Content-driven cost, which is larger than the content line. The salaried
+# content heads sit inside people_beng_cost and their whole job is the content
+# schedule, so the cost-split table read as though content were only the
+# contracted authoring and validation. people_beng_content_cost is a
+# DECOMPOSITION of people_beng_cost, not a thirteenth cost line, so it is never
+# added to the grand total: doing so would count it twice.
+_bch = float(col(monthly, "people_beng_content_cost_mean").sum())
+add("por_total_people_beng_content_cost_mean", _bch, "USD", "por_monthly.csv",
+    "sum over months of people_beng_content_cost_mean: the salaried content heads inside the Bengaluru people line")
+add("por_share_people_beng_content_cost_pct", 100.0 * (_bch / grand if grand else 0.0), "per cent",
+    "por_monthly.csv", "those heads as a share of the whole modelled cost base")
+add("por_content_head_share_of_beng_people_pct",
+    100.0 * (_bch / totals["people_beng_cost"] if totals["people_beng_cost"] else 0.0), "per cent",
+    "por_monthly.csv", "those heads as a share of the Bengaluru people line they sit inside")
+add("por_content_driven_cost_mean", totals["content_cost"] + _bch, "USD", "por_monthly.csv",
+    "the content line plus the salaried content heads: everything the content schedule causes")
+add("por_share_content_driven_pct",
+    100.0 * ((totals["content_cost"] + _bch) / grand if grand else 0.0), "per cent",
+    "por_monthly.csv", "that sum as a share of the whole modelled cost base, against por_share_content_cost_pct which counts only the contracted line")
 
 rev_c = float(col(monthly, "net_rev_consumer_mean").sum())
 rev_s = float(col(monthly, "net_rev_schools_mean").sum())
@@ -426,6 +453,9 @@ if os.path.exists(os.path.join(OUT, "sobol.csv")):
         for pos, r in enumerate(rows, start=1):
             add("sobol_%s_rank_of_%s" % (target, r["driver"]), pos, "rank", "sobol.csv",
                 "the rank of %s by first-order index for target %s" % (r["driver"], target))
+            add("sobol_%s_value_of_%s" % (target, r["driver"]), float(r["sobol_first_order"]),
+                "share of variance", "sobol.csv",
+                "the first-order index of %s for target %s, by name rather than by rank, so a figure quoted beside a grouped index is the same driver whatever its rank turns out to be" % (r["driver"], target))
 
     # The same quantities on every other scope in the file, under their own
     # prefix, so the write-up can put the two orderings side by side.
@@ -452,6 +482,14 @@ if os.path.exists(os.path.join(OUT, "sobol.csv")):
             for pos, r in enumerate(rows, start=1):
                 add("sobol_%s%s_rank_of_%s" % (pre, target, r["driver"]), pos, "rank", "sobol.csv",
                     "the rank of %s for target %s on the %s scope" % (r["driver"], target, run))
+
+if os.path.exists(os.path.join(OUT, "sobol_grouped.csv")):
+    for r in read_csv("sobol_grouped.csv"):
+        pre = "" if r["run"] == "por" else ("gtm_" if r["run"] == "gtm_minimum" else r["run"] + "_")
+        add("sobol_grouped_%s%s_%s" % (pre, r["target"], r["grouped_quantity"]),
+            float(r["sobol_first_order"]), "share of variance", "sobol_grouped.csv",
+            "first-order index of %s on %s for the %s run: %s"
+            % (r["grouped_quantity"], r["target"], r["run"], r["what_it_is"]))
 
 if os.path.exists(os.path.join(OUT, "pinned_sweeps.csv")):
     ps = read_csv("pinned_sweeps.csv")

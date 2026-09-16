@@ -118,6 +118,26 @@ add("trial-to-paid conversion and involuntary churn", 0.0, 0.0,
     "zero as a cost line: an acquisition is a paying household immediately, and failed payments reduce cash without reducing the book, so involuntary churn is absent from retention entirely. The size is the same %s churn stress as the row above, not a second independent amount"
     % format(CHURN_STRESS_COST, ",.0f"))
 
+# The institution channel has no variable cost except inference. School seats
+# consume inference, but support, hosting, payment processing and age assurance
+# are all driven by active CONSUMER households only, so a seat costs nothing to
+# support, host, bill or verify. Priced from the consumer variable lines at the
+# channel's own share of sessions.
+_sess_total = float(MOUT["sessions_delivered"].sum(axis=1).mean())
+_consumer_var = float(sum(MOUT[c].sum(axis=1).mean()
+                          for c in ("support_cost", "hosting_cost", "payment_cost", "verif_cost")))
+_school_rev_share = float(MOUT["net_rev_schools"].sum(axis=1).mean()
+                          / max(MOUT["net_rev_consumer"].sum(axis=1).mean()
+                                + MOUT["net_rev_schools"].sum(axis=1).mean(), 1e-9))
+add("institution channel variable cost other than inference",
+    0.5 * _consumer_var * _school_rev_share, 1.5 * _consumer_var * _school_rev_share,
+    "support, hosting, payment processing and age assurance are driven by active consumer households only, so an institution seat carries none of them. Priced at half to one and a half times the consumer variable lines scaled by the channel's revenue share, which is small, so this is a lower bound on the channel's cost as the no-schools scenario is a lower bound on its value")
+
+# Institution revenue is recognised only at the annual renewal month, so a
+# contract landing in any other month produces nothing until the following one.
+add("institution contract revenue lost to annual recognition", 0.0, 0.0,
+    "zero, and it is a timing artefact rather than a cost: school_live only updates in the renewal month, so a contract signed in October is paid for that month and earns nothing until the following September, and contracts landing in the last five months of the horizon are never recognised at all. It makes the institution channel look worse than the plan describes")
+
 # Accessibility conformance, which a school procurement process asks for directly.
 add("accessibility conformance and audit", 15000.0 * years_live * 0.5, 40000.0 * years_live * 0.5,
     "fifteen to forty thousand dollars a year, from roughly halfway through the horizon")

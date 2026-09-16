@@ -115,10 +115,15 @@ def rederive():
     d["_xcheck_net_equals_gross_less_tax"] = float(np.max(np.abs(
         mcol("gross_rev_consumer_mean") - mcol("tax_collected_mean") - mcol("net_rev_consumer_mean"))))
 
-    # Cross-check: net cash must equal revenue less every cost line, down the file.
+    # Cross-check: net cash must equal revenue less every cost line PLUS any
+    # terminal value, down the file. The terminal_value term was missing from
+    # this identity and it passed only because the published run credits no
+    # residual, so a scenario that did would have broken an identity this
+    # verifier would not have noticed.
     rev = mcol("net_rev_consumer_mean") + mcol("net_rev_schools_mean")
     cost = sum(mcol(c + "_mean") for c in lines)
-    d["_xcheck_net_cash_identity"] = float(np.max(np.abs(rev - cost - mcol("net_cash_mean"))))
+    resid = mcol("terminal_value_mean")
+    d["_xcheck_net_cash_identity"] = float(np.max(np.abs(rev - cost + resid - mcol("net_cash_mean"))))
 
     # Cross-check: the scope ladder must decompose. Owner decision 1 rests on
     # reading the content column of a four-row table as two separable
@@ -150,7 +155,6 @@ def pass_a(figs):
         if k.startswith("_xcheck_"):
             # Identities that must hold to within floating point and the six
             # decimal places the CSV is written at.
-            tol = max(1e-3, abs(v) * 0.0)
             if abs(v) > 1.0:
                 fails.append("%s: identity violated by %.6f" % (k, v))
             checked += 1
@@ -252,13 +256,16 @@ def pass_b(figs, allowed):
 # ---------------------------------------------------------------------------
 def pass_staleness():
     import hashlib
-    sha = hashlib.sha256(open(os.path.join(HERE, "model.py"), "rb").read()).hexdigest()
+    h = hashlib.sha256()
+    for f in ("model.py", "harness.py"):
+        h.update(open(os.path.join(HERE, f), "rb").read())
+    sha = h.hexdigest()
     path = os.path.join(OUT, "provenance.csv")
     if not os.path.exists(path):
         return 0, ["provenance.csv is missing: no script has recorded which model.py it ran against"]
     rows = read_csv("provenance.csv")
     fails = [
-        "%s last ran against model.py %s, not the current %s: its outputs are stale"
+        "%s last ran against model.py+harness.py %s, not the current %s: its outputs are stale"
         % (r["script"], r["model_sha256"][:12], sha[:12])
         for r in rows if r["model_sha256"] != sha
     ]

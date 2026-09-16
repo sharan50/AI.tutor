@@ -142,8 +142,20 @@ def verify(ns=None, quiet=False):
     return ns
 
 
+HARNESS = os.path.join(HERE, "harness.py")
+
+
 def model_sha():
-    return hashlib.sha256(open(MODEL, "rb").read()).hexdigest()
+    """
+    Hashes model.py AND harness.py together. It used to hash model.py alone,
+    which left the file that splits, executes and gates the model outside the
+    staleness check entirely: a change to the splitter, to EXPECTED_SECTIONS or
+    to verify() itself left no trace in any output.
+    """
+    h = hashlib.sha256()
+    for path in (MODEL, HARNESS):
+        h.update(open(path, "rb").read())
+    return h.hexdigest()
 
 
 def _record_provenance():

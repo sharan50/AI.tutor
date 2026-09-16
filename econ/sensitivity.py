@@ -213,8 +213,52 @@ def run_twoway(d1, d2):
                       "share_reaching_profitability"], rows)
 
 
+# ---------------------------------------------------------------------------
+# Grouped indices.
+#
+# A count of how many "content drivers" appear in a top seven is a fact about
+# how finely the driver registry splits each cost, not about the business.
+# Content cost per item is registered as three priors (validation minutes, the
+# examiner rate, the authoring rate) because that is how it decomposes; but one
+# timed pilot measures all three at once, so as an object of decision it is ONE
+# quantity. Acquisition, by contrast, is split across nine. Rank the registry
+# entries and content wins on count; group them the way the instruments that
+# would measure them group them and the picture is different again.
+#
+# Each group below acts on the answer through a genuine SCALAR, which is what
+# makes a one-dimensional index legitimate. Summing the individual indices of a
+# group is NOT a group index and is not done here.
+# ---------------------------------------------------------------------------
+def grouped_quantities():
+    d = DRV
+    exam_gbp = d["minutes_per_item"] / 60.0 * d["examiner_rate_gbp_hr"] * 1.10
+    cost_per_item = (exam_gbp + d["writer_gbp_item"]) * NS["FX_GBP_USD"]
+    blend = 1.0 - d["creator_share"] * (1.0 - d["creator_cac_rel"])
+    return [
+        ("cost_per_item_usd", cost_per_item,
+         "validation minutes, the examiner rate and the authoring rate as the single quantity one timed pilot measures"),
+        ("cost_of_one_bank_usd", cost_per_item * d["items_per_unit"],
+         "that, times items per bank: what one full item bank costs to build"),
+        ("cac_anchor_blended_usd", d["cac_anchor_usd"] * blend,
+         "the low-volume acquisition anchor after the creator-led blend, which is the scalar the acquisition drivers act through at low volume"),
+    ]
+
+
+def run_grouped():
+    rows = []
+    for rname, tset in scope_runs():
+        for gname, x, note in grouped_quantities():
+            for tname, y in tset.items():
+                rows.append([SEED, RUN_DATE, rname, tname, gname,
+                             "%.6f" % sobol_first_order(x, y), note])
+    return write_csv("sobol_grouped.csv",
+                     ["seed", "run_date", "run", "target", "grouped_quantity",
+                      "sobol_first_order", "what_it_is"], rows)
+
+
 def main():
     ranked = run_sobol_and_tornado()
+    run_grouped()
     # The sweeps and the grid are instruments on the plan of record, so they
     # take the plan of record's ordering. The second ordering is written to the
     # files beside it and is not silently averaged into this one.
