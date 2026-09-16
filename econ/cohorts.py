@@ -332,7 +332,7 @@ add("por_terminal_cash_mc_se_two_sigma", 2.0 * mc_se, "USD",
 #    the monthly net cash line, which is exact.
 net_month = MOUT["net_cash"]
 months = np.arange(net_month.shape[1])
-for rate in (0.12, 0.25):
+for rate in (0.0, 0.12, 0.25):
     disc = (1.0 + rate) ** (-(months / 12.0))
     npv = float((net_month * disc[None, :]).sum(axis=1).mean())
     tag = "%02d" % int(round(rate * 100))
@@ -341,6 +341,23 @@ for rate in (0.12, 0.25):
         "the instrument")
     add("por_npv_%s_less_undiscounted" % tag, npv - float(tc.mean()), "USD",
         "that present value less the undiscounted terminal cash mean", "the instrument")
+    # Which way discounting cuts is not obvious and the write-up asserted it
+    # before it was computed. It cuts BOTH ways: the nominal loss shrinks,
+    # because the largest negative months are the late ones, while the economics
+    # look worse, because revenue is later than cost. Both are published.
+    _cl = ["inference_cost", "support_cost", "payment_cost", "hosting_cost", "verif_cost",
+           "cac_spend", "content_cost", "people_beng_cost", "people_uk_cost", "step_cost",
+           "school_onboard_cost", "appstore_fee"]
+    d_tot = float(sum((MOUT[c].mean(axis=0) * disc).sum() for c in _cl))
+    d_rev = float(((MOUT["net_rev_consumer"] + MOUT["net_rev_schools"]).mean(axis=0) * disc).sum())
+    for line in ("content_cost", "cac_spend"):
+        add("por_discounted_%s_share_%s_pct" % (line, tag),
+            100.0 * float((MOUT[line].mean(axis=0) * disc).sum()) / d_tot, "per cent",
+            "%s as a share of discounted total cost at %d per cent a year" % (line, int(round(rate * 100))),
+            "the instrument")
+    add("por_discounted_cost_over_revenue_%s" % tag, d_tot / max(d_rev, 1e-9), "ratio",
+        "discounted total cost over discounted net revenue at %d per cent a year" % int(round(rate * 100)),
+        "the instrument")
 
 # 3. Variable cost against PRICE, which is the quantity docs/10's load-bearing
 #    row is about. The write-up answered it with inference over TOTAL COST, a

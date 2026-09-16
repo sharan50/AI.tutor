@@ -33,18 +33,28 @@ at this sample size**, and section 9 says so where it is tabulated.
 
 The seed and the date are quoted wherever a number appears for the same reason.
 
-**Two conventions that are load-bearing, and the second is an absence.** Nothing
-in this instrument is discounted: terminal cash, the peak funding requirement,
-every break-even and the residual are undiscounted nominal sums over sixty
-months. At twelve per cent a year the same net cash line is worth
-@@por_terminal_cash_npv_12|usd0@@ against the undiscounted
-@@por_terminal_cash_mean|usd0@@; at twenty-five per cent,
-@@por_terminal_cash_npv_25|usd0@@. Content spend is front- and mid-loaded against
-revenue that arrives late, so discounting makes content relatively more expensive
-and sharpens the ordering this document reports — while shrinking the residual
+**Two conventions are load-bearing, and the second is an absence.** Nothing in
+this instrument is discounted: terminal cash, the peak funding requirement, every
+break-even and the residual are undiscounted nominal sums over sixty months.
+
+**Discounting cuts both ways here, and the obvious direction is the wrong one.**
+The headline loss gets *smaller*: at twelve per cent a year the same net cash
+line is worth @@por_terminal_cash_npv_12|usd0@@ against the undiscounted
+@@por_terminal_cash_mean|usd0@@, and at twenty-five per cent
+@@por_terminal_cash_npv_25|usd0@@, because the largest negative months are the
+late ones. The economics get *worse*: revenue arrives later than cost, so
+discounted cost over discounted revenue rises from
+@@por_discounted_cost_over_revenue_00|num2@@ undiscounted to
+@@por_discounted_cost_over_revenue_25|num2@@ at twenty-five per cent. And
+content's share of cost **rises** — from @@por_share_content_cost_pct|num1@@ per
+cent to @@por_discounted_content_cost_share_25_pct|num1@@ — while acquisition's
+falls to @@por_discounted_cac_spend_share_25_pct|num1@@, because content is built
+early and acquisition spend follows revenue. So discounting sharpens the ordering
+this document reports rather than disturbing it, and it shrinks the residual
 scenario, which sits entirely at month 60 and is the largest single item in the
-scenario table. Nothing here is restated on a discounted basis; the two figures
-above are published so that the omission has a size.
+scenario table. Nothing here is restated on a discounted basis; these figures are
+published so that the omission has a size and a direction rather than only a
+mention.
 
 ---
 
@@ -464,8 +474,8 @@ modelled cost.
 | Institution onboarding, per school | @@por_total_school_onboard_cost_mean|usd0@@ | @@por_share_school_onboard_cost_pct|num1@@% |
 | App store fees | @@por_total_appstore_fee_mean|usd0@@ | @@por_share_appstore_fee_pct|num1@@% |
 
-Three readings, each of which contradicts something in the vault or in the usual
-telling.
+Four readings. The first three each contradict something in the vault or in the
+usual telling; the fourth is about what the table leaves out.
 
 **Content is the largest line, not acquisition — and the table above understates
 it, because some of the content cost is filed under people.**

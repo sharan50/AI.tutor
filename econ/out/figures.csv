@@ -3074,10 +3074,21 @@ missing_night_rota_share_of_total_cost,0.017626,share,cohorts.csv,the missing ro
 por_total_cost_recomputed,38242309.651151,USD,cohorts.csv,"sum over paths and months of every modelled cost line, averaged over paths"
 por_terminal_cash_mc_se,533243.956808,USD,cohorts.csv,standard error of the mean of terminal_cash across paths: the sampling error on the headline level at this seed and this path count
 por_terminal_cash_mc_se_two_sigma,1066487.913616,USD,cohorts.csv,"twice that, which is the interval a figure quoted to the dollar actually carries"
+por_terminal_cash_npv_00,-10049079.627034,USD,cohorts.csv,"mean over paths of net cash discounted monthly at 0 per cent a year: the model discounts nothing, and this is what that is worth"
+por_npv_00_less_undiscounted,0.000000,USD,cohorts.csv,that present value less the undiscounted terminal cash mean
+por_discounted_content_cost_share_00_pct,36.519305,per cent,cohorts.csv,content_cost as a share of discounted total cost at 0 per cent a year
+por_discounted_cac_spend_share_00_pct,26.477265,per cent,cohorts.csv,cac_spend as a share of discounted total cost at 0 per cent a year
+por_discounted_cost_over_revenue_00,1.356436,ratio,cohorts.csv,discounted total cost over discounted net revenue at 0 per cent a year
 por_terminal_cash_npv_12,-8616256.533425,USD,cohorts.csv,"mean over paths of net cash discounted monthly at 12 per cent a year: the model discounts nothing, and this is what that is worth"
 por_npv_12_less_undiscounted,1432823.093609,USD,cohorts.csv,that present value less the undiscounted terminal cash mean
+por_discounted_content_cost_share_12_pct,38.469114,per cent,cohorts.csv,content_cost as a share of discounted total cost at 12 per cent a year
+por_discounted_cac_spend_share_12_pct,24.955039,per cent,cohorts.csv,cac_spend as a share of discounted total cost at 12 per cent a year
+por_discounted_cost_over_revenue_12,1.443097,ratio,cohorts.csv,discounted total cost over discounted net revenue at 12 per cent a year
 por_terminal_cash_npv_25,-7484668.158638,USD,cohorts.csv,"mean over paths of net cash discounted monthly at 25 per cent a year: the model discounts nothing, and this is what that is worth"
 por_npv_25_less_undiscounted,2564411.468397,USD,cohorts.csv,that present value less the undiscounted terminal cash mean
+por_discounted_content_cost_share_25_pct,40.429476,per cent,cohorts.csv,content_cost as a share of discounted total cost at 25 per cent a year
+por_discounted_cac_spend_share_25_pct,23.414959,per cent,cohorts.csv,cac_spend as a share of discounted total cost at 25 per cent a year
+por_discounted_cost_over_revenue_25,1.544396,ratio,cohorts.csv,discounted total cost over discounted net revenue at 25 per cent a year
 por_inference_over_gross_revenue_pooled,0.030744,share,cohorts.csv,"total inference cost over total gross consumer revenue, pooled across paths: docs/10's row is variable cost against PRICE, not against total cost"
 por_inference_over_gross_revenue_median,0.042981,share,cohorts.csv,the same ratio on the median path
 por_variable_over_gross_revenue_median,0.126075,share,cohorts.csv,"all four variable cost lines over gross consumer revenue, on the median path"
