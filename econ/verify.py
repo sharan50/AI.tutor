@@ -198,10 +198,21 @@ NUM_RE = re.compile(
 
 
 def printed_tolerance(text):
-    """Half of the place value of the last digit printed."""
+    """
+    Half of the place value of the last digit printed, plus a hair.
+
+    The hair is there because a value landing exactly on the half — 11.45
+    rendered to one decimal, 2.585 to two — sits precisely on the boundary, and
+    binary floating point puts it a hair either side unpredictably. Without it
+    the scrape reports a figure as underivable for having rounded the way the
+    renderer rounded it. The hair is a millionth of the place value, far too
+    small to let a genuinely different number through.
+    """
     if "." in text:
-        return 0.5 * 10 ** (-len(text.split(".")[1]))
-    return 0.5
+        place = 10 ** (-len(text.split(".")[1]))
+    else:
+        place = 1.0
+    return 0.5 * place * (1.0 + 1e-6)
 
 
 def candidates(raw, suffix):
@@ -321,6 +332,18 @@ def main():
     for f in unit_fails:
         print("  FAIL " + f)
 
+    inv_fails = []
+    if os.path.exists(os.path.join(OUT, "invariants.csv")):
+        inv_fails = ["%s on %s: %s" % (r["invariant"], r["run"], r["detail"])
+                     for r in read_csv("invariants.csv") if r["result"] != "pass"]
+        print("\nPASS 0b, structural invariants: %d checks"
+              % len(read_csv("invariants.csv")))
+        for f in inv_fails:
+            print("  FAIL " + f)
+    else:
+        inv_fails = ["invariants.csv is missing: run invariants.py"]
+        print("\nPASS 0b, structural invariants: not run")
+
     n_prov, stale = pass_staleness()
     print("\nPASS 0, generator staleness: %d scripts recorded" % n_prov)
     for f in stale:
@@ -339,7 +362,7 @@ def main():
         print("  UNDERIVABLE %s:%d  %-14s  %s" % (doc, lineno, token, ctx))
     print("  %d numbers could not be re-derived" % len(unmatched))
 
-    total = len(fails) + len(unmatched) + len(stale) + len(unit_fails)
+    total = len(fails) + len(unmatched) + len(stale) + len(unit_fails) + len(inv_fails)
     print("\nTOTAL FAILURES: %d" % total)
     return 1 if total else 0
 

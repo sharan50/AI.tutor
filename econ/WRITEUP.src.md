@@ -1016,10 +1016,14 @@ product launches.
 
 ## 10. What the break-evens say
 
-**One cash target is now reachable, on one scope, by one driver — and that is new
-in round 5.** Until the two month-loop defects in CHANGELOG 5.1 and 5.2 were
-fixed, nothing in the prior ranges got the median path whole on either scope.
-A price on the go-to-market minimum now does.
+**On the cash targets there are none, and one of them misses by a margin small
+enough to be worth the sentence.** On the go-to-market minimum with condition C1
+passing, the top of the price prior leaves the median path
+@@breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_metric_at_support_high|usd0@@
+short over five years — about half a per cent of what the same scope consumes at
+the bottom of that prior. It does not cross zero, so there is no break-even to
+report; it comes close enough that reporting "nothing rescues it" without the
+margin would be its own kind of overstatement.
 
 @@breakeven_distinct_metrics|int@@ targets were solved by bisection on a pinned driver, each across that
 driver's entire prior range: the median path ending the horizon whole, the plan
@@ -1028,25 +1032,29 @@ all paths running three consecutive cash-positive months.
 @@breakeven_plan_of_record_questions|int@@ questions per scope, @@breakeven_rows_total|int@@ rows in all.
 @@breakeven_rows_unbracketed|int@@ are unbracketed and @@breakeven_rows_bracketed|int@@ bracket.
 
-**Almost nothing rescues the cash targets, and the exception is worth the whole
-section.** No value of the reachable pool, the acquisition anchor, age assurance
-cost, validation minutes, item count, sessions per household or churn, anywhere
-in its prior range, gets the median path whole on either scope. **Price on the
-go-to-market minimum does**, at
-@@breakeven_at_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median|num2@@
-pounds a month with condition C1 passing — and at that price the same run needs
-@@breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_at_be_peak_funding_p80|usd0@@
-of capital at the eightieth percentile and
-@@breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_at_be_share_reaching_profitability_pct|num1@@
-per cent of paths reach profitability. That is the only combination anywhere in
-this document where a single driver, inside its own prior range, produces a plan
-that returns the cash it consumes on the median path and stays inside the capital
-ceiling at the same time.
+**Nothing rescues the cash targets, and one near-miss is worth recording
+because it flickered.** No value of the reachable pool, the acquisition anchor,
+age assurance cost, validation minutes, item count, sessions per household, churn
+or price, anywhere in its prior range, gets the median path whole on either
+scope.
 
-It is a **conditional** result and the conditions are the point: the narrow
-scope, the tutoring anchor holding, and a price near the top of its prior. Read
-it as what the instrument says the narrow scope would have to be true for, not as
-a plan.
+The near-miss is price on the go-to-market minimum with condition C1 pinned to
+tutoring. At the top of its prior the median path ends
+@@breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_metric_at_support_high|usd0@@
+short, against
+@@breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_metric_at_support_low|usd0@@
+at the bottom.
+
+**It is worth a paragraph because of how it behaved during round 5, not because
+of where it landed.** Two mechanism fixes moved it far enough to bracket — the
+write-up said so, in bold — and a third fix, made a few hours later while
+building `invariants.py`, moved it back. Nothing about the business changed
+between those two states; three arithmetic corrections did. **A result that sits
+this close to a boundary is not a finding at this level of precision**, and the
+right reading of it is the margin rather than the verdict: on the narrow scope,
+with the tutoring anchor holding and the price at the top of its range, the plan
+is within a rounding error of returning the cash it consumes over five years, and
+the instrument cannot tell you which side of zero that lands on.
 
 **But two of them were also solved against the ten-million-dollar capital
 ceiling, and there the answer is the opposite of what this paragraph used to
@@ -1081,9 +1089,8 @@ LIMITS.md item 5.)
 
 ### The @@breakeven_rows_bracketed|int@@ that do solve
 
-@@breakeven_rows_bracketed_on_profitability|int@@ of them are on the same target,
-half of all paths running three consecutive cash-positive months; the remaining
-one is the median-path cash target above. All of them are on the two drivers
+All @@breakeven_rows_bracketed|int@@ are on the same target, half of all paths
+running three consecutive cash-positive months. All of them are on the two drivers
 section 8 says decide whether the venture exists at all — and **two drafts
 running have got the reason for that wrong in opposite directions.** The first called it "the instrument
 agreeing with itself", as though it were corroboration. The second called it a

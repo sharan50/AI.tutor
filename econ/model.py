@@ -894,7 +894,8 @@ def run(drv, cfg=None):
         "payment_cost", "hosting_cost", "verif_cost", "cac_spend", "content_cost",
         "people_beng_cost", "people_uk_cost", "step_cost", "school_onboard_cost",
         "appstore_fee", "people_beng_content_cost", "school_inference_cost",
-        "sessions_delivered", "share_over_allowance",
+        "school_sessions_delivered", "sessions_delivered", "share_over_allowance",
+        "arrivals_removed_same_month",
         "cac_effective_blended", "cac_effective_noncreator", "net_cash", "demand_shock",
         "terminal_value",
     ]}
@@ -1158,6 +1159,11 @@ def run(drv, cfg=None):
         # CHANGELOG 5.2.
         out["school_inference_cost"][:, t] = school_sessions * cps
         out["inference_cost"][:, t] += school_sessions * cps
+        # Same treatment for the session count, and for the same reason: a
+        # sessions-per-household figure built from the combined series over
+        # consumer households is not a per-household figure at all. Found by
+        # invariants.py on its first run. See CHANGELOG 5.15.
+        out["school_sessions_delivered"][:, t] = school_sessions
         out["sessions_delivered"][:, t] += school_sessions
         new_schools = school_pending[:, t] if reps_live > 0 else np.zeros(P)
         # Carries overhead_mult like every other people cost. It did not, which
@@ -1248,6 +1254,12 @@ def run(drv, cfg=None):
         if fb:
             churn = np.clip(churn * fb["churn_price_mult"] * fb["churn_quality_mult"][:, t], 1e-4, 0.95)
         stock *= (1.0 - churn)[:, None, None]
+        # This month's arrivals are a subset of stock and must take the same
+        # churn, or the two are on different bases and "stock less arrivals"
+        # stops being the standing book. The round 5 fix clamped that difference
+        # at zero, which hid the mismatch and made the exemption slightly too
+        # generous on paths with a small standing book. See CHANGELOG 5.15.
+        arrivals *= (1.0 - churn)[:, None, None]
 
         for m in range(NM):
             em = EXAM_CAL_MONTH[m]
@@ -1262,13 +1274,34 @@ def run(drv, cfg=None):
                 # sitting; that was worth 1,049,552 of terminal cash. Round 5
                 # found the same error against the ACQUISITION path, on both
                 # segments, worth about twice as much again. See CHANGELOG 5.1.
-                std_exam = np.maximum(stock[:, ms(m, S_EXAM), :]
-                                      - arrivals[:, ms(m, S_EXAM), :], 0.0)
+                stock_exam_before = stock[:, ms(m, S_EXAM), :].copy()
+                stock_al_before = stock[:, ms(m, S_ALEVEL), :].copy()
+                std_exam = stock[:, ms(m, S_EXAM), :] - arrivals[:, ms(m, S_EXAM), :]
                 leaving = std_exam * (1.0 - drv["exam_carryover"])[:, None]
                 stock[:, ms(m, S_EXAM), :] -= leaving
-                std_al = np.maximum(stock[:, ms(m, S_ALEVEL), :]
-                                    - arrivals[:, ms(m, S_ALEVEL), :], 0.0)
+                std_al = stock[:, ms(m, S_ALEVEL), :] - arrivals[:, ms(m, S_ALEVEL), :]
                 stock[:, ms(m, S_ALEVEL), :] -= std_al * drv["alevel_exit_rate"][:, None]
+                # How much MORE the two exits above would have removed had they
+                # fired on the whole stock instead of the standing book. Zero by
+                # construction here, and exactly the households a version that
+                # got the ordering wrong would delete in the month they arrived.
+                # It is published because the defect is invisible in every
+                # aggregate the model otherwise produces: the exits fire in one
+                # month a year, so a ratio over the horizon barely moves.
+                # invariants.py checks it and proves the check bites by putting
+                # the defect back. See CHANGELOG 5.15.
+                # What the exits SHOULD remove, written in terms of the stock
+                # before them and this month's arrivals, so that a version which
+                # drops the arrivals term cannot alter this expression too.
+                ought_exam = ((stock_exam_before - arrivals[:, ms(m, S_EXAM), :])
+                              * (1.0 - drv["exam_carryover"])[:, None]).sum(axis=1)
+                ought_al = ((stock_al_before - arrivals[:, ms(m, S_ALEVEL), :])
+                            * drv["alevel_exit_rate"][:, None]).sum(axis=1)
+                did_exam = leaving.sum(axis=1)
+                did_al = (std_al * drv["alevel_exit_rate"][:, None]).sum(axis=1)
+                out["arrivals_removed_same_month"][:, t] += (
+                    np.maximum(did_exam - ought_exam, 0.0)
+                    + np.maximum(did_al - ought_al, 0.0))
                 stock[:, ms(m, S_ALEVEL), :] += leaving * drv["alevel_continue"][:, None]
             if cm in ((em + 1) % 12, (em + 2) % 12):
                 per_month = 1.0 - np.sqrt(1.0 - drv["summer_lapse_pre"])
@@ -1498,7 +1531,8 @@ MONTHLY_SERIES = [
     "school_contracts", "inference_cost", "support_cost", "payment_cost", "hosting_cost",
     "verif_cost", "cac_spend", "content_cost", "people_beng_cost", "people_uk_cost",
     "step_cost", "school_onboard_cost", "appstore_fee", "people_beng_content_cost",
-    "school_inference_cost", "sessions_delivered",
+    "school_inference_cost", "school_sessions_delivered", "sessions_delivered",
+    "arrivals_removed_same_month",
     "share_over_allowance", "cac_effective_blended", "cac_effective_noncreator", "net_cash",
     "demand_shock", "terminal_value",
 ]

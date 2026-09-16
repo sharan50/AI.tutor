@@ -1200,11 +1200,35 @@ the mechanisms are correct; it is that a defect of this class survives until
 somebody reads the code, and five readings have found seven.** A sixth reading
 should be assumed to find more.
 
-**What would actually close it** is not another gate of the kind above. It is a
-second implementation of the month loop by a different route — a cohort-level
-accounting that tracks each acquisition's own months and cash and reconciles to
-the aggregate series — which would catch every one of the seven, because all
-seven put a household in the wrong place or at the wrong time. That is a day of
-work and it has not been done. It is the largest single improvement available to
-this instrument and it is not in the open items, because it is a question about
-this directory rather than about the business.
+**Something has been built against it, and it is worth being precise about how
+far it goes.** `invariants.py` asserts structural statements about what the month
+loop must produce — not that cash adds up, which all seven defects left perfect,
+but that a household is in the right place at the right time. Four of them are
+proved to bite the way the harness gate is: the defect each was written for is
+reintroduced into a copy of `model.py` in memory, the check is required to fail,
+and the copy is discarded. `out/invariant_selftest.txt` records it.
+
+**Three things it does not do.** Three of the seven checks are containment or
+boundary statements that no defect found so far has violated, so they are
+untested in the only way that matters. One is not an invariant at all but a
+regression tripwire, thresholded between the correct code's value and a known
+defect's, and it is labelled as one in the file: it will catch that defect
+returning and will not catch a new one. And the whole suite was written *after*
+seven defects were known, so it is fitted to the defects that have been found. A
+defect of a shape nobody has met yet will pass it.
+
+**The stronger thing still has not been built**: a second implementation of the
+month loop by a different route, a cohort-level accounting that tracks each
+acquisition's own months and cash and reconciles to the aggregate series. That
+would catch all seven without having been told about any of them. It is a day of
+work, it is the largest single improvement available to this instrument, and it
+is not in the open items because it is a question about this directory rather
+than about the business.
+
+**Two things the suite found on its first run**, which is the only evidence that
+it does anything: `sessions_delivered` mixed consumer and institution sessions,
+so a sessions-per-household figure built from it would have been the same
+contamination as CHANGELOG 5.2; and the round 5 arrivals fix compared a churned
+stock against un-churned arrivals and clamped the difference at zero, which hid
+the mismatch and made the exemption slightly too generous on paths with a small
+standing book. Neither was found by a reviewer.

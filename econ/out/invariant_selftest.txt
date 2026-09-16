@@ -1,0 +1,16 @@
+invariant self-test
+each invariant is checked against the defect it was written for,
+reintroduced into a copy of model.py in memory. model.py is not modified.
+
+caught : every acquisition can be billed                (change log 4.2 and 5.1)
+         most arrivals removed in the month they arrived is 301432.832260
+caught : school inference stays inside the inference line (change log 5.2)
+         smallest consumer-only inference is -187880.773223
+caught : content heads stay inside the people line      (change log 4.8)
+         smallest non-content Bengaluru people cost is -1220376.982860
+caught : TRIPWIRE: the budget cap's assumed life        (change log 4.3 and 5.4)
+         longest life the budget cap assumes is 18.18 billed household months
+
+4 of the 7 invariants have a historical defect to be proved against.
+The other 3 are boundary or containment checks that no defect found so far
+has violated, and they are reported as the weaker things they are.

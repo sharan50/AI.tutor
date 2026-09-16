@@ -1323,3 +1323,92 @@ percentile-addition in the round sizing, which I expected to be a finding and is
 not: need and burn correlate at 0.97 to 1.00, so the sum of the percentiles is
 the percentile of the sum to within seven hundred dollars on thirty-seven
 million.
+
+---
+
+## Round 5b: building the thing round 5 said was missing
+
+Round 5's LIMITS entry said seven mechanism defects had passed every automated
+check here while wrong, that all seven were found by reading the month loop, and
+that what would close it had not been built. Leaving that as a note would have
+been the easy option.
+
+### 5.15 invariants.py
+
+Seven structural checks on what the month loop must produce. Not accounting
+identities — all seven historical defects left cash adding up perfectly — but
+statements about whether a household is in the right place at the right time.
+
+**Four are proved to bite.** The defect each was written for is reintroduced
+into a copy of `model.py` in memory, the check is required to fail on it, and the
+copy is discarded. `model.py` on disk is never written to. This is the harness
+gate's own argument: a check that has never been shown to fail is not a check.
+`out/invariant_selftest.txt` records the result.
+
+**Writing it caught four things, three of them mine.**
+
+*The suite found a real contamination.* `sessions_delivered` mixed consumer and
+institution sessions, so any sessions-per-household figure built from it over
+consumer households would have been exactly the defect 5.2 had just fixed
+elsewhere. `school_sessions_delivered` is emitted separately now. Nothing in the
+documents divided it that way yet, which is the point of finding it first.
+
+*The suite found a flaw in round 5's own fix.* The arrivals exemption compared a
+churned `stock` against un-churned `arrivals` and clamped the difference at zero.
+The clamp hid the mismatch and made the exemption slightly too generous on paths
+with a small standing book. Arrivals now take the same churn as the stock they
+are part of, and the clamp is gone because it is no longer needed.
+
+*Two of the seven checks did not catch their own defect when first written, and
+the self-test is the only reason I know.* One used household months per
+acquisition with a floor of one: the exits fire in one month a year, so an
+aggregate over sixty months barely moves. It now reads a diagnostic the model
+publishes for the purpose, written in terms of `arrivals` so that reintroducing
+the defect cannot alter the diagnostic too. The other **reimplemented
+`ltv_estimate`'s arithmetic inside the check**, so it was comparing the formula
+against itself and passed cheerfully against a reintroduced defect. It calls the
+model's function now and extracts the assumed months by differencing two runs at
+different contributions, which cancels everything except the quantity wanted.
+
+**What it does not do, stated in LIMITS rather than glossed.** Three of the seven
+are containment or boundary checks no defect has yet violated, so they are
+untested in the only way that counts. One is a regression tripwire rather than an
+invariant — its threshold sits between the correct code's value and a known
+defect's, because a principled ceiling would need the survival term the check
+cannot see — and it is labelled `TRIPWIRE:` in the file and in the CSV. And the
+whole suite was written after seven defects were known, so it is fitted to them.
+A defect of an unfamiliar shape will pass it.
+
+The second implementation of the month loop by an independent route, which would
+catch all seven without being told about any of them, is still not built.
+
+### 5.16 A result that flickered, and what that says about reporting it
+
+The arrivals-churn correction above moved one break-even back across the line it
+had just crossed. Within round 5, on the same priors and the same seed, the
+go-to-market minimum's median-path cash target went: unreachable, then reachable
+at about 42 pounds a month after 5.1 and 5.2, then unreachable again after 5.15.
+The write-up asserted the middle state in bold before the third fix landed.
+
+Nothing about the business changed. Three arithmetic corrections did, and the
+result sits close enough to zero that each of them was decisive: at the top of
+the price prior the median path now ends about 56 thousand dollars short over
+five years, against about five million short at the bottom of the same prior.
+
+Section 10 reports the **margin** rather than a verdict, and says the instrument
+cannot tell which side of zero it lands on. That is the honest reading and it is
+more useful than either of the two verdicts this round produced. It is also a
+caution that generalises: a bracketed-or-not answer is a threshold on a
+continuous quantity, and near the threshold it carries none of the precision the
+word "break-even" implies.
+
+### 5.17 A tolerance that reported correct numbers as wrong
+
+`verify.py`'s prose scrape allowed half the place value of the last digit
+printed. A figure landing exactly on the half — 11.45 to one decimal, 2.585 to
+two — sits on the boundary, and binary floating point puts it a hair either side
+unpredictably, so the scrape reported two figures as underivable for having
+rounded the way the renderer rounded them. The tolerance carries a millionth of
+the place value now, which is far too small to admit a genuinely different
+number. Found by the check failing on correct prose, which is the only way this
+class shows up.
