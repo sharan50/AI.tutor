@@ -1,13 +1,16 @@
 seed,run_date,absent_cost_line,low_usd,high_usd,low_share_of_total_cost,high_share_of_total_cost,basis
-20260916,2026-09-16,"refunds, chargebacks and failed payments",342624.890671,1027874.672014,0.008709,0.026127,one to three per cent of modelled gross consumer revenue
-20260916,2026-09-16,"insurance: professional indemnity, cyber and directors",135000.000000,360000.000000,0.003431,0.009151,thirty to eighty thousand dollars a year from the UK go-to-market month to the end of the horizon
-20260916,2026-09-16,recruitment fees,123941.945012,206569.908354,0.003150,0.005251,twelve to twenty per cent of first-year salary on thirty-five hires at the median Bengaluru salary
-20260916,2026-09-16,out-of-hours operations rota,449379.320121,898758.640242,0.011422,0.022845,two to four posts at the median Bengaluru salary and overhead multiplier with a thirty per cent night premium
-20260916,2026-09-16,penetration testing and vulnerability disclosure,112500.000000,270000.000000,0.002860,0.006863,twenty-five to sixty thousand dollars a year over the same period
-20260916,2026-09-16,intercompany markup and Indian tax on it,161213.393217,241820.089825,0.004098,0.006147,"a ten to fifteen per cent cost-plus markup on the Bengaluru people cost, taxed at twenty-five per cent"
-20260916,2026-09-16,accessibility conformance and audit,33750.000000,90000.000000,0.000858,0.002288,"fifteen to forty thousand dollars a year, from roughly halfway through the horizon"
+20260916,2026-09-16,"refunds, chargebacks and failed payments",298321.405832,894964.217495,0.007760,0.023280,one to three per cent of modelled gross consumer revenue
+20260916,2026-09-16,"insurance: professional indemnity, cyber and directors",135000.000000,360000.000000,0.003512,0.009365,thirty to eighty thousand dollars a year from the UK go-to-market month to the end of the horizon
+20260916,2026-09-16,recruitment fees,123941.945012,206569.908354,0.003224,0.005373,twelve to twenty per cent of first-year salary on thirty-five hires at the median Bengaluru salary
+20260916,2026-09-16,out-of-hours operations rota,449379.320121,898758.640242,0.011690,0.023379,two to four posts at the median Bengaluru salary and overhead multiplier with a thirty per cent night premium
+20260916,2026-09-16,penetration testing and vulnerability disclosure,112500.000000,270000.000000,0.002926,0.007023,twenty-five to sixty thousand dollars a year over the same period
+20260916,2026-09-16,intercompany markup and Indian tax on it,161213.393217,241820.089825,0.004194,0.006290,"a ten to fifteen per cent cost-plus markup on the Bengaluru people cost, taxed at twenty-five per cent"
+20260916,2026-09-16,age assurance on non-converting checks,806574.420228,2016436.050571,0.020981,0.052453,"the model bills one check per acquisition; at two to five checks per acquired household, which is a conservative funnel for a consumer trial, the line is two to five times what is modelled"
+20260916,2026-09-16,"consumer subscription regime: renewal reminders, cooling off, easy exit",0.000000,0.000000,0.000000,0.000000,"zero, and that is the omission: these are retention mechanics rather than a cost line, so they cannot be priced from anything the model carries, and their effect is on churn and on refunds"
+20260916,2026-09-16,trial-to-paid conversion and involuntary churn,0.000000,0.000000,0.000000,0.000000,"zero: an acquisition is a paying household immediately, and failed payments reduce cash without reducing the book, so involuntary churn is absent from retention entirely"
+20260916,2026-09-16,accessibility conformance and audit,33750.000000,90000.000000,0.000878,0.002341,"fifteen to forty thousand dollars a year, from roughly halfway through the horizon"
 20260916,2026-09-16,corporation tax on trading profit,0.000000,0.000000,0.000000,0.000000,zero: no scenario in this instrument returns a taxable trading profit inside the horizon
 20260916,2026-09-16,translation and localisation,0.000000,0.000000,0.000000,0.000000,zero: the plan of record expands only across English-speaking curricula
 20260916,2026-09-16,regulatory enforcement exposure,0.000000,0.000000,0.000000,0.000000,"zero, and deliberately so: no probability of enforcement is modelled, while the smallest United Kingdom penalty in the vault's own verified set exceeds every cost line here except content"
 20260916,2026-09-16,"examiner supply, as a quantity rather than a price",0.000000,0.000000,0.000000,0.000000,"zero: the model prices examiner time and never asks whether it exists. The month-18 scope needs about 44,319 hours of qualified examiner time and the rate is perfectly elastic"
-20260916,2026-09-16,TOTAL of every absent line,1358409.549021,3095023.310435,0.034528,0.078670,"sum of the rows above, against the modelled total cost of 39341950"
+20260916,2026-09-16,TOTAL of every absent line,2120680.484410,4978548.906487,0.055164,0.129505,"sum of the rows above, against the modelled total cost of 38442936"

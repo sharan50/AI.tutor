@@ -75,7 +75,7 @@ seed,run_date,driver,distribution,low,mode,high,what_anchors_the_range
 20260916,2026-09-16,step_cert_setup_usd,u,18000.000000,,70000.000000,"information security certification, first award, prior"
 20260916,2026-09-16,step_cert_annual_usd,u,9000.000000,,28000.000000,"certification surveillance and renewal, prior"
 20260916,2026-09-16,step_uk_rep_usd_yr,u,3500.000000,,16000.000000,"UK Article 27 representative, prior"
-20260916,2026-09-16,step_counsel_initial_usd,u,25000.000000,,130000.000000,"the eleven counsel items in docs/14, prior"
+20260916,2026-09-16,step_counsel_initial_usd,u,25000.000000,,130000.000000,"the counsel items in docs/14, prior. The vault is not internally consistent about how many there are: docs/14 lists OI-1 to OI-12, its README and docs/11 both say eleven"
 20260916,2026-09-16,step_counsel_market_usd,u,12000.000000,,70000.000000,"counsel per additional jurisdiction, prior"
 20260916,2026-09-16,step_office_usd_head_yr,u,900.000000,,3600.000000,"premises per head per year once premises exist, prior"
 20260916,2026-09-16,step_dpia_audit_usd_yr,u,8000.000000,,40000.000000,"DPIA maintenance and ICO-facing audit readiness, prior"

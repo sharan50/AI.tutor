@@ -469,3 +469,20 @@ all-in contribution was defined two ways in two documents. Four table headers
 carried units their own rows contradicted. The demand shock's run lengths were
 published and its cost never was; it is now measured, and it is about one per cent.
 
+### 2.8 What the round 2 fixes moved
+
+The allowance decision **changed sign**. With the allowance actually enforced
+rather than the billing cap, enforcing destroys value: the overage revenue lost
+is larger than the inference cost saved. Owner decision 4 in the write-up now
+says the opposite of what it said, and it now agrees with the commercial posture
+instead of sitting against it.
+
+The terminal-value residual is worth more than any other scenario in the file,
+which is the measure of how much the horizon choice was doing.
+
+The demand shock's measured cost is about half a per cent of terminal cash on the
+mean, against run lengths that read as though it were the thing that ends the
+company. Both numbers are now published together.
+
+The onshoring scenario got smaller once it moved the right people, and stayed
+large.

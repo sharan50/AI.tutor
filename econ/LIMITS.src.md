@@ -66,8 +66,14 @@ allowance and removes the overage line with it, which is what the decision
 actually is. See `CHANGELOG.md` 2.3.
 
 @@por_mean_share_over_allowance_pct|num1@@ per cent of active households exceed the allowance being sold to
-them, household-month weighted. Enforcing it instead is worth
-@@delta_por_allowance_enforced_terminal_cash_mean|usd0@@ dollars of terminal cash.
+them. That is a household-month weighted share within each path and then a plain
+mean across paths, so a path with a hundred households and a path with one count
+equally in it.
+
+**Enforcing the allowance destroys @@delta_por_allowance_enforced_terminal_cash_abs|usd0@@ dollars of terminal cash**,
+because the overage revenue lost is larger than the inference cost saved. Before
+round 2 this scenario reported a small gain, from truncating delivery at the
+billing cap rather than at the allowance.
 
 ### 4. Foreign exchange: **not clean, by instruction**
 
@@ -704,7 +710,7 @@ material fraction of gross churn.
 
 ### The app-store fee is the small-business rate on every path
 
-`appstore_params()` sets @@const_APPSTORE_FEE_PCT|num0@@ per cent on every path, including paths billing
+`appstore_params()` sets @@const_APPSTORE_FEE_pct|num0@@ per cent on every path, including paths billing
 tens of millions a year, where the small-business rate does not apply and the
 headline rate is double. The app-store decision is priced at the lower rate
 throughout.

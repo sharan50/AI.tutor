@@ -15,20 +15,27 @@ date are quoted wherever a number appears for that reason.
 ## 1. The three things worth knowing
 
 **One. The plan of record is not a seed-stage plan.** Sized at the eightieth
-percentile of need, it requires 28.44 million dollars across the
-horizon, against 17.66 million for a United Kingdom consumer business alone and
-6.91 million for the go-to-market minimum: five GCSE subjects, one board,
+percentile of need, it requires 28.52 million dollars across the
+horizon, against 17.74 million for a United Kingdom consumer business alone and
+6.94 million for the go-to-market minimum: five GCSE subjects, one board,
 one market, no institution channel. The first eighteen months of the plan of
-record alone need 10.33 million.
+record alone need 10.32 million.
 
-**Two. 63.5 per cent of the cost base is committed before demand can say
-anything about it.** Content is 35.5 per cent of total modelled cost, people
-16.4 per cent in Bengaluru plus 8.3 in the United Kingdom, and step
-costs 3.2 per cent. Acquisition, which does depend on demand, is
-27.8 per cent. Inference, the cost docs/06 builds up so carefully, is
-2.7 per cent. This is why **no single driver rescues the plan of record**:
-every break-even solved in section 10 is unbracketed, because the money is spent
-whether or not anyone buys.
+**Two. About 64.9 per cent of the cost base is committed before demand can say
+much about it.** Content is 36.3 per cent of total modelled cost, people
+16.8 per cent in Bengaluru plus 8.5 in the United Kingdom, and step
+costs 3.3 per cent. Acquisition, which does depend on demand, is
+27.2 per cent. Inference, the cost docs/06 builds up so carefully, is
+2.5 per cent.
+
+"About" is doing work in that sentence and it is meant to. Part of the United
+Kingdom people line is not demand-independent: the safeguarding rota steps at
+3,000 and again at 25,000 active households, and those steps fire on
+most paths. The overwhelming majority of the 64.9 per cent is fixed; a
+slice of it is not, and LIMITS.md item 5 says which. This is why **no single driver gets the median path whole**: every break-even
+solved in section 10 against a cash target is unbracketed, because the money is
+spent whether or not anyone buys. Four solves against the profitability target do
+bracket, and section 10 gives them.
 
 **Three. Two different questions have two different answers, and conflating them
 is the easiest mistake available here.** Whether the venture ever makes money is
@@ -64,18 +71,26 @@ Go-to-market is set at month 6 and the seed is set to close in March 2027, so th
 the launch lands in September, at the start of an academic year. That placement is
 a decision, and section 12 shows what it is worth.
 
-**One thing was changed from the stated plan and it should be argued with.** The
-India pilot is modelled through institutions, not direct to parents. DPDP Rules
-2025 section 9(3) prohibits tracking, behavioural monitoring and targeted
-advertising directed at anyone under 18, the prohibition stands independent of
-consent, and a parent cannot waive it; children's-data obligations bite around
-May 2027, inside this horizon. The direct-to-parent version is modelled as a
-variant. On these priors it is worth -3,286,962 dollars of terminal cash on the
-mean over five years, against a statutory prohibition. The comparison is against
-no India business at all rather than against an institutional one, because the
-institution channel in this model is a single United Kingdom motion, so the
-figure prices the prohibition and not the choice between the two routes into
-India.
+**One thing was changed from the stated plan, it should be argued with, and the
+change went further than intended: the India pilot is not modelled at all.**
+
+The reason for moving it off the direct-to-parent path is real. DPDP Rules 2025
+section 9(3) prohibits tracking, behavioural monitoring and targeted advertising
+directed at anyone under 18, the prohibition stands independent of consent, a
+parent cannot waive it, and children's-data obligations bite around May 2027,
+inside this horizon. D1 rejected India partly on this.
+
+The intention was to model India through institutions instead. **That is not what
+the instrument does.** The institution channel here is a single United
+Kingdom-priced motion with no market index on its seat price, so the published run
+has no India revenue, no India content build and no India entity: `active_in_mean`
+is zero in all 60 rows of `out/por_monthly.csv`.
+
+So the direct-to-parent variant, worth 3,239,977 dollars of terminal cash on
+the mean, is compared against **no India business at all** rather than against an
+institutional one. It prices the prohibition, not the choice between the two
+routes in. An Indian institution motion is neither modelled nor costed here, and
+the plan of record should not be read as containing one.
 
 ---
 
@@ -98,15 +113,22 @@ comparison passes when it should fail.
 decimal place, confirms the harness refuses, restores the file and confirms it
 verifies again. The result is written to `out/harness_selftest.txt`.
 
-Everything downstream, without exception, runs through `harness.load()`. That is
-what makes the sensitivity, the scenarios, the funding sizing and the break-even
-solves run the published code rather than a restatement of it.
+Every script that RUNS THE MODEL goes through `harness.load()`: the sensitivity,
+the scenarios, the funding sizing, the break-even solves, the rescue grid, the
+cohort counterfactuals, the omissions pricing and the parameter dump. That is what
+makes them run the published code rather than a restatement of it.
+
+Three scripts deliberately do not, and must not. `figures.py`, `render.py` and
+`verify.py` read the CSVs and never import the model, so that a figure quoted in
+the prose is checked against what was written to disk rather than against what the
+code would produce if asked again.
 
 **Every mechanism that a variant adds must reproduce the base run exactly when it
 is switched off, and every parameter a variant needs is drawn outside the
-published random stream.** Four mechanisms are tested this way on every run: the
-feedback loops, the app-store fee, sampled foreign exchange, and the creator
-licence. All four reproduce the base character for character when off.
+published random stream.** 6 mechanisms are tested this way on every run: the feedback loops, the
+app-store fee, sampled foreign exchange, the creator licence, the onshoring
+switch and the terminal-value residual. Every one reproduces the base character
+for character when off.
 
 Because no draw happens inside the month loop, the streams cannot diverge between
 scenarios. That is shown rather than asserted: `out/variants.csv` carries, for
@@ -116,22 +138,24 @@ paths would collapse the first and inflate the second.
 
 **The range has to be quoted in two parts, and an earlier draft of this section
 quoted it wrong.** Across the scenarios that only flip a switch, the correlation
-runs from 0.7811 at the loosest, which is por_anchor_software, to
+runs from 0.7871 at the loosest, which is por_anchor_software, to
 1.0000 at the tightest. The two dependence scenarios sit far below that, at
-0.2765 and above, **by construction and not by accident**: Iman-Conover
+0.2998 and above, **by construction and not by accident**: Iman-Conover
 reordering changes which path holds which driver value, so path identity is
 deliberately not preserved there. Those two are matched in their marginals, which
 is what the reordering guarantees, and not in their paths. Every other comparison
 in section 9 is matched path by path.
 
-**Every driver is a prior, and the registry in `model.py` says so for each one.**
-Where a range is anchored on something, the note says what. Where nothing anchors
-it, the note says "prior". There is no third kind.
+**Every driver is a prior, and the registry in `model.py` carries a note on each
+one saying what, if anything, anchors its range.** Most notes end in the word
+"prior" where nothing does. A handful describe the mechanism instead of the
+anchor and should be read as "prior" too: an earlier draft claimed there was no
+third kind of note, and `out/drivers.csv` shows there is.
 
 **Two scope responses were added because the comparators were not like for like.**
 Platform engineering was a fixed ramp to twenty-two heads regardless of scope,
-which charged a one-market, one-subject scenario for a team sized to run four
-markets and an institution channel. It is now a floor plus heads per additional
+which charged a one-market, one-subject scenario for a team sized to run the
+three consumer markets the plan of record opens plus an institution channel. It is now a floor plus heads per additional
 live market and for running the institution channel at all. Running the other
 way, the reachable pool was the same whether the product covered one subject or
 eleven; it now scales sublinearly with subject breadth from the five-subject
@@ -142,14 +166,14 @@ moved. Both are decisions with stated constants, not measurements.
 
 ## 4. Unit economics
 
-| | USD |
+| | Value |
 |---|---|
-| Gross consumer revenue over the horizon, mean of paths | 34,262,489 |
-| Consumption tax inside it | 3,774,665 |
-| Tax as a share of gross | 11.0 per cent |
-| Net revenue, consumer and institution together | 30,658,989 |
-| Institution channel share of net revenue | 0.56 per cent |
-| Total cost | 39,341,950 |
+| Gross consumer revenue over the horizon, mean of paths, USD | 29,832,141 |
+| Consumption tax inside it, USD | 3,271,438 |
+| Tax as a share of gross, per cent | 11.0 |
+| Net revenue, consumer and institution together, USD | 26,731,868 |
+| Institution channel share of net revenue, per cent | 0.64 |
+| Total cost, USD | 38,442,936 |
 
 **Prices are read as gross, that is, tax-inclusive**, which is what United Kingdom
 consumer law requires a consumer-facing price to be. Net revenue is the gross
@@ -157,7 +181,7 @@ price divided by one plus the rate. Blended across markets that removes
 11.0 per cent of gross; on the United Kingdom alone at
 twenty per cent VAT it removes a sixth. Under the other reading, in which the
 quoted price is net and tax is added on top, revenue would be higher by the whole
-tax line: 3,774,665 dollars over the horizon.
+tax line: 3,271,438 dollars over the horizon.
 
 ### Contribution per household, two ways round
 
@@ -170,17 +194,17 @@ over the 99.8 per cent of paths that have a final year to speak of.
 
 | | Pooled | Median path |
 |---|---|---|
-| Gross: net revenue less inference, support, payment, hosting and store fees | 31.65 | 27.36 |
-| All-in: the same, net of engineering, content, overhead and compliance | 16.54 | -104.65 |
+| Gross: net revenue less inference, support, payment, hosting and store fees | 31.30 | 27.44 |
+| All-in: the same, net of engineering, content, overhead and compliance | 12.34 | -108.55 |
 
 The first row is a **gross margin**. Quoting it as the value of a customer, which
 is the conventional thing to do, overstates: pooled, the all-in figure is
-15.11 dollars lower.
+18.97 dollars lower.
 
 **The two columns disagree in sign on the all-in row, and that disagreement is
 the finding.** Pooled, a household month contributes
-16.54 dollars all-in. On the median path it consumes
-104.65. The pooled figure is dominated by the few paths with
+12.34 dollars all-in. On the median path it consumes
+108.55. The pooled figure is dominated by the few paths with
 large books, which carry most of the household-months and spread the fixed costs
 over them; the median path is small and the same fixed costs sit on top of it.
 Neither is wrong. Quoting only the pooled one would describe a business that most
@@ -188,26 +212,34 @@ paths are not running.
 
 ### Acquisition cost: the anchor is not the cost
 
-| | USD per acquisition |
+| | Value |
 |---|---|
-| The low-volume anchor, median of the driver | 32.26 |
-| Effective cost in the final year, pooled at the spend actually modelled | 47.30 |
-| Effective cost on the median path | 32.25 |
-| Pooled effective over anchor | 1.47 times |
+| The low-volume anchor, median of the driver, USD | 32.26 |
+| Effective cost in the final year, pooled at the spend actually modelled, USD | 55.39 |
+| Effective cost on the median path, USD | 33.31 |
+| Pooled effective over anchor, a ratio | 1.72 |
 
 Channels saturate. The effective cost rises as the square-root-ish power of spend
 over a sampled reference spend, and again as the reachable pool is penetrated.
 Quoting the anchor as the cost at scale would understate by a factor of
-1.47 at the spend actually modelled. The median path is a different
-story, at 32.25, because the median path never spends enough to
+1.72 at the spend actually modelled. The median path is a different
+story, at 33.31, because the median path never spends enough to
 saturate anything; that is why the pooled figure is the one to plan against. The
-effective cost is published by month in `out/por_monthly.csv` as
-`cac_effective_blended_mean`, with the non-creator channel beside it.
+A related but different series is published by month in `out/por_monthly.csv` as
+`cac_effective_blended_mean`, with the non-creator channel beside it. It is not
+the same number: it excludes verification and the shock wastage, and it is a
+mean of a within-month weighted cost. Do not read the two as one series.
+
+One more caution on the pooled figure. Pooling weights by acquisitions, so it is
+pulled by the largest paths, and LIMITS.md says plainly that the top of that
+distribution is not believable. The pooled figure is the right basis for "what
+does a household cost at the spend actually modelled" and it is still a
+tail-influenced statistic; the median path's figure is beside it for that reason.
 
 **Lifetime value against cost per acquisition in the final year.** Pooled gross
-lifetime value is 104.26 dollars against a pooled effective acquisition
-cost of 47.30, a ratio of 2.20. On
-5.0 per cent of individual paths that ratio is below one: the business
+lifetime value is 103.28 dollars against a pooled effective acquisition
+cost of 55.39, a ratio of 1.86. On
+5.8 per cent of individual paths that ratio is below one: the business
 is buying households for more than they are worth, in the final year, on that
 share of paths. The acquisition budget is capped at 0.75 times lifetime value,
 which is what keeps that share as low as it is.
@@ -227,11 +259,11 @@ probability sampled between 0.20 and 0.85 and a progression
 rate sampled between 0.65 and 0.98. Running the segment mix pinned to all-examination-year and then to
 all-pre-examination-year, on the same random numbers:
 
-| | Months per acquisition |
+| | Value |
 |---|---|
-| Examination year | 2.97 |
-| Pre-examination year | 3.67 |
-| A-level | 4.08 |
+| Examination year, months per acquisition | 2.96 |
+| Pre-examination year, months per acquisition | 3.69 |
+| A-level, months per acquisition | 4.09 |
 | **Ratio, pre-examination to examination** | **1.24** |
 
 The ratio the code produces is 1.24, not two. It reaches two or
@@ -240,14 +272,14 @@ better on 0.0 per cent of paths.
 **The summer is not where it goes, and an earlier draft of this passage said it
 was, following docs/10's own caveat rather than the model.** Pinning the summer
 lapse to zero and progression to one, which removes the summer entirely, lifts
-the ratio only to 1.75. Pinning in-term churn to the bottom of its
-prior range instead, with the summer left alone, gives 1.31. Only
-pinning both recovers it, at 2.01. **It is in-term churn, not the
+the ratio only to 1.77. Pinning in-term churn to the bottom of its
+prior range instead, with the summer left alone, gives 1.32. Only
+pinning both recovers it, at 2.03. **It is in-term churn, not the
 summer, that is eating the Year 10 advantage**, and docs/10's caveat sends the
 owner to measure the wrong thing first.
 
 There is a larger problem sitting underneath those numbers, and it is in
-LIMITS.md: an examination-year household is retained 2.97 months in this
+LIMITS.md: an examination-year household is retained 2.96 months in this
 model, against a product sold as a cycle plan running to the last paper. The
 average customer of a nine-month plan does not finish a cycle. That follows from
 the churn prior, which nothing has measured.
@@ -255,16 +287,26 @@ the churn prior, which nothing has measured.
 ### The allowance is sold but not enforced
 
 23.6 per cent of active households exceed the session allowance being
-sold to them, weighted by household-months.
+sold to them. That is a household-month weighted share WITHIN each path, then a
+plain mean across paths, so a path with a hundred households and a path with one
+count equally in it.
 
 The allowance is not enforced. Sessions above it are delivered and cost money, and
-they are billed only up to two and a half times the allowance. So the omission
-sits on one side only and its sign is known rather than assumed away: above the
-billing cap, cost runs and revenue does not. Enforcing the allowance instead is
-worth
-91,453 dollars of terminal cash on the mean. Nothing here was
-measured: that is a difference between two simulations on invented priors. What
-it is, is a question the instrument can now answer rather than argue about.
+they are billed only up to 2.5 times the allowance. So the omission sits on
+one side only and its sign is known rather than assumed away: above the billing
+cap, cost runs and revenue does not.
+
+**Enforcing the allowance instead destroys 3,965,012 dollars of terminal
+cash on the mean.** The overage revenue lost is larger than the inference cost
+saved, which is what you would expect once the numbers are on the same side of
+the question, and is the opposite of what an earlier version of this scenario
+said. That version truncated delivery at the billing cap rather than at the
+allowance, so it cut off a level almost nobody reaches and kept the overage
+revenue; see `CHANGELOG.md` 2.3.
+
+Nothing here was measured: it is a difference between two simulations on invented
+priors. What it is, is a question the instrument can now answer rather than argue
+about, and it answers it the other way round.
 
 ---
 
@@ -275,16 +317,16 @@ modelled cost.
 
 | Line | USD | Share |
 |---|---|---|
-| Content: examiner validation and authoring | 13,965,826 | 35.5% |
-| Acquisition spend | 10,936,830 | 27.8% |
-| People, Bengaluru | 6,448,536 | 16.4% |
-| People, United Kingdom | 3,284,398 | 8.3% |
-| Step costs: entities, counsel, certification, premises, representative | 1,271,772 | 3.2% |
-| Payment processing | 1,253,886 | 3.2% |
-| Inference | 1,045,446 | 2.7% |
-| Age assurance | 459,023 | 1.2% |
-| Support | 316,402 | 0.8% |
-| Retrieval, storage, telemetry | 294,408 | 0.7% |
+| Content: examiner validation and authoring | 13,965,826 | 36.3% |
+| Acquisition spend | 10,441,178 | 27.2% |
+| People, Bengaluru | 6,448,536 | 16.8% |
+| People, United Kingdom | 3,267,690 | 8.5% |
+| Step costs: entities, counsel, certification, premises, representative | 1,271,459 | 3.3% |
+| Payment processing | 1,095,606 | 2.8% |
+| Inference | 945,424 | 2.5% |
+| Age assurance | 403,287 | 1.0% |
+| Support | 278,541 | 0.7% |
+| Retrieval, storage, telemetry | 259,965 | 0.7% |
 | Institution onboarding, per school | 65,424 | 0.2% |
 | App store fees | 0 | 0.0% |
 
@@ -294,17 +336,17 @@ telling.
 **Content is the largest line, not acquisition.** docs/10 is right that content
 does not enter the payback ratio, because it does not scale with learners. It is
 nonetheless the largest single call on cash in a plan that builds this much of it.
-On 84.0 per cent of individual paths content exceeds acquisition, and on
-59.7 per cent it exceeds both acquisition and people, so this is not an
+On 84.6 per cent of individual paths content exceeds acquisition, and on
+60.1 per cent it exceeds both acquisition and people, so this is not an
 artefact of averaging.
 
 **The load-bearing assumption in docs/10 holds.** That document assumes variable
 cost per month is small relative to price, and says plainly that if it is not, the
 sensitivity ordering reverses and cost engineering becomes the priority. Inference
-is 2.7 per cent of total cost under these priors. The row does not reverse.
+is 2.5 per cent of total cost under these priors. The row does not reverse.
 
 **Age assurance, the condition the route decision turns on, is
-1.2 per cent of cost.** That is not an argument that condition C2 does not
+1.0 per cent of cost.** That is not an argument that condition C2 does not
 matter. C2 is a threshold test against the first month of contribution, not a
 share of the cost base, and section 10 gives its break-even. But the idea that
 verification could dominate the cost structure is not supported: what it does is
@@ -319,9 +361,9 @@ within a band of ranks**, not by blending unrelated percentiles. The central ban
 is ranks 40 to 60 per cent, the low band 10 to 30, the high band 70 to 90.
 
 That construction has a property a reader will not assume, so it is measured and
-published. The central band line sits at the 49.9 percentile of the real
+published. The central band line sits at the 49.8 percentile of the real
 per-path distribution of cumulative cash at the end of the horizon, and between
-the 49.8 and 57.3 percentiles across the months from go-to-market
+the 49.8 and 56.7 percentiles across the months from go-to-market
 onward. It moves between scenarios as well: on the software-anchored scenario it
 ends at 49.9, and on the tutoring-anchored one at
 50.1.
@@ -340,18 +382,19 @@ divided by one another.
 **The minimum of an average is shallower than the average of minimums**, and the
 headline understates.
 
-| | USD |
+| | Value |
 |---|---|
-| Minimum of the mean cumulative cash line, the headline figure | -10,465,590 at month 43 |
-| Mean of each path's own minimum | -20,550,577 |
-| Ratio | 0.5093 |
-| **The headline is shallower by** | **49.1 per cent** |
+| Minimum of the mean cumulative cash line, USD | -12,149,776 |
+| The month it reaches it | 55 |
+| Mean of each path's own minimum, USD | -20,663,286 |
+| Ratio of the two | 0.5880 |
+| **The headline is shallower by** | **41.2 per cent** |
 
-The per-path distribution beside it: tenth percentile -33,468,803, ninetieth
--6,071,151, mean month of the trough 53.6. The averaged line reaches its
-low at month 43; individual paths reach theirs, on average, at month
-53.6. Planning to the averaged line plans to a trough that is
-49.1 per cent shallower and later than the one a given path actually meets.
+The per-path distribution beside it: tenth percentile -33,509,657, ninetieth
+-6,268,830, mean month of the trough 54.0. The averaged line reaches its
+low at month 55; individual paths reach theirs, on average, at month
+54.0. Planning to the averaged line plans to a trough that is
+41.2 per cent shallower and later than the one a given path actually meets.
 
 ### The sustained bad run
 
@@ -373,8 +416,8 @@ within-bin noise. Without the correction every driver scores about the bin count
 over the path count and a driver that does nothing looks like it does something.
 
 **Read the sum before reading the ordering.** First-order indices sum to
-0.161 on terminal cash, 0.766 on its rank transform,
-0.790 on peak funding and 0.515 on whether a path
+0.177 on terminal cash, 0.770 on its rank transform,
+0.790 on peak funding and 0.493 on whether a path
 reaches profitability.
 
 **Only the raw terminal-cash decomposition is interaction-dominated**, and that is
@@ -391,11 +434,11 @@ Target: does a path run three consecutive cash-positive months inside the horizo
 
 | Rank | Driver | First-order index |
 |---|---|---|
-| 1 | cac_anchor_usd | 0.220 |
-| 2 | anchor_u | 0.162 |
-| 3 | cac_ref_spend_usd | 0.046 |
-| 4 | sat_kappa | 0.017 |
-| 5 | churn_base | 0.013 |
+| 1 | cac_anchor_usd | 0.202 |
+| 2 | anchor_u | 0.160 |
+| 3 | cac_ref_spend_usd | 0.043 |
+| 4 | sat_kappa | 0.016 |
+| 5 | churn_base | 0.014 |
 
 ### How much capital it takes
 
@@ -403,12 +446,12 @@ Target: the peak funding requirement.
 
 | Rank | Driver | First-order index |
 |---|---|---|
-| 1 | items_per_unit | 0.162 |
-| 2 | cac_anchor_usd | 0.108 |
-| 3 | anchor_u | 0.102 |
-| 4 | writer_gbp_item | 0.081 |
-| 5 | minutes_per_item | 0.078 |
-| 6 | board_reuse | 0.066 |
+| 1 | items_per_unit | 0.165 |
+| 2 | cac_anchor_usd | 0.102 |
+| 3 | anchor_u | 0.100 |
+| 4 | writer_gbp_item | 0.082 |
+| 5 | minutes_per_item | 0.079 |
+| 6 | board_reuse | 0.067 |
 | 7 | examiner_rate_gbp_hr | 0.043 |
 
 **The two orderings are different and the difference is the finding.** Acquisition
@@ -432,12 +475,12 @@ number and the difference is that driver's alone.
 
 | Driver pinned | Terminal cash at q5 | at q95 | Swing |
 |---|---|---|---|
-| items_per_unit | -1,904,548 | -15,430,111 | 13,525,563 |
-| cac_anchor_usd | 37,463,668 | -24,229,860 | 61,693,528 |
-| anchor_u | 5,719,391 | -23,388,433 | 29,107,825 |
-| writer_gbp_item | -4,014,722 | -13,311,543 | 9,296,821 |
-| minutes_per_item | -3,790,432 | -13,577,961 | 9,787,530 |
-| board_reuse | -13,109,631 | -4,285,354 | 8,824,276 |
+| items_per_unit | -4,932,656 | -18,458,219 | 13,525,563 |
+| cac_anchor_usd | 24,148,537 | -24,233,223 | 48,381,761 |
+| anchor_u | 16,898 | -23,565,709 | 23,582,606 |
+| writer_gbp_item | -7,042,831 | -16,339,651 | 9,296,821 |
+| minutes_per_item | -6,818,540 | -16,606,069 | 9,787,530 |
+| board_reuse | -16,137,739 | -7,313,463 | 8,824,276 |
 
 Two notes on that table. The `anchor_u` row is degenerate and is reported as such:
 that driver is a uniform compared against a threshold, so pinning it is not a
@@ -453,12 +496,14 @@ endpoints will occasionally differ from the printed swing by one dollar;
 
 ### The grid
 
-The two drivers owning the most variance on the capital target, crossed five by
-five, each cell a full re-run on the same random numbers.
+The two drivers owning the most variance, crossed five by five, each cell a full
+re-run on the same random numbers. `sensitivity.py` selects them on the
+rank-transformed terminal-cash target; they are also ranks one and two on the
+capital target, so the pair is the same either way.
 
 `out/twoway_grid.csv` holds items_per_unit against cac_anchor_usd. Terminal cash
-across the grid runs from -30,143,226 to 31,972,572, a range of
-62,115,798.
+across the grid runs from -30,148,750 to 21,515,285, a range of
+51,664,035.
 
 The shape matters more than the range. Moving one step down the content axis costs
 roughly the same amount wherever you are on the acquisition axis: content is close
@@ -479,32 +524,32 @@ disagree in sign the scenario is marked. A third column gives the effect on the
 peak funding requirement at the eightieth percentile, which is the statistic
 section 11 sizes the rounds on.
 
-| Scenario | Delta, mean | Delta, median path | Delta, peak funding p80 | Signs agree |
+| Scenario | Delta, mean | Delta, median path | Delta, peak funding p80 | Mean and median agree in sign: 1 yes, 0 no |
 |---|---|---|---|---|
-| Condition C1 passes: tutoring anchor on every path | 14,402,352 | 2,971,430 | -2,219,149 | 1 |
-| Condition C1 fails: software anchor on every path | -14,705,473 | -2,324,743 | 1,916,325 | 1 |
-| Without the institution channel | 2,238,366 | 2,257,974 | -2,249,597 | 1 |
-| United Kingdom consumer only, no institution channel | 189,627 | 7,605,256 | -10,770,756 | 1 |
-| Half the engineering forced onshore | -6,695,136 | -6,484,806 | 7,454,941 | 1 |
-| All learner-facing engineering onshore | -13,390,271 | -12,733,804 | 15,267,234 | 1 |
-| With driver dependence imposed | 3,895,528 | -42,260 | 176,804 | 0 |
-| With the feedback loops switched on | -8,132,352 | -1,246,718 | 1,156,656 | 1 |
-| Dependence and feedback together | -6,260,254 | -1,238,053 | 1,283,162 | 1 |
-| Creators want money | -2,082,643 | -1,357,209 | 1,426,223 | 1 |
-| A share of billing through an app store | -2,248,015 | -377,080 | 316,545 | 1 |
-| Go-to-market three months later | -1,234,592 | 304,420 | -433,167 | 0 |
-| Go-to-market six months later | -367,654 | 1,970,418 | -2,943,539 | 0 |
-| Foreign exchange sampled rather than fixed | 42,566 | 12,249 | 4,619 | 1 |
-| India opened direct to parents | -3,286,962 | -2,979,206 | 4,445,293 | 1 |
-| The allowance enforced | 91,453 | 39,732 | -19,082 | 1 |
+| Condition C1 passes: tutoring anchor on every path | 11,727,966 | 2,850,175 | -2,188,786 | 1 |
+| Condition C1 fails: software anchor on every path | -11,854,640 | -2,314,353 | 1,893,415 | 1 |
+| Without the institution channel | 2,240,198 | 2,207,080 | -2,280,674 | 1 |
+| United Kingdom consumer only, no institution channel | 1,609,577 | 7,550,724 | -10,780,102 | 1 |
+| Half the engineering forced onshore | -4,010,442 | -3,459,517 | 3,553,788 | 1 |
+| All learner-facing engineering onshore | -8,020,885 | -6,899,353 | 7,287,301 | 1 |
+| With driver dependence imposed | 2,843,486 | -30,631 | 155,947 | 0 |
+| With the feedback loops switched on | -4,423,293 | -1,026,866 | 945,772 | 1 |
+| Dependence and feedback together | -2,559,688 | -1,007,505 | 1,093,528 | 1 |
+| Creators want money | -1,971,141 | -1,382,364 | 1,417,274 | 1 |
+| A share of billing through an app store | -1,955,115 | -411,040 | 307,085 | 1 |
+| Go-to-market three months later | -585,519 | 289,489 | -456,652 | 0 |
+| Go-to-market six months later | 769,606 | 1,970,944 | -2,964,762 | 1 |
+| Foreign exchange sampled rather than fixed | 41,454 | -2,933 | -11,118 | 0 |
+| India opened direct to parents | -3,239,977 | -3,014,495 | 4,450,728 | 1 |
+| The allowance enforced | -3,965,012 | -531,890 | 404,567 | 1 |
 
-The plan of record itself is -8,682,961 on the mean and
--20,176,327 on the median path. The gap between those two numbers is
+The plan of record itself is -11,711,069 on the mean and
+-20,252,933 on the median path. The gap between those two numbers is
 the reason the second column exists.
 
 Five readings.
 
-**The price anchor is worth 29,107,825 dollars between its two states**, and
+**The price anchor is worth 23,582,606 dollars between its two states**, and
 it is a landing page and a few days of spend to test. It is condition C1 in
 docs/09, and nothing else in this instrument comes close to it on cost of
 information.
@@ -515,16 +560,16 @@ each path into one regime or the other with probability 0.50, so it is a
 mixture of both. The quantity a landing-page test resolves is the spread between
 the regimes, which is the larger number.
 
-**Dropping the institution channel is worth 2,238,366 dollars on the mean and
-2,257,974 on the median path.** Field sales
+**Dropping the institution channel is worth 2,240,198 dollars on the mean and
+2,207,080 on the median path.** Field sales
 salaries, per-school onboarding, a security certification and its annual renewal,
-against contracts worth 0.56 per cent of net revenue. On these priors Route B
+against contracts worth 0.64 per cent of net revenue. On these priors Route B
 as scoped here does not pay for itself inside the horizon. docs/09's argument for
 Route B was never that it pays sooner; it was that it produces the outcome
 evidence that is the only durable moat, and this instrument does not value
 evidence. That is a limit of the instrument, not a refutation of the argument.
 
-**The feedback loops cost 8,132,352 dollars.** A higher price costs
+**The feedback loops cost 4,423,293 dollars.** A higher price costs
 retention, expanding faster costs quality and quality costs retention, and a higher
 automation ceiling costs engineering heads. The base model has none of these and
 is therefore optimistic by that amount. Every lever in section 8 should be read
@@ -533,52 +578,100 @@ figures: `out/variants.csv` carries no feedback-on version of the individual
 levers, so every figure there is feedback-off and each is optimistic by a share
 of this amount.
 
-**Imposed dependence is worth 3,895,528 dollars, in the favourable
+**Imposed dependence is worth 2,843,486 dollars, in the favourable
 direction.** Ten rank correlations were imposed by Iman-Conover reordering, which
 preserves every marginal exactly: 10 pairs, worst achieved-against-target
 error 0.016, and every marginal verified unchanged in
 `out/imanconover_check.csv`. The direction is not a comfort: it means the base run
 is conservative on dependence and optimistic on feedback, and the two do not
-cancel. Together they are -6,260,254.
+cancel. Together they are -2,559,688.
 
-**Launching later is not monotonic, and the reason is a defect in the comparator
-rather than a fact about the calendar.** Three months late costs
-1,234,592; six months late costs 367,654, which is less.
+**The launch-delay scenarios do not support any conclusion at all, and the honest
+thing is to say so rather than to quote the one column that agrees with
+intuition.** On the mean, both delays cost money. On the median path and on the
+capital requirement, both delays HELP:
 
-That is not a finding about examination timing. `launch_shift` moves the content
-schedule along with the market openings, so a six-month shift pushes the
-month-54 content step past the end of the horizon and the run simply never pays
-for it. Content cost falls by 1,720,691 dollars against the plan of
-record at a six-month shift, against 189,913 at three months.
-**The saving is the horizon boundary, not the season.** The two launch scenarios
-are therefore usable for "later is worse" and not for comparing one delay against
-another, and no calendar conclusion should be drawn from them.
+| | Delta, mean | Delta, median path | Delta, peak funding p80 |
+|---|---|---|---|
+| Three months late | -585,519 | 289,489 | -456,652 |
+| Six months late | 769,606 | 1,970,944 | -2,964,762 |
+
+Two things are wrong with these scenarios and both run the same way.
+
+`launch_shift` moves the content schedule along with the market openings, so a
+six-month shift pushes the month-54 content step past the end of the horizon and
+the run never pays for it: content cost falls by
+1,720,691 dollars against the plan of record at six months,
+against 189,913 at three. And `launch_shift` does NOT move the
+platform headcount floor, the general and administrative schedule, the data
+protection officer hires, the initial counsel spend or the Article 27
+representative, so a delayed launch pays the same sixty months of fixed overhead
+against a shorter trading window.
+
+The first effect flatters delay and the second penalises it, and nothing here
+separates them. **Draw no calendar conclusion from these two rows.** What the
+model does say about the calendar is in the retained-month figures in section 4,
+which are about when in the year a household is acquired rather than when the
+product launches.
 
 ---
 
 ## 10. What the break-evens say
 
-**On the plan of record, there are none.** Ten questions were solved by bisection
-on a pinned driver, each across that driver's entire prior range, against three
-targets: the median path ending the horizon whole, half of paths reaching
-profitability, and the plan needing no more than ten million dollars at the
-eightieth percentile. **Every one is unbracketed.** No value of the reachable
-pool, the acquisition anchor, age assurance cost, validation minutes, item count,
-sessions per household, churn or price, anywhere in its prior range, reaches any
-of those targets on the plan of record.
+**On the cash targets, there are none. On the profitability target, there are
+four, and they are the most actionable numbers in this document.**
 
-That is not a modelling failure; it is the answer. Content is 35.5 per cent of
-cost, people 16.4 per cent in Bengaluru plus 8.3 in the United Kingdom,
-and step costs 3.2 per cent. Not one of them depends on whether a single
-household buys. A driver that acts only on demand cannot move a cost base that
-demand does not touch.
+3 targets were solved by bisection on a pinned driver, each across that
+driver's entire prior range: the median path ending the horizon whole, the plan
+needing no more than ten million dollars at the eightieth percentile, and half of
+all paths running three consecutive cash-positive months.
+12 questions per scope, 24 rows in all.
+20 are unbracketed and 4 bracket.
 
-**The same solve was run again on the narrowest scope**, the go-to-market minimum
-of five GCSE subjects at one board in the United Kingdom with no institution
-channel, and **it is unbracketed there too**. `out/breakeven.csv` records both
-scopes and records every row as "not bracketed by the prior range". Neither scope
-has a single-driver break-even. That is the honest reading and the write-up is not
-going to imply otherwise.
+**Nothing rescues the cash targets.** No value of the reachable pool, the
+acquisition anchor, age assurance cost, validation minutes, item count, sessions
+per household, churn or price, anywhere in its prior range, gets the median path
+whole or brings the capital requirement under ten million dollars, on either
+scope. That is not a modelling failure; it is the answer, and the reason is in
+the cost split. Content is 36.3 per cent of cost, people 16.8 per cent in
+Bengaluru plus 8.5 in the United Kingdom, and step costs 3.3 per cent.
+A driver that acts only on demand cannot move a cost base that demand does not
+touch. (The one qualification: the United Kingdom safeguarding rota steps on
+active households, so part of that people line does respond to demand. See
+LIMITS.md item 5.)
+
+### The four that do solve
+
+All four are on the same target, half of all paths running three consecutive
+cash-positive months, and all four are on the two drivers section 8 says decide
+whether the venture exists at all. **That is not a coincidence; it is the
+instrument agreeing with itself.**
+
+| Scope | Driver | Break-even | Prior median |
+|---|---|---|---|
+| Plan of record | acquisition anchor | 8.97 USD | 32.26 |
+| Plan of record | tutoring-anchored price | 39.98 GBP a month | 22.00 |
+| Go-to-market minimum | acquisition anchor | 12.99 USD | 32.26 |
+| Go-to-market minimum | tutoring-anchored price | 27.84 GBP a month | 22.00 |
+
+The price rows are the ones to look at, because docs/07 already has the
+comparator. Against the verified £25 to £45 an hour GCSE tutoring rate, the
+narrow scope's break-even price of
+27.84 a month is
+1.11 hours of human tutoring at the bottom of that band and
+0.62 hours at the top. **That is inside docs/07's own substitution
+table, not outside it.** The plan of record needs
+39.98 a month, which is
+1.60 hours at the bottom of the band, near the top of that table.
+
+Both price figures are conditional on condition C1 passing, because they are
+solved with the anchor regime pinned to tutoring. If C1 fails there is no price
+in the range that reaches the target on either scope.
+
+**This changes the instruction section 10 gives, not its level.** The question is
+not "what rescues the plan", to which the answer is nothing. It is "at what
+acquisition cost, or at what price, does half of this become viable", and the
+instrument answers it on both scopes.
 
 ### What it takes, taken two at a time
 
@@ -593,19 +686,25 @@ same random numbers.
 
 | | Plan of record | Go-to-market minimum |
 |---|---|---|
-| Cells of 36 where the median path ends the horizon whole | 7 | 11 |
+| Cells of 36 where the median path ends the horizon whole | 6 | 10 |
 | Highest acquisition anchor that clears anywhere on the grid | 14.00 | 24.40 |
 | Price needed at that anchor, GBP a month | 31.35 | 36.59 |
-| Best cell | 57,761,611 | 21,418,935 |
-| Worst cell | -23,025,923 | -6,095,045 |
+| Best cell | 41,608,659 | 15,793,057 |
+| Worst cell | -23,031,414 | -6,096,498 |
 
 **The boundary is set almost entirely by acquisition cost.** Read the grid across
 a row and the price axis moves the number; read it down a column and the
-acquisition axis decides whether there is a number to move. On the plan of record,
-an anchor above 14.00 dollars does not clear at any price in the
-prior range, including the top of it. The narrow scope tolerates an anchor up to
-24.40 dollars, which is the whole of what the narrower scope buys you:
-not a different business, a wider tolerance on the one number that decides it.
+acquisition axis decides whether there is a number to move.
+
+**These are grid quantiles, not solved boundaries, and should not be read as
+thresholds.** The highest anchor that clears anywhere on the plan-of-record grid
+is 14.00 dollars and on the narrow-scope grid
+24.40; the true boundaries lie somewhere between those
+tested points and the next ones up, so the ratio between them is bounded loosely
+rather than measured. The grid's top price is the ninety-fifth percentile of the
+prior, not its maximum, so "no price in the range" means no price the grid tested.
+The solved thresholds are in the break-even table above; the grid is here for the
+shape, which is that the acquisition axis decides and the price axis adjusts.
 
 **The instruction this yields is about scope and about acquisition, not about any
 other parameter.** How much is attempted before the first evidence arrives is the
@@ -623,27 +722,34 @@ flow, so the sizing is not circular.
 
 | Scope | Seed, to month 18 | Series A, 18 to 36 | Series B, 36 to 60 | Whole horizon, p80 |
 |---|---|---|---|---|
-| Plan of record | 10,326,427 | 12,027,164 | 15,056,294 | 28,435,028 |
-| United Kingdom consumer only | 8,538,001 | 5,542,614 | 9,153,607 | 17,664,272 |
-| Go-to-market minimum: five subjects, one board | 3,423,388 | 2,380,462 | 3,422,151 | 6,905,883 |
-| One subject, one board | 2,122,045 | 2,286,522 | 3,335,041 | 5,892,678 |
+| Plan of record | 10,315,167 | 12,036,017 | 15,118,365 | 28,519,031 |
+| United Kingdom consumer only | 8,533,286 | 5,561,575 | 9,241,401 | 17,738,929 |
+| Go-to-market minimum: five subjects, one board | 3,421,208 | 2,386,712 | 3,448,133 | 6,936,086 |
+| One subject, one board | 2,118,566 | 2,298,756 | 3,382,851 | 5,938,868 |
 
 **The round is sized on the plan of record, and the base case is stated beside
 it.** They differ by enough that sizing on the base case would underfund the plan
-the owner has actually described: 28.44 million against
-17.66 million across the horizon.
+the owner has actually described: 28.52 million against
+17.74 million across the horizon.
 
 **The last column and the first three are computed by different rules, and the
 difference is not small.** Each staged round carries six months of that stage's
 own burn as buffer; the whole-horizon figure is the bare eightieth percentile of
 the peak drawdown with no buffer at all. Added up, the plan of record's three
-staged rounds come to 37,409,884, which is
-8,974,857 more than the whole-horizon figure, a ratio of
-1.316. **Raise against the staged number, not the headline**: the
-headline is what the plan consumes if every round closes exactly as the previous
-one runs out, which is not how rounds close.
+staged rounds come to 37,469,549, which is
+8,950,518 more than the whole-horizon figure, a ratio of
+1.314. **Raise against the staged number rather than the headline** if you want a
+number that survives rounds closing late: the headline is what the plan consumes
+if every round closes exactly as the previous one runs out, which is not how
+rounds close. As in section 8, each figure in that table is rounded from its own
+float, so adding the printed rows will differ from the printed sum by a dollar;
+`out/funding.csv` carries the unrounded values.
 
-84.8 per cent of individual paths need more than ten million dollars.
+**And read every figure in this section as an order of magnitude, not a number.**
+They are rendered to the dollar because that is what the file holds, not because
+they are known to the dollar. Nothing in this instrument is.
+
+85.4 per cent of individual paths need more than ten million dollars.
 
 ### The staging does not match the decisions
 
@@ -660,7 +766,7 @@ round opens: all four United Kingdom boards live at month 18, built from month 1
 The rest-of-English-speaking market at month 24 starts its build at month 18,
 exactly when the Series A opens, so by the file's own test it does not qualify.
 
-**A round of 10,326,427 dollars is not a seed round.** Calling it one and
+**A round of 10,315,167 dollars is not a seed round.** Calling it one and
 then discovering at month 18 that the Series A is paying for choices made at month
 12 is the failure mode that staging is supposed to prevent.
 
@@ -668,56 +774,81 @@ then discovering at month 18 that the Series A is paying for choices made at mon
 
 ## 12. The decisions that are yours, not the model's
 
-Ranked by how much each moves the answer.
+**The ordering of the top two depends on which statistic you rank on, and nothing
+here can settle that for you.** On the capital requirement at the eightieth
+percentile, scope comes first: 21,582,945 against the price anchor's
+4,082,201. On terminal cash at the mean, the anchor comes first:
+23,582,606 against a scope difference the same statistic puts at
+1,609,577. The two statistics disagree by more than an order of
+magnitude and they disagree about the order. Both are published so that the
+disagreement is visible rather than resolved by whichever one was quoted.
+
+Items 3 onward are ordered by terminal cash at the mean, and the same caution
+applies to every one of them.
 
 **Every figure below is feedback-off**, because `out/variants.csv` carries no
 feedback-on version of the individual levers. The feedback loops cost
-8,132,352 dollars in total, so each lever here is optimistic by some
-share of that. Read the ordering, not the levels.
+4,423,293 dollars in total, so each lever here is optimistic by some
+share of that. Read the ordering, not the levels, and read the ordering knowing
+it moves with the statistic.
 
 **1. How much scope to attempt before the first evidence arrives.** The plan of
-record needs 28,435,028 against 6,905,883 for the
-go-to-market minimum, a spread of 21,529,145. It is entirely yours: the
-model has no view on how much ambition is correct, only on what each amount
-costs. It is not the largest number printed anywhere in this document, which is
-the acquisition-anchor sweep in section 8; it is the largest one that is a
-decision rather than a driver.
+record needs 28,519,031 against 6,936,086 for the
+go-to-market minimum, a spread of 21,582,945 **on the capital
+requirement**. On terminal cash the nearest published comparison is the United
+Kingdom-only scenario, which the same statistic puts at 1,609,577,
+close to nothing. **Scope is the dominant decision on the statistic that sizes
+rounds and a minor one on the statistic that measures return**, and you are
+entitled to know that before acting on it.
+
+It is entirely yours either way: the model has no view on how much ambition is
+correct, only on what each amount costs.
 
 **2. Whether to test the price anchor before building anything.** Worth
-29,107,825 between its two states, and it costs a landing page.
+23,582,606 between its two states, and it costs a landing page.
 It is already condition C1 in docs/09 and already milestone M1 in docs/11. The decision
 is whether you will actually stop if it fails.
 
 **3. Whether to run the institution channel at all inside this horizon.** Costs
-2,238,366 here, and buys outcome evidence that this instrument cannot
+2,240,198 here, and buys outcome evidence that this instrument cannot
 value. docs/09 makes the case for it honestly and this model is not equipped to
 answer it. You are.
 
 **4. What the session allowance should be, and whether to enforce it.** The
 allowance is set at 16 sessions a month in `model.py` as a decision, and
-23.6 per cent of households exceed it. Enforcing is worth
-91,453. The number is small; the commercial posture it implies,
-toward the struggling learner the product exists for, is not.
+23.6 per cent of households exceed it. **Enforcing it costs
+3,965,012**, because the overage revenue lost exceeds the
+inference cost saved.
 
-**5. Whether to bill through an app store.** Costs -2,248,015 and buys
+That is the rare case where the commercial posture and the arithmetic point the
+same way: the product exists for the struggling learner, the struggling learner
+is the one who exceeds the allowance, and on these priors they are worth more in
+overage than they cost in inference. The decision that remains yours is the
+allowance level itself, which sets how much of that shows up as overage rather
+than as plan price.
+
+**5. Whether to bill through an app store.** Costs 1,955,115 and buys
 distribution the model does not credit. docs/04 identifies app stores and payment
 processors as the real chokepoint, which is an argument for a second relationship
 rather than for or against the fee.
 
 **6. Whether India is worth a statutory prohibition.** Direct to parents is worth
--3,286,962 over five years against DPDP section 9(3). The institution
-route in India carries no such conflict and is what the plan of record models.
+3,239,977 over five years against DPDP section 9(3). The institution
+route in India carries no such conflict, and **this instrument does not model it**,
+so the figure is the prohibition's price and not a comparison between the two
+routes in. See section 2.
 
-**7. Where to launch in the calendar.** Delay costs money: three months late is
--1,234,592. The instrument cannot tell you which month is best,
-because its delay scenarios move the content schedule with the launch and so
-collide with the end of the horizon; see section 9. What the calendar mechanics
-in the model do say is that an examination-year household acquired after
-Christmas has months rather than a year, and the model's own retained-month
-figures in section 4 are the size of that.
+**7. Where to launch in the calendar. The instrument has nothing usable to say
+about this, and it is on the list so that nobody reads its silence as agreement.**
+The two delay scenarios disagree with themselves across the three statistics and
+are contaminated at both ends; section 9 sets out how. What the calendar mechanics
+do say is about when in the year a household is acquired rather than when the
+product launches: an examination-year household acquired after Christmas has
+months rather than a year, and the retained-month figures in section 4 are the
+size of that.
 
 **8. Whether to fix the exchange rate.** You instructed fixed rates. Sampling them
-moves the mean by 42,566, which is small; what it changes is the
+moves the mean by 41,454, which is small; what it changes is the
 width of the distribution, not its centre. See LIMITS.md.
 
 ---
@@ -726,11 +857,18 @@ width of the distribution, not its centre. See LIMITS.md.
 Kingdom children's learner data may be processed in Bengaluru at all is a question
 for counsel, not a decision for you. docs/05 flags it as a standard position not
 confirmed for this fact pattern. If the answer forces the learner path onshore,
-the Bengaluru cost base goes with it: -13,390,271 dollars of terminal cash
-at the worst reading, and people overtakes content as the largest cost line,
-which inverts the sensitivity ordering this whole document is built on. **It is
-the one unmodelled item that reorders the answer rather than shifting it, and it
-costs a letter to counsel to resolve.** It is X8 in OPEN_ITEMS.md.
+the Bengaluru cost base goes with it: 8,020,885 dollars of terminal cash
+at the worst reading, 7,287,301 on the capital requirement, and people
+overtakes content as the largest cost line.
+
+**It re-ranks the sensitivity; it does not invert it.** Running the decomposition
+under full onshoring moves a United Kingdom salary driver into the top three on
+capital and pushes item count down, but content drivers still hold most of the
+top seven and section 8's instruction survives with a people driver inserted. An
+earlier draft of this paragraph said it inverted the ordering. It does not, and
+saying so was the kind of overstatement this document is supposed to catch. It
+is still the largest thing a letter to counsel could resolve. It is X8 in
+OPEN_ITEMS.md.
 
 ---
 
@@ -739,7 +877,7 @@ costs a letter to counsel to resolve.** It is X8 in OPEN_ITEMS.md.
 | File | What it holds |
 |---|---|
 | `model.py` | Drivers, mechanisms, month loop. Every driver's note says what anchors its range, or that nothing does. |
-| `harness.py` | The character-for-character gate. Everything downstream runs through it. |
+| `harness.py` | The character-for-character gate. Every script that runs the model goes through it. |
 | `out/por_monthly.csv` | The monthly output of the published run: 60 rows, every series as a mean, three percentiles and three band lines. |
 | `out/por_paths.csv` | 20000 rows: every per-path outcome and every driver value. |
 | `out/sobol.csv`, `out/tornado.csv` | The full sensitivity, every driver against four targets. |
@@ -761,5 +899,17 @@ disk.
 every number printed here exists on disk to the precision it is printed at. It
 does not check that the sentence around the number is true, and it cannot: a
 figure quoted in the wrong place, or described as the wrong quantity, passes.
-Every error of that kind in this document was found by a person reading it, not
-by the verifier. Run it anyway, because it catches the other kind.
+
+It is also far weaker on small numbers than on large ones. With on the order of a
+thousand figures on disk, a seven-digit dollar amount effectively cannot match by
+accident; a one-decimal percentage often can; and a small integer, a month index
+or a rank, matches something almost always. **So the pass is strongest exactly
+where it is least needed**, because the dollar figures are substituted from
+`out/figures.csv` at render time and cannot drift by construction, and weakest on
+the hand-typed counts and ordinals, which is where every error the reviewers found
+actually was. Numbers written as words escape it entirely.
+
+The remedy has been to convert counts and ordinals into rendered tokens computed
+from the files, which is why `figures.py` now counts bracketed break-even rows,
+absent cost lines, off-tests and driver ranks rather than leaving them to prose.
+Run the verifier anyway, because it catches the other kind of error.

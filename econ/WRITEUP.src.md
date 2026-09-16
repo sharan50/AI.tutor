@@ -292,13 +292,21 @@ plain mean across paths, so a path with a hundred households and a path with one
 count equally in it.
 
 The allowance is not enforced. Sessions above it are delivered and cost money, and
-they are billed only up to two and a half times the allowance. So the omission
-sits on one side only and its sign is known rather than assumed away: above the
-billing cap, cost runs and revenue does not. Enforcing the allowance instead is
-worth
-@@delta_por_allowance_enforced_terminal_cash_mean|usd0@@ dollars of terminal cash on the mean. Nothing here was
-measured: that is a difference between two simulations on invented priors. What
-it is, is a question the instrument can now answer rather than argue about.
+they are billed only up to @@const_OVERAGE_CAP_MULT|num1@@ times the allowance. So the omission sits on
+one side only and its sign is known rather than assumed away: above the billing
+cap, cost runs and revenue does not.
+
+**Enforcing the allowance instead destroys @@delta_por_allowance_enforced_terminal_cash_abs|usd0@@ dollars of terminal
+cash on the mean.** The overage revenue lost is larger than the inference cost
+saved, which is what you would expect once the numbers are on the same side of
+the question, and is the opposite of what an earlier version of this scenario
+said. That version truncated delivery at the billing cap rather than at the
+allowance, so it cut off a level almost nobody reaches and kept the overage
+revenue; see `CHANGELOG.md` 2.3.
+
+Nothing here was measured: it is a difference between two simulations on invented
+priors. What it is, is a question the instrument can now answer rather than argue
+about, and it answers it the other way round.
 
 ---
 
@@ -808,9 +816,16 @@ answer it. You are.
 
 **4. What the session allowance should be, and whether to enforce it.** The
 allowance is set at @@const_SESSION_ALLOWANCE|int@@ sessions a month in `model.py` as a decision, and
-@@por_mean_share_over_allowance_pct|num1@@ per cent of households exceed it. Enforcing is worth
-@@delta_por_allowance_enforced_terminal_cash_mean|usd0@@. The number is small; the commercial posture it implies,
-toward the struggling learner the product exists for, is not.
+@@por_mean_share_over_allowance_pct|num1@@ per cent of households exceed it. **Enforcing it costs
+@@delta_por_allowance_enforced_terminal_cash_abs|usd0@@**, because the overage revenue lost exceeds the
+inference cost saved.
+
+That is the rare case where the commercial posture and the arithmetic point the
+same way: the product exists for the struggling learner, the struggling learner
+is the one who exceeds the allowance, and on these priors they are worth more in
+overage than they cost in inference. The decision that remains yours is the
+allowance level itself, which sets how much of that shows up as overage rather
+than as plan price.
 
 **5. Whether to bill through an app store.** Costs @@delta_por_appstore_terminal_cash_abs|usd0@@ and buys
 distribution the model does not credit. docs/04 identifies app stores and payment
