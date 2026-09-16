@@ -170,8 +170,16 @@ add("share_paths_terminal_cash_positive", float((OUTC["terminal_cash"] > 0).mean
 #           year to speak of.
 FY = slice(NS["HORIZON"] - 12, NS["HORIZON"])
 hh_months = float(MOUT["active_hh"][:, FY].sum())
-contrib_pooled_total = float((MOUT["net_rev_consumer"][:, FY] + MOUT["net_rev_schools"][:, FY]
-                              - MOUT["inference_cost"][:, FY] - MOUT["support_cost"][:, FY]
+# Consumer-only, to match the per-path column printed beside it. CHANGELOG 5.2
+# stripped the institution channel out of path_outcomes' version and left this
+# pooled twin carrying institution revenue in the numerator and the WHOLE
+# inference line -- school seats included -- as its cost, over a denominator of
+# consumer household months. The write-up prints the two in one table row as
+# though they were the same quantity. See CHANGELOG 6.6.
+contrib_pooled_total = float((MOUT["net_rev_consumer"][:, FY]
+                              - (MOUT["inference_cost"][:, FY]
+                                 - MOUT["school_inference_cost"][:, FY])
+                              - MOUT["support_cost"][:, FY]
                               - MOUT["payment_cost"][:, FY] - MOUT["hosting_cost"][:, FY]
                               - MOUT["appstore_fee"][:, FY]).sum())
 allin_pooled_total = float((MOUT["net_cash"][:, FY] + MOUT["cac_spend"][:, FY]
@@ -330,19 +338,21 @@ add("por_total_cost_recomputed", total_cost, "USD",
 # 0. What the acquisition budget cap believes about retention, against what the
 #    model delivers. Two documents claimed this file published both numbers
 #    before it did; round 4's coherence pass caught that. It does now.
-_ch = np.clip(DRV["churn_base"], 1e-3, 0.95)
-_keep_first = (1.0 - DRV["churn_m1_extra"]) * (1.0 - _ch)
 _num = np.zeros(P); _den = np.zeros(P)
+# This block used to re-implement ltv_estimate rather than call it, and the
+# duplicate carried the arithmetic CHANGELOG 5.4 says was removed: the
+# pre-examination leg capped at the sitting plus ten where the loop caps it at
+# the progression month, and the post-progression leg reusing m_exam where the
+# function uses a flat ten months. So the published "what the cap believes"
+# figure was 5.866 months against the 5.227 the function actually assumes,
+# 12.2 per cent high, and LIMITS.md narrated the fix while quoting the unfixed
+# number. Calling the published function is the only way this file cannot drift
+# from it again. See CHANGELOG 6.5.
+_billed_months = NS["ltv_billed_months"]
 for _t in range(NS["HORIZON"]):
-    _to_sit = float((NS["EXAM_CAL_MONTH"][NS["M_UK"]] - NS["cal_month"](_t)) % 12)
-    _m_exam = np.minimum(1.0 / _ch, _to_sit)
-    _m_pre = (np.minimum(1.0 / _ch, _to_sit + 10.0)
-              + (1.0 - DRV["summer_lapse_pre"]) * DRV["progress_continue"] * _m_exam)
-    _m_al = np.minimum(1.0 / _ch, _to_sit + 12.0)
-    _mix_e, _mix_a = DRV["seg_mix_exam"], DRV["seg_mix_alevel"]
-    _mix_p = np.maximum(1.0 - _mix_e - _mix_a, 0.0)
+    _kf, _mo = _billed_months(DRV, NS["M_UK"], _t)
     _w = MOUT["acquisitions"][:, _t]
-    _num += _w * _keep_first * (_mix_e * _m_exam + _mix_p * _m_pre + _mix_a * _m_al)
+    _num += _w * _kf * _mo
     _den += _w
 _assumed = float((_num / np.maximum(_den, 1e-9)).mean())
 _realised = float((MOUT["active_hh"].sum(axis=1)

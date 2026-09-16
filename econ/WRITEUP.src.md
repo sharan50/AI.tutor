@@ -24,8 +24,9 @@ cash spread. Those two happen to be close in magnitude, which makes the
 comparison look like one and it is not: a capital figure is bad when it is large
 and a cash spread is good when it is large, and nothing converts one into the
 other. Within each statistic separately the gap is wide — on capital scope leads
-the price anchor by about five to one, on terminal cash the anchor leads scope by
-about three to one — and those are the two orderings this instrument can support.
+the price anchor by about @@scope_over_anchor_peak_funding_ratio|num0@@ to one, on terminal cash the anchor leads scope
+by about @@anchor_over_scope_terminal_cash_ratio|num0@@ to one — and those are the two orderings this instrument
+can support.
 The cross-statistic comparison is not a third ordering; it is the absence of one.
 
 A figure re-derived from a different seed is a different number, and until round
@@ -117,6 +118,17 @@ quote which one.
 costs @@por_share_step_cost_pct|num1@@ per cent. Acquisition, which does depend on demand, is
 @@por_share_cac_spend_pct|num1@@ per cent. Inference, the cost docs/06 builds up so carefully, is
 @@por_share_inference_cost_pct|num1@@ per cent.
+
+That figure is a slight **under**statement, and the direction matters because it
+runs the same way as the argument it supports. For twelve months after
+go-to-market the acquisition envelope is a fixed dollar amount that does not
+depend on revenue and is not scaled by the demand shock — the shock changes how
+many households that money buys, not how much is spent — and it tapers over the
+twelve months after that. It sits in the acquisition line, so it is counted as
+demand-responsive here when it is nothing of the kind. Folding it in raises the
+share by about a percentage point. It is left out of the headline rather than
+quietly folded in, and recorded in LIMITS.md, because a correction that helps
+your own case is the one to be most careful about.
 
 **"Committed" used to be the word in that sentence and it was the wrong one.**
 This block is not spent early. @@demand_independent_share_months_24_60|pct1@@ per
@@ -218,6 +230,7 @@ the plan of record should not be read as containing one.
 Three files, in this order: `model.py`, `harness.py`, and then everything else,
 which in this directory means `sensitivity.py`, `variants.py`, `funding.py`,
 `breakeven.py`, `rescue_grid.py`, `cohorts.py`, `omissions.py`, `params.py`,
+`invariants.py`,
 `figures.py`, `render.py` and `verify.py`.
 
 `model.py` carries the drivers, the mechanisms and the month loop, behind section
@@ -237,7 +250,8 @@ to `out/harness_selftest.txt`.
 
 Every script that RUNS THE MODEL goes through `harness.load()`: the sensitivity,
 the scenarios, the funding sizing, the break-even solves, the rescue grid, the
-cohort counterfactuals, the omissions pricing and the parameter dump. That is what
+cohort counterfactuals, the omissions pricing, the parameter dump and the
+structural invariants. That is what
 makes them run the published code rather than a restatement of it.
 
 Three scripts deliberately do not, and must not. `figures.py`, `render.py` and
@@ -262,9 +276,10 @@ than the gate and is reported as the weaker thing it is.
 **Every mechanism that a variant adds must reproduce the base run exactly when it
 is switched off, and every parameter a variant needs is drawn outside the
 published random stream.** @@offtest_mechanism_count|int@@ mechanisms are tested
-this way on every run: the feedback loops, the app-store fee, sampled foreign
-exchange, the creator licence, the onshoring switch, the terminal-value residual
-and the pool reacquisition multiple. Every one reproduces the base character for
+this way on every run, named here from the file rather than by hand because the
+hand-typed version of this list named seven of the eight for two rounds and the
+missing one is the acquisition-stop switch that section 4 then leans on:
+@@offtest_mechanism_names|raw@@. Every one reproduces the base character for
 character when off, and every one changes the run when on, so none is wired up
 and inert.
 
@@ -369,6 +384,22 @@ large books, which carry most of the household-months and spread the fixed costs
 over them; the median path is small and the same fixed costs sit on top of it.
 Neither is wrong. Quoting only the pooled one would describe a business that most
 paths are not running.
+
+**The all-in row is not a consumer figure, and round 6 is where that gets said.**
+The gross row was cleaned in round 5 to carry only consumer revenue and only
+consumer inference, because the institution channel has its own scenario and does
+not belong in a per-household figure. The all-in row was not: it is net cash plus
+acquisition spend plus verification, and net cash carries the whole institution
+cost base — the United Kingdom sales reps, the institution platform heads, the
+security certification, the per-school onboarding, the school inference — over a
+denominator of consumer household months. The institution channel is about one
+per cent of net revenue and rather more than that of cost, so the row is
+pessimistic about the consumer household by roughly a sixth: removing the channel
+entirely moves the pooled figure to about 18.05 dollars and the median path to
+about -84.37. It is left as published rather than quietly re-based, because which
+basis is wanted is a decision rather than an arithmetic question, and the
+@@share_paths_final_year_ltv_allin_below_cac|pct1@@ per cent figure below inherits
+it either way. It is in LIMITS.md as an open defect.
 
 ### Acquisition cost: the anchor is not the cost
 
@@ -573,8 +604,11 @@ question about how the content function is actually staffed, and it is open item
 X12.
 
 **The load-bearing assumption in docs/10 holds on the median path and fails on
-about one path in sixteen, and an earlier draft answered it with the wrong
-denominator.** That document assumes variable cost per month is small **relative
+@@share_paths_variable_cost_over_half_of_revenue|pct1@@ per cent of live paths,
+and two earlier drafts answered it with the wrong denominator and then with the
+wrong failure rate.** The second said "about one path in sixteen", which is
+6.25 per cent, in a section whose own rendered figure four lines below it is the
+one above; it is a token now for the same reason every other number here is. That document assumes variable cost per month is small **relative
 to price**, and says plainly that if it is not, the sensitivity ordering reverses
 and cost engineering becomes the priority. This section used to answer it with
 inference over **total cost** — a denominator dominated by the content build,
@@ -643,12 +677,25 @@ across all @@band_central_placement_scenario_count|int@@ scenarios in
 @@band_central_placement_scenario_min|pct1@@ to
 @@band_central_placement_scenario_max|pct1@@ — a spread of
 @@band_central_placement_scenario_spread|pct2@@ percentile points, which is
-twenty times smaller than the within-run wander and is not a reason for anything.
+@@band_placement_wander_over_scenario_spread|num0@@ times smaller than the within-run wander and is not a reason
+for anything.
 
-**So: comparing terminal band lines between scenarios is fine, and comparing a
-band line at one month against a band line at another is not.** The placement is
-stable across scenarios and unstable across the horizon, which is the opposite of
-what this section used to say.
+**So: comparing the CENTRAL band line at the TERMINAL month between scenarios is
+fine, and comparing a band line at one month against a band line at another is
+not.** The placement is stable across scenarios and unstable across the horizon,
+which is the opposite of what this section used to say.
+
+**That sentence is deliberately narrower than the one it replaces, because the
+measurement behind it is narrower than it looks.** Bands are ranked on terminal
+cumulative cash, so the central band line at the final month is the mean of ranks
+40 to 60 per cent of the very variable being ranked: its placement near the
+fiftieth percentile is partly forced by the construction, and measuring it across
+scenarios partly measures the construction. `out/variants_bands.csv` carries the
+low and high bands as well, and they are not as well behaved — the high band's
+placement moves several times further across scenarios than the central band's
+does, and further still away from the terminal month. Nothing downstream compares
+a non-terminal band line across scenarios, so nothing in this document rests on
+the wider claim. It is stated narrowly because the wider version was not tested.
 
 **What holds regardless: a band line is not a percentile line and must never be
 read as one.** Every band line in `out/por_monthly.csv` carries
@@ -723,9 +770,30 @@ reaches profitability.
 a property of its tail rather than of the model: terminal cash is heavy enough
 that its variance is largely a handful of paths. On the rank transform and on the
 capital requirement, first-order effects explain most of the variance, so the
-ordering on those targets can be read as an ordering. It is still worth having
-the two-way grid in section 9, because the interaction that remains is
-concentrated in exactly the two drivers that matter most.
+ordering on those targets can be read as an ordering.
+
+A previous draft said the two-way grid in section 9 was still worth having
+"because the interaction that remains is concentrated in exactly the two drivers
+that matter most". The grid says the opposite, and says it flatly. Across its
+twenty-five cells the acquisition step from the first to the third decile costs
+@@twoway_acq_step_terminal_cash|usd0@@ at **every** one of the five content
+levels, and the content step from the first to the ninth decile costs
+@@twoway_content_step_terminal_cash|usd0@@ at **every** one of the five
+acquisition levels — identical to the cent, not approximately. On terminal cash
+the two largest drivers do not interact at all, which is what you would expect of
+a model in which content spend is committed before demand can say anything about
+it. Nothing in this directory computes a second-order index, so the missing
+variance is not attributed anywhere, and the claim that it sits in these two
+drivers was never measured.
+
+Where the grid does show interaction is on whether a path reaches profitability
+at all: the same content step moves that share by
+@@twoway_content_step_profitability_at_low_cac|pctv1@@ points at the cheapest
+acquisition level and @@twoway_content_step_profitability_at_high_cac|pctv1@@
+points at the dearest, a factor of
+@@twoway_content_step_profitability_attenuation|num1@@. Expensive acquisition
+does not make content cheaper; it makes content irrelevant, because the paths it
+would have rescued are already lost.
 
 ### Whether the venture ever makes money
 
@@ -893,10 +961,37 @@ switches named. Every scenario that opens a market or a channel is charged for i
 
 **Three columns, and the third is the one to argue with.** Terminal cash is
 heavy-tailed, so a difference in its mean is partly a difference in a handful of
-paths. The delta on the median path is given beside it, and where the two
-disagree in sign the scenario is marked. A third column gives the effect on the
+paths. A median column is given beside it, and where the two disagree in sign the
+scenario is marked. A third column gives the effect on the
 peak funding requirement at the eightieth percentile, which is the statistic
 section 11 sizes the rounds on.
+
+**Read the median column carefully, because until round 6 it was not the
+quantity its heading claimed.** It was the difference of two marginal medians —
+the median of the scenario less the median of the base — taken over what is in
+general a different path in each term. That is a perfectly respectable number,
+but it is not the delta on the median path, and it cannot do the job the
+paragraph above asks of it, which is to check whether a change in the mean is a
+change in a handful of paths. The median of the per-path differences is now
+published beside it in `out/variants.csv` as `pathwise_p50_delta`, with a paired
+bootstrap error, and the two are not close: on the enforced-allowance scenario
+the difference of medians is @@delta_por_allowance_enforced_terminal_cash_p50|usd0@@
+against a genuine per-path median of
+@@scenario_por_allowance_enforced_pathwise_p50_delta|usd0@@, a factor of
+@@allowance_enforced_median_basis_ratio|num1@@. The table below still shows the
+difference of medians, because that is what the sign-agreement flag was computed
+on and changing one without the other would make the flag wrong; both are on
+disk and the file is the authority.
+
+**Two scenarios in the table are not paired, and their errors should not be read
+as paired ones.** `por_dependence` and `por_dependence_feedback` reorder the
+driver columns by Iman-Conover, which is the whole point of them: path *i* no
+longer carries the driver values path *i* carries in the base. Their per-path
+rank correlation against the base is about
+@@por_dependence_pathwise_spearman|num2@@ where every other scenario is between
+0.77 and 1.00, and `out/variants.csv` now carries a `pairing_holds` column
+saying so. The preamble to this document tells the reader to use each scenario's
+paired standard error; for those two, there is no paired error to use.
 
 | Scenario | Delta, mean | Delta, median path | Delta, peak funding p80 | Mean and median agree in sign: 1 yes, 0 no |
 |---|---|---|---|---|
@@ -1020,7 +1115,7 @@ product launches.
 enough to be worth the sentence.** On the go-to-market minimum with condition C1
 passing, the top of the price prior leaves the median path
 @@breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_metric_at_support_high|usd0@@
-short over five years — about half a per cent of what the same scope consumes at
+short over five years — @@gtm_price_margin_share_of_low_support|pct1@@ per cent of what the same scope consumes at
 the bottom of that prior. It does not cross zero, so there is no break-even to
 report; it comes close enough that reporting "nothing rescues it" without the
 margin would be its own kind of overstatement.
@@ -1079,7 +1174,17 @@ target is **met** across the whole prior range.
 **That is the most actionable positive result in the file and it was being
 reported as a failure.** The narrow scope stays inside a ten-million-dollar
 capital ceiling at the eightieth percentile wherever the acquisition anchor and
-the reachable pool land inside their priors. That is not a modelling failure; it is the answer, and the reason is in
+the reachable pool land inside their priors.
+
+**How that is known, and how far it goes.** When the bisection finds no bracket
+the status is read off the two endpoint evaluations, which would be the wrong
+label for a metric that wandered past the target somewhere in between and came
+back. These two rows were checked on a nine-point grid in round 6 and both are
+monotone across the prior, so both labels are sound. The other
+@@breakeven_rows_unbracketed_missed|int@@ rows rest on two evaluations each and
+have not been checked that way. They all say "missed", which is the direction
+that would be embarrassing to overturn rather than the one that would be
+convenient, but the basis is two points and this says so. That is not a modelling failure; it is the answer, and the reason is in
 the cost split. Content is @@por_share_content_cost_pct|num1@@ per cent of cost, people @@por_share_people_beng_cost_pct|num1@@ per cent in
 Bengaluru plus @@por_share_people_uk_cost_pct|num1@@ in the United Kingdom, and step costs @@por_share_step_cost_pct|num1@@ per cent.
 A driver that acts only on demand cannot move a cost base that demand does not
@@ -1090,9 +1195,11 @@ LIMITS.md item 5.)
 ### The @@breakeven_rows_bracketed|int@@ that do solve
 
 All @@breakeven_rows_bracketed|int@@ are on the same target, half of all paths
-running three consecutive cash-positive months. All of them are on the two drivers
-section 8 says decide whether the venture exists at all — and **two drafts
-running have got the reason for that wrong in opposite directions.** The first called it "the instrument
+running three consecutive cash-positive months. They are on two drivers, the
+acquisition anchor and the tutoring price — which are **not** the two section 8
+ranks highest on that target, as a third draft of this paragraph claimed before
+the sentence under it refuted the claim in the same breath. **Three drafts
+running have got the reason for this wrong.** The first called it "the instrument
 agreeing with itself", as though it were corroboration. The second called it a
 tautology, on the argument that a bisection can only bracket on a driver the
 index ranks highly. That argument fails on this file: the price driver brackets
@@ -1514,10 +1621,12 @@ OPEN_ITEMS.md.
 | `out/sized_omissions.csv` | Quantities that are not cost lines but were being reported as zero: the retention stress, the examiner hours, the penalty comparison. |
 | `out/rescue_grid.csv` | The two-driver rescue grid behind the second half of section 10, on both scopes. |
 | `out/sobol_grouped.csv` | The same decomposition on grouped scalars rather than registry entries, because the registry's granularity is not the business's. |
-| `out/drivers.csv`, `out/constants.csv` | Every sampled driver with its range and what anchors it, and every decided constant with what it is. |
+| `out/drivers.csv`, `out/constants.csv` | Every sampled driver with its range and what anchors it, and the @@constants_row_count|int@@ decided constants that are scalars, each with what it is. It is **not** every decided constant: the seasonality shapes, the examination-month and season-shift maps, the market opening months, the four content schedules, the market budget weights, the segment usage relatives, the sales and creator ramps, the platform headcount floor and the general and administrative schedule are all decisions and none of them is in the file, because none is a scalar. LIMITS.md lists them. |
 | `out/aux_params.csv` | The priors drawn outside the published random stream, which are not in `out/drivers.csv` because they are not in the published run. |
 | `out/provenance.csv` | Which `model.py` **and `harness.py`** each generating script last ran against, hashed together. `verify.py` fails the run if they disagree. |
-| `out/harness_selftest.txt`, `out/suffix_selftest.txt` | The records of the three self-tests: both harness gates, and the column-naming discipline. |
+| `out/invariants.csv` | The structural checks on the month loop, run on every configuration, with what each one measured. |
+| `out/invariant_defect_costs.csv` | Each historical mechanism defect put back and the model re-run: what terminal cash does with it in. @@invariant_defects_costing_no_cash|int@@ of them move it by exactly nothing, which is why the accounting identities could never have found them. |
+| `out/harness_selftest.txt`, `out/suffix_selftest.txt`, `out/invariant_selftest.txt` | The records of the @@selftest_count|int@@ self-tests: both harness gates, the column-naming discipline, and each invariant against the defect it was written for. |
 | `out/offtest.csv` | Each mechanism, off and on: exact when off, and not inert when on. |
 | `out/figures.csv` | Every figure quoted anywhere, with its source file and its derivation. |
 | `LIMITS.md`, `OPEN_ITEMS.md`, `CHANGELOG.md` | What is not clean, what is unanswered, and what moved. |

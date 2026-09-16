@@ -388,11 +388,30 @@ OUTCOME_COLS = [
     "understatement_ratio", "band_central_placement_terminal",
     "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
     "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta",
-    "paired_mc_se",
+    "paired_mc_se", "pairing_holds", "pathwise_p50_delta", "pathwise_p50_delta_se",
 ]
+
+# The one column that is a word rather than a number.
+TEXT_COLS = {"pairing_holds"}
 
 
 BASE_TERMINAL = None
+
+# A paired bootstrap on the median of the per-path differences. The median has
+# no closed-form standard error, and the column it accompanies used to have no
+# error basis at all while the write-up drew sign conclusions from it.
+SEED_BOOT = 604920260916
+N_BOOT = 400
+
+
+def _median_delta_se(scenario_terminal, base_terminal):
+    d = scenario_terminal - base_terminal
+    rng = np.random.default_rng(SEED_BOOT)
+    n = d.shape[0]
+    meds = np.empty(N_BOOT)
+    for b in range(N_BOOT):
+        meds[b] = np.median(d[rng.integers(0, n, n)])
+    return float(np.std(meds, ddof=1))
 
 
 def evaluate(name):
@@ -445,6 +464,30 @@ def evaluate(name):
         # for it did not. See CHANGELOG 5.9.
         paired_mc_se=float(np.std(o["terminal_cash"] - BASE_TERMINAL, ddof=1)
                            / np.sqrt(o["terminal_cash"].shape[0]))
+        if BASE_TERMINAL is not None else 0.0,
+        # Whether the pairing this error assumes actually holds. The two
+        # dependence scenarios reorder the driver columns by Iman-Conover, so
+        # path i carries different driver values from path i in the base: the
+        # per-path difference is not a paired difference and the error above is
+        # not the right one for them. It was published for all 25 scenarios
+        # with a preamble telling the reader to use it for every one. The
+        # threshold is well below where a mechanism change alone lands -- the
+        # tightest genuinely-paired scenario sits near 0.77 -- and well above
+        # the 0.30 the reordered ones reach. See CHANGELOG 6.9.
+        pairing_holds="no" if (BASE_TERMINAL is not None and float(
+            stats.spearmanr(o["terminal_cash"], BASE_TERMINAL).statistic) < 0.5) else "yes",
+        # The median of the PER-PATH differences, which is what "the delta on
+        # the median path" means. The column that carried that label was the
+        # difference of two marginal medians -- p50(scenario) less p50(base) --
+        # taken over what is in general a different path in each term, and it
+        # was presented as the path-level check on a heavy-tailed mean. It
+        # cannot do that job. Both are now published. See CHANGELOG 6.9.
+        pathwise_p50_delta=float(np.median(o["terminal_cash"] - BASE_TERMINAL))
+        if BASE_TERMINAL is not None else 0.0,
+        # A paired bootstrap error on that median, because the column it
+        # replaces carried no error at all and one of the sign disagreements
+        # the write-up drew from it is inside its own noise.
+        pathwise_p50_delta_se=float(_median_delta_se(o["terminal_cash"], BASE_TERMINAL))
         if BASE_TERMINAL is not None else 0.0,
         total_content_cost_mean=float(out["content_cost"].sum(axis=1).mean()),
         total_cost_mean=float(sum(out[c].sum(axis=1).mean() for c in [
@@ -546,7 +589,9 @@ def main():
     rows, band_rows = [], []
     for name in SCENARIOS:
         note, vals, out, o, cum, placement = evaluate(name)
-        rows.append([SEED, RUN_DATE, name, note] + ["%.6f" % vals[c] for c in OUTCOME_COLS])
+        rows.append([SEED, RUN_DATE, name, note]
+                    + [vals[c] if c in TEXT_COLS else "%.6f" % vals[c]
+                       for c in OUTCOME_COLS])
         for band in ("low", "central", "high"):
             pl = NS["band_percentile_placement"](cum, cum, band)
             line = NS["band_line"](cum, cum, band)

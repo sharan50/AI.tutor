@@ -137,14 +137,21 @@ def main():
         opens_at = next((a for n, a, b in STAGES if n == stage), 0)
         prior = next((n for n, a, b in STAGES if a <= starts < b), "before_the_first_round")
         crows.append([SEED, RUN_DATE, note, month, max(starts, 0), stage, opens_at, prior,
-                      "no" if starts < opens_at else "yes",
+                      # Renamed and inverted in round 6. The column was
+                      # decision_taken_after_its_round_closed and carried "no"
+                      # on the two rows that violate the section's own test and
+                      # "yes" on the eighteen that do not, so a reader filtering
+                      # for the problem got its complement. It now names the
+                      # test it applies and answers yes when the test fails.
+                      # See CHANGELOG 6.8.
+                      "yes" if starts < opens_at else "no",
                       "%.6f" % float(out["content_cost"][:, month].mean()),
                       "%.6f" % float(out["step_cost"][:, month].mean())])
     with open(os.path.join(OUT, "funding_commitments.csv"), "w", newline="") as fh:
         w = csv.writer(fh, lineterminator="\n")
         w.writerow(["seed", "run_date", "commitment", "month_it_lands", "month_spend_starts",
                     "stage_it_lands_in", "that_stage_opens_month", "stage_that_actually_pays",
-                    "decision_taken_after_its_round_closed",
+                    "spend_starts_before_its_stage_opens",
                     "content_cost_that_month_mean", "step_cost_that_month_mean"])
         w.writerows(crows)
     print("wrote funding.csv and funding_commitments.csv")

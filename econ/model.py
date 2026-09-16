@@ -21,7 +21,7 @@ import math
 import os
 
 import numpy as np
-from scipy import special, stats
+from scipy import special
 
 SEED = 20260916
 RUN_DATE = "2026-09-16"
@@ -34,7 +34,6 @@ HORIZON = 60
 SEED_AUX_FEEDBACK = 771020260916
 SEED_AUX_DEPENDENCE = 771120260916
 SEED_AUX_FX = 771220260916
-SEED_AUX_INDIA = 771320260916
 SEED_AUX_APPSTORE = 771420260916
 SEED_AUX_CREATOR = 771520260916
 SEED_AUX_RESIDUAL = 771620260916
@@ -84,10 +83,6 @@ def cal_month(t):
 def cal_year(t):
     return START_YEAR + (START_MONTH_IDX + t) // 12
 
-def acad_year_index(t):
-    """Academic years since t=0, rolling in September (calendar index 8)."""
-    return (START_MONTH_IDX + t - 8) // 12 + 1
-
 # ---------------------------------------------------------------------------
 # Markets and segments.
 #
@@ -105,7 +100,11 @@ SEGMENTS = ["PRE", "EXAM", "ALEVEL"]
 NM = len(MARKETS)
 NS = len(SEGMENTS)
 MS = NM * NS
-N_COHORT_YEARS = 6
+# Cohort-year slots in the stock and arrivals arrays. A sixty-month horizon
+# reaches t // 12 == 4, so a sixth slot was allocated in every month of every
+# path and was permanently zero: one sixth of two of the largest arrays in the
+# model, standing for a cohort year the horizon cannot reach.
+N_COHORT_YEARS = 5
 
 M_UK, M_US, M_IN, M_ROW = 0, 1, 2, 3
 S_PRE, S_EXAM, S_ALEVEL = 0, 1, 2
@@ -551,27 +550,22 @@ def headcount(drv, cfg, t, active_consumer, units_fe_total, units_fe_ahead, reps
     # market must not be charged a platform team sized for four; charging it one
     # made every narrow scope look worse than it is, which is checklist item 10
     # (see CHANGELOG.md 0.8).
-    plat_heads = z
-    if t < 0:
-        plat = z
-    else:
-        floor_pts = [(0, 4.0), (6, 7.0), (12, 9.0), (24, 11.0), (36, 12.0), (48, 13.0)]
-        base = floor_pts[0][1]
-        for month, v in floor_pts:
-            if t >= month:
-                base = v
-        extra_markets = max(sum(1 for mm in range(NM) if t >= _open_month(cfg, mm)) - 1, 0)
-        schools_on = 1.0 if t >= _school_open_month(cfg, M_UK) else 0.0
-        plat = (base + PLATFORM_PER_EXTRA_MARKET * extra_markets
-                + PLATFORM_FOR_INSTITUTIONS * schools_on) * drv["eng_ramp_mult"]
-    plat_heads = plat
+    floor_pts = [(0, 4.0), (6, 7.0), (12, 9.0), (24, 11.0), (36, 12.0), (48, 13.0)]
+    base = floor_pts[0][1]
+    for month, v in floor_pts:
+        if t >= month:
+            base = v
+    extra_markets = max(sum(1 for mm in range(NM) if t >= _open_month(cfg, mm)) - 1, 0)
+    schools_on = 1.0 if t >= _school_open_month(cfg, M_UK) else 0.0
+    plat_heads = (base + PLATFORM_PER_EXTRA_MARKET * extra_markets
+                  + PLATFORM_FOR_INSTITUTIONS * schools_on) * drv["eng_ramp_mult"]
 
     # Content: what is being built over the coming year, plus revalidation of
     # what is live. Both divided by what one content head sustains in a year.
     fe_now = units_fe_total
     build = np.maximum(units_fe_ahead - fe_now, 0.0)
     content = (build + fe_now * drv["reval_frac_yr"]) / drv["units_per_content_head"]
-    content = np.maximum(content, 2.0 if t >= 0 else 0.0)
+    content = np.maximum(content, 2.0)
 
     # General and administrative, a decided step schedule.
     ga = 1.0
@@ -579,7 +573,7 @@ def headcount(drv, cfg, t, active_consumer, units_fe_total, units_fe_ahead, reps
         if t >= month:
             ga = v
 
-    beng = plat + content + ga
+    beng = plat_heads + content + ga
 
     # UK-based roles. Safeguarding is a rota, which is a step cost: docs/05
     # concedes next-business-day review is not adequate for an acute
@@ -601,7 +595,7 @@ def headcount(drv, cfg, t, active_consumer, units_fe_total, units_fe_ahead, reps
     return beng, uk, plat_heads, content
 
 
-def step_costs_usd(drv, cfg, t, heads_total, active_consumer):
+def step_costs_usd(drv, cfg, t, heads_total):
     """
     One-off and recurring step costs, each named. Absence is not conservatism,
     so anything believed to be zero is written down as zero here rather than
@@ -701,6 +695,29 @@ def verification_cost(drv, m):
     return drv["verif_cost_usd"] * (2.0 if m == M_IN else 1.0)
 
 
+def normalise_segment_mix(mix_e, mix_a):
+    """
+    The three segment shares, guaranteed to sum to one.
+
+    seg_mix_exam is U(0.40, 0.85) and seg_mix_alevel is U(0.03, 0.25), drawn
+    independently, so their sum exceeds one on about a twentieth of paths and
+    reaches 1.097. The old arithmetic floored the pre-examination share at zero
+    and left the other two alone, so on those paths the loop put MORE households
+    into stock than acquisitions bought. They were billed, they consumed
+    inference, and no acquisition cost and no age-assurance check was paid for
+    any of them. The clamp made the discrepancy invisible rather than absent:
+    it is exactly the np.maximum that hides a defect instead of reporting it.
+
+    Rescaling preserves the ratio between the two drawn shares, which is what
+    the priors are about, and gives up nothing the model was using. It is
+    applied here and at the acquisition site so the budget cap and the loop
+    cannot disagree about what a cohort is made of. See CHANGELOG 6.2.
+    """
+    mix_p = np.maximum(1.0 - mix_e - mix_a, 0.0)
+    total = mix_p + mix_e + mix_a
+    return mix_p / total, mix_e / total, mix_a / total
+
+
 def ltv_estimate(drv, contrib_pm, m, t):
     """
     The company's own running estimate of what a household is worth, used only
@@ -736,12 +753,35 @@ def ltv_estimate(drv, contrib_pm, m, t):
     constant. The gap is smaller and is not closed; cohorts.py publishes what
     remains. See CHANGELOG 4.3 and 5.4.
     """
+    keep_first, months = ltv_billed_months(drv, m, t)
+    # Verification is paid on every acquisition whether or not it survives, so
+    # it is not scaled by keep_first.
+    return np.maximum(keep_first * contrib_pm * months - verification_cost(drv, m), 0.0)
+
+
+def ltv_billed_months(drv, m, t):
+    """
+    The survival the budget cap believes in, split out of ltv_estimate so that
+    the retained months it assumes can be read without inverting a clamped cash
+    figure. cohorts.py publishes the gap between this and what the loop
+    delivers, and until round 6 it did so from its own COPY of this arithmetic,
+    which still carried the form CHANGELOG 5.4 removed. One implementation is
+    the only way that cannot drift again. See CHANGELOG 6.5.
+
+    Returns (keep_first, months): the share of an acquisition that survives to
+    be billed at all, and the months the survivors are credited with.
+    """
     ch = np.clip(drv["churn_base"], 1e-3, 0.95)
     # What survives to be billed at all.
     keep_first = (1.0 - drv["churn_m1_extra"]) * (1.0 - ch)
     # Months from here to the next sitting in this market, which is the hard
     # ceiling on an examination-year household however slowly it churns.
-    to_sitting = float((EXAM_CAL_MONTH[m] - cal_month(t)) % 12)
+    # A household acquired IN the sitting month is exempt from that month's
+    # sitting exit (the loop skips this month's arrivals), so its ceiling is the
+    # NEXT sitting, twelve months out, not zero. The bare modulus gave it zero
+    # billed months and, through budget_cap_from_ltv, collapsed the acquisition
+    # budget in one month of every twelve. See CHANGELOG 6.3.
+    to_sitting = float((EXAM_CAL_MONTH[m] - cal_month(t)) % 12) or 12.0
     # A pre-examination household leaves that segment at the PROGRESSION month,
     # which the loop puts two months after the sitting, not at the sitting plus
     # ten. Those are different quantities and not congruent: for a household
@@ -750,7 +790,7 @@ def ltv_estimate(drv, contrib_pm, m, t):
     # later, not to this year's. Round 4 rewrote this function to take the
     # calendar from the loop and then used arithmetic the loop does not.
     # See CHANGELOG 5.4.
-    to_progress = float((EXAM_CAL_MONTH[m] + 2 - cal_month(t)) % 12)
+    to_progress = float((EXAM_CAL_MONTH[m] + 2 - cal_month(t)) % 12) or 12.0
     m_exam = np.minimum(1.0 / ch, to_sitting)
     m_pre_first = np.minimum(1.0 / ch, to_progress)
     m_pre = (m_pre_first + (1.0 - drv["summer_lapse_pre"]) * drv["progress_continue"]
@@ -758,11 +798,9 @@ def ltv_estimate(drv, contrib_pm, m, t):
     m_al = np.minimum(1.0 / ch, to_sitting + 12.0)
     mix_e = drv["seg_mix_exam"]
     mix_a = drv["seg_mix_alevel"]
-    mix_p = np.maximum(1.0 - mix_e - mix_a, 0.0)
+    mix_p, mix_e, mix_a = normalise_segment_mix(mix_e, mix_a)
     months = mix_e * m_exam + mix_p * m_pre + mix_a * m_al
-    # Verification is paid on every acquisition whether or not it survives, so
-    # it is not scaled by keep_first.
-    return np.maximum(keep_first * contrib_pm * months - verification_cost(drv, m), 0.0)
+    return keep_first, months
 
 
 def effective_cac(drv, m, spend, penetration):
@@ -928,7 +966,17 @@ def run(drv, cfg=None):
     _share_flat, billed_flat = overage_terms(drv, drv["sessions_per_hh_month"])
 
     shock_state = np.zeros(P)
-    shock_var = drv["shock_sd"] ** 2 / np.maximum(1.0 - drv["shock_rho"] ** 2, 1e-3)
+    # The stationary variance of the AR(1) state. It is the right correction
+    # only once the process HAS reached stationarity: shock_state starts at
+    # exactly zero, so for the first several months its true variance is
+    # smaller and subtracting the stationary half-variance made the
+    # "mean-one" multiplier mean LESS than one. Measured on the published
+    # draws it was 0.969 at month zero and 0.995 at the United Kingdom
+    # go-to-market month, so the launch ran into a demand headwind that is an
+    # artefact of the initial condition rather than a modelled shock. The
+    # per-month variance below is the correct one at every t and converges to
+    # this. See CHANGELOG 6.4.
+    shock_var_stationary = drv["shock_sd"] ** 2 / np.maximum(1.0 - drv["shock_rho"] ** 2, 1e-3)
 
     school_live = np.zeros(P)
     school_pending = np.zeros((P, T + 24))
@@ -944,6 +992,7 @@ def run(drv, cfg=None):
         # --- persistent demand shock; independent monthly noise would remove
         # --- exactly the sustained bad run that ends companies.
         shock_state = drv["shock_rho"] * shock_state + drv["shock_sd"] * drv["_shock_eps"][:, t]
+        shock_var = shock_var_stationary * (1.0 - drv["shock_rho"] ** (2 * (t + 1)))
         shock_mult = np.exp(shock_state - 0.5 * shock_var)
         # Tracked here so that the sustained-bad-run figures are re-derivable
         # from a published file. The innovations themselves are not published,
@@ -1115,7 +1164,7 @@ def run(drv, cfg=None):
             cy = min(t // 12, N_COHORT_YEARS - 1)
             mix_e = drv["seg_mix_exam"]
             mix_a = drv["seg_mix_alevel"]
-            mix_p = np.maximum(1.0 - mix_e - mix_a, 0.0)
+            mix_p, mix_e, mix_a = normalise_segment_mix(mix_e, mix_a)
             keep = 1.0 - drv["churn_m1_extra"]
             for s, mix in ((S_PRE, mix_p), (S_EXAM, mix_e), (S_ALEVEL, mix_a)):
                 add = acq * mix
@@ -1211,7 +1260,7 @@ def run(drv, cfg=None):
             out["support_cost"][:, t] = (active_total * drv["support_min_hh_month"] / 60.0
                                          * ((1.0 - onshore) * drv["support_usd_hr"] + onshore * uk_support_hr)
                                          * (fb["support_mult"] if fb else 1.0))
-        out["step_cost"][:, t] = step_costs_usd(drv, cfg, t, beng + uk, active_total)
+        out["step_cost"][:, t] = step_costs_usd(drv, cfg, t, beng + uk)
 
         # The creator licence, which the published run costs at zero. Both limbs
         # of a name-and-likeness deal: a fixed minimum per signed creator, and a
@@ -1274,42 +1323,48 @@ def run(drv, cfg=None):
                 # sitting; that was worth 1,049,552 of terminal cash. Round 5
                 # found the same error against the ACQUISITION path, on both
                 # segments, worth about twice as much again. See CHANGELOG 5.1.
-                stock_exam_before = stock[:, ms(m, S_EXAM), :].copy()
-                stock_al_before = stock[:, ms(m, S_ALEVEL), :].copy()
                 std_exam = stock[:, ms(m, S_EXAM), :] - arrivals[:, ms(m, S_EXAM), :]
                 leaving = std_exam * (1.0 - drv["exam_carryover"])[:, None]
                 stock[:, ms(m, S_EXAM), :] -= leaving
                 std_al = stock[:, ms(m, S_ALEVEL), :] - arrivals[:, ms(m, S_ALEVEL), :]
                 stock[:, ms(m, S_ALEVEL), :] -= std_al * drv["alevel_exit_rate"][:, None]
-                # How much MORE the two exits above would have removed had they
-                # fired on the whole stock instead of the standing book. Zero by
-                # construction here, and exactly the households a version that
-                # got the ordering wrong would delete in the month they arrived.
-                # It is published because the defect is invisible in every
-                # aggregate the model otherwise produces: the exits fire in one
-                # month a year, so a ratio over the horizon barely moves.
-                # invariants.py checks it and proves the check bites by putting
-                # the defect back. See CHANGELOG 5.15.
-                # What the exits SHOULD remove, written in terms of the stock
-                # before them and this month's arrivals, so that a version which
-                # drops the arrivals term cannot alter this expression too.
-                ought_exam = ((stock_exam_before - arrivals[:, ms(m, S_EXAM), :])
-                              * (1.0 - drv["exam_carryover"])[:, None]).sum(axis=1)
-                ought_al = ((stock_al_before - arrivals[:, ms(m, S_ALEVEL), :])
-                            * drv["alevel_exit_rate"][:, None]).sum(axis=1)
-                did_exam = leaving.sum(axis=1)
-                did_al = (std_al * drv["alevel_exit_rate"][:, None]).sum(axis=1)
-                out["arrivals_removed_same_month"][:, t] += (
-                    np.maximum(did_exam - ought_exam, 0.0)
-                    + np.maximum(did_al - ought_al, 0.0))
                 stock[:, ms(m, S_ALEVEL), :] += leaving * drv["alevel_continue"][:, None]
+            # The summer lapse and the progression are examination-calendar
+            # exits exactly as the two above are, and until round 6 they were
+            # the two that still fired on this month's arrivals. A pre-exam
+            # household acquired in the month after the sitting lost the lapse
+            # before its first invoice; one acquired two months after lost the
+            # lapse AND was moved into the examination segment or deleted, about
+            # 44 per cent of it gone in its arrival month having paid its
+            # acquisition cost and its age-assurance check and billed nothing.
+            # Round 5 fixed this on the sitting exits and left it here. The
+            # arrivals stay in the pre-exam segment and take next year's
+            # calendar, which is the year their own sitting falls in.
+            # See CHANGELOG 6.1.
             if cm in ((em + 1) % 12, (em + 2) % 12):
                 per_month = 1.0 - np.sqrt(1.0 - drv["summer_lapse_pre"])
-                stock[:, ms(m, S_PRE), :] *= (1.0 - per_month)[:, None]
+                std_pre = stock[:, ms(m, S_PRE), :] - arrivals[:, ms(m, S_PRE), :]
+                lapsed = std_pre * per_month[:, None]
+                stock[:, ms(m, S_PRE), :] -= lapsed
             if cm == (em + 2) % 12:
-                moving = stock[:, ms(m, S_PRE), :] * drv["progress_continue"][:, None]
-                stock[:, ms(m, S_PRE), :] = 0.0
+                std_pre = stock[:, ms(m, S_PRE), :] - arrivals[:, ms(m, S_PRE), :]
+                moving = std_pre * drv["progress_continue"][:, None]
+                stock[:, ms(m, S_PRE), :] -= std_pre
                 stock[:, ms(m, S_EXAM), :] += moving
+
+            # Every household acquired this month must still be standing after
+            # the calendar block, in whichever segment it was acquired into.
+            # This replaces a diagnostic that compared what the two SITTING
+            # exits removed against what they ought to have removed, which was
+            # algebraically zero whatever the rest of the block did: it could
+            # only ever fire if someone edited the one line it was written
+            # against, and the summer lapse and the progression were wrong for
+            # five rounds underneath it while it read zero in all sixty months.
+            # This form is written against the arrivals array rather than
+            # against any one exit, so it bites on all four. See CHANGELOG 6.1.
+            for _s in (S_PRE, S_EXAM, S_ALEVEL):
+                out["arrivals_removed_same_month"][:, t] += np.maximum(
+                    arrivals[:, ms(m, _s), :] - stock[:, ms(m, _s), :], 0.0).sum(axis=1)
 
     summary = dict(stock=stock,
                    bad_run_longest=bad_run_longest, cum_acq=cum_acq)

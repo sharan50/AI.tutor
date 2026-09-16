@@ -62,6 +62,19 @@ add("horizon_months", len(monthly), "months", "por_monthly.csv", "row count")
 paths = read_csv("por_paths.csv")
 add("n_paths", len(paths), "paths", "por_paths.csv", "row count")
 
+# The count of scalar constants the file actually carries. Section 13 used to
+# say it held "every decided constant"; it holds every decided constant that is
+# a SCALAR, and LIMITS.md lists a dozen that are not. See CHANGELOG 6.10.
+add("constants_row_count", len(read_csv("constants.csv")), "count", "constants.csv",
+    "row count")
+# Self-test records on disk. The table in section 13 said three; the invariant
+# self-test added in round 5b is a fourth and had no row. Counted from the
+# files rather than typed, because that is the defect this fixes.
+add("selftest_count", len([f for f in ("harness_selftest.txt", "suffix_selftest.txt",
+                                       "invariant_selftest.txt")
+                           if os.path.exists(os.path.join(OUT, f))]),
+    "count", "out/", "the self-test record files present on disk")
+
 terminal_cash = col(paths, "terminal_cash")
 peak_fund = col(paths, "peak_funding_requirement")
 trough = col(paths, "trough")
@@ -365,6 +378,12 @@ if os.path.exists(os.path.join(OUT, "variants_bands.csv")):
             "how far the central band line's terminal placement moves BETWEEN scenarios, against how far it moves within one run across months")
         add("band_central_placement_scenario_count", len(_pt), "count", "variants_bands.csv",
             "how many scenarios that is measured over")
+        # The ratio the prose used to give as "twenty times". See CHANGELOG 6.14.
+        _ws = next(f["value"] for f in FIGS
+                   if f["name"] == "por_band_central_placement_month_spread")
+        add("band_placement_wander_over_scenario_spread",
+            _ws / max(max(_pt) - min(_pt), 1e-12), "ratio", "variants_bands.csv",
+            "the within-run wander of the central band line across months, divided by its spread across scenarios")
 
     vb = read_csv("variants_bands.csv")
     for r in vb:
@@ -384,10 +403,27 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
                   "understatement_ratio", "band_central_placement_terminal",
                   "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
                   "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta",
-                  "paired_mc_se"):
+                  "paired_mc_se", "pathwise_p50_delta", "pathwise_p50_delta_se"):
             if k in r:
                 add("scenario_%s_%s" % (name, k), float(r[k]), "USD or share", "variants.csv",
                     "column %s for scenario %s" % (k, name))
+    # How far the difference of marginal medians is from the median of the
+    # per-path differences on the scenario where they diverge most. Section 9
+    # quotes this to show that the column it used for four rounds was not the
+    # quantity its heading claimed. See CHANGELOG 6.9.
+    if "por_allowance_enforced" in vr and "por" in vr:
+        _dm = (float(vr["por_allowance_enforced"]["terminal_cash_p50"])
+               - float(vr["por"]["terminal_cash_p50"]))
+        _pw = float(vr["por_allowance_enforced"]["pathwise_p50_delta"])
+        add("allowance_enforced_median_basis_ratio", abs(_dm) / max(abs(_pw), 1e-9),
+            "ratio", "variants.csv",
+            "the difference of marginal medians divided by the median of the per-path differences, for the enforced-allowance scenario")
+    if "por_dependence" in vr:
+        add("por_dependence_pathwise_spearman",
+            float(vr["por_dependence"]["pathwise_spearman_vs_base"]), "rank correlation",
+            "variants.csv",
+            "the per-path rank correlation against the base for the Iman-Conover reordered scenario: the pairing every other scenario has and this one does not")
+
     # The spread between the two price-anchor regimes is a different quantity
     # from either one's delta against the published run, which is a mix of them.
     if "por_anchor_tutoring" in vr and "por_anchor_software" in vr:
@@ -608,6 +644,41 @@ if os.path.exists(os.path.join(OUT, "twoway_grid.csv")):
     add("twoway_worst_terminal_cash_mean", float(vals.min()), "USD", "twoway_grid.csv", "minimum of terminal_cash_mean over the grid")
     add("twoway_range", float(vals.max() - vals.min()), "USD", "twoway_grid.csv", "that maximum less that minimum")
 
+    # Whether the two largest drivers interact AT ALL on terminal cash. Section
+    # 8 used to assert that the variance first-order indices do not explain is
+    # "concentrated in exactly the two drivers that matter most", and cited this
+    # grid for it. The grid says the surface is additive: the same step in one
+    # driver costs the same at every level of the other. These figures measure
+    # that rather than asserting it, and twoway_additivity_worst_gap is
+    # published so the claim can be checked instead of believed.
+    # See CHANGELOG 6.12.
+    g = {(r["q1"], r["q2"]): r for r in tg}
+    qs = sorted({r["q1"] for r in tg}, key=int)
+    def cell(a, b, col):
+        return float(g[(a, b)][col])
+    acq_steps = [cell(a, qs[1], "terminal_cash_mean") - cell(a, qs[0], "terminal_cash_mean")
+                 for a in qs]
+    con_steps = [cell(qs[-1], b, "terminal_cash_mean") - cell(qs[0], b, "terminal_cash_mean")
+                 for b in qs]
+    add("twoway_acq_step_terminal_cash", float(np.mean(acq_steps)), "USD", "twoway_grid.csv",
+        "terminal_cash_mean at the second quantile of %s less the first, averaged over the five levels of %s"
+        % (tg[0]["driver2"], tg[0]["driver1"]))
+    add("twoway_content_step_terminal_cash", float(np.mean(con_steps)), "USD", "twoway_grid.csv",
+        "terminal_cash_mean at the top quantile of %s less the bottom, averaged over the five levels of %s"
+        % (tg[0]["driver1"], tg[0]["driver2"]))
+    add("twoway_additivity_worst_gap",
+        float(max(max(acq_steps) - min(acq_steps), max(con_steps) - min(con_steps))),
+        "USD", "twoway_grid.csv",
+        "the largest spread of either step across the levels of the other driver: zero means the surface is exactly additive")
+    lo = cell(qs[-1], qs[0], "share_reaching_profitability") - cell(qs[0], qs[0], "share_reaching_profitability")
+    hi = cell(qs[-1], qs[-1], "share_reaching_profitability") - cell(qs[0], qs[-1], "share_reaching_profitability")
+    add("twoway_content_step_profitability_at_low_cac", abs(lo), "share", "twoway_grid.csv",
+        "the same content step measured on share_reaching_profitability at the cheapest acquisition level")
+    add("twoway_content_step_profitability_at_high_cac", abs(hi), "share", "twoway_grid.csv",
+        "the same content step at the dearest acquisition level")
+    add("twoway_content_step_profitability_attenuation", abs(lo) / max(abs(hi), 1e-12), "ratio",
+        "twoway_grid.csv", "the first divided by the second")
+
 # --------------------------------------------------------------------------
 # Break-evens and funding
 # --------------------------------------------------------------------------
@@ -744,8 +815,10 @@ if os.path.exists(os.path.join(OUT, "funding_commitments.csv")):
     # Named for what it counts. The old name said "decided after their round
     # closed" over a count of rows whose answer to that question is "no", which
     # is the inverse; the derivation string was right and the name was not.
+    # Round 6 renamed the CSV column itself for the same reason, and this now
+    # reads the positive sense rather than the negative. See CHANGELOG 6.8.
     add("commitments_paid_by_an_earlier_round_than_they_land_in",
-        len([r for r in fc if r["decision_taken_after_its_round_closed"] == "no"]),
+        len([r for r in fc if r["spend_starts_before_its_stage_opens"] == "yes"]),
         "count", "funding_commitments.csv",
         "rows where the commitment LANDS in a stage later than the one whose window its spend starts in: the Series A refinancing a seed-window decision")
     ents = [r for r in fc if "entity" in r["commitment"]]
@@ -856,6 +929,89 @@ if os.path.exists(os.path.join(OUT, "imanconover_check.csv")):
     add("imanconover_all_marginals_preserved",
         all(r["marginal_preserved_a"] == "True" and r["marginal_preserved_b"] == "True" for r in rows),
         "boolean", "imanconover_check.csv", "every marginal_preserved column is True")
+
+if os.path.exists(os.path.join(OUT, "invariants.csv")):
+    _iv = read_csv("invariants.csv")
+    add("invariant_check_count", len({r["invariant"] for r in _iv}), "count",
+        "invariants.csv", "distinct invariant names")
+    add("invariant_run_count", len({r["run"] for r in _iv}) if _iv and "run" in _iv[0] else 0,
+        "count", "invariants.csv", "distinct configurations they are run on")
+
+if os.path.exists(os.path.join(OUT, "invariant_defect_costs.csv")):
+    _dc = read_csv("invariant_defect_costs.csv")
+    _real = [r for r in _dc if r["change_log_entry"] != "-"]
+    add("invariant_proved_count", len({r["change_log_entry"] for r in _real}), "count",
+        "invariant_defect_costs.csv",
+        "historical defects reintroduced and refused by the check written for them")
+    # How many of those defects moved terminal cash by nothing at all. This is
+    # the reason the five accounting identities could not see them, measured
+    # rather than asserted. See CHANGELOG 6.1.
+    add("invariant_defects_costing_no_cash",
+        len([r for r in _real if abs(float(r["what_the_fix_is_worth_at_the_mean"])) < 1e-6]),
+        "count", "invariant_defect_costs.csv",
+        "reintroduced defects whose terminal cash mean is identical to the correct model's: they move a decomposition, not cash")
+    for r in _real:
+        if r["change_log_entry"] == "6.1, both exits together":
+            add("limits_round6_arrivals_fix_usd",
+                float(r["what_the_fix_is_worth_at_the_mean"]), "USD",
+                "invariant_defect_costs.csv",
+                "terminal cash mean of the correct model less that of the model with both round 6.1 calendar exits put back")
+        if r["change_log_entry"] == "4.2 and 5.1":
+            add("limits_round5_sitting_fix_usd",
+                float(r["what_the_fix_is_worth_at_the_mean"]), "USD",
+                "invariant_defect_costs.csv",
+                "the same for the two sitting-month exits fixed in rounds 4 and 5")
+
+# --------------------------------------------------------------------------
+# Ratios the prose used to state by hand and state wrongly. Each is derived from
+# figures already in this registry, so the multiple in the sentence and the two
+# numbers it compares cannot drift apart. Round 6 found four of these wrong at
+# once -- "about three to one" over 4.04, "twenty times" over 17.4, "half a per
+# cent" over 1.10, "about twelve times" over 3.74 -- three of which had survived
+# five rounds of review because a hand-typed multiple looks like prose rather
+# than like a figure. See CHANGELOG 6.14.
+# --------------------------------------------------------------------------
+def fig(name):
+    return next(f["value"] for f in FIGS if f["name"] == name)
+
+
+def has(name):
+    return any(f["name"] == name for f in FIGS)
+
+
+if has("delta_gtm_minimum_peak_funding_p80_abs") and has("anchor_software_minus_tutoring_peak_funding_p80"):
+    add("scope_over_anchor_peak_funding_ratio",
+        fig("delta_gtm_minimum_peak_funding_p80_abs")
+        / max(abs(fig("anchor_software_minus_tutoring_peak_funding_p80")), 1e-9),
+        "ratio", "variants.csv, funding.csv",
+        "what the scope decision is worth on the capital requirement, divided by what the price anchor is worth on it")
+
+if has("anchor_tutoring_minus_software_terminal_cash_mean") and has("delta_gtm_minimum_terminal_cash_abs"):
+    add("anchor_over_scope_terminal_cash_ratio",
+        abs(fig("anchor_tutoring_minus_software_terminal_cash_mean"))
+        / max(fig("delta_gtm_minimum_terminal_cash_abs"), 1e-9),
+        "ratio", "variants.csv",
+        "what the price anchor is worth on terminal cash, divided by what the scope decision is worth on it")
+
+_bk_hi = "breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_metric_at_support_high"
+_bk_lo = "breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_metric_at_support_low"
+if has(_bk_hi) and has(_bk_lo):
+    add("gtm_price_margin_share_of_low_support",
+        abs(fig(_bk_hi)) / max(abs(fig(_bk_lo)), 1e-9), "share",
+        "breakeven.csv",
+        "how far short the median path falls at the top of the price prior, as a share of how far it falls at the bottom")
+
+if os.path.exists(os.path.join(OUT, "sized_omissions.csv")):
+    _so = {r["quantity"]: r["value"] for r in read_csv("sized_omissions.csv")}
+    if "examiner_full_equivalents_month18" in _so and "gtm_minimum_full_equivalents_month18" in _so:
+        _p18 = float(_so["examiner_full_equivalents_month18"])
+        _g18 = float(_so["gtm_minimum_full_equivalents_month18"])
+        add("uk_content_fe_por_month18", _p18, "full item-bank equivalents", "sized_omissions.csv",
+            "median United Kingdom content at month 18 on the plan of record, in full item-bank equivalents")
+        add("uk_content_fe_gtm_month18", _g18, "full item-bank equivalents", "sized_omissions.csv",
+            "the same for the go-to-market minimum")
+        add("uk_content_fe_ratio_por_over_gtm_month18", _p18 / max(_g18, 1e-9), "ratio",
+            "sized_omissions.csv", "the first divided by the second")
 
 # --------------------------------------------------------------------------
 if __name__ == "__main__":

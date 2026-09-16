@@ -36,6 +36,7 @@ NS = harness.load()
 OUT, SEED, RUN_DATE = NS["OUT"], NS["SEED"], NS["RUN_DATE"]
 DRV = NS["_verified"]["drv"]
 MOUT = NS["_verified"]["out"]
+BASE_OUTCOMES = NS["_verified"]["outcomes"]
 HORIZON = NS["HORIZON"]
 
 
@@ -44,21 +45,28 @@ HORIZON = NS["HORIZON"]
 # ---------------------------------------------------------------------------
 def inv_acquisitions_are_billed(out, drv, cfg, ns):
     """
-    Every acquisition must be able to produce billed household months.
+    Every acquisition must still be standing at the end of the month it arrived
+    in, in the segment it arrived into.
 
-    This is the one that catches CHANGELOG 4.2 and 5.1: a sitting-month exit
-    applied to a cohort in the month it arrived deleted households that had been
-    charged their acquisition cost and never billed. Measured as household
-    months per acquisition over the whole run. It cannot be one-to-one, because
-    churn is real; it can be bounded well away from the floor that a
-    delete-on-arrival produces.
+    This catches CHANGELOG 4.2, 5.1 and 6.1: an examination-calendar exit
+    applied to a cohort in the month it arrived deletes households that have
+    been charged their acquisition cost and their age-assurance check and
+    billed for nothing.
+
+    Round 6 is the reason the wording above is narrow and mechanical rather than
+    broad. The name of this invariant has always been "every acquisition can be
+    billed", and the docstring used to assert exactly that. What it actually
+    read was a diagnostic written against ONE of the four calendar exits, and
+    that diagnostic was algebraically zero whatever the other three did -- it
+    could only ever fire if someone edited the single line it was written
+    against. The summer lapse and the progression deleted arrivals for five
+    rounds underneath it, worth 523,800 dollars of terminal cash, while this
+    check read zero in all sixty months of every run and the suite reported it
+    as one of the four proved to bite. An invariant named for a general property
+    and fitted to one line is worse than no invariant, because the name is what
+    a reader trusts. The model's diagnostic is now written against the arrivals
+    array rather than against any one exit, and this reads that.
     """
-    # Checked on the model's OWN diagnostic rather than on an aggregate.
-    # An earlier version of this invariant used household months per
-    # acquisition with a floor of one, and the self-test showed it did not
-    # catch its own defect: the exits fire in one month a year, so an
-    # aggregate ratio barely moves. The defect is invisible in every series
-    # the model already published, so the model publishes the quantity.
     worst = float(out["arrivals_removed_same_month"].max())
     return worst <= 1e-6, "most arrivals removed in the month they arrived is %.6f" % worst
 
@@ -188,6 +196,28 @@ def inv_ltv_estimate_below_a_year_and_a_half(out, drv, cfg, ns):
             "longest life the budget cap assumes is %.2f billed household months" % worst)
 
 
+def inv_segment_mix_sums_to_one(out, drv, cfg, ns):
+    """
+    A cohort is made of exactly one cohort's worth of households.
+
+    seg_mix_exam and seg_mix_alevel are drawn independently, U(0.40, 0.85) and
+    U(0.03, 0.25), so their sum exceeds one on about a twentieth of paths. The
+    old arithmetic floored the pre-examination share at zero and rescaled
+    nothing, so on those paths the loop put more households into stock than
+    acquisitions bought: billed, consuming inference, with no acquisition cost
+    and no age-assurance check paid for any of them. The clamp did not prevent
+    it, it concealed it. See CHANGELOG 6.2.
+
+    This is checked on the shares the model computes, across every path, rather
+    than on an aggregate the defect barely moves.
+    """
+    mp, me, ma = ns["normalise_segment_mix"](drv["seg_mix_exam"], drv["seg_mix_alevel"])
+    total = mp + me + ma
+    worst = float(np.max(np.abs(total - 1.0)))
+    return (worst <= 1e-12,
+            "worst departure from one across %d paths: %.3e" % (total.shape[0], worst))
+
+
 # Set between the correct code's maximum (about 13.7) and the maximum the
 # CHANGELOG 5.4 defect produces (about 18.2). See the note in the function.
 LTV_MONTHS_TRIPWIRE = 16.0
@@ -199,6 +229,7 @@ INVARIANTS = [
     ("nothing happens before the first market opens", inv_no_revenue_before_the_first_market_opens, "boundary"),
     ("school inference stays inside the inference line", inv_school_inference_within_total, "5.2"),
     ("content heads stay inside the people line", inv_content_heads_within_bengaluru_people, "4.8"),
+    ("a cohort is one cohort's worth of households", inv_segment_mix_sums_to_one, "6.2"),
     ("TRIPWIRE: the budget cap's assumed life", inv_ltv_estimate_below_a_year_and_a_half, "4.3 and 5.4"),
 ]
 
@@ -235,6 +266,38 @@ REINTRODUCTIONS = [
      '                                                 * drv["overhead_mult"] / 12.0)',
      '        out["people_beng_content_cost"][:, t] = (content_heads * drv["eng_usd_yr"]\n'
      '                                                 * drv["overhead_mult"] / 12.0) * 5.0'),
+    ("every acquisition can be billed", "6.1, the summer lapse",
+     '                std_pre = stock[:, ms(m, S_PRE), :] - arrivals[:, ms(m, S_PRE), :]\n'
+     '                lapsed = std_pre * per_month[:, None]',
+     '                std_pre = stock[:, ms(m, S_PRE), :]\n'
+     '                lapsed = std_pre * per_month[:, None]'),
+    ("every acquisition can be billed", "6.1, the progression",
+     '                std_pre = stock[:, ms(m, S_PRE), :] - arrivals[:, ms(m, S_PRE), :]\n'
+     '                moving = std_pre * drv["progress_continue"][:, None]',
+     '                std_pre = stock[:, ms(m, S_PRE), :]\n'
+     '                moving = std_pre * drv["progress_continue"][:, None]'),
+    # Both round 6.1 exits at once, because that is the state the model was
+    # actually in for five rounds and therefore the cost the documents quote.
+    # The two rows above are each defect on its own; their costs do not sum to
+    # this one, because the progression acts on what the lapse left.
+    ("every acquisition can be billed", "6.1, both exits together",
+     '                std_pre = stock[:, ms(m, S_PRE), :] - arrivals[:, ms(m, S_PRE), :]\n'
+     '                lapsed = std_pre * per_month[:, None]\n'
+     '                stock[:, ms(m, S_PRE), :] -= lapsed\n'
+     '            if cm == (em + 2) % 12:\n'
+     '                std_pre = stock[:, ms(m, S_PRE), :] - arrivals[:, ms(m, S_PRE), :]\n'
+     '                moving = std_pre * drv["progress_continue"][:, None]\n'
+     '                stock[:, ms(m, S_PRE), :] -= std_pre',
+     '                stock[:, ms(m, S_PRE), :] *= (1.0 - per_month)[:, None]\n'
+     '            if cm == (em + 2) % 12:\n'
+     '                moving = stock[:, ms(m, S_PRE), :] * drv["progress_continue"][:, None]\n'
+     '                stock[:, ms(m, S_PRE), :] = 0.0'),
+    ("a cohort is one cohort's worth of households", "6.2",
+     "    mix_p = np.maximum(1.0 - mix_e - mix_a, 0.0)\n"
+     "    total = mix_p + mix_e + mix_a\n"
+     "    return mix_p / total, mix_e / total, mix_a / total",
+     "    mix_p = np.maximum(1.0 - mix_e - mix_a, 0.0)\n"
+     "    return mix_p, mix_e, mix_a"),
     ("TRIPWIRE: the budget cap's assumed life", "4.3 and 5.4",
      "    m_pre_first = np.minimum(1.0 / ch, to_progress)",
      "    m_pre_first = np.minimum(1.0 / ch, to_sitting + 10.0)"),
@@ -262,7 +325,8 @@ def _run_patched(old_src, new_src):
     cfg = ns["base_config"]()
     drv = ns["draw_drivers"]()
     out, sm = ns["run"](drv, cfg)
-    return out, drv, cfg, ns
+    po, cum = ns["path_outcomes"](out, sm)
+    return out, drv, cfg, ns, po
 
 
 def selftest():
@@ -272,15 +336,33 @@ def selftest():
            ""]
     ok = True
     by_name = {n: fn for n, fn, _ in INVARIANTS}
+    # What each defect was worth. The self-test already runs the defective model
+    # to prove the check refuses it, so the paired cost is one extra call and it
+    # means the sizes quoted in LIMITS and the change log trace to a file like
+    # every other number here rather than to a measurement taken by hand.
+    # See CHANGELOG 6.1.
+    base_terminal = float(np.mean(BASE_OUTCOMES["terminal_cash"]))
+    costs = [[SEED, RUN_DATE, "correct model", "-", "%.6f" % base_terminal, "0.000000"]]
     for name, entry, old_src, new_src in REINTRODUCTIONS:
-        out, drv, cfg, pns = _run_patched(old_src, new_src)
+        out, drv, cfg, pns, po = _run_patched(old_src, new_src)
         passed, detail = by_name[name](out, drv, cfg, pns)
+        defect_terminal = float(np.mean(po["terminal_cash"]))
+        costs.append([SEED, RUN_DATE, name, entry, "%.6f" % defect_terminal,
+                      "%.6f" % (base_terminal - defect_terminal)])
         if passed:
             log.append("FAILED: %-46s did not catch its own defect (%s)" % (name, entry))
             ok = False
         else:
             log.append("caught : %-46s (change log %s)" % (name, entry))
             log.append("         %s" % detail)
+            log.append("         costs {:+,.0f} of terminal cash at the mean"
+                       .format(base_terminal - defect_terminal))
+    with open(os.path.join(OUT, "invariant_defect_costs.csv"), "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["seed", "run_date", "invariant", "change_log_entry",
+                    "terminal_cash_mean_with_the_defect",
+                    "what_the_fix_is_worth_at_the_mean"])
+        w.writerows(costs)
     log.append("")
     log.append("%d of the %d invariants have a historical defect to be proved against."
                % (len(REINTRODUCTIONS), len(INVARIANTS)))

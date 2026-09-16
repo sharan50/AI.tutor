@@ -1,8 +1,8 @@
 harness self-test
-perturbed por_monthly.csv row 30 field 7 from 122.412098 to 122.412099, one unit in the last place
+perturbed por_monthly.csv row 30 field 7 from 169.307124 to 169.307125, one unit in the last place
 RESULT: the harness refused, as it must.
 file restored; the harness verifies again.
-sha256 of the restored file: ad96efa4e80cd572cad35da4664f994c8bc809c18b93ccc222abfb59e526e179
+sha256 of the restored file: a32c145653e4480bbf0ad768fd8d0ae04d6f1940bb92027cd0fbb40651609532
 
 second gate: no random draw inside the month loop
 RESULT: the check refused, as it must.

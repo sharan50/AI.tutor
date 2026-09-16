@@ -205,6 +205,8 @@ add("regulatory enforcement exposure", 0.0, 0.0,
 # boards of a subject reuse part of the first board's bank. Counting the
 # catalogue overstated this line by roughly a factor of two.
 _fe_m18 = float(np.median(NS["content_full_equivalents"](DRV, NS["M_UK"], 18)))
+_fe_m18_gtm = float(np.median(NS["content_full_equivalents"](
+    DRV, NS["M_UK"], 18, NS["GTM_MINIMUM_SCHEDULES"])))
 _hours = (_fe_m18 * float(np.median(DRV["items_per_unit"]))
           * float(np.median(DRV["minutes_per_item"])) / 60.0 * 1.10)
 add("examiner supply, as a quantity rather than a price", 0.0, 0.0,
@@ -252,6 +254,14 @@ if __name__ == "__main__":
         w.writerow([SEED, RUN_DATE, "examiner_full_equivalents_month18", "%.6f" % _fe_m18,
                     "full item-bank equivalents",
                     "median full item-bank equivalents of United Kingdom content at month 18, after board reuse, from the model's own content function"])
+        # The go-to-market minimum's United Kingdom content at the same month, so
+        # that the ratio LIMITS quotes when it says the reachable pool ignores
+        # levels and boards is measured rather than estimated. It was written as
+        # "about twelve times" for four rounds; on the model's own measure it is
+        # under four. See CHANGELOG 6.13.
+        w.writerow([SEED, RUN_DATE, "gtm_minimum_full_equivalents_month18", "%.6f" % _fe_m18_gtm,
+                    "full item-bank equivalents",
+                    "the same quantity for the go-to-market minimum schedule: five subjects, one level, one board"])
         w.writerow([SEED, RUN_DATE, "penalty_smallest_usd", "%.6f" % _pen_lo, "USD",
                     "the smallest penalty in the vault's verified United Kingdom set, 1.95m pounds to Snap, at the fixed rate"])
         w.writerow([SEED, RUN_DATE, "penalty_largest_usd", "%.6f" % _pen_hi, "USD",

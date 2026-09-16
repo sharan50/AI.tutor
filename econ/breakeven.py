@@ -56,9 +56,12 @@ METRICS = {
 # plan of record no value of any single driver, anywhere in its prior range,
 # reaches either CASH target — not because the money is committed early, but
 # because nothing in the model ever stops building. Four rows across the two
-# scopes do bracket, all on the profitability target, and four more are
-# unbracketed on the SATISFYING side. Both scopes are solved and every row is
-# reported as what it is.
+# scopes do bracket, all on the profitability target, and TWO more are
+# unbracketed on the satisfying side. Both scopes are solved and every row is
+# reported as what it is. (This comment and the one in side_of_target both said
+# four for two rounds, against a file that has two. The write-up said two and
+# was right; a reader sent to the code found the wrong count waiting for them.
+# See CHANGELOG 6.7.)
 SCOPES = {
     "plan_of_record": BASE_CFG,
     "gtm_minimum_uk_one_board": dict(NS["base_config"](), scope="ukonly", schools=False,
@@ -183,7 +186,7 @@ def side_of_target(metric_name, ends, target):
 
     "Not bracketed" only says the metric does not cross the target inside the
     prior range. It says nothing about whether the plan meets the target or
-    misses it, and the write-up read every unbracketed row as a failure. Four of
+    misses it, and the write-up read every unbracketed row as a failure. Two of
     the twenty-four are unbracketed on the SATISFYING side: on the go-to-market
     minimum the ten-million-dollar capital ceiling is met everywhere in the
     prior range of both drivers it was solved against, which is the most

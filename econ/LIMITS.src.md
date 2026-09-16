@@ -173,14 +173,22 @@ typed, because a hand-kept copy of it drifted from the file twice:
 anyway, because a zero recorded is not the same as a line left out:
 @@omission_zero_line_names|raw@@.
 
-They are zero for three different reasons and the breakdown used to name only
-two of them. **Four are genuine zeros**: no scenario here returns a taxable
+They are zero for four different reasons. The breakdown named two of them for
+several rounds, then three, and the three-way version still accounted for only
+seven of the eight: "organic and referred acquisition" appeared in the list of
+zero lines above and in none of the groups below it, which is the same
+hand-kept-list failure this item is about. **Four are genuine zeros**: no
+scenario here returns a taxable
 trading profit, the expansion is across English-speaking curricula by decision,
 nothing here puts a probability on enforcement, and examiner supply is a quantity
 question rather than a cost. **One is not a cost at all** — institution revenue
 lost to annual recognition is a timing artefact that makes the channel look worse
 than the plan describes, and it is in the list because a zero recorded is better
-than a line left out. **The remaining two** are zero only as *cost* lines,
+than a line left out. **One is a revenue mechanic rather than a cost**: there is
+no unpaid channel anywhere in the model, so every household in it is bought, and
+organic and referred acquisition is carried at zero not because it is small but
+because the model has no term for it at all. That is the one of the eight most
+likely to be materially wrong in the company's favour. **The remaining two** are zero only as *cost* lines,
 because they are retention mechanics rather than costs, and their size is
 published separately in `out/sized_omissions.csv`:
 scaling both churn drivers by @@retention_stress_churn_pct|num0@@ per cent costs
@@ -525,11 +533,20 @@ six of the model's own content steps were missing and the count was 10 of 14.
 One of the six is a second violation of the section's own test. An instrument
 that measures whether staging matches decisions, built as a hand-kept list of
 half the decisions, is the failure class this document spends most of its change
-log converting away from. One commitment lands
-after the Series A opens with its spend starting before it: all four boards live
-at month 18, built from month 12. The rest-of-English-speaking market at month 24
+log converting away from. @@commitments_paid_by_an_earlier_round_than_they_land_in|int@@ commitments land
+in a later stage than the one their spend starts in, and until round 6 this
+paragraph announced the second one and then named only the first. They are: all
+four United Kingdom boards live at month 18, built from month 12, inside the
+seed window; and the United States seven-subject step live at month 40, built
+from month 34, inside the Series A. The rest-of-English-speaking market at month 24
 begins its build at month 18, exactly as the Series A opens, so the file's test
 puts it on the right side of the line.
+
+The column that carries this test used to be called
+`decision_taken_after_its_round_closed` and answered "no" on both violations and
+"yes" on the eighteen clean rows, so a reader filtering the file for the problem
+got its complement. It is now `spend_starts_before_its_stage_opens` and answers
+yes when the test fails.
 
 **The Series A does not buy those decisions. It refinances them.** `out/funding_commitments.csv`
 holds the landing month and the spend-start month for each.
@@ -865,9 +882,18 @@ and neither is defensible as a valuation; the point is the size, not the number.
 Nothing sweeps the horizon itself, no scenario stops building content when the
 remaining window is shorter than the payback, and the launch-delay scenarios in
 section 9 of the write-up are the same defect showing through in another place.
-**This is the second item, alongside the restricted-transfer question, that
-changes the ordering rather than the levels, and it is cheaper to test than that
-one.**
+**Whether this one changes the ordering rather than the levels is not known,
+because nothing here computes it.** This paragraph asserted for four rounds that
+it does, and named the restricted-transfer question as the other item that does.
+Both halves were wrong. The restricted-transfer half was the round-2 position,
+retracted in round 4 once the decomposition was actually run under full
+onshoring — `out/sobol.csv` carries it as the `onshore_all` run, item count
+holds rank 1 exactly as on the plan of record, and the write-up's section 12 says
+plainly that it barely moves the ordering at all. The residual half was never
+computed in any round: `out/sobol.csv` carries three configurations and a
+residual-on decomposition is not among them. What is known is the size of the
+cash, which is in the two figures above. The ordering claim is withdrawn rather
+than restated, and it is a one-run job to settle if it matters.
 
 ### Age assurance is charged once per acquired household, never per check
 
@@ -1100,7 +1126,9 @@ entire subject is that a mean of minimums is not the minimum of a mean.**
 `model.py` scales the reachable pool with subject breadth and discards the level
 and board counts from the same call. So the go-to-market minimum — five subjects,
 one level, one board — and the plan of record's United Kingdom at month 18 — five
-subjects, two levels, four boards, and about twelve times the content — are
+subjects, two levels, four boards, and @@uk_content_fe_ratio_por_over_gtm_month18|num1@@ times the content by the
+model's own full-equivalent measure (@@uk_content_fe_por_month18|num1@@ against
+@@uk_content_fe_gtm_month18|num1@@, and eight times by raw subject-level-board count) — are
 credited the **same** reachable pool, through a window that spans the whole seed
 and Series A. A United Kingdom household sits one awarding body's specification;
 a one-board product cannot serve three quarters of them. Round 0 fixed the
@@ -1163,17 +1191,22 @@ figure is not a clean measure of anything.
 
 ---
 
-## What five rounds of review say about the gates in this directory
+## What six rounds of review say about the gates in this directory
 
 This is the most important limit in the document and it is an empirical one, so
 it goes last rather than among the checklist items.
 
-Seven mechanism defects have been found in `model.py` across rounds 2, 4 and 5:
+Ten mechanism defects have been found in `model.py` across rounds 2, 4, 5 and 6:
 a churn reference in the wrong place, an allowance that truncated at the wrong
 number and kept the revenue anyway, saturation measured on the wrong quantity,
 an onshoring switch that moved the wrong people, a sitting-month exit applied to
 a cohort in the month it arrived — twice, on two different paths into the
-segment — and a lifetime-value estimate using a calendar the loop does not have.
+segment — a lifetime-value estimate using a calendar the loop does not have, the
+summer lapse and the year-group progression firing on the month's arrivals in
+exactly the way the two sitting exits had been fixed not to, a segment mix that
+did not sum to one so that households were billed which had never been bought,
+and a lifetime-value cap that valued an examination household acquired in its own
+sitting month at zero months of life.
 
 **Every one of them passed every automated check in this directory, on every
 run, while it was wrong.** Not by accident: the checks cannot see this class of
@@ -1183,32 +1216,59 @@ defect by construction.
   against a rebuild from the same source. A defect that is *in* the published
   run reproduces perfectly. The gate proves the file matches the code; it says
   nothing about whether the code is right.
-- The **two-sided off-test** applies only to switchable mechanisms. Five of the
-  seven defects were in the base loop, which has no switch.
-- The **five accounting identities** check that cash adds up. Five of the seven
+- The **two-sided off-test** applies only to switchable mechanisms. Eight of the
+  ten defects were in the base loop, which has no switch.
+- The **five accounting identities** check that cash adds up. Eight of the ten
   moved households, ratios or a spend cap — quantities that do not appear in a
-  cash identity.
+  cash identity. This is now measured rather than asserted:
+  `out/invariant_defect_costs.csv` re-runs the model with each historical defect
+  put back and records what terminal cash does, and
+  @@invariant_defects_costing_no_cash|int@@ of the reintroduced defects move the
+  terminal cash mean by **exactly nothing** — identical to six decimal places —
+  because they move a decomposition rather than a total. No cash identity can
+  see those, on any run, ever.
+- The **structural invariants**, added in round 5b as the answer to all of the
+  above, did not catch round 6's three because two of them were outside what any
+  invariant then covered and the third was covered by an invariant that was
+  arithmetically incapable of firing. That is written up in the round 6 section
+  below, and it is the most instructive single item in this document.
 - **`verify.py` Pass B** checks that a number in the prose exists on disk at the
   precision printed. A wrong number computed consistently is on disk.
 - The **staleness check** proves the outputs were generated against the current
   code. Against the current *wrong* code, they were.
 
-All seven were found by a reader going through the month loop line by line.
+All ten were found by a reader going through the month loop line by line.
 That is the only method that has worked here, it does not scale, and it is not
-guaranteed to have finished. **The honest position after five rounds is not that
+guaranteed to have finished. **The honest position after six rounds is not that
 the mechanisms are correct; it is that a defect of this class survives until
-somebody reads the code, and five readings have found seven.** A sixth reading
-should be assumed to find more.
+somebody reads the code, and six readings have found ten.**
+
+The previous version of this paragraph ended "a sixth reading should be assumed
+to find more". A sixth reading found three, one of which had been sitting under a
+check written to catch precisely it. The sentence stands unchanged for the
+seventh, and the rate of discovery is not falling fast enough to argue that the
+process has converged. Anyone relying on a level from this instrument, rather
+than on the ordering it is for, should read that as the warning it is.
 
 **Something has been built against it, and it is worth being precise about how
 far it goes.** `invariants.py` asserts structural statements about what the month
-loop must produce — not that cash adds up, which all seven defects left perfect,
-but that a household is in the right place at the right time. Four of them are
+loop must produce — not that cash adds up, which all ten defects left perfect,
+but that a household is in the right place at the right time.
+@@invariant_proved_count|int@@ of them are
 proved to bite the way the harness gate is: the defect each was written for is
 reintroduced into a copy of `model.py` in memory, the check is required to fail,
 and the copy is discarded. `out/invariant_selftest.txt` records it.
 
-**Three things it does not do.** Three of the seven checks are containment or
+**And one of them was proved to bite while being incapable of catching what its
+own name promised.** The round 6 section below is the account; the short version
+is that "every acquisition can be billed" read a diagnostic that was
+algebraically zero, was reintroduced against the single line that diagnostic was
+written for, refused it, and was reported as proved — while two of the four
+exits it was named after were violating the property in every run. Being proved
+to bite is necessary and it is not sufficient. It shows the check can fail; it
+does not show the check covers what its name says.
+
+**Three things it does not do.** Some of the checks are containment or
 boundary statements that no defect found so far has violated, so they are
 untested in the only way that matters. One is not an invariant at all but a
 regression tripwire, thresholded between the correct code's value and a known
@@ -1232,3 +1292,123 @@ contamination as CHANGELOG 5.2; and the round 5 arrivals fix compared a churned
 stock against un-churned arrivals and clamped the difference at zero, which hid
 the mismatch and made the exemption slightly too generous on paths with a small
 standing book. Neither was found by a reviewer.
+
+---
+
+## What a sixth adversarial round found, which was three more live mechanism defects
+
+The protocol this document was built under says to run paired fresh-context
+reviews until a round returns nothing new, and to expect three rounds. This is
+the sixth, and it returned three live mechanism defects in the month loop, a
+duplicated function carrying arithmetic a previous round had removed, and a
+diagnostic that was arithmetically incapable of firing. The count of mechanism
+defects found by reading the loop is now **ten**, across rounds 2, 4, 5 and 6.
+Every one of them passed every automated gate in this directory on every run
+while it was wrong.
+
+### The invariant that was named for a property it did not check
+
+This is the one worth reading even if nothing else here is.
+
+Round 5b added `invariants.py` as the answer to exactly the problem the section
+above describes: the gates cannot see a defect that is in the published run, so
+the loop needs structural checks that are not about reproduction. The first
+invariant in the list is called **"every acquisition can be billed"**, and its
+docstring asserted that "every acquisition must be able to produce billed
+household months". That is a real property and it is the right one to check.
+
+What the check actually read was a single diagnostic column, and that column
+compared what the two examination-sitting exits removed against what they ought
+to have removed. Given the line immediately above it, those two expressions are
+the same expression. The column was zero by construction. It could not become
+non-zero unless someone edited the one line it was written against — which is
+precisely what the self-test did, and the self-test passed, and the suite
+reported the check as one of four "proved to bite".
+
+Underneath it, two of the four examination-calendar exits — the summer lapse and
+the year-group progression — were deleting households in the month they arrived,
+for five rounds, worth @@limits_round6_arrivals_fix_usd|usd0@@ of terminal cash
+against the @@limits_round5_sitting_fix_usd|usd0@@ that the two exits it COULD
+see were worth. The check read zero in all sixty months of every run the whole
+time. Those two figures are measured by putting each defect back and re-running,
+and they are in `out/invariant_defect_costs.csv` with everything else the suite
+has been proved against.
+
+An invariant fitted to one line and named for a general property is worse than
+no invariant at all, because the name is what a reader trusts and the name was
+doing work the code was not. The diagnostic is now written against the arrivals
+array rather than against any exit, and the self-test reintroduces each of the
+offending exits separately and confirms the check refuses each one.
+
+The general lesson, which applies to every check in this directory and not only
+that one: **a check written after a defect, against the defect, tests the fix
+and not the property.** The suite still says so about itself, and now it says it
+with an instance.
+
+### A clamp that concealed rather than prevented
+
+The three segment shares did not sum to one. Two were drawn independently and
+their sum exceeds one on a twentieth of paths; an `np.maximum` floored the third
+at zero and rescaled nothing. On those paths the model billed households it had
+never bought. It is fixed and it is now an invariant, but the thing to take from
+it is that the clamp is what made it invisible: without the `np.maximum` the
+pre-examination share would have gone negative and the defect would have
+surfaced in the first run. Every remaining clamp in `model.py` is a candidate
+for the same reading.
+
+### What is still not clean after this round
+
+**The all-in contribution per household month mixes two channels.** `model.py`
+computes it as net cash plus acquisition spend plus verification, over
+**consumer** household months. Net cash carries the institution channel's entire
+cost base — the United Kingdom sales reps, the institution platform heads, the
+security certification, the per-school onboarding and the school inference —
+against a channel that is about one per cent of net revenue. Round 5 fixed
+exactly this contamination on the GROSS row and left it on the all-in row, which
+is the row the write-up calls the one that answers whether a household pays for
+the business that serves it. Removing the institution channel entirely moves the
+pooled figure from @@final_year_contrib_per_hh_month_allin_pooled|usd0@@ to
+about 18.05 dollars, roughly 17 per cent, and the median path from
+@@final_year_contrib_per_hh_month_allin_median|usd0@@ to about -84.37. The
+figures quoted in section 4 and in item 19 inherit it. It is left rather than
+fixed because there is a real question about which basis is wanted, and the
+answer is the owner's: the honest position is that the row as published is
+neither a consumer figure nor a whole-business figure.
+
+**The acquisition budget cap is blind to every variant's mechanism.**
+`expected_contrib_pm` takes no configuration. It always credits overage revenue,
+so under the enforced-allowance scenario the cap believes in revenue that is
+never billed; it never subtracts the app-store fee or the creator revenue share;
+it always uses the Bengaluru support rate even under onshoring. Every
+cost-adding scenario therefore runs an acquisition budget a company that knew its
+own economics would not run, and the contamination has a known sign. Measured on
+the two largest cases it is about one per cent of the allowance-enforced delta
+and about two per cent of the app-store delta — small, but systematic, and it
+was not written down before this round.
+
+**"Met" and "missed across the whole prior range" are decided on two points.**
+When the bisection finds no bracket, the status is read off the two endpoint
+evaluations alone. If a metric were non-monotone with an interior excursion past
+the target, the label would be wrong. The two rows the write-up calls the most
+actionable positive result in the file were checked on a nine-point grid this
+round and are monotone, so those two labels are sound. The other eighteen rest
+on two evaluations each and are not independently checked.
+
+**The band-placement stability argument is measured where the construction
+forces the answer.** Bands are ranked on terminal cumulative cash, so the
+central band line's placement at the final month is pinned near the fiftieth
+percentile by construction, and measuring it across scenarios measures the
+construction rather than the model. `out/variants_bands.csv` carries the low and
+high bands too, and nothing in the prose reads them: the high band's
+cross-scenario placement at mid-horizon moves several times further than the
+central band's does at the terminal month. The conclusion the section draws —
+that terminal band lines may be compared across scenarios — is true of the band
+and the month it was measured on, and is stated more narrowly than it was.
+
+**The demand-independent share omits the launch subsidy.** For twelve months
+after go-to-market the acquisition envelope is a fixed dollar amount independent
+of revenue and of the demand shock, tapering over the twelve after that. It sits
+in the acquisition line and therefore outside the content-people-step sum the
+document calls demand-independent. Including it raises that share by about one
+percentage point, which pushes the document's own argument further in its own
+direction and is recorded here rather than folded in silently.

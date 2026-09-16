@@ -1006,6 +1006,28 @@ Change log entry 1b.11 still asserted the onshoring conclusion that 2.5 and 3.4
 retract. It is left in place as the record of what that round believed and is now
 marked superseded where it stands.
 
+### 4.14 What held up
+
+Recorded because a round that only reports failures is not a review.
+
+**Round sizing adds two percentiles and it is safe.** A staged round is the
+eightieth percentile of the window's need plus six times the eightieth
+percentile of its burn — the construction section 6 refuses for band lines. I
+expected this to be a finding and it is not: need and burn correlate at 0.97 to
+1.00 across the three windows, so the sum of the percentiles differs from the
+percentile of the sum by about seven hundred dollars on a staged total of
+thirty-seven million. LIMITS item 20 now states the check and the condition
+under which it would stop holding.
+ The harness
+gate and both its self-tests; the suffix discipline check; that no draw occurs
+inside the month loop; that the funding section's staged-versus-headline gap is
+buffer rather than quantile arithmetic; that the shared market budget pot does
+not penalise the plan of record; that the pre-to-exam retained-month ratio
+survives horizon censoring; that the Sobol ANOVA estimator is correctly
+specified; and that the launch-delay deltas are not Monte Carlo noise.
+
+---
+
 ### 4.15 Following the drivers.csv header fix to its consequence
 
 The header defect in 4.13 was reported as a presentation problem. Following it
@@ -1085,28 +1107,6 @@ ad-hoc `python3 -` that loads the harness to check a number wrote a row into
 `out/provenance.csv` under the script name `-`. It writes no output, so the row
 stands for nothing. `harness.load()` now records only callers whose name ends in
 `.py`.
-
-### 4.14 What held up
-
-Recorded because a round that only reports failures is not a review.
-
-**Round sizing adds two percentiles and it is safe.** A staged round is the
-eightieth percentile of the window's need plus six times the eightieth
-percentile of its burn — the construction section 6 refuses for band lines. I
-expected this to be a finding and it is not: need and burn correlate at 0.97 to
-1.00 across the three windows, so the sum of the percentiles differs from the
-percentile of the sum by about seven hundred dollars on a staged total of
-thirty-seven million. LIMITS item 20 now states the check and the condition
-under which it would stop holding.
- The harness
-gate and both its self-tests; the suffix discipline check; that no draw occurs
-inside the month loop; that the funding section's staged-versus-headline gap is
-buffer rather than quantile arithmetic; that the shared market budget pot does
-not penalise the plan of record; that the pre-to-exam retained-month ratio
-survives horizon censoring; that the Sobol ANOVA estimator is correctly
-specified; and that the launch-delay deltas are not Monte Carlo noise.
-
----
 
 ## Round 5: two more mechanism defects, and a positive result the document reported as a failure
 
@@ -1276,6 +1276,28 @@ the code below them. The change log asserted "2.6 times" over its own 8.351 and
 brackets while ranking sixth on that target, and the real reason is the pinning,
 which the write-up says two paragraphs later.
 
+### 5.13 What held up
+
+Recorded because a round that only reports failures is not a review.
+
+Every figure in the scenario table, the scope ladder and the funding table
+reconciles to the CSVs to the dollar. The cost split, the whole Sobol section
+including both scope orderings and the onshoring ordering, the rescue grid, the
+two-way grid, the Year 10 counterfactuals and their differencing, the trough
+table and the new censoring figures, all fifteen discounting figures, the
+penalty comparison, the examiner-hours and night-rota derivations. Both harness
+gates and the source-level no-draw check. The suffix discipline and its
+self-test. The two-sided off-test on every mechanism. The five identities and the
+count of them. `enforce_allowance` truncating delivery and removing the overage
+with it. The A-level exit firing on the standing stock. `fx_scale` reaching
+content. `people_beng_content_cost` never entering a total. And the
+percentile-addition in the round sizing, which I expected to be a finding and is
+not: need and burn correlate at 0.97 to 1.00, so the sum of the percentiles is
+the percentile of the sum to within seven hundred dollars on thirty-seven
+million.
+
+---
+
 ### 5.14 What the round 5 fixes moved, and one of them changed a headline
 
 Plan-of-record terminal cash at the mean moved from -10,049,080 to
@@ -1303,28 +1325,6 @@ The hours-of-tutoring figures are keyed by metric now.
 support-end break-even figures carried a generic "metric units", so a dollar
 figure and a share were indistinguishable to the check. The unit follows the
 metric now.
-
-### 5.13 What held up
-
-Recorded because a round that only reports failures is not a review.
-
-Every figure in the scenario table, the scope ladder and the funding table
-reconciles to the CSVs to the dollar. The cost split, the whole Sobol section
-including both scope orderings and the onshoring ordering, the rescue grid, the
-two-way grid, the Year 10 counterfactuals and their differencing, the trough
-table and the new censoring figures, all fifteen discounting figures, the
-penalty comparison, the examiner-hours and night-rota derivations. Both harness
-gates and the source-level no-draw check. The suffix discipline and its
-self-test. The two-sided off-test on every mechanism. The five identities and the
-count of them. `enforce_allowance` truncating delivery and removing the overage
-with it. The A-level exit firing on the standing stock. `fx_scale` reaching
-content. `people_beng_content_cost` never entering a total. And the
-percentile-addition in the round sizing, which I expected to be a finding and is
-not: need and burn correlate at 0.97 to 1.00, so the sum of the percentiles is
-the percentile of the sum to within seven hundred dollars on thirty-seven
-million.
-
----
 
 ## Round 5b: building the thing round 5 said was missing
 
@@ -1412,3 +1412,272 @@ rounded the way the renderer rounded them. The tolerance carries a millionth of
 the place value now, which is far too small to admit a genuinely different
 number. Found by the check failing on correct prose, which is the only way this
 class shows up.
+
+### 5.18 What round 5b moved, recorded late
+
+This section exists because round 6's coherence pass found it missing. Section
+5.14 recorded the plan-of-record terminal cash mean moving to -7,880,764 across
+the round 5 fixes. Sections 5.15 to 5.17 then changed the model again -- arrivals
+took the same churn as the stock they are part of, and the clamp that had been
+hiding the mismatch went -- and recorded nothing about what that did to the
+headline. The published value after round 5b was **-8,049,733**.
+
+A change log whose stated purpose is "what the numbers moved from and to" has to
+say so in the round that moves them, not leave the last figure in it stale while
+the file on disk says something else. `verify_allow.csv` made it worse by
+exempting -7,880,764 with the reason "it is the current value", which had
+stopped being true in the same round.
+
+---
+
+## Round 6
+
+Two fresh-context reviews again, a coherence pass and an adversarial pass, each
+given the artefacts and none of the reasoning behind them. The protocol says to
+repeat until a round returns nothing new. This round returned three live
+mechanism defects, one duplicated function carrying arithmetic a previous round
+had removed, four wrong magnitudes in the prose, and a diagnostic that was
+tautologically zero. It is not a converging round.
+
+### 6.1 The summer lapse and the progression deleted households in the month they arrived
+
+This is the same defect as 4.2 and 5.1, on the two calendar paths neither of
+those rounds looked at.
+
+`model.py` states the rule in a comment above the stock array: the
+examination-calendar exits must not fire on this month's arrivals, because
+billing starts the month after acquisition, so an arrival deleted in its arrival
+month has paid its acquisition cost and its age-assurance check and been billed
+for nothing. Round 5 made the two SITTING exits obey it. The summer lapse and
+the year-group progression, twenty lines below and in the same block, kept
+operating on the whole stock.
+
+A pre-examination household acquired in the month after the sitting lost the
+lapse before its first invoice. One acquired two months after lost the lapse and
+was then either moved into the examination segment or deleted outright: about
+44 per cent of it gone in the month it arrived.
+
+**Moved.** Paired against the same random numbers: terminal cash mean
+-8,049,733 to -7,525,932, **+523,800**, against a paired standard error of
+20,312 — 25.8 sigma. Terminal active households +870.6. Acquisitions +3,139.
+Peak funding mean -66,770.
+
+**And the check that was supposed to catch it read zero in all sixty months.**
+`arrivals_removed_same_month` compared what the two sitting exits removed
+against what they ought to have removed, and those two expressions are
+algebraically identical given the line above them. The column could only ever
+become non-zero if someone edited that one line. `invariants.py` read it under
+the name "every acquisition can be billed" and asserted in its docstring that
+"every acquisition must be able to produce billed household months" — a general
+property, checked by a quantity fitted to one line, while two of the four exits
+violated it. The self-test proved the check bites, against the defect it was
+written for, which is the whole of what it proved.
+
+The diagnostic is now written against the arrivals array rather than against any
+one exit: after the calendar block, every household acquired this month must
+still be standing in the segment it was acquired into. The self-test now
+reintroduces the summer-lapse defect and the progression defect separately and
+confirms the check refuses both, which the old form could not have done.
+
+### 6.2 The three segment shares did not sum to one
+
+`seg_mix_exam` is U(0.40, 0.85) and `seg_mix_alevel` is U(0.03, 0.25), drawn
+independently. Their sum exceeds one on **5.125 per cent of paths** and reaches
+1.0967. The code floored the pre-examination share at zero with an `np.maximum`
+and rescaled nothing, so on those paths the loop put more households into stock
+than acquisitions bought. They were billed, they consumed inference, and no
+acquisition cost and no age-assurance check was paid for any of them.
+
+The clamp did not prevent this. It concealed it, which is the failure mode this
+document's own checklist item names.
+
+**Moved.** Renormalising in the loop and in the budget cap together: terminal
+cash mean **-64,839** across all paths (paired SE 11,051, 5.9 sigma), and
+**-1,265,157** on the 1,025 paths affected. Terminal households -92 overall,
+-1,805 on the affected paths.
+
+Not disclosed anywhere before this round. It is now an invariant with its own
+reintroduction.
+
+### 6.3 The budget cap believed an examination household acquired in its sitting month was worth nothing
+
+`ltv_estimate` capped an examination-year household's life at
+`(EXAM_CAL_MONTH[m] - cal_month(t)) % 12`. In the sitting month itself that is
+zero. But the loop exempts that month's arrivals from that month's sitting exit,
+so such a household survives to the next sitting and is billed twelve times. The
+closed form and the loop disagreed by the whole of an examination household's
+life, in one month of every twelve, and `budget_cap_from_ltv` inverts the
+saturation curve, so the permitted spend collapsed by roughly the square of the
+error.
+
+`to_progress` carried the same modulus and was consistent with the loop only
+because of 6.1. Fixing 6.1 without this would have reopened the disagreement on
+the pre-examination branch.
+
+**Moved.** +300,708 of terminal cash, paired SE 23,322, 12.9 sigma. Terminal
+households +1,846. Acquisitions +10,773.
+
+### 6.4 The demand shock was not stationary at month zero
+
+`shock_state` starts at exactly zero but the half-variance subtracted from it
+was the STATIONARY variance, so the supposedly mean-one multiplier had mean
+below one during burn-in: 0.969 at month zero, 0.995 at the United Kingdom
+go-to-market month, reaching one around month nine. The launch ran into a demand
+headwind that was an artefact of the initial condition. The correction is the
+time-varying variance, which converges to the stationary one.
+
+### 6.5 cohorts.py re-implemented ltv_estimate, and the copy carried the arithmetic 5.4 removed
+
+The "what the acquisition budget cap believes" figure — the one the write-up and
+LIMITS use to say the cap assumes more retention than the model delivers — was
+computed by a duplicate of `ltv_estimate` living in `cohorts.py`. The duplicate
+capped the pre-examination leg at the sitting plus ten and reused `m_exam` for
+the post-progression leg. Both are exactly the forms CHANGELOG 5.4 says were
+removed from the real function; `invariants.py` uses one of them as its
+REINTRODUCED DEFECT in the self-test.
+
+**Moved.** `ltv_cap_assumed_months` published 5.866317; what `ltv_estimate`
+actually assumes is 5.227200. The published figure was 12.2 per cent high, and
+so was the overstatement ratio built on it. LIMITS.md narrated the round-5 fix
+in detail and then quoted the unfixed number.
+
+The months are now factored out of `ltv_estimate` into `ltv_billed_months` and
+`cohorts.py` calls it. There is one implementation.
+
+### 6.6 The pooled contribution included the institution channel; the median beside it did not
+
+CHANGELOG 5.2 stripped institution revenue and school inference out of
+`path_outcomes`' per-path contribution. It left the pooled twin in `cohorts.py`
+untouched, carrying institution revenue in the numerator and the whole inference
+line as its cost, over a denominator of consumer household months only. The
+write-up prints the two in a single table row.
+
+**Moved.** Gross contribution per household month, pooled: 31.904323 published
+against 31.560924 on the consumer-only basis the median column uses.
+
+### 6.7 Two code comments said four where the file says two
+
+`breakeven.py` said in two places that four rows are unbracketed on the
+satisfying side. There are two. The write-up said two and was right; a reader
+sent to the code found the wrong count waiting for them.
+
+### 6.8 A column whose "yes" meant "fine" under a name that read like a flag
+
+`out/funding_commitments.csv` carried `decision_taken_after_its_round_closed`,
+which answered "no" on the two rows that violate the staging test and "yes" on
+the eighteen that do not. A reader filtering the file for the problem got its
+complement. It is now `spend_starts_before_its_stage_opens` and answers yes when
+the test fails.
+
+### 6.9 A paired error on two scenarios where the pairing is destroyed by construction
+
+`apply_dependence` reorders the driver columns by Iman-Conover, so path i in
+`por_dependence` carries different driver values from path i in the base. The
+file says so itself: `pathwise_spearman_vs_base` is 0.2998 and 0.2985 for the
+two dependence scenarios against 0.77 to 1.00 for every other. A paired standard
+error was published for them anyway, and the preamble told the reader to use the
+paired error for every scenario. `variants.csv` now carries a `pairing_holds`
+column.
+
+The same table's "Delta, median path" column was the difference of two marginal
+medians — p50(scenario) less p50(base) — taken over what is in general a
+different path in each term, presented as the path-level check on a heavy-tailed
+mean. It cannot do that job. The genuine per-path median difference is now
+published beside it with a paired bootstrap error, because the column it
+replaces carried no error at all while sign conclusions were drawn from it.
+
+### 6.10 Section 13 said constants.csv holds every decided constant
+
+It holds every decided constant that is a SCALAR. The seasonality shapes, the
+examination-month and season-shift maps, the market opening months, the four
+content schedules, the market budget weights, the segment usage relatives, the
+sales and creator ramps, the platform headcount floor and the general and
+administrative schedule are all decisions and none is in the file. LIMITS.md has
+listed them correctly for three rounds while section 13 claimed otherwise.
+
+### 6.11 The provenance file was writable by anyone who ran a script
+
+`_record_provenance()` recorded any caller whose name ended in `.py`. Both
+round-6 reviewers wrote throwaway scripts to check the arithmetic, ran them
+against the harness, and silently added `t2.py`, `t3.py`, `t5.py`, `t7.py`,
+`t11.py` and `t14.py` to the file whose job is to record which generating
+scripts produced the published set. A reader should not be able to write to it
+by reading. There is an allowlist now.
+
+### 6.12 The two-way grid was cited for a claim it refutes
+
+Section 8 said the variance the first-order indices do not explain is
+"concentrated in exactly the two drivers that matter most", and offered the
+two-way grid in support. The grid shows the surface is exactly additive on
+terminal cash: the acquisition step costs the same at every one of the five
+content levels, to the cent, and the content step the same at every one of the
+five acquisition levels. The two largest drivers do not interact at all on that
+target. Nothing in this directory computes a second-order index, so the missing
+variance is not attributed anywhere and never was.
+
+Where the grid does show interaction is on whether a path reaches profitability,
+and the section now reports that instead.
+
+### 6.13 Four magnitudes stated by hand, four of them wrong
+
+"About three to one" over 4.04. "Twenty times smaller" over 17.40. "About half a
+per cent" over 1.10 per cent. "About twelve times the content" over 3.74 on the
+model's own full-equivalent measure, and never above 5.00 anywhere in the
+`board_reuse` prior.
+
+Three of the four had survived five rounds of review, because a hand-typed
+multiple reads as prose rather than as a figure and the prose scrape is weakest
+on small numbers. All four are rendered tokens now, derived from the two figures
+each one compares, so the multiple cannot drift from its operands.
+
+### 6.14 Smaller, and again there were many
+
+A section-5 headline saying the docs/10 assumption fails "on about one path in
+sixteen" — 6.25 per cent — four lines above its own rendered figure of 1.4 per
+cent. A colon-introduced list of eight off-tested mechanisms naming seven, with
+the missing one being the acquisition-stop switch section 4 then relies on. A
+LIMITS item saying eight omissions are zero "for three different reasons" and
+then accounting for seven of them, with the eighth having a fourth reason of its
+own. A LIMITS paragraph announcing a second staging violation and naming only
+the first. A section-10 sentence asserting that all four break-even solves are
+on section 8's top two drivers, refuted three lines below by the paragraph
+correcting the previous draft of the same sentence. `invariants.py` and its
+three output files missing from every enumeration in the write-up and the README
+that claims to be complete. Two `verify_allow.csv` exemption reasons that had
+the live and superseded values the wrong way round. Changelog subsections out of
+order in two places.
+
+
+### 6.15 What round 6 moved
+
+Plan-of-record terminal cash at the mean, across 6.1, 6.2, 6.3 and 6.4 together:
+**-8,049,733 to -7,278,633**, a move of **+771,100**. Terminal active households
+28,471 to 31,102, +9.2 per cent. Every component is a paired measurement against
+the same random numbers, and `out/invariant_defect_costs.csv` now records what
+each defect is worth on its own by putting it back and re-running:
+
+| Defect | Change log | What fixing it is worth, terminal cash mean |
+|---|---|---|
+| Sitting-month exits on the month's arrivals | 4.2 and 5.1 | +2,141,420 |
+| Summer lapse on the month's arrivals | 6.1 | +362,070 |
+| Year-group progression on the month's arrivals | 6.1 | +163,849 |
+| Both round 6.1 exits together | 6.1 | +524,796 |
+| Segment mix not summing to one | 6.2 | **-66,202** |
+| Budget cap's calendar | 4.3 and 5.4 | +248,646 |
+| School inference outside the inference line | 5.2 | **0** |
+| Content heads outside the people line | 4.8 | **0** |
+
+Two things in that table are worth saying out loud.
+
+The segment-mix fix is **negative**. The defect flattered the model: it billed
+households that had never been bought, so correcting it costs money. A reader
+who assumes every correction found by review moves the answer in the
+conservative direction has the sign wrong on this one.
+
+Two rows are **exactly zero** — identical to six decimal places, not merely
+small. Those defects moved a decomposition series rather than a total, so no
+accounting identity in `verify.py` could ever have detected them on any run.
+That was asserted in LIMITS.md for three rounds. It is now measured.
+
+The two round 6.1 rows do not sum to the combined row, because the progression
+acts on whatever the summer lapse left.

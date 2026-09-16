@@ -144,6 +144,13 @@ def verify(ns=None, quiet=False):
 
 HARNESS = os.path.join(HERE, "harness.py")
 
+# The scripts that write something under out/. verify.py checks that every one
+# of these ran against the current model.py and harness.py.
+GENERATING_SCRIPTS = frozenset([
+    "breakeven.py", "cohorts.py", "funding.py", "invariants.py", "omissions.py",
+    "params.py", "rescue_grid.py", "sensitivity.py", "variants.py",
+])
+
 
 def model_sha():
     """
@@ -173,11 +180,16 @@ def _record_provenance():
     it is reported as the weaker thing it is.
     """
     script = os.path.basename(sys.argv[0]) or ""
-    # Only the generating scripts belong in this file. An ad-hoc `python3 -` or
-    # `python3 -c` that loads the harness to check something writes no output,
-    # so recording it puts a row in the provenance file that stands for nothing
-    # and that a reader has to work out how to ignore.
-    if not script.endswith(".py"):
+    # Only the generating scripts belong in this file, and only THESE ones.
+    # The test used to be `script.endswith(".py")`, on the reasoning that an
+    # ad-hoc `python3 -` or `python3 -c` writes no output and should not be
+    # recorded. That let anything else in. Round 6's two reviewers each wrote
+    # throwaway scripts to check the arithmetic, ran them against this harness,
+    # and silently added t2.py, t3.py, t5.py, t7.py, t11.py and t14.py to the
+    # provenance file -- the one artefact whose job is to say which generating
+    # scripts produced the published set. A reader who runs a scratch script
+    # should not be able to write to it. See CHANGELOG 6.11.
+    if script not in GENERATING_SCRIPTS:
         return
     path = os.path.join(OUTDIR, "provenance.csv")
     sha = model_sha()
