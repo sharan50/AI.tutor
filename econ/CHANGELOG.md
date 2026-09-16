@@ -109,3 +109,52 @@ published CSVs kept their sha256 across the change.
 **Moved.** Nothing. That is the point.
 
 ---
+
+### 0.8 Every narrow comparator was charged a platform team sized for the widest one
+
+**Found.** Platform engineering was a decided ramp from four heads to twenty-two,
+scaled by a sampled multiplier and by nothing else. A scenario opening one market
+with one subject and no institution channel was charged the same engineering team
+as the plan of record, which opens three consumer markets and an institution
+channel. Since the central recommendation this instrument produces is about scope,
+a cost base that does not respond to scope on its second-largest people line makes
+that recommendation untestable. This is checklist item 10: the comparators were
+not like for like.
+
+**Fixed.** Platform headcount is now a floor, because the product must exist at
+all, plus `PLATFORM_PER_EXTRA_MARKET` heads for each additional live consumer
+market and `PLATFORM_FOR_INSTITUTIONS` heads for running the institution channel.
+Both constants are decisions, stated in `model.py`, and neither is a measurement.
+
+### 0.9 The reachable pool did not respond to how many subjects the product covered
+
+**Found, running the other way.** `pool_uk` is documented as reachable United
+Kingdom households, and it was applied unchanged whether the product covered one
+subject or eleven. Having just stopped over-charging narrow scopes on engineering,
+this would have left them over-credited on demand.
+
+**Fixed.** The driver is now defined at the five-subject go-to-market scope and
+scales sublinearly with subject breadth, `(subjects / 5) ** 0.6`. Again a decision
+with stated constants.
+
+### 0.10 The launch-delay scenarios are contaminated by the horizon
+
+**Found, in the draft write-up rather than in the code.** The draft explained a
+six-month launch delay costing less than a three-month one by appeal to the
+September intake. That explanation is wrong. `launch_shift` moves the content
+schedule along with the market openings, so a six-month shift pushes the
+month-54 content step past the end of the horizon and the run never pays for it.
+
+**Left, and labelled.** The scenarios are kept because "later is worse" is real,
+and the content-cost delta that produces the non-monotonicity is now published
+beside them so the artefact is visible. No calendar conclusion is drawn from them.
+
+### 0.11 The gate had never been shown to refuse
+
+**Found.** The harness's character-for-character check had only ever been seen to
+pass. A gate that has never refused is not evidence of anything.
+
+**Fixed.** `python3 harness.py --selftest` perturbs one field of the published
+file by one unit in its last decimal place, requires the harness to refuse,
+restores the file and requires it to verify again. The result, including the
+sha256 of the restored file, is written to `out/harness_selftest.txt`.

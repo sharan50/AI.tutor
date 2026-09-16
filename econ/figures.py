@@ -57,6 +57,32 @@ eff_cac_all = col(paths, "effective_cac_all_in")
 cac_anchor = col(paths, "cac_anchor_usd")
 
 # --------------------------------------------------------------------------
+# The driver registry and the decided constants, so that a range or a constant
+# quoted in prose traces to a file on disk like every other number.
+# --------------------------------------------------------------------------
+if os.path.exists(os.path.join(OUT, "drivers.csv")):
+    drows = read_csv("drivers.csv")
+    add("n_drivers", len(drows), "count", "drivers.csv", "row count")
+    for r in drows:
+        add("driver_%s_low" % r["driver"], float(r["low"]), "driver units", "drivers.csv",
+            "the low column for %s" % r["driver"])
+        add("driver_%s_high" % r["driver"], float(r["high"]), "driver units", "drivers.csv",
+            "the high column for %s" % r["driver"])
+        if r["mode"]:
+            add("driver_%s_mode" % r["driver"], float(r["mode"]), "driver units", "drivers.csv",
+                "the mode column for %s" % r["driver"])
+        add("driver_%s_low_pct" % r["driver"], 100.0 * float(r["low"]), "per cent", "drivers.csv",
+            "the low column for %s, as a percentage" % r["driver"])
+        add("driver_%s_high_pct" % r["driver"], 100.0 * float(r["high"]), "per cent", "drivers.csv",
+            "the high column for %s, as a percentage" % r["driver"])
+
+if os.path.exists(os.path.join(OUT, "constants.csv")):
+    for r in read_csv("constants.csv"):
+        add("const_%s" % r["constant"], float(r["value"]), "model units", "constants.csv", r["what_it_is"])
+        add("const_%s_pct" % r["constant"], 100.0 * float(r["value"]), "per cent", "constants.csv",
+            "%s, as a percentage" % r["what_it_is"])
+
+# --------------------------------------------------------------------------
 # Headline outcomes, plan of record
 # --------------------------------------------------------------------------
 add("por_terminal_cash_mean", float(terminal_cash.mean()), "USD", "por_paths.csv", "mean of terminal_cash")
@@ -167,7 +193,8 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
                   "peak_funding_p90", "share_reaching_profitability", "final_year_effective_cac_mean",
                   "final_year_contrib_per_hh_month_mean", "mean_share_over_allowance",
                   "understatement_ratio", "band_central_placement_terminal",
-                  "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean"):
+                  "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
+                  "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta"):
             if k in r:
                 add("scenario_%s_%s" % (name, k), float(r[k]), "USD or share", "variants.csv",
                     "column %s for scenario %s" % (k, name))
@@ -197,6 +224,24 @@ if os.path.exists(os.path.join(OUT, "sobol.csv")):
                 "driver at rank %d by sobol_first_order for target %s" % (i, target))
             add("sobol_%s_rank%d_value" % (target, i), float(r["sobol_first_order"]), "share of variance", "sobol.csv",
                 "sobol_first_order at rank %d for target %s" % (i, target))
+
+    # Counts stated in words in the prose must be counted here, not typed.
+    CONTENT_DRIVERS = {"items_per_unit", "writer_gbp_item", "minutes_per_item",
+                       "board_reuse", "examiner_rate_gbp_hr", "market_reuse",
+                       "reval_frac_yr", "units_per_content_head"}
+    ACQ_DRIVERS = {"cac_anchor_usd", "cac_ref_spend_usd", "sat_kappa", "pool_pressure_psi",
+                   "creator_share", "creator_cac_rel", "pool_uk", "acq_pct_of_rev",
+                   "acq_launch_ramp", "cac_rel_us", "cac_rel_in", "cac_rel_row"}
+    for target in sorted({r["target"] for r in sb}):
+        rows = sorted([r for r in sb if r["target"] == target], key=lambda r: -float(r["sobol_first_order"]))
+        top7 = [r["driver"] for r in rows[:7]]
+        top3 = [r["driver"] for r in rows[:3]]
+        add("sobol_%s_content_drivers_in_top7" % target, len([d for d in top7 if d in CONTENT_DRIVERS]),
+            "count", "sobol.csv", "how many of the top seven drivers by first-order index for %s are content-cost drivers" % target)
+        add("sobol_%s_acq_drivers_in_top3" % target, len([d for d in top3 if d in ACQ_DRIVERS]),
+            "count", "sobol.csv", "how many of the top three drivers for %s are acquisition drivers" % target)
+        add("sobol_%s_content_drivers_in_top3" % target, len([d for d in top3 if d in CONTENT_DRIVERS]),
+            "count", "sobol.csv", "how many of the top three drivers for %s are content-cost drivers" % target)
 
 if os.path.exists(os.path.join(OUT, "pinned_sweeps.csv")):
     ps = read_csv("pinned_sweeps.csv")
@@ -237,6 +282,37 @@ if os.path.exists(os.path.join(OUT, "funding.csv")):
             "round_size for scenario %s stage %s" % (r["scenario"], r["stage"]))
         add("funding_%s_%s_need_p80" % (r["scenario"], r["stage"]), float(r["need_p80"]), "USD", "funding.csv",
             "need_p80 for scenario %s stage %s" % (r["scenario"], r["stage"]))
+
+if os.path.exists(os.path.join(OUT, "rescue_grid.csv")):
+    rg = read_csv("rescue_grid.csv")
+    for scope in sorted({r["scope"] for r in rg}):
+        cells = [r for r in rg if r["scope"] == scope]
+        clearing = [r for r in cells if float(r["terminal_cash_median"]) > 0]
+        add("rescue_%s_cells_total" % scope, len(cells), "count", "rescue_grid.csv",
+            "cells in the grid for scope %s" % scope)
+        add("rescue_%s_cells_clearing" % scope, len(clearing), "count", "rescue_grid.csv",
+            "cells whose terminal_cash_median is above zero for scope %s" % scope)
+        add("rescue_%s_best_median" % scope, max(float(r["terminal_cash_median"]) for r in cells),
+            "USD", "rescue_grid.csv", "highest terminal_cash_median in the grid for %s" % scope)
+        add("rescue_%s_worst_median" % scope, min(float(r["terminal_cash_median"]) for r in cells),
+            "USD", "rescue_grid.csv", "lowest terminal_cash_median in the grid for %s" % scope)
+        if clearing:
+            worst_cac = max(float(r["value1"]) for r in clearing)
+            at = [r for r in clearing if float(r["value1"]) == worst_cac]
+            add("rescue_%s_highest_cac_that_clears" % scope, worst_cac, "USD per acquisition",
+                "rescue_grid.csv", "largest value1 among cells whose terminal_cash_median is above zero, for %s" % scope)
+            add("rescue_%s_price_needed_at_that_cac" % scope, min(float(r["value2"]) for r in at),
+                "GBP per month", "rescue_grid.csv",
+                "smallest value2 that clears at that acquisition cost, for %s" % scope)
+        for r in cells:
+            add("rescue_%s_cac_q%s_price_q%s_median" % (scope, r["q1"], r["q2"]),
+                float(r["terminal_cash_median"]), "USD", "rescue_grid.csv",
+                "terminal_cash_median at cac_anchor_usd q%s and price_uk_tut_gbp q%s for %s"
+                % (r["q1"], r["q2"], scope))
+            add("rescue_%s_cac_q%s_value" % (scope, r["q1"]), float(r["value1"]),
+                "USD per acquisition", "rescue_grid.csv", "the pinned acquisition anchor at q%s" % r["q1"])
+            add("rescue_%s_price_q%s_value" % (scope, r["q2"]), float(r["value2"]),
+                "GBP per month", "rescue_grid.csv", "the pinned tutoring-anchored price at q%s" % r["q2"])
 
 if os.path.exists(os.path.join(OUT, "cohorts.csv")):
     for r in read_csv("cohorts.csv"):

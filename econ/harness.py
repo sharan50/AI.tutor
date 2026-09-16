@@ -117,6 +117,46 @@ def load(quiet=True):
     return verify(quiet=quiet)
 
 
+def selftest():
+    """
+    Prove the gate bites. Perturb one field of the published monthly CSV by one
+    unit in the last decimal place it is written at, confirm the harness refuses,
+    then restore the file and confirm it verifies again.
+
+    A gate that has never been shown to refuse is not a gate.
+    """
+    path = os.path.join(OUTDIR, "por_monthly.csv")
+    original = open(path, newline="").read()
+    lines = original.split("\n")
+    fields = lines[30].split(",")
+    before = fields[7]
+    fields[7] = "%.6f" % (float(before) + 0.000001)
+    lines[30] = ",".join(fields)
+    log = ["harness self-test",
+           "perturbed por_monthly.csv row 30 field 7 from %s to %s, one unit in the last place"
+           % (before, fields[7])]
+    try:
+        open(path, "w", newline="").write("\n".join(lines))
+        try:
+            verify(quiet=True)
+            log.append("RESULT: FAILED. The harness accepted a file it should have refused.")
+            ok = False
+        except HarnessRefusal:
+            log.append("RESULT: the harness refused, as it must.")
+            ok = True
+    finally:
+        open(path, "w", newline="").write(original)
+    verify(quiet=True)
+    log.append("file restored; the harness verifies again.")
+    log.append("sha256 of the restored file: %s"
+               % hashlib.sha256(original.encode()).hexdigest())
+    text = "\n".join(log) + "\n"
+    with open(os.path.join(OUTDIR, "harness_selftest.txt"), "w") as fh:
+        fh.write(text)
+    print(text, end="")
+    return ok
+
+
 if __name__ == "__main__":
     try:
         ns = verify()
@@ -126,3 +166,5 @@ if __name__ == "__main__":
         sys.exit(1)
     print("harness verified: seed %s, run date %s, %d paths, %d months"
           % (ns["SEED"], ns["RUN_DATE"], ns["N_PATHS"], ns["HORIZON"]))
+    if "--selftest" in sys.argv:
+        sys.exit(0 if selftest() else 1)

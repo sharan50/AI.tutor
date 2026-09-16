@@ -1,0 +1,27 @@
+seed,run_date,constant,value,what_it_is
+20260916,2026-09-16,FX_GBP_USD,1.270000,"United States dollars per pound, fixed at the owner's instruction"
+20260916,2026-09-16,FX_INR_USD,0.011561,"United States dollars per rupee, fixed at the owner's instruction"
+20260916,2026-09-16,VAT_UK,0.200000,"United Kingdom VAT on business-to-consumer digital services, statutory"
+20260916,2026-09-16,GST_IN,0.180000,"Indian GST on OIDAR services, statutory"
+20260916,2026-09-16,ROW_TAX,0.130000,"blended rest-of-English-speaking consumption tax, a stated prior"
+20260916,2026-09-16,SESSION_ALLOWANCE,16.000000,"sessions included per active household per month, a commercial decision"
+20260916,2026-09-16,OVERAGE_CAP_MULT,2.500000,"billed overage capped at this multiple of the allowance, a commercial decision"
+20260916,2026-09-16,CAC_LTV_CAP,0.750000,acquisition spend capped so effective cost stays below this times lifetime value
+20260916,2026-09-16,ACQ_RAMP_HOLD_MONTHS,12.000000,months the launch acquisition subsidy holds after go-to-market
+20260916,2026-09-16,ACQ_RAMP_TAPER_MONTHS,12.000000,months over which it then tapers to nothing
+20260916,2026-09-16,ROTA_EXTENDED_AT,3000.000000,active households at which safeguarding cover steps up
+20260916,2026-09-16,ROTA_24_7_AT,25000.000000,active households at which an out-of-hours rota is added
+20260916,2026-09-16,PLATFORM_PER_EXTRA_MARKET,1.500000,platform engineering heads per additional live consumer market
+20260916,2026-09-16,PLATFORM_FOR_INSTITUTIONS,2.000000,platform engineering heads for running the institution channel
+20260916,2026-09-16,POOL_BREADTH_REFERENCE_SUBJECTS,5.000000,subject count the reachable pool driver is defined at
+20260916,2026-09-16,POOL_BREADTH_EXPONENT,0.600000,exponent by which reachable pool scales with subject breadth
+20260916,2026-09-16,CONTENT_BUILD_WINDOW,6.000000,months a content step is built over before it is delivered
+20260916,2026-09-16,SCHOOL_USAGE_REL,0.350000,a school seat's usage relative to a paying household's
+20260916,2026-09-16,SCHOOL_ONBOARD_WEEKS,0.750000,"United Kingdom person-weeks per institution: agreement, security review, onboarding"
+20260916,2026-09-16,GTM_MONTH,6.000000,the month the United Kingdom consumer market opens
+20260916,2026-09-16,HORIZON,60.000000,months in the horizon
+20260916,2026-09-16,N_PATHS,20000.000000,paths simulated
+20260916,2026-09-16,P_TUTORING_ANCHOR,0.500000,probability a path lands in the tutoring-anchored price regime
+20260916,2026-09-16,START_YEAR,2027.000000,calendar year of month zero
+20260916,2026-09-16,START_MONTH_IDX,2.000000,"calendar month index of month zero, zero being January"
+20260916,2026-09-16,FX_INR_USD_inverse,86.500000,"rupees per United States dollar, the inverse of FX_INR_USD"

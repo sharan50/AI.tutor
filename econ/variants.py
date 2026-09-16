@@ -280,13 +280,18 @@ def s_l6():
 
 OUTCOME_COLS = [
     "terminal_cash_mean", "terminal_cash_p50", "peak_funding_mean", "peak_funding_p50",
-    "peak_funding_p90", "share_reaching_profitability", "median_month_rev_passes_cost",
+    "peak_funding_p80", "peak_funding_p90", "share_reaching_profitability",
+    "median_month_rev_passes_cost",
     "terminal_active_hh_mean", "final_year_effective_cac_mean",
     "final_year_contrib_per_hh_month_mean", "mean_share_over_allowance",
     "total_tax_collected_mean", "min_of_mean_trough", "mean_of_min_trough",
     "understatement_ratio", "band_central_placement_terminal",
     "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
+    "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta",
 ]
+
+
+BASE_TERMINAL = None
 
 
 def evaluate(name):
@@ -302,6 +307,7 @@ def evaluate(name):
         terminal_cash_p50=float(np.median(o["terminal_cash"])),
         peak_funding_mean=float(o["peak_funding_requirement"].mean()),
         peak_funding_p50=float(np.percentile(o["peak_funding_requirement"], 50)),
+        peak_funding_p80=float(np.percentile(o["peak_funding_requirement"], 80)),
         peak_funding_p90=float(np.percentile(o["peak_funding_requirement"], 90)),
         share_reaching_profitability=float(reach.mean()),
         median_month_rev_passes_cost=float(np.median(o["month_rev_passes_cost"][reach])) if reach.any() else float("nan"),
@@ -314,6 +320,16 @@ def evaluate(name):
         mean_of_min_trough=ts["mean_of_min"],
         understatement_ratio=ts["understatement_ratio"],
         band_central_placement_terminal=float(placement[-1]),
+        # Proof that the comparison is matched path by path rather than only in
+        # aggregate: if the streams had diverged, the per-path rank correlation
+        # against the base would collapse and the mean absolute per-path change
+        # would dwarf the change in the mean.
+        pathwise_spearman_vs_base=float(stats.spearmanr(o["terminal_cash"], BASE_TERMINAL).statistic)
+        if BASE_TERMINAL is not None else 1.0,
+        pathwise_mean_abs_delta=float(np.mean(np.abs(o["terminal_cash"] - BASE_TERMINAL)))
+        if BASE_TERMINAL is not None else 0.0,
+        abs_mean_delta=float(abs(o["terminal_cash"].mean() - BASE_TERMINAL.mean()))
+        if BASE_TERMINAL is not None else 0.0,
         total_content_cost_mean=float(out["content_cost"].sum(axis=1).mean()),
         total_cost_mean=float(sum(out[c].sum(axis=1).mean() for c in [
             "inference_cost", "support_cost", "payment_cost", "hosting_cost", "verif_cost",
@@ -351,6 +367,11 @@ def test_off_reproduces_base():
 def main():
     print("checking that each mechanism reproduces the base run when switched off")
     test_off_reproduces_base()
+
+    global BASE_TERMINAL
+    base_out, _ = NS["run"](DRV, NS["base_config"]())
+    base_o, _base_cum = NS["path_outcomes"](base_out)
+    BASE_TERMINAL = base_o["terminal_cash"]
 
     rows, band_rows = [], []
     for name in SCENARIOS:

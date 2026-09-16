@@ -145,7 +145,10 @@ def pass_a(figs):
         if not isinstance(ref, float):
             fails.append("%s: figures.csv holds a non-numeric value" % k)
             continue
-        tol = max(abs(ref) * 1e-6, 1e-9)
+        # figures.csv stores values at six decimal places, so a small number
+        # loses relative precision there. The tolerance has to be the storage
+        # precision, not a pure relative one, or every share fails.
+        tol = max(abs(ref) * 1e-6, 5e-7)
         if abs(ref - v) > tol:
             fails.append("%s: figures.csv says %.6f, independent re-derivation says %.6f" % (k, ref, v))
         checked += 1
@@ -155,7 +158,10 @@ def pass_a(figs):
 # ---------------------------------------------------------------------------
 # Pass B: prose scrape
 # ---------------------------------------------------------------------------
-NUM_RE = re.compile(r"(?<![\w.])(-?\d{1,3}(?:,\d{3})*(?:\.\d+)?|-?\d+(?:\.\d+)?)\s*(m\b|bn\b|%|)", re.I)
+# The comma-grouped alternative must REQUIRE a comma group, or the regex matches
+# the first three digits of an ungrouped number and reports "202" for "20260916".
+NUM_RE = re.compile(
+    r"(?<![\w.])(-?\d{1,3}(?:,\d{3})+(?:\.\d+)?|-?\d+(?:\.\d+)?)(?![\d,])\s*(m\b|bn\b|%|)", re.I)
 
 
 def printed_tolerance(text):
