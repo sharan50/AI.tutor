@@ -225,4 +225,6 @@ have let a later row overwrite an earlier one, and every figure in that file is
 quoted somewhere by name.
 
 **Fixed.** `add()` now refuses a name collision that carries a different value, and
-drops an exact repeat. 1,163 written, 1,163 loaded.
+drops an exact repeat. At the time of this entry that took the file from 1,283
+rows to 1,163, written and loaded alike; the current count is whatever
+`figures.py` last reported and is not this number.

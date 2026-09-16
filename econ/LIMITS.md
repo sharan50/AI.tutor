@@ -262,8 +262,8 @@ contribution: net revenue less inference, support, payment, hosting and store fe
 
 The all-in figure, net of engineering, content, overhead, compliance and payment
 fees, is 19.85 dollars per household month pooled and
--109.95 on the median path. Pooled, the two differ by
--13.04.
+-109.95 on the median path. Pooled, the all-in figure is
+13.04 dollars a household month lower than the gross one.
 
 **The pooled and median all-in figures disagree in sign**, because the pooled one
 is dominated by the few paths with large books that spread the fixed costs, and

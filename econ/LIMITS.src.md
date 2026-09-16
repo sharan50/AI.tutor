@@ -262,8 +262,8 @@ contribution: net revenue less inference, support, payment, hosting and store fe
 
 The all-in figure, net of engineering, content, overhead, compliance and payment
 fees, is @@final_year_contrib_per_hh_month_allin_pooled|num2@@ dollars per household month pooled and
-@@final_year_contrib_per_hh_month_allin_median|num2@@ on the median path. Pooled, the two differ by
-@@allin_minus_gross_contrib_per_hh_month_pooled|num2@@.
+@@final_year_contrib_per_hh_month_allin_median|num2@@ on the median path. Pooled, the all-in figure is
+@@gross_minus_allin_contrib_per_hh_month_pooled|num2@@ dollars a household month lower than the gross one.
 
 **The pooled and median all-in figures disagree in sign**, because the pooled one
 is dominated by the few paths with large books that spread the fixed costs, and

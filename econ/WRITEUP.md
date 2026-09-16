@@ -160,12 +160,12 @@ over the 99.8 per cent of paths that have a final year to speak of.
 
 The first row is a **gross margin**. Quoting it as the value of a customer, which
 is the conventional thing to do, overstates: pooled, the all-in figure is
--13.04 dollars lower.
+13.04 dollars lower.
 
 **The two columns disagree in sign on the all-in row, and that disagreement is
 the finding.** Pooled, a household month contributes
 19.85 dollars all-in. On the median path it consumes
--109.95. The pooled figure is dominated by the few paths with
+109.95. The pooled figure is dominated by the few paths with
 large books, which carry most of the household-months and spread the fixed costs
 over them; the median path is small and the same fixed costs sit on top of it.
 Neither is wrong. Quoting only the pooled one would describe a business that most

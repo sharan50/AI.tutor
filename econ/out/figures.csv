@@ -1117,6 +1117,8 @@ final_year_contrib_per_hh_month_gross_median,27.331019,USD per household month,c
 final_year_contrib_per_hh_month_allin_pooled,19.854833,USD per household month,cohorts.csv,"total net cash with acquisition and verification added back over the final year, divided by total final-year household months: net of engineering, content, overhead and compliance"
 final_year_contrib_per_hh_month_allin_median,-109.947564,USD per household month,cohorts.csv,median over paths with a real final year of the per-path all-in contribution ratio
 allin_minus_gross_contrib_per_hh_month_pooled,-13.039866,USD per household month,cohorts.csv,the pooled all-in figure less the pooled gross one: what the gross margin leaves out
+gross_minus_allin_contrib_per_hh_month_pooled,13.039866,USD per household month,cohorts.csv,the pooled gross figure less the pooled all-in one: how much lower the all-in figure is
+allin_consumed_per_hh_month_median,109.947564,USD per household month,cohorts.csv,the median path's all-in contribution with the sign reversed: what a household month consumes on the median path
 blended_retained_months_mean,3.286480,months,cohorts.csv,retained months weighted by the sampled segment mix
 final_year_ltv_gross_pooled,108.107766,USD per household,cohorts.csv,pooled gross contribution per household month times blended retained months
 final_year_effective_cac_pooled,54.020355,USD per acquisition,cohorts.csv,"total final-year acquisition and verification spend over total final-year acquisitions, pooled across paths"

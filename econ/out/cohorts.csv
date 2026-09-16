@@ -22,6 +22,8 @@ seed,run_date,name,value,unit,derivation,checklist_item
 20260916,2026-09-16,final_year_contrib_per_hh_month_allin_pooled,19.854833,USD per household month,"total net cash with acquisition and verification added back over the final year, divided by total final-year household months: net of engineering, content, overhead and compliance",16
 20260916,2026-09-16,final_year_contrib_per_hh_month_allin_median,-109.947564,USD per household month,median over paths with a real final year of the per-path all-in contribution ratio,16
 20260916,2026-09-16,allin_minus_gross_contrib_per_hh_month_pooled,-13.039866,USD per household month,the pooled all-in figure less the pooled gross one: what the gross margin leaves out,16
+20260916,2026-09-16,gross_minus_allin_contrib_per_hh_month_pooled,13.039866,USD per household month,the pooled gross figure less the pooled all-in one: how much lower the all-in figure is,16
+20260916,2026-09-16,allin_consumed_per_hh_month_median,109.947564,USD per household month,the median path's all-in contribution with the sign reversed: what a household month consumes on the median path,16
 20260916,2026-09-16,blended_retained_months_mean,3.286480,months,retained months weighted by the sampled segment mix,14
 20260916,2026-09-16,final_year_ltv_gross_pooled,108.107766,USD per household,pooled gross contribution per household month times blended retained months,14
 20260916,2026-09-16,final_year_effective_cac_pooled,54.020355,USD per acquisition,"total final-year acquisition and verification spend over total final-year acquisitions, pooled across paths",14

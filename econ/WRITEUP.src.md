@@ -160,12 +160,12 @@ over the @@share_paths_with_a_real_final_year|pct1@@ per cent of paths that have
 
 The first row is a **gross margin**. Quoting it as the value of a customer, which
 is the conventional thing to do, overstates: pooled, the all-in figure is
-@@allin_minus_gross_contrib_per_hh_month_pooled|num2@@ dollars lower.
+@@gross_minus_allin_contrib_per_hh_month_pooled|num2@@ dollars lower.
 
 **The two columns disagree in sign on the all-in row, and that disagreement is
 the finding.** Pooled, a household month contributes
 @@final_year_contrib_per_hh_month_allin_pooled|num2@@ dollars all-in. On the median path it consumes
-@@final_year_contrib_per_hh_month_allin_median|num2@@. The pooled figure is dominated by the few paths with
+@@allin_consumed_per_hh_month_median|num2@@. The pooled figure is dominated by the few paths with
 large books, which carry most of the household-months and spread the fixed costs
 over them; the median path is small and the same fixed costs sit on top of it.
 Neither is wrong. Quoting only the pooled one would describe a business that most

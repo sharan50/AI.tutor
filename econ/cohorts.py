@@ -162,6 +162,12 @@ add("final_year_contrib_per_hh_month_allin_median", float(np.median(fy_allin[REA
     "median over paths with a real final year of the per-path all-in contribution ratio", "16")
 add("allin_minus_gross_contrib_per_hh_month_pooled", allin_pooled - gross_pooled, "USD per household month",
     "the pooled all-in figure less the pooled gross one: what the gross margin leaves out", "16")
+# The same quantity signed so that prose can say "lower by" without a double
+# negative, and the median path's all-in figure as an amount consumed.
+add("gross_minus_allin_contrib_per_hh_month_pooled", gross_pooled - allin_pooled, "USD per household month",
+    "the pooled gross figure less the pooled all-in one: how much lower the all-in figure is", "16")
+add("allin_consumed_per_hh_month_median", -float(np.median(fy_allin[REAL])), "USD per household month",
+    "the median path's all-in contribution with the sign reversed: what a household month consumes on the median path", "16")
 
 blended_months = float((DRV["seg_mix_exam"] * exam_months + DRV["seg_mix_alevel"] * al_months
                         + np.maximum(1 - DRV["seg_mix_exam"] - DRV["seg_mix_alevel"], 0) * pre_months).mean())
