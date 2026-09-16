@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Status, AI.tutor design vault</title>
+<meta name="description" content="Everything open, unproven or waiting, on one page.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#doc">Skip to the document</a>
+
+<header class="topbar">
+  <a class="brand" href="index.html"><b>AI.tutor</b> <span>design vault</span></a>
+  <details class="switcher">
+    <summary>Status</summary>
+    <div class="sw-panel"><a href="00-thesis.html"><span class="sw-no">00</span>Thesis</a><a href="01-product.html"><span class="sw-no">01</span>Product</a><a href="02-style-engine.html"><span class="sw-no">02</span>Style engine</a><a href="03-curriculum-and-content.html"><span class="sw-no">03</span>Curriculum and content</a><a href="04-rights-dossier.html"><span class="sw-no">04</span>Rights dossier</a><a href="05-safety-privacy-regulatory.html"><span class="sw-no">05</span>Safety, privacy and regulatory</a><a href="06-architecture.html"><span class="sw-no">06</span>Architecture</a><a href="07-route-a-direct-to-parents.html"><span class="sw-no">07</span>Route A: direct to parents</a><a href="08-route-b-through-schools.html"><span class="sw-no">08</span>Route B: through schools</a><a href="09-route-comparison.html"><span class="sw-no">09</span>Route comparison</a><a href="10-economics.html"><span class="sw-no">10</span>Economics</a><a href="11-roadmap.html"><span class="sw-no">11</span>Roadmap</a><a href="12-risk-register.html"><span class="sw-no">12</span>Risk register</a><a href="13-primer-gateway.html"><span class="sw-no">13</span>Primer gateway</a><a href="14-open-items.html"><span class="sw-no">14</span>Open items</a><a href="decision-ledger.html"><span class="sw-no"></span>Decision ledger</a><a href="status.html"><span class="sw-no"></span>Status</a><a href="../map/"><span class="sw-no"></span>Impact surface</a><a href="../evidence/sources.html"><span class="sw-no"></span>Evidence register</a></div>
+  </details>
+  <nav class="toplinks">
+    <a href="status.html">Status</a>
+    <a href="../map/">Map</a>
+    <a href="../evidence/sources.html">Evidence</a>
+    <a href="index.html">Contents</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#conditions">The three conditions that decide the route</a></li><li><a href="#counsel">Questions for counsel</a></li><li><a href="#assumptions">Assumptions the plan rests on</a></li><li><a href="#floors">Accuracy floors</a></li><li><a href="#tests">Every test in the vault</a></li><li><a href="#risks">Risks</a></li></ol></div></aside>
+  <main class="sheet" id="doc">
+<h1>Status</h1>
+<p class="standfirst">Everything in this vault that is open, unproven or waiting, on one page.
+Generated from the registers themselves at build time, so it cannot drift from the documents
+the way a hand-maintained summary would.</p>
+
+<div class="stats"><div class="stat"><span class="stat-n">16</span><span class="stat-l">documents</span><span class="stat-note">drafted, none built</span></div><div class="stat"><span class="stat-n">13</span><span class="stat-l">tests specified</span><span class="stat-note"><b>none run</b></span></div><div class="stat"><span class="stat-n">12</span><span class="stat-l">questions for counsel</span><span class="stat-note">none answered</span></div><div class="stat"><span class="stat-n">21</span><span class="stat-l">assumptions</span><span class="stat-note">eight answerable by reading or asking</span></div><div class="stat"><span class="stat-n">37</span><span class="stat-l">decisions</span><span class="stat-note">each with what it forecloses</span></div><div class="stat"><span class="stat-n">7</span><span class="stat-l">risks</span><span class="stat-note">ordered by the owner's ranking</span></div></div>
+
+<div class="claim">
+<p>The single most important line on this page is the second figure: <b>13 tests
+specified and none run.</b> There is no product, no pilot and no customer, so every accuracy
+and style claim in this vault is a commitment rather than a measurement. Read everything
+else here in that light.</p>
+<span class="tag open">Unproven<span class="src">no pilot, no users, no revenue</span></span>
+</div>
+
+<h2 id="conditions">The three conditions that decide the route</h2>
+<p><a href="09-route-comparison.html">09</a> recommends Route A on three conditions. Two can be
+tested this quarter for almost nothing, and either can flip the decision on its own.</p>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Condition</th><th>How it is tested</th><th>State</th></tr></thead>
+<tbody><tr><td class="id">C1</td><td>Parents anchor the price against tutoring (£25 to £45 an hour, verified) rather than against software or against free.</td><td>Landing-page price testing before any product exists. M1 in 11 Roadmap. Decision rule: run a tutoring-anchored price point and a software-anchored one and compare revenue per visitor.</td><td class="pill-cell"><span class="pill wait">untested</span></td></tr><tr><td class="id">C2</td><td>Age verification cost per verified adult is small against the contribution of a whole acquisition.</td><td>Ask three certified providers for a quote. Doable this quarter, requires nothing to be built.</td><td class="pill-cell"><span class="pill wait">untested</span></td></tr><tr><td class="id">C3</td><td>Non-creator acquisition cost is affordable, so that D11's zero-persona independence is commercial as well as technical.</td><td>Split CAC by channel from the first cohort. M4.</td><td class="pill-cell"><span class="pill wait">untested</span></td></tr></tbody></table></div>
+
+<h2 id="counsel">Questions for counsel</h2>
+<p>Deliberately unanswered. One, OI-3, we are proceeding ahead of under D34, and it says so
+where it is applied. Full text in <a href="14-open-items.html">14</a>.</p>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Question</th><th>Unblocks</th></tr></thead>
+<tbody><tr><td class="id">OI-1</td><td>Does AQA's AI clause reach runtime retrieval, or only training?</td><td>Whether any board-derived material could ever sit in a retrieval index, and therefore whether the clean room is a strategy or…</td></tr><tr><td class="id">OI-2</td><td>Do the other boards' positions differ, and does any board licence for AI use at any price?</td><td>Board alignment (D19), and whether a licensed route exists at all.</td></tr><tr><td class="id">OI-3</td><td>What exact wording may be used to state which specification a course follows, without implying endorsement? We are proceeding ahead of this answer under decision D34 and the convention in 04, because a product that will not name the examination it…</td><td>Every piece of marketing copy, and the product's own course naming. Already in use.</td></tr><tr><td class="id">OI-4</td><td>Is a one-to-one tutor with no inter-user sharing outside the Online Safety Act user-to-user duties, and precisely which feature changes that?</td><td>The whole regulatory posture, and the trigger list in 05.</td></tr><tr><td class="id">OI-5</td><td>What age assurance method would satisfy the ICO for a service whose entire user base is children, at a cost compatible with a consumer price point?</td><td>The Route A launch, and the unit economics, since verification cost subtracts directly from the acquisition budget.</td></tr><tr><td class="id">OI-6</td><td>What is the minimum viable creator licence for name and likeness only, and what does the exemplar-conditioning upgrade under D6 add to it?</td><td>The first creator signature, and the D6 contingency.</td></tr><tr><td class="id">OI-7</td><td>Which entity contracts with the parent, and what does that do to consumer jurisdiction, UK representative obligations and VAT?</td><td>Incorporation, the payment stack, the terms of business, and the international transfer position.</td></tr><tr><td class="id">OI-8</td><td>New. Is the default of no parental transcript access (D16) defensible where the learner is under 13, and does the answer differ between Route A and Route B?</td><td>The parent reporting surface and the parent-facing terms.</td></tr><tr><td class="id">OI-9</td><td>New. Under what licence may the DfE-published subject content be used as the source for commercial item authoring, and does that use carry conditions?</td><td>The entire item bank. The clean room depends on there being a lawful source to write from.</td></tr><tr><td class="id">OI-12</td><td>New. What exposure do consumer protection law and the advertising standards regime create for education marketing that names an examination board, and how does that interact with the trade mark analysis in OI-3?</td><td>The wording convention in D34, which is already in use.</td></tr><tr><td class="id">OI-11</td><td>New. If a provisional grade range is shown to a teacher in a form that could inform a Foundation or Higher tier entry decision, does Article 22 become engaged, and what is then required?</td><td>Any teacher-facing view of the range, which is a predictable Route B feature request.</td></tr><tr><td class="id">OI-10</td><td>New. Is Article 6(1)(b) the correct basis for processing a child's data under a contract held by their parent, or is legitimate interests sounder? How does the Article 8 threshold interact?</td><td>The privacy notice, the DPIA, and the consent architecture.</td></tr></tbody></table></div>
+
+<h2 id="assumptions">Assumptions the plan rests on</h2>
+<p>None verified. Eight of them resolve by reading a published document or making
+a phone call, rather than by building anything, which is why
+<a href="11-roadmap.html#m1">milestone M1</a> contains almost no engineering.</p>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Assumption</th><th>Shapes</th></tr></thead>
+<tbody><tr><td class="id">OA-1</td><td>That AQA's AI clause may bite at inference as well as at training. The wording is broad enough; untested.</td><td>The absoluteness of the clean room.</td></tr><tr><td class="id">OA-2</td><td>That OCR, WJEC and Eduqas take a similar position to AQA. Not checked.</td><td>Board alignment, and multi-board expansion.</td></tr><tr><td class="id">OA-3</td><td>That naming an exam board descriptively may be honest use under section 11(2) of the Trade Marks Act 1994, provided endorsement is not implied. Counsel's likely starting point, not settled advice.</td><td>All marketing copy.</td></tr><tr><td class="id">OA-4</td><td>That UK persona protection runs through passing off for false endorsement (Irvine v Talksport), trade marks, copyright in the underlying videos, performers' rights and data protection, there being no statutory UK personality…</td><td>The entire licence architecture and the on-screen label.</td></tr><tr><td class="id">OA-5</td><td>That Save My Exams, Physics & Maths Tutor, Seneca, Cognito and Twinkl sell board-aligned commercial revision material without licensing past papers. This is inference from their existence, not from their terms.</td><td>Confidence that the clean-room line is commercially survivable.</td></tr><tr><td class="id">OA-9</td><td>That most creators the venture wants are US-resident, bringing US state right-of-publicity law into scope.</td><td>The licence's governing law and the enforcement analysis.</td></tr><tr><td class="id">OA-6</td><td>That a private one-to-one tutor with no sharing between users sits outside the Online Safety Act user-to-user duties. Reasoned from Ofcom's published examples; needs counsel.</td><td>The scoping decision in 05.</td></tr><tr><td class="id">OA-7</td><td>That UK GDPR Article 3(2) and the Article 27 UK representative requirement apply to an India-established controller serving UK children. Standard position, unconfirmed for this fact pattern.</td><td>The corporate and compliance structure.</td></tr><tr><td class="id">OA-8</td><td>That the proportion-of-screen and proportion-of-audio requirements for synthetic content labelling under the Indian rules appeared in the October 2025 draft; the final notified text has not been checked.</td><td>The specific display parameters of the on-screen label.</td></tr><tr><td class="id">OA-13</td><td>New. That UK tax law requires six-year retention of billing records.</td><td>The retention table in 05.</td></tr><tr><td class="id">OA-16</td><td>New. That the fifteen Children's code standards are enumerated as set out in 05. Reproduced from understanding, not re-verified against the published text.</td><td>The compliance mapping.</td></tr><tr><td class="id">OA-20</td><td>New. That this design meets what a school will actually assess it against: Keeping Children Safe in Education, the school's filtering and monitoring expectations, and any DfE supplier standard.</td><td>Every Route B conversation. It is the most likely reason a pilot discussion ends early.</td></tr><tr><td class="id">OA-14</td><td>New. That processing UK pupil data in India will be raised as an objection in school due diligence, independently of whether the transfer mechanism is legally sound.</td><td>Route B feasibility and the corporate structure.</td></tr><tr><td class="id">OA-11</td><td>New. That a recognisable educator's teaching is stable enough across topics to be a point in the style space rather than a cloud.</td><td>The entire preset representation.</td></tr><tr><td class="id">OA-21</td><td>New. That a Year 10 household pays across roughly twice the span of a Year 11 one, including through a summer with no examination.</td><td>The acquisition ceiling by year group, and whether the two cohorts have genuinely different economics.</td></tr><tr><td class="id">OA-19</td><td>New. That performance on our validated items maps onto examination grades closely enough for a provisional range to be useful before it is calibrated. Nothing supports this at launch;</td><td>A feature shown to every learner and every parent from day one.</td></tr><tr><td class="id">OA-18</td><td>New. That the structural differences between presets shown in 01 are perceptible to a fifteen-year-old and matter to them.</td><td>D4, the wedge, and therefore the venture's differentiation.</td></tr><tr><td class="id">OA-10</td><td>New, and the most load-bearing assumption in the repository. That parents anchor an AI tutoring subscription against the hourly cost of a human tutor rather than against software prices, or against free.</td><td>Every price point, and the entire Route A case.</td></tr><tr><td class="id">OA-12</td><td>New. The school budget-holder analysis in 08, and that procurement is aligned to the academic year so a missed summer decision is a twelve-month delay. Not one school has been asked.</td><td>The entire Route B sales motion and its cash planning.</td></tr><tr><td class="id">OA-17</td><td>New. That schools cut their tutoring offer because human tutoring is unaffordable at scale, rather than because the budget line is closing. Verified that 58% cut it; entirely unevidenced as to why.</td><td>Whether Route B has a market at all.</td></tr><tr><td class="id">OA-15</td><td>New. That variable cost per month is small relative to price, which is what makes engineering cost reduction low-leverage in 10.</td><td>Where engineering effort goes.</td></tr></tbody></table></div>
+
+<h2 id="floors">Accuracy floors</h2>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Floor</th><th class="id">Test</th><th>State</th></tr></thead>
+<tbody><tr><td class="id">ACC-1</td><td>100% of live items carry a complete validation record by a named validator.</td><td class="id">T-VAL-01</td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">ACC-2</td><td>99.5% of tutor turns make no substantive curricular assertion that is unsupported by a cited live item.</td><td class="id">T-GND-01</td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">ACC-3</td><td>99.0% of generated worked steps are mathematically correct.</td><td class="id">T-MTH-01</td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">ACC-5</td><td>100% of assembled practice papers meet their structural specification: mark total, topic coverage, command-word mix and difficulty distribution, all within declared…</td><td class="id">T-PAP-01</td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">ACC-4</td><td>99.5% of tutor turns stay inside the declared specification scope.</td><td class="id">T-SCP-01</td><td class="pill-cell"><span class="pill stop">not run</span></td></tr></tbody></table></div>
+
+<h2 id="tests">Every test in the vault</h2>
+<div class="tw"><table>
+<thead><tr><th class="id">Test</th><th>What it establishes</th><th>State</th></tr></thead>
+<tbody><tr><td class="id">T-CAL-01</td><td>of learners shown a range, what proportion of actual examination outcomes fall inside it</td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-GATE-01</td><td>a blocking release check asserting that no component outside the learner-facing and parent-facing reporting surface reads</td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-GND-01</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-MTH-01</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-PAP-01</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-REG-01</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-SCP-01</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-STY-01</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-STY-02</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-STY-03</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-STY-04</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-VAL-01</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr><tr><td class="id">T-ZERO-01</td><td></td><td class="pill-cell"><span class="pill stop">not run</span></td></tr></tbody></table></div>
+
+<h2 id="risks">Risks</h2>
+<p>In the owner's ranking. <a href="12-risk-register.html#ordering">12</a> explains why the
+engineering priority runs close to the reverse of it.</p>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Risk</th><th>Leading indicator</th></tr></thead>
+<tbody><tr><td class="id">R5</td><td>Platform interruption by an app store or payment processor.</td><td>A complaint, or press.</td></tr><tr><td class="id">R11</td><td>An uncalibrated grade range is relied on by a parent or a learner as though it were a forecast.</td><td>Support contact mentioning the range; any marketing copy using the word prediction.</td></tr><tr><td class="id">R6</td><td>Vendor model drift moving the accuracy numbers.</td><td>T-REG-01 failing on a version change.</td></tr><tr><td class="id">R7</td><td>Examiner supply, and the cost per item, making the content moat unaffordable beyond one strand.</td><td>minutes_per_item from the M2 timed pilot.</td></tr><tr><td class="id">R8</td><td>D4 is wrong and the wedge has no substance.</td><td>T-STY-02 at chance (M3), or no retention advantage at M4.</td></tr><tr><td class="id">R9</td><td>A free tool ships validated, board-specific, warranted content.</td><td>Any competitor making a correctness claim with a test behind it.</td></tr><tr><td class="id">R10</td><td>Runway against the clock: seasonality in Route A, the annual procurement cycle in Route B.</td><td>Cohort contribution; pipeline age.</td></tr></tbody></table></div>
+
+  </main>
+</div>
+
+<nav class="pager">
+  <a class="prev" href="index.html"><span>Previous</span>Contents</a>
+  <a class="next" href="00-thesis.html"><span>Next</span>Thesis</a>
+</nav>
+
+<footer class="pagefoot">
+  <div class="legend-row">
+    <span class="li"><span class="mark verified">Verified</span>checked against a named source</span>
+    <span class="li"><span class="mark assumed">Assumed</span>reasoned, not checked</span>
+    <span class="li"><span class="mark open">Open</span>a question for a lawyer</span>
+    <span class="li"><span class="mark unknown">Unknown</span>a number we do not have</span>
+    <span class="li"><span class="mark decided">Decision</span>a choice taken here</span>
+  </div>
+  <div class="meta-row">
+    <span>AI.tutor design vault, revised September 2026. Nothing here has been built.</span>
+    <span class="stamp">Built 15 September 2026</span>
+  </div>
+</footer>
+</body>
+</html>

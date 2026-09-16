@@ -22,19 +22,10 @@
   to = "/docs/index.html"
   status = 200
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Content-Type-Options = "nosniff"
-    X-Frame-Options = "DENY"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    # No JavaScript and no inline styles anywhere in this site, so both can be
-    # shut off entirely rather than loosened with unsafe-inline.
-    Content-Security-Policy = "default-src 'none'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'"
-
-# The contracts are markdown by design. Serve them as text so they open in the
-# browser instead of downloading, since they get sent to a creator to read.
-[[headers]]
-  for = "/contracts/*"
-  [headers.values]
-    Content-Type = "text/plain; charset=utf-8"
+# Headers are generated into _site/_headers by src/build.py, not written here.
+# The map at /map/ is the one page that runs a script, and its policy names the
+# SHA-256 of each of that page's own inline blocks rather than allowing inline
+# script generally. Those hashes have to be computed from the file, so the whole
+# set of header rules is emitted by the build to keep one source of truth, and
+# to keep the strict policy on /docs/, /evidence/ and /contracts/ from
+# overlapping the map's on any path.
