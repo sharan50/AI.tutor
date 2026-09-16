@@ -310,7 +310,19 @@ staged round carries six months of buffer and the whole-horizon figure carries
 none, so the three staged rounds sum to about a third more than the number the
 document led with. Both are now printed with the difference named.
 
-**1b.10 The summer is not what costs the Year 10 advantage.** The write-up blamed
+**1b.10 The summer is not what costs the Year 10 advantage.**
+
+> **SUPERSEDED AND REVERSED by 4.13.** What follows is what round 1b believed,
+> and it is the opposite of the current finding: the summer is the larger lever
+> by a factor of about fourteen, removing it entirely reaches about 1.41 rather
+> than 1.75, and nothing in the prior ranges recovers 2. OPEN_ITEMS now sends the
+> owner to measure the summer first and in-term churn second — the reverse of the
+> instruction below. Marked in place rather than rewritten, on the rule 4.13
+> itself applied to 1b.11: a reader arriving here should not be told the opposite
+> of what the files say. Round 7 found that 4.13 marked 1b.11 and left 1b.10
+> unmarked, though 1b.10 is the entry 4.13 was reversing.
+
+The write-up blamed
 it, following docs/10's own caveat. Removing the summer entirely lifts the ratio
 to 1.75, not 2; only pinning in-term churn to its floor as well recovers 2. The
 open item now sends the owner to measure in-term churn first and the summer
@@ -1545,7 +1557,12 @@ removed from the real function; `invariants.py` uses one of them as its
 REINTRODUCED DEFECT in the self-test.
 
 **Moved.** `ltv_cap_assumed_months` published 5.866317; what `ltv_estimate`
-actually assumes is 5.227200. The published figure was 12.2 per cent high, and
+actually assumed **at that moment** was 5.227200. Neither is the current figure:
+`out/cohorts.csv` carries what the corrected code produces against the corrected
+model, and LIMITS quotes that. The pair here is the before-and-after of the
+defect, measured before the round 6 regeneration moved the model underneath it —
+the same distinction 6.1 spells out for its own pair, and this entry did not,
+though it is the entry a reader consults precisely when those numbers disagree. The published figure was 12.2 per cent high, and
 so was the overstatement ratio built on it. LIMITS.md narrated the round-5 fix
 in detail and then quoted the unfixed number.
 
@@ -1795,3 +1812,133 @@ two new figures; a mistake in `figures.py` meant they were not emitted;
 `render.py` refused `WRITEUP.md`; and `verify.py` reported one failure naming the
 unrendered file, instead of reporting a clean run over a stale document, which is
 what it would have done an hour earlier.
+
+---
+
+## Round 7
+
+Two fresh-context reviews again. The coherence pass returned sixteen defects.
+Several are of a kind this document has now produced repeatedly: a rendered
+token moved during a regeneration and the hand-typed sentence wrapped around it
+did not move with it. Two are worse than that, and one of those reverses a
+headline.
+
+### 7.1 A cash break-even now exists, and the document said none did
+
+`out/breakeven.csv` carries five bracketed rows, and one of them is on a **cash**
+target: on the go-to-market minimum with condition C1 passing, the tutoring price
+crosses the median-path-ends-whole threshold at **41.29 pounds a month**. At the
+top of the price prior the median path ends the horizon **192,216 ahead**.
+
+Section 10 opened with "on the cash targets there are none", said "it does not
+cross zero, so there is no break-even to report", and called that same 192,216
+figure a **shortfall**. Section 1 said "no break-even against a cash target
+brackets" and "every break-even solved in section 10 against a cash target is
+unbracketed". The heading read "the 5 that do solve" from a token, and the
+sentence under it said all five were on the profitability target, over a table of
+four.
+
+The sign inversion is the instructive part. The token rendered the magnitude;
+the hand-typed word "short" next to it supplied the direction; the round 6
+regeneration flipped the direction and the word stayed. `figures.csv` was already
+carrying `breakeven_rows_bracketed_on_cash,1` while the prose said zero.
+
+**This result has now moved three times**: unreachable, reachable at about
+forty-two pounds, unreachable, and now reachable at 41.29. Nothing about the
+business changed between those readings. Each move came from an arithmetic
+correction inside the model, and the solved price sits close enough to the top of
+the prior for any of them to push it across. Section 10 now reports the
+threshold, the history, and the conclusion that follows: this scope is near the
+line, and where exactly the line falls is inside the instrument's own error.
+
+### 7.2 A 5.2-point effect printed as "0.1", because of a format tag
+
+`render.py` has two percentage formats. `pct0/1/2` take a share and multiply by a
+hundred; `pctv1` takes a value that is *already* a percentage and prints it
+unchanged. Two figures carrying unit `share` were rendered through `pctv1`, so
+0.05155 printed as **0.1** and 0.00510 as **0.0** — in the one sentence of
+section 8 that reports the only real interaction in the two-way grid, beside a
+ratio of 10.1 that those two printed numbers cannot possibly produce.
+
+Right in the file, wrong on the page, and invisible to every pass: Pass 0a
+checked currency tags only. It now also refuses a `share` rendered through
+`pctv1`, and a `per cent` rendered through `pct0/1/2`. Both directions, because
+both are a hundred times wrong.
+
+### 7.3 The invariant count claimed coverage the suite does not have
+
+`invariant_proved_count` counted distinct change-log entries in
+`out/invariant_defect_costs.csv` — that is, reintroduction **cases**. Four of the
+eight cases are the same invariant. LIMITS rendered the figure as "8 of them are
+proved to bite", where "them" is the invariants, so three checks were credited
+with a proof never run. Two of the three were written for named historical
+defects and simply have no reintroduction; the third is a boundary check.
+
+`out/invariant_selftest.txt` printed "8 of the 8 invariants have a historical
+defect to be proved against. The other 0 are boundary or containment checks."
+Both halves false, and the zero came from subtracting the case count from the
+invariant count — two counts of different things that happened to be equal.
+
+Both numbers are published now, the prose uses the one it means, and the
+self-test **names** the three unproved checks instead of implying there are none.
+
+Round 6 found an invariant whose name claimed a property its code did not check.
+Round 7 found the count of those invariants claiming coverage the suite did not
+have. The artefact built to say what is verified has now overstated what is
+verified twice, in consecutive rounds.
+
+### 7.4 The mechanism-defect count, quoted in three places and maintained in none
+
+The write-up said "seven mechanism errors … across rounds 2, 4 and 5" a round
+after round 6 found three more. LIMITS said "all seven" forty lines below its own
+enumeration of ten.
+
+The enumeration is now the artefact: `MECHANISM_DEFECTS` in `invariants.py`, one
+row per defect with its change-log entry, written to
+`out/mechanism_defects.csv`, and every quoted count derived from it.
+
+### 7.5 A nine-month gap described as four tenths of a month, in the wrong direction
+
+Section 7's paragraph about a mean hiding a distribution said the averaged cash
+line troughs "later" than the average path, "by four tenths of a month". The
+averaged line troughs at month 44; the average path troughs at 52.99. The gap is
+**8.99 months** and the direction is **earlier**. Both figures beside the phrase
+are rendered tokens; the phrase was right when written, when they read 54 and
+53.6, and a regeneration moved one of them.
+
+### 7.6 A ratio of two medians presented as one path's ratio
+
+LIMITS said "on the median path, content costs X and acquisition costs Y, a ratio
+of Z". X and Y are separate medians and belong to different paths — the path
+holding the median content cost spends nothing like the median on acquisition.
+The per-path median ratio is published now and the prose uses it. The conclusion
+survives; the attribution did not. This is the construction round 6 removed from
+the scenario table's delta column and left standing here.
+
+### 7.7 The rest
+
+A sign-hiding ratio still quoted in section 12, four paragraphs above the
+passage explaining why it should not be, and which 6.19 had recorded as already
+removed. "On the mean, both delays cost money" over a table showing the
+six-month delay gaining 297,481. A scope comparison — written in round 6 — that
+printed one scenario's difference-of-medians against another's per-path median
+and concluded the wrong one was larger; on a consistent basis the two are within
+a few per cent and which leads depends on the basis. Two different values for the
+all-in median twelve lines apart, on different path sets, unstated. "Eighteen"
+unbracketed rows where the file says seventeen. Invariants described as running
+on "every configuration" when they run on two. Five cross-checks called five
+accounting identities when one is a scope-ladder decomposition. A causal "so"
+that the count it follows does not establish. CHANGELOG 1b.10 still carrying a
+conclusion round 4 reversed, unmarked, in a file that marks other superseded
+entries in place — and 4.13 marked 1b.11 while leaving unmarked the entry it was
+actually reversing. CHANGELOG 6.5 quoting a pre-regeneration pair with no
+reconciliation, in the entry a reader consults precisely when those numbers
+disagree.
+
+### 7.8 Pass 0c earned its place twice more
+
+Both times this round that `figures.py` was edited badly — once a stale variable
+name, once two helpers called before they were defined — the sequence was the
+same: `figures.py` failed, `figures.csv` went stale, `render.py` refused to write
+the documents, and `verify.py` reported failures naming the unrendered files.
+Before round 6 that sequence ended in a green verifier over a stale document.

@@ -261,8 +261,19 @@ add("por_median_path_total_content_cost", med_content, "USD", "por_paths.csv",
     "median over paths of total_content_cost")
 add("por_median_path_total_cac_spend", med_cac, "USD", "por_paths.csv",
     "median over paths of total_cac_spend, which includes verification")
+# A ratio of two medians is not "the median path's ratio": the path holding the
+# median content cost is not the path holding the median acquisition spend, and
+# here they are nowhere near each other. Round 6 removed exactly this
+# construction from the scenario table's delta column and left it here, in the
+# passage arguing that on most paths the company barely markets. Both are
+# published now and the prose uses the per-path one. See CHANGELOG 7.6.
 add("por_median_path_content_over_cac", med_content / med_cac if med_cac else 0.0, "ratio",
-    "por_paths.csv", "the median path's content cost divided by its acquisition and verification spend")
+    "por_paths.csv",
+    "the median content cost divided by the median acquisition and verification spend: a ratio of two medians, which in general belong to two different paths")
+_pp_ratio = col(paths, "total_content_cost") / np.maximum(col(paths, "total_cac_spend"), 1e-9)
+add("por_median_path_content_over_cac_pathwise", float(np.median(_pp_ratio)), "ratio",
+    "por_paths.csv",
+    "the median over paths of each path's OWN content cost divided by its own acquisition and verification spend")
 for c, v in totals.items():
     add("por_total_%s_mean" % c, v, "USD", "por_monthly.csv", "sum over months of %s_mean" % c)
     add("por_share_%s" % c, v / grand if grand else 0.0, "share", "por_monthly.csv",
@@ -719,6 +730,10 @@ if os.path.exists(os.path.join(OUT, "breakeven.csv")):
         len([r for r in berows if r["status"] == "bracketed"
              and r["metric"] == "share_reaching_profitability"]),
         "count", "breakeven.csv", "bracketed rows solved against the profitability target")
+    add("breakeven_rows_against_a_cash_target",
+        len([r for r in berows if r["metric"] != "share_reaching_profitability"]),
+        "count", "breakeven.csv",
+        "rows solved against a cash target rather than against the profitability share")
     add("breakeven_rows_bracketed_on_cash",
         len([r for r in berows if r["status"] == "bracketed"
              and r["metric"] != "share_reaching_profitability"]),
@@ -959,12 +974,27 @@ if os.path.exists(os.path.join(OUT, "invariants.csv")):
     add("invariant_run_count", len({r["run"] for r in _iv}) if _iv and "run" in _iv[0] else 0,
         "count", "invariants.csv", "distinct configurations they are run on")
 
+if os.path.exists(os.path.join(OUT, "mechanism_defects.csv")):
+    _md = read_csv("mechanism_defects.csv")
+    add("mechanism_defect_count", len(_md), "count", "mechanism_defects.csv",
+        "rows: the mechanism defects found in model.py by reading the month loop, one per row")
+
 if os.path.exists(os.path.join(OUT, "invariant_defect_costs.csv")):
     _dc = read_csv("invariant_defect_costs.csv")
     _real = [r for r in _dc if r["change_log_entry"] != "-"]
-    add("invariant_proved_count", len({r["change_log_entry"] for r in _real}), "count",
+    # This counted distinct change-log ENTRIES, which is the number of
+    # reintroduction cases, and the prose rendered it as "N of them are proved",
+    # where "them" is the invariants. Four of the cases are the same invariant
+    # ("every acquisition can be billed"), so the sentence claimed proof for
+    # three checks that have never been run against any defect. Both numbers are
+    # published now and the prose uses the one it means. See CHANGELOG 7.3.
+    add("invariant_reintroduction_case_count",
+        len({r["change_log_entry"] for r in _real}), "count",
         "invariant_defect_costs.csv",
         "historical defects reintroduced and refused by the check written for them")
+    add("invariant_proved_count", len({r["invariant"] for r in _real}), "count",
+        "invariant_defect_costs.csv",
+        "DISTINCT invariants proved to refuse at least one real defect")
     # How many of those defects moved terminal cash by nothing at all. This is
     # the reason the five accounting identities could not see them, measured
     # rather than asserted. See CHANGELOG 6.1.
@@ -983,6 +1013,17 @@ if os.path.exists(os.path.join(OUT, "invariant_defect_costs.csv")):
                 float(r["what_the_fix_is_worth_at_the_mean"]), "USD",
                 "invariant_defect_costs.csv",
                 "the same for the two sitting-month exits fixed in rounds 4 and 5")
+
+# How far the averaged cash line's trough sits from the average path's own
+# trough. The prose called this "four tenths of a month" for several rounds
+# after a regeneration moved it, and had the direction backwards too.
+# See CHANGELOG 7.5.
+_tg = {f["name"]: f["value"] for f in FIGS}
+if "por_min_of_mean_cash_month" in _tg and "por_mean_trough_month" in _tg:
+    add("por_averaged_line_trough_gap_months",
+        abs(float(_tg["por_mean_trough_month"]) - float(_tg["por_min_of_mean_cash_month"])),
+        "months", "por_monthly.csv, por_paths.csv",
+        "the mean of the per-path trough month less the month the averaged cash line troughs in, in absolute months")
 
 # --------------------------------------------------------------------------
 # Ratios the prose used to state by hand and state wrongly. Each is derived from

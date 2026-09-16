@@ -27,6 +27,9 @@ caught : TRIPWIRE: the budget cap's assumed life        (change log 4.3 and 5.4)
          longest life the budget cap assumes is 19.10 billed household months
          costs +248,646 of terminal cash at the mean
 
-8 of the 8 invariants have a historical defect to be proved against.
-The other 0 are boundary or containment checks that no defect found so far
-has violated, and they are reported as the weaker things they are.
+8 reintroduction cases, covering 5 of the 8 invariants.
+The other 3 have never been run against any defect and are NOT proved
+to bite, whatever their names claim:
+   unproved: cumulative reach never falls
+   unproved: an enforced allowance bills no overage
+   unproved: nothing happens before the first market opens

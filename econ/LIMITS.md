@@ -726,9 +726,20 @@ scenario table in the write-up now gives the median beside it.
 
 ### "Content is the largest line" is partly a property of the budget rule
 
-On the median path, content costs 12,448,547 over the horizon and
-acquisition and verification together cost 1,516,841, a ratio of
-8.2 to one. Content is almost entirely exogenous: a fixed schedule
+The median content cost over the horizon is 12,448,547 and the median
+acquisition and verification spend is 1,516,841. Taking each path's
+own ratio and then the median of those, the typical path spends
+7.9 times as much on content as on
+acquisition.
+
+**The two medians in that first sentence do not belong to the same path, and
+until round 7 this passage said they did.** It read "on the median path, content
+costs X and acquisition costs Y, a ratio of Z" over a ratio of two separately
+taken medians; the path holding the median content cost spends nothing like the
+median on acquisition. The conclusion survives — the per-path median ratio is
+within a few per cent of the ratio-of-medians — but the attribution to a single
+path did not, and it is the same construction round 6 removed from the scenario
+table's delta column and left standing here. Content is almost entirely exogenous: a fixed schedule
 times a sampled item cost, with no demand feedback at all. Acquisition is
 throttled by the lifetime-value cap and the launch-subsidy taper.
 
@@ -981,8 +992,9 @@ property of the business.
 
 ### A break-even against a weak target read as a rescue
 
-The four solved break-evens target half of all paths stringing three
-cash-positive months together. `out/breakeven.csv` now carries, for each solved
+4 of the 5 solved break-evens target half of all paths stringing three
+cash-positive months together; the remaining one targets the median path ending
+the horizon whole, on the narrowest scope. `out/breakeven.csv` now carries, for each solved
 row, the median path's terminal cash and the eightieth-percentile funding
 requirement at that same value, and the share of the paths that meet the target
 and still end the horizon negative. On the plan of record that last share is
@@ -999,7 +1011,7 @@ mechanism correctness test in this instrument and there cannot easily be one:
 what would it compare against?** The four defects were found by reading the
 code, which is the only method that has worked, and which does not scale.
 
-### The gate covers two files of 26
+### The gate covers two files of 27
 
 `por_monthly.csv` and `por_paths.csv` are rebuilt character for character on
 every load. The other derived outputs are not rebuilt by anything, and the check
@@ -1116,7 +1128,9 @@ because there is no month 61.
 This was hidden by a mean. The write-up quoted the mean trough month,
 53.0 against the averaged line's
 44, and concluded the averaged line troughs
-"later" — by four tenths of a month. The mean sits between a fifth of paths that
+"later" by four tenths of a month, which was right when it was written and is
+not now: the averaged line troughs 9.0
+months earlier than the average path. The mean sits between a fifth of paths that
 trough early and four fifths that never trough at all, and describes neither.
 **It is the same defect as checklist item 19 and it was inside the section whose
 entire subject is that a mean of minimums is not the minimum of a mean.**
@@ -1218,7 +1232,8 @@ defect by construction.
   nothing about whether the code is right.
 - The **two-sided off-test** applies only to switchable mechanisms. Eight of the
   ten defects were in the base loop, which has no switch.
-- The **five accounting identities** check that cash adds up. Eight of the ten
+- The **five cross-checks**, four of which are accounting identities and one of
+  which is a scope-ladder decomposition, check that cash adds up. Eight of the ten
   moved households, ratios or a spend cap — quantities that do not appear in a
   cash identity. This is now measured rather than asserted:
   `out/invariant_defect_costs.csv` re-runs the model with each historical defect
@@ -1254,10 +1269,29 @@ than on the ordering it is for, should read that as the warning it is.
 far it goes.** `invariants.py` asserts structural statements about what the month
 loop must produce — not that cash adds up, which all ten defects left perfect,
 but that a household is in the right place at the right time.
-8 of them are
+5 of the 8 are
 proved to bite the way the harness gate is: the defect each was written for is
 reintroduced into a copy of `model.py` in memory, the check is required to fail,
-and the copy is discarded. `out/invariant_selftest.txt` records it.
+and the copy is discarded, across 8
+reintroduction cases in total. `out/invariant_selftest.txt` records it, and now
+names the ones that are **not** proved instead of implying there are none.
+
+**That sentence read "8 of them" for one round, and the file it cites
+agreed with it, and both were wrong.** The figure behind it counted
+reintroduction *cases*; four of those cases are the same invariant, so three
+checks were being credited with a proof that had never been run. Two of the
+three were written for named historical defects and simply have no
+reintroduction; the third is a boundary check. The self-test's own summary line
+computed "the other zero are boundary checks" by subtracting the case count from
+the invariant count, which are counts of different things that happened to be
+equal.
+
+It is worth being blunt about what that means, because it is the second time in
+two rounds the same thing has happened in this same file. Round 6 found an
+invariant whose NAME claimed a property its code did not check. Round 7 found
+the COUNT of those invariants claiming coverage the suite did not have. The
+artefact built to say what is and is not verified was, twice, the artefact
+overstating what is verified.
 
 **And one of them was proved to bite while being incapable of catching what its
 own name promised.** The round 6 section below is the account; the short version
@@ -1280,7 +1314,7 @@ defect of a shape nobody has met yet will pass it.
 **The stronger thing still has not been built**: a second implementation of the
 month loop by a different route, a cohort-level accounting that tracks each
 acquisition's own months and cash and reconciles to the aggregate series. That
-would catch all seven without having been told about any of them. It is a day of
+would catch all 10 without having been told about any of them. It is a day of
 work, it is the largest single improvement available to this instrument, and it
 is not in the open items because it is a question about this directory rather
 than about the business.
@@ -1393,7 +1427,8 @@ When the bisection finds no bracket, the status is read off the two endpoint
 evaluations alone. If a metric were non-monotone with an interior excursion past
 the target, the label would be wrong. The two rows the write-up calls the most
 actionable positive result in the file were checked on a nine-point grid this
-round and are monotone, so those two labels are sound. The other eighteen rest
+round and are monotone, so those two labels are sound. The other
+17 rest
 on two evaluations each and are not independently checked.
 
 **The band-placement stability argument is measured where the construction

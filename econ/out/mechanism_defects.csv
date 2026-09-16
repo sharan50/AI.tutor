@@ -1,0 +1,11 @@
+seed,run_date,change_log_entry,what_it_was
+20260916,2026-09-16,2.1,a churn reference in the wrong place
+20260916,2026-09-16,2.3,an allowance that truncated at the wrong number and kept the revenue anyway
+20260916,2026-09-16,2.4,saturation measured on the standing book rather than cumulative reach
+20260916,2026-09-16,2.6,an onshoring switch that moved the wrong people
+20260916,2026-09-16,4.2,the A-level sitting exit applied to households that had just progressed
+20260916,2026-09-16,5.1,both sitting exits applied to households acquired that same month
+20260916,2026-09-16,5.4,a lifetime-value estimate using a calendar the loop does not have
+20260916,2026-09-16,6.1,the summer lapse and the progression applied to that month's arrivals
+20260916,2026-09-16,6.2,"a segment mix that did not sum to one, so households were billed that were never bought"
+20260916,2026-09-16,6.3,the budget cap valuing an examination household acquired in its sitting month at zero months

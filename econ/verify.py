@@ -309,6 +309,26 @@ def pass_format_units():
             if spec.startswith("usd") and "USD" not in r["unit"]:
                 fails.append("%s: %s is tagged %s but its unit is %r"
                              % (os.path.basename(src), name, spec, r["unit"]))
+            # The same class of defect one scale down, and it is worse because
+            # it is not invisible, it is wrong by a hundred. `pctv1` means "this
+            # value is ALREADY a percentage, print it as is"; `pct0/1/2` mean
+            # "this value is a share, multiply by a hundred". Round 7 found two
+            # figures carrying unit `share` rendered through `pctv1`, so a
+            # 5.2-percentage-point effect printed as "0.1" -- in the one
+            # sentence of section 8 that reports the only real interaction in
+            # the two-way grid, next to a ratio of 10.1 that the printed numbers
+            # could not produce. Nothing else in the chain could see it: the
+            # figure is right in the file and wrong on the page.
+            # See CHANGELOG 7.2.
+            if spec == "pctv1" and r["unit"] == "share":
+                fails.append("%s: %s is rendered with pctv1, which prints the value "
+                             "unchanged, but its unit is 'share' -- it needs pct0/1/2, "
+                             "or the printed number is a hundred times too small"
+                             % (os.path.basename(src), name))
+            if spec.startswith("pct") and spec != "pctv1" and r["unit"] == "per cent":
+                fails.append("%s: %s is rendered with %s, which multiplies by a hundred, "
+                             "but its unit is already 'per cent'"
+                             % (os.path.basename(src), name, spec))
     return fails
 
 

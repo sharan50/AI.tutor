@@ -5,7 +5,7 @@ horizon_months,60,months,por_monthly.csv,row count
 n_paths,20000,paths,por_paths.csv,row count
 constants_row_count,29,count,constants.csv,row count
 selftest_count,3,count,out/,the self-test record files present on disk
-out_csv_count,26,count,out/,how many .csv files the out directory holds
+out_csv_count,27,count,out/,how many .csv files the out directory holds
 out_csv_gated_count,2,count,out/,how many of them the character-for-character harness gate rebuilds and compares
 n_drivers,80,count,drivers.csv,row count
 driver_anchor_u_low,0.000000,driver units,drivers.csv,the low column for anchor_u
@@ -510,7 +510,8 @@ por_mean_share_over_allowance_pct,23.380434,per cent,por_paths.csv,the same shar
 por_total_cost_mean,40290730.196096,USD,por_monthly.csv,sum over months of the mean of every cost line
 por_median_path_total_content_cost,12448547.479682,USD,por_paths.csv,median over paths of total_content_cost
 por_median_path_total_cac_spend,1516840.758491,USD,por_paths.csv,"median over paths of total_cac_spend, which includes verification"
-por_median_path_content_over_cac,8.206891,ratio,por_paths.csv,the median path's content cost divided by its acquisition and verification spend
+por_median_path_content_over_cac,8.206891,ratio,por_paths.csv,"the median content cost divided by the median acquisition and verification spend: a ratio of two medians, which in general belong to two different paths"
+por_median_path_content_over_cac_pathwise,7.933319,ratio,por_paths.csv,the median over paths of each path's OWN content cost divided by its own acquisition and verification spend
 por_total_inference_cost_mean,1106771.039135,USD,por_monthly.csv,sum over months of inference_cost_mean
 por_share_inference_cost,0.027470,share,por_monthly.csv,"inference_cost_mean summed over months, divided by the sum of every cost line"
 por_share_inference_cost_pct,2.746962,per cent,por_monthly.csv,the same share as a percentage
@@ -2984,6 +2985,7 @@ breakeven_rows_total,24,count,breakeven.csv,row count
 breakeven_rows_bracketed,5,count,breakeven.csv,rows whose status is bracketed
 breakeven_rows_unbracketed,19,count,breakeven.csv,rows whose status is not bracketed
 breakeven_rows_bracketed_on_profitability,4,count,breakeven.csv,bracketed rows solved against the profitability target
+breakeven_rows_against_a_cash_target,20,count,breakeven.csv,rows solved against a cash target rather than against the profitability share
 breakeven_rows_bracketed_on_cash,1,count,breakeven.csv,bracketed rows solved against a cash target
 breakeven_rows_unbracketed_met,2,count,breakeven.csv,"rows where the target is met across the whole prior range, so the driver never crosses it because the plan already satisfies it"
 breakeven_rows_unbracketed_missed,17,count,breakeven.csv,"rows where the target is missed across the whole prior range, which is the real failure"
@@ -3483,10 +3485,13 @@ imanconover_worst_corr_error,0.016000,rank correlation,imanconover_check.csv,lar
 imanconover_all_marginals_preserved,True,boolean,imanconover_check.csv,every marginal_preserved column is True
 invariant_check_count,8,count,invariants.csv,distinct invariant names
 invariant_run_count,2,count,invariants.csv,distinct configurations they are run on
-invariant_proved_count,8,count,invariant_defect_costs.csv,historical defects reintroduced and refused by the check written for them
+mechanism_defect_count,10,count,mechanism_defects.csv,"rows: the mechanism defects found in model.py by reading the month loop, one per row"
+invariant_reintroduction_case_count,8,count,invariant_defect_costs.csv,historical defects reintroduced and refused by the check written for them
+invariant_proved_count,5,count,invariant_defect_costs.csv,DISTINCT invariants proved to refuse at least one real defect
 invariant_defects_costing_no_cash,2,count,invariant_defect_costs.csv,"reintroduced defects whose terminal cash mean is identical to the correct model's: they move a decomposition, not cash"
 limits_round5_sitting_fix_usd,2141420.131646,USD,invariant_defect_costs.csv,the same for the two sitting-month exits fixed in rounds 4 and 5
 limits_round6_arrivals_fix_usd,524796.422454,USD,invariant_defect_costs.csv,terminal cash mean of the correct model less that of the model with both round 6.1 calendar exits put back
+por_averaged_line_trough_gap_months,8.985250,months,"por_monthly.csv, por_paths.csv","the mean of the per-path trough month less the month the averaged cash line troughs in, in absolute months"
 scope_over_anchor_peak_funding_ratio,4.786166,ratio,"variants.csv, funding.csv","what the scope decision is worth on the capital requirement, divided by what the price anchor is worth on it"
 anchor_over_scope_terminal_cash_ratio,4.562208,ratio,variants.csv,"what the price anchor is worth on terminal cash, divided by what the scope decision is worth on it"
 gtm_price_margin_share_of_low_support,0.037637,share,breakeven.csv,"how far short the median path falls at the top of the price prior, as a share of how far it falls at the bottom"

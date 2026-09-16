@@ -63,7 +63,9 @@ the magnitude-weighted mean month of negative net cash is
 19.6 against
 48.0 for the positive months. The reason is
 duller. 42 of the
-60 months are negative, so discounting shrinks a sum that is
+60 months are negative — though the count alone would not settle
+the direction, and what does is that the negative months are both larger and
+earlier than the positive ones — so discounting shrinks a sum that is
 mostly negative — and the negatives being **early** is what limits how much it
 shrinks by. The economics get *worse*: revenue arrives later than cost, so
 discounted cost over discounted revenue rises from
@@ -141,18 +143,26 @@ content schedule, the headcount ramp and the step costs run to month 60 on every
 path, including the ones with no book. That is a property of the instrument, not
 of the business, and LIMITS.md states it under "the company never adapts". A real
 company facing month 30 of these medians would cut the schedule; this one cannot,
-and that is the single largest reason no break-even against a cash target
-brackets.
+and that is the single largest reason only 1 of the
+20 break-evens solved against a cash target brackets at all.
 
 "About" is doing work in that sentence too, and it is meant to. Part of the United
 Kingdom people line is not demand-independent: the safeguarding rota steps at
 3,000 and again at 25,000 active
-households. The first fires on 55.7 per
-cent of paths and the second on 20.5 — an
+households. 55.7 per cent of paths sit above
+the first threshold **at the final month** and 20.5 per cent above the
+second. Those are terminal-month shares, which is what the file measures; a step
+fires when the book crosses the threshold in ANY month, and no per-path maximum
+of the standing book is published, so both figures are lower bounds on how often
+each step actually fires. The bound is one-sided and it runs the same way as the
+argument this paragraph is qualifying, which is why it is stated rather than
+left. An
 earlier draft said "most paths", which is true of the first and not of the
 second. The overwhelming majority of the 62.0 per cent is fixed; a
-slice of it is not, and LIMITS.md item 5 says which. This is why **no single driver gets the median path whole**: every break-even
-solved in section 10 against a cash target is unbracketed, because the money is
+slice of it is not, and LIMITS.md item 5 says which. This is why **almost no single driver gets the median path whole**:
+1 of the 20 break-evens solved in section 10 against a
+cash target brackets, and that one only on the narrowest scope with the price
+anchor pinned favourably. The money is
 spent whether or not anyone buys — not because it was committed early, but
 because nothing in the model ever decides to stop. Four solves against the profitability target do
 bracket, and section 10 gives them.
@@ -394,12 +404,24 @@ cost base — the United Kingdom sales reps, the institution platform heads, the
 security certification, the per-school onboarding, the school inference — over a
 denominator of consumer household months. The institution channel is about one
 per cent of net revenue and rather more than that of cost, so the row is
-pessimistic about the consumer household: removing the channel entirely, which is
+pessimistic about the consumer household. Removing the channel entirely, which is
 the `por_no_schools` scenario, moves the pooled figure from
 16.53 to
 18.93 and the median
 path from -87.97 to
--73.54. It is left as published rather than quietly re-based, because which
+-73.54.
+
+**Those two median figures are on a different path set from the
+-86.91 in the table above, and the
+difference is the point of saying so.** The table's figure is the median over
+paths with at least twelve final-year household months — a little over
+ninety-nine in a hundred — because a path with almost no book gives a
+per-household-month figure with an unusable denominator. The scenario columns are
+medians over every path. The gap between the two is about a dollar, which is
+small; an unstated switch of path set inside one subsection is not, and it was
+unstated for a round.
+
+It is left as published rather than quietly re-based, because which
 basis is wanted is a decision rather than an arithmetic question, and the
 85.0 per cent figure below inherits
 it either way. It is in LIMITS.md as an open defect.
@@ -730,8 +752,14 @@ given path actually meets.
 **The timing is worse than the depth, and an earlier draft of this paragraph
 missed it entirely by quoting a mean.** It said the averaged line troughs at
 month 44 while individual paths trough on average
-at 53.0, and called the difference "later" — four tenths
-of a month, which is nothing. The mean was hiding the distribution. The **median**
+at 53.0, and called the difference "later" by four
+tenths of a month. Both halves of that are now wrong: the averaged line troughs
+9.0 months **earlier** than the average
+path does, not later, and the gap is not four tenths. The sentence was written
+when the two figures were 54 and 53.6, where four tenths was right; a later
+regeneration moved the averaged line and the hand-typed words around the two
+rendered tokens did not move with it — in the paragraph whose subject is a mean
+hiding a distribution. The mean was hiding the distribution. The **median**
 path troughs at month 59, the tenth percentile at
 month 23, and
 **77.1 per cent of paths have their
@@ -791,8 +819,8 @@ drivers was never measured.
 
 Where the grid does show interaction is on whether a path reaches profitability
 at all: the same content step moves that share by
-0.1 points at the cheapest
-acquisition level and 0.0
+5.2 points at the cheapest
+acquisition level and 0.5
 points at the dearest, a factor of
 10.1. Expensive acquisition
 does not make content cheaper; it makes content irrelevant, because the paths it
@@ -1084,8 +1112,9 @@ cancel. Together they are -3,441,606.
 
 **The launch-delay scenarios do not support any conclusion at all, and the honest
 thing is to say so rather than to quote the one column that agrees with
-intuition.** On the mean, both delays cost money. On the median path and on the
-capital requirement, both delays HELP:
+intuition.** On the mean the three-month delay costs money and the six-month
+delay **makes** money — all three of its statistics favour delaying. On the
+median path and on the capital requirement, both delays HELP:
 
 | | Delta, mean | Delta, median path | Delta, peak funding p80 |
 |---|---|---|---|
@@ -1114,14 +1143,37 @@ product launches.
 
 ## 10. What the break-evens say
 
-**On the cash targets there are none, and one of them misses by a margin small
-enough to be worth the sentence.** On the go-to-market minimum with condition C1
-passing, the top of the price prior leaves the median path
+**One cash target is now met, and it is the third time this particular result has
+moved.** On the go-to-market minimum with condition C1 passing, the tutoring
+price crosses the median-path-ends-whole threshold at
+**41.29 pounds a month**.
+At the top of the price prior the median path ends the horizon
 192,216
-short over five years — 3.8 per cent of what the same scope consumes at
-the bottom of that prior. It does not cross zero, so there is no break-even to
-report; it comes close enough that reporting "nothing rescues it" without the
-margin would be its own kind of overstatement.
+**ahead**, not short; at the bottom it ends
+-5,107,055
+down. At the solved price the scope needs
+4,849,426
+of capital at the eightieth percentile and
+70.0
+per cent of paths reach profitability.
+
+**Read that with the history attached, because the history is the finding.**
+Across rounds 5 and 6 this same row has been unreachable, then reachable at about
+forty-two pounds, then unreachable, and now reachable at
+41.29.
+Nothing about the business changed between those readings. What changed each time
+was an arithmetic correction inside the model — three in round 5, four more in
+round 6 — and the solved price sits close enough to the top of the prior that
+each of them was able to push it across. A quantity that has changed sign three
+times under corrections to its own calculation is not a threshold anyone should
+plan against. It is a statement that this scope is near the line, and that where
+exactly the line falls is inside the instrument's own error.
+
+The previous draft of this paragraph said "on the cash targets there are none",
+called the margin at the top of the prior a **shortfall**, and reported the
+figure without its sign. All three were wrong after the round 6 regeneration: the
+token rendered the magnitude, the hand-typed word around it supplied the
+direction, and the direction had flipped.
 
 3 targets were solved by bisection on a pinned driver, each across that
 driver's entire prior range: the median path ending the horizon whole, the plan
@@ -1197,8 +1249,10 @@ LIMITS.md item 5.)
 
 ### The 5 that do solve
 
-All 5 are on the same target, half of all paths
-running three consecutive cash-positive months. They are on two drivers, the
+4 of the 5 are on one target, half of all paths
+running three consecutive cash-positive months; the 1 remaining one is the
+go-to-market minimum's price against the median path ending whole, described
+above. The four are on two drivers, the
 acquisition anchor and the tutoring price — which are **not** the two section 8
 ranks highest on that target, as a third draft of this paragraph claimed before
 the sentence under it refuted the claim in the same breath. **Three drafts
@@ -1248,7 +1302,7 @@ solved with the anchor regime pinned to tutoring. If C1 fails there is no price
 in the range that reaches the target on either scope.
 
 **"Viable" is the wrong word, and it was the word an earlier draft used.** The
-target these four solve against is that half of all paths run three consecutive
+target the 4 profitability solves aim at is that half of all paths run three consecutive
 cash-positive months. That is a low bar, and `out/breakeven.csv` now carries what
 the plan looks like at each solved value on the statistics the solve did not
 target. At the plan of record's break-even price, the median path still ends the
@@ -1262,8 +1316,11 @@ per cent still end the horizon with negative cash. Three cash-positive months in
 a row is a thing a business can do on its way to failing.
 
 **What changes is the instruction, not the level.** The question is not "what
-rescues the plan", to which the answer is still nothing: none of these four
-values gets the median path whole, and the same file says so in the rows above.
+rescues the plan", to which the answer on the plan of record is still nothing:
+none of the profitability solves gets the median path whole, and the same file
+says so in the rows above. On the go-to-market minimum with the price anchor
+pinned favourably the answer is no longer nothing, and the paragraph at the top
+of this section says what that is worth and how far it has moved.
 It is "at what acquisition cost, or at what price, does half of this stop being
 structurally cash-negative every single month", and the instrument answers that
 on both scopes. It is a threshold worth knowing and it is not a rescue.
@@ -1448,7 +1505,11 @@ go-to-market minimum's 1,151,306. On
 terminal cash that scenario is worth -1,130,317,
 which is close to nothing and which the document duly called close to nothing.
 The real scope reduction is worth
--6 times that. So the capital figure was a
+6,817,629 against that, which differs from it
+in sign as well as size — this sentence used to give a ratio between the two,
+which is exactly the form section 12 later explains should never have been used
+for quantities that can differ in sign, and which CHANGELOG 6.19 wrongly recorded
+as already removed from the prose. So the capital figure was a
 comparison against the real scope reduction, the terminal-cash figure was a
 comparison against a different and much smaller one, and the conclusion drawn
 from putting them side by side was an artefact of the mismatch rather than a
@@ -1475,13 +1536,26 @@ reduction they come to 21,373,030. On
 terminal cash they do not merely differ in size, they differ in **sign**, and
 this is the most interesting thing in the section. Freezing content is worth
 8,121,027 at the mean and
-7,318,367 on the median path: it helps
-on both. Dropping the second and third markets is worth
+7,885,450 on the median path: it
+helps on both. Dropping the second and third markets is worth
 -1,130,317 at the mean — it **costs** money — and
-7,463,227 on the median path, where it is far
-the larger of the two decisions. Neither figure is noise: the mean sits
+7,463,227 on the median path. Neither of the
+market-drop figures is noise: the mean sits
 2.4 paired standard errors below zero and the median
 sits 218 above it.
+
+**On the median path the two decisions are close, and which is larger depends on
+a choice of statistic that a previous draft of this paragraph made without
+noticing.** Both quantities above are the median of the per-path differences.
+Measured that way freezing content is the larger by about six per cent. Measured
+as the difference of the two marginal medians — the other column in section 9's
+table, and a different number — dropping markets is the larger, by about one per
+cent. The draft that stood here for one round printed the content freeze from one
+basis and the market drop from the other and concluded that the market drop was
+"far the larger of the two": wrong on both counts, since on a consistent basis
+the gap is a few per cent either way and its direction flips with the basis. The
+honest statement is that on the median path these two decisions are worth about
+the same, and the instrument cannot separate them.
 
 **That is a real economic statement and not an artefact.** The extra markets pay
 for themselves only on the paths that get large, and those paths carry the mean.
@@ -1650,7 +1724,7 @@ OPEN_ITEMS.md.
 | `out/drivers.csv`, `out/constants.csv` | Every sampled driver with its range and what anchors it, and the 29 decided constants that are scalars, each with what it is. It is **not** every decided constant: the seasonality shapes, the examination-month and season-shift maps, the market opening months, the four content schedules, the market budget weights, the segment usage relatives, the sales and creator ramps, the platform headcount floor and the general and administrative schedule are all decisions and none of them is in the file, because none is a scalar. LIMITS.md lists them. |
 | `out/aux_params.csv` | The priors drawn outside the published random stream, which are not in `out/drivers.csv` because they are not in the published run. |
 | `out/provenance.csv` | Which `model.py` **and `harness.py`** each generating script last ran against, hashed together. `verify.py` fails the run if they disagree. |
-| `out/invariants.csv` | The structural checks on the month loop, run on every configuration, with what each one measured. |
+| `out/invariants.csv` | The structural checks on the month loop, run on 2 configurations — the plan of record and the enforced-allowance scenario, not on every scenario — with what each one measured. |
 | `out/invariant_defect_costs.csv` | Each historical mechanism defect put back and the model re-run: what terminal cash does with it in. 2 of them move it by exactly nothing, which is why the accounting identities could never have found them. |
 | `out/harness_selftest.txt`, `out/suffix_selftest.txt`, `out/invariant_selftest.txt` | The records of the 3 self-tests: both harness gates, the column-naming discipline, and each invariant against the defect it was written for. |
 | `out/offtest.csv` | Each mechanism, off and on: exact when off, and not inert when on. |
@@ -1698,14 +1772,18 @@ absent cost lines, off-tests, entity set-ups and driver ranks rather than leavin
 them to prose, and renders two of the lists verbatim from the file that holds
 them. Run the verifier anyway, because it catches the other kind of error.
 
-**And there is a whole class of defect no pass here can reach.** Seven
-mechanism errors have been found in `model.py` across rounds 2, 4 and 5, and
+**And there is a whole class of defect no pass here can reach.**
+10
+mechanism errors have been found in `model.py` across rounds 2, 4, 5 and 6, and
 every one passed every automated check in this directory on every run while it
 was wrong — the gate because the defect was in the published run, the off-test
 because most were in the base loop, the identities because they moved households
 rather than cash, this scrape because a wrong number computed consistently is
-still on disk. All seven were found by reading the month loop. LIMITS.md sets out
-why that is structural and what would actually close it.
+still on disk. Every one of them was found by a person reading the month loop.
+LIMITS.md sets out
+why that is structural and what would actually close it. (This paragraph said
+"seven … across rounds 2, 4 and 5" for a round after round 6 had found three
+more, which is the same hand-typed-count defect it is describing.)
 
 **The third review round found a different failure mode this pass cannot reach,
 and it is worth stating because it was the worst defect in the document.** Owner decision 1

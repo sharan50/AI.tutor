@@ -254,6 +254,27 @@ def run_all(out, drv, cfg, label, ns=NS):
 # The defects below are the real ones, taken from the change log entries they
 # come from, not inventions chosen to be easy to catch.
 # ---------------------------------------------------------------------------
+# The mechanism defects found in model.py by reading the month loop, one row
+# each. This list exists because the COUNT of them has been stated by hand in
+# three documents and has been wrong twice: the write-up said seven for a round
+# after round 6 had found three more, and LIMITS said "all seven" forty lines
+# under its own enumeration of ten. A count that is quoted in three places and
+# maintained in none is a defect waiting to happen, so the enumeration is the
+# artefact and the count is derived from it. See CHANGELOG 7.4.
+MECHANISM_DEFECTS = [
+    ("2.1", "a churn reference in the wrong place"),
+    ("2.3", "an allowance that truncated at the wrong number and kept the revenue anyway"),
+    ("2.4", "saturation measured on the standing book rather than cumulative reach"),
+    ("2.6", "an onshoring switch that moved the wrong people"),
+    ("4.2", "the A-level sitting exit applied to households that had just progressed"),
+    ("5.1", "both sitting exits applied to households acquired that same month"),
+    ("5.4", "a lifetime-value estimate using a calendar the loop does not have"),
+    ("6.1", "the summer lapse and the progression applied to that month's arrivals"),
+    ("6.2", "a segment mix that did not sum to one, so households were billed that were never bought"),
+    ("6.3", "the budget cap valuing an examination household acquired in its sitting month at zero months"),
+]
+
+
 REINTRODUCTIONS = [
     ("every acquisition can be billed", "4.2 and 5.1",
      "                std_exam = stock[:, ms(m, S_EXAM), :] - arrivals[:, ms(m, S_EXAM), :]",
@@ -364,11 +385,27 @@ def selftest():
                     "what_the_fix_is_worth_at_the_mean"])
         w.writerows(costs)
     log.append("")
-    log.append("%d of the %d invariants have a historical defect to be proved against."
-               % (len(REINTRODUCTIONS), len(INVARIANTS)))
-    log.append("The other %d are boundary or containment checks that no defect found so far"
-               % (len(INVARIANTS) - len(REINTRODUCTIONS)))
-    log.append("has violated, and they are reported as the weaker things they are.")
+    # These two lines said "8 of the 8 invariants have a historical defect to be
+    # proved against. The other 0 are boundary or containment checks." Both
+    # halves were false, and the zero was produced by subtracting two counts of
+    # DIFFERENT THINGS: there are eight reintroduction CASES, but four of them
+    # are the same invariant, so five distinct invariants are proved and three
+    # have never been run against any defect at all. Two of those three were
+    # written for named historical defects and simply have no reintroduction.
+    #
+    # This is the same defect as the one round 6 rewrote this file to fix: a
+    # count that claims more coverage than the code delivers, in the artefact
+    # whose entire purpose is to say what is and is not covered.
+    # See CHANGELOG 7.3.
+    proved = sorted({name for name, _entry, _o, _n in REINTRODUCTIONS})
+    unproved = [n for n, _fn, _e in INVARIANTS if n not in proved]
+    log.append("%d reintroduction cases, covering %d of the %d invariants."
+               % (len(REINTRODUCTIONS), len(proved), len(INVARIANTS)))
+    log.append("The other %d have never been run against any defect and are NOT proved"
+               % len(unproved))
+    log.append("to bite, whatever their names claim:")
+    for n in unproved:
+        log.append("   unproved: %s" % n)
     text = "\n".join(log) + "\n"
     with open(os.path.join(OUT, "invariant_selftest.txt"), "w") as fh:
         fh.write(text)
@@ -394,6 +431,14 @@ def main():
     for r in rows:
         print("  %-24s %-46s %-5s %s" % (r[2], r[3], r[4], r[5]))
     print("wrote", path, len(rows), "checks,", len(failed), "failures")
+
+    mpath = os.path.join(OUT, "mechanism_defects.csv")
+    with open(mpath, "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["seed", "run_date", "change_log_entry", "what_it_was"])
+        for entry, what in MECHANISM_DEFECTS:
+            w.writerow([SEED, RUN_DATE, entry, what])
+    print("wrote", mpath, len(MECHANISM_DEFECTS), "mechanism defects")
     return 0 if not failed else 1
 
 
