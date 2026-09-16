@@ -324,6 +324,18 @@ add("por_terminal_annual_run_rate", 12.0 * _tnr, "USD", "por_monthly.csv",
 # Band construction and where the band line actually sits
 # --------------------------------------------------------------------------
 place = col(monthly, "cum_cash_bandcentral_placement")
+# How far the central band line's percentile placement wanders WITHIN a run,
+# across the months, against how far it moves BETWEEN scenarios at the terminal
+# month. The write-up warned about the second and the evidence is in the first.
+_pl = col(monthly, "cum_cash_bandcentral_placement")
+_g = int(col(monthly, "t")[0]) + 6   # from the United Kingdom go-to-market month
+add("por_band_central_placement_month_min", float(_pl[_g:].min()), "percentile", "por_monthly.csv",
+    "the lowest percentile the central band line sits at over the months from go-to-market onward")
+add("por_band_central_placement_month_max", float(_pl[_g:].max()), "percentile", "por_monthly.csv",
+    "the highest it reaches over the same months")
+add("por_band_central_placement_month_spread", float(_pl[_g:].max() - _pl[_g:].min()),
+    "percentile", "por_monthly.csv",
+    "how far it wanders within this one run: the difference between those two")
 add("por_band_central_placement_terminal", float(place[-1]), "percentile as a share", "por_monthly.csv",
     "cum_cash_bandcentral_placement in the final row: the percentile of the real per-path distribution the central band line sits at")
 add("por_band_central_placement_min", float(place[6:].min()), "percentile as a share", "por_monthly.csv",
@@ -332,6 +344,19 @@ add("por_band_central_placement_max", float(place[6:].max()), "percentile as a s
     "maximum of cum_cash_bandcentral_placement from month 6 onward")
 
 if os.path.exists(os.path.join(OUT, "variants_bands.csv")):
+    _vb = [r for r in read_csv("variants_bands.csv") if r["band"] == "central"]
+    if _vb:
+        _pt = [float(r["placement_terminal"]) for r in _vb]
+        add("band_central_placement_scenario_min", min(_pt), "percentile", "variants_bands.csv",
+            "the lowest terminal placement of the central band line over every scenario")
+        add("band_central_placement_scenario_max", max(_pt), "percentile", "variants_bands.csv",
+            "the highest")
+        add("band_central_placement_scenario_spread", max(_pt) - min(_pt), "percentile",
+            "variants_bands.csv",
+            "how far the central band line's terminal placement moves BETWEEN scenarios, against how far it moves within one run across months")
+        add("band_central_placement_scenario_count", len(_pt), "count", "variants_bands.csv",
+            "how many scenarios that is measured over")
+
     vb = read_csv("variants_bands.csv")
     for r in vb:
         add("band_placement_%s_%s_terminal" % (r["scenario"], r["band"]), float(r["placement_terminal"]),

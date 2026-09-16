@@ -564,9 +564,16 @@ por_terminal_active_hh_mean,26539.785347,households,por_monthly.csv,active_hh_me
 por_terminal_month_net_cash_mean,246841.757737,USD,por_monthly.csv,net_cash_mean in the final row
 por_terminal_month_net_rev_mean,930809.171213,USD,por_monthly.csv,net_rev_consumer_mean plus net_rev_schools_mean in the final row
 por_terminal_annual_run_rate,11169710.054556,USD,por_monthly.csv,that final-month net revenue multiplied by twelve
+por_band_central_placement_month_min,0.497750,percentile,por_monthly.csv,the lowest percentile the central band line sits at over the months from go-to-market onward
+por_band_central_placement_month_max,0.574000,percentile,por_monthly.csv,the highest it reaches over the same months
+por_band_central_placement_month_spread,0.076250,percentile,por_monthly.csv,how far it wanders within this one run: the difference between those two
 por_band_central_placement_terminal,0.498550,percentile as a share,por_monthly.csv,cum_cash_bandcentral_placement in the final row: the percentile of the real per-path distribution the central band line sits at
 por_band_central_placement_min,0.497750,percentile as a share,por_monthly.csv,minimum of cum_cash_bandcentral_placement from month 6 onward
 por_band_central_placement_max,0.574000,percentile as a share,por_monthly.csv,maximum of cum_cash_bandcentral_placement from month 6 onward
+band_central_placement_scenario_min,0.497550,percentile,variants_bands.csv,the lowest terminal placement of the central band line over every scenario
+band_central_placement_scenario_max,0.501300,percentile,variants_bands.csv,the highest
+band_central_placement_scenario_spread,0.003750,percentile,variants_bands.csv,"how far the central band line's terminal placement moves BETWEEN scenarios, against how far it moves within one run across months"
+band_central_placement_scenario_count,23,count,variants_bands.csv,how many scenarios that is measured over
 band_placement_por_low_terminal,0.192100,percentile as a share,variants_bands.csv,placement_terminal for scenario por band low
 band_placement_por_central_terminal,0.498550,percentile as a share,variants_bands.csv,placement_terminal for scenario por band central
 band_placement_por_high_terminal,0.825850,percentile as a share,variants_bands.csv,placement_terminal for scenario por band high

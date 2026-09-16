@@ -601,12 +601,29 @@ That construction has a property a reader will not assume, so it is measured and
 published. The central band line sits at the 49.9 percentile of the real
 per-path distribution of cumulative cash at the end of the horizon, and between
 the 49.8 and 57.4 percentiles across the months from go-to-market
-onward. It moves between scenarios as well: on the software-anchored scenario it
-ends at 49.9, and on the tutoring-anchored one at
-50.1.
+onward — a wander of
+7.6 percentile points **within this
+one run**.
 
-**Cross-scenario comparison of band lines is therefore invalid unless the
-placement is quoted with them.** Every band line in `out/por_monthly.csv` carries
+**The warning that used to sit here pointed at the wrong axis.** It said the
+placement "moves between scenarios as well" and offered two scenarios ending at
+49.9 and
+50.1 as the evidence,
+then concluded that cross-scenario comparison of band lines is invalid. Measured
+across all 23 scenarios in
+`out/variants_bands.csv`, the terminal placement runs from
+49.8 to
+50.1 — a spread of
+0.38 percentile points, which is
+twenty times smaller than the within-run wander and is not a reason for anything.
+
+**So: comparing terminal band lines between scenarios is fine, and comparing a
+band line at one month against a band line at another is not.** The placement is
+stable across scenarios and unstable across the horizon, which is the opposite of
+what this section used to say.
+
+**What holds regardless: a band line is not a percentile line and must never be
+read as one.** Every band line in `out/por_monthly.csv` carries
 a `_bandlow`, `_bandcentral` or `_bandhigh` suffix; every mean over all paths
 carries `_mean`; and `check_suffix_discipline()` in `model.py` refuses a header in
 which the two could collide. A `_mean` figure and a `_band` figure must never be

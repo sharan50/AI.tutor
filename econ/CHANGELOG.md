@@ -1037,6 +1037,30 @@ section 11 says the table is censored, and LIMITS carries it as its own item.
 It is the checklist item 19 defect — a conclusion true only of an averaged line —
 committed inside the section whose entire subject is that defect.
 
+### 4.17 The band-placement warning pointed at the wrong axis
+
+Also found by re-reading rather than by a reviewer, and in the same shape as
+4.16: a strong claim resting on a comparison nobody had measured.
+
+Section 6 measured the central band line's percentile placement, found it moves,
+and warned that **cross-scenario** comparison of band lines is invalid. The
+evidence offered was two scenarios ending at 49.9 and 50.1 per cent. Measured
+across all 23 scenarios in `out/variants_bands.csv`, the terminal placement
+spans 0.38 percentile points. Within the single published run, across the months
+from go-to-market, it wanders 7.6 points.
+
+So the placement is **stable** across scenarios and **unstable** across the
+horizon, and the warning had it exactly backwards. Comparing terminal band lines
+between scenarios is fine; comparing a band line at one month against one at
+another is not. Both spreads are now figures, the section says which comparison
+is unsafe, and the rule that survives either way — a band line is not a
+percentile line — is stated on its own.
+
+Worth noting what this does NOT change: the construction, the suffix discipline
+that keeps `_mean` and `_band` columns from colliding, and the measurement of the
+placement itself were all correct. It was only the sentence drawing a conclusion
+from them.
+
 ### 4.14 What held up
 
 Recorded because a round that only reports failures is not a review. The harness
