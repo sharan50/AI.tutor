@@ -1,0 +1,37 @@
+invariant self-test
+each invariant is checked against the defect it was written for,
+reintroduced into a copy of model.py in memory. model.py is not modified.
+
+caught : every acquisition can be billed                (change log 4.2 and 5.1)
+         most arrivals removed in the month they arrived is 326172.951016
+         costs +2,141,420 of terminal cash at the mean
+caught : school inference stays inside the inference line (change log 5.2)
+         smallest consumer-only inference is -185850.569933
+         costs +0 of terminal cash at the mean
+caught : content heads stay inside the people line      (change log 4.8)
+         smallest non-content Bengaluru people cost is -1220376.982860
+         costs +0 of terminal cash at the mean
+caught : every acquisition can be billed                (change log 6.1, the summer lapse)
+         most arrivals removed in the month they arrived is 9964.854129
+         costs +362,070 of terminal cash at the mean
+caught : every acquisition can be billed                (change log 6.1, the progression)
+         most arrivals removed in the month they arrived is 119227.610128
+         costs +163,849 of terminal cash at the mean
+caught : every acquisition can be billed                (change log 6.1, both exits together)
+         most arrivals removed in the month they arrived is 117562.882452
+         costs +524,796 of terminal cash at the mean
+caught : the saturation numerator never falls           (change log 2.4)
+         largest fall in the saturation numerator is 2843060.061180
+         costs -6,621,714 of terminal cash at the mean
+caught : a cohort is one cohort's worth of households   (change log 6.2)
+         worst departure from one across 20000 paths: 9.665e-02
+         costs -66,202 of terminal cash at the mean
+caught : TRIPWIRE: the budget cap's assumed life        (change log 4.3 and 5.4)
+         longest life the budget cap assumes is 19.10 billed household months
+         costs +248,646 of terminal cash at the mean
+
+9 reintroduction cases, covering 6 of the 8 invariants.
+The other 2 have never been run against any defect and are NOT proved
+to bite, whatever their names claim:
+   unproved: an enforced allowance bills no overage
+   unproved: nothing happens before the first market opens

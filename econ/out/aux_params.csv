@@ -1,0 +1,10 @@
+seed,run_date,parameter,low,high,what_it_is
+20260916,2026-09-16,appstore_share,0.150000,0.700000,share of consumer billing routed through an app store
+20260916,2026-09-16,autom_beta,0.000000,8.000000,engineering heads bought per unit of automation ceiling
+20260916,2026-09-16,creator_fee_per_creator_yr,2000.000000,40000.000000,"fixed annual minimum per signed creator, USD"
+20260916,2026-09-16,creator_rev_share,0.000000,0.150000,share of the revenue a creator's audience brought
+20260916,2026-09-16,fx_terminal_sd,0.040000,0.160000,terminal dispersion of the GBP/USD random walk
+20260916,2026-09-16,price_elast,0.200000,1.400000,how hard a price above the regime's own mode costs retention
+20260916,2026-09-16,quality_gamma,0.000000,0.800000,how hard build intensity three months ago costs retention now
+20260916,2026-09-16,residual_book_months,6.000000,30.000000,months of contribution a standing book is worth to a buyer
+20260916,2026-09-16,residual_content_retained,0.150000,0.650000,share of accumulated content cost still worth something at month 60

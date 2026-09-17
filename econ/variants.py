@@ -1,0 +1,658 @@
+"""
+variants.py
+
+Structural probes and scenario variants. Runs on the harness, so it runs the
+published model.
+
+Two rules hold for everything in this file, and are tested rather than asserted:
+
+  1. A variant that changes the mechanism must reproduce the base run EXACTLY
+     when the new mechanism is switched off, and must NOT reproduce it when the
+     mechanism is switched on. test_off_reproduces_base() checks both on the
+     written CSV text, not on in-memory floats. Neither direction is a
+     correctness test and the write-up says so.
+  2. Every new parameter is drawn OUTSIDE the published random stream, from the
+     auxiliary seeds in model.py, so the two runs stay comparable path by path
+     rather than only in aggregate.
+
+Outputs: out/variants.csv, out/variants_bands.csv, out/imanconover_check.csv
+"""
+
+import csv
+import os
+
+import numpy as np
+from scipy import stats
+
+import harness
+
+NS = harness.load()
+OUT, SEED, RUN_DATE = NS["OUT"], NS["SEED"], NS["RUN_DATE"]
+DRV = NS["_verified"]["drv"]
+P = DRV["anchor_u"].shape[0]
+T = NS["HORIZON"]
+
+
+# ---------------------------------------------------------------------------
+# The priors drawn OUTSIDE the published random stream.
+#
+# Every one of these is a prior and not one of them is in out/drivers.csv,
+# because drivers.csv holds the published run's drivers and none of these is in
+# the published run. They were nevertheless quoted in prose, which meant a range
+# in the write-up traced to a literal in this file and nowhere else. They are
+# declared here once, used from here, and written to out/aux_params.csv, so a
+# range quoted anywhere has a file behind it.
+# ---------------------------------------------------------------------------
+AUX = {
+    "price_elast": (0.20, 1.40, "how hard a price above the regime's own mode costs retention"),
+    "quality_gamma": (0.0, 0.80, "how hard build intensity three months ago costs retention now"),
+    "autom_beta": (0.0, 8.0, "engineering heads bought per unit of automation ceiling"),
+    "fx_terminal_sd": (0.04, 0.16, "terminal dispersion of the GBP/USD random walk"),
+    "appstore_share": (0.15, 0.70, "share of consumer billing routed through an app store"),
+    "creator_fee_per_creator_yr": (2000.0, 40000.0, "fixed annual minimum per signed creator, USD"),
+    "creator_rev_share": (0.0, 0.15, "share of the revenue a creator's audience brought"),
+    "residual_content_retained": (0.15, 0.65, "share of accumulated content cost still worth something at month 60"),
+    "residual_book_months": (6.0, 30.0, "months of contribution a standing book is worth to a buyer"),
+}
+
+
+def aux(name):
+    lo, hi, _why = AUX[name]
+    return lo, hi
+
+
+# ---------------------------------------------------------------------------
+# Iman-Conover: impose a target rank correlation by reordering, which preserves
+# every marginal exactly. Nothing about the distributions changes; only which
+# path gets which value.
+# ---------------------------------------------------------------------------
+def iman_conover(cols, target_corr, rng):
+    n, k = cols.shape
+    scores = stats.norm.ppf(np.arange(1, n + 1) / (n + 1.0))
+    R = np.column_stack([rng.permutation(scores) for _ in range(k)])
+    Tm = np.corrcoef(R, rowvar=False)
+    Pm = np.linalg.cholesky(target_corr)
+    Qm = np.linalg.cholesky(Tm)
+    S = Pm @ np.linalg.inv(Qm)
+    Rstar = R @ S.T
+    out = np.empty_like(cols)
+    for j in range(k):
+        sorted_col = np.sort(cols[:, j])
+        order = np.argsort(np.argsort(Rstar[:, j], kind="stable"), kind="stable")
+        out[:, j] = sorted_col[order]
+    return out
+
+
+# Dependence imposed between drivers. Every one of these is a prior about how
+# the world hangs together, not a measurement, and each is stated so it can be
+# argued with.
+DEPENDENCE = [
+    ("price_uk_tut_gbp", "churn_base", 0.35,
+     "a higher price is harder to hold on to"),
+    ("cac_anchor_usd", "pool_uk", -0.40,
+     "a larger reachable pool is a cheaper one to find people in"),
+    ("minutes_per_item", "examiner_rate_gbp_hr", -0.30,
+     "the slower examiners are the cheaper ones per hour"),
+    ("price_in_mtok_usd", "price_out_mtok_usd", 0.80,
+     "vendor input and output prices move together"),
+    ("turns_per_session", "sessions_per_hh_month", -0.25,
+     "longer sessions substitute for more of them"),
+    ("churn_base", "summer_lapse_pre", 0.40,
+     "a book that churns in term churns harder over the summer"),
+    ("cac_anchor_usd", "creator_share", -0.30,
+     "where paid acquisition is dear, creator channels carry more of the load"),
+    ("eng_usd_yr", "uk_gbp_yr", 0.50,
+     "one labour market, two currencies"),
+    ("items_per_unit", "minutes_per_item", 0.25,
+     "a bigger bank is a bank of harder items"),
+    ("sat_kappa", "cac_ref_spend_usd", -0.35,
+     "a channel that saturates fast saturates at a smaller spend"),
+]
+
+
+def dependence_matrix(names):
+    idx = {n: i for i, n in enumerate(names)}
+    C = np.eye(len(names))
+    for a, b, r, _why in DEPENDENCE:
+        C[idx[a], idx[b]] = C[idx[b], idx[a]] = r
+    # Nearest positive definite by eigenvalue clipping, if the stated set is not
+    # internally consistent. Reported if it fires.
+    w, v = np.linalg.eigh(C)
+    if w.min() < 1e-8:
+        w = np.clip(w, 1e-8, None)
+        C = v @ np.diag(w) @ v.T
+        d = np.sqrt(np.diag(C))
+        C = C / np.outer(d, d)
+        print("dependence matrix was not positive definite; repaired by eigenvalue clipping")
+    return C
+
+
+def apply_dependence(drv):
+    rng = np.random.default_rng(NS["SEED_AUX_DEPENDENCE"])
+    names = sorted({n for a, b, _r, _w in DEPENDENCE for n in (a, b)})
+    cols = np.column_stack([drv[n] for n in names])
+    C = dependence_matrix(names)
+    new = iman_conover(cols, C, rng)
+    out = dict(drv)
+    for j, n in enumerate(names):
+        out[n] = new[:, j]
+    return out, names, C
+
+
+# ---------------------------------------------------------------------------
+# Feedback loops the base model does not have. Each lever is then reported net
+# of its own penalty rather than gross.
+# ---------------------------------------------------------------------------
+def feedback_params(drv, cfg, on=True):
+    if not on:
+        return None
+    rng = np.random.default_rng(NS["SEED_AUX_FEEDBACK"])
+    price_elast = rng.uniform(*aux('price_elast'), P)
+    quality_gamma = rng.uniform(*aux('quality_gamma'), P)
+    autom_beta = rng.uniform(*aux('autom_beta'), P)
+
+    # Does a higher price cost retention?
+    #
+    # This used a single reference: the median price over ALL paths. Because the
+    # two price regimes are far apart, that reference landed in the gap between
+    # them, so every tutoring-anchored path got a churn penalty and every
+    # software-anchored path got a churn BONUS. The only price-retention
+    # mechanism in the instrument had its sign backwards on half the sample, and
+    # the penalty it applied was a transfer between regimes rather than an
+    # elasticity. See CHANGELOG 2.2.
+    #
+    # The reference is now each regime's OWN modal price, so the elasticity is
+    # within-regime and correctly signed everywhere: above your regime's mode
+    # costs retention, below it saves some.
+    price_now = NS["gross_price_usd"](drv, NS["M_UK"], 0)
+    tut = drv["anchor_u"] < NS["P_TUTORING_ANCHOR"]
+    reg = {n: (kind, params) for n, kind, params, _ in NS["DRIVERS"]}
+    mode_tut = reg["price_uk_tut_gbp"][1][1] * NS["FX_GBP_USD"]
+    mode_sw = reg["price_uk_sw_gbp"][1][1] * NS["FX_GBP_USD"]
+    ref = np.where(tut, mode_tut, mode_sw)
+    churn_price_mult = (np.maximum(price_now, 1e-6) / ref) ** price_elast
+
+    # Does expanding faster cost quality, and does that cost retention? Build
+    # intensity is content built this month per content head, normalised.
+    plan, live = NS["content_build_plan"](drv, cfg)
+    build = np.column_stack(plan)                       # (P, T)
+    intensity = build / np.maximum(drv["units_per_content_head"], 1e-6)[:, None]
+    scale = np.percentile(intensity[intensity > 0], 90) if np.any(intensity > 0) else 1.0
+    lag = np.zeros_like(intensity)
+    lag[:, 3:] = intensity[:, :-3]                      # quality damage shows up later
+    churn_quality_mult = 1.0 + quality_gamma[:, None] * np.clip(lag / max(scale, 1e-9), 0.0, 3.0)
+
+    # Does a higher automation ceiling cost engineering? Fewer support minutes
+    # per household is more automation, and it is bought with heads.
+    lo, hi = 0.4, 6.0
+    autom = np.clip((hi - drv["support_min_hh_month"]) / (hi - lo), 0.0, 1.0)
+    eng_heads_extra = autom_beta * autom
+
+    return dict(churn_price_mult=churn_price_mult,
+                churn_quality_mult=churn_quality_mult,
+                eng_heads_extra=eng_heads_extra,
+                support_mult=np.ones(P))
+
+
+def feedback_off():
+    """The identity feedback. Must reproduce the base run exactly."""
+    return dict(churn_price_mult=np.ones(P),
+                churn_quality_mult=np.ones((P, T)),
+                eng_heads_extra=np.zeros(P),
+                support_mult=np.ones(P))
+
+
+# ---------------------------------------------------------------------------
+# Scenarios
+# ---------------------------------------------------------------------------
+def sampled_fx():
+    rng = np.random.default_rng(NS["SEED_AUX_FX"])
+    # A random walk on GBP/USD with a sampled terminal dispersion. Fixed FX is
+    # the owner's instruction; this exists to price what that instruction costs.
+    sd = rng.uniform(*aux('fx_terminal_sd'), P)
+    z = rng.standard_normal(P)
+    return dict(gbp=NS["FX_GBP_USD"] * np.exp(sd * z - 0.5 * sd ** 2))
+
+
+def appstore_params():
+    rng = np.random.default_rng(NS["SEED_AUX_APPSTORE"])
+    return dict(share=rng.uniform(*aux('appstore_share'), P), fee=np.full(P, NS["APPSTORE_FEE"]))
+
+
+SCENARIOS = {}
+
+
+def scenario(name, note):
+    def deco(fn):
+        SCENARIOS[name] = (fn, note)
+        return fn
+    return deco
+
+
+@scenario("por", "the plan of record, as published")
+def s_por():
+    return DRV, NS["base_config"]()
+
+
+@scenario("por_feedback_off", "the feedback machinery present but switched off; must equal por exactly")
+def s_fb_off():
+    return DRV, dict(NS["base_config"](), feedback=feedback_off())
+
+
+@scenario("por_feedback_on", "price costs retention, expansion pace costs quality, automation costs engineering")
+def s_fb_on():
+    cfg = NS["base_config"]()
+    return DRV, dict(cfg, feedback=feedback_params(DRV, cfg, on=True))
+
+
+@scenario("por_dependence", "Iman-Conover dependence between drivers, every marginal preserved exactly")
+def s_dep():
+    drv, _names, _C = apply_dependence(DRV)
+    return drv, NS["base_config"]()
+
+
+@scenario("por_dependence_feedback", "dependence and feedback together")
+def s_dep_fb():
+    drv, _n, _C = apply_dependence(DRV)
+    cfg = NS["base_config"]()
+    return drv, dict(cfg, feedback=feedback_params(drv, cfg, on=True))
+
+
+@scenario("por_fx_sampled", "the fixed rate replaced by a sampled one, to price what fixing it hides")
+def s_fx():
+    return DRV, dict(NS["base_config"](), fx=sampled_fx())
+
+
+@scenario("por_india_d2c", "India opened direct to parents rather than through institutions")
+def s_india():
+    return DRV, dict(NS["base_config"](), india_d2c=True)
+
+
+@scenario("por_appstore", "a share of consumer billing routed through an app store at 15 per cent")
+def s_app():
+    return DRV, dict(NS["base_config"](), appstore=appstore_params())
+
+
+@scenario("por_allowance_enforced", "the session allowance enforced rather than sold and overshot")
+def s_enf():
+    return DRV, dict(NS["base_config"](), enforce_allowance=True)
+
+
+@scenario("ukonly", "UK consumer only: no second market, no institution channel, and charged accordingly")
+def s_uk():
+    return DRV, dict(NS["base_config"](), scope="ukonly", schools=False)
+
+
+@scenario("por_no_schools", "the plan of record without the institution channel, everything else identical")
+def s_nosch():
+    return DRV, dict(NS["base_config"](), schools=False)
+
+
+# The scope ladder has three rungs, not two, and the middle one was doing the
+# work of the bottom one. "ukonly" drops the second market and the institution
+# channel but keeps the whole United Kingdom content escalation to eleven
+# subjects; the content line barely moves. Comparing the plan of record against
+# it alone answers "what does a second market cost", not "what does scope cost",
+# and the write-up was reading the first answer as the second. The two
+# scenarios below separate the market decision from the content decision so the
+# ladder is like-for-like at each rung.
+@scenario("por_content_frozen", "the plan of record's markets and channels, with United Kingdom content frozen at the go-to-market five subjects: isolates the content escalation")
+def s_content_frozen():
+    sched = dict(NS["UNIT_SCHEDULES"])
+    sched[NS["M_UK"]] = NS["GTM_MINIMUM_SCHEDULES"][NS["M_UK"]]
+    return DRV, dict(NS["base_config"](), unit_schedules=sched)
+
+
+@scenario("gtm_minimum", "the floor of the scope ladder: United Kingdom consumer only, no institution channel, five subjects at one board and never widened")
+def s_gtm_min():
+    return DRV, dict(NS["base_config"](), scope="ukonly", schools=False,
+                     unit_schedules=NS["GTM_MINIMUM_SCHEDULES"])
+
+
+def creator_params():
+    rng = np.random.default_rng(NS["SEED_AUX_CREATOR"])
+    return dict(fee_per_creator_yr=rng.uniform(*aux('creator_fee_per_creator_yr'), P),
+                rev_share=rng.uniform(*aux('creator_rev_share'), P))
+
+
+@scenario("por_creator_fees", "signed creators want money: a fixed annual minimum each, plus a share of the revenue their audience brought")
+def s_creator():
+    return DRV, dict(NS["base_config"](), creator=creator_params())
+
+
+@scenario("por_onshore_half", "half the engineering forced onshore by a restricted-transfer finding on United Kingdom children's data")
+def s_onshore_half():
+    return DRV, dict(NS["base_config"](), onshore_share=0.5)
+
+
+@scenario("por_onshore_all", "all learner-facing engineering forced onshore, the worst reading of docs/05's unconfirmed transfer position")
+def s_onshore_all():
+    return DRV, dict(NS["base_config"](), onshore_share=1.0)
+
+
+def residual_params():
+    rng = np.random.default_rng(NS["SEED_AUX_RESIDUAL"])
+    # Both are priors. The item bank is an asset with a life beyond the horizon;
+    # how much of its cost is still worth something at month 60 is unknown, and
+    # so is what a standing book of subscribers is worth to a buyer.
+    return dict(content_retained=rng.uniform(*aux('residual_content_retained'), P),
+                book_months=rng.uniform(*aux('residual_book_months'), P))
+
+
+@scenario("por_residual", "the horizon credits a residual: part of the item bank as an asset, and the standing book at a multiple of monthly contribution")
+def s_residual():
+    return DRV, dict(NS["base_config"](), residual=residual_params())
+
+
+@scenario("por_reacq_low", "the reachable pool may be worked twice rather than three times over the horizon")
+def s_reacq_low():
+    return DRV, dict(NS["base_config"](), pool_reacq_multiple=2.0)
+
+
+@scenario("por_reacq_high", "the reachable pool may be worked five times rather than three")
+def s_reacq_high():
+    return DRV, dict(NS["base_config"](), pool_reacq_multiple=5.0)
+
+
+@scenario("por_anchor_tutoring", "condition C1 passes: every path anchors on the tutoring rate")
+def s_anchor_tut():
+    drv = dict(DRV)
+    drv["anchor_u"] = np.zeros(P)
+    return drv, NS["base_config"]()
+
+
+@scenario("por_anchor_software", "condition C1 fails: every path anchors on software prices")
+def s_anchor_sw():
+    drv = dict(DRV)
+    drv["anchor_u"] = np.ones(P)
+    return drv, NS["base_config"]()
+
+
+@scenario("por_launch_plus3", "go-to-market three months later, landing outside the September intake")
+def s_l3():
+    return DRV, dict(NS["base_config"](), launch_shift=3)
+
+
+@scenario("por_launch_plus6", "go-to-market six months later")
+def s_l6():
+    return DRV, dict(NS["base_config"](), launch_shift=6)
+
+
+OUTCOME_COLS = [
+    "terminal_cash_mean", "terminal_cash_p50", "peak_funding_mean", "peak_funding_p50",
+    "peak_funding_p80", "peak_funding_p90", "share_reaching_profitability",
+    "median_month_rev_passes_cost",
+    "terminal_active_hh_mean", "final_year_effective_cac_mean",
+    "mean_share_over_allowance",
+    "total_tax_collected_mean", "min_of_mean_trough", "mean_of_min_trough",
+    "understatement_ratio", "band_central_placement_terminal",
+    "total_content_cost_mean", "total_cost_mean", "total_net_revenue_mean",
+    "pathwise_spearman_vs_base", "pathwise_mean_abs_delta", "abs_mean_delta",
+    "paired_mc_se", "pairing_holds", "pathwise_p50_delta", "pathwise_p50_delta_se",
+    "final_year_allin_contrib_pooled", "final_year_allin_contrib_median",
+    "final_year_gross_contrib_pooled",
+]
+
+# The final twelve months, the window every contribution figure here is struck on.
+_FY = slice(NS["HORIZON"] - 12, NS["HORIZON"])
+
+# The one column that is a word rather than a number.
+TEXT_COLS = {"pairing_holds"}
+
+
+BASE_TERMINAL = None
+
+# A paired bootstrap on the median of the per-path differences. The median has
+# no closed-form standard error, and the column it accompanies used to have no
+# error basis at all while the write-up drew sign conclusions from it.
+SEED_BOOT = 604920260916
+N_BOOT = 400
+
+
+def _median_delta_se(scenario_terminal, base_terminal):
+    d = scenario_terminal - base_terminal
+    rng = np.random.default_rng(SEED_BOOT)
+    n = d.shape[0]
+    meds = np.empty(N_BOOT)
+    for b in range(N_BOOT):
+        meds[b] = np.median(d[rng.integers(0, n, n)])
+    return float(np.std(meds, ddof=1))
+
+
+def evaluate(name):
+    fn, note = SCENARIOS[name]
+    drv, cfg = fn()
+    out, summary = NS["run"](drv, cfg)
+    o, cum = NS["path_outcomes"](out, summary)
+    ts = NS["trough_stats"](cum)
+    placement = NS["band_percentile_placement"](cum, cum, "central")
+    reach = o["month_rev_passes_cost"] >= 0
+    vals = dict(
+        terminal_cash_mean=float(o["terminal_cash"].mean()),
+        terminal_cash_p50=float(np.median(o["terminal_cash"])),
+        peak_funding_mean=float(o["peak_funding_requirement"].mean()),
+        peak_funding_p50=float(np.percentile(o["peak_funding_requirement"], 50)),
+        peak_funding_p80=float(np.percentile(o["peak_funding_requirement"], 80)),
+        peak_funding_p90=float(np.percentile(o["peak_funding_requirement"], 90)),
+        share_reaching_profitability=float(reach.mean()),
+        median_month_rev_passes_cost=float(np.median(o["month_rev_passes_cost"][reach])) if reach.any() else float("nan"),
+        terminal_active_hh_mean=float(o["terminal_active_hh"].mean()),
+        final_year_effective_cac_mean=float(o["final_year_effective_cac"].mean()),
+        # The final-year contribution per household month, per scenario. These
+        # exist so that the size of the institution channel's contamination of
+        # the all-in row can be read off the no-schools scenario instead of
+        # being typed into the prose by hand, which is how round 6 left it for
+        # one draft. The all-in numerator is net cash plus what acquisition and
+        # verification took out of it; the denominator is consumer household
+        # months, which is exactly the mismatch LIMITS.md records as open.
+        # See CHANGELOG 6.6 and 6.16.
+        final_year_allin_contrib_pooled=float(
+            (out["net_cash"][:, _FY] + out["cac_spend"][:, _FY]
+             + out["verif_cost"][:, _FY]).sum()
+            / max(out["active_hh"][:, _FY].sum(), 1e-9)),
+        final_year_allin_contrib_median=float(
+            np.median(o["final_year_allin_contrib_per_hh_month"])),
+        final_year_gross_contrib_pooled=float(
+            (out["net_rev_consumer"][:, _FY]
+             - (out["inference_cost"][:, _FY] - out["school_inference_cost"][:, _FY])
+             - out["support_cost"][:, _FY] - out["payment_cost"][:, _FY]
+             - out["hosting_cost"][:, _FY] - out["appstore_fee"][:, _FY]).sum()
+            / max(out["active_hh"][:, _FY].sum(), 1e-9)),
+        # A mean over paths of a per-path household-month-weighted share. It is
+        # a well-behaved quantity because its denominator is household months
+        # rather than a book that can collapse, which is what made the
+        # contribution-per-household ratio unusable in CHANGELOG 1a.1. The
+        # comment that used to sit here described that other ratio, and said a
+        # median was published instead of the mean on the line below it.
+        mean_share_over_allowance=float(o["mean_share_over_allowance"].mean()),
+        total_tax_collected_mean=float(o["total_tax_collected"].mean()),
+        min_of_mean_trough=ts["min_of_mean"],
+        mean_of_min_trough=ts["mean_of_min"],
+        understatement_ratio=ts["understatement_ratio"],
+        band_central_placement_terminal=float(placement[-1]),
+        # Proof that the comparison is matched path by path rather than only in
+        # aggregate: if the streams had diverged, the per-path rank correlation
+        # against the base would collapse and the mean absolute per-path change
+        # would dwarf the change in the mean.
+        pathwise_spearman_vs_base=float(stats.spearmanr(o["terminal_cash"], BASE_TERMINAL).statistic)
+        if BASE_TERMINAL is not None else 1.0,
+        pathwise_mean_abs_delta=float(np.mean(np.abs(o["terminal_cash"] - BASE_TERMINAL)))
+        if BASE_TERMINAL is not None else 0.0,
+        abs_mean_delta=float(abs(o["terminal_cash"].mean() - BASE_TERMINAL.mean()))
+        if BASE_TERMINAL is not None else 0.0,
+        # The sampling error on THIS scenario's delta, computed on the paired
+        # per-path differences. Every scenario here shares its random numbers
+        # with the base, so the relevant error is the paired one and not the
+        # standard error of the base mean, which is several times larger. The
+        # write-up used the unpaired figure to argue that one scenario is
+        # indistinguishable from zero; the conclusion held, the number offered
+        # for it did not. See CHANGELOG 5.9.
+        paired_mc_se=float(np.std(o["terminal_cash"] - BASE_TERMINAL, ddof=1)
+                           / np.sqrt(o["terminal_cash"].shape[0]))
+        if BASE_TERMINAL is not None else 0.0,
+        # Whether the pairing this error assumes actually holds. The two
+        # dependence scenarios reorder the driver columns by Iman-Conover, so
+        # path i carries different driver values from path i in the base: the
+        # per-path difference is not a paired difference and the error above is
+        # not the right one for them. It was published for all 25 scenarios
+        # with a preamble telling the reader to use it for every one. The
+        # threshold is well below where a mechanism change alone lands -- the
+        # tightest genuinely-paired scenario sits near 0.77 -- and well above
+        # the 0.30 the reordered ones reach. See CHANGELOG 6.9.
+        pairing_holds="no" if (BASE_TERMINAL is not None and float(
+            stats.spearmanr(o["terminal_cash"], BASE_TERMINAL).statistic) < 0.5) else "yes",
+        # The median of the PER-PATH differences, which is what "the delta on
+        # the median path" means. The column that carried that label was the
+        # difference of two marginal medians -- p50(scenario) less p50(base) --
+        # taken over what is in general a different path in each term, and it
+        # was presented as the path-level check on a heavy-tailed mean. It
+        # cannot do that job. Both are now published. See CHANGELOG 6.9.
+        pathwise_p50_delta=float(np.median(o["terminal_cash"] - BASE_TERMINAL))
+        if BASE_TERMINAL is not None else 0.0,
+        # A paired bootstrap error on that median, because the column it
+        # replaces carried no error at all and one of the sign disagreements
+        # the write-up drew from it is inside its own noise.
+        pathwise_p50_delta_se=float(_median_delta_se(o["terminal_cash"], BASE_TERMINAL))
+        if BASE_TERMINAL is not None else 0.0,
+        total_content_cost_mean=float(out["content_cost"].sum(axis=1).mean()),
+        total_cost_mean=float(sum(out[c].sum(axis=1).mean() for c in [
+            "inference_cost", "support_cost", "payment_cost", "hosting_cost", "verif_cost",
+            "cac_spend", "content_cost", "people_beng_cost", "people_uk_cost", "step_cost",
+            "school_onboard_cost", "appstore_fee"])),
+        total_net_revenue_mean=float((out["net_rev_consumer"] + out["net_rev_schools"]).sum(axis=1).mean()),
+    )
+    return note, vals, out, o, cum, placement
+
+
+def test_off_reproduces_base():
+    """
+    Two sides of the same test, and neither of them is a correctness test.
+
+    OFF: a mechanism switched off must reproduce the base run character for
+    character. This is what the brief asks for, and what it proves is narrow:
+    that the mechanism's own parameters were drawn outside the published random
+    stream, so the on and off runs are comparable path by path. It does not
+    look at what the mechanism does when it is on. Every one of the four
+    mechanism defects found in round two passed this test while wrong.
+
+    ON: the same mechanism switched on must NOT reproduce the base run. This
+    catches the opposite failure, a mechanism that is wired up, configured and
+    inert, which the off test cannot see and which reads in a scenario table as
+    a lever that does not matter. It is still not a correctness test: a
+    mechanism can move the answer and move it wrongly, and only reading the code
+    settles that.
+    """
+    base_out, base_summary = NS["run"](DRV, NS["base_config"]())
+    base_o, base_cum = NS["path_outcomes"](base_out, base_summary)
+    base_text = NS["monthly_csv_text"](base_out, base_cum, "por")
+
+    def text_of(cfg):
+        out, summary = NS["run"](DRV, cfg)
+        o, cum = NS["path_outcomes"](out, summary)
+        return NS["monthly_csv_text"](out, cum, "por")
+
+    bc = NS["base_config"]
+    cases = [
+        ("feedback",
+         dict(bc(), feedback=feedback_off()),
+         dict(bc(), feedback=feedback_params(DRV, bc(), on=True))),
+        ("appstore_zero",
+         dict(bc(), appstore=dict(share=np.zeros(P), fee=np.zeros(P))),
+         dict(bc(), appstore=appstore_params())),
+        ("fx_fixed",
+         dict(bc(), fx=dict(gbp=np.full(P, NS["FX_GBP_USD"]))),
+         dict(bc(), fx=sampled_fx())),
+        ("creator_zero",
+         dict(bc(), creator=dict(fee_per_creator_yr=np.zeros(P), rev_share=np.zeros(P))),
+         dict(bc(), creator=creator_params())),
+        ("onshore_zero",
+         dict(bc(), onshore_share=0.0),
+         dict(bc(), onshore_share=1.0)),
+        ("residual_zero",
+         dict(bc(), residual=dict(content_retained=np.zeros(P), book_months=np.zeros(P))),
+         dict(bc(), residual=residual_params())),
+        ("pool_reacq_published",
+         dict(bc(), pool_reacq_multiple=NS["POOL_REACQUISITION_MULTIPLE"]),
+         dict(bc(), pool_reacq_multiple=2.0)),
+        ("stop_acquisition_never",
+         dict(bc(), stop_acquisition_after=NS["HORIZON"]),
+         dict(bc(), stop_acquisition_after=24)),
+    ]
+    results = []
+    for name, off_cfg, on_cfg in cases:
+        off_ok = (text_of(off_cfg) == base_text)
+        on_moves = (text_of(on_cfg) != base_text)
+        results.append((name, off_ok, on_moves))
+        print("  %-14s off: %-7s  on: %s"
+              % (name, "EXACT" if off_ok else "DIFFERS",
+                 "moves the run" if on_moves else "INERT"))
+        if not off_ok:
+            raise AssertionError("variant %s does not reproduce the base run when switched off" % name)
+        if not on_moves:
+            raise AssertionError("variant %s is inert: switching it on changes nothing" % name)
+    # Written down so the count can be read off a file rather than typed into
+    # prose. A hand-typed count is exactly what the reviewers kept catching.
+    with open(os.path.join(OUT, "offtest.csv"), "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["seed", "run_date", "mechanism", "reproduces_base_exactly",
+                    "moves_the_run_when_switched_on"])
+        for name, off_ok, on_moves in results:
+            w.writerow([SEED, RUN_DATE, name, "yes" if off_ok else "no",
+                        "yes" if on_moves else "no"])
+    return results
+
+
+def main():
+    print("checking each mechanism both ways: exact when off, and not inert when on")
+    test_off_reproduces_base()
+
+    global BASE_TERMINAL
+    base_out, base_summary = NS["run"](DRV, NS["base_config"]())
+    base_o, _base_cum = NS["path_outcomes"](base_out, base_summary)
+    BASE_TERMINAL = base_o["terminal_cash"]
+
+    rows, band_rows = [], []
+    for name in SCENARIOS:
+        note, vals, out, o, cum, placement = evaluate(name)
+        rows.append([SEED, RUN_DATE, name, note]
+                    + [vals[c] if c in TEXT_COLS else "%.6f" % vals[c]
+                       for c in OUTCOME_COLS])
+        for band in ("low", "central", "high"):
+            pl = NS["band_percentile_placement"](cum, cum, band)
+            line = NS["band_line"](cum, cum, band)
+            band_rows.append([SEED, RUN_DATE, name, band,
+                              "%.6f" % float(line[-1]), "%.6f" % float(pl[-1]),
+                              "%.6f" % float(pl[NS["HORIZON"] // 2]), "%.6f" % float(np.mean(pl[6:]))])
+        print("  %-26s terminal_cash_mean %s" % (name, format(vals["terminal_cash_mean"], ",.0f")))
+
+    with open(os.path.join(OUT, "variants.csv"), "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["seed", "run_date", "scenario", "note"] + OUTCOME_COLS)
+        w.writerows(rows)
+    with open(os.path.join(OUT, "variants_bands.csv"), "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["seed", "run_date", "scenario", "band", "terminal_band_line",
+                    "placement_terminal", "placement_mid", "placement_mean_from_m6"])
+        w.writerows(band_rows)
+
+    drv2, names, C = apply_dependence(DRV)
+    with open(os.path.join(OUT, "imanconover_check.csv"), "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["seed", "run_date", "driver_a", "driver_b", "target_rank_corr",
+                    "achieved_rank_corr", "marginal_preserved_a", "marginal_preserved_b", "rationale"])
+        for a, b, r, why in DEPENDENCE:
+            ach = stats.spearmanr(drv2[a], drv2[b]).statistic
+            pa = bool(np.array_equal(np.sort(drv2[a]), np.sort(DRV[a])))
+            pb = bool(np.array_equal(np.sort(drv2[b]), np.sort(DRV[b])))
+            w.writerow([SEED, RUN_DATE, a, b, "%.4f" % r, "%.4f" % ach, pa, pb, why])
+    with open(os.path.join(OUT, "aux_params.csv"), "w", newline="") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["seed", "run_date", "parameter", "low", "high", "what_it_is"])
+        for k in sorted(AUX):
+            lo, hi, why = AUX[k]
+            w.writerow([SEED, RUN_DATE, k, "%.6f" % lo, "%.6f" % hi, why])
+    print("wrote variants.csv, variants_bands.csv, imanconover_check.csv, aux_params.csv")
+
+
+if __name__ == "__main__":
+    main()
