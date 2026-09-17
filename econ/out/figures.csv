@@ -1159,6 +1159,7 @@ allowance_enforced_median_basis_ratio,2.541690,ratio,variants.csv,"the differenc
 por_dependence_pathwise_spearman,0.300217,rank correlation,variants.csv,the per-path rank correlation against the base for the Iman-Conover reordered scenario: the pairing every other scenario has and this one does not
 anchor_tutoring_minus_software_terminal_cash_mean,31103443.415357,USD,variants.csv,"terminal_cash_mean for por_anchor_tutoring less terminal_cash_mean for por_anchor_software: the spread between the two regimes, not either one's delta against the published mix"
 anchor_software_minus_tutoring_peak_funding_p80,4465584.414449,USD,variants.csv,peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring: the extra capital the software-anchored regime needs
+por_schools_share_of_total_cost_pct,6.134919,per cent,variants.csv,"total_cost_mean for the plan of record less the same for por_no_schools, over the plan of record's total"
 ukonly_mean_delta_sigma,2.443822,standard errors,variants.csv,the United Kingdom-only scenario's mean terminal-cash delta divided by its paired standard error
 ukonly_median_delta_sigma,218.445151,standard errors,variants.csv,the same scenario's per-path median delta divided by its bootstrap standard error
 pathwise_spearman_min,0.298622,rank correlation,variants.csv,the lowest pathwise_spearman_vs_base over every scenario

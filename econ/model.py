@@ -1417,8 +1417,15 @@ def band_percentile_placement(series, cum, band):
     """
     Where the band line actually sits in the real per-path distribution, month by
     month. It is not the percentile a reader assumes from the band's rank range,
-    and it moves between scenarios, which is what makes cross-scenario
-    comparisons of band lines invalid unless the placement is quoted with them.
+    and it moves across MONTHS within a single run by several percentile points,
+    which is what makes comparing a band line at one month against a band line at
+    another invalid.
+
+    It moves very little BETWEEN scenarios at the terminal month -- measured
+    across every scenario in section 6 of the write-up. An earlier version of
+    this docstring had the two axes the wrong way round and asserted exactly the
+    conclusion the write-up went on to retract, so a reader sent to the code got
+    the superseded claim. See CHANGELOG 8.2.
     """
     line = band_line(series, cum, band)
     P = series.shape[0]

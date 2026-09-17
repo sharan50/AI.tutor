@@ -1185,6 +1185,11 @@ other end, and section 10 contradicted it for two rounds.
 inside the prior range. That says nothing about which side of it the metric sits
 on, and four of the twenty-four rows are unbracketed on the satisfying side.
 
+> **CORRECTED by 6.7.** There are two, not four. 6.7 records this same count
+> being wrong in two places in `breakeven.py` and fixed there; it was left
+> standing here, in the entry those code comments cite. Marked in place in round
+> 8 rather than edited, on the rule 4.13 set for 1b.11 and 7.7 applied to 1b.10.
+
 **Fixed.** `breakeven.py` classifies every unbracketed row as met or missed
 across the range, with the direction of "good" taken per metric. `figures.py`
 counts both. Section 10 now reports the result it had been inverting: **the
@@ -1959,10 +1964,20 @@ place it mattered.
 
 **Measured**, paired per path, 20,000 paths, by patching `model.py` in memory:
 
-| scenario | published delta | corrected clock | paired SE |
-|---|---|---|---|
-| three months late | -605,704 | **-961,639** | 58,784 |
-| six months late | **+297,481** | **-189,731** | 109,133 |
+| scenario | published delta | corrected clock | SE of the delta | SE of the correction |
+|---|---|---|---|---|
+| three months late | -605,704 | **-961,639** | 58,784 | 24,346 |
+| six months late | **+297,481** | **-189,731** | 109,133 | 31,300 |
+
+Two different standard errors, and the write-up quotes the second. The fourth
+column is the paired error on each scenario's delta against the base. The fifth
+is the paired error on the CORRECTION itself — the same scenario run twice, once
+with the defect and once without, on the same random numbers — which is the right
+denominator for "how sure are we the clock was wrong" and is much the smaller of
+the two. The correction is 14.6 and 15.6 of those. Round 8's coherence pass read
+the fourth column, got 4.5, and reported the write-up's "fifteen paired standard
+errors" as unsupported. The claim was right and the table did not support it;
+both columns are published now.
 
 The six-month delay's mean delta changes **sign**. And that matters beyond the
 scenario, because of the order in which this round happened.
@@ -2050,3 +2065,91 @@ other. That is what makes the grid exactly separable, and it means this model is
 structurally incapable of showing cost-side interaction on terminal cash. Section
 9 draws a conclusion from that separability; the conclusion is about the model's
 shape, not the business's.
+
+---
+
+## Round 8
+
+The coherence pass returned thirteen defects. The first is the one worth the
+section.
+
+### 8.1 Round 7's sign fix reached one of its two sites, in the same section
+
+Round 7 found section 10 opening with "on the cash targets there are none" over a
+file holding a bracketed cash-target row, and calling a +192,216 margin a
+shortfall. It corrected that passage, regenerated, verified clean across six
+passes, committed, and recorded the fix in 7.1.
+
+Forty lines below, in the same section, a second passage went on saying
+**"Nothing rescues the cash targets"**, listing price among the drivers that
+never get the median path whole, and calling the same rendered figure **"short"**.
+The two passages contradicted each other by the sign of the same number. They
+survived a full regeneration and a clean run of every verifier pass, because both
+render the same two correct tokens and only the hand-typed words between them
+differ.
+
+**A fix applied to the site a review names is not a fix.** Round 7 found this
+exact shape in someone else's work — a segment-mix normalisation that reached two
+of its three sites — wrote it up as 7.10, and then committed the same failure in
+its own correction, one entry later.
+
+### 8.2 Three source files asserting what their own outputs deny
+
+- `invariants.py`'s module docstring said "seven mechanism defects across rounds
+  2, 4 and 5" and "**Each invariant is proved to bite**". The same file defines
+  an eleven-row enumeration of those defects, and its own self-test output ends
+  by naming three invariants that have never been run against any defect. Round 7
+  corrected that claim in LIMITS and in the self-test, and not in the source.
+  Three sites, two fixed — again.
+- `model.py`'s `band_percentile_placement` docstring asserted that the placement
+  "moves between scenarios, which is what makes cross-scenario comparisons of
+  band lines invalid". Section 6 of the write-up retracts precisely that and
+  measures the opposite: the movement is across months, not scenarios. The README
+  tells a reader that a comment misdescribing the line below it is the kind of
+  defect these reviews keep finding.
+- `breakeven.py` said four rows bracket, all on the profitability target. Five
+  bracket and one is on a cash target. The comment already carried a
+  parenthetical apologising for a previous wrong count in the same sentence.
+
+### 8.3 The institution channel's revenue share, hand-typed at roughly twice its value
+
+"A channel that is about one per cent of net revenue", in two documents, over a
+token rendering 0.52 in a table forty-five lines above. The asymmetry that makes
+the all-in row pessimistic is that the channel is about six per cent of cost
+against half a per cent of revenue, and the cost side — the half that carries the
+argument — was not given at all. Both are tokens now.
+
+### 8.4 The rest
+
+The mechanism-defect count still hand-typed as ten in five places in LIMITS,
+while two tokens in the same file rendered eleven; 7.4 had claimed every quoted
+count was derived from the file and had converted three sites. A round-6 estimate
+of the budget cap's blindness ("about one and two per cent") left standing beside
+round 7's proper measurement of the same quantity (2.8 and 5.1), with the
+superseded one the one saying "Measured". A causal clause attributing the two-way
+grid's exact additivity to content being committed early, when the real reason is
+that the instrument has no cash constraint at all, so no cost line can throttle
+another — a fact about the model's shape that appeared only in a change-log entry
+and now appears in the write-up. A difference of marginal medians labelled "on
+the median path" four paragraphs from the passage explaining why those are
+different quantities. "A fifth of the cost base" over a rendered 23.9 per cent. A
+denominator that dropped verification. CHANGELOG 5.3 still carrying a count that
+6.7 records correcting everywhere else, now marked in place.
+
+And one finding I rejected after checking: the pass reported the write-up's
+"fifteen paired standard errors" as unsupported, computing 4.5. It read the
+error on the scenario delta; the claim is about the error on the correction,
+measured at 15.6. The claim was right and the table published only the other
+denominator, so both are published now. See 7.9.
+
+### 8.5 What this round says about the protocol
+
+Round 8's largest finding is that round 7's largest fix was incomplete, and
+incomplete in exactly the way round 7 had just finished describing. Round 7's
+largest finding was that round 7's own earlier fix had been made to match an
+artefact. Two rounds running, the most instructive defect has been in the
+correction rather than in the model.
+
+The practical rule that falls out of it: **after fixing a defect a review names,
+grep the whole directory for every other site that states the same fact, before
+regenerating.** Neither round did that, and both had the tooling to.

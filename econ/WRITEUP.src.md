@@ -128,9 +128,18 @@ depend on revenue and is not scaled by the demand shock — the shock changes ho
 many households that money buys, not how much is spent — and it tapers over the
 twelve months after that. It sits in the acquisition line, so it is counted as
 demand-responsive here when it is nothing of the kind. Folding it in raises the
-share by about a percentage point. It is left out of the headline rather than
-quietly folded in, and recorded in LIMITS.md, because a correction that helps
-your own case is the one to be most careful about.
+share by about a percentage point.
+
+**And there is a correction of about the same size running the other way**, which
+round 7 measured and which this paragraph did not have when it was written. The
+safeguarding rota below steps on active consumer households — that is demand —
+and it sits inside the United Kingdom people line this share counts as
+demand-independent. Taking it out lowers the share by about 1.2 points. So the
+two roughly cancel and the published figure is, on the directory's own current
+arithmetic, about right rather than an understatement. Both are in LIMITS.md with
+their sizes. The reason to state both is that the first was volunteered as a
+correction that helped the document's own argument, and stating only that one
+would have been the more comfortable half.
 
 **"Committed" used to be the word in that sentence and it was the wrong one.**
 This block is not spent early. @@demand_independent_share_months_24_60|pct1@@ per
@@ -402,8 +411,9 @@ not belong in a per-household figure. The all-in row was not: it is net cash plu
 acquisition spend plus verification, and net cash carries the whole institution
 cost base — the United Kingdom sales reps, the institution platform heads, the
 security certification, the per-school onboarding, the school inference — over a
-denominator of consumer household months. The institution channel is about one
-per cent of net revenue and rather more than that of cost, so the row is
+denominator of consumer household months. The institution channel is
+@@por_schools_share_of_net_revenue_pct|num2@@ per cent of net revenue and about
+@@por_schools_share_of_total_cost_pct|num1@@ per cent of cost, so the row is
 pessimistic about the consumer household. Removing the channel entirely, which is
 the `por_no_schools` scenario, moves the pooled figure from
 @@scenario_por_final_year_allin_contrib_pooled|num2@@ to
@@ -610,7 +620,7 @@ docs/10 is right that content does not enter the payback ratio, because it does
 not scale with learners. It is nonetheless the largest single call on cash in a
 plan that builds this much of it. On
 @@share_paths_content_exceeds_acquisition|pct1@@ per cent of individual paths the
-contracted content line alone exceeds acquisition, and on
+contracted content line alone exceeds acquisition and verification, and on
 @@share_paths_content_is_largest_line|pct1@@ per cent it exceeds both acquisition
 and people, so this is not an artefact of averaging. Those two shares are
 computed on the contracted line, so they are lower bounds once the heads are
@@ -811,9 +821,14 @@ twenty-five cells the acquisition step from the first to the third decile costs
 levels, and the content step from the first to the ninth decile costs
 @@twoway_content_step_terminal_cash|usd0@@ at **every** one of the five
 acquisition levels — identical to the cent, not approximately. On terminal cash
-the two largest drivers do not interact at all, which is what you would expect of
-a model in which content spend is committed before demand can say anything about
-it. Nothing in this directory computes a second-order index, so the missing
+the two largest drivers do not interact at all, and the reason is structural
+rather than a fact about timing. **This instrument has no cash constraint
+anywhere**: the acquisition envelope is a function of revenue, not of cash, so no
+cost line can ever throttle another, and `items_per_unit` enters the model in
+exactly one place, linearly, inside the content cost. Content built late would be
+just as additive as content built early. An earlier draft attributed the
+additivity to content being committed before demand can speak, which sounds like
+a finding about the business and is a fact about the model's shape. Nothing in this directory computes a second-order index, so the missing
 variance is not attributed anywhere, and the claim that it sits in these two
 drivers was never measured.
 
@@ -1203,29 +1218,34 @@ all paths running three consecutive cash-positive months.
 @@breakeven_plan_of_record_questions|int@@ questions per scope, @@breakeven_rows_total|int@@ rows in all.
 @@breakeven_rows_unbracketed|int@@ are unbracketed and @@breakeven_rows_bracketed|int@@ bracket.
 
-**Nothing rescues the cash targets, and one near-miss is worth recording
-because it flickered.** No value of the reachable pool, the acquisition anchor,
-age assurance cost, validation minutes, item count, sessions per household, churn
-or price, anywhere in its prior range, gets the median path whole on either
-scope.
+**@@breakeven_rows_bracketed_on_cash|int@@ of the @@breakeven_rows_against_a_cash_target|int@@ cash-target solves brackets, and it is the one described
+at the top of this section.** No value of the reachable pool, the acquisition
+anchor, age assurance cost, validation minutes, item count, sessions per
+household or churn, anywhere in its prior range, gets the median path whole on
+either scope. Price on the go-to-market minimum, with condition C1 pinned to
+tutoring, does.
 
-The near-miss is price on the go-to-market minimum with condition C1 pinned to
-tutoring. At the top of its prior the median path ends
-@@breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_metric_at_support_high|usd0@@
-short, against
-@@breakeven_gtm_minimum_uk_one_board_price_uk_tut_gbp_terminal_cash_median_metric_at_support_low|usd0@@
-at the bottom.
+**It is worth the paragraph at the top of this section because of how it has
+behaved, not because of where it landed.** In round 5 two mechanism fixes moved
+it far enough to bracket — the write-up said so, in bold — and a third fix, made
+a few hours later while building `invariants.py`, moved it back. In round 6 four
+more corrections moved it across again, where it now sits. Nothing about the
+business changed between any of those states. **A result that sits this close to
+a boundary is not a finding at this level of precision**, and the right reading
+is the margin rather than the verdict: on the narrow scope, with the tutoring
+anchor holding and the price near the top of its range, the plan is within a
+rounding error of returning the cash it consumes over five years, and the
+instrument cannot tell you reliably which side of zero that lands on.
 
-**It is worth a paragraph because of how it behaved during round 5, not because
-of where it landed.** Two mechanism fixes moved it far enough to bracket — the
-write-up said so, in bold — and a third fix, made a few hours later while
-building `invariants.py`, moved it back. Nothing about the business changed
-between those two states; three arithmetic corrections did. **A result that sits
-this close to a boundary is not a finding at this level of precision**, and the
-right reading of it is the margin rather than the verdict: on the narrow scope,
-with the tutoring anchor holding and the price at the top of its range, the plan
-is within a rounding error of returning the cash it consumes over five years, and
-the instrument cannot tell you which side of zero that lands on.
+**This paragraph is also the clearest instance in the document of the defect it
+keeps finding.** Round 7 corrected the top of this section — "on the cash targets
+there are none" became "one cash target is now met", and a margin called a
+shortfall was given back its sign. It did not correct this passage, forty lines
+below, in the same section, which went on saying "nothing rescues the cash
+targets" and calling the same rendered figure "short". The two passages
+contradicted each other by the sign of the same number, through a full
+regeneration and a clean run of all six verifier passes, until round 8 read them
+side by side. A fix applied to the site a review names is not a fix.
 
 **But two of them were also solved against the ten-million-dollar capital
 ceiling, and there the answer is the opposite of what this paragraph used to
@@ -1510,7 +1530,10 @@ record needs @@funding_plan_of_record_whole_horizon_round_size|usd0@@ against
 go-to-market minimum, a spread of @@funding_por_less_gtm_minimum_whole_horizon|usd0@@
 **on the capital requirement**. On terminal cash the same reduction is worth
 @@delta_gtm_minimum_terminal_cash_mean|usd0@@ at the mean and
-@@delta_gtm_minimum_terminal_cash_p50|usd0@@ on the median path. **Scope is much
+@@scenario_gtm_minimum_pathwise_p50_delta|usd0@@ as the median of the per-path
+differences — the difference of the two marginal medians, which is the column
+section 9's table carries, is @@delta_gtm_minimum_terminal_cash_p50|usd0@@, and
+this passage quoted that one while calling it the median path. **Scope is much
 the largest decision on the capital requirement and the third largest on terminal
 cash**, behind the terminal-value residual and the price-anchor regime spread of
 @@anchor_tutoring_minus_software_terminal_cash_mean|usd0@@. It is material on
@@ -1795,7 +1818,7 @@ them. Run the verifier anyway, because it catches the other kind of error.
 
 **And there is a whole class of defect no pass here can reach.**
 @@mechanism_defect_count|int@@
-mechanism errors have been found in `model.py` across rounds 2, 4, 5 and 6, and
+mechanism errors have been found in `model.py` across rounds 2 to 7, and
 every one passed every automated check in this directory on every run while it
 was wrong — the gate because the defect was in the published run, the off-test
 because most were in the base loop, the identities because they moved households

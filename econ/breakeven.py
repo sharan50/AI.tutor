@@ -55,9 +55,10 @@ METRICS = {
 # A break-even is only a useful question on a scope that can be rescued. On the
 # plan of record no value of any single driver, anywhere in its prior range,
 # reaches either CASH target — not because the money is committed early, but
-# because nothing in the model ever stops building. Four rows across the two
-# scopes do bracket, all on the profitability target, and TWO more are
-# unbracketed on the satisfying side. Both scopes are solved and every row is
+# because nothing in the model ever stops building. FIVE rows across the two
+# scopes bracket -- four on the profitability target and one on a cash target,
+# the go-to-market minimum's price against the median path ending whole -- and
+# two more are unbracketed on the satisfying side. Both scopes are solved and every row is
 # reported as what it is. (This comment and the one in side_of_target both said
 # four for two rounds, against a file that has two. The write-up said two and
 # was right; a reader sent to the code found the wrong count waiting for them.

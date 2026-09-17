@@ -456,6 +456,20 @@ if os.path.exists(os.path.join(OUT, "variants.csv")):
             "peak_funding_p80 for por_anchor_software less the same for por_anchor_tutoring: the extra capital the software-anchored regime needs")
     base = float(vr["por"]["terminal_cash_mean"])
 
+    # What share of the modelled cost base the institution channel carries. The
+    # prose compared its revenue share against "rather more than that of cost"
+    # and hand-typed both as "about one per cent"; the revenue share is nearer a
+    # half and the cost share is an order up from it, which is the whole of why
+    # the all-in row is pessimistic about the consumer household.
+    # See CHANGELOG 8.3.
+    if "por_no_schools" in vr:
+        _tc_all = float(vr["por"]["total_cost_mean"])
+        _tc_nos = float(vr["por_no_schools"]["total_cost_mean"])
+        add("por_schools_share_of_total_cost_pct",
+            100.0 * (_tc_all - _tc_nos) / _tc_all if _tc_all else 0.0, "per cent",
+            "variants.csv",
+            "total_cost_mean for the plan of record less the same for por_no_schools, over the plan of record's total")
+
     # How many paired standard errors each scope delta sits from zero. The
     # write-up says the mean and the median disagree in sign on the market drop;
     # these are what make that a finding rather than an observation about noise.

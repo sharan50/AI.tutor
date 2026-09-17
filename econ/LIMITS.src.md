@@ -203,8 +203,8 @@ cost base at the top of the range**, up from about an eighth before round 3 adde
 specification change, which is the largest single line in the file. They deepen the hole. They do
 not reverse the ordering in section 8 of the write-up, and the largest of them
 pushes the same way: specification change acts on the content line, so closing it
-would make content a larger share of cost rather than a smaller one. **But a
-fifth of the cost base sitting outside the model is not a footnote**, and a
+would make content a larger share of cost rather than a smaller one. **But
+@@omission_total_of_every_absent_line_share_high_pct|num1@@ per cent of the cost base sitting outside the model is not a footnote**, and a
 reader who takes the absolute levels from this document rather than the ordering
 is being misled by more than they were two rounds ago.
 
@@ -1205,12 +1205,16 @@ figure is not a clean measure of anything.
 
 ---
 
-## What six rounds of review say about the gates in this directory
+## What seven rounds of review say about the gates in this directory
 
 This is the most important limit in the document and it is an empirical one, so
 it goes last rather than among the checklist items.
 
-Ten mechanism defects have been found in `model.py` across rounds 2, 4, 5 and 6:
+@@mechanism_defect_count|int@@ mechanism defects have been found in `model.py`, every one of them by a
+person reading the month loop. `out/mechanism_defects.csv` is the list, one row
+per defect with the change-log entry that records it; the count here and
+everywhere else in these documents is derived from that file, because it was
+stated by hand in three places and was wrong in two of them for a round:
 a churn reference in the wrong place, an allowance that truncated at the wrong
 number and kept the revenue anyway, saturation measured on the wrong quantity,
 an onshoring switch that moved the wrong people, a sitting-month exit applied to
@@ -1219,8 +1223,17 @@ segment — a lifetime-value estimate using a calendar the loop does not have, t
 summer lapse and the year-group progression firing on the month's arrivals in
 exactly the way the two sitting exits had been fixed not to, a segment mix that
 did not sum to one so that households were billed which had never been bought,
-and a lifetime-value cap that valued an examination household acquired in its own
-sitting month at zero months of life.
+a lifetime-value cap that valued an examination household acquired in its own
+sitting month at zero months of life, and the reachable pool reading its subject
+catalogue on the undelayed calendar while the content it stands for is built on
+the delayed one.
+
+This list is hand-written prose and the count above it is not. That is
+deliberate: a reader wants the shape of the defects, and the shape does not fit a
+CSV column. But it means the prose can fall behind the file, as it did — the
+count read ten here while `out/mechanism_defects.csv` held eleven and two other
+tokens in this same document rendered eleven. If the two ever disagree again,
+the file is right.
 
 **Every one of them passed every automated check in this directory, on every
 run, while it was wrong.** Not by accident: the checks cannot see this class of
@@ -1230,12 +1243,12 @@ defect by construction.
   against a rebuild from the same source. A defect that is *in* the published
   run reproduces perfectly. The gate proves the file matches the code; it says
   nothing about whether the code is right.
-- The **two-sided off-test** applies only to switchable mechanisms. Eight of the
-  ten defects were in the base loop, which has no switch.
+- The **two-sided off-test** applies only to switchable mechanisms. Most of
+  those defects were in the base loop, which has no switch.
 - The **five cross-checks**, four of which are accounting identities and one of
-  which is a scope-ladder decomposition, check that cash adds up. Eight of the ten
-  moved households, ratios or a spend cap — quantities that do not appear in a
-  cash identity. This is now measured rather than asserted:
+  which is a scope-ladder decomposition, check that cash adds up. Most of those
+  defects moved households, ratios or a spend cap — quantities that do not appear
+  in a cash identity. This is now measured rather than asserted:
   `out/invariant_defect_costs.csv` re-runs the model with each historical defect
   put back and records what terminal cash does, and
   @@invariant_defects_costing_no_cash|int@@ of the reintroduced defects move the
@@ -1252,11 +1265,11 @@ defect by construction.
 - The **staleness check** proves the outputs were generated against the current
   code. Against the current *wrong* code, they were.
 
-All ten were found by a reader going through the month loop line by line.
+Every one was found by a reader going through the month loop line by line.
 That is the only method that has worked here, it does not scale, and it is not
-guaranteed to have finished. **The honest position after six rounds is not that
+guaranteed to have finished. **The honest position after seven rounds is not that
 the mechanisms are correct; it is that a defect of this class survives until
-somebody reads the code, and six readings have found ten.**
+somebody reads the code, and seven readings have found @@mechanism_defect_count|int@@.**
 
 The previous version of this paragraph ended "a sixth reading should be assumed
 to find more". A sixth reading found three, one of which had been sitting under a
@@ -1267,7 +1280,7 @@ than on the ordering it is for, should read that as the warning it is.
 
 **Something has been built against it, and it is worth being precise about how
 far it goes.** `invariants.py` asserts structural statements about what the month
-loop must produce — not that cash adds up, which all ten defects left perfect,
+loop must produce — not that cash adds up, which every one of those defects left perfect,
 but that a household is in the right place at the right time.
 @@invariant_proved_count|int@@ of the @@invariant_check_count|int@@ are
 proved to bite the way the harness gate is: the defect each was written for is
@@ -1336,7 +1349,7 @@ reviews until a round returns nothing new, and to expect three rounds. This is
 the sixth, and it returned three live mechanism defects in the month loop, a
 duplicated function carrying arithmetic a previous round had removed, and a
 diagnostic that was arithmetically incapable of firing. The count of mechanism
-defects found by reading the loop is now **ten**, across rounds 2, 4, 5 and 6.
+defects found by reading the loop is now **@@mechanism_defect_count|int@@**.
 Every one of them passed every automated gate in this directory on every run
 while it was wrong.
 
@@ -1397,7 +1410,12 @@ computes it as net cash plus acquisition spend plus verification, over
 **consumer** household months. Net cash carries the institution channel's entire
 cost base — the United Kingdom sales reps, the institution platform heads, the
 security certification, the per-school onboarding and the school inference —
-against a channel that is about one per cent of net revenue. Round 5 fixed
+against a channel that is @@por_schools_share_of_net_revenue_pct|num2@@ per cent
+of net revenue and about @@por_schools_share_of_total_cost_pct|num1@@ per cent of
+cost. That asymmetry is the whole of the defect, and both halves of it were
+hand-typed as "about one per cent" until round 8 — nearly twice the true revenue
+share, and the cost side, which is what makes the row pessimistic, was not given
+at all. Round 5 fixed
 exactly this contamination on the GROSS row and left it on the all-in row, which
 is the row the write-up calls the one that answers whether a household pays for
 the business that serves it. Removing the institution channel entirely moves the
@@ -1417,10 +1435,13 @@ so under the enforced-allowance scenario the cap believes in revenue that is
 never billed; it never subtracts the app-store fee or the creator revenue share;
 it always uses the Bengaluru support rate even under onshoring. Every
 cost-adding scenario therefore runs an acquisition budget a company that knew its
-own economics would not run, and the contamination has a known sign. Measured on
-the two largest cases it is about one per cent of the allowance-enforced delta
-and about two per cent of the app-store delta — small, but systematic, and it
-was not written down before this round.
+own economics would not run, and the contamination has a known sign. Round 6
+sized it roughly, at about one and two per cent of the two largest deltas.
+**Those figures are superseded by the round 7 section below**, which measured it
+properly rather than estimating it and gives 2.8 per cent, 5.1 per cent and a
+third case. The round 6 numbers are left here rather than deleted so a reader who
+has met them can tell which is which; where the two disagree the later one is
+the measurement.
 
 **"Met" and "missed across the whole prior range" are decided on two points.**
 When the bisection finds no bracket, the status is read off the two endpoint

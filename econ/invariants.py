@@ -1,26 +1,35 @@
 """
 invariants.py
 
-Seven mechanism defects have been found in model.py across rounds 2, 4 and 5.
-Every one of them passed every automated check in this directory, on every run,
-while it was wrong: the harness gate because the defect was in the published run,
-the off/on test because most were in the base loop, the accounting identities
-because they moved households rather than cash, and verify.py's prose scrape
-because a wrong number computed consistently is still on disk.
+Every mechanism defect found in model.py so far -- MECHANISM_DEFECTS below is
+the list, and out/mechanism_defects.csv is written from it -- passed every
+automated check in this directory, on every run, while it was wrong: the harness
+gate because the defect was in the published run, the off/on test because most
+were in the base loop, the accounting identities because they moved households
+rather than cash, and verify.py's prose scrape because a wrong number computed
+consistently is still on disk.
 
-All seven were found by a reader going through the month loop line by line. That
+Every one was found by a reader going through the month loop line by line. That
 does not scale and it is not guaranteed to have finished.
 
-This file is the answer to that. Each invariant below is a structural statement
-about what the month loop must produce which at least one of the seven historical
-defects violated. They are not accounting identities: an identity asks whether
-cash adds up, and all seven of these defects left cash adding up perfectly. They
+This file is a partial answer to that. Each invariant below is a structural
+statement about what the month loop must produce which at least one historical
+defect violated. They are not accounting identities: an identity asks whether
+cash adds up, and every one of these defects left cash adding up perfectly. They
 ask whether a household is in the right place at the right time.
 
-**Each invariant is proved to bite**, the way the harness gate is: the defect it
+**Some invariants are proved to bite** and some are not, and selftest() prints
+which is which rather than implying they all are. Proving one means the defect it
 was written for is reintroduced into a copy of the model in memory, the invariant
-is required to fail, and the copy is discarded. An invariant that has never been
-shown to fail is not an invariant. model.py itself is never written to.
+is required to fail, and the copy is discarded. model.py itself is never written
+to. There are more reintroduction cases than invariants proved, because four
+cases exercise the same check; three invariants have never been run against any
+defect and the self-test names them.
+
+This docstring said "seven defects across rounds 2, 4 and 5" and "each invariant
+is proved to bite" for two rounds after both had stopped being true, in the file
+whose own comments name a stale hand-typed count as the defect. See CHANGELOG
+8.2.
 
 Output: out/invariants.csv, out/invariant_selftest.txt
 """
@@ -118,7 +127,7 @@ def inv_no_revenue_before_the_first_market_opens(out, drv, cfg, ns):
 
     A boundary check on the first months of the horizon. Nothing has violated it
     yet; it is here because the start of the loop is where an off-by-one lands
-    and because two of the seven defects were off-by-one in the calendar.
+    and because several of the historical defects were off-by-one in the calendar.
     """
     first = min(NS["_open_month"](cfg, m) for m in range(NS["NM"]))
     if first >= HORIZON:
