@@ -20,7 +20,7 @@ caught : every acquisition can be billed                (change log 6.1, the pro
 caught : every acquisition can be billed                (change log 6.1, both exits together)
          most arrivals removed in the month they arrived is 117562.882452
          costs +524,796 of terminal cash at the mean
-caught : cumulative reach never falls                   (change log 2.4)
+caught : the saturation numerator never falls           (change log 2.4)
          largest fall in the saturation numerator is 2843060.061180
          costs -6,621,714 of terminal cash at the mean
 caught : a cohort is one cohort's worth of households   (change log 6.2)
