@@ -1,0 +1,935 @@
+<meta charset="utf-8">
+<title>CINE Impact Surface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#0E1417;
+  --ground-2:#121A1E;
+  --panel:#151D21;
+  --panel-2:#1A2429;
+  --rule:#27343A;
+  --rule-soft:#1E292E;
+  --ink:#E7EEF0;
+  --ink-2:#A8BAC1;
+  --ink-3:#74888F;
+  --accent:#E4622B;
+  --down:#E8B33C;
+  --up:#4FB3A6;
+  --side:#9A86DE;
+  --oblig:#CE5A72;
+  --font:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --panel-w:23.5rem;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--font);font-size:15px;line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  display:grid;grid-template-rows:auto minmax(0,1fr);grid-template-columns:minmax(0,1fr);
+  overflow:hidden;
+}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---------- command bar ---------- */
+.bar{
+  display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;max-width:100%;
+  padding:.6rem 1rem;padding-top:calc(.6rem + env(safe-area-inset-top,0px));
+  border-bottom:1px solid var(--rule);background:var(--ground-2);
+  position:relative;z-index:6;
+}
+.mark{display:flex;align-items:baseline;gap:.5rem;margin-right:.3rem;flex:none}
+.mark b{font-weight:700;font-stretch:112%;letter-spacing:.055em;font-size:.95rem;text-transform:uppercase}
+.mark span{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);letter-spacing:.04em}
+.mark .back{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);letter-spacing:.04em;text-decoration:none;border-bottom:1px solid var(--rule);margin-left:.35rem}
+.mark .back:hover{color:var(--accent);border-color:var(--accent)}
+.kinds{display:flex;gap:1px;min-width:0;max-width:100%;background:var(--rule-soft);border:1px solid var(--rule);border-radius:2px;overflow-x:auto;scrollbar-width:none}
+.kinds::-webkit-scrollbar{display:none}
+.kinds button{
+  padding:.34rem .6rem;font-size:.74rem;letter-spacing:.045em;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap;background:var(--ground-2);font-weight:600;
+}
+.kinds button:hover{color:var(--ink-2)}
+.kinds button[aria-pressed="true"]{background:var(--accent);color:#120A05}
+.bar .spacer{flex:1 1 auto}
+.viewbtns{display:flex;gap:.4rem}
+.viewbtns button{
+  font-family:var(--mono);font-size:.7rem;color:var(--ink-3);
+  border:1px solid var(--rule);border-radius:2px;padding:.3rem .5rem;
+}
+.viewbtns button:hover{color:var(--ink);border-color:var(--ink-3)}
+.viewbtns button[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
+.kindhint{
+  font-size:.75rem;color:var(--ink-3);flex-basis:100%;
+  font-family:var(--mono);letter-spacing:.01em;
+}
+
+/* ---------- stage ---------- */
+.stage{position:relative;min-height:0;overflow:hidden}
+#viz{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#viz.dragging{cursor:grabbing}
+
+.legend{
+  position:absolute;left:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));
+  z-index:3;display:flex;flex-direction:column;gap:.55rem;
+  pointer-events:none;max-width:15rem;
+}
+.legend .grp{pointer-events:auto;background:rgba(14,20,23,.82);border:1px solid var(--rule-soft);border-radius:2px;padding:.5rem .6rem}
+.legend h4{
+  margin:0 0 .4rem;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;
+}
+.legend .row{display:flex;align-items:center;gap:.45rem;font-size:.75rem;color:var(--ink-2);padding:.09rem 0}
+.swatch{width:.62rem;height:.62rem;border-radius:50%;flex:none}
+.c-origin{background:#E4622B}.c-down{background:#E8B33C}.c-up{background:#4FB3A6}
+.c-side{background:#9A86DE}.c-oblig{background:#CE5A72}
+.s-obligation{background:#CE5A72}.s-surface{background:#D9A441}
+.s-orchestration{background:#E4622B}.s-engine{background:#5FA8C9}
+.s-data{background:#4FB3A6}.s-supply{background:#9A86DE}
+.strata{display:flex;flex-direction:column;gap:1px}
+.strata button{
+  display:flex;align-items:center;gap:.45rem;width:100%;text-align:left;
+  font-size:.75rem;color:var(--ink-2);padding:.11rem .1rem;
+}
+.strata button[aria-pressed="false"]{color:var(--ink-3);opacity:.5;text-decoration:line-through}
+.strata .bar-i{width:1.4rem;height:2px;flex:none;border-radius:1px}
+
+.hoverchip{
+  position:absolute;z-index:4;pointer-events:none;
+  background:var(--panel);border:1px solid var(--rule);border-radius:2px;
+  padding:.3rem .5rem;font-size:.76rem;max-width:15rem;
+  box-shadow:0 6px 22px rgba(0,0,0,.5);opacity:0;transition:opacity .12s;
+}
+.hoverchip b{display:block;font-weight:600}
+.hoverchip i{font-style:normal;font-family:var(--mono);font-size:.68rem;color:var(--ink-3)}
+
+/* ---------- inspector ---------- */
+.panel{
+  position:absolute;top:0;right:0;bottom:0;width:var(--panel-w);z-index:5;
+  background:rgba(21,29,33,.94);border-left:1px solid var(--rule);
+  overflow-y:auto;overscroll-behavior:contain;
+  display:flex;flex-direction:column;
+}
+.phead{padding:.85rem 1rem .75rem;border-bottom:1px solid var(--rule-soft);display:flex;flex-direction:column;gap:.55rem}
+.pickrow{display:flex;gap:.4rem;align-items:center}
+.pickrow label{font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+select{
+  flex:1;font:inherit;font-size:.8rem;background:var(--ground-2);color:var(--ink);
+  border:1px solid var(--rule);border-radius:2px;padding:.3rem .4rem;min-width:0;
+}
+.ptitle{font-size:1.28rem;line-height:1.18;font-weight:700;text-wrap:balance;margin:0}
+.chips{display:flex;gap:.35rem;flex-wrap:wrap}
+.chip{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.03em;
+  padding:.13rem .38rem;border-radius:2px;border:1px solid var(--rule);color:var(--ink-2);
+}
+.chip.own{border-color:#3C6E63;color:#7FD0C2}
+.chip.buy{border-color:#6E5C38;color:#D9B166}
+.chip.process{border-color:#4B5E74;color:#93B2D0}
+.chip.policy{border-color:#7A3F4D;color:#E48297}
+.pnote{margin:0;font-size:.85rem;color:var(--ink-2);line-height:1.5}
+
+.readout{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--rule-soft)}
+.readout div{padding:.7rem 1rem;border-top:1px solid var(--rule-soft)}
+.readout div:first-child{border-right:1px solid var(--rule-soft)}
+.readout .n{
+  font-size:2.1rem;font-weight:700;font-stretch:118%;line-height:1;
+  font-variant-numeric:tabular-nums;display:block;
+}
+.readout .k{font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.readout .down .n{color:var(--down)}
+.readout .up .n{color:var(--up)}
+
+.sect{padding:.85rem 1rem;border-bottom:1px solid var(--rule-soft)}
+.sect h3{
+  margin:0 0 .5rem;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;display:flex;align-items:center;gap:.4rem;
+}
+.sect h3 .dot{width:.5rem;height:.5rem;border-radius:50%;flex:none}
+.hit{
+  display:grid;grid-template-columns:auto 1fr;gap:.1rem .5rem;align-items:baseline;
+  width:100%;text-align:left;padding:.24rem .3rem;border-radius:2px;
+}
+.hit:hover{background:var(--panel-2)}
+.hit .hop{font-family:var(--mono);font-size:.64rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.hit .nm{font-size:.82rem;color:var(--ink)}
+.hit .via{grid-column:2;font-family:var(--mono);font-size:.66rem;color:var(--ink-3)}
+.stops{background:var(--panel-2);border-left:2px solid var(--up);padding:.5rem .6rem;margin-top:.4rem;border-radius:0 2px 2px 0}
+.stops p{margin:0 0 .3rem;font-size:.78rem;color:var(--ink-2)}
+.stops p:last-child{margin-bottom:0}
+.stops b{color:var(--up);font-family:var(--mono);font-size:.72rem;font-weight:500}
+.reg{display:flex;flex-direction:column;gap:.4rem}
+.reg a,.reg .item{display:grid;grid-template-columns:4.2rem 1fr;gap:.5rem;align-items:baseline;text-decoration:none}
+.reg code{
+  font-family:var(--mono);font-size:.68rem;color:var(--ink);background:var(--panel-2);
+  border:1px solid var(--rule);border-radius:2px;padding:.08rem .25rem;text-align:center;
+}
+.reg span{font-size:.78rem;color:var(--ink-2);line-height:1.42}
+.reg .t code{border-color:#3C6E63;color:#7FD0C2}
+.reg .o code{border-color:#7A3F4D;color:#E48297}
+.reg .r code{border-color:#6E5C38;color:#D9B166}
+.empty{font-size:.78rem;color:var(--ink-3);font-style:italic}
+.pfoot{padding:.85rem 1rem;color:var(--ink-3);font-size:.72rem;line-height:1.5;margin-top:auto}
+.pfoot b{color:var(--ink-2);font-weight:600}
+
+@media (max-width:62rem){
+  :root{--panel-w:20rem}
+  .legend{max-width:11rem}
+}
+@media (max-width:46rem){
+  body{font-size:14px}
+  .panel{
+    top:auto;left:0;width:auto;height:58%;
+    border-left:none;border-top:1px solid var(--rule);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .legend{display:none}
+  .bar{gap:.55rem;padding:.5rem .7rem;padding-top:calc(.5rem + env(safe-area-inset-top,0px))}
+  .kindhint{display:none}
+  .viewbtns{display:none}
+  .readout .n{font-size:1.7rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+
+<div class="bar">
+  <div class="mark"><b>CINE</b> <span>impact surface</span><a class="back" href="https://aitutor-plan.netlify.app/">design vault</a></div>
+  <div class="kinds" role="group" aria-label="Kind of change">
+    <button type="button" data-kind="interface" aria-pressed="false">Interface</button>
+    <button type="button" data-kind="schema" aria-pressed="true">Schema</button>
+    <button type="button" data-kind="behaviour" aria-pressed="false">Behaviour</button>
+    <button type="button" data-kind="vendor" aria-pressed="false">Vendor</button>
+    <button type="button" data-kind="policy" aria-pressed="false">Obligation</button>
+    <button type="button" data-kind="removal" aria-pressed="false">Withdrawal</button>
+  </div>
+  <div class="spacer"></div>
+  <div class="viewbtns">
+    <button type="button" id="spin" aria-pressed="true">orbit</button>
+    <button type="button" id="reset">reset view</button>
+  </div>
+  <p class="kindhint" id="kindhint"></p>
+</div>
+
+<div class="stage">
+  <canvas id="viz" tabindex="0" aria-label="Three dimensional dependency map. Use the component list in the inspector to select a component, or the arrow keys to rotate the view."></canvas>
+
+  <div class="legend">
+    <div class="grp">
+      <h4>Impact</h4>
+      <div class="row"><i class="swatch c-origin"></i>the change</div>
+      <div class="row"><i class="swatch c-down"></i>downstream, feels it</div>
+      <div class="row"><i class="swatch c-up"></i>upstream, holds it up</div>
+      <div class="row"><i class="swatch c-side"></i>sideways, co-changes</div>
+      <div class="row"><i class="swatch c-oblig"></i>obligation touched</div>
+    </div>
+    <div class="grp strataset">
+      <h4>Strata</h4>
+      <div class="strata" id="strata"></div>
+    </div>
+  </div>
+
+  <div class="hoverchip" id="chip" aria-hidden="true"></div>
+
+  <aside class="panel" id="panel" aria-live="polite"></aside>
+</div>
+
+<script>
+/* ------------------------------------------------------------------
+   CINE impact surface
+   Every component, edge and identifier below is taken from the design
+   vault: document 06 for the planes, the pipeline, the data model and
+   the kill switch; 02 for the style engine; 03 for the content
+   pipeline; 05 for safety and identity; 01 for the surfaces.
+------------------------------------------------------------------- */
+
+const STRATA = [
+  {id:"obligation",  label:"Obligations",   y: 300, tint:"#CE5A72"},
+  {id:"surface",     label:"Surfaces",      y: 180, tint:"#D9A441"},
+  {id:"orchestration",label:"Orchestration",y:  60, tint:"#E4622B"},
+  {id:"engine",      label:"Engines",       y: -60, tint:"#5FA8C9"},
+  {id:"data",        label:"Stores",        y:-180, tint:"#4FB3A6"},
+  {id:"supply",      label:"Bought and supplied", y:-300, tint:"#9A86DE"},
+];
+
+const SECTORS = {
+  content:    {az:   0, label:"Content and curriculum"},
+  pipeline:   {az:  60, label:"Turn pipeline"},
+  style:      {az: 120, label:"Style and persona"},
+  assessment: {az: 180, label:"Assessment and progress"},
+  safety:     {az: 240, label:"Safety and identity"},
+  commerce:   {az: 300, label:"Commerce and distribution"},
+};
+
+const TESTS = {
+  "T-VAL-01":"Every live item carries a recorded validation by a named examiner. Census, not sample.",
+  "T-GND-01":"Every substantive assertion cites a live node and is entailed by it. Floor 99.5 per cent.",
+  "T-MTH-01":"Generated worked steps are mathematically correct. Floor 99.0 per cent.",
+  "T-SCP-01":"Nothing outside the declared specification scope reaches the learner.",
+  "T-STY-01":"Measured style signatures match the parameter vector the tutor was given.",
+  "T-STY-02":"A blind grader tells two presets apart above chance.",
+  "T-STY-03":"Style changes the teaching and never the truth.",
+  "T-STY-04":"No licensed exemplar is reproduced in output.",
+  "T-ZERO-01":"The full regression battery passes with the persona registry empty.",
+  "T-PAP-01":"An assembled paper meets its structural specification as a whole.",
+  "T-CAL-01":"The grade range is calibrated against real examination outcomes.",
+  "T-GATE-01":"The gate-fire rate is measured on the frozen battery.",
+  "T-REG-01":"The frozen regression battery, blocking before any vendor version moves.",
+};
+
+const DECISIONS = {
+  D4:"Named-educator personas are the wedge, retained against advice.",
+  D5:"Personas pass a student usefulness test, not a fan's ear test. Name and likeness only.",
+  D6:"The route to high-fidelity personas via exemplar conditioning is designed now, not built now.",
+  D7:"Style is a structured parameter object, with a written style card generated from it.",
+  D8:"No persona LoRAs or fine-tuned weights carrying creator style. Retrieval and prompting only.",
+  D9:"Voice cloning is off the launch path; a separate opt-in limb of the licence.",
+  D10:"A creator selects a preset; the student may then move individual dimensions.",
+  D11:"Zero-persona operation is a hard requirement. The product runs with no signed creator.",
+  D12:"Clean-room content. Original items written to the published specification, examiner-validated.",
+  D14:"Ship named presets and unnamed archetypes from day one; instrument return rate.",
+  D15:"The unaided check is scored on first commit, with no hints available.",
+  D16:"The parent does not see session transcripts by default.",
+  D17:"No tone dimension in the weighted style set.",
+  D18:"The exemplar retriever supplies style context only; the verifier rejects curricular claims from it.",
+  D19:"Launch alignment is Pearson Edexcel. Explicitly provisional.",
+  D20:"Validators are engaged on terms forbidding them from bringing any awarding-body material.",
+  D21:"Groundedness is reported per session, not per turn, and no “it does not make things up” claim.",
+  D22:"Model versions are pinned; a vendor update must pass the blocking regression battery first.",
+  D23:"The full regression battery runs with the persona registry empty, as a blocking gate.",
+  D24:"Zero retention of prompts and outputs, and no training on our data, as a vendor precondition.",
+  D25:"No engagement objective anywhere in the system. No streaks, badges or return notifications.",
+  D26:"A safeguarding disclosure is not automatically reported to the parent.",
+  D27:"The verifier runs on a different pinned model from the generator; mathematics runs on none.",
+  D28:"Figures are rendered deterministically from a specification, never generated by an image model.",
+  D29:"The kill switch is rehearsed quarterly against a live archetype, with elapsed time recorded.",
+  D30:"The conversation window is a bounded rolling summary, giving near-constant cost per turn.",
+  D34:"Name the board in public copy, under a fixed convention, ahead of counsel on OI-3.",
+  D35:"Ship a provisional grade range, and gate nothing on it.",
+  D36:"Every mark scheme in the product is named a CINE mark scheme.",
+};
+
+const OPEN = {
+  "OI-1":"Does AQA's AI clause reach runtime retrieval, or only training?",
+  "OI-2":"Do the other boards' positions differ, and does any board licence for AI use at any price?",
+  "OI-3":"What wording may state which specification a course follows, without implying endorsement?",
+  "OI-4":"Is a one-to-one tutor with no inter-user sharing outside the Online Safety Act duties?",
+  "OI-5":"What age assurance method satisfies the ICO at a consumer price point?",
+  "OI-6":"What is the minimum viable creator licence for name and likeness only?",
+  "OI-7":"Which entity contracts with the parent, and what does that do to consumer jurisdiction?",
+  "OI-8":"Is no parental transcript access defensible where the learner is under 13?",
+  "OI-9":"Under what licence may DfE subject content be the source for commercial item writing?",
+  "OI-10":"Is Article 6(1)(b) the right basis for a child's data under a contract held by the parent?",
+  "OI-11":"If a grade range could inform a tier entry decision, does Article 22 engage?",
+  "OI-12":"What exposure do consumer protection and advertising rules create for outcome claims?",
+};
+
+const RISKS = {
+  R1:"A creator or board sues.",
+  R2:"Teaching something wrong before an exam.",
+  R3:"Nobody pays.",
+  R4:"Child harm or data breach.",
+  R5:"Platform interruption by an app store or payment processor.",
+  R6:"Vendor model drift moving the accuracy numbers.",
+  R7:"Examiner supply, and the cost per item.",
+  R8:"D4 is wrong and the wedge has no substance.",
+  R9:"A free tool ships validated, board-specific, warranted content.",
+  R11:"An uncalibrated grade range is relied on as though it were a forecast.",
+};
+</script>
+
+<script>
+/* id, label, stratum, sector, ownership, note, tests, decisions, open items, risks, damping */
+const NODES = /*@@NODES@@*/;
+
+/* from depends on to */
+const EDGES = /*@@EDGES@@*/;
+</script>
+
+<script>
+"use strict";
+const N = new Map(NODES.map(n => [n.id, n]));
+const bad = [];
+EDGES.forEach(([a,b]) => { if(!N.has(a)) bad.push(a); if(!N.has(b)) bad.push(b); });
+if (bad.length) console.error("unknown node ids in EDGES:", [...new Set(bad)]);
+
+const deps = new Map(), dependants = new Map();
+NODES.forEach(n => { deps.set(n.id, []); dependants.set(n.id, []); });
+EDGES.forEach(([a,b,k]) => { deps.get(a).push({to:b,kind:k}); dependants.get(b).push({from:a,kind:k}); });
+const degree = id => deps.get(id).length + dependants.get(id).length;
+
+/* ---------- layout: strata by altitude, concerns by azimuth ---------- */
+const RADIUS = {obligation:212, surface:176, orchestration:142, engine:162, data:190, supply:226};
+const SY = Object.fromEntries(STRATA.map(s => [s.id, s.y]));
+(function layout(){
+  const groups = new Map();
+  NODES.forEach(n => {
+    const k = n.st + "|" + n.sec;
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(n);
+  });
+  for (const [k, list] of groups){
+    const [st, sec] = k.split("|");
+    const cols = Math.min(3, Math.ceil(Math.sqrt(list.length)));
+    const rows = Math.ceil(list.length / cols);
+    list.forEach((n, i) => {
+      const col = i % cols, row = Math.floor(i / cols);
+      const az = (SECTORS[sec].az + (col - (cols-1)/2) * 14) * Math.PI/180;
+      const r  = RADIUS[st] + (row - (rows-1)/2) * 46;
+      n.x = r * Math.sin(az);
+      n.z = r * Math.cos(az);
+      n.y = SY[st];
+      n.deg = degree(n.id);
+    });
+  }
+})();
+
+/* ---------- impact model ---------- */
+const TRANSMIT = {
+  interface:{calls:1.00, renders:0.95, reads:0.34, writes:0.34, binds:0.20, feeds:0.20, governs:0.14},
+  schema:   {calls:0.42, renders:0.50, reads:1.00, writes:1.00, binds:0.95, feeds:0.48, governs:0.50},
+  behaviour:{calls:0.90, renders:0.62, reads:0.48, writes:0.48, binds:0.22, feeds:0.40, governs:0.30},
+  vendor:   {calls:0.86, renders:0.30, reads:0.20, writes:0.20, binds:0.15, feeds:0.15, governs:0.58},
+  policy:   {calls:0.62, renders:0.62, reads:0.70, writes:0.70, binds:0.70, feeds:0.90, governs:1.00},
+  removal:  {calls:1.00, renders:1.00, reads:0.90, writes:0.90, binds:0.80, feeds:0.78, governs:0.40},
+};
+const KIND_HINT = {
+  interface:"The shape of the call changes. Travels through callers and renderings, and barely through stored data.",
+  schema:"A stored shape changes. Travels through everything that reads or writes it, and on into retention.",
+  behaviour:"Same interface, different output. Travels to whatever measures the distribution or depends on it.",
+  vendor:"A bought component is swapped or its version moves. Damped at the abstractions, and absent where nothing calls a model.",
+  policy:"An obligation moves. Travels down into every component that exists to satisfy it.",
+  removal:"The component is withdrawn or disabled. Travels to everything without a fallback path.",
+};
+const KIND_LABEL = {interface:"interface change", schema:"schema change", behaviour:"behaviour change",
+  vendor:"vendor change", policy:"obligation change", removal:"withdrawal"};
+const MIN_SCORE = 0.18;
+
+function computeImpact(originId, kind){
+  const T = TRANSMIT[kind];
+  const score = new Map([[originId, 1]]);
+  const hop = new Map([[originId, 0]]);
+  const via = new Map();
+  const stopped = [];
+  let frontier = [originId], guard = 0;
+  while (frontier.length && guard++ < 40){
+    const next = [];
+    for (const cur of frontier){
+      const s = score.get(cur);
+      for (const e of dependants.get(cur)){
+        const nd = N.get(e.from);
+        let v = s * (T[e.kind] ?? 0.3);
+        if (nd.abs && nd.abs.kinds.includes(kind)){
+          v *= nd.abs.f;
+          if (!stopped.some(x => x.id === nd.id)) stopped.push({id:nd.id, why:nd.abs.why});
+        }
+        if (v < MIN_SCORE) continue;
+        if (!score.has(e.from) || score.get(e.from) < v - 1e-9){
+          score.set(e.from, v);
+          hop.set(e.from, (hop.get(cur) ?? 0) + 1);
+          via.set(e.from, {from:cur, kind:e.kind});
+          next.push(e.from);
+        }
+      }
+    }
+    frontier = next;
+  }
+  score.delete(originId);
+
+  const up = new Map();
+  let uf = [originId], ud = 0;
+  const seen = new Set([originId]);
+  while (uf.length && ud++ < 3){
+    const next = [];
+    for (const cur of uf) for (const e of deps.get(cur)){
+      if (seen.has(e.to)) continue;
+      seen.add(e.to); up.set(e.to, {hop:ud, via:{from:cur, kind:e.kind}});
+      next.push(e.to);
+    }
+    uf = next;
+  }
+
+  const origin = N.get(originId);
+  const mine = new Set(deps.get(originId).map(e => e.to));
+  const lateral = [];
+  for (const n of NODES){
+    if (n.id === originId || score.has(n.id) || n.st !== origin.st) continue;
+    const shared = deps.get(n.id).map(e => e.to).filter(t => mine.has(t));
+    if (shared.length) lateral.push({id:n.id, shared});
+  }
+  lateral.sort((a,b) => b.shared.length - a.shared.length);
+
+  const reg = {t:new Set(), d:new Set(), o:new Set(), r:new Set()};
+  for (const id of [originId, ...score.keys()]){
+    const n = N.get(id);
+    (n.t||[]).forEach(v => reg.t.add(v));
+    (n.d||[]).forEach(v => reg.d.add(v));
+    (n.o||[]).forEach(v => reg.o.add(v));
+    (n.r||[]).forEach(v => reg.r.add(v));
+  }
+  return {originId, kind, score, hop, via, stopped, up, lateral, reg};
+}
+
+/* ---------- state ---------- */
+var dragging = false;
+const state = {
+  origin:"db.items",
+  kind:"schema",
+  hidden:new Set(),
+  impact:null,
+  hover:null,
+};
+const cam = {az:0.62, el:0.34, dist:980, tAz:0.62, tEl:0.34, tDist:980};
+const HOME = {az:0.62, el:0.34, dist:980};
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let spinning = !reduced;
+
+/* ---------- canvas ---------- */
+const cv = document.getElementById("viz");
+const ctx = cv.getContext("2d");
+let W = 0, H = 0, DPR = 1;
+function resize(){
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const r = cv.getBoundingClientRect();
+  W = Math.max(1, r.width); H = Math.max(1, r.height);
+  cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+new ResizeObserver(resize).observe(cv);
+resize();
+
+const panelEl = document.getElementById("panel");
+function camera(){
+  const st = cv.getBoundingClientRect();
+  const pr = panelEl.getBoundingClientRect();
+  const side = pr.width < st.width * 0.9;
+  const availW = side ? Math.max(260, W - pr.width) : W;
+  const availH = side ? H : Math.max(220, H - pr.height);
+  const cx = side ? availW / 2 : W / 2;
+  const cy = side ? H / 2 : availH / 2;
+  const ce = Math.cos(cam.el), se = Math.sin(cam.el);
+  const eye = [cam.dist*ce*Math.sin(cam.az), cam.dist*se, cam.dist*ce*Math.cos(cam.az)];
+  let f = [-eye[0], -eye[1], -eye[2]];
+  const fl = Math.hypot(f[0],f[1],f[2]); f = f.map(v => v/fl);
+  let rgt = [-f[2], 0, f[0]];
+  const rl = Math.hypot(rgt[0],rgt[1],rgt[2]) || 1; rgt = rgt.map(v => v/rl);
+  const upv = [rgt[1]*f[2]-rgt[2]*f[1], rgt[2]*f[0]-rgt[0]*f[2], rgt[0]*f[1]-rgt[1]*f[0]];
+  return {eye, f, rgt, upv, focal: Math.min(availW, availH) * 1.02, cx, cy, availW, availH, side};
+}
+function project(p, c){
+  const dx = p[0]-c.eye[0], dy = p[1]-c.eye[1], dz = p[2]-c.eye[2];
+  const z = dx*c.f[0] + dy*c.f[1] + dz*c.f[2];
+  if (z < 40) return null;
+  const x = dx*c.rgt[0] + dy*c.rgt[1] + dz*c.rgt[2];
+  const y = dx*c.upv[0] + dy*c.upv[1] + dz*c.upv[2];
+  const sc = c.focal / z;
+  return {sx: c.cx + x*sc, sy: c.cy - y*sc, z, s: sc};
+}
+
+const PALETTE = {origin:"#E4622B", down:"#E8B33C", up:"#4FB3A6", side:"#9A86DE", oblig:"#CE5A72", idle:"#3E5058"};
+function roleOf(id){
+  const im = state.impact;
+  if (!im) return "idle";
+  if (id === im.originId) return "origin";
+  const inDown = im.score.has(id), inUp = im.up.has(id);
+  const isSide = im.lateral.some(l => l.id === id);
+  if (!inDown && !inUp && !isSide) return "idle";
+  if (N.get(id).st === "obligation") return "oblig";
+  if (inDown) return "down";
+  if (inUp) return "up";
+  return "side";
+}
+const visible = n => !state.hidden.has(n.st);
+const fade = z => Math.max(0.1, Math.min(1, 1 - (z - 620) / 1150));
+
+let screenPos = new Map();
+let tAnim = 0;
+
+function draw(){
+  const c = camera();
+  ctx.clearRect(0,0,W,H);
+  const g = ctx.createRadialGradient(c.cx, H*0.44, 20, c.cx, H*0.5, Math.max(W,H)*0.8);
+  g.addColorStop(0, "#131C20"); g.addColorStop(1, "#0E1417");
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+  screenPos = new Map();
+  const items = [], labels = [];
+
+  for (const st of STRATA){
+    if (state.hidden.has(st.id)) continue;
+    const r = RADIUS[st.id] + 56;
+    const pts = [];
+    for (let i = 0; i <= 60; i++){
+      const a = i/60 * Math.PI*2;
+      pts.push(project([r*Math.sin(a), st.y, r*Math.cos(a)], c));
+    }
+    const mid = project([0, st.y, 0], c);
+    items.push({z: mid ? mid.z + 4 : 9e5, kind:"disc", pts, tint:st.tint});
+    const lab = project([(r+30)*Math.sin(0.524), st.y, (r+30)*Math.cos(0.524)], c);
+    if (lab) items.push({z: lab.z, kind:"datum", p:lab, text:st.label, tint:st.tint});
+  }
+  if (!state.hidden.has("supply")){
+    for (const key in SECTORS){
+      const a = SECTORS[key].az * Math.PI/180, r = RADIUS.supply + 96;
+      const pp = project([r*Math.sin(a), SY.supply - 26, r*Math.cos(a)], c);
+      if (pp) items.push({z: pp.z, kind:"sector", p:pp, text:SECTORS[key].label});
+    }
+  }
+
+  for (const [a, b, k] of EDGES){
+    const na = N.get(a), nb = N.get(b);
+    if (!visible(na) || !visible(nb)) continue;
+    const ra = roleOf(a), rb = roleOf(b);
+    const im = state.impact;
+    const lit = im && ra !== "idle" && rb !== "idle" &&
+      (im.via.get(a)?.from === b || im.up.get(b)?.via.from === a ||
+       a === im.originId || b === im.originId);
+    const pa = project([na.x, na.y, na.z], c), pb = project([nb.x, nb.y, nb.z], c);
+    if (!pa || !pb) continue;
+    const bulge = 1.1;
+    const pm = project([(na.x+nb.x)/2*bulge, (na.y+nb.y)/2 + 12, (na.z+nb.z)/2*bulge], c);
+    if (!pm) continue;
+    items.push({z:(pa.z+pb.z)/2, kind:"edge", pa, pb, pm, lit, ek:k,
+      colour: lit ? (PALETTE[ra] === PALETTE.idle ? PALETTE[rb] : PALETTE[ra]) : null});
+  }
+
+  for (const n of NODES){
+    if (!visible(n)) continue;
+    const p = project([n.x, n.y, n.z], c);
+    if (!p) continue;
+    const role = roleOf(n.id);
+    const base = role === "origin" ? 6.6 : 2.6 + Math.min(3.0, n.deg * 0.26);
+    const rad = Math.max(2.4, base * p.s * 1.55);
+    screenPos.set(n.id, {x:p.sx, y:p.sy, r:rad, z:p.z, role});
+    items.push({z:p.z, kind:"node", n, p, role, rad});
+  }
+
+  items.sort((u,v) => v.z - u.z);
+
+  for (const it of items){
+    if (it.kind === "disc"){
+      ctx.beginPath();
+      let started = false;
+      for (const p of it.pts){ if (!p){ started = false; continue; }
+        if (!started){ ctx.moveTo(p.sx,p.sy); started = true; } else ctx.lineTo(p.sx,p.sy); }
+      ctx.strokeStyle = it.tint + "2B"; ctx.lineWidth = 1; ctx.stroke();
+    } else if (it.kind === "datum"){
+      ctx.font = "600 10px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = it.tint + "B0";
+      ctx.textAlign = "left"; ctx.textBaseline = "middle";
+      ctx.fillText(it.text.toUpperCase(), it.p.sx, it.p.sy);
+    } else if (it.kind === "sector"){
+      ctx.font = "400 9.5px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = "#6C838C";
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(it.text.toUpperCase(), it.p.sx, it.p.sy);
+    } else if (it.kind === "edge"){
+      ctx.beginPath();
+      ctx.moveTo(it.pa.sx, it.pa.sy);
+      ctx.quadraticCurveTo(it.pm.sx, it.pm.sy, it.pb.sx, it.pb.sy);
+      ctx.setLineDash(it.ek === "governs" ? [3,4] : []);
+      if (it.lit){ ctx.strokeStyle = it.colour + "D0"; ctx.lineWidth = 1.6; }
+      else { const a = state.impact ? 0.05 : 0.095; ctx.strokeStyle = "rgba(125,158,170," + a.toFixed(3) + ")"; ctx.lineWidth = 1; }
+      ctx.stroke(); ctx.setLineDash([]);
+      if (it.lit && !reduced && it.colour){
+        const t = (tAnim * 0.00042 + (it.pa.sx + it.pa.sy) * 0.0013) % 1;
+        const u = 1-t;
+        const px = u*u*it.pa.sx + 2*u*t*it.pm.sx + t*t*it.pb.sx;
+        const py = u*u*it.pa.sy + 2*u*t*it.pm.sy + t*t*it.pb.sy;
+        ctx.beginPath(); ctx.arc(px, py, 1.7, 0, 6.2832);
+        ctx.fillStyle = it.colour; ctx.fill();
+      }
+    } else {
+      const {n, p, role, rad} = it;
+      const col = PALETTE[role];
+      const hop = state.impact ? state.impact.hop.get(n.id) : null;
+      ctx.globalAlpha = role === "idle" ? fade(p.z) * (state.impact ? 0.34 : 0.72) : 1;
+      if (role === "origin" || hop === 1){
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, rad * 2.2, 0, 6.2832);
+        ctx.fillStyle = col + "1C"; ctx.fill();
+      }
+      ctx.beginPath(); ctx.arc(p.sx, p.sy, rad, 0, 6.2832);
+      ctx.fillStyle = col; ctx.fill();
+      if (role === "origin"){
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, rad + 5.5, 0, 6.2832);
+        ctx.strokeStyle = col; ctx.lineWidth = 1.3; ctx.stroke();
+      } else if (n.own === "policy" && role !== "idle"){
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, rad + 3, 0, 6.2832);
+        ctx.strokeStyle = col + "80"; ctx.lineWidth = 1;
+        ctx.setLineDash([2,3]); ctx.stroke(); ctx.setLineDash([]);
+      }
+      ctx.globalAlpha = 1;
+      const hovered = state.hover === n.id;
+      let pri = 9;
+      if (role === "origin" || hovered) pri = 0;
+      else if (hop === 1) pri = 1;
+      else if (role !== "idle") pri = 2;
+      else if (!state.impact && n.deg >= 8) pri = 4;
+      if (pri < 9) labels.push({n, role, pri, z:p.z, x:p.sx + rad + 6, y:p.sy});
+    }
+  }
+
+  // labels last, nearest and most relevant first, skipping any that would collide
+  labels.sort((a,b) => a.pri - b.pri || a.z - b.z);
+  const placed = [];
+  const limit = c.side ? c.availW : W;
+  for (const L of labels){
+    ctx.font = (L.role === "origin" ? "700 12px" : (L.role === "idle" ? "500 10.5px" : "500 11.5px")) + " Archivo, sans-serif";
+    const w = ctx.measureText(L.n.label).width;
+    const box = {x:L.x - 3, y:L.y - 8, w:w + 6, h:16};
+    if (box.x + box.w > limit - 6 || box.x < 4 || box.y < 4 || box.y + box.h > H - 4) continue;
+    let clash = false;
+    for (const q of placed){
+      if (box.x < q.x + q.w && box.x + box.w > q.x && box.y < q.y + q.h && box.y + box.h > q.y){ clash = true; break; }
+    }
+    if (clash) continue;
+    placed.push(box);
+    ctx.globalAlpha = L.role === "idle" ? 0.5 : 0.98;
+    ctx.fillStyle = "rgba(14,20,23,.74)";
+    ctx.fillRect(box.x, box.y, box.w, box.h);
+    ctx.fillStyle = L.role === "idle" ? "#8FA2A9" : (L.role === "origin" ? PALETTE.origin : "#E7EEF0");
+    ctx.textAlign = "left"; ctx.textBaseline = "middle";
+    ctx.fillText(L.n.label, L.x, L.y);
+    ctx.globalAlpha = 1;
+  }
+}
+
+function frame(ts){
+  tAnim = ts || 0;
+  if (spinning && !dragging) cam.tAz += 0.0016;
+  cam.az += (cam.tAz - cam.az) * 0.14;
+  cam.el += (cam.tEl - cam.el) * 0.14;
+  cam.dist += (cam.tDist - cam.dist) * 0.14;
+  draw();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+
+<script>
+const panel = document.getElementById("panel");
+const chip = document.getElementById("chip");
+const esc = s => String(s).replace(/[&<>"]/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const OWN_LABEL = {own:"built here", buy:"bought", mixed:"mixed", process:"human process", policy:"obligation", external:"external source"};
+const OWN_CLASS = {own:"own", buy:"buy", mixed:"buy", process:"process", policy:"policy", external:"buy"};
+const VIA_WORD = {calls:"called by", renders:"rendered by", reads:"read by", writes:"written by",
+  binds:"bound to", feeds:"supplied to", governs:"constrains"};
+
+function hitRow(id, hopN, viaText){
+  const n = N.get(id);
+  return '<button type="button" class="hit" data-go="' + id + '">' +
+    '<span class="hop">' + (hopN != null ? hopN : "·") + '</span>' +
+    '<span class="nm">' + esc(n.label) + '</span>' +
+    (viaText ? '<span class="via">' + esc(viaText) + '</span>' : '') +
+    '</button>';
+}
+function regList(map, ids, cls){
+  if (!ids.length) return '<p class="empty">None in the path.</p>';
+  return '<div class="reg">' + ids.map(i =>
+    '<div class="item ' + cls + '"><code>' + esc(i) + '</code><span>' + esc(map[i] || "") + '</span></div>').join("") + '</div>';
+}
+
+function renderPanel(){
+  const im = state.impact, n = N.get(state.origin);
+  const optgroups = STRATA.map(s => {
+    const list = NODES.filter(x => x.st === s.id)
+      .map(x => '<option value="' + x.id + '"' + (x.id === state.origin ? " selected" : "") + '>' + esc(x.label) + '</option>').join("");
+    return '<optgroup label="' + esc(s.label) + '">' + list + '</optgroup>';
+  }).join("");
+
+  const downIds = [...im.score.keys()].sort((a,b) => (im.hop.get(a) - im.hop.get(b)) || (im.score.get(b) - im.score.get(a)));
+  const upIds = [...im.up.keys()].filter(id => im.up.get(id).hop === 1);
+  const strataTouched = new Set(downIds.map(i => N.get(i).st)).size;
+
+  const downHtml = downIds.length
+    ? downIds.slice(0, 14).map(id => {
+        const v = im.via.get(id);
+        return hitRow(id, im.hop.get(id), v ? (VIA_WORD[v.kind] || v.kind) + " " + N.get(v.from).label.toLowerCase() : "");
+      }).join("") + (downIds.length > 14 ? '<p class="empty">and ' + (downIds.length - 14) + ' further components.</p>' : "")
+    : '<p class="empty">Nothing depends on this component, so a ' + KIND_LABEL[state.kind] + ' here reaches no further.</p>';
+
+  const stopHtml = im.stopped.length
+    ? '<div class="stops">' + im.stopped.map(s =>
+        '<p><b>' + esc(N.get(s.id).label) + '</b><br>' + esc(s.why) + '</p>').join("") + '</div>'
+    : "";
+
+  const upHtml = upIds.length
+    ? upIds.map(id => hitRow(id, null, VIA_WORD[im.up.get(id).via.kind] || "")).join("")
+    : '<p class="empty">Nothing. This is a leaf: it stands on its own.</p>';
+
+  const sideHtml = im.lateral.length
+    ? im.lateral.slice(0, 6).map(l =>
+        hitRow(l.id, null, "shares " + l.shared.map(s => N.get(s).label.toLowerCase()).slice(0,2).join(", "))).join("")
+    : '<p class="empty">Nothing else in this stratum shares a dependency with it.</p>';
+
+  panel.innerHTML =
+    '<div class="phead">' +
+      '<div class="pickrow"><label for="pick">Component</label>' +
+      '<select id="pick">' + optgroups + '</select></div>' +
+      '<h2 class="ptitle">' + esc(n.label) + '</h2>' +
+      '<div class="chips">' +
+        '<span class="chip ' + OWN_CLASS[n.own] + '">' + OWN_LABEL[n.own] + '</span>' +
+        '<span class="chip">' + esc(SECTORS[n.sec].label) + '</span>' +
+        '<span class="chip">' + esc(STRATA.find(s => s.id === n.st).label) + '</span>' +
+      '</div>' +
+      '<p class="pnote">' + esc(n.note) + '</p>' +
+    '</div>' +
+    '<div class="readout">' +
+      '<div class="down"><span class="n">' + downIds.length + '</span><span class="k">downstream</span></div>' +
+      '<div class="up"><span class="n">' + im.up.size + '</span><span class="k">it stands on</span></div>' +
+    '</div>' +
+    '<div class="sect"><h3><i class="dot c-down"></i>Where a ' + KIND_LABEL[state.kind] + ' lands</h3>' +
+      downHtml + stopHtml + '</div>' +
+    '<div class="sect"><h3><i class="dot c-up"></i>What it stands on</h3>' + upHtml + '</div>' +
+    '<div class="sect"><h3><i class="dot c-side"></i>Moves alongside it</h3>' + sideHtml + '</div>' +
+    '<div class="sect"><h3>Tests that would have to run again</h3>' +
+      regList(TESTS, [...im.reg.t].sort(), "t") + '</div>' +
+    '<div class="sect"><h3>Decisions you would be reopening</h3>' +
+      regList(DECISIONS, [...im.reg.d].sort((a,b) => (+a.slice(1)) - (+b.slice(1))), "d") + '</div>' +
+    '<div class="sect"><h3>Unanswered questions in the path</h3>' +
+      regList(OPEN, [...im.reg.o].sort((a,b) => (+a.slice(3)) - (+b.slice(3))), "o") + '</div>' +
+    '<div class="sect"><h3>Risks in the path</h3>' +
+      regList(RISKS, [...im.reg.r].sort((a,b) => (+a.slice(1)) - (+b.slice(1))), "r") + '</div>' +
+    '<p class="pfoot">This change would reach <b>' + strataTouched + ' of the 6 strata</b> and ' +
+      downIds.length + ' of the ' + (NODES.length - 1) + ' other components on the map. ' +
+      'Nothing here has been built: the thirteen tests named across these documents are specified and none has been run, ' +
+      'so the map shows what a change would reach, not what it would break.</p>';
+
+  document.getElementById("pick").addEventListener("change", e => select(e.target.value));
+}
+
+function select(id, kind){
+  if (id) state.origin = id;
+  if (kind) state.kind = kind;
+  state.impact = computeImpact(state.origin, state.kind);
+  renderPanel();
+  document.getElementById("kindhint").textContent = KIND_HINT[state.kind];
+  document.querySelectorAll(".kinds button").forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.kind === state.kind)));
+}
+
+panel.addEventListener("click", e => {
+  const b = e.target.closest("[data-go]");
+  if (b) select(b.dataset.go);
+});
+document.querySelectorAll(".kinds button").forEach(b =>
+  b.addEventListener("click", () => select(null, b.dataset.kind)));
+
+/* ---------- strata filters ---------- */
+const strataBox = document.getElementById("strata");
+strataBox.innerHTML = STRATA.map(s =>
+  '<button type="button" data-st="' + s.id + '" aria-pressed="true">' +
+  '<i class="bar-i s-' + s.id + '"></i>' + esc(s.label) + '</button>').join("");
+strataBox.addEventListener("click", e => {
+  const b = e.target.closest("[data-st]");
+  if (!b) return;
+  const id = b.dataset.st;
+  if (state.hidden.has(id)) state.hidden.delete(id); else state.hidden.add(id);
+  b.setAttribute("aria-pressed", String(!state.hidden.has(id)));
+});
+
+/* ---------- pointer ---------- */
+let px = 0, py = 0, moved = 0;
+const pointers = new Map();
+let pinchBase = 0;
+
+function pick(cx, cy){
+  let best = null, bd = 1e9;
+  for (const [id, p] of screenPos){
+    const d = Math.hypot(p.x - cx, p.y - cy);
+    if (d < Math.max(p.r + 9, 13) && d < bd){ bd = d; best = id; }
+  }
+  return best;
+}
+cv.addEventListener("pointerdown", e => {
+  cv.setPointerCapture(e.pointerId);
+  pointers.set(e.pointerId, [e.clientX, e.clientY]);
+  if (pointers.size === 2){
+    const [a, b] = [...pointers.values()];
+    pinchBase = Math.hypot(a[0]-b[0], a[1]-b[1]);
+  }
+  dragging = true; moved = 0; px = e.clientX; py = e.clientY;
+  cv.classList.add("dragging");
+});
+cv.addEventListener("pointermove", e => {
+  const r = cv.getBoundingClientRect();
+  if (pointers.has(e.pointerId)) pointers.set(e.pointerId, [e.clientX, e.clientY]);
+  if (dragging && pointers.size === 2){
+    const [a, b] = [...pointers.values()];
+    const d = Math.hypot(a[0]-b[0], a[1]-b[1]);
+    if (pinchBase > 0) cam.tDist = Math.max(260, Math.min(1500, cam.tDist * (pinchBase / d)));
+    pinchBase = d;
+    return;
+  }
+  if (dragging){
+    const dx = e.clientX - px, dy = e.clientY - py;
+    moved += Math.abs(dx) + Math.abs(dy);
+    cam.tAz -= dx * 0.0062;
+    cam.tEl = Math.max(-1.18, Math.min(1.18, cam.tEl + dy * 0.0052));
+    px = e.clientX; py = e.clientY;
+    chip.style.opacity = 0;
+    return;
+  }
+  const cx = e.clientX - r.left, cy = e.clientY - r.top;
+  const id = pick(cx, cy);
+  state.hover = id;
+  if (id){
+    const n = N.get(id);
+    chip.innerHTML = '<b>' + esc(n.label) + '</b><i>' + esc(SECTORS[n.sec].label) + ' · ' + OWN_LABEL[n.own] + '</i>';
+    chip.style.opacity = 1;
+    chip.style.left = Math.min(cx + 14, W - 250) + "px";
+    chip.style.top = Math.max(8, cy - 40) + "px";
+    cv.style.cursor = "pointer";
+  } else {
+    chip.style.opacity = 0;
+    cv.style.cursor = "grab";
+  }
+});
+function endPointer(e){
+  pointers.delete(e.pointerId);
+  if (pointers.size < 2) pinchBase = 0;
+  if (pointers.size === 0){
+    dragging = false;
+    cv.classList.remove("dragging");
+    if (moved < 5){
+      const r = cv.getBoundingClientRect();
+      const id = pick(e.clientX - r.left, e.clientY - r.top);
+      if (id) select(id);
+    }
+  }
+}
+cv.addEventListener("pointerup", endPointer);
+cv.addEventListener("pointercancel", endPointer);
+cv.addEventListener("wheel", e => {
+  e.preventDefault();
+  cam.tDist = Math.max(260, Math.min(1500, cam.tDist * Math.exp(e.deltaY * 0.0011)));
+}, {passive:false});
+cv.addEventListener("keydown", e => {
+  const k = e.key;
+  if (k === "ArrowLeft") cam.tAz -= 0.12;
+  else if (k === "ArrowRight") cam.tAz += 0.12;
+  else if (k === "ArrowUp") cam.tEl = Math.min(1.18, cam.tEl + 0.09);
+  else if (k === "ArrowDown") cam.tEl = Math.max(-1.18, cam.tEl - 0.09);
+  else if (k === "+" || k === "=") cam.tDist = Math.max(260, cam.tDist * 0.88);
+  else if (k === "-") cam.tDist = Math.min(1500, cam.tDist * 1.14);
+  else return;
+  e.preventDefault();
+});
+
+const spinBtn = document.getElementById("spin");
+spinBtn.setAttribute("aria-pressed", String(spinning));
+spinBtn.addEventListener("click", () => {
+  spinning = !spinning;
+  spinBtn.setAttribute("aria-pressed", String(spinning));
+});
+document.getElementById("reset").addEventListener("click", () => {
+  cam.tAz = HOME.az; cam.tEl = HOME.el; cam.tDist = HOME.dist;
+});
+
+select(state.origin, state.kind);
+</script>

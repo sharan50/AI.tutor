@@ -1,0 +1,24 @@
+<h2 id="floor">The accuracy floor</h2>
+
+<p>Four floors. Each is a commitment we are choosing to make, not a measurement of anything that exists.</p>
+
+<div class="tw">
+<table>
+<caption>Accuracy floors at launch. Every status reads the same because nothing has been built.</caption>
+<thead><tr><th class="id">Claim</th><th>Floor</th><th>Measured over</th><th class="id">Test</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td class="id">ACC-1</td><td><b>100%</b> of live items carry a complete validation record by a named validator.</td><td>Census of the live bank, every release.</td><td class="id">T-VAL-01</td><td>Specified, not run</td></tr>
+<tr><td class="id">ACC-2</td><td><b>99.5%</b> of tutor turns make no substantive curricular assertion that is unsupported by a cited live item.</td><td>Weekly sample of turns.</td><td class="id">T-GND-01</td><td>Specified, not run</td></tr>
+<tr><td class="id">ACC-3</td><td><b>99.0%</b> of generated worked steps are mathematically correct.</td><td>All symbolically checkable steps, plus a sample of the rest. <span class="mark unknown">Unknown</span> What proportion of Higher algebra steps a computer algebra system can actually adjudicate is not known, and it sets how much of this floor rests on sampling rather than on a check. Measured at M2.</td><td class="id">T-MTH-01</td><td>Specified, not run</td></tr>
+<tr><td class="id">ACC-5</td><td><b>100%</b> of assembled practice papers meet their structural specification: mark total, topic coverage, command-word mix and difficulty distribution, all within declared tolerance.</td><td>Census of every paper at assembly time.</td><td class="id">T-PAP-01</td><td>Specified, not run</td></tr>
+<tr><td class="id">ACC-4</td><td><b>99.5%</b> of tutor turns stay inside the declared specification scope.</td><td>Weekly sample of turns.</td><td class="id">T-SCP-01</td><td>Specified, not run</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Why the floors are not 100%</h3>
+
+<p>ACC-1 is 100% because it is a census of a process and a missing record is a fact, not an estimate. ACC-2 to ACC-4 are measured by sampling with human adjudication, and a 100% claim over a sample is not a claim anyone can test. A floor that cannot be falsified is worse than a lower floor that can.</p>
+
+<p>The runtime gate is a separate mechanism aiming at zero, described in <a href="06-architecture.html">06</a> and shown to the learner in <a href="01-product.html#blocked">01</a>. <b>The floors describe residual risk after the gate,</b> not the gate's tolerance. Conflating the two would be the easiest way to mislead a reader of this document, including a future version of ourselves.</p>
+

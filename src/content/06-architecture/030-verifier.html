@@ -1,0 +1,26 @@
+<h2 id="verifier">The verifier, which is the product</h2>
+
+<p>Promise P2 in <a href="01-product.html#promise">01</a> is the business. The verifier is the thing that keeps it, so it gets specified rather than described.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Check</th><th>Mechanism</th><th>Failure action</th></tr></thead>
+<tbody>
+<tr><td><b>a. Citation presence</b></td><td>Deterministic parse. Every sentence classified as a substantive curricular assertion must carry a citation to a node in the permitted set.</td><td>Block. This is a format failure and is cheap to detect.</td></tr>
+<tr><td><b>b. Claim support</b></td><td>Entailment check of the assertion against the cited node. A model call, on a pinned cheaper model, with the node and the assertion only.</td><td>Block, and queue for human adjudication. Every automated failure is adjudicated, which is what makes T-GND-01 measurable rather than self-reported.</td></tr>
+<tr><td><b>c. Scope</b></td><td>Classifier against the declared objective set.</td><td>Block. The learner sees the refusal in <a href="01-product.html#blocked">01</a>.</td></tr>
+<tr><td><b>d. Mathematics</b></td><td>Computer algebra system on every symbolically checkable step. Deterministic, local, no model call.</td><td>Block. A CAS disagreement is never overridden by the generator.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p>The verifier runs on a <b>different pinned model</b> from the generator, and check (d) runs on no model at all. A verifier that shares the generator's weights shares its errors, and the correlated-failure mode is exactly the one that produces a confident wrong answer that passes its own check. <b>What it makes harder:</b> two vendor relationships to qualify instead of one, two regression surfaces under D22, and a second cost line per turn.</p>
+<span class="tag decided">Decision D27<span class="src">14 September 2026</span></span>
+</div>
+
+<div class="claim">
+<p><b>The gate-fire rate:</b> the proportion of generated turns the verifier blocks. Not known and not guessable. It sets the cost of P2 twice over, once in wasted generation and once in learner experience, since every blocked turn is a question a free chatbot would have answered fluently. It is measured from the first frozen-battery run at M2 in <a href="11-roadmap.html">11 Roadmap</a>, and it is the first number to look at when that run completes.</p>
+<span class="tag unknown">Unknown<span class="src">and it is the number that decides whether P2 is affordable</span></span>
+</div>
+

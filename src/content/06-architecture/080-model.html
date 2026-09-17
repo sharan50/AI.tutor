@@ -1,0 +1,21 @@
+<h2 id="model">Model choice and the vendor problem</h2>
+
+<p><b>Bought, pinned, abstracted, and qualified before use.</b> No specific vendor is named in this document, for a reason that is not evasion.</p>
+
+<div class="claim">
+<p>Model prices, context limits and capability at the relevant tasks are <b>not in the verified findings</b> and are not stated here from memory. They change frequently enough that a number written today would be wrong before the item bank exists, and a plausible-looking cost per session built on a half-remembered price is exactly the kind of figure this repository is meant not to contain.</p>
+<p><b>What to do instead:</b> the selection procedure below is vendor-neutral and runs at M2, when there is a frozen battery to run it against. That is the point at which prices should be gathered and written into <a href="10-economics.html">10</a>.</p>
+<span class="tag unknown">Unknown<span class="src">and deliberately not filled in</span></span>
+</div>
+
+<h3>Selection procedure</h3>
+
+<ol class="tight">
+<li><b>Gate on contract terms first.</b> D24: zero retention of prompts and outputs, no training on our data. A vendor failing this is disqualified before quality is considered.</li>
+<li>Run the frozen battery T-REG-01 on each candidate and measure ACC-2, ACC-3, ACC-4, the gate-fire rate, and T-STY-01 conformance.</li>
+<li>Measure cost per session on the same battery, which is the only honest way to get the number.</li>
+<li>Pin the winning version. D22: a vendor update is a change that must pass the battery before reaching a learner.</li>
+</ol>
+
+<p>Note the asymmetry the pinning creates, because it is a real cost. We will run behind the frontier, and we pay to qualify every upgrade. <span class="mark verified">Verified</span> The free tools are improving continuously and at no cost to the user, so running behind is a competitive expense as well as an operational one. It is accepted because the alternative is a vendor silently moving ACC-3 in the middle of exam term, which is the failure the entire correctness promise exists to prevent.</p>
+

@@ -1,0 +1,17 @@
+<h2 id="figures">Figures are rendered, not generated</h2>
+
+<div class="claim">
+<p>Diagrams are produced by <b>deterministic rendering from a structured figure specification stored in the item bank</b>, not by an image model. A number line, an axis pair, a labelled triangle and a function plot are all describable as data, and rendering them is a template.</p>
+<span class="tag decided">Decision D28<span class="src">14 September 2026</span></span>
+</div>
+
+<p>Three constraints converge on this and any one of them would be sufficient.</p>
+
+<ul class="tight">
+<li><b>Correctness.</b> A generated image cannot be verified by the verifier. A figure rendered from validated data inherits the validation of the item, so <code>visual_density</code> in <a href="02-style-engine.html">02</a> can be a real style dimension without opening a hole in P2.</li>
+<li><b>Cost.</b> Image generation is the most expensive thing a turn could do. Rendering is effectively free, which is why the <code>visual_density</code> ceiling in <a href="02-style-engine.html#adjust">02</a> is a modest constraint rather than the dominant cost line.</li>
+<li><b>Provenance.</b> <span class="mark verified">Verified</span> The IT Amendment Rules 2026 require prominent labelling and permanent provenance metadata that cannot be stripped for synthetically generated information. A deterministically rendered figure carries its source item identifier in its metadata by construction. See <a href="04-rights-dossier.html#india">04</a>.</li>
+</ul>
+
+<p>What this costs: the figure vocabulary is finite, and a topic needing a figure type nobody has built is blocked on engineering rather than on content. The vocabulary needed for the Algebra strand is small, which is a further reason that strand is the launch scope.</p>
+

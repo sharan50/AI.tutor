@@ -1,0 +1,22 @@
+<h2 id="harder">What each choice makes harder later</h2>
+
+<p>The brief requires this and it is the section a future reader will want most.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Choice</th><th>Forced by</th><th>What it makes harder</th></tr></thead>
+<tbody>
+<tr><td>Deterministic retrieval before generation; the model never searches.</td><td>P2, ACC-2.</td><td>Open-ended questions are structurally hard. A learner asking something adjacent to the objective gets a refusal rather than an answer, and the product cannot grow into a general study assistant without dismantling this.</td></tr>
+<tr><td>Separate verifier model (D27).</td><td>Correlated failure.</td><td>Two vendors, two regression surfaces, a second cost line, and latency added to every turn.</td></tr>
+<tr><td>Figures rendered from specifications (D28).</td><td>Verifiability, cost, provenance.</td><td>A finite figure vocabulary. Subjects needing rich or irregular diagrams, which is most of science, need engineering before they need content. This is a real barrier to the second subject.</td></tr>
+<tr><td>Bounded rolling window (D30).</td><td>Constant cost per turn.</td><td>Lossy recall within a session, and a summariser that can be wrong.</td></tr>
+<tr><td>Pinned models, blocking regression (D22).</td><td>Vendor drift during exam term.</td><td>We run behind the frontier and pay to qualify every upgrade, while competitors get improvements free.</td></tr>
+<tr><td>No fine-tuning, no adapters (D8).</td><td>Revocability, the kill switch.</td><td>Style fidelity is capped at what prompting achieves. If T-STY-02 fails and the diagnosis is fidelity, D8 forecloses the obvious fix and D6 exemplar conditioning is the only route left.</td></tr>
+<tr><td>Zero-retention vendor terms (D24).</td><td>The marketing-site line in <a href="05-safety-privacy-regulatory.html#line">05</a>.</td><td>Narrows the vendor set, possibly to more expensive tiers, and forecloses vendor-side caching optimisations that would have cut cost.</td></tr>
+<tr><td>Papers and grade ranges are computed, never generated (D28's principle, applied; D35 keeps the range ungated).</td><td>Verifiability and cost.</td><td>Item metadata (mark, command word, difficulty) must be right at authoring time, so a metadata error is now a paper defect rather than a cosmetic one. And a structural specification has to be written per board and per paper, which is the work that repeats if a second board is added.</td></tr>
+<tr><td>No persona-dependent code paths (D11, T-ZERO-01).</td><td>Zero-persona operation.</td><td>Every persona feature must degrade gracefully to an archetype, which is a constraint on every future style feature, not a one-time check.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The row to watch is the first one. Deterministic retrieval is what makes the correctness promise enforceable, and it is also the thing that makes the product feel narrow next to a free chatbot that will cheerfully answer anything. That trade is the venture in miniature, it will show up as a retention problem before it shows up anywhere else, and <a href="12-risk-register.html">12</a> treats it accordingly.</p>

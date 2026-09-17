@@ -1,0 +1,30 @@
+<h2 id="provenance">Provenance, recorded per item</h2>
+
+<p>Every item carries a provenance record that is written once and never edited. An item without a complete record cannot be live; that is enforced by T-VAL-01 rather than by policy.</p>
+
+<pre><code>{
+  "item_id":        "IB-MAT-INEQ-004",
+  "objective_id":   "OBJ-MAT-ALG-INEQ-02",
+  "kind":           "explanation",        // explanation | misconception | practice | check
+  "marks":          3,                    // paper assembly: mark tariff
+  "command_word":   "Solve",              // a standard instruction word, not anyone's property;
+                                          // see structure_basis for how it was set
+  "difficulty":     "standard",           // paper assembly: distribution control
+  "written_by":     "writer:0xx",
+  "written_on":     "2026-11-xx",
+  "derived_from":   "DfE:GCSE-Maths-subject-content:A22",   // or "original"
+  "structure_basis":"observed-paper-shape",   // how marks/command_word were set:
+                                              // "observed-paper-shape" | "authored"
+  "board_alignment":"pearson-edexcel",
+  "tier":           "higher",
+  "attestation":    "no awarding-body material consulted",
+  "similarity_check": { "service": null, "score": null, "checked_on": null },
+  "validated_by":   "validator:0xx",
+  "validation_date":null,
+  "validation_result": null,              // pass | pass-with-amendment | fail
+  "revalidate_after": "2027-09-01",
+  "status":         "draft"               // draft | validated | live | withdrawn
+}</code></pre>
+
+<p>Four fields are doing real work. <code>derived_from</code> must be either a DfE content reference or the literal string <code>original</code>; there is no free-text option, because a free-text option is where "adapted from" would eventually appear. <code>structure_basis</code> exists because <code>derived_from</code> could not express the boundary case above, which meant the provenance record, the centrepiece of the counter-notice pack, could not record where a mark tariff or a command word came from. A record that cannot describe its own hardest case is not a record. <code>attestation</code> is per item, not per writer, so it cannot be given once and forgotten. <code>status</code> is the only gate: nothing serves from the bank unless it reads <code>live</code>.</p>
+

@@ -1,0 +1,19 @@
+<h2 id="promise">What is promised, and the test behind each promise</h2>
+
+<p>Four promises. Each one is a claim that can be false, each has a test named against it, and each test is specified in <a href="03-curriculum-and-content.html">03</a> or <a href="02-style-engine.html">02</a>. No test has been run, because nothing has been built.</p>
+
+<div class="tw">
+<table>
+<caption>The four promises and their tests. Status is the same for all of them and will stay that way until M2 in <a href="11-roadmap.html">11 Roadmap</a>.</caption>
+<thead><tr><th>#</th><th>Promise, as a parent would read it</th><th>The claim underneath it</th><th class="id">Test</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td class="id">P1</td><td>Everything it teaches you is checked by someone who examines or has taught the subject at this level.</td><td>Every item in the live bank carries a recorded validation by a named validator who is a current or recent examiner, or a teacher with at least five years at this tier and documented examining experience (<a href="03-curriculum-and-content.html#validation">03</a>). Target: 100%, census not sample.</td><td class="id">T-VAL-01</td><td>Specified, not run</td></tr>
+<tr><td class="id">P2</td><td>It only tells you things it can show you the source for, and says so when it cannot.</td><td>Every substantive curricular assertion in tutor output cites a live item-bank node and is entailed by it. Floor: 99.5% of sampled turns.</td><td class="id">T-GND-01</td><td>Specified, not run</td></tr>
+<tr><td class="id">P3</td><td>The working is right.</td><td>Generated worked steps are mathematically correct. Floor: 99.0% of sampled steps.</td><td class="id">T-MTH-01</td><td>Specified, not run</td></tr>
+<tr><td class="id">P4</td><td>It teaches the way you chose.</td><td>Two presets produce measurably different teaching on the same item, and a blind grader can tell them apart above chance.</td><td class="id">T-STY-01, T-STY-02</td><td>Specified, not run</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>P2 is worded carefully and the wording is a commitment, not a style choice. <b>"It does not make things up" is the claim D21 forbids</b> until groundedness is measured at 99.9% per turn, so it is not the promise made here, however much better it reads. P2 is the promise that carries the business. Its below-floor behaviour is not a statistical tolerance; it is a hard runtime gate, and what the learner sees when the gate fires is shown <a href="#blocked">below</a>.</p>
+

@@ -1,0 +1,16 @@
+<h2 id="derived">Papers and grade ranges: deterministic, no model call</h2>
+
+<p class="lede">Practice papers and the provisional grade range are computed, not generated. Neither involves a model call, and that single property is what lets them inherit the item bank's validation instead of needing a verification story of their own.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Component</th><th>Input</th><th>Method</th><th>Why it is not a model call</th></tr></thead>
+<tbody>
+<tr><td><b>Paper assembler</b></td><td>The paper's structural specification, plus <code>live</code> items with mark, command-word and difficulty metadata.</td><td>Constraint satisfaction over the bank: hit the mark total, the coverage profile, the command-word mix and the difficulty distribution, excluding items the learner has seen recently.</td><td>A generated paper would need every item verified afresh. An assembled paper contains only items that are already validated, so the paper's correctness is a property of the bank. T-PAP-01 checks the assembly, not the content.</td></tr>
+<tr><td><b>Grade range</b></td><td><code>MasteryState</code>: unaided-check results on validated items.</td><td>An arithmetic mapping from performance to a band, with an evidence-sufficiency gate below which nothing is shown.</td><td>Asking a model to estimate a grade would produce a fluent, unfalsifiable number. An arithmetic mapping can be calibrated against real outcomes by T-CAL-01, and can be shown to be wrong.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The consequence worth stating: neither feature adds a cost line in <a href="10-economics.html">10</a>, because neither consumes vendor tokens. They are close to free at the margin, which is unusual for the two features most visible to a paying parent.</p>
+
