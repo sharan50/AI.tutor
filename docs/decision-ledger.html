@@ -25,10 +25,10 @@
 </header>
 
 <div class="layout">
-  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#settled">D1 to D14: settled in the brief, not to be re-opened</a></li><li><a href="#taken">D15 to D33: taken while writing this design</a></li><li><a href="#reversals">D34 to D36: three decisions reversing two earlier positions</a></li><li><a href="#thresholds">D37: thresholds, so the route conditions are not judgement calls</a></li><li><a href="#unresolved">Decisions deliberately not taken</a></li></ol></div></aside>
+  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#settled">D1 to D14: settled in the brief, not to be re-opened</a></li><li><a href="#taken">D15 to D33: taken while writing this design</a></li><li><a href="#reversals">D34 to D36: three decisions reversing two earlier positions</a></li><li><a href="#thresholds">D37: thresholds, so the route conditions are not judgement calls</a></li><li><a href="#repository">D38: how the repository is kept</a></li><li><a href="#unresolved">Decisions deliberately not taken</a></li></ol></div></aside>
   <main class="sheet" id="doc">
 <h1>Decision ledger</h1>
-<p class="standfirst">Thirty-seven decisions: fourteen carried from the brief and settled, twenty taken while writing this design, and three taken on the owner's instruction, two of which reverse earlier positions. Each records what was chosen, what forced it, what was rejected and what that would have cost, and what it makes harder later. This is the document that lets someone reconstruct the reasoning in six months, including the reasoning they disagree with.</p>
+<p class="standfirst">Thirty-eight decisions: fourteen carried from the brief and settled, twenty taken while writing this design, three taken on the owner's instruction, two of which reverse earlier positions, and the remainder on how the repository itself is kept. Each records what was chosen, what forced it, what was rejected and what that would have cost, and what it makes harder later. This is the document that lets someone reconstruct the reasoning in six months, including the reasoning they disagree with.</p>
 <dl class="meta">
 <dt>Document</dt><dd>Decision ledger. Not numbered; it spans all fourteen.</dd>
 <dt>Status</dt><dd>Live. Any new decision is appended here, not recorded only in the document it affects.</dd>
@@ -185,6 +185,15 @@
 <dd><b>Driven by:</b> an audit of <a href="09-route-comparison.html#rec">09</a> observing that conditions written as "a small fraction, not a large one" leave the pre-committed flip to somebody's judgement on the day, which is the exact failure the conditions exist to prevent. <b>Why this threshold:</b> verification is a one-off; if it costs more than the first month earns, every acquisition begins underwater and the entire return depends on a duration the examination calendar caps. <b>Rejected:</b> a percentage-of-lifetime-value rule, which needs three numbers nobody has; this needs one quote and one price. <b>Makes harder:</b> it can fail Route A on a single quote, which is the point, and it will feel harsh if the quote lands just above the line. C1 and C3 are given comparative rules in the same pass so that none of the three depends on a number invented here. <a href="09-route-comparison.html#rec">09</a></dd>
 </dl>
 
+<h2 id="repository">D38: how the repository is kept</h2>
+
+<p>Dated 17 September 2026. A decision about the repository rather than the product, recorded here because it changes what a contributor must do and nothing that a reader receives.</p>
+
+<dl class="defs">
+<dt>D38. Pages may be assembled from fragment directories split at their headings; the dependency map lives in one data file that the build inlines into the served page; and the build checks that every served file is fresh.</dt>
+<dd><b>Driven by:</b> a fresh session has to hold a fragment beside the task it is doing, and the largest documents had grown past what fits, so a fragment over 3,000 words of prose is split at its h2 headings into a directory that concatenates back verbatim. The map's nodes and edges sat inside the page, so "what else changes if this changes" had no command behind it; the map now lives in tools/depmap/graph.json, each node names where the pages state it, and tools/depmap.py answers <i>check</i> and <i>impact</i>. Nothing checked that docs/ matched src/content/; src/build.py --check now does, and tools/verify.py runs it with the link and map checks. <b>Rejected:</b> a separate data file the map fetches at runtime, which the no-network convention forbids; and leaving the map inside the page, where it cannot be queried. <b>Makes harder:</b> two files to keep in step, the graph and the served map, closed by the check; and a page in fragments is opened as several files rather than one. <a href="../map/">map</a></dd>
+</dl>
+
 <h2 id="unresolved">Decisions deliberately not taken</h2>
 
 <p>Recorded here so that their absence is visible rather than looking like an oversight.</p>
@@ -220,7 +229,7 @@
   </div>
   <div class="meta-row">
     <span>AI.tutor design vault, revised September 2026. Nothing here has been built.</span>
-    <span class="stamp">Built 15 September 2026</span>
+    <span class="stamp">Built 17 September 2026</span>
   </div>
 </footer>
 </body>

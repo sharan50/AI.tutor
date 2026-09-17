@@ -1,0 +1,9 @@
+<h2 id="repository">D38: how the repository is kept</h2>
+
+<p>Dated 17 September 2026. A decision about the repository rather than the product, recorded here because it changes what a contributor must do and nothing that a reader receives.</p>
+
+<dl class="defs">
+<dt>D38. Pages may be assembled from fragment directories split at their headings; the dependency map lives in one data file that the build inlines into the served page; and the build checks that every served file is fresh.</dt>
+<dd><b>Driven by:</b> a fresh session has to hold a fragment beside the task it is doing, and the largest documents had grown past what fits, so a fragment over 3,000 words of prose is split at its h2 headings into a directory that concatenates back verbatim. The map's nodes and edges sat inside the page, so "what else changes if this changes" had no command behind it; the map now lives in tools/depmap/graph.json, each node names where the pages state it, and tools/depmap.py answers <i>check</i> and <i>impact</i>. Nothing checked that docs/ matched src/content/; src/build.py --check now does, and tools/verify.py runs it with the link and map checks. <b>Rejected:</b> a separate data file the map fetches at runtime, which the no-network convention forbids; and leaving the map inside the page, where it cannot be queried. <b>Makes harder:</b> two files to keep in step, the graph and the served map, closed by the check; and a page in fragments is opened as several files rather than one. <a href="../map/">map</a></dd>
+</dl>
+

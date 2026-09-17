@@ -587,7 +587,24 @@ def _test_blurb(everything, test_id):
     return m.group(1) if m else ""
 
 
+def section(arg):
+    """For /section: a page's one-line description and the fragment(s) holding <slug>[#anchor]."""
+    slug, _, anchor = arg.partition("#")
+    files = fragment_files(slug)
+    if not files:
+        print(f"src/content/{slug}: no such page")
+        return 1
+    print(next((p[3] for p in PAGES if p[0] == slug), "(not in PAGES)"))
+    for f in files:
+        if not anchor or f'id="{anchor}"' in f.read_text(encoding="utf-8"):
+            print(f.relative_to(ROOT))
+    return 0
+
+
 if __name__ == "__main__":
-    if "--check" in sys.argv[1:]:
+    args = sys.argv[1:]
+    if "--check" in args:
         sys.exit(check())
+    if len(args) == 2 and args[0] == "--section":
+        sys.exit(section(args[1]))
     build()
