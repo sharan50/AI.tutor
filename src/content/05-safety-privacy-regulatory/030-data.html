@@ -1,0 +1,40 @@
+<h2 id="data">The data model for a child user</h2>
+
+<div class="tw">
+<table>
+<caption>What is held about a learner, for how long, and who can see it. Retention periods are decisions taken here, not requirements read off a statute, except where marked.</caption>
+<thead><tr><th>Held</th><th>Why it is necessary</th><th>Retention</th><th>Who can see it</th></tr></thead>
+<tbody>
+<tr><td>Session transcripts: what the learner typed and what the tutor replied.</td><td>The tutor cannot teach without the conversation. Also the evidence base for accuracy adjudication.</td><td><b>12 months rolling</b>, then deleted. One exam cycle plus a margin.</td><td>The learner. CINE staff only under the three conditions below. <b>Not the parent by default</b> (D16).</td></tr>
+<tr><td>Objective-level mastery: which objectives attempted, which passed the unaided check, on which date.</td><td>This is the adaptive model. It is the service.</td><td>Life of the account plus 12 months.</td><td>The learner and the parent.</td></tr>
+<tr><td>Provisional grade range, and the item results it was computed from.</td><td>A promised feature of the service. Derived from nothing but performance on validated items in the enrolled subject.</td><td>Recomputed on each session; history kept 12 months with transcripts.</td><td>The learner and the parent. Not gated on by any system (D35).</td></tr>
+<tr><td>Style preset and any student adjustments.</td><td>D10. Delivers the chosen teaching style.</td><td>Life of the account.</td><td>The learner only. Never shared, never publishable (see <a href="#trigger">the OSA trigger list</a>).</td></tr>
+<tr><td>Account and billing details of the <b>adult</b>.</td><td>Contract and payment.</td><td>As required by tax law. <span class="mark assumed">Assumption</span> six years in the UK; standard position, not re-verified.</td><td>The account holder, finance staff.</td></tr>
+<tr><td>Age verification outcome: boolean, method, provider reference, timestamp.</td><td>Demonstrating age assurance to a regulator.</td><td>Life of the account.</td><td>Compliance staff. <b>No document, image or biometric is ever held.</b></td></tr>
+<tr><td>Safety escalation records.</td><td>Safeguarding, and the record of what we did.</td><td><span class="mark unknown">Unknown</span> Longer than transcripts, and <b>not yet set</b>, because the safeguarding policy that would set it does not exist. It is a named gap below, and until it is written this row is a commitment with no number behind it.</td><td>Named safeguarding role only.</td></tr>
+<tr><td>Operational telemetry: timestamps, error events, device class for rendering.</td><td>Running the service.</td><td>90 days.</td><td>Engineering, aggregated.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Staff access to transcripts</h3>
+
+<p>Transcripts are not browsable by anyone. Access requires one of exactly three conditions, is role-limited, and every access is logged with a reason:</p>
+
+<ol class="tight">
+<li>A safety escalation has fired on that session.</li>
+<li>That turn has been drawn in the T-GND-01 accuracy sample and requires human adjudication.</li>
+<li>The account holder has raised a support request about that session.</li>
+</ol>
+
+<h3>The model vendor</h3>
+
+<div class="claim">
+<p>No model vendor is used unless the contract provides <b>zero retention of prompts and outputs, and no use of our data for training</b>. This is not a preference. The marketing line below says "we do not use it to train anyone's AI model", and that clause is only true if the vendor contract makes it true. A vendor that cannot offer it is disqualified regardless of model quality, and the term is checked at procurement and at every renewal.</p>
+<span class="tag decided">Decision D24<span class="src">14 September 2026, and it is a procurement gate</span></span>
+</div>
+
+<h3>Deletion</h3>
+
+<p>On request: inaccessible in the product immediately, purged from primary stores within <b>7 days</b>, aged out of backups within <b>35 days</b>. The backup figure is stated on the marketing site rather than hidden, because a deletion promise with a silent exception is the kind of thing an ICO audit finds.</p>
+

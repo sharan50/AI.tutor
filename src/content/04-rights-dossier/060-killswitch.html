@@ -1,0 +1,31 @@
+<h2 id="killswitch">The kill switch, with a time to effect</h2>
+
+<p class="lede">Fifteen minutes to disabled, seven days to deleted, thirty-five days to gone from backups. Measured from receipt of a valid notice at a published address, not from when someone reads it.</p>
+
+<div class="tw">
+<table>
+<caption>Kill switch service levels. These are commitments offered in the licence, not observations. None has been tested, because nothing has been built.</caption>
+<thead><tr><th>Time from valid notice</th><th>What has happened</th><th>What makes it achievable</th></tr></thead>
+<tbody>
+<tr><td><b>T + 15 minutes</b></td><td>The preset is disabled for all new sessions.</td><td>A single flag in the persona registry, read per request, with a maximum cache lifetime of 60 seconds. No deployment, no rebuild, no model change.</td></tr>
+<tr><td><b>T + 16 minutes</b></td><td>Hard ceiling for in-flight sessions. Any session still running falls back to the nearest unnamed archetype at its next turn, with an on-screen notice to the student.</td><td>The 60-second cache lifetime bounds this. The archetype fallback exists because of D11.</td></tr>
+<tr><td><b>T + 24 hours</b></td><td>The creator's name and image are gone from the catalogue, the marketing site, app store listing metadata and any CDN caches.</td><td>Purge is scripted and rehearsed, not assembled on the day.</td></tr>
+<tr><td><b>T + 7 days</b></td><td>The parameter object, the rendered style card, every stored session snapshot of that preset, the name and the likeness assets are deleted from primary stores. Transcripts are retained for the learner's benefit but carry a neutral preset identifier with no creator reference.</td><td>The object is the only path by which a card can exist, so deleting it provably removes every card derivable from it.</td></tr>
+<tr><td><b>T + 35 days</b></td><td>Backups have aged out.</td><td>Backup retention cycle. This is the honest caveat and it is stated in the licence rather than omitted.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Why this is a real kill switch and not a promise</h3>
+
+<p><b>Because of D8.</b> No persona LoRAs, no fine-tuned weights, no adapters carrying creator style, ever. Retrieval and prompting only. Weights cannot be cleanly revoked, and a kill switch that requires retraining is not a kill switch; it is a project plan. The fifteen-minute figure is only credible because there is nothing to retrain, and any future proposal to fine-tune on persona data should be read as a proposal to delete this table.</p>
+
+<p><b>Because of D11.</b> The product runs with zero personas. Disabling every preset simultaneously degrades the product; it does not stop it. A kill switch that would take the service down is a switch nobody will pull.</p>
+
+<h3>What changes under D6 and D9</h3>
+
+<ul>
+<li><b>D6, exemplar conditioning:</b> add invalidation of cached prompt fragments by T+15 minutes, and deletion of the licensed corpus and every derived index by T+7 days. The 15-minute disable figure survives; the deletion story becomes materially more complex and is the largest operational cost of D6.</li>
+<li><b>D9, voice:</b> a voice model is deleted on the same seven-day line, and because D8 forbids weights carrying creator style, there is no trained artefact to chase. If that ever ceases to be true, this entire section stops being accurate.</li>
+</ul>
+

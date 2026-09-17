@@ -1,0 +1,111 @@
+<h2 id="basis">Lawful basis, and what is deliberately not inferred</h2>
+
+<p><b>Adaptive tutoring is profiling.</b> Automated processing to evaluate a person's performance in education is profiling on any reading, and there is no version of this product that avoids it. <span class="mark verified">Verified</span> The UK has no categorical ban; profiling is permissible with a lawful basis and Children's code compliant design. So the work is to have a basis we can defend and a design that justifies it.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Processing</th><th>Proposed basis</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td>Core tutoring, including the adaptive model.</td><td>Article 6(1)(b), contract.</td><td>The adaptivity <b>is</b> the service the parent bought, not an add-on to it. The awkwardness is that the contract is with the parent while the data subject is the child; see the counsel item below.</td></tr>
+<tr><td>Safety classification and escalation.</td><td>Article 6(1)(f), legitimate interests, with a documented assessment weighted to the child's interests.</td><td>Also arguably vital interests in an acute case.</td></tr>
+<tr><td>Accuracy adjudication on sampled turns.</td><td>Article 6(1)(f), legitimate interests.</td><td>Minimised: sampled, not bulk; adjudicators see the turn, not the learner.</td></tr>
+<tr><td>Product improvement.</td><td>Article 6(1)(f), on <b>aggregated and de-identified</b> data only.</td><td>Never on identifiable transcripts.</td></tr>
+<tr><td>Anything optional, such as notifications.</td><td>Consent, separately and revocably.</td><td>Off by default, per the Children's code default settings standard.</td></tr>
+<tr><td>Special category data.</td><td><b>None processed.</b></td><td>And the system is designed so that none can be inferred as a by-product; see below.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p>Whether Article 6(1)(b) is the correct basis for processing a child's data under a contract held by their parent, or whether legitimate interests with a documented assessment is the sounder position; and how that interacts with the UK GDPR Article 8 age threshold for information society services offered directly to a child. <b>Unblocks:</b> the privacy notice, the DPIA, and the consent architecture. <b>Cost of getting it wrong:</b> the second limb of the Reddit finding, which was profiling children without a lawful basis.</p>
+<span class="tag open">For counsel<span class="src">open item OI-10</span></span>
+</div>
+
+<h3>What is deliberately not inferred</h3>
+
+<p>The Children's code expects profiling to be off unless justified. Our justification covers academic performance in the enrolled subject and nothing else. The following are not inferred, not stored, and the system is designed so that they cannot be produced as a by-product:</p>
+
+<ul class="tight">
+<li>Special educational needs or disability status.</li>
+<li>Health, mental health, mood or affective state.</li>
+<li>Household income or socioeconomic status.</li>
+<li>Ethnicity, religion, nationality, or sexual orientation.</li>
+<li>Any characteristic of the learner beyond performance on validated items in the enrolled subject. The provisional grade range described below is inside that boundary and is derived from nothing else.</li>
+<li>Any behavioural profile used for marketing, pricing, or engagement optimisation.</li>
+</ul>
+
+<div class="claim">
+<p>Nothing in the product optimises for time on app, session count, streaks, or return frequency <b>as an objective</b>. Return rate is measured (D14 requires it) and is never optimised against. No notification is sent to bring a learner back. No streak, no badge, no loss-aversion mechanic.</p>
+<p>This is the Children's code nudge-techniques standard taken seriously, and it costs something real: every consumer subscription growth playbook runs on exactly the mechanics excluded here, and retention will be worse for it. It is written as a decision rather than a value so that the first growth hire cannot treat it as an oversight. <b>What it makes harder:</b> Route A retention, which is already the weakest number in <a href="10-economics.html">10</a>.</p>
+<span class="tag decided">Decision D25<span class="src">14 September 2026: no engagement objective anywhere in the system</span></span>
+</div>
+
+<h3 id="graderange">Provisional grade ranges, and why Article 22 is not engaged</h3>
+
+<p>The product shows a <b>provisional grade range</b>. That is a profiling output about a child and it has to be argued for rather than assumed, so the argument is set out here in full.</p>
+
+<p><b>What it is.</b> A band, derived solely from performance on unaided checks against validated items in the enrolled subject, shown alongside the evidence it rests on: how many items, over what period, covering what proportion of the specification.</p>
+
+<p><b>What it is not.</b> It is not a forecast of the examination result. At launch there is no calibration data, so what the product states is a <i>current performance band on our own validated items</i>, and it says so in those words. It becomes a forecast only once T-CAL-01 has coverage data, and not before. The distinction is not pedantry; it is the difference between a measurement we can support and a prediction we cannot.</p>
+
+<p><b>Why Article 22 is not engaged.</b> Article 22 bites on a decision, based solely on automated processing, which produces legal effects concerning the data subject or similarly significantly affects them. The design does not reach the first element, there being no decision; and even if it did, it would not reach the last, there being no significant effect. The middle point below is not an element of the test but the design constraint that keeps the first one true.</p>
+
+<ol>
+<li><b>There is no decision.</b> The range is information given to the learner and their parent. Nothing is decided about the learner on the strength of it.</li>
+<li><b>Nothing is gated on it.</b> See the decision below. No feature, price, tier, route or restriction depends on the range.</li>
+<li><b>No significant effect follows.</b> It does not touch the learner's schooling, their entry tier, or anything a school or an awarding body does.</li>
+</ol>
+
+<div class="claim">
+<p><b>No feature, content path, price, tier or restriction may be gated on the provisional grade range.</b> It is an output to the learner and their parent and never an input to anything the product does.</p>
+<p>This is the constraint that keeps Article 22 out, and it is written as a decision because the obvious next product idea, routing a struggling learner down a different path automatically, would flip the analysis without anybody noticing that it had. Adaptive sequencing continues to run on objective-level mastery, which is a different and much narrower signal: it decides which objective comes next, it has never seen the band, and it would behave identically if the band were deleted.</p>
+
+<p><b>A policy is not enough, and this vault says so elsewhere.</b> D11 is proved by T-ZERO-01 rather than asserted; provenance is "a field and not a policy". The same standard applies here.</p>
+
+<p><b>T-GATE-01:</b> a blocking release check asserting that no component outside the learner-facing and parent-facing reporting surface reads <code>GradeRange</code>. The band is write-only to everything else. A build in which the scheduler, the composer, the pricing path or any experiment can read it does not ship. <b>Status: specified, not run.</b></p>
+<span class="tag decided">Decision D35<span class="src">14 September 2026</span></span>
+</div>
+
+<div class="claim">
+<p>If the range is ever put in front of a teacher in a form that informs a <b>Foundation or Higher tier entry decision</b>, the analysis above changes and Article 22 becomes live, because tier entry caps the grade a child can be awarded and is about as close to a legal effect on a fifteen-year-old as a school decision gets.</p>
+<p>That is a Route B feature request waiting to happen, and it is therefore listed as a change-control trigger alongside the Online Safety Act triggers rather than left to be remembered. Before any teacher-facing view of the range ships, the Article 22 assessment is re-run and counsel is asked.</p>
+
+<p><b>The teacher is not the only route, and probably not the likeliest one.</b> The parent has the band from day one, and a parent who takes it into a tier-entry conversation with a school has put our output into that decision without any feature of ours changing. We cannot design that away. What we can do, and what the range's framing above is for, is make it hard to mistake the band for a forecast in exactly that conversation. OI-11 is therefore written to cover the output reaching a tier decision by <i>any</i> route, not merely a teacher-facing view.</p>
+<span class="tag open">Trigger<span class="src">Route B, teacher-facing views</span></span>
+</div>
+
+<h4>Article 22 is not the only question, and it is not the hardest one</h4>
+
+<p>Article 22 asks whether a <i>decision</i> was taken. <b>Article 5(1)(d) asks whether the data is accurate</b>, and it applies to inferred personal data as much as to data a person gave us. A grade band is personal data we generated, we know it is uncalibrated, and we show it to the data subject and their parent. "There is no decision" is no answer at all to that.</p>
+
+<p>Four things respond to it, and the fourth is the only strong one:</p>
+
+<ol class="tight">
+<li>It is described as what it is: a current performance band on our own validated items, not a forecast. Accuracy is judged against what the data purports to represent.</li>
+<li>It is a range, and it is recomputed every session rather than standing as a stored verdict.</li>
+<li>Article 16 rectification is available: the learner or parent can challenge the band, and a challenge is answered by showing the item results behind it.</li>
+<li><b>It is not shown at all below the evidence threshold.</b> Withholding an estimate we cannot support is the only mitigation here that is about accuracy rather than about presentation, which is why the threshold is set conservatively high while <span class="mark unknown">Unknown</span>.</li>
+</ol>
+
+<h4>Detrimental use, which is the Children's code question rather than the Article 22 one</h4>
+
+<p>A grade range that discourages a child is a foreseeable harm, and the code's detrimental-use standard is the one that actually bites here. Five safeguards, each of which costs something:</p>
+
+<ul>
+<li><b>Always a range, never a point.</b> A point estimate invites reliance it cannot support.</li>
+<li><b>Never presented as a ceiling.</b> The range is always shown with the objectives that would move it, so it reads as a position rather than a verdict.</li>
+<li><b>Suppressed below a minimum evidence threshold.</b> No range is shown off a handful of items. <span class="mark unknown">Unknown</span> The threshold, which needs the calibration data from T-CAL-01 to set properly; until then it is set conservatively high and that is stated in the product.</li>
+<li><b>Never comparative.</b> The learner is never shown their position against other learners.</li>
+<li><b>The learner can hide it from their own view,</b> and is told plainly that the parent's report still shows it. Hiding a number from a child while showing it to their parent without saying so would be worse than showing it.</li>
+</ul>
+
+<div class="claim">
+<p>A grade range is a statistical claim, so it gets a test like any other claim in this vault. <b>T-CAL-01:</b> of learners shown a range, what proportion of actual examination outcomes fall inside it.</p>
+
+<p><b>Pass condition:</b> the band carries a declared nominal coverage, the declaration is made <b>before</b> the cohort sits, and the test passes when observed coverage is at or above that figure. Declaring the target afterwards would let any result be called a pass, which is the standard failure of a calibration claim. The nominal figure itself is <span class="mark unknown">Unknown</span> and is not invented here; what is fixed now is that it is chosen in advance and published with the band.</p>
+
+<p>Until it passes, the product does not use the word prediction anywhere, and the band is labelled as a current performance measure.</p>
+<p><b>Status: specified, not run, and it cannot be run until a cohort has sat an examination.</b> That is roughly a year after launch, which means the honest position for the whole of the first year is that the range is uncalibrated and labelled as such.</p>
+<span class="tag unknown">T-CAL-01<span class="src">uncalibrated until a cohort sits an examination</span></span>
+</div>
+

@@ -2,7 +2,17 @@
 """Assemble /docs HTML pages from content fragments in /src/content.
 
 No dependencies, no build tooling. Run `python3 src/build.py` from the repo
-root after editing any fragment.
+root after editing any fragment. `python3 src/build.py --check` writes nothing
+and exits non-zero, printing `file:line message`, when any served file differs
+from what a build would write.
+
+A page's source is either src/content/<slug>.html or a directory
+src/content/<slug>/ whose *.html fragments are concatenated verbatim in
+filename order (000-head.html, one NNN-<h2 id>.html per section, 999-foot.html).
+
+The "Built" stamp in the footer is kept when a page is otherwise unchanged, so
+a rebuild on a later day leaves untouched pages byte-identical and the stamp
+records when the page last changed.
 """
 from pathlib import Path
 import datetime
@@ -10,10 +20,16 @@ import shutil
 import re
 import hashlib
 import base64
+import json
+import sys
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "src" / "content"
 DOCS = ROOT / "docs"
+EVIDENCE = ROOT / "evidence"
+MAP_TEMPLATE = ROOT / "src" / "viz" / "dependency-map.html"
+GRAPH = ROOT / "tools" / "depmap" / "graph.json"
+MAP_OUT = ROOT / "viz" / "dependency-map.html"
 
 REVISED = "September 2026"
 
@@ -109,6 +125,37 @@ SHELL = """<!doctype html>
 """
 
 
+# ------------------------------------------------------------------ sources
+
+def source_path(slug):
+    """A page's source: src/content/<slug>.html, or the directory src/content/<slug>/."""
+    single = CONTENT / f"{slug}.html"
+    if single.exists():
+        return single
+    folder = CONTENT / slug
+    if folder.is_dir():
+        return folder
+    return None
+
+
+def fragment_files(slug):
+    """The files a page is assembled from, in the order they are concatenated."""
+    src = source_path(slug)
+    if src is None:
+        return []
+    if src.is_dir():
+        return sorted(p for p in src.iterdir() if p.suffix == ".html")
+    return [src]
+
+
+def read_source(slug):
+    """A page's source text: the fragments concatenated verbatim, in filename order."""
+    files = fragment_files(slug)
+    if not files:
+        return None
+    return "".join(p.read_text(encoding="utf-8") for p in files)
+
+
 def outline_for(fragment):
     """Section outline for the left rail, built from the fragment's own h2s."""
     heads = re.findall(r'<h2 id="([^"]+)"[^>]*>(.*?)</h2>', fragment, re.S)
@@ -135,16 +182,18 @@ def switcher_for(current_slug):
     return "".join(out)
 
 
+# ------------------------------------------------------------------ render
 
-def build():
+def render():
+    """Every served file the build owns, as {path: text}. Writes nothing."""
     built = datetime.date.today().strftime("%d %B %Y")
-    DOCS.mkdir(exist_ok=True)
+    outputs = {}
     for i, (slug, number, title, desc, _status) in enumerate(PAGES):
-        frag = CONTENT / f"{slug}.html"
-        if not frag.exists():
+        body = read_source(slug)
+        if body is None:
             print(f"  missing fragment: {slug}")
             continue
-        body = frag.read_text(encoding="utf-8").strip()
+        body = body.strip()
         prev_i, next_i = i - 1, i + 1
         prev_href = "index.html" if prev_i < 0 else PAGES[prev_i][0] + ".html"
         prev_label = "Contents" if prev_i < 0 else PAGES[prev_i][2]
@@ -159,10 +208,8 @@ def build():
             prev_href=prev_href, prev_label=prev_label,
             next_href=next_href, next_label=next_label,
         )
-        (DOCS / f"{slug}.html").write_text(html, encoding="utf-8")
-        print(f"  built {slug}.html")
+        outputs[DOCS / f"{slug}.html"] = html
 
-    index_frag = CONTENT / "index.html"
     rows = []
     for slug, number, title, desc, status in PAGES:
         label = {"done": "drafted", "partial": "outline", "todo": "not written"}[status]
@@ -171,7 +218,7 @@ def build():
             f'<span class="t"><a href="{slug}.html">{title}</a><span>{desc}</span></span>'
             f'<span class="s {status}">{label}</span></li>'
         )
-    index_body = index_frag.read_text(encoding="utf-8").replace("<!--CONTENTS-->", "\n".join(rows)).strip()
+    index_body = read_source("index").replace("<!--CONTENTS-->", "\n".join(rows)).strip()
     index_html = SHELL.format(
         title="Contents", desc="AI.tutor venture design vault", number="&middot;", numlabel="",
         revised=REVISED, css="style.css", home="index.html", status_href="status.html",
@@ -181,16 +228,15 @@ def build():
         prev_href="status.html", prev_label="Status",
         next_href="00-thesis.html", next_label="Thesis",
     )
-    (DOCS / "index.html").write_text(index_html, encoding="utf-8")
-    print("  built index.html")
+    outputs[DOCS / "index.html"] = index_html
 
-    build_status(built)
+    outputs[DOCS / "status.html"] = build_status(built)
 
     # The evidence register lives in /evidence, a sibling of /docs, so it needs
     # the same shell with relative paths rewritten one level across.
-    src_frag = CONTENT / "sources.html"
-    if src_frag.exists():
-        body = src_frag.read_text(encoding="utf-8").strip()
+    body = read_source("sources")
+    if body is not None:
+        body = body.strip()
         html = SHELL.format(
             title="Evidence register", number="&middot;", numlabel="",
             desc="Every external claim, with its source and the date it was checked.",
@@ -202,13 +248,89 @@ def build():
             prev_href="../docs/decision-ledger.html", prev_label="Decision ledger",
             next_href="../docs/index.html", next_label="Contents",
         )
-        out = ROOT / "evidence"
-        out.mkdir(exist_ok=True)
-        (out / "sources.html").write_text(html, encoding="utf-8")
-        print("  built ../evidence/sources.html")
+        outputs[EVIDENCE / "sources.html"] = html
 
+    page = render_map()
+    if page is not None:
+        outputs[MAP_OUT] = page
+    return outputs
+
+
+# ------------------------------------------------------------------ the map
+# tools/depmap/graph.json is the single source for the dependency map. The
+# served page inlines it at build time, so it still fetches nothing.
+
+def _json_rows(items):
+    return "[\n" + ",\n".join(json.dumps(i, ensure_ascii=False) for i in items) + "\n]"
+
+
+def render_map():
+    if not MAP_TEMPLATE.exists() or not GRAPH.exists():
+        return None
+    graph = json.loads(GRAPH.read_text(encoding="utf-8"))
+    template = MAP_TEMPLATE.read_text(encoding="utf-8")
+    for marker in ("/*@@NODES@@*/", "/*@@EDGES@@*/"):
+        if template.count(marker) != 1:
+            raise SystemExit(f"{MAP_TEMPLATE.relative_to(ROOT)}: expected exactly one {marker}")
+    return (template.replace("/*@@NODES@@*/", _json_rows(graph["nodes"]))
+                    .replace("/*@@EDGES@@*/", _json_rows(graph["edges"])))
+
+
+# ------------------------------------------------------------------ write / check
+
+STAMP = re.compile(r"Built \d{1,2} [A-Z][a-z]+ \d{4}")
+
+
+def _unstamped(text):
+    return STAMP.sub("Built (stamp)", text)
+
+
+def write_outputs(outputs):
+    for path, text in outputs.items():
+        rel = path.relative_to(ROOT)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if path.exists():
+            old = path.read_text(encoding="utf-8")
+            if old == text or _unstamped(old) == _unstamped(text):
+                print(f"  unchanged {rel}")
+                continue
+        path.write_text(text, encoding="utf-8")
+        print(f"  built {rel}")
+
+
+def check_outputs(outputs):
+    """Every served file that differs from what a build would write, as file:line."""
+    stale = 0
+    for path, text in outputs.items():
+        rel = path.relative_to(ROOT)
+        if not path.exists():
+            print(f"{rel}:1 missing; run python3 src/build.py")
+            stale += 1
+            continue
+        old = _unstamped(path.read_text(encoding="utf-8")).split("\n")
+        new = _unstamped(text).split("\n")
+        if old == new:
+            continue
+        line = next((n for n, (a, b) in enumerate(zip(old, new), 1) if a != b),
+                    min(len(old), len(new)) + 1)
+        print(f"{rel}:{line} stale; differs from a fresh build (run python3 src/build.py)")
+        stale += 1
+    return stale
+
+
+def build():
+    DOCS.mkdir(exist_ok=True)
+    write_outputs(render())
     assemble_publish_dir()
 
+
+def check():
+    stale = check_outputs(render())
+    if stale:
+        print(f"{stale} served file(s) differ from a fresh build")
+        return 1
+    print("build is fresh")
+    return 0
 
 
 # Netlify publishes PUBLISH_DIR, not the repository root. Anything absent from
@@ -226,7 +348,7 @@ PUBLISHED = ["docs", "evidence", "contracts"]
 # and there is no way to write "everything except this page". Separate prefixes
 # mean the strict policy that covers the documents is never loosened to
 # accommodate the map.
-MAP_SRC = ROOT / "viz" / "dependency-map.html"
+MAP_SRC = MAP_OUT
 
 STRICT_CSP = ("default-src 'none'; script-src 'none'; style-src 'self'; "
               "img-src 'self' data:; font-src 'self'; base-uri 'none'; "
@@ -330,18 +452,16 @@ def _plain(html_str, limit=None):
     if cut > limit * 0.45:
         return window[:cut + 1]
     cut = window.rfind(" ")
-    return window[:cut].rstrip(" ,;:") + "\u2026"
+    return window[:cut].rstrip(" ,;:") + "…"
 
 
 def build_status(built):
-    read = lambda n: (CONTENT / n).read_text(encoding="utf-8")
-    openitems = read("14-open-items.html")
-    ledger = read("decision-ledger.html")
-    curric = read("03-curriculum-and-content.html")
-    routes = read("09-route-comparison.html")
-    risks_f = read("12-risk-register.html")
-    everything = "\n".join((CONTENT / f"{p[0]}.html").read_text(encoding="utf-8")
-                           for p in PAGES if (CONTENT / f"{p[0]}.html").exists())
+    openitems = read_source("14-open-items")
+    ledger = read_source("decision-ledger")
+    curric = read_source("03-curriculum-and-content")
+    routes = read_source("09-route-comparison")
+    risks_f = read_source("12-risk-register")
+    everything = "\n".join(read_source(p[0]) for p in PAGES if read_source(p[0]) is not None)
 
     oi = _rows(openitems, "OI")
     oa = _rows(openitems, "OA")
@@ -448,7 +568,7 @@ engineering priority runs close to the reverse of it.</p>
 <tbody>{risk_rows}</tbody></table></div>
 """
 
-    html = SHELL.format(
+    return SHELL.format(
         title="Status", desc="Everything open, unproven or waiting, on one page.",
         number="&middot;", numlabel="", revised=REVISED, css="style.css", home="index.html",
         status_href="status.html", evidence_href="../evidence/sources.html",
@@ -456,8 +576,6 @@ engineering priority runs close to the reverse of it.</p>
         prev_href="index.html", prev_label="Contents",
         next_href="00-thesis.html", next_label="Thesis",
     )
-    (DOCS / "status.html").write_text(html, encoding="utf-8")
-    print("  built status.html")
 
 
 def _test_blurb(everything, test_id):
@@ -470,5 +588,6 @@ def _test_blurb(everything, test_id):
 
 
 if __name__ == "__main__":
+    if "--check" in sys.argv[1:]:
+        sys.exit(check())
     build()
-
