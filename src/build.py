@@ -984,11 +984,12 @@ def render_role(role, built, cfg, blocks, entries, owners, graph):
                   key=lambda k: (order[blocks[k]["slug"]],
                                  [hid for hid, _t, _h in page_sections(blocks[k]["slug"])].index(blocks[k]["section"]),
                                  k))
-    # A block is transcluded when it is short and carries no Verified marker; a
-    # generated page may carry none. Anything else is linked and read in place.
+    # A block is transcluded when it is short and carries no Verified marker, in
+    # either its margin form (mark) or its claim-box form (tag); a generated page
+    # may carry none. Anything else is linked and read in place.
     def in_place(k):
         n = word_count(blocks[k]["html"])
-        if 'class="mark verified"' in blocks[k]["html"]:
+        if re.search(r'class="(?:mark|tag) verified"', blocks[k]["html"]):
             return f"carries a Verified marker, {n:,} words"
         return f"{n:,}-word block" if n > ROLE_BLOCK_WORDS else None
     shown = [transclude(k, to, blocks) for k in keys if in_place(k) is None]

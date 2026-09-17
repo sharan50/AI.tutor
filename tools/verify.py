@@ -103,8 +103,9 @@ def check_views():
         for m in re.finditer(r'data-key-missing="([^"]+)"', text):
             problems.append(f"{rel}:{text[:m.start()].count(chr(10)) + 1} key block {m.group(1)} is missing")
         main = re.search(r'<main class="sheet" id="doc">(.*?)</main>', text, re.S)
-        if main and 'class="mark verified"' in main.group(1):
-            line = text[:text.find('class="mark verified"', main.start())].count("\n") + 1
+        marker = re.search(r'class="(?:mark|tag) verified"', main.group(1)) if main else None
+        if marker:
+            line = text[:main.start() + marker.start()].count("\n") + 1
             problems.append(f"{rel}:{line} a Verified marker on a generated page")
     front = build.DOCS / "index.html"
     if front.exists():

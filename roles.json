@@ -59,7 +59,7 @@
   "summary": {
     "decisions": ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "D13", "D14"],
     "route": "09-route-comparison.rec.1",
-    "keys": ["04-rights-dossier.killswitch.1", "03-curriculum-and-content.uncomfortable.1", "10-economics.dominant.1", "07-route-a-direct-to-parents.cliff.2", "08-route-b-through-schools.shrinking.1"],
+    "keys": ["04-rights-dossier.killswitch.1", "03-curriculum-and-content.uncomfortable.1", "10-economics.dominant.1", "03-curriculum-and-content.scope.1", "01-product.session.1"],
     "unknowns": ["OI-1", "OI-4", "OI-5", "OI-7", "OA-10", "OA-15"]
   }
 }

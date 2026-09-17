@@ -535,7 +535,7 @@ $ python3 tools/verify.py
 1. build freshness
    build is fresh
 2. links and anchors
-   1964 links in 26 files, 0 broken
+   1977 links in 26 files, 0 broken
 3. dependency map
    depmap: 73 nodes, 129 edges, every locus resolves, served page agrees
 4. Verified markers link a register entry: not mechanical, not run (see the docstring)
