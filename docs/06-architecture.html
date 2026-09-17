@@ -14,13 +14,13 @@
   <a class="brand" href="index.html"><b>AI.tutor</b> <span>design vault</span></a>
   <details class="switcher">
     <summary><span class="sw-no">06</span> Architecture</summary>
-    <div class="sw-panel"><a href="00-thesis.html"><span class="sw-no">00</span>Thesis</a><a href="01-product.html"><span class="sw-no">01</span>Product</a><a href="02-style-engine.html"><span class="sw-no">02</span>Style engine</a><a href="03-curriculum-and-content.html"><span class="sw-no">03</span>Curriculum and content</a><a href="04-rights-dossier.html"><span class="sw-no">04</span>Rights dossier</a><a href="05-safety-privacy-regulatory.html"><span class="sw-no">05</span>Safety, privacy and regulatory</a><a href="06-architecture.html" class="here"><span class="sw-no">06</span>Architecture</a><a href="07-route-a-direct-to-parents.html"><span class="sw-no">07</span>Route A: direct to parents</a><a href="08-route-b-through-schools.html"><span class="sw-no">08</span>Route B: through schools</a><a href="09-route-comparison.html"><span class="sw-no">09</span>Route comparison</a><a href="10-economics.html"><span class="sw-no">10</span>Economics</a><a href="11-roadmap.html"><span class="sw-no">11</span>Roadmap</a><a href="12-risk-register.html"><span class="sw-no">12</span>Risk register</a><a href="13-primer-gateway.html"><span class="sw-no">13</span>Primer gateway</a><a href="14-open-items.html"><span class="sw-no">14</span>Open items</a><a href="decision-ledger.html"><span class="sw-no"></span>Decision ledger</a><a href="status.html"><span class="sw-no"></span>Status</a><a href="../map/"><span class="sw-no"></span>Impact surface</a><a href="../evidence/sources.html"><span class="sw-no"></span>Evidence register</a></div>
+    <div class="sw-panel"><p class="rail-h">Doors</p><a href="index.html"><span class="sw-no"></span>Summary</a><a href="roles/ceo.html"><span class="sw-no"></span>Chief executive</a><a href="roles/cto.html"><span class="sw-no"></span>Chief technology officer</a><a href="roles/coo.html"><span class="sw-no"></span>Chief operating officer</a><a href="roles/cfo.html"><span class="sw-no"></span>Chief financial officer</a><a href="roles/counsel.html"><span class="sw-no"></span>Counsel</a><a href="contents.html"><span class="sw-no"></span>Contents</a><p class="rail-h">Documents</p><a href="00-thesis.html"><span class="sw-no">00</span>Thesis</a><a href="01-product.html"><span class="sw-no">01</span>Product</a><a href="02-style-engine.html"><span class="sw-no">02</span>Style engine</a><a href="03-curriculum-and-content.html"><span class="sw-no">03</span>Curriculum and content</a><a href="04-rights-dossier.html"><span class="sw-no">04</span>Rights dossier</a><a href="05-safety-privacy-regulatory.html"><span class="sw-no">05</span>Safety, privacy and regulatory</a><a href="06-architecture.html" class="here"><span class="sw-no">06</span>Architecture</a><a href="07-route-a-direct-to-parents.html"><span class="sw-no">07</span>Route A: direct to parents</a><a href="08-route-b-through-schools.html"><span class="sw-no">08</span>Route B: through schools</a><a href="09-route-comparison.html"><span class="sw-no">09</span>Route comparison</a><a href="10-economics.html"><span class="sw-no">10</span>Economics</a><a href="11-roadmap.html"><span class="sw-no">11</span>Roadmap</a><a href="12-risk-register.html"><span class="sw-no">12</span>Risk register</a><a href="13-primer-gateway.html"><span class="sw-no">13</span>Primer gateway</a><a href="14-open-items.html"><span class="sw-no">14</span>Open items</a><a href="decision-ledger.html"><span class="sw-no"></span>Decision ledger</a><a href="status.html"><span class="sw-no"></span>Status</a><a href="../map/"><span class="sw-no"></span>Impact surface</a><a href="../evidence/sources.html"><span class="sw-no"></span>Evidence register</a></div>
   </details>
   <nav class="toplinks">
     <a href="status.html">Status</a>
     <a href="../map/">Map</a>
     <a href="../evidence/sources.html">Evidence</a>
-    <a href="index.html">Contents</a>
+    <a href="contents.html">Contents</a>
   </nav>
 </header>
 
@@ -55,7 +55,7 @@
 
 <h2 id="planes">Five planes, and which ones we own</h2>
 
-<div class="tw">
+<div class="tw" data-key="06-architecture.planes.1">
 <table>
 <thead><tr><th>Plane</th><th>Contents</th><th>Build or buy</th><th>Why</th></tr></thead>
 <tbody>
@@ -70,7 +70,7 @@
 
 <h2 id="turn">The turn pipeline</h2>
 
-<p class="lede">The load-bearing property: <b>the model never retrieves.</b> The composer selects the permitted sources deterministically from the objective before generation begins. The model is given those sources and cannot reach outside them, so the set to check against is known in advance rather than reconstructed from whatever the model decided to look at.</p>
+<p class="lede" data-key="06-architecture.turn.1">The load-bearing property: <b>the model never retrieves.</b> The composer selects the permitted sources deterministically from the objective before generation begins. The model is given those sources and cannot reach outside them, so the set to check against is known in advance rather than reconstructed from whatever the model decided to look at.</p>
 
 <pre><code>session state
       |
@@ -109,7 +109,7 @@
 
 <p>Promise P2 in <a href="01-product.html#promise">01</a> is the business. The verifier is the thing that keeps it, so it gets specified rather than described.</p>
 
-<div class="tw">
+<div class="tw" data-key="06-architecture.verifier.1">
 <table>
 <thead><tr><th>Check</th><th>Mechanism</th><th>Failure action</th></tr></thead>
 <tbody>
@@ -121,7 +121,7 @@
 </table>
 </div>
 
-<div class="claim">
+<div class="claim" data-key="06-architecture.verifier.2">
 <p>The verifier runs on a <b>different pinned model</b> from the generator, and check (d) runs on no model at all. A verifier that shares the generator's weights shares its errors, and the correlated-failure mode is exactly the one that produces a confident wrong answer that passes its own check. <b>What it makes harder:</b> two vendor relationships to qualify instead of one, two regression surfaces under D22, and a second cost line per turn.</p>
 <span class="tag decided">Decision D27<span class="src">14 September 2026</span></span>
 </div>
@@ -133,7 +133,7 @@
 
 <h2 id="figures">Figures are rendered, not generated</h2>
 
-<div class="claim">
+<div class="claim" data-key="06-architecture.figures.1">
 <p>Diagrams are produced by <b>deterministic rendering from a structured figure specification stored in the item bank</b>, not by an image model. A number line, an axis pair, a labelled triangle and a function plot are all describable as data, and rendering them is a template.</p>
 <span class="tag decided">Decision D28<span class="src">14 September 2026</span></span>
 </div>
@@ -150,7 +150,7 @@
 
 <h2 id="derived">Papers and grade ranges: deterministic, no model call</h2>
 
-<p class="lede">Practice papers and the provisional grade range are computed, not generated. Neither involves a model call, and that single property is what lets them inherit the item bank's validation instead of needing a verification story of their own.</p>
+<p class="lede" data-key="06-architecture.derived.1">Practice papers and the provisional grade range are computed, not generated. Neither involves a model call, and that single property is what lets them inherit the item bank's validation instead of needing a verification story of their own.</p>
 
 <div class="tw">
 <table>
@@ -162,7 +162,7 @@
 </table>
 </div>
 
-<p>The consequence worth stating: neither feature adds a cost line in <a href="10-economics.html">10</a>, because neither consumes vendor tokens. They are close to free at the margin, which is unusual for the two features most visible to a paying parent.</p>
+<p data-key="06-architecture.derived.2">The consequence worth stating: neither feature adds a cost line in <a href="10-economics.html">10</a>, because neither consumes vendor tokens. They are close to free at the margin, which is unusual for the two features most visible to a paying parent.</p>
 
 <h2 id="data">Data model</h2>
 
@@ -192,7 +192,7 @@ Account          id, verification{bool, method, provider_ref, timestamp}, billin
 
 <p>Four details that are not obvious and are each doing work:</p>
 
-<ul>
+<ul data-key="06-architecture.data.1">
 <li><code>Preset.enabled</code> is the entire kill switch. One boolean, read per request.</li>
 <li><code>Session.preset_snapshot</code> records the style object as it was at session start, so a transcript can be explained after a preset changes. <b>For a licensed preset it is purged on the same seven-day line as the object itself</b>, and the transcript thereafter carries only the neutral preset identifier. An earlier draft had the snapshot surviving termination as company work product; that is the exact retention the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a> rejects, and a snapshot that outlived the licence would have made the deletion promise false while appearing to keep it.</li>
 <li><code>Turn.style_signatures</code> is written at logging time, which is what makes T-STY-01 a measurement over live traffic rather than a separate test harness.</li>
@@ -201,7 +201,7 @@ Account          id, verification{bool, method, provider_ref, timestamp}, billin
 
 <h2 id="killswitch">Kill switch mechanics</h2>
 
-<p>The service levels are in <a href="04-rights-dossier.html#killswitch">04</a>. This is what makes them achievable, and the fifteen-minute figure is a consequence of exactly one design choice repeated in several places: <b>nothing derived from a persona is cached for longer than sixty seconds, and nothing derived from a persona is ever baked into an artefact.</b></p>
+<p data-key="06-architecture.killswitch.1">The service levels are in <a href="04-rights-dossier.html#killswitch">04</a>. This is what makes them achievable, and the fifteen-minute figure is a consequence of exactly one design choice repeated in several places: <b>nothing derived from a persona is cached for longer than sixty seconds, and nothing derived from a persona is ever baked into an artefact.</b></p>
 
 <div class="tw">
 <table>
@@ -218,14 +218,14 @@ Account          id, verification{bool, method, provider_ref, timestamp}, billin
 </table>
 </div>
 
-<div class="claim">
+<div class="claim" data-key="06-architecture.killswitch.2">
 <p>The kill switch is <b>rehearsed quarterly against a live archetype</b> and the elapsed time is recorded. An untested switch is a claim, and this one is a contractual commitment to a creator. The rehearsal is cheap because D11 guarantees the product keeps running with the preset disabled.</p>
 <span class="tag decided">Decision D29<span class="src">14 September 2026</span></span>
 </div>
 
 <h2 id="model">Model choice and the vendor problem</h2>
 
-<p><b>Bought, pinned, abstracted, and qualified before use.</b> No specific vendor is named in this document, for a reason that is not evasion.</p>
+<p data-key="06-architecture.model.1"><b>Bought, pinned, abstracted, and qualified before use.</b> No specific vendor is named in this document, for a reason that is not evasion.</p>
 
 <div class="claim">
 <p>Model prices, context limits and capability at the relevant tasks are <b>not in the verified findings</b> and are not stated here from memory. They change frequently enough that a number written today would be wrong before the item bank exists, and a plausible-looking cost per session built on a half-remembered price is exactly the kind of figure this repository is meant not to contain.</p>
@@ -235,7 +235,7 @@ Account          id, verification{bool, method, provider_ref, timestamp}, billin
 
 <h3>Selection procedure</h3>
 
-<ol class="tight">
+<ol class="tight" data-key="06-architecture.model.2">
 <li><b>Gate on contract terms first.</b> D24: zero retention of prompts and outputs, no training on our data. A vendor failing this is disqualified before quality is considered.</li>
 <li>Run the frozen battery T-REG-01 on each candidate and measure ACC-2, ACC-3, ACC-4, the gate-fire rate, and T-STY-01 conformance.</li>
 <li>Measure cost per session on the same battery, which is the only honest way to get the number.</li>
@@ -263,7 +263,7 @@ where, per turn:
                  |             +------------------------ BOUNDED, fixed-size card
                  +--------------------------------------- fixed once written</code></pre>
 
-<div class="claim">
+<div class="claim" data-key="06-architecture.cost.1">
 <p>The conversation window is a <b>rolling summary of bounded size</b>, not the full session history. Every term in <code>ctx_tokens</code> is therefore bounded, which makes cost per turn approximately <b>constant</b> rather than growing with session length.</p>
 <p>This matters more than it looks. With an unbounded window, cost per session grows roughly with the square of the number of turns, and the sessions that cost the most are precisely the long ones with a struggling student, which is the student we most want to keep. A pricing model built on average session cost would then be wrong in the worst direction. <b>What it makes harder:</b> the tutor's recall of early-session detail is lossy, and the summariser becomes a component that can itself be wrong; it sits inside the content plane and its output is not citable evidence.</p>
 <span class="tag decided">Decision D30<span class="src">14 September 2026: bounded context, therefore constant cost per turn</span></span>
@@ -284,7 +284,7 @@ where, per turn:
 </table>
 </div>
 
-<p>What can be said now without inventing anything: <b>the only cost lever we control is bounded context multiplied by turns</b>, every other term is a price someone else sets, and the architecture is shaped to keep both factors bounded. The arithmetic that follows from this structure, and its consequences for pricing, is in <a href="10-economics.html">10</a>, which identifies the variable that actually dominates and finds that it is not this one.</p>
+<p data-key="06-architecture.cost.2">What can be said now without inventing anything: <b>the only cost lever we control is bounded context multiplied by turns</b>, every other term is a price someone else sets, and the architecture is shaped to keep both factors bounded. The arithmetic that follows from this structure, and its consequences for pricing, is in <a href="10-economics.html">10</a>, which identifies the variable that actually dominates and finds that it is not this one.</p>
 
 <h2 id="harder">What each choice makes harder later</h2>
 
@@ -307,7 +307,7 @@ where, per turn:
 </table>
 </div>
 
-<p>The row to watch is the first one. Deterministic retrieval is what makes the correctness promise enforceable, and it is also the thing that makes the product feel narrow next to a free chatbot that will cheerfully answer anything. That trade is the venture in miniature, it will show up as a retention problem before it shows up anywhere else, and <a href="12-risk-register.html">12</a> treats it accordingly.</p>
+<p data-key="06-architecture.harder.1">The row to watch is the first one. Deterministic retrieval is what makes the correctness promise enforceable, and it is also the thing that makes the product feel narrow next to a free chatbot that will cheerfully answer anything. That trade is the venture in miniature, it will show up as a retention problem before it shows up anywhere else, and <a href="12-risk-register.html">12</a> treats it accordingly.</p>
   </main>
 </div>
 
@@ -326,7 +326,7 @@ where, per turn:
   </div>
   <div class="meta-row">
     <span>AI.tutor design vault, revised September 2026. Nothing here has been built.</span>
-    <span class="stamp">Built 15 September 2026</span>
+    <span class="stamp">Built 17 September 2026</span>
   </div>
 </footer>
 </body>

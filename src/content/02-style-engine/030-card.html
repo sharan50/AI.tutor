@@ -1,6 +1,6 @@
 <h2 id="card">From object to style card</h2>
 
-<p>The model never sees the object. It sees a <b>style card</b>, a block of text generated from the object by a deterministic, versioned renderer.</p>
+<p data-key="02-style-engine.card.1">The model never sees the object. It sees a <b>style card</b>, a block of text generated from the object by a deterministic, versioned renderer.</p>
 
 <p>Determinism matters for three reasons that are not obvious: a card can be regenerated exactly from a stored object, so audit is possible; a card can be diffed when a preset changes; and when a licence ends, deleting the object removes every card that could be <i>produced</i> from it, because the renderer is the only path by which one comes into existence. That is a statement about production, not about retention: a rendered card and a fitted vector are also held in <code>Session.preset_snapshot</code>, which is why <a href="06-architecture.html#killswitch">06</a> deletes the snapshot on the same line.</p>
 

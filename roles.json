@@ -1,0 +1,65 @@
+{
+  "repository": "sharan50/AI.tutor",
+  "roles": [
+    {
+      "id": "ceo",
+      "title": "Chief executive",
+      "github": null,
+      "frame": "You hold the thesis, the product, the two routes and the choice between them, the roadmap, the risk register, the primer gateway, the open-items register, the decision ledger and the evidence register. Nothing described in this vault has been built. Your first job is not to build anything. It is to close the questions that are cheap to answer, which the roadmap puts before any engineering, and to keep the route decision honest by testing its conditions rather than defending it. Every decision in the ledger is yours to keep or to reverse with a written reason; the settled ones move only on evidence obtained through a route written down in advance. Where a register says a number is unknown, it stays unknown until someone measures it, and no plausible substitute is ever written in its place.",
+      "owns": [
+        "00-thesis", "01-product", "07-route-a-direct-to-parents", "08-route-b-through-schools",
+        "09-route-comparison", "11-roadmap", "12-risk-register", "13-primer-gateway",
+        "14-open-items", "decision-ledger", "sources", "status", "contents"
+      ],
+      "reads": []
+    },
+    {
+      "id": "cto",
+      "title": "Chief technology officer",
+      "github": null,
+      "frame": "You own the architecture and the style engine: the turn pipeline, the verifier that is the product, deterministic retrieval, the kill switch and the read path that makes it a bound rather than a promise, the data model, the vendor position and cost per session; and the parameter object, the style card renderer, the conformance tests and the seam where exemplar conditioning would attach. Nothing here has been built. What you are held to is the set of tests specified in these pages and not yet run, and the invariants those tests protect: a claim the verifier cannot ground does not reach a learner, every persona feature degrades to an archetype, and a vendor update passes the frozen battery before a learner sees it. Before you change a mechanism, run the impact command; most of what you own is stated on more than one page.",
+      "owns": ["06-architecture", "02-style-engine"],
+      "reads": []
+    },
+    {
+      "id": "coo",
+      "title": "Chief operating officer",
+      "github": null,
+      "frame": "You own curriculum and content: the clean-room policy, provenance recorded per item, examiner validation and who performs it, the accuracy floor and the harness that measures it, behaviour below floor, practice papers and what launch validation costs. Nothing has been built and no item has been validated. The item bank is the moat and the slowest thing in the plan; the writers and the validators are a rate-limited human process that does not get cheaper when the next model ships, and the writer and the validator are never the same person. You read, but do not own, the creator licence, because the licence sets what a creator's material may and may not touch in the bank.",
+      "owns": ["03-curriculum-and-content"],
+      "reads": ["04-rights-dossier#creator"]
+    },
+    {
+      "id": "cfo",
+      "title": "Chief financial officer",
+      "github": null,
+      "frame": "You own the economics: cost per session built up from the architecture, the variable that dominates and why it is derived rather than assumed, the acquisition ceiling set by the examination calendar, sensitivity, examiner validation as a line item, price points, and the order in which the unknowns must be measured. You also own the pricing and unit economics sections of both routes. Nothing has been built and no price has been tested; the ledger records price as deliberately not decided. Every figure you inherit is from the evidence register, a stated design choice, or marked unknown, and the discipline you hold is that no fourth kind ever appears.",
+      "owns": ["10-economics", "07-route-a-direct-to-parents#pricing", "08-route-b-through-schools#pricing"],
+      "reads": []
+    },
+    {
+      "id": "counsel",
+      "title": "Counsel",
+      "github": null,
+      "frame": "You own the rights dossier, the safety, privacy and regulatory chapter, the contracts, and the counsel questions in the open-items register. Nothing has been built. The questions are deliberately unanswered and stay open until you answer them; the single exception, naming the board, is recorded as a decision taken ahead of your advice with its containment written down, and it says so wherever it is applied. You read the data and consent sections and the compliance sections of both routes, because they apply your positions rather than set them. Where a page says a marker is Assumed, the reasoning is visible and could be wrong; where it says Open, the vault is waiting on you.",
+      "owns": ["04-rights-dossier", "05-safety-privacy-regulatory", "contracts", "14-open-items#counsel"],
+      "reads": [
+        "07-route-a-direct-to-parents#data", "07-route-a-direct-to-parents#compliance",
+        "08-route-b-through-schools#data", "08-route-b-through-schools#compliance"
+      ]
+    }
+  ],
+  "decisions": {
+    "overrides": {
+      "D10": "cto",
+      "D22": "cto",
+      "D23": "cto"
+    }
+  },
+  "summary": {
+    "decisions": ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "D13", "D14"],
+    "route": "09-route-comparison.rec.1",
+    "keys": ["04-rights-dossier.killswitch.1", "03-curriculum-and-content.uncomfortable.1", "10-economics.dominant.1", "07-route-a-direct-to-parents.cliff.2", "08-route-b-through-schools.shrinking.1"],
+    "unknowns": ["OI-1", "OI-4", "OI-5", "OI-7", "OA-10", "OA-15"]
+  }
+}

@@ -17,7 +17,7 @@ where, per turn:
                  |             +------------------------ BOUNDED, fixed-size card
                  +--------------------------------------- fixed once written</code></pre>
 
-<div class="claim">
+<div class="claim" data-key="06-architecture.cost.1">
 <p>The conversation window is a <b>rolling summary of bounded size</b>, not the full session history. Every term in <code>ctx_tokens</code> is therefore bounded, which makes cost per turn approximately <b>constant</b> rather than growing with session length.</p>
 <p>This matters more than it looks. With an unbounded window, cost per session grows roughly with the square of the number of turns, and the sessions that cost the most are precisely the long ones with a struggling student, which is the student we most want to keep. A pricing model built on average session cost would then be wrong in the worst direction. <b>What it makes harder:</b> the tutor's recall of early-session detail is lossy, and the summariser becomes a component that can itself be wrong; it sits inside the content plane and its output is not citable evidence.</p>
 <span class="tag decided">Decision D30<span class="src">14 September 2026: bounded context, therefore constant cost per turn</span></span>
@@ -38,5 +38,5 @@ where, per turn:
 </table>
 </div>
 
-<p>What can be said now without inventing anything: <b>the only cost lever we control is bounded context multiplied by turns</b>, every other term is a price someone else sets, and the architecture is shaped to keep both factors bounded. The arithmetic that follows from this structure, and its consequences for pricing, is in <a href="10-economics.html">10</a>, which identifies the variable that actually dominates and finds that it is not this one.</p>
+<p data-key="06-architecture.cost.2">What can be said now without inventing anything: <b>the only cost lever we control is bounded context multiplied by turns</b>, every other term is a price someone else sets, and the architecture is shaped to keep both factors bounded. The arithmetic that follows from this structure, and its consequences for pricing, is in <a href="10-economics.html">10</a>, which identifies the variable that actually dominates and finds that it is not this one.</p>
 

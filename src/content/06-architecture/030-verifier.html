@@ -2,7 +2,7 @@
 
 <p>Promise P2 in <a href="01-product.html#promise">01</a> is the business. The verifier is the thing that keeps it, so it gets specified rather than described.</p>
 
-<div class="tw">
+<div class="tw" data-key="06-architecture.verifier.1">
 <table>
 <thead><tr><th>Check</th><th>Mechanism</th><th>Failure action</th></tr></thead>
 <tbody>
@@ -14,7 +14,7 @@
 </table>
 </div>
 
-<div class="claim">
+<div class="claim" data-key="06-architecture.verifier.2">
 <p>The verifier runs on a <b>different pinned model</b> from the generator, and check (d) runs on no model at all. A verifier that shares the generator's weights shares its errors, and the correlated-failure mode is exactly the one that produces a confident wrong answer that passes its own check. <b>What it makes harder:</b> two vendor relationships to qualify instead of one, two regression surfaces under D22, and a second cost line per turn.</p>
 <span class="tag decided">Decision D27<span class="src">14 September 2026</span></span>
 </div>

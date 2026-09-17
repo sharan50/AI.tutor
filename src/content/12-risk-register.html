@@ -24,7 +24,7 @@
 
 <p><b>Ranked first by the owner.</b> The analysis in <a href="04-rights-dossier.html#wargame">04</a> says the ranking is right about the severity and wrong about the mechanism, and the correction matters more than the ranking.</p>
 
-<div class="claim">
+<div class="claim" data-key="12-risk-register.r1.1">
 <p><b>You are very unlikely to be sued and quite likely to be switched off.</b> An app store removes on a credible intellectual property complaint in days, sometimes hours, with limited process and no adjudication of the merits. A payment processor freezes on brand risk, often triggered by press rather than by a complainant. Neither reads the clean-room policy. Neither weighs the licence.</p>
 <p>So the mitigation for R1 is not a stronger legal position. It is a <b>prepared counter-notice pack, a second payment processor, and a web-first product that survives app store removal.</b> All three are cheap, all three are at M1, and none of them is a legal argument.</p>
 <span class="tag decided">The reframing<span class="src">and it changes what the mitigation is</span></span>
@@ -46,7 +46,7 @@
 
 <h2 id="r2">R2: teaching something wrong before an exam</h2>
 
-<p><b>Ranked second, and it is the risk the architecture is mostly built around.</b> A wrong answer three weeks before a GCSE is not a bug report; it is a harm to a specific child at the one moment the product exists to serve.</p>
+<p data-key="12-risk-register.r2.1"><b>Ranked second, and it is the risk the architecture is mostly built around.</b> A wrong answer three weeks before a GCSE is not a bug report; it is a harm to a specific child at the one moment the product exists to serve.</p>
 
 <div class="tw">
 <table>
@@ -62,7 +62,7 @@
 </table>
 </div>
 
-<p><b>The residual, stated honestly:</b> at the launch floor of 99.5% per turn, somewhere between <b>one session in twenty and one in seven</b> contains at least one unsupported assertion, the spread being a session length nobody has measured (<a href="03-curriculum-and-content.html#uncomfortable">03</a>). That is the number to hold in mind, not the per-turn figure. D21 commits to reporting the per-session number and to withholding the "it does not make things up" claim until the per-turn floor reaches 99.9%.</p>
+<p data-key="12-risk-register.r2.2"><b>The residual, stated honestly:</b> at the launch floor of 99.5% per turn, somewhere between <b>one session in twenty and one in seven</b> contains at least one unsupported assertion, the spread being a session length nobody has measured (<a href="03-curriculum-and-content.html#uncomfortable">03</a>). That is the number to hold in mind, not the per-turn figure. D21 commits to reporting the per-session number and to withholding the "it does not make things up" claim until the per-turn floor reaches 99.9%.</p>
 
 <p><b>Leading indicator:</b> the weekly per-session groundedness figure, and the adjudication queue's composition. A rising share of failures concentrated in one topic is a content defect; a rising share spread evenly is a model or prompt regression.</p>
 
@@ -70,7 +70,7 @@
 
 <h2 id="r3">R3: nobody pays</h2>
 
-<p><b>Ranked third.</b> The most likely of the four to actually happen, and the cheapest to test.</p>
+<p data-key="12-risk-register.r3.1"><b>Ranked third.</b> The most likely of the four to actually happen, and the cheapest to test.</p>
 
 <ul>
 <li><b>The specific failure mode:</b> parents anchor an AI tutoring subscription against software prices or against free, rather than against the verified £25 to £45 hourly tutoring rate. OA-10.</li>
@@ -82,7 +82,7 @@
 
 <h2 id="r4">R4: child harm or data breach</h2>
 
-<p><b>Ranked fourth by the owner, and the ranking is about threat to the venture rather than about severity.</b> Read <a href="#ordering">the next section</a> before using this ranking for anything.</p>
+<p data-key="12-risk-register.r4.1"><b>Ranked fourth by the owner, and the ranking is about threat to the venture rather than about severity.</b> Read <a href="#ordering">the next section</a> before using this ranking for anything.</p>
 
 <div class="tw">
 <table>
@@ -98,7 +98,7 @@
 
 <h2 id="ordering">Why engineering does not follow this ordering</h2>
 
-<div class="claim">
+<div class="claim" data-key="12-risk-register.ordering.1">
 <p>The owner's ranking is a ranking of <b>threats to the venture</b>, and as such it is defensible. The engineering priority is <b>R4, then R2, then R1, then R3</b>, which is close to the reverse. Where the two orderings conflict inside a sprint, <b>the engineering ordering wins.</b></p>
 <span class="tag decided">Decision<span class="src">Stated as a decision so it cannot be treated as an oversight, 14 September 2026</span></span>
 </div>
@@ -115,7 +115,7 @@
 
 <h2 id="second">Second tier</h2>
 
-<div class="tw">
+<div class="tw" data-key="12-risk-register.second.1">
 <table>
 <thead><tr><th class="id">#</th><th>Risk</th><th>Leading indicator</th><th>Note</th></tr></thead>
 <tbody>
@@ -132,7 +132,7 @@
 
 <h2 id="first">Which one actually breaks first</h2>
 
-<p class="lede"><b>R3, and specifically the price anchor.</b> It is the most likely to be true, it is the cheapest to discover, and it is discoverable before a single item is written.</p>
+<p class="lede" data-key="12-risk-register.first.1"><b>R3, and specifically the price anchor.</b> It is the most likely to be true, it is the cheapest to discover, and it is discoverable before a single item is written.</p>
 
 <p>The reasoning is not a probability estimate; it is about what is already known. R1, R2 and R4 are all managed by designs that exist in this repository and that have never been tested, so their real status is unknown rather than low. R3 is different: it rests on a single assumption, OA-10, that parents anchor against tutoring rates rather than software prices, and that assumption has no evidence behind it at all. <span class="mark verified">Verified</span> The competing anchor is free, in three products already on the parent's phone.</p>
 

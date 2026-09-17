@@ -26,7 +26,7 @@ Account          id, verification{bool, method, provider_ref, timestamp}, billin
 
 <p>Four details that are not obvious and are each doing work:</p>
 
-<ul>
+<ul data-key="06-architecture.data.1">
 <li><code>Preset.enabled</code> is the entire kill switch. One boolean, read per request.</li>
 <li><code>Session.preset_snapshot</code> records the style object as it was at session start, so a transcript can be explained after a preset changes. <b>For a licensed preset it is purged on the same seven-day line as the object itself</b>, and the transcript thereafter carries only the neutral preset identifier. An earlier draft had the snapshot surviving termination as company work product; that is the exact retention the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a> rejects, and a snapshot that outlived the licence would have made the deletion promise false while appearing to keep it.</li>
 <li><code>Turn.style_signatures</code> is written at logging time, which is what makes T-STY-01 a measurement over live traffic rather than a separate test harness.</li>

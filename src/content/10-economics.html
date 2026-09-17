@@ -24,7 +24,7 @@
 
 <h2 id="rule">The rule this document follows</h2>
 
-<p class="lede">A financial model is the easiest place in a venture document to put a number that nobody checks and everybody later repeats. Every quantity below is one of exactly three things: a figure from the verified findings, a design choice made in this repository, or an <span class="mark unknown">Unknown</span> that is named and left empty. There is no fourth category and there are no illustrative figures, because illustrative figures get quoted.</p>
+<p class="lede" data-key="10-economics.rule.1">A financial model is the easiest place in a venture document to put a number that nobody checks and everybody later repeats. Every quantity below is one of exactly three things: a figure from the verified findings, a design choice made in this repository, or an <span class="mark unknown">Unknown</span> that is named and left empty. There is no fourth category and there are no illustrative figures, because illustrative figures get quoted.</p>
 
 <h2 id="cost">Cost per session, from the architecture</h2>
 
@@ -49,7 +49,7 @@ ctx = system_fixed + style_card + k_nodes + window     ALL BOUNDED (D30)</code><
 </table>
 </div>
 
-<p>Two structural properties follow from the architecture and hold whatever the vendor prices turn out to be. First, <b>cost per turn is approximately constant</b> rather than growing with session length, because D30 bounds every term in the context. Second, <b>the struggling learner is expensive linearly, not quadratically</b>, which matters because the struggling learner is the one the product exists for and is the one an unbounded-context design would have made uneconomic.</p>
+<p data-key="10-economics.cost.1">Two structural properties follow from the architecture and hold whatever the vendor prices turn out to be. First, <b>cost per turn is approximately constant</b> rather than growing with session length, because D30 bounds every term in the context. Second, <b>the struggling learner is expensive linearly, not quadratically</b>, which matters because the struggling learner is the one the product exists for and is the one an unbounded-context design would have made uneconomic.</p>
 
 <h2 id="dominant">The variable that dominates, derived</h2>
 
@@ -80,14 +80,14 @@ ctx = system_fixed + style_card + k_nodes + window     ALL BOUNDED (D30)</code><
 </table>
 </div>
 
-<div class="claim">
+<div class="claim" data-key="10-economics.dominant.1">
 <p>The dominant quantity is the <b>payback ratio</b></p>
 <pre><code>R = (CAC + V) / ((p - c) x m)          viable iff R &lt; 1</code></pre>
 <p>and it dominates for a structural reason rather than a numerical one: <b>its denominator is capped by external facts while its numerator has no anchor at all.</b> Price is anchored by the verified tutoring rate, variable cost is bounded by the architecture, and retained months are capped by the examination calendar. The whole business therefore reduces to a single question, which is whether acquisition plus verification can be brought in under a ceiling that somebody else has already set.</p>
 <span class="tag decided">The finding<span class="src">14 September 2026</span></span>
 </div>
 
-<p>This is why <a href="09-route-comparison.html#rec">condition C2</a> is a kill condition rather than a cost line. <code>V</code> is a one-off subtracted from a capped denominator, so every pound of verification cost removes a pound from the acquisition budget directly. A large verification quote does not make Route A more expensive; it makes it arithmetically impossible, and no amount of product work recovers it.</p>
+<p data-key="10-economics.dominant.2">This is why <a href="09-route-comparison.html#rec">condition C2</a> is a kill condition rather than a cost line. <code>V</code> is a one-off subtracted from a capped denominator, so every pound of verification cost removes a pound from the acquisition budget directly. A large verification quote does not make Route A more expensive; it makes it arithmetically impossible, and no amount of product work recovers it.</p>
 
 <h2 id="ceiling">The acquisition ceiling, and the Year 10 result</h2>
 
@@ -110,13 +110,13 @@ ctx = system_fixed + style_card + k_nodes + window     ALL BOUNDED (D30)</code><
 <span class="tag decided">Decision<span class="src">Derived result: you can afford roughly twice as much to acquire a Year 10 household</span></span>
 </div>
 
-<p>The operational consequence is in <a href="07-route-a-direct-to-parents.html#cliff">07</a>: acquire Year 10 deliberately in the autumn, accept a worse conversion rate for the better denominator, and report the two cohorts separately from the first customer rather than adopting the split later when the blended number becomes misleading.</p>
+<p data-key="10-economics.ceiling.1">The operational consequence is in <a href="07-route-a-direct-to-parents.html#cliff">07</a>: acquire Year 10 deliberately in the autumn, accept a worse conversion rate for the better denominator, and report the two cohorts separately from the first customer rather than adopting the split later when the blended number becomes misleading.</p>
 
 <h2 id="sensitivity">Sensitivity</h2>
 
 <p>Since <code>R</code> is a ratio of a sum to a product, its sensitivities are simple and worth stating plainly, because they say where effort should go.</p>
 
-<div class="tw">
+<div class="tw" data-key="10-economics.sensitivity.1">
 <table>
 <thead><tr><th>Move</th><th>Effect on R</th><th>Practical reading</th></tr></thead>
 <tbody>
@@ -128,29 +128,29 @@ ctx = system_fixed + style_card + k_nodes + window     ALL BOUNDED (D30)</code><
 </table>
 </div>
 
-<div class="claim">
+<div class="claim" data-key="10-economics.sensitivity.2">
 <p>That <code>c</code> is small relative to <code>p</code>, which is what makes engineering cost reduction low-leverage. This follows from the architecture bounding context per turn, but it <b>has not been measured</b> and depends on vendor prices that are unknown. If <code>c</code> turns out to be a large fraction of <code>p</code>, that row reverses and cost engineering becomes the priority. This is the first thing to check when M2 produces a measured cost per session.</p>
 <span class="tag assumed">Assumption<span class="src">and it is load-bearing for the row above</span></span>
 </div>
 
 <h2 id="content">Examiner validation as a line item</h2>
 
-<p>It is a <b>fixed cost, not a variable one</b>, and putting it in the right place changes what it means. Content cost does not scale with learners; it scales with items, once. So it does not appear in <code>c</code> and does not affect <code>R</code>. It sets the number of households the business must reach before it covers its content base.</p>
+<p data-key="10-economics.content.1">It is a <b>fixed cost, not a variable one</b>, and putting it in the right place changes what it means. Content cost does not scale with learners; it scales with items, once. So it does not appear in <code>c</code> and does not affect <code>R</code>. It sets the number of households the business must reach before it covers its content base.</p>
 
 <pre><code>launch content cost = items x minutes_per_item x examiner_rate / 60   + writer cost
                     = ~600 x  UNKNOWN        x  UNKNOWN
 
 households needed to cover it = launch content cost / C</code></pre>
 
-<p>Both unknowns are specified in <a href="03-curriculum-and-content.html#cost">03</a>, along with the timed pilot that resolves them. <b><code>minutes_per_item</code> is the more important of the two</b>, and not because of the launch bill. It is the constant that determines whether the content moat extends to a second strand, a second subject and a second board. If it is small, the moat compounds; if it is large, the content strategy is a one-strand business wearing the language of a platform, and the defensibility argument in <a href="00-thesis.html#shelf">00</a> does not survive contact with a spreadsheet.</p>
+<p data-key="10-economics.content.2">Both unknowns are specified in <a href="03-curriculum-and-content.html#cost">03</a>, along with the timed pilot that resolves them. <b><code>minutes_per_item</code> is the more important of the two</b>, and not because of the launch bill. It is the constant that determines whether the content moat extends to a second strand, a second subject and a second board. If it is small, the moat compounds; if it is large, the content strategy is a one-strand business wearing the language of a platform, and the defensibility argument in <a href="00-thesis.html#shelf">00</a> does not survive contact with a spreadsheet.</p>
 
 <h2 id="price">Price points</h2>
 
 <p>The substitution arithmetic against the verified £25 to £45 GCSE tutoring rate is tabulated in <a href="07-route-a-direct-to-parents.html#pricing">07</a> and is not repeated here, to avoid two copies of the same table drifting apart.</p>
 
-<p>The addition this document makes is the reminder that price is the <b>narrowest</b> of the five terms, bounded above by a verified comparator and below by free tools. Effort spent optimising price is effort spent on the term with the least room in it. The same effort spent on <code>CAC + V</code>, or on shifting acquisition toward Year 10, moves <code>R</code> far more.</p>
+<p data-key="10-economics.price.1">The addition this document makes is the reminder that price is the <b>narrowest</b> of the five terms, bounded above by a verified comparator and below by free tools. Effort spent optimising price is effort spent on the term with the least room in it. The same effort spent on <code>CAC + V</code>, or on shifting acquisition toward Year 10, moves <code>R</code> far more.</p>
 
-<div class="claim">
+<div class="claim" data-key="10-economics.price.2">
 <p>That parents anchor against tutoring rates rather than against software prices or against free. If the anchor is software, <code>p</code> collapses, the denominator collapses with it, and the affordable acquisition ceiling falls to something no consumer channel can deliver. This is condition C1 in <a href="09-route-comparison.html#rec">09</a> and it is testable with a landing page before anything is built.</p>
 <span class="tag assumed">Assumption<span class="src">carried over from 07 and repeated because the whole model rests on it</span></span>
 </div>
@@ -159,7 +159,7 @@ households needed to cover it = launch content cost / C</code></pre>
 
 <p>Ordered by cost to obtain, cheapest first, which is also roughly the order of how likely each is to end the venture.</p>
 
-<div class="tw">
+<div class="tw" data-key="10-economics.fill.1">
 <table>
 <thead><tr><th class="id">#</th><th>Quantity</th><th>How</th><th>Cost to obtain</th><th>Milestone</th></tr></thead>
 <tbody>
@@ -173,4 +173,4 @@ households needed to cover it = launch content cost / C</code></pre>
 </table>
 </div>
 
-<p>Items 1 and 2 cost almost nothing and together decide whether Route A is viable at all. Items 5 and 6 cost a year and a product, and they are the ones a conventional plan would guess at in order to produce a forecast. <b>This document does not produce that forecast.</b> The model is built, the inputs are named, and the two cheap measurements that gate everything else are scheduled first.</p>
+<p data-key="10-economics.fill.2">Items 1 and 2 cost almost nothing and together decide whether Route A is viable at all. Items 5 and 6 cost a year and a product, and they are the ones a conventional plan would guess at in order to produce a forecast. <b>This document does not produce that forecast.</b> The model is built, the inputs are named, and the two cheap measurements that gate everything else are scheduled first.</p>
