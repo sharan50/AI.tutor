@@ -1,2 +1,4 @@
 # Assembled at build time by src/build.py; never committed.
 _site/
+# Python bytecode caches from importing build.py or depmap.py; never committed.
+__pycache__/
