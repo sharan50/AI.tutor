@@ -20,6 +20,9 @@ caught : every acquisition can be billed                (change log 6.1, the pro
 caught : every acquisition can be billed                (change log 6.1, both exits together)
          most arrivals removed in the month they arrived is 117562.882452
          costs +524,796 of terminal cash at the mean
+caught : cumulative reach never falls                   (change log 2.4)
+         largest fall in the saturation numerator is 2843060.061180
+         costs -6,621,714 of terminal cash at the mean
 caught : a cohort is one cohort's worth of households   (change log 6.2)
          worst departure from one across 20000 paths: 9.665e-02
          costs -66,202 of terminal cash at the mean
@@ -27,9 +30,8 @@ caught : TRIPWIRE: the budget cap's assumed life        (change log 4.3 and 5.4)
          longest life the budget cap assumes is 19.10 billed household months
          costs +248,646 of terminal cash at the mean
 
-8 reintroduction cases, covering 5 of the 8 invariants.
-The other 3 have never been run against any defect and are NOT proved
+9 reintroduction cases, covering 6 of the 8 invariants.
+The other 2 have never been run against any defect and are NOT proved
 to bite, whatever their names claim:
-   unproved: cumulative reach never falls
    unproved: an enforced allowance bills no overage
    unproved: nothing happens before the first market opens

@@ -418,7 +418,16 @@ _USE_SHAPE = _USE_SHAPE / _USE_SHAPE.mean()
 
 # Phase shift in months applied to the seasonality of each market, because the
 # examination calendar is what drives it and it does not sit in the same place.
-SEASON_SHIFT = {M_UK: 0, M_US: 0, M_IN: -3, M_ROW: 0}
+# A NEGATIVE shift delays the pattern in calendar time; a positive one advances
+# it. India sits its terminal examinations in March, three months BEFORE the
+# United Kingdom's June, so its season has to be ADVANCED. The published value
+# was -3, which put India's usage peak in August -- five months AFTER the board
+# exams -- and its acquisition peak in December. With +3 it peaks in February,
+# one month before the sitting, and acquires in June, nine months before, which
+# is exactly the relationship the United Kingdom has to its own calendar.
+# India is closed in the published run, so this was inert there and bit only
+# por_india_d2c. See CHANGELOG 8.6.
+SEASON_SHIFT = {M_UK: 0, M_US: 0, M_IN: 3, M_ROW: 0}
 
 
 def season_factor(shape, m, t, amp):
@@ -933,7 +942,7 @@ def run(drv, cfg=None):
         "people_beng_cost", "people_uk_cost", "step_cost", "school_onboard_cost",
         "appstore_fee", "people_beng_content_cost", "school_inference_cost",
         "school_sessions_delivered", "sessions_delivered", "share_over_allowance",
-        "arrivals_removed_same_month",
+        "arrivals_removed_same_month", "worst_saturation_numerator_drop",
         "cac_effective_blended", "cac_effective_noncreator", "net_cash", "demand_shock",
         "terminal_value",
     ]}
@@ -982,6 +991,9 @@ def run(drv, cfg=None):
     school_pending = np.zeros((P, T + 24))
     trailing_net = np.zeros(P)
     cum_acq = [np.zeros(P) for _ in range(NM)]
+    # Last month's saturation numerator per market, for the diagnostic that
+    # replaces the tautological one. See CHANGELOG 8.5.
+    prev_saturation_numerator = [np.zeros(P) for _ in range(NM)]
     bad_run_current = np.zeros(P)
     bad_run_longest = np.zeros(P)
 
@@ -1145,8 +1157,32 @@ def run(drv, cfg=None):
             # saturation term never rose above a fifth, which made the effective
             # cost curve in section 4 of the write-up describe something the
             # model was not doing.
-            reach = cum_acq[m] / np.maximum(pool * pool_reacq, 1.0)
+            # The saturation term's NUMERATOR, named so that it can be
+            # diagnosed. CHANGELOG 2.4 was this expression reading the standing
+            # book, which a churning path can shrink, instead of cumulative
+            # acquisitions, which cannot.
+            #
+            # The invariant written for 2.4 checked the month-on-month change in
+            # np.cumsum(out["acquisitions"]) -- a cumsum of a non-negative
+            # series, which cannot fall on any version of this model, right or
+            # wrong. Its own docstring said so ("a cumulative series cannot
+            # fall") while claiming to check something. Round 8 reintroduced the
+            # real 2.4 defect and the check passed: the defect is worth about
+            # six and a half million dollars of terminal cash.
+            #
+            # This reads whatever the line above actually assigns, so swapping
+            # cum_acq for the standing book makes it fire. Note that REACH
+            # itself legitimately falls when the catalogue grows -- a wider
+            # subject range is a larger pool, so the same acquisitions cover
+            # less of it -- which is why the numerator rather than the ratio is
+            # the quantity with an invariant. See CHANGELOG 8.5.
+            saturation_numerator = cum_acq[m]
+            reach = saturation_numerator / np.maximum(pool * pool_reacq, 1.0)
             pen = np.clip(reach, 0.0, 0.97)
+            out["worst_saturation_numerator_drop"][:, t] = np.minimum(
+                out["worst_saturation_numerator_drop"][:, t],
+                saturation_numerator - prev_saturation_numerator[m])
+            prev_saturation_numerator[m] = saturation_numerator
             ltv_m = ltv_estimate(drv, expected_contrib_pm(drv, m, t, cps, billed_flat), m, t)
             cap = budget_cap_from_ltv(drv, m, ltv_m, pen)
             season = season_factor(_ACQ_SHAPE, m, t, drv["acq_season_amp"])

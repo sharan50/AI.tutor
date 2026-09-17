@@ -1544,3 +1544,103 @@ decision it belongs to. It is left rather than fixed because whether the operato
 own budget rule knows about a switch the operator has thrown is a modelling
 decision rather than an arithmetic one, and it is the owner's to make; the sizes
 are here so that it can be made with the numbers in view.
+
+---
+
+## What an eighth adversarial round found, including an invariant that could not fail
+
+### An invariant that was arithmetically incapable of failing, over a defect worth six and a half million dollars
+
+The check named for CHANGELOG 2.4 read the month-on-month change in the
+cumulative sum of acquisitions and passed if it was non-negative. Acquisitions
+are non-negative by construction, so their cumulative sum cannot fall — on any
+version of this model, right or wrong. **The check could not fire.** Its own
+docstring said as much ("a cumulative series cannot fall") and treated that as
+the reassurance rather than the defect.
+
+Round 8 put the real 2.4 defect back — saturation measured on the standing book
+instead of on cumulative acquisitions — and every one of the eight checks passed,
+including that one. `out/invariant_defect_costs.csv` now records what it was
+worth: about **6.6 million dollars** of terminal cash, and a quarter more
+acquisitions.
+
+This is the second time in three rounds that a check in this file has been found
+to assert more than its code tests. Round 6 found one whose *name* promised a
+property its body did not cover. Round 8 found one whose *body could not fail*.
+Both were in the suite built specifically to answer the fact that no other gate
+here can see a mechanism defect.
+
+The fix is that the model now publishes the saturation term's numerator as a
+diagnostic, and the check reads that — so substituting the standing book makes it
+fire, which is now proved by reintroduction. Note what the check is *not*: it is
+not "reach never falls". Reach legitimately falls whenever the catalogue grows,
+because a wider subject range is a larger pool and the same acquisitions cover
+less of it. An earlier draft of this fix asserted the stronger property and was
+wrong.
+
+### India's season was six months out
+
+`SEASON_SHIFT[M_IN]` was −3 where it should be +3. A negative shift delays the
+seasonal pattern in calendar time; India sits its terminal examinations in March,
+three months *before* the United Kingdom's June, so its season has to be
+advanced. With the published value India's usage peaked in **August, five months
+after the board exams**, and its acquisition peaked in December. With the sign
+corrected it peaks in February, one month before the sitting, and acquires in
+June, nine months before — exactly the relationship the United Kingdom has to its
+own calendar.
+
+India is closed in the published run, so this was inert there and bit only
+`por_india_d2c`, where it is worth about 29,000 dollars — small, because both
+seasonal shapes are normalised to mean one and the acquisition budget is annual,
+so the error largely cancels over a year. The mechanism was wrong regardless, and
+the section of this document that enumerates every other foreign-calendar defect
+asserted that the shift itself was applied correctly.
+
+### The largest priced omission double-counted a modelled line
+
+The age-assurance row priced the absent amount at two to five times the modelled
+verification line. At two to five checks per acquired household the *line* is two
+to five times what is modelled, so what is *missing* is one to four times it. The
+modelled check was being counted once inside the cost base and a second time as
+an omission, and the total of every absent line inherited it.
+
+### Two clocks in one function, and a sign that turns on which one is right
+
+Half of `headcount()` and part of `step_costs_usd()` read the delayed calendar
+under a launch delay and the rest read the undelayed one. The platform floor, the
+general and administrative schedule, the data protection officer hires, the
+initial counsel spend and the Article 27 representative do not shift; the market
+openings, the foreign entities and the institution channel do.
+
+Round 8 shifted all of them in memory and re-ran: the unshifted-overhead penalty
+is about 0.41m dollars at six months, roughly a quarter of the content-step
+flattery running the other way. **On a fully-shifted reading the six-month
+delay's mean delta turns positive again** — so the sign of that row depends on a
+convention the model has not settled. Whether an organisation's ramp should move
+with a delayed launch is a modelling decision and it is the owner's; that the
+model currently holds both conventions at once is not a decision.
+
+### What the prose scrape is actually worth, measured
+
+`verify.py`'s Pass B matches every number in the prose against a figure on disk.
+The write-up has always said the scrape is strong on long dollar figures and weak
+on short ones. Round 8 measured it by perturbing every currently-matched token by
+7 per cent and re-rendering at its own printed precision:
+
+| token length | matched | still matching after a 7 per cent error |
+|---|---|---|
+| 1–2 digits | 181 | 177 (97.8%) |
+| 3–4 digits | 305 | **156 (51.1%)** |
+| 5 or more digits | 329 | 4 (1.2%) |
+
+The claim about long figures is vindicated. The middle band is not "often can":
+**half** of the three- and four-digit tokens would survive a seven per cent
+error, and that band is where nearly every percentage, share, ratio and month
+index this document reasons from sits. Overall 41 per cent of matched tokens
+survive a 7 per cent error. Pass B is a strong check on the levels and a weak one
+on exactly the quantities the ordering rests on.
+
+`verify_allow.csv` compounds it: exemptions are matched by token string with no
+document or line scope, so once "10" is exempt anywhere it is exempt everywhere.
+That is how a mechanism-defect count could read ten in one paragraph and eleven
+two pages later with every pass green.

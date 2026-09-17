@@ -82,16 +82,27 @@ def inv_acquisitions_are_billed(out, drv, cfg, ns):
 
 def inv_penetration_never_falls(out, drv, cfg, ns):
     """
-    Cumulative reach must be non-decreasing.
+    The saturation term's numerator must be non-decreasing.
 
     CHANGELOG 2.4: saturation was measured on the standing book, so a path that
     churned and reacquired saw its penetration FALL and could sell to the same
-    market repeatedly at low-volume prices. Cumulative acquisitions are the
-    quantity the saturation term now uses, and a cumulative series cannot fall.
+    market repeatedly at low-volume prices.
+
+    Round 8: this check used to read the month-on-month change in
+    np.cumsum(out["acquisitions"]) and pass if it was non-negative. A cumsum of
+    a non-negative series cannot fall, on any version of this model, right or
+    wrong -- the docstring said exactly that and treated it as reassurance. The
+    check could not fail. Reintroducing the real 2.4 defect left it passing, and
+    the defect is worth about six and a half million dollars of terminal cash.
+
+    It now reads a diagnostic the model computes from whatever expression the
+    saturation term actually uses as its numerator, so substituting the standing
+    book makes it fire. It is NOT a check that reach itself never falls: reach
+    legitimately falls when the catalogue grows, because a wider subject range
+    is a larger pool. See CHANGELOG 8.5.
     """
-    cum = np.cumsum(out["acquisitions"], axis=1)
-    worst = float(np.min(np.diff(cum, axis=1)))
-    return worst >= -1e-9, "smallest month-on-month change in cumulative acquisitions is %.6f" % worst
+    worst = float(out["worst_saturation_numerator_drop"].min())
+    return worst >= -1e-9, "largest fall in the saturation numerator is %.6f" % max(-worst, 0.0)
 
 
 def inv_allowance_enforced_means_no_overage(out, drv, cfg, ns):
@@ -233,7 +244,7 @@ LTV_MONTHS_TRIPWIRE = 16.0
 
 INVARIANTS = [
     ("every acquisition can be billed", inv_acquisitions_are_billed, "4.2 and 5.1"),
-    ("cumulative reach never falls", inv_penetration_never_falls, "2.4"),
+    ("the saturation numerator never falls", inv_penetration_never_falls, "2.4"),
     ("an enforced allowance bills no overage", inv_allowance_enforced_means_no_overage, "2.3"),
     ("nothing happens before the first market opens", inv_no_revenue_before_the_first_market_opens, "boundary"),
     ("school inference stays inside the inference line", inv_school_inference_within_total, "5.2"),
@@ -323,6 +334,9 @@ REINTRODUCTIONS = [
      '            if cm == (em + 2) % 12:\n'
      '                moving = stock[:, ms(m, S_PRE), :] * drv["progress_continue"][:, None]\n'
      '                stock[:, ms(m, S_PRE), :] = 0.0'),
+    ("the saturation numerator never falls", "2.4",
+     "            saturation_numerator = cum_acq[m]",
+     "            saturation_numerator = active_by_market[m]"),
     ("a cohort is one cohort's worth of households", "6.2",
      "    mix_p = np.maximum(1.0 - mix_e - mix_a, 0.0)\n"
      "    total = mix_p + mix_e + mix_a\n"

@@ -99,8 +99,14 @@ add("intercompany markup and Indian tax on it", 0.10 * beng_people * 0.25, 0.15 
 # Age assurance is charged once per ACQUIRED household. Every check on someone
 # who does not convert is free. A reusable identity check is billed per attempt.
 _verif_total = float(MOUT["verif_cost"].sum(axis=1).mean())
-add("age assurance on non-converting checks", 2.0 * _verif_total, 5.0 * _verif_total,
-    "the model bills one check per acquisition; at two to five checks per acquired household, which is a conservative funnel for a consumer trial, the line is two to five times what is modelled")
+# The ABSENT amount, not the total. At two to five checks per acquired
+# household the line is two to five TIMES what is modelled, so what is missing
+# is one to four times it -- the modelled check is already in the cost base.
+# This row carried 2x-5x until round 8, double-counting the whole modelled
+# verification line inside the largest priced omission, and the total of every
+# absent line inherited it. See CHANGELOG 8.7.
+add("age assurance on non-converting checks", 1.0 * _verif_total, 4.0 * _verif_total,
+    "the model bills one check per acquisition; at two to five checks per acquired household, which is a conservative funnel for a consumer trial, the line is two to five times what is modelled, so the ABSENT part is one to four times it")
 
 # The United Kingdom consumer subscription regime. The Digital Markets,
 # Competition and Consumers Act 2024 brings mandatory renewal reminders, a

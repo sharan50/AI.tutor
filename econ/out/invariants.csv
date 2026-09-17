@@ -1,6 +1,6 @@
 seed,run_date,run,invariant,result,detail,change_log_entry_it_was_written_for
 20260916,2026-09-16,por,every acquisition can be billed,pass,most arrivals removed in the month they arrived is 0.000000,4.2 and 5.1
-20260916,2026-09-16,por,cumulative reach never falls,pass,smallest month-on-month change in cumulative acquisitions is 0.000000,2.4
+20260916,2026-09-16,por,cumulative reach never falls,pass,largest fall in the saturation numerator is -0.000000,2.4
 20260916,2026-09-16,por,an enforced allowance bills no overage,pass,not applicable: the allowance is not enforced in this run,2.3
 20260916,2026-09-16,por,nothing happens before the first market opens,pass,"largest pre-launch revenue, acquisition or inference is 0.000000000",boundary
 20260916,2026-09-16,por,school inference stays inside the inference line,pass,smallest consumer-only inference is 0.000000,5.2
@@ -8,7 +8,7 @@ seed,run_date,run,invariant,result,detail,change_log_entry_it_was_written_for
 20260916,2026-09-16,por,a cohort is one cohort's worth of households,pass,worst departure from one across 20000 paths: 2.220e-16,6.2
 20260916,2026-09-16,por,TRIPWIRE: the budget cap's assumed life,pass,longest life the budget cap assumes is 14.61 billed household months,4.3 and 5.4
 20260916,2026-09-16,por_allowance_enforced,every acquisition can be billed,pass,most arrivals removed in the month they arrived is 0.000000,4.2 and 5.1
-20260916,2026-09-16,por_allowance_enforced,cumulative reach never falls,pass,smallest month-on-month change in cumulative acquisitions is 0.000000,2.4
+20260916,2026-09-16,por_allowance_enforced,cumulative reach never falls,pass,largest fall in the saturation numerator is -0.000000,2.4
 20260916,2026-09-16,por_allowance_enforced,an enforced allowance bills no overage,pass,most sessions delivered to one household in a month is 14.3064 against an allowance of 16,2.3
 20260916,2026-09-16,por_allowance_enforced,nothing happens before the first market opens,pass,"largest pre-launch revenue, acquisition or inference is 0.000000000",boundary
 20260916,2026-09-16,por_allowance_enforced,school inference stays inside the inference line,pass,smallest consumer-only inference is 0.000000,5.2

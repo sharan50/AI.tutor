@@ -1169,8 +1169,18 @@ protection officer hires, the initial counsel spend or the Article 27
 representative, so a delayed launch pays the same sixty months of fixed overhead
 against a shorter trading window.
 
-The first effect flatters delay and the second penalises it, and nothing here
-separates them. **Draw no calendar conclusion from these two rows.** What the
+The first effect flatters delay and the second penalises it. An earlier draft
+said nothing here separates them; round 8 separated them by shifting every one of
+those clocks in memory and re-running. The unshifted-overhead penalty is about
+0.41m dollars at six months, against the content-step flattery the paragraph
+above sizes at @@delta_por_launch_plus6_total_content_cost_abs|usd0@@ — about a quarter of
+it, not a comparable offset. On a fully-shifted reading the six-month row's mean
+delta would turn positive again, so **the sign of that row depends on a
+convention this model has not settled**: whether the organisation's ramp moves
+with a delayed launch. Half of `headcount()` and part of `step_costs_usd()`
+already shift and the rest do not, which is not a decision, it is two decisions.
+Which one is right is the owner's; that the model currently holds both is
+recorded in LIMITS.md. **Draw no calendar conclusion from these two rows.** What the
 model does say about the calendar is in the retained-month figures in section 4,
 which are about when in the year a household is acquired rather than when the
 product launches.

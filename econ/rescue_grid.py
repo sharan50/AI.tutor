@@ -1,9 +1,17 @@
 """
 rescue_grid.py
 
-No single-driver break-even in out/breakeven.csv reaches a CASH target: no value
-of any one driver, anywhere in its prior range, gets the median path whole or
-brings the capital requirement under ten million dollars. (Four solves against
+Almost no single-driver break-even in out/breakeven.csv reaches a CASH target.
+One does: on the go-to-market minimum with the tutoring anchor pinned, price
+brackets the median-path-ends-whole target at about 41 pounds a month. And the
+ten-million capital ceiling is met across the whole prior range of both drivers
+solved against it on that same scope.
+
+This docstring said "no value of any one driver, anywhere in its prior range,
+gets the median path whole or brings the capital requirement under ten million
+dollars" for a round after out/breakeven.csv stopped agreeing with it, in the
+file that exists to answer what one driver cannot. Round 7 corrected the
+write-up; round 8 found the twin claim here. See CHANGELOG 8.4. (Four solves against
 the profitability target do bracket; see WRITEUP.md section 10.) That is the
 finding on the cash targets, and it is not a useful instruction on its own.
 
