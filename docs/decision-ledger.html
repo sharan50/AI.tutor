@@ -25,10 +25,10 @@
 </header>
 
 <div class="layout">
-  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#settled">D1 to D14: settled in the brief, not to be re-opened</a></li><li><a href="#taken">D15 to D33: taken while writing this design</a></li><li><a href="#reversals">D34 to D36: three decisions reversing two earlier positions</a></li><li><a href="#thresholds">D37: thresholds, so the route conditions are not judgement calls</a></li><li><a href="#repository">D38: how the repository is kept</a></li><li><a href="#unresolved">Decisions deliberately not taken</a></li></ol></div></aside>
+  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#settled">D1 to D14: settled in the brief, not to be re-opened</a></li><li><a href="#taken">D15 to D33: taken while writing this design</a></li><li><a href="#reversals">D34 to D36: three decisions reversing two earlier positions</a></li><li><a href="#thresholds">D37: thresholds, so the route conditions are not judgement calls</a></li><li><a href="#repository">D38: how the repository is kept</a></li><li><a href="#views">D39: the front door and the owner views</a></li><li><a href="#unresolved">Decisions deliberately not taken</a></li></ol></div></aside>
   <main class="sheet" id="doc">
 <h1>Decision ledger</h1>
-<p class="standfirst"><span data-count="decisions" data-format="words">Thirty-eight</span> decisions: fourteen carried from the brief and settled, twenty taken while writing this design, three taken on the owner's instruction, two of which reverse earlier positions, and the remainder on how the repository itself is kept. Each records what was chosen, what forced it, what was rejected and what that would have cost, and what it makes harder later. This is the document that lets someone reconstruct the reasoning in six months, including the reasoning they disagree with.</p>
+<p class="standfirst"><span data-count="decisions" data-format="words">Thirty-nine</span> decisions: fourteen carried from the brief and settled, twenty taken while writing this design, three taken on the owner's instruction, two of which reverse earlier positions, and the remainder on how the repository itself is kept. Each records what was chosen, what forced it, what was rejected and what that would have cost, and what it makes harder later. This is the document that lets someone reconstruct the reasoning in six months, including the reasoning they disagree with.</p>
 <dl class="meta">
 <dt>Document</dt><dd>Decision ledger. Not numbered; it spans all fourteen.</dd>
 <dt>Status</dt><dd>Live. Any new decision is appended here, not recorded only in the document it affects.</dd>
@@ -192,6 +192,15 @@
 <dl class="defs">
 <dt>D38. Pages may be assembled from fragment directories split at their headings; the dependency map lives in one data file that the build inlines into the served page; and the build checks that every served file is fresh.</dt>
 <dd><b>Driven by:</b> a fresh session has to hold a fragment beside the task it is doing, and the largest documents had grown past what fits, so a fragment over 3,000 words of prose is split at its h2 headings into a directory that concatenates back verbatim. The map's nodes and edges sat inside the page, so "what else changes if this changes" had no command behind it; the map now lives in tools/depmap/graph.json, each node names where the pages state it, and tools/depmap.py answers <i>check</i> and <i>impact</i>. Nothing checked that docs/ matched src/content/; src/build.py --check now does, and tools/verify.py runs it with the link and map checks. <b>Rejected:</b> a separate data file the map fetches at runtime, which the no-network convention forbids; and leaving the map inside the page, where it cannot be queried. <b>Makes harder:</b> two files to keep in step, the graph and the served map, closed by the check; and a page in fragments is opened as several files rather than one. <a href="../map/">map</a></dd>
+</dl>
+
+<h2 id="views">D39: the front door and the owner views</h2>
+
+<p data-key="decision-ledger.views.1">Dated 17 September 2026. A decision about how the vault is read, recorded here because it sets who a change is discussed with and what a generated page may contain.</p>
+
+<dl class="defs">
+<dt>D39. The vault has a generated front door and one generated page per owner; ownership is set at section level in roles.json; and a fact reaches a view only by transcluding a block marked in the fragment that states it.</dt>
+<dd><b>Driven by:</b> a person joining should read what they own and nothing else, and until now a newcomer landed on a contents page listing every document, every decision and every open item. The front door is a short summary generated from the ledger, the open-items register, the dependency map and the marked key blocks; each owner's page names their documents and sections, their decisions and open items, what binds them, and a reading path with cumulative word counts. Nothing on a generated page is written twice: the only hand-written prose is one capped frame per page, and every count is computed at build time. <b>Rejected:</b> hand-written role pages, because they drift; page-level ownership, because the two route documents would each be split between three owners; and including whole fragments in role pages, which would make each page a copy of the vault. <b>Makes harder:</b> a prose edit on a generated page is lost on the next build, so a frame lives in roles.json and everything else in the fragments; and ownership changes only through roles.json, never by editing a page. <a href="index.html">Summary</a></dd>
 </dl>
 
 <h2 id="unresolved">Decisions deliberately not taken</h2>
