@@ -781,28 +781,28 @@ scenario_por_fx_sampled_pathwise_p50_delta_se,6874.358354,USD or share,variants.
 scenario_por_fx_sampled_final_year_allin_contrib_pooled,16.623796,USD or share,variants.csv,column final_year_allin_contrib_pooled for scenario por_fx_sampled
 scenario_por_fx_sampled_final_year_allin_contrib_median,-87.911641,USD or share,variants.csv,column final_year_allin_contrib_median for scenario por_fx_sampled
 scenario_por_fx_sampled_final_year_gross_contrib_pooled,31.325788,USD or share,variants.csv,column final_year_gross_contrib_pooled for scenario por_fx_sampled
-scenario_por_india_d2c_terminal_cash_mean,-10273685.781921,USD or share,variants.csv,column terminal_cash_mean for scenario por_india_d2c
-scenario_por_india_d2c_terminal_cash_p50,-22605054.844008,USD or share,variants.csv,column terminal_cash_p50 for scenario por_india_d2c
-scenario_por_india_d2c_peak_funding_mean,23265696.216313,USD or share,variants.csv,column peak_funding_mean for scenario por_india_d2c
-scenario_por_india_d2c_peak_funding_p80,32368563.413495,USD or share,variants.csv,column peak_funding_p80 for scenario por_india_d2c
-scenario_por_india_d2c_peak_funding_p90,38212826.954972,USD or share,variants.csv,column peak_funding_p90 for scenario por_india_d2c
-scenario_por_india_d2c_share_reaching_profitability,0.207100,USD or share,variants.csv,column share_reaching_profitability for scenario por_india_d2c
-scenario_por_india_d2c_final_year_effective_cac_mean,32.448678,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_india_d2c
-scenario_por_india_d2c_mean_share_over_allowance,0.231693,USD or share,variants.csv,column mean_share_over_allowance for scenario por_india_d2c
-scenario_por_india_d2c_understatement_ratio,0.516217,USD or share,variants.csv,column understatement_ratio for scenario por_india_d2c
+scenario_por_india_d2c_terminal_cash_mean,-10244441.784255,USD or share,variants.csv,column terminal_cash_mean for scenario por_india_d2c
+scenario_por_india_d2c_terminal_cash_p50,-22608473.070515,USD or share,variants.csv,column terminal_cash_p50 for scenario por_india_d2c
+scenario_por_india_d2c_peak_funding_mean,23268676.315079,USD or share,variants.csv,column peak_funding_mean for scenario por_india_d2c
+scenario_por_india_d2c_peak_funding_p80,32371392.958001,USD or share,variants.csv,column peak_funding_p80 for scenario por_india_d2c
+scenario_por_india_d2c_peak_funding_p90,38217128.124093,USD or share,variants.csv,column peak_funding_p90 for scenario por_india_d2c
+scenario_por_india_d2c_share_reaching_profitability,0.208800,USD or share,variants.csv,column share_reaching_profitability for scenario por_india_d2c
+scenario_por_india_d2c_final_year_effective_cac_mean,32.456022,USD or share,variants.csv,column final_year_effective_cac_mean for scenario por_india_d2c
+scenario_por_india_d2c_mean_share_over_allowance,0.234619,USD or share,variants.csv,column mean_share_over_allowance for scenario por_india_d2c
+scenario_por_india_d2c_understatement_ratio,0.515482,USD or share,variants.csv,column understatement_ratio for scenario por_india_d2c
 scenario_por_india_d2c_band_central_placement_terminal,0.498850,USD or share,variants.csv,column band_central_placement_terminal for scenario por_india_d2c
 scenario_por_india_d2c_total_content_cost_mean,16461584.031681,USD or share,variants.csv,column total_content_cost_mean for scenario por_india_d2c
-scenario_por_india_d2c_total_cost_mean,45327824.127373,USD or share,variants.csv,column total_cost_mean for scenario por_india_d2c
-scenario_por_india_d2c_total_net_revenue_mean,35054138.345452,USD or share,variants.csv,column total_net_revenue_mean for scenario por_india_d2c
-scenario_por_india_d2c_pathwise_spearman_vs_base,0.995733,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_india_d2c
-scenario_por_india_d2c_pathwise_mean_abs_delta,4701181.123359,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_india_d2c
-scenario_por_india_d2c_abs_mean_delta,2995052.626380,USD or share,variants.csv,column abs_mean_delta for scenario por_india_d2c
-scenario_por_india_d2c_paired_mc_se,97029.335659,USD or share,variants.csv,column paired_mc_se for scenario por_india_d2c
-scenario_por_india_d2c_pathwise_p50_delta,-3172874.345729,USD or share,variants.csv,column pathwise_p50_delta for scenario por_india_d2c
-scenario_por_india_d2c_pathwise_p50_delta_se,16208.048114,USD or share,variants.csv,column pathwise_p50_delta_se for scenario por_india_d2c
-scenario_por_india_d2c_final_year_allin_contrib_pooled,11.593332,USD or share,variants.csv,column final_year_allin_contrib_pooled for scenario por_india_d2c
-scenario_por_india_d2c_final_year_allin_contrib_median,-76.042306,USD or share,variants.csv,column final_year_allin_contrib_median for scenario por_india_d2c
-scenario_por_india_d2c_final_year_gross_contrib_pooled,21.892358,USD or share,variants.csv,column final_year_gross_contrib_pooled for scenario por_india_d2c
+scenario_por_india_d2c_total_cost_mean,45418000.411683,USD or share,variants.csv,column total_cost_mean for scenario por_india_d2c
+scenario_por_india_d2c_total_net_revenue_mean,35173558.627427,USD or share,variants.csv,column total_net_revenue_mean for scenario por_india_d2c
+scenario_por_india_d2c_pathwise_spearman_vs_base,0.995704,USD or share,variants.csv,column pathwise_spearman_vs_base for scenario por_india_d2c
+scenario_por_india_d2c_pathwise_mean_abs_delta,4716065.565744,USD or share,variants.csv,column pathwise_mean_abs_delta for scenario por_india_d2c
+scenario_por_india_d2c_abs_mean_delta,2965808.628715,USD or share,variants.csv,column abs_mean_delta for scenario por_india_d2c
+scenario_por_india_d2c_paired_mc_se,98069.942649,USD or share,variants.csv,column paired_mc_se for scenario por_india_d2c
+scenario_por_india_d2c_pathwise_p50_delta,-3173479.433636,USD or share,variants.csv,column pathwise_p50_delta for scenario por_india_d2c
+scenario_por_india_d2c_pathwise_p50_delta_se,16299.489318,USD or share,variants.csv,column pathwise_p50_delta_se for scenario por_india_d2c
+scenario_por_india_d2c_final_year_allin_contrib_pooled,11.601603,USD or share,variants.csv,column final_year_allin_contrib_pooled for scenario por_india_d2c
+scenario_por_india_d2c_final_year_allin_contrib_median,-76.006596,USD or share,variants.csv,column final_year_allin_contrib_median for scenario por_india_d2c
+scenario_por_india_d2c_final_year_gross_contrib_pooled,21.940310,USD or share,variants.csv,column final_year_gross_contrib_pooled for scenario por_india_d2c
 scenario_por_appstore_terminal_cash_mean,-9694195.281992,USD or share,variants.csv,column terminal_cash_mean for scenario por_appstore
 scenario_por_appstore_terminal_cash_p50,-20029497.041214,USD or share,variants.csv,column terminal_cash_p50 for scenario por_appstore
 scenario_por_appstore_peak_funding_mean,20452981.434018,USD or share,variants.csv,column peak_funding_mean for scenario por_appstore
@@ -1217,14 +1217,14 @@ delta_por_fx_sampled_sign_agrees_mean_and_median,1.000000,boolean,variants.csv,"
 delta_por_fx_sampled_terminal_cash_abs,48899.465307,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_fx_sampled_terminal_cash_mean
 delta_por_fx_sampled_total_content_cost_mean,9819.935448,USD,variants.csv,total_content_cost_mean for por_fx_sampled less the same for por
 delta_por_fx_sampled_total_content_cost_abs,9819.935448,USD,variants.csv,the absolute value of that difference
-delta_por_india_d2c_terminal_cash_mean,-2995052.626380,USD,variants.csv,terminal_cash_mean for por_india_d2c less terminal_cash_mean for por
-delta_por_india_d2c_terminal_cash_p50,-2909673.030678,USD,variants.csv,terminal_cash_p50 for por_india_d2c less terminal_cash_p50 for por
-delta_por_india_d2c_terminal_cash_p50_abs,2909673.030678,USD,variants.csv,the absolute value of that median difference
-delta_por_india_d2c_peak_funding_p80,4329489.607228,USD,variants.csv,peak_funding_p80 for por_india_d2c less peak_funding_p80 for por
-delta_por_india_d2c_peak_funding_p80_abs,4329489.607228,USD,variants.csv,the absolute value of that difference
-delta_por_india_d2c_t_stat,30.867496,ratio,variants.csv,the absolute terminal-cash delta for por_india_d2c divided by the paired standard error of that delta
+delta_por_india_d2c_terminal_cash_mean,-2965808.628714,USD,variants.csv,terminal_cash_mean for por_india_d2c less terminal_cash_mean for por
+delta_por_india_d2c_terminal_cash_p50,-2913091.257185,USD,variants.csv,terminal_cash_p50 for por_india_d2c less terminal_cash_p50 for por
+delta_por_india_d2c_terminal_cash_p50_abs,2913091.257185,USD,variants.csv,the absolute value of that median difference
+delta_por_india_d2c_peak_funding_p80,4332319.151734,USD,variants.csv,peak_funding_p80 for por_india_d2c less peak_funding_p80 for por
+delta_por_india_d2c_peak_funding_p80_abs,4332319.151734,USD,variants.csv,the absolute value of that difference
+delta_por_india_d2c_t_stat,30.241770,ratio,variants.csv,the absolute terminal-cash delta for por_india_d2c divided by the paired standard error of that delta
 delta_por_india_d2c_sign_agrees_mean_and_median,1.000000,boolean,variants.csv,"1 when the mean delta and the median delta for por_india_d2c have the same sign, 0 when they disagree"
-delta_por_india_d2c_terminal_cash_abs,2995052.626380,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_india_d2c_terminal_cash_mean
+delta_por_india_d2c_terminal_cash_abs,2965808.628714,USD,variants.csv,the absolute value of that difference; the direction is in the sign of delta_por_india_d2c_terminal_cash_mean
 delta_por_india_d2c_total_content_cost_mean,2495758.221031,USD,variants.csv,total_content_cost_mean for por_india_d2c less the same for por
 delta_por_india_d2c_total_content_cost_abs,2495758.221031,USD,variants.csv,the absolute value of that difference
 delta_por_appstore_terminal_cash_mean,-2415562.126451,USD,variants.csv,terminal_cash_mean for por_appstore less terminal_cash_mean for por
@@ -3411,9 +3411,9 @@ omission_penetration_testing_and_vulnerability_disclosure_share_high_pct,0.67010
 omission_intercompany_markup_and_indian_tax_on_it_low,161213.393217,USD,omissions.csv,"a ten to fifteen per cent cost-plus markup on the Bengaluru people cost, taxed at twenty-five per cent"
 omission_intercompany_markup_and_indian_tax_on_it_high,241820.089825,USD,omissions.csv,"a ten to fifteen per cent cost-plus markup on the Bengaluru people cost, taxed at twenty-five per cent"
 omission_intercompany_markup_and_indian_tax_on_it_share_high_pct,0.600200,per cent,omissions.csv,high_share_of_total_cost as a percentage
-omission_age_assurance_on_non_converting_checks_low,851696.545668,USD,omissions.csv,"the model bills one check per acquisition; at two to five checks per acquired household, which is a conservative funnel for a consumer trial, the line is two to five times what is modelled"
-omission_age_assurance_on_non_converting_checks_high,2129241.364170,USD,omissions.csv,"the model bills one check per acquisition; at two to five checks per acquired household, which is a conservative funnel for a consumer trial, the line is two to five times what is modelled"
-omission_age_assurance_on_non_converting_checks_share_high_pct,5.284700,per cent,omissions.csv,high_share_of_total_cost as a percentage
+omission_age_assurance_on_non_converting_checks_low,425848.272834,USD,omissions.csv,"the model bills one check per acquisition; at two to five checks per acquired household, which is a conservative funnel for a consumer trial, the line is two to five times what is modelled, so the ABSENT part is one to four times it"
+omission_age_assurance_on_non_converting_checks_high,1703393.091336,USD,omissions.csv,"the model bills one check per acquisition; at two to five checks per acquired household, which is a conservative funnel for a consumer trial, the line is two to five times what is modelled, so the ABSENT part is one to four times it"
+omission_age_assurance_on_non_converting_checks_share_high_pct,4.227800,per cent,omissions.csv,high_share_of_total_cost as a percentage
 omission_consumer_subscription_regime_low,0.000000,USD,omissions.csv,"zero as a cost line, because these are retention mechanics rather than costs. The size is not zero: scaling both churn drivers by 25 per cent, which is this file's prior on what a reminder-and-easy-exit regime does to a consumer book, costs 4,950,548 of terminal cash, shared with the row below"
 omission_consumer_subscription_regime_high,0.000000,USD,omissions.csv,"zero as a cost line, because these are retention mechanics rather than costs. The size is not zero: scaling both churn drivers by 25 per cent, which is this file's prior on what a reminder-and-easy-exit regime does to a consumer book, costs 4,950,548 of terminal cash, shared with the row below"
 omission_consumer_subscription_regime_share_high_pct,0.000000,per cent,omissions.csv,high_share_of_total_cost as a percentage
@@ -3450,9 +3450,9 @@ omission_examiner_supply_as_a_quantity_rather_than_a_price_share_high_pct,0.0000
 omission_specification_change_and_curriculum_reform_low,837949.548639,USD,omissions.csv,"six to eighteen per cent of the modelled content spend: the model never expires an item, and on a five-year horizon a share of the bank is written to a specification that has since been reissued. The range is a prior on how much of the bank turns over, not a measurement"
 omission_specification_change_and_curriculum_reform_high,2513848.645917,USD,omissions.csv,"six to eighteen per cent of the modelled content spend: the model never expires an item, and on a five-year horizon a share of the bank is written to a specification that has since been reissued. The range is a prior on how much of the bank turns over, not a measurement"
 omission_specification_change_and_curriculum_reform_share_high_pct,6.239300,per cent,omissions.csv,high_share_of_total_cost as a percentage
-omission_total_of_every_absent_line_low,3980847.680725,USD,omissions.csv,"sum of the rows above, against the modelled total cost of 40290730"
-omission_total_of_every_absent_line_high,9635693.667925,USD,omissions.csv,"sum of the rows above, against the modelled total cost of 40290730"
-omission_total_of_every_absent_line_share_high_pct,23.915400,per cent,omissions.csv,high_share_of_total_cost as a percentage
+omission_total_of_every_absent_line_low,3554999.407891,USD,omissions.csv,"sum of the rows above, against the modelled total cost of 40290730"
+omission_total_of_every_absent_line_high,9209845.395091,USD,omissions.csv,"sum of the rows above, against the modelled total cost of 40290730"
+omission_total_of_every_absent_line_share_high_pct,22.858500,per cent,omissions.csv,high_share_of_total_cost as a percentage
 appstore_share_low,0.150000,prior bound,aux_params.csv,low bound of the auxiliary prior appstore_share: share of consumer billing routed through an app store
 appstore_share_high,0.700000,prior bound,aux_params.csv,high bound of the auxiliary prior appstore_share: share of consumer billing routed through an app store
 autom_beta_low,0.000000,prior bound,aux_params.csv,low bound of the auxiliary prior autom_beta: engineering heads bought per unit of automation ceiling
@@ -3487,8 +3487,8 @@ imanconover_all_marginals_preserved,True,boolean,imanconover_check.csv,every mar
 invariant_check_count,8,count,invariants.csv,distinct invariant names
 invariant_run_count,2,count,invariants.csv,distinct configurations they are run on
 mechanism_defect_count,11,count,mechanism_defects.csv,"rows: the mechanism defects found in model.py by reading the month loop, one per row"
-invariant_reintroduction_case_count,8,count,invariant_defect_costs.csv,historical defects reintroduced and refused by the check written for them
-invariant_proved_count,5,count,invariant_defect_costs.csv,DISTINCT invariants proved to refuse at least one real defect
+invariant_reintroduction_case_count,9,count,invariant_defect_costs.csv,historical defects reintroduced and refused by the check written for them
+invariant_proved_count,6,count,invariant_defect_costs.csv,DISTINCT invariants proved to refuse at least one real defect
 invariant_defects_costing_no_cash,2,count,invariant_defect_costs.csv,"reintroduced defects whose terminal cash mean is identical to the correct model's: they move a decomposition, not cash"
 limits_round5_sitting_fix_usd,2141420.131646,USD,invariant_defect_costs.csv,the same for the two sitting-month exits fixed in rounds 4 and 5
 limits_round6_arrivals_fix_usd,524796.422454,USD,invariant_defect_costs.csv,terminal cash mean of the correct model less that of the model with both round 6.1 calendar exits put back

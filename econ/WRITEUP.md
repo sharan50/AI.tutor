@@ -236,7 +236,7 @@ has no India revenue, no India content build and no India entity: `active_in_mea
 is zero in all 60 rows of `out/por_monthly.csv`.
 
 So the direct-to-parent variant, which **costs**
-2,995,053 dollars of terminal cash on the
+2,965,809 dollars of terminal cash on the
 mean, is compared against **no India business at all** rather than against an
 institutional one. It prices the prohibition, not the choice between the two
 routes in. An Indian institution motion is neither modelled nor costed here, and
@@ -678,9 +678,9 @@ pound, and the mechanism is set out in E4 of OPEN_ITEMS.md.
 above is a share of the cost the model *carries*.
 `out/omissions.csv` names 19 cost lines the model does
 not carry and prices them at
-3,980,848 to
-9,635,694 dollars, which at the top of
-the range is 23.9 per cent
+3,554,999 to
+9,209,845 dollars, which at the top of
+the range is 22.9 per cent
 of the base in that table. The largest of them, specification change, acts on the
 content line, so closing them would make content a larger share rather than a
 smaller one: the ordering above survives. **The levels do not.** Read this table
@@ -1055,7 +1055,7 @@ paired standard error; for those two, there is no paired error to use.
 | Go-to-market three months later | -961,639 | 324,080 | -475,961 | 0 |
 | Go-to-market six months later | -189,731 | 1,940,394 | -2,967,436 | 0 |
 | Foreign exchange sampled rather than fixed — **not distinguishable from zero**, see below | 48,899 | 89,568 | 50,244 | 1 |
-| India opened direct to parents | -2,995,053 | -2,909,673 | 4,329,490 | 1 |
+| India opened direct to parents | -2,965,809 | -2,913,091 | 4,332,319 | 1 |
 | The allowance enforced | -5,272,575 | -547,768 | 413,137 | 1 |
 | United Kingdom content frozen at the go-to-market five subjects | 8,121,027 | 7,318,367 | -11,161,886 | 1 |
 | The go-to-market minimum: one market, one board, no institution channel | 6,817,629 | 14,667,533 | -21,373,030 | 1 |
@@ -1169,8 +1169,18 @@ protection officer hires, the initial counsel spend or the Article 27
 representative, so a delayed launch pays the same sixty months of fixed overhead
 against a shorter trading window.
 
-The first effect flatters delay and the second penalises it, and nothing here
-separates them. **Draw no calendar conclusion from these two rows.** What the
+The first effect flatters delay and the second penalises it. An earlier draft
+said nothing here separates them; round 8 separated them by shifting every one of
+those clocks in memory and re-running. The unshifted-overhead penalty is about
+0.41m dollars at six months, against the content-step flattery the paragraph
+above sizes at 1,720,691 — about a quarter of
+it, not a comparable offset. On a fully-shifted reading the six-month row's mean
+delta would turn positive again, so **the sign of that row depends on a
+convention this model has not settled**: whether the organisation's ramp moves
+with a delayed launch. Half of `headcount()` and part of `step_costs_usd()`
+already shift and the rest do not, which is not a decision, it is two decisions.
+Which one is right is the owner's; that the model currently holds both is
+recorded in LIMITS.md. **Draw no calendar conclusion from these two rows.** What the
 model does say about the calendar is in the retained-month figures in section 4,
 which are about when in the year a household is acquired rather than when the
 product launches.
@@ -1679,10 +1689,10 @@ rather than for or against the fee.
 
 **6. Whether India is worth a statutory prohibition — and on these priors it is
 not, which is the opposite of what this paragraph used to say.** Opening India
-direct to parents **costs** 2,995,053 of
-terminal cash over five years, 2,909,673
+direct to parents **costs** 2,965,809 of
+terminal cash over five years, 2,913,091
 on the median path, and **raises** the capital requirement at the eightieth
-percentile by 4,329,490. It loses money
+percentile by 4,332,319. It loses money
 because it carries an entity, market counsel, a content bank
 (2,495,758 of additional content cost),
 a platform head and double age assurance, against prices sampled at a fraction of

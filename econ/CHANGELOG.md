@@ -2132,7 +2132,9 @@ that the instrument has no cash constraint at all, so no cost line can throttle
 another — a fact about the model's shape that appeared only in a change-log entry
 and now appears in the write-up. A difference of marginal medians labelled "on
 the median path" four paragraphs from the passage explaining why those are
-different quantities. "A fifth of the cost base" over a rendered 23.9 per cent. A
+different quantities. "A fifth of the cost base" over a rendered figure that was
+23.9 per cent at the time and is now lower still, because round 8 found the
+largest omission double-counting a modelled line. A
 denominator that dropped verification. CHANGELOG 5.3 still carrying a count that
 6.7 records correcting everywhere else, now marked in place.
 
