@@ -28,7 +28,7 @@ this repository and the brief disagree, the brief governs.
 | Tests specified | **13**, none run. There is nothing to run them against |
 | Counsel questions | **12** open, none answered. We proceed ahead of exactly one (OI-3), and it says so where it is applied |
 | Assumptions unverified | **21**, of which 8 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **38**, including 3 that reverse earlier positions |
+| Decisions recorded | **39**, including 3 that reverse earlier positions |
 | External claims registered | **42**, each with source and date checked |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at
@@ -36,9 +36,18 @@ build time and governs where this table disagrees with it.
 
 ## How to read it
 
-Start at [`docs/index.html`](docs/index.html), which carries the reading order and
-four routes through the material depending on whether you are a lawyer, a creator,
-an investor or a curriculum specialist.
+Start at [`docs/index.html`](docs/index.html), the front door: the route, the
+settled decisions, the computed counts, the numbers that matter, what is not
+known, and a door for each owner. Each door, under [`docs/roles/`](docs/roles/),
+names what that owner holds: documents and sections, decisions, open items and
+components on the map, what binds them from elsewhere, and a reading path with
+cumulative word counts. Every line on those pages is transcluded from the page
+that states it or computed at build time; the only hand-written text is one
+short frame per page, kept in [`roles.json`](roles.json).
+
+[`docs/contents.html`](docs/contents.html) carries the reading order and the
+four routes through the material for a lawyer, a creator, an investor or a
+curriculum specialist.
 
 If you only read three things:
 
@@ -111,22 +120,28 @@ session.
 BUILD_BRIEF.md                 the source instruction
 REBUILD_BRIEF.md               the brief for the tooling and the owner views
 RESTRUCTURE_REPORT.md          what the restructure changed, with its checks
+VIEWS_REPORT.md                what the views added, with the identity proof and the ownership table
+roles.json                     the five owners, what each owns and reads, the front door's picks
 CLAUDE.md                      working rules for a coding session
 README.md                      this file
 netlify.toml                   static publish config
-.claude/commands/              /impact, /section, /verify
+.claude/commands/              /impact, /section, /verify, /role
+.github/CODEOWNERS             generated from roles.json
 src/
   build.py                     assembles docs/, evidence/ and viz/ from fragments
   content/                     the fragments you actually edit
     <slug>.html                a page in one file
     <slug>/                    a page in fragments, one per h2 section
   viz/dependency-map.html      the map's template; the build inlines graph.json
+  templates/                   summary.html, the front door and its frame; role.html
 tools/
   depmap.py                    check, impact <node>, list
   depmap/graph.json            the dependency map: nodes with a locus, and edges
   verify.py                    build freshness, links and anchors, the map
 docs/
-  index.html                   contents and reading order
+  index.html                   the front door, generated
+  contents.html                contents, reading order and the four reader routes
+  roles/<id>.html              one generated page per owner
   00-thesis.html .. 14-open-items.html
   decision-ledger.html
   status.html                  generated from the registers
