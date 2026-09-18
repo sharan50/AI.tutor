@@ -6,8 +6,10 @@
         tools/depmap/graph.json agrees with the served viz/dependency-map.html
     python3 tools/depmap.py impact <node-id>
         the transitive closure upstream (what depends on the node) and
-        downstream (what it depends on), printed as an edit plan naming the
-        fragments under src/content/ to open, in document order
+        downstream (what it depends on), each node with the owner of the
+        section that states it (roles.json), the owners to discuss the change
+        with, and an edit plan naming the fragments under src/content/ to
+        open, in document order, with their owners
     python3 tools/depmap.py list
         every node: id, stratum, label, locus
 
@@ -169,14 +171,25 @@ def impact(node_id):
     up = closure(graph, node_id, forward=False)
     down = closure(graph, node_id, forward=True)
     me = nodes[node_id]
-    print(f"{node_id}: {me['label']} [{me['st']}]  stated at {me['locus']}")
+    owner = {i: build.node_owner(n) or "(no owner)" for i, n in nodes.items()}
+    print(f"{node_id}: {me['label']} [{me['st']}]  stated at {me['locus']}  owner {owner[node_id]}")
     print(f"upstream, depends on it, transitively: {len(up)}")
     for i, hop in sorted(up.items(), key=lambda kv: (kv[1], kv[0])):
-        print(f"  {hop}  {i:20s} {nodes[i]['label']:32s} {nodes[i]['locus']}")
+        print(f"  {hop}  {i:20s} {nodes[i]['label']:32s} {nodes[i]['locus']:44s} {owner[i]}")
     print(f"downstream, it depends on, transitively: {len(down)}")
     for i, hop in sorted(down.items(), key=lambda kv: (kv[1], kv[0])):
-        print(f"  {hop}  {i:20s} {nodes[i]['label']:32s} {nodes[i]['locus']}")
-    plan = {}
+        print(f"  {hop}  {i:20s} {nodes[i]['label']:32s} {nodes[i]['locus']:44s} {owner[i]}")
+    by_owner = {}
+    for i, hop in up.items():
+        by_owner.setdefault(owner[i], []).append((hop, f"{i} (up {hop})"))
+    for i, hop in down.items():
+        by_owner.setdefault(owner[i], []).append((hop, f"{i} (down {hop})"))
+    others = [o for o in sorted(by_owner) if o != owner[node_id]]
+    print(f"owners to discuss with, besides {owner[node_id]}: {', '.join(others) if others else 'none'}")
+    for o in sorted(by_owner, key=lambda o: (o == owner[node_id], o)):
+        tag = " (this node's owner)" if o == owner[node_id] else ""
+        print(f"  {o:8s} {', '.join(t for _h, t in sorted(by_owner[o]))}{tag}")
+    plan, plan_owner = {}, {}
     entries = [(node_id, "this", 0)] + [(i, "up", h) for i, h in up.items()] + [(i, "down", h) for i, h in down.items()]
     for i, role, hop in entries:
         key, frag = _place(nodes[i]["locus"])
@@ -184,9 +197,10 @@ def impact(node_id):
         _page, anchor = locus_parts(nodes[i]["locus"])
         tag = f"{i} ({role}{'' if role == 'this' else ' ' + str(hop)})"
         plan.setdefault((key[0], key[1], label), {}).setdefault((key[2], anchor or ""), []).append(tag)
-    print(f"edit plan, {len(plan)} fragment(s) in document order:")
+        plan_owner.setdefault((key[0], key[1], label), set()).add(owner[i])
+    print(f"edit plan, {len(plan)} fragment(s) in document order, with the owner to discuss each with:")
     for (_p, _f, label), anchors in sorted(plan.items()):
-        print(f"  {label}")
+        print(f"  {label}  ({', '.join(sorted(plan_owner[(_p, _f, label)]))})")
         for (_pos, anchor), tags in sorted(anchors.items()):
             print(f"      {'#' + anchor + ': ' if anchor else ''}{', '.join(sorted(tags))}")
     return 0
