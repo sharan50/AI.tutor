@@ -105,7 +105,7 @@ counted with tags stripped, is split at its `<h2>` headings.
 
 Before editing a decision, invariant or mechanism stated on more than one
 page, run `python3 tools/depmap.py impact <node>`; it prints the fragments to
-open, in order. The map is `tools/depmap/graph.json`, and
+open, in order, with the owner of each and the owners to discuss the change with. The map is `tools/depmap/graph.json`, and
 `python3 tools/depmap.py check` proves every node's locus resolves and that the
 served map agrees with it.
 

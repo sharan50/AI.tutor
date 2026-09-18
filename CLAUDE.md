@@ -37,7 +37,7 @@ Open only the fragment the task needs: `python3 src/build.py --section <slug>[#a
 
 ## Dependencies
 Run `python3 tools/depmap.py impact <node>` before editing any decision, invariant or mechanism stated on more than one page; `python3 tools/depmap.py list` names the nodes.
-Open the fragments it prints, in the order it prints them, and nothing else.
+Open the fragments it prints, in the order it prints them, and nothing else; it names the owner of each, and the owners the change is discussed with.
 
 ## Markers
 No invented figures: every number is from the evidence register, a stated design choice, or marked Unknown. There is no fourth kind.
