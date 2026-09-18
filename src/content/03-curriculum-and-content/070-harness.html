@@ -1,0 +1,21 @@
+<h2 id="harness">The harness</h2>
+
+<div class="tw">
+<table>
+<thead><tr><th class="id">Test</th><th>Method</th><th>Cadence</th><th>Blocking?</th></tr></thead>
+<tbody>
+<tr><td class="id">T-VAL-01</td><td>Automated census: every item with <code>status: live</code> has a complete, non-null validation record and is within its re-validation date.</td><td>Every release, and nightly.</td><td>Yes. A failure takes the affected items out of <code>live</code> automatically.</td></tr>
+<tr><td class="id">T-GND-01</td><td>Two stages. An automated entailment check of every substantive assertion against its cited node, then human adjudication of a subsample plus <b>every</b> automated failure. Reported per turn and per session.</td><td>Weekly on live traffic; on a frozen battery pre-launch.</td><td>Yes, at the fleet gate below.</td></tr>
+<tr><td class="id">T-MTH-01</td><td>A computer algebra system checks every symbolically checkable generated step. Human adjudication of a sample of the steps a CAS cannot check.</td><td>Continuous on generation; reported weekly.</td><td>Yes.</td></tr>
+<tr><td class="id">T-SCP-01</td><td>Scope classifier against the declared objective set, plus human sample.</td><td>Weekly.</td><td>Yes.</td></tr>
+<tr><td class="id">T-PAP-01</td><td>Deterministic check at assembly: every item in the paper is <code>live</code>, mark total matches the specification, coverage and command-word mix are within tolerance, and no item appears twice in one paper or in the learner's recent history.</td><td>Every paper, at assembly.</td><td>Yes. A paper that fails is not assembled, rather than assembled and flagged.</td></tr>
+<tr><td class="id">T-REG-01</td><td>Frozen regression battery of objectives, run with all of the above, on <b>every change to the model version, the prompt, the renderer or the retrieval configuration</b>.</td><td>Per change.</td><td>Yes. No change ships on a regression failure.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim" data-key="03-curriculum-and-content.harness.1">
+<p>Model versions are <b>pinned</b>, and a vendor model update is treated as a change that must pass T-REG-01 before it reaches any learner. We buy the model, which means someone else can move every number in this document without telling us. Pinning plus a blocking regression battery is the only thing standing between a vendor release and a silent drop in ACC-3 in the middle of exam term. <b>What it makes harder:</b> we will run behind the current model, and we carry the cost of qualifying every upgrade.</p>
+<span class="tag decided">Decision D22<span class="src">14 September 2026</span></span>
+</div>
+

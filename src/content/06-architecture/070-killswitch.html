@@ -1,0 +1,24 @@
+<h2 id="killswitch">Kill switch mechanics</h2>
+
+<p data-key="06-architecture.killswitch.1">The service levels are in <a href="04-rights-dossier.html#killswitch">04</a>. This is what makes them achievable, and the fifteen-minute figure is a consequence of exactly one design choice repeated in several places: <b>nothing derived from a persona is cached for longer than sixty seconds, and nothing derived from a persona is ever baked into an artefact.</b></p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Where persona data could persist</th><th>Bound</th><th>How it is enforced</th></tr></thead>
+<tbody>
+<tr><td>The registry flag itself.</td><td>Immediate.</td><td>Single write. No deployment.</td></tr>
+<tr><td>Application cache of the preset.</td><td>60 seconds.</td><td>Hard TTL, set in one place, asserted by a test.</td></tr>
+<tr><td>In-flight session, already holding a rendered card.</td><td>Next turn, ceiling 16 minutes.</td><td>The flag is re-read at every turn, not at session start. Falls back to <code>fallback_archetype_id</code>.</td></tr>
+<tr><td>CDN, catalogue, marketing, app store metadata.</td><td>24 hours.</td><td>Scripted purge, rehearsed rather than assembled on the day.</td></tr>
+<tr><td>Primary stores: style object, card, name, likeness assets, <b>and every <code>preset_snapshot</code> referencing the preset</b>.</td><td>7 days.</td><td>The renderer is the only path by which a card is <i>produced</i>, and the snapshot is the only place a produced vector is <i>retained</i>. Both are deleted, or the promise is not kept.</td></tr>
+<tr><td>Backups.</td><td>35 days.</td><td>Retention cycle. Stated in the licence rather than omitted.</td></tr>
+<tr><td><b>Model weights.</b></td><td><b>Not applicable.</b></td><td><b>D8.</b> No LoRAs, no fine-tunes, no adapters carrying persona style. There is nothing to retrain, which is the only reason any of the above is credible.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim" data-key="06-architecture.killswitch.2">
+<p>The kill switch is <b>rehearsed quarterly against a live archetype</b> and the elapsed time is recorded. An untested switch is a claim, and this one is a contractual commitment to a creator. The rehearsal is cheap because D11 guarantees the product keeps running with the preset disabled.</p>
+<span class="tag decided">Decision D29<span class="src">14 September 2026</span></span>
+</div>
+

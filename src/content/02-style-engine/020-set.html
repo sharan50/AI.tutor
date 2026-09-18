@@ -1,0 +1,88 @@
+<h2 id="set">The parameter set, version 1</h2>
+
+<p data-key="02-style-engine.set.1">Twelve dimensions, each an integer from 0 to 100. <span class="mark decided">Decision</span> The seven dimensions named in the brief are all present; five were added because the seven did not span the differences visible in real teaching, and one of the additions is flagged as low-weight for a reason given below.</p>
+
+<div class="tw">
+<table>
+<caption>Style parameter set v1. The signature column is what is actually counted; it is the operational definition of the dimension and it is what T-STY-01 measures.</caption>
+<thead><tr><th class="id">Key</th><th>Dimension</th><th>0 means</th><th>100 means</th><th>Observable signature</th></tr></thead>
+<tbody>
+<tr><td class="id">entry_point</td><td>Point of entry</td><td>Opens on a concrete instance</td><td>Opens on the formal statement</td><td>Whether the first substantive tutor move is a specific instance or a general statement, scored on the first three tutor sentences.</td></tr>
+<tr><td class="id">formalism_latency</td><td>Lateness of formalism</td><td>General rule stated immediately</td><td>General rule withheld until the student states it</td><td>Count of complete worked instances preceding the tutor's first full general statement of the rule.</td></tr>
+<tr><td class="id">example_policy</td><td>One running example or many</td><td>One example carried throughout</td><td>A new example context each turn</td><td>Distinct example contexts divided by total example instances in the session.</td></tr>
+<tr><td class="id">error_response</td><td>Response to a student error</td><td>Direct correction</td><td>Predict then falsify</td><td>Proportion of student errors met with a turn that invites the student to test their own answer, rather than a turn that states the correct one.</td></tr>
+<tr><td class="id">abstraction_pace</td><td>Pace of abstraction</td><td>Stays concrete for long stretches</td><td>Generalises immediately from each instance</td><td>Mean number of tutor sentences between a concrete referent and the next general quantifier.</td></tr>
+<tr><td class="id">digression_tolerance</td><td>Digression tolerance</td><td>Strictly on the critical path</td><td>Follows tangents readily</td><td>Proportion of tutor sentences not on the critical path to the stated objective.</td></tr>
+<tr><td class="id">visual_density</td><td>Visual density</td><td>Words only</td><td>Figure with almost every idea</td><td>Rendered figures per 1,000 words of tutor output.</td></tr>
+<tr><td class="id">question_density</td><td>Question density</td><td>Tutor asserts</td><td>Tutor almost only asks</td><td>Tutor questions per tutor turn.</td></tr>
+<tr><td class="id">talk_ratio</td><td>Who does the work</td><td>Student produces most of the text</td><td>Tutor produces most of the text</td><td>Tutor tokens divided by student tokens across the session.</td></tr>
+<tr><td class="id">notation_discipline</td><td>Notation timing</td><td>Informal language first, symbols late</td><td>Formal notation from the first line</td><td>Formal symbols per 100 words across the first five tutor turns.</td></tr>
+<tr><td class="id">misconception_preemption</td><td>Pre-empting known errors</td><td>Waits for the student to make the error</td><td>Names the common wrong answer before it can occur</td><td>Proportion of the objective's known-misconception nodes named before the student's first attempt rather than after.</td></tr>
+<tr><td class="id">worked_completeness</td><td>Completeness of worked steps</td><td>Heavily faded, steps left to the student</td><td>Every step shown every time</td><td>Steps shown divided by steps required, across worked solutions in the session.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim" data-key="02-style-engine.set.2">
+<p>Warmth, encouragement rate and register are deliberately <b>excluded</b> from the twelve. They are the easiest dimensions to implement, the easiest to perceive, and they fail admission test 2: they change how a session sounds without changing what the student is asked to do. A style engine built on them would demonstrate beautifully and teach identically, and the D14 return-rate instrumentation would then be measuring nothing. Register is carried in the style card as free text for naturalness, is not scored, and is not adjustable by the student.</p>
+<p><b>What this makes harder:</b> presets will feel less distinct on a first read than they would if tone varied, which raises the risk that T-STY-02 fails for a reason that is real but not the reason we care about. That risk is accepted and noted in <a href="#weak">where this design is weak</a>.</p>
+<span class="tag decided">Decision D17<span class="src">14 September 2026: no tone dimension in the weighted set</span></span>
+</div>
+
+<h3>Two worked vectors</h3>
+
+<p>These are the vectors behind the two transcripts in <a href="01-product.html#worked">01 Product</a>. They are archetype defaults, not licensed presets; no creator is involved in either.</p>
+
+<pre><code>{
+  "schema": "cine.style/1",
+  "preset_id": "arch.groundwork",
+  "display_name": "Groundwork",
+  "kind": "archetype",              // "archetype" | "licensed"
+  "creator_ref": null,              // populated only for kind == "licensed"
+  "dimensions": {
+    "entry_point":              8,
+    "formalism_latency":       88,
+    "example_policy":          12,
+    "error_response":          92,
+    "abstraction_pace":        22,
+    "digression_tolerance":    35,
+    "visual_density":          64,
+    "question_density":        78,
+    "talk_ratio":              30,
+    "notation_discipline":     18,
+    "misconception_preemption": 20,
+    "worked_completeness":     45
+  },
+  "register_note": "plain, unhurried, second person",
+  "constraints": [],                // never-do list; the creator's 14-day right writes here
+  "exemplars": null,                // D6 seam. Always null at launch. See below.
+  "renderer": "cine.card/1.0.0",
+  "provenance": { "source": "authored", "date": "2026-09-14" }
+}</code></pre>
+
+<pre><code>{
+  "schema": "cine.style/1",
+  "preset_id": "arch.spine",
+  "display_name": "Spine",
+  "kind": "archetype",
+  "creator_ref": null,
+  "dimensions": {
+    "entry_point":             95,
+    "formalism_latency":        2,
+    "example_policy":          88,
+    "error_response":           6,
+    "abstraction_pace":        84,
+    "digression_tolerance":     8,
+    "visual_density":          25,
+    "question_density":        30,
+    "talk_ratio":              72,
+    "notation_discipline":     86,
+    "misconception_preemption": 74,
+    "worked_completeness":     80
+  },
+  "register_note": "brisk, declarative, exam-facing",
+  "exemplars": null,
+  "renderer": "cine.card/1.0.0",
+  "provenance": { "source": "authored", "date": "2026-09-14" }
+}</code></pre>
+

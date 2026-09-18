@@ -1,0 +1,39 @@
+<h2 id="adjust">How a student moves an axis</h2>
+
+<p data-key="02-style-engine.adjust.1">D10. Picking a creator selects a preset; the student may then move individual dimensions. The handle gets them in, and then they can turn it.</p>
+
+<ul>
+<li><b>Surface.</b> Not twelve sliders. Six controls in plain language, each mapping to one or two dimensions, on a five-point scale, with the preset's position marked. "Tell me the rule first, or let me work it out" maps to <code>entry_point</code> and <code>formalism_latency</code>. "Correct me, or make me spot it" maps to <code>error_response</code>.</li>
+<li><b>Scope.</b> Adjustments are per student, per subject. They persist between sessions and there is always a one-tap return to the preset as licensed.</li>
+<li><b>Privacy and the Online Safety Act.</b> An adjusted style is visible only to the student who made it. It cannot be named, published, shared or sent to another user. This is not a product preference; it is the architectural invariant that keeps the service outside user-to-user territory, and the trigger analysis is in <a href="05-safety-privacy-regulatory.html">05</a>.</li>
+<li><b>Attribution.</b> Once a student has moved an axis, the on-screen label changes from "Style preset licensed from [Name]" to "Style preset: [Name], adjusted by you". A creator should not be shown as the author of a configuration the student invented. This is a rights point as much as an honesty point.</li>
+</ul>
+
+<h3>Acting on a creator objection within 14 days</h3>
+
+<p data-key="02-style-engine.adjust.2">The licence gives the creator a continuing right to require a specific behaviour to be removed within 14 days. That right needs a mechanism, or it is a promise with nothing behind it. There are exactly three, in escalating order, and <b>none requires a release</b>:</p>
+
+<ol class="tight">
+<li><b>Move a dimension.</b> If the objection is to a teaching behaviour the vector produces, change the value.</li>
+<li><b>Add a constraint.</b> The <code>constraints</code> field carries a never-do list that the renderer emits verbatim into the card. This is where "do not do X" lives when no dimension expresses X.</li>
+<li><b>Withdraw the preset.</b> The kill switch, on the creator's word rather than ours.</li>
+</ol>
+
+<p>All three are configuration changes to one record, which is what makes 14 days comfortable rather than tight. The constraint list is also the honest answer to a question the parameter set otherwise cannot handle: a creator may object to something that is not a point in the twelve-dimensional space at all.</p>
+
+<h3>Clamps</h3>
+
+<p>Not every point in the space is a legitimate tutor. Four dimensions are clamped and the student cannot cross the clamp.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th class="id">Dimension</th><th>Clamp</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td class="id">worked_completeness</td><td>Floor</td><td>Below the floor the tutor stops showing enough working to be checkable, and P3 in <a href="01-product.html#promise">01</a> becomes unverifiable.</td></tr>
+<tr><td class="id">misconception_preemption</td><td>Floor on safety-critical nodes</td><td>Some misconceptions are marked must-warn in the item bank. Those fire regardless of preset.</td></tr>
+<tr><td class="id">digression_tolerance</td><td>Ceiling</td><td>High tolerance plus a fifteen-year-old is how a maths session becomes a conversation about something else, which is both a teaching failure and a safety surface.</td></tr>
+<tr><td class="id">visual_density</td><td>Ceiling</td><td>Cost. Figures are the expensive part of a turn; the ceiling is an economics constraint and is set in <a href="10-economics.html">10</a>.</td></tr>
+</tbody>
+</table>
+</div>
+

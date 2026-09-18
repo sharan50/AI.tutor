@@ -1,0 +1,35 @@
+<h2 id="data">Data model</h2>
+
+<pre><code>Objective        id, strand, dfe_content_ref, tier, prerequisites[], must_warn[]
+Item             id, objective_id, kind, body, worked_solution, figure_spec?,
+                 provenance{...}, status            // 03 defines provenance
+ValidationRecord item_id, validator_id, date, result, notes, revalidate_after
+
+Preset           id, kind(archetype|licensed), display_name, fallback_archetype_id,
+                 enabled                            // <-- the kill switch flag
+StyleObject      preset_id, dimensions{12}, register_note, exemplars(null),
+                 renderer_version, provenance{...}
+CreatorLicence   id, preset_id, term_start, term_end, schedules[], status
+
+Learner          id, account_id, year_group, preset_id, adjustments{}
+MasteryState     learner_id, objective_id, attempts, unaided_pass, last_seen, due
+GradeRange       learner_id, band_low, band_high, computed_at, n_items,
+                 spec_coverage, sufficient(bool), calibrated(bool=false)
+Paper            id, spec_id, item_ids[], mark_total, assembled_at, checks{}
+Session          id, learner_id, objective_id, preset_snapshot, started, ended
+Turn             id, session_id, role, text, citations[], verdicts{a,b,c,d},
+                 gate_result, style_signatures{12}
+Escalation       session_id, category, raised_at, reviewed_by, reviewed_at, action
+
+Account          id, verification{bool, method, provider_ref, timestamp}, billing
+</code></pre>
+
+<p>Four details that are not obvious and are each doing work:</p>
+
+<ul data-key="06-architecture.data.1">
+<li><code>Preset.enabled</code> is the entire kill switch. One boolean, read per request.</li>
+<li><code>Session.preset_snapshot</code> records the style object as it was at session start, so a transcript can be explained after a preset changes. <b>For a licensed preset it is purged on the same seven-day line as the object itself</b>, and the transcript thereafter carries only the neutral preset identifier. An earlier draft had the snapshot surviving termination as company work product; that is the exact retention the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a> rejects, and a snapshot that outlived the licence would have made the deletion promise false while appearing to keep it.</li>
+<li><code>Turn.style_signatures</code> is written at logging time, which is what makes T-STY-01 a measurement over live traffic rather than a separate test harness.</li>
+<li><code>Account.verification</code> holds a boolean and a reference. There is no date of birth field in this schema, anywhere, by design.</li>
+</ul>
+

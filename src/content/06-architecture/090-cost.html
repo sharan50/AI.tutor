@@ -1,0 +1,42 @@
+<h2 id="cost">Cost per session, built up rather than assumed</h2>
+
+<p>The structure first, then the honest statement of what is missing.</p>
+
+<pre><code>cost_per_session
+  = turns x [ generate(ctx_tokens, out_tokens)          // generator call
+            + verify(node_tokens + assertion_tokens) ]  // entailment call
+  + figures x render_cost                               // ~0, deterministic (D28)
+  + cas_checks x 0                                      // local, no vendor cost
+  + storage + telemetry                                 // negligible per session
+
+where, per turn:
+  ctx_tokens = system_fixed + style_card + k_nodes + window
+                 |             |            |        |
+                 |             |            |        +-- BOUNDED by rolling summary
+                 |             |            +----------- BOUNDED, k fixed per objective
+                 |             +------------------------ BOUNDED, fixed-size card
+                 +--------------------------------------- fixed once written</code></pre>
+
+<div class="claim" data-key="06-architecture.cost.1">
+<p>The conversation window is a <b>rolling summary of bounded size</b>, not the full session history. Every term in <code>ctx_tokens</code> is therefore bounded, which makes cost per turn approximately <b>constant</b> rather than growing with session length.</p>
+<p>This matters more than it looks. With an unbounded window, cost per session grows roughly with the square of the number of turns, and the sessions that cost the most are precisely the long ones with a struggling student, which is the student we most want to keep. A pricing model built on average session cost would then be wrong in the worst direction. <b>What it makes harder:</b> the tutor's recall of early-session detail is lossy, and the summariser becomes a component that can itself be wrong; it sits inside the content plane and its output is not citable evidence.</p>
+<span class="tag decided">Decision D30<span class="src">14 September 2026: bounded context, therefore constant cost per turn</span></span>
+</div>
+
+<h3>What is known and what is not</h3>
+
+<div class="tw">
+<table>
+<thead><tr><th>Term</th><th>Status</th><th>How it gets filled in</th></tr></thead>
+<tbody>
+<tr><td><code>turns</code> per session</td><td><span class="mark unknown">Unknown</span></td><td>Measured from the frozen battery at M2, then from live sessions.</td></tr>
+<tr><td><code>system_fixed</code>, <code>style_card</code>, <code>k_nodes</code>, <code>window</code></td><td><b>Design-controlled.</b> Each is bounded by a decision we make, not by a vendor.</td><td>Countable as soon as the prompts and the card renderer exist. These are the only levers we hold.</td></tr>
+<tr><td><code>generate()</code>, <code>verify()</code> unit prices</td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>Gathered at M2 during model selection. Not written from memory.</td></tr>
+<tr><td>Gate-fire rate, which adds wasted generations</td><td><span class="mark unknown">Unknown</span></td><td>First frozen-battery run.</td></tr>
+<tr><td>Figure, CAS, storage costs</td><td><b>Approximately zero</b> by construction (D28).</td><td>Already settled by the architecture.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p data-key="06-architecture.cost.2">What can be said now without inventing anything: <b>the only cost lever we control is bounded context multiplied by turns</b>, every other term is a price someone else sets, and the architecture is shaped to keep both factors bounded. The arithmetic that follows from this structure, and its consequences for pricing, is in <a href="10-economics.html">10</a>, which identifies the variable that actually dominates and finds that it is not this one.</p>
+

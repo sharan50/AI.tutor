@@ -1,0 +1,32 @@
+<h2 id="uncomfortable">The uncomfortable arithmetic of that floor</h2>
+
+<p data-key="03-curriculum-and-content.uncomfortable.1">A 99.5% per-turn floor sounds strong. Per session it is not, and the honest number is the one a parent experiences.</p>
+
+<div class="claim">
+<p>Per-session risk is <code>1 - (1 - p)^n</code>, where <code>p</code> is the per-turn floor and <code>n</code> is the number of tutor turns in a session. <span class="mark unknown">Unknown</span> <code>n</code> is not known; it is measured at M2 and is marked unknown in <a href="06-architecture.html#cost">06</a> and <a href="10-economics.html#cost">10</a> as well. So the honest presentation is the relationship, not a single number.</p>
+
+<div class="tw">
+<table>
+<caption>Chance that a session contains at least one unsupported assertion. Arithmetic, not measurement: every cell is <code>1 - (1 - p)^n</code>. The column to read is whichever turns out to be the real session length.</caption>
+<thead><tr><th>Per-turn floor</th><th class="num">n = 10 turns</th><th class="num">n = 20 turns</th><th class="num">n = 30 turns</th></tr></thead>
+<tbody>
+<tr><td><b>99.5%</b>, the launch floor</td><td class="num">4.9%</td><td class="num">9.5%</td><td class="num">14.0%</td></tr>
+<tr><td><b>99.9%</b>, the D21 threshold</td><td class="num">1.0%</td><td class="num">2.0%</td><td class="num">3.0%</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>At the launch floor, somewhere between one session in twenty and one in seven contains an unsupported assertion, depending on a session length nobody has measured. That is the range to hold in mind, and it is wide because the input is unknown rather than because the arithmetic is uncertain.</p>
+<span class="tag unknown">Derived from ACC-2<span class="src">and it is not comfortable</span></span>
+</div>
+
+<p>Two things follow, and both are commitments rather than observations.</p>
+
+<div class="claim" data-key="03-curriculum-and-content.uncomfortable.2">
+<p><b>The per-session figure is the reported figure.</b> Internally and externally, groundedness is reported as "proportion of sessions containing at least one unsupported assertion", not as a per-turn percentage. Per-turn numbers flatter the product by a factor of roughly twenty and are the number a competitor would quote.</p>
+<p><b>No marketing claim in the form "it does not make things up" is made until ACC-2 is measured at or above 99.9% per turn on two consecutive weekly runs.</b> Until then the product claim is the narrower and true one: every substantive statement cites a validated item, and the tutor refuses rather than guesses when it cannot. That claim is supportable at the launch floor; the stronger one is not.</p>
+<span class="tag decided">Decision D21<span class="src">14 September 2026</span></span>
+</div>
+
+<p>This is the single clearest case in the repository of a number that would have been easier to leave at the per-turn figure. It is stated this way so that someone reading in six months cannot accidentally market a 99.5% floor as though it meant what it sounds like it means.</p>
+

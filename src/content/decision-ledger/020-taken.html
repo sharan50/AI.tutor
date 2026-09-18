@@ -1,0 +1,89 @@
+<h2 id="taken">D15 to D33: taken while writing this design</h2>
+
+<p data-key="decision-ledger.taken.1">All dated 14 September 2026. Each is reversible with a recorded reason, except where noted.</p>
+
+<h3>Product</h3>
+
+<dl class="defs">
+<dt>D15. The unaided check is scored on first commit, with no hints available.</dt>
+<dd><b>Driven by:</b> <span class="mark verified">Verified</span> the reported caveat that students who default to the AI develop surface fluency that does not hold under examination conditions. <b>Rejected:</b> allowing hints and scoring leniently, which would have produced better-looking session outcomes and a happier student, and would have made the product's core metric the one a surface-fluency failure flatters. <b>Makes harder:</b> sessions end on a negative note more often, which will show up in retention. <a href="01-product.html#session">01</a></dd>
+
+<dt>D16. The parent does not see session transcripts by default.</dt>
+<dd><b>Driven by:</b> best interests of the child, and the fact that a student who knows every word is reported will not admit confusion. <b>Rejected:</b> full parental visibility, which the payer would prefer and which would have removed a sales objection; it would have cost the willingness to admit confusion, which is the raw material the tutor works with. <b>Makes harder:</b> a real objection from paying parents, and an unresolved question for under-13s (OI-8). <a href="01-product.html#parent">01</a></dd>
+</dl>
+
+<h3>Style</h3>
+
+<dl class="defs">
+<dt>D17. No tone dimension in the weighted style set.</dt>
+<dd><b>Driven by:</b> admission test 2, that a dimension must change what the student is asked to do rather than how it sounds. <b>Rejected:</b> including warmth and register, which are the easiest dimensions to implement and perceive; they would have made presets demo beautifully and teach identically, leaving the D14 instrumentation measuring nothing. <b>Makes harder:</b> presets are less distinct on a single transcript, which raises the risk T-STY-02 fails for a real but uninteresting reason. <a href="02-style-engine.html#set">02</a></dd>
+
+<dt>D18. The exemplar retriever supplies style context only; the verifier rejects any curricular claim supported solely by an exemplar.</dt>
+<dd><b>Driven by:</b> without the second half, D6 quietly reintroduces ungrounded content through the style path and P2 fails silently. <b>Rejected:</b> treating exemplars as a retrieval source, which would have been simpler and would have put a hole in the correctness gate. <b>Makes harder:</b> exemplar conditioning delivers less than it appears to, because it cannot contribute content. <a href="02-style-engine.html#d6">02</a></dd>
+</dl>
+
+<h3>Content</h3>
+
+<dl class="defs">
+<dt>D19. Launch alignment is Pearson Edexcel. <b>Explicitly provisional.</b></dt>
+<dd><b>Driven by:</b> <span class="mark verified">Verified</span> AQA's published AI policy is the broadest, and OI-1 is unanswered. <b>Rejected:</b> AQA, pending OI-1. <b>Trigger to revisit:</b> <span class="mark unknown">Unknown</span> relative board share of GCSE Mathematics entries, which has not been checked; if AQA's share is materially larger this decision is commercially wrong. <b>Makes harder:</b> adding a second board repeats the command-word and convention work. <a href="03-curriculum-and-content.html#scope">03</a></dd>
+
+<dt>D20. Validators are engaged on terms forbidding them from bringing any awarding-body material into the work, with a positive declaration per item.</dt>
+<dd><b>Driven by:</b> the people best qualified to validate are current examiners, who hold exactly the material the clean room excludes, under confidentiality obligations of their own. <b>Rejected:</b> a briefing rather than a contractual term, which would have been friendlier and would have left the validator personally exposed. <b>Makes harder:</b> validators cannot be asked the most natural question, "is this like a real exam question", because it invites the recall we have excluded. <a href="03-curriculum-and-content.html#cleanroom">03</a></dd>
+
+<dt>D21. Groundedness is reported per session, not per turn; and no "it does not make things up" claim until the per-turn floor reaches 99.9%.</dt>
+<dd><b>Driven by:</b> a 99.5% per-turn floor means between one session in twenty and one in seven contains an unsupported assertion, depending on session length, which is unmeasured. The per-turn number flatters the product by roughly an order of magnitude. <b>Rejected:</b> reporting the per-turn figure, which is the number a competitor would quote and which sounds far stronger than it is. <b>Makes harder:</b> the launch marketing claim is narrower and less quotable than the one the product could plausibly have got away with. <a href="03-curriculum-and-content.html#uncomfortable">03</a></dd>
+
+<dt>D22. Model versions are pinned; a vendor update must pass the blocking regression battery before reaching a learner.</dt>
+<dd><b>Driven by:</b> we buy the model, so someone else can move every accuracy number without telling us, potentially mid-exam-term. <b>Rejected:</b> tracking the latest version automatically, which would have given free capability improvements. <b>Makes harder:</b> we run behind the frontier and pay to qualify every upgrade, while <span class="mark verified">Verified</span> free competitors improve continuously at no cost to the user. <a href="03-curriculum-and-content.html#harness">03</a></dd>
+</dl>
+
+<h3>Rights</h3>
+
+<dl class="defs">
+<dt>D23. T-ZERO-01: the full regression battery runs with the persona registry empty, as a blocking check on every release.</dt>
+<dd><b>Driven by:</b> D11 is a hard requirement, and without a test it degrades into a claim that was true the day it was written. <b>Rejected:</b> asserting zero-persona operation in prose, which is what the first persona-dependent code path added under delivery pressure would have silently falsified. <b>Makes harder:</b> every future persona feature must have an archetype degradation path, permanently. <a href="04-rights-dossier.html#zero">04</a></dd>
+</dl>
+
+<h3>Safety and privacy</h3>
+
+<dl class="defs">
+<dt>D24. Zero retention of prompts and outputs, and no training on our data, as a model vendor procurement gate.</dt>
+<dd><b>Driven by:</b> the marketing-site line says "we do not use it to train anyone's AI model", and that clause is false without the contract. <b>Rejected:</b> treating it as a preference to negotiate, which would have widened the vendor set and probably reduced cost. <b>Makes harder:</b> narrows vendors, possibly to more expensive tiers, and forecloses vendor-side caching optimisations. <a href="05-safety-privacy-regulatory.html#data">05</a></dd>
+
+<dt>D25. No engagement objective anywhere in the system. No streaks, badges, loss aversion or return notifications.</dt>
+<dd><b>Driven by:</b> the Children's code nudge-techniques standard, taken seriously rather than gestured at. <b>Rejected:</b> the standard consumer subscription retention toolkit, which every competitor uses and which works. <b>Makes harder:</b> Route A retention, which is already the weakest number in the economics, and it costs most at exactly the June cliff where reversing it would be most tempting. Written as a decision so a future growth hire cannot mistake it for an oversight. <a href="05-safety-privacy-regulatory.html#basis">05</a></dd>
+
+<dt>D26. A safeguarding disclosure is not automatically reported to the parent.</dt>
+<dd><b>Driven by:</b> automatic parental notification is unsafe in precisely the cases that matter most, because the parent is sometimes the risk. <b>Rejected:</b> automatic notification, which is simpler, looks responsible, and would occasionally be dangerous. <b>Makes harder:</b> requires a trained human reviewer and a written decision policy, and <a href="05-safety-privacy-regulatory.html#content">05</a> admits next-business-day review is not adequate for an acute disclosure. <a href="05-safety-privacy-regulatory.html#content">05</a></dd>
+</dl>
+
+<h3>Architecture</h3>
+
+<dl class="defs">
+<dt>D27. The verifier runs on a different pinned model from the generator; the mathematics check runs on no model at all.</dt>
+<dd><b>Driven by:</b> a verifier sharing the generator's weights shares its errors, which is the failure mode that produces a confident wrong answer passing its own check. <b>Rejected:</b> self-verification, which would have been cheaper and lower-latency. <b>Makes harder:</b> two vendor relationships, two regression surfaces, a second cost line, and latency on every turn. <a href="06-architecture.html#verifier">06</a></dd>
+
+<dt>D28. Figures are rendered deterministically from a structured specification, never generated by an image model.</dt>
+<dd><b>Driven by:</b> three constraints at once, any one sufficient: a generated image cannot be verified; image generation is the most expensive thing a turn could do; and <span class="mark verified">Verified</span> the Indian rules require unstrippable provenance metadata on synthetic content. <b>Rejected:</b> image generation, which would have given unlimited visual vocabulary. <b>Makes harder:</b> a finite figure vocabulary, so subjects needing rich diagrams need engineering before content. This is a real barrier to the second subject. <a href="06-architecture.html#figures">06</a></dd>
+
+<dt>D29. The kill switch is rehearsed quarterly against a live archetype, with the elapsed time recorded.</dt>
+<dd><b>Driven by:</b> an untested switch is a claim, and this one is a contractual commitment to a creator. <b>Rejected:</b> testing it when first needed, which is when it will be needed under maximum pressure. <b>Makes harder:</b> nothing material; D11 makes the rehearsal safe. <a href="06-architecture.html#killswitch">06</a></dd>
+
+<dt>D30. The conversation window is a bounded rolling summary, giving approximately constant cost per turn.</dt>
+<dd><b>Driven by:</b> with an unbounded window, cost grows roughly with the square of session length, and the most expensive sessions would be the long ones with a struggling student, who is the student the product exists for. <b>Rejected:</b> full session history, which would have given perfect recall. <b>Makes harder:</b> lossy recall of early-session detail, and a summariser that can itself be wrong and whose output is not citable evidence. <a href="06-architecture.html#cost">06</a></dd>
+</dl>
+
+<h3>Commercial and process</h3>
+
+<dl class="defs">
+<dt>D31. The verified ethnicity figures inform where to test channels by geography only. No advertising is targeted on a protected characteristic.</dt>
+<dd><b>Driven by:</b> the figures describe where tutoring demand already exists; turning them into an audience segment would be unlawful. <b>Rejected:</b> characteristic-based targeting, which the data would superficially support and which should not be built. <b>Makes harder:</b> a blunter acquisition instrument than the data appears to offer. <a href="07-route-a-direct-to-parents.html#distribution">07</a></dd>
+
+<dt>D32. Milestones are ordered by what the information costs to obtain, cheapest first, and the roadmap carries no dates.</dt>
+<dd><b>Driven by:</b> two questions that can end the venture cost less than a week of engineering time to answer. <b>Rejected:</b> a feature-ordered roadmap with dates, which is what an investor expects to see and what a team finds motivating. <b>Makes harder:</b> the first milestone contains almost no building, which is unsatisfying and is the most common reason this ordering is abandoned. <a href="11-roadmap.html#rule">11</a></dd>
+
+<dt>D33. The D14 experiment randomises preset <i>availability</i> at cohort level, not choice.</dt>
+<dd><b>Driven by:</b> a learner chooses their preset, so randomising choice would remove the thing being tested. <b>Rejected:</b> comparing learners who chose a named preset against those who chose an archetype, which is selection-biased; it will be the more tempting number because it is larger and easier to compute, and it does not answer the question. <b>Makes harder:</b> needs two cohorts and a pre-registered analysis, and the baseline return rate must be observed before the sample size can be set. <a href="11-roadmap.html#d14">11</a></dd>
+</dl>
+

@@ -1,0 +1,105 @@
+<h2 id="worked">The same topic taught twice</h2>
+
+<p data-key="01-product.worked.1">Objective: understand why the inequality sign reverses when both sides are multiplied or divided by a negative number. GCSE Mathematics, Higher tier. Both transcripts below are grounded in the same single item-bank node, <span class="cite">IB-MAT-INEQ-004</span>, and would be produced from the same objective by the same model. The only difference is the style parameter object.</p>
+
+<p>The point of showing both is that the difference is not vocabulary. The tutor does not become chattier or more formal. It enters the topic at a different place, withholds the general rule for a different length of time, and does something structurally different when the student is wrong.</p>
+
+<h3>Preset A: entry from a concrete instance, late formalism, one running example, predict-then-falsify on error</h3>
+
+<div class="transcript">
+<div class="tr-head">Preset A &middot; style vector A in <a href="02-style-engine.html">02</a> &middot; objective INEQ-004</div>
+<div class="turn tutor"><span class="who">Tutor</span>
+<p>Quick one before we start. Is 3 less than 5?</p>
+</div>
+<div class="turn student"><span class="who">Student</span>
+<p>yes obviously</p>
+</div>
+<div class="turn tutor"><span class="who">Tutor</span>
+<p>Good. Now multiply both sides by &minus;1. Write down what you get, including the sign in the middle. Do not think about rules, just write what you think it says.</p>
+</div>
+<div class="turn student"><span class="who">Student</span>
+<p>-3 &lt; -5</p>
+</div>
+<div class="turn tutor"><span class="who">Tutor</span>
+<p>Right, that is what most people write. Hold onto it, we are going to check it rather than me telling you.</p>
+<p>Put &minus;3 and &minus;5 on a number line. Which one is further left?</p>
+<div class="annot"><b>Dimension: error_response = predict-then-falsify.</b> The student is wrong and has not been told. Under preset B this turn is a correction. Here the wrong answer is kept on the table so the student can knock it down, which is the entire mechanism of this style.</div>
+</div>
+<div class="turn student"><span class="who">Student</span>
+<p>-5 is further left</p>
+</div>
+<div class="turn tutor"><span class="who">Tutor</span>
+<p>And further left means smaller. So which is smaller, &minus;5 or &minus;3?</p>
+</div>
+<div class="turn student"><span class="who">Student</span>
+<p>-5. oh. so it's -3 &gt; -5</p>
+</div>
+<div class="turn tutor"><span class="who">Tutor</span>
+<p>Yes. You started with 3 &lt; 5 and ended with &minus;3 &gt; &minus;5. The sign turned round.</p>
+<p>Stay with the same two numbers. Try it with &minus;2 instead of &minus;1: what do 3 and 5 become, and which is bigger now? <span class="cite">IB-MAT-INEQ-004</span></p>
+<div class="annot"><b>Dimension: example_policy = one running example.</b> The 3 and 5 pair is carried through the whole session rather than replaced with fresh numbers. Preset B replaces them every turn.</div>
+</div>
+<div class="turn student"><span class="who">Student</span>
+<p>-6 and -10, and -6 is bigger</p>
+</div>
+<div class="turn tutor"><span class="who">Tutor</span>
+<p>So it happened again. Now say what you think the rule is, in your own words, before I say it.</p>
+</div>
+<div class="turn student"><span class="who">Student</span>
+<p>if you times by a negative the inequality swaps round</p>
+</div>
+<div class="turn tutor"><span class="who">Tutor</span>
+<p>That is the rule, and you got there from two examples rather than from me. Formally: multiplying or dividing both sides of an inequality by a negative number reverses the direction of the inequality. It is worth knowing <i>why</i>, because it stops you forgetting it: multiplying by a negative reflects every number to the other side of zero, and reflecting a line reverses the order of everything on it. <span class="cite">IB-MAT-INEQ-004</span></p>
+<div class="annot"><b>Dimension: formalism_latency = high.</b> The general statement appears at turn 11, after two worked instances and after the student has articulated it themselves. In preset B it is the first sentence of the session.</div>
+</div>
+</div>
+
+<h3>Preset B: entry from the formal statement, early formalism, many varied examples, direct correction on error</h3>
+
+<div class="transcript">
+<div class="tr-head">Preset B &middot; style vector B in <a href="02-style-engine.html">02</a> &middot; same objective, same source node</div>
+<div class="turn tutor"><span class="who">Tutor</span>
+<p>Rule first, then practice.</p>
+<p>Multiplying or dividing both sides of an inequality by a negative number reverses the direction of the inequality. The reason is that multiplying by a negative reflects the number line about zero, and a reflection reverses order. <span class="cite">IB-MAT-INEQ-004</span></p>
+<p>Three to try, getting harder. First: solve &minus;2<i>x</i> &gt; 8.</p>
+<div class="annot"><b>Dimensions: entry_point = formal, formalism_latency = zero.</b> The general rule and its justification are turn one. No instance precedes them.</div>
+</div>
+<div class="turn student"><span class="who">Student</span>
+<p>x &gt; -4</p>
+</div>
+<div class="turn tutor"><span class="who">Tutor</span>
+<p>No. You divided by &minus;2 and kept the sign the same. Dividing by a negative reverses it, so &minus;2<i>x</i> &gt; 8 gives <i>x</i> &lt; &minus;4.</p>
+<p>Next: solve 5 &minus; 3<i>x</i> &le; 17.</p>
+<div class="annot"><b>Dimension: error_response = direct correction.</b> Same student error as in preset A. Here it is named, corrected and moved past inside one turn. The student is not asked to diagnose it. <b>example_policy = varied</b>: a new expression each time rather than one carried through.</div>
+</div>
+<div class="turn student"><span class="who">Student</span>
+<p>-3x &lt;= 12 so x &lt;= -4</p>
+</div>
+<div class="turn tutor"><span class="who">Tutor</span>
+<p>First step right, second step wrong, same reason as before. Dividing &minus;3<i>x</i> &le; 12 by &minus;3 reverses it: <i>x</i> &ge; &minus;4.</p>
+<p>Last one, and this is the one that catches people in the exam: solve &minus;<i>x</i>/4 + 1 &gt; 3. <span class="cite">IB-MAT-INEQ-004</span></p>
+</div>
+</div>
+
+<h3>What changed, and what did not</h3>
+
+<div class="tw">
+<table>
+<caption>The two transcripts differ on four dimensions of the style object. Everything in the right-hand column is held constant by design.</caption>
+<thead><tr><th>Changed by the style object</th><th>Held constant regardless of preset</th></tr></thead>
+<tbody>
+<tr><td>Where the session enters the topic: a true numerical instance, or the general statement.</td><td>The objective, and the item-bank node it is grounded in.</td></tr>
+<tr><td>How long the general rule is withheld: eleven turns, or zero.</td><td>The mathematical content, which is identical and comes from the same validated node.</td></tr>
+<tr><td>Whether one example is carried through or each turn brings a new one.</td><td>The correctness gate. Both transcripts are verified against the same node before display.</td></tr>
+<tr><td>What happens when the student is wrong: the error is kept and falsified by the student, or named and corrected by the tutor.</td><td>The unaided check at the end, its items, and how it is scored.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>This is the test of D4 and D7 in miniature. If a reader looks at those two transcripts and sees a difference of tone rather than a difference of teaching, the style engine has failed and the wedge fails with it. The formal version of that judgement is T-STY-02, the blind discrimination test in <a href="02-style-engine.html">02</a>, which replaces this informal impression with a measurement.</p>
+
+<div class="claim">
+<p>That the difference shown above is a difference students can perceive and will care about. These transcripts were written to illustrate a specification, not produced by a system, and the author is not a fifteen-year-old. Nothing here establishes that preset A and preset B feel different to the learner, only that they are structurally different on paper.</p>
+<span class="tag assumed">Assumption<span class="src">not verified</span></span>
+</div>
+

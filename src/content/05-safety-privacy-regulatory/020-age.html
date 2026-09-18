@@ -1,0 +1,32 @@
+<h2 id="age">Age assurance</h2>
+
+<p class="lede" data-key="05-safety-privacy-regulatory.age.1"><b>There is no date-of-birth field anywhere in the product.</b> A child is never asked their age, because a child's answer would be the weakest possible signal and asking for it would create a record we would then have to justify holding.</p>
+
+<h3>Route A, direct to parents</h3>
+
+<ol>
+<li><b>The account holder must be a verified adult.</b> Verification is performed by a third-party age assurance provider certified to a recognised standard, before any learner profile can be created.</li>
+<li><b>The provider returns a result, not a document.</b> We receive a boolean, a method identifier, a provider reference and a timestamp. <b>We never receive or store an identity document, a facial image, or a biometric template.</b> The provider's own retention is bounded contractually.</li>
+<li><b>Methods offered</b>, so that a parent without one route has another: facial age estimation, a digital identity wallet, open-banking based verification, or a credit-reference lookup on the account holder.</li>
+<li><b>A payment card alone is not sufficient.</b> It is recorded as a corroborating signal only. Card possession is a weak proxy for adulthood and treating it as assurance is close to the mistake the ICO has been fining.</li>
+<li><b>The child never self-declares.</b> The learner profile is created by the verified adult inside their verified account. The adult states the learner's school year, which is needed for curriculum placement, not for age gating.</li>
+<li><b>Every learner account is a child account by default,</b> with the highest-privacy settings, regardless of what year group was entered. An incorrect or inflated entry cannot downgrade a protection.</li>
+<li><b>Re-verification</b> on change of payment instrument, on material account change, and at least annually.</li>
+</ol>
+
+<p>The design property that matters: there is no path through the product by which an unverified person creates a learner profile, and no field anywhere in which a child's self-asserted age is relied on for anything.</p>
+
+<h3>Route B, through schools</h3>
+
+<p>The school is the gateway. Staff authenticate through the school's own identity provider, pupils are enrolled by the school under its existing duties, and the school already knows who its pupils are. Age assurance largely dissolves as a problem, which is one of the genuine advantages of Route B and is scored as such in <a href="09-route-comparison.html">09</a>.</p>
+
+<div class="claim">
+<p>What age assurance method would satisfy the ICO for a service whose entire user base is children, at a cost compatible with a consumer price point? <b>We have specified a mechanism above; we have not established that it is sufficient, and we are not going to guess.</b> <b>Unblocks:</b> the Route A launch, and the unit economics, because the per-verified-adult cost is a variable the consumer price has to carry. <b>Cost of getting it wrong:</b> the Reddit outcome, which was £14.47m and was specifically about inadequate age assurance.</p>
+<span class="tag open">For counsel<span class="src">open item OI-5</span></span>
+</div>
+
+<div class="claim" data-key="05-safety-privacy-regulatory.age.2">
+<p><b>Cost per verified adult.</b> Not known, not in the verified findings, and not invented here. It is a one-off charge against the contribution of a whole acquisition, not of a month: <a href="10-economics.html#dominant">10</a> shows it subtracting directly from <code>(p - c) x m</code> over the examination cycle. If it consumes a large share of that, Route A's economics fail at the front door and Route B becomes the default. That is written as an explicit condition on the recommendation in <a href="09-route-comparison.html">09</a> rather than left as a footnote.</p>
+<span class="tag unknown">Unknown<span class="src">required input, and it can break Route A on its own</span></span>
+</div>
+

@@ -25,7 +25,7 @@
 
 <h2 id="rule">The ordering rule, and why there are no dates</h2>
 
-<div class="claim">
+<div class="claim" data-key="11-roadmap.rule.1">
 <p>Milestones are ordered by <b>what the information costs to obtain</b>, cheapest first, and not by what is most interesting to build. A milestone is complete when the evidence is in hand, not when the work is done.</p>
 <p>There are <b>no dates</b> in this roadmap. Dates on an unstarted plan with an unhired team are decoration, and they would be the first invented numbers in a repository that has otherwise refused to invent any. Sequence is real and is stated; duration is not known.</p>
 <span class="tag decided">Decision D32<span class="src">14 September 2026</span></span>
@@ -35,7 +35,7 @@
 
 <h2 id="m1">M1: questions answered before anything is built</h2>
 
-<p><b>Evidence obtained:</b> answers to all eleven counsel items, the three unread board policies, three age-verification quotes, a price anchor reading, and thirty school conversations.</p>
+<p data-key="11-roadmap.m1.1"><b>Evidence obtained:</b> answers to all eleven counsel items, the three unread board policies, three age-verification quotes, a price anchor reading, and thirty school conversations.</p>
 
 <div class="tw">
 <table>
@@ -55,11 +55,11 @@
 
 <p><b>What would falsify the plan here:</b> a counsel answer that AQA's clause reaches runtime retrieval in a way that implicates specification-shaped teaching; an age verification quote large enough to exhaust the acquisition budget; or a price test showing parents anchor against software.</p>
 
-<p><b>Exit:</b> written positions on all eleven counsel items, and a go or no-go on Route A against conditions C1 and C2 in <a href="09-route-comparison.html#rec">09</a>.</p>
+<p data-key="11-roadmap.m1.2"><b>Exit:</b> written positions on all eleven counsel items, and a go or no-go on Route A against conditions C1 and C2 in <a href="09-route-comparison.html#rec">09</a>.</p>
 
 <h2 id="m2">M2: the content and accuracy floor</h2>
 
-<p><b>Evidence obtained:</b> whether the correctness promise is deliverable, and what it costs.</p>
+<p data-key="11-roadmap.m2.1"><b>Evidence obtained:</b> whether the correctness promise is deliverable, and what it costs.</p>
 
 <ul>
 <li><b>Timed validation pilot:</b> two examiners, the same 20 items. Produces <code>minutes_per_item</code> by item kind and a rate check. These are the two numbers that decide whether the content moat scales (<a href="10-economics.html#content">10</a>).</li>
@@ -72,11 +72,11 @@
 
 <p><b>What would falsify the plan:</b> ACC-2 sitting far below the 99.5% floor with no tractable path to it; a gate-fire rate so high that the product refuses constantly; or <code>minutes_per_item</code> so large that a second strand is unaffordable, which would mean the defensibility argument in <a href="00-thesis.html#shelf">00</a> does not hold.</p>
 
-<p><b>Exit:</b> the floors in <a href="03-curriculum-and-content.html#floor">03</a> met on a held-out set with a pinned model, and a measured cost per session.</p>
+<p data-key="11-roadmap.m2.2"><b>Exit:</b> the floors in <a href="03-curriculum-and-content.html#floor">03</a> met on a held-out set with a pinned model, and a measured cost per session.</p>
 
 <h2 id="m3">M3: style falsification</h2>
 
-<p><b>Evidence obtained:</b> whether the style engine does anything a stranger can detect. Deliberately scheduled <b>before any creator is signed</b>, so a failure costs an engineering cycle rather than a contract and a relationship.</p>
+<p data-key="11-roadmap.m3.1"><b>Evidence obtained:</b> whether the style engine does anything a stranger can detect. Deliberately scheduled <b>before any creator is signed</b>, so a failure costs an engineering cycle rather than a contract and a relationship.</p>
 
 <ul>
 <li><b>Rating protocol pilot:</b> three raters score the same public material for one real educator, against the rubric in <a href="02-style-engine.html#preset">02</a>. Produces the inter-rater agreement data that sets the threshold, which is currently an explicit unknown.</li>
@@ -86,23 +86,23 @@
 
 <p><b>What would falsify the plan:</b> T-STY-02 at chance. Before concluding the wedge is dead, run the pre-specified diagnostic in <a href="02-style-engine.html#weak">02</a>: check whether graders discriminate better on longer samples. If they do not, D4 is in serious trouble and <a href="00-thesis.html#hold">00</a> already names that as a live outcome rather than a tail risk.</p>
 
-<p><b>Exit:</b> blind discrimination significantly above chance, and T-STY-03 passing, which matters more than T-STY-02 because a style engine that changes the truth is worse than no style engine.</p>
+<p data-key="11-roadmap.m3.2"><b>Exit:</b> blind discrimination significantly above chance, and T-STY-03 passing, which matters more than T-STY-02 because a style engine that changes the truth is worse than no style engine.</p>
 
 <h2 id="m4">M4: the wedge test</h2>
 
-<p><b>Evidence obtained:</b> whether a name is worth more than an archetype to a real learner, and whether acquisition works without one.</p>
+<p data-key="11-roadmap.m4.1"><b>Evidence obtained:</b> whether a name is worth more than an archetype to a real learner, and whether acquisition works without one.</p>
 
-<p>This is D14 and it is the experiment the venture turns on. It requires named presets and unnamed archetypes shipped simultaneously from day one, which means at least one signed creator, which means M1's counsel answers and the <a href="../contracts/creator-licence-term-sheet.md">term sheet</a>.</p>
+<p data-key="11-roadmap.m4.2">This is D14 and it is the experiment the venture turns on. It requires named presets and unnamed archetypes shipped simultaneously from day one, which means at least one signed creator, which means M1's counsel answers and the <a href="../contracts/creator-licence-term-sheet.md">term sheet</a>.</p>
 
 <h2 id="d14">The D14 instrumentation, in detail</h2>
 
-<div class="claim">
+<div class="claim" data-key="11-roadmap.d14.1">
 <p>A learner chooses their preset, so choice cannot be randomised without removing the thing being tested. <b>Availability</b> is randomised instead, at cohort level: one arm sees archetypes only, the other sees named presets and archetypes together. The comparison between arms is the causal estimate.</p>
 <p>Within the both-arm, comparing learners who chose a named preset against those who chose an archetype is <b>selection-biased and is exploratory only</b>. It will be the more tempting number because it is bigger and easier to compute, and it does not answer the question.</p>
 <span class="tag decided">Decision D33<span class="src">14 September 2026: randomise availability, not choice</span></span>
 </div>
 
-<div class="tw">
+<div class="tw" data-key="11-roadmap.d14.2">
 <table>
 <thead><tr><th>Metric</th><th>Definition</th><th>Role</th></tr></thead>
 <tbody>
@@ -124,7 +124,7 @@
 
 <h2 id="m5">M5: revealed willingness to pay</h2>
 
-<p><b>Evidence obtained:</b> the payback ratio, measured rather than modelled.</p>
+<p data-key="11-roadmap.m5.1"><b>Evidence obtained:</b> the payback ratio, measured rather than modelled.</p>
 
 <p>M1 tested the price <i>anchor</i> with a landing page, which is a stated preference. This milestone tests what people actually do with a card in their hand, which is different and is the number that matters.</p>
 
@@ -136,13 +136,13 @@
 <li>Correlation between gate-fire rate and second-session return, which prices what the correctness promise costs in retention.</li>
 </ul>
 
-<p><b>What would falsify the plan:</b> R at or above 1 with no lever available. Price is anchored, variable cost is bounded, retained months are capped by the examination calendar, so an R above 1 that cannot be fixed by shifting acquisition to Year 10 or by reducing CAC is a finding about the business rather than a bad quarter.</p>
+<p data-key="11-roadmap.m5.2"><b>What would falsify the plan:</b> R at or above 1 with no lever available. Price is anchored, variable cost is bounded, retained months are capped by the examination calendar, so an R above 1 that cannot be fixed by shifting acquisition to Year 10 or by reducing CAC is a finding about the business rather than a bad quarter.</p>
 
 <h2 id="d6">The D6 trigger, as a decision rule</h2>
 
 <p class="lede">D6 requires the route to high-fidelity personas to be designed now, and the interface is specified in <a href="02-style-engine.html#d6">02</a>. This is the rule that decides whether it is ever exercised. Both conditions must hold. Either alone points somewhere else.</p>
 
-<div class="claim">
+<div class="claim" data-key="11-roadmap.d6.1">
 <p>Named presets go to exemplar conditioning <b>only when</b> they show a clear retention advantage over unnamed archetypes <b>and</b> qualitative feedback attributes the shortfall to <b>fidelity</b> rather than to <b>relevance</b>.</p>
 <span class="tag decided">The trigger<span class="src">stated as the brief states it</span></span>
 </div>
@@ -164,11 +164,11 @@
 
 <h2 id="m6">M6: route confirmation or reversal</h2>
 
-<p><b>Evidence obtained:</b> enough to confirm Route A or to flip to Route B on evidence rather than on fatigue.</p>
+<p data-key="11-roadmap.m6.1"><b>Evidence obtained:</b> enough to confirm Route A or to flip to Route B on evidence rather than on fatigue.</p>
 
 <p>The three conditions in <a href="09-route-comparison.html#rec">09</a> are re-evaluated against measured inputs rather than expectations. C2 will have been answered at M1 and may already have flipped the decision. C1 is answered twice, at M1 by stated preference and at M5 by revealed preference, and the two can disagree.</p>
 
-<p><b>The reversal is cheap and is meant to be used.</b> <a href="09-route-comparison.html#mind">09</a> puts the switching cost at months rather than a rewrite, because roughly 80% of the design does not care who pays (D3). A plan that treats a route reversal as a failure will delay it past the point where it helps; this one treats it as the expected use of the parallel planning that D2 and D3 paid for.</p>
+<p data-key="11-roadmap.m6.2"><b>The reversal is cheap and is meant to be used.</b> <a href="09-route-comparison.html#mind">09</a> puts the switching cost at months rather than a rewrite, because roughly 80% of the design does not care who pays (D3). A plan that treats a route reversal as a failure will delay it past the point where it helps; this one treats it as the expected use of the parallel planning that D2 and D3 paid for.</p>
 
 <div class="claim">
 <p>No hiring plan, no funding plan, and no dates. All three depend on numbers that do not exist yet: the content cost from M2, the payback ratio from M5, and the answers from M1. Writing them now would require inventing the very inputs this repository has refused to invent everywhere else, and a roadmap with fabricated dates is the artefact most likely to be quoted back later as though it had meant something.</p>

@@ -1,0 +1,9 @@
+<h2 id="views">D39: the front door and the owner views</h2>
+
+<p data-key="decision-ledger.views.1">Dated 17 September 2026. A decision about how the vault is read, recorded here because it sets who a change is discussed with and what a generated page may contain.</p>
+
+<dl class="defs">
+<dt>D39. The vault has a generated front door and one generated page per owner; ownership is set at section level in roles.json; and a fact reaches a view only by transcluding a block marked in the fragment that states it.</dt>
+<dd><b>Driven by:</b> a person joining should read what they own and nothing else, and until now a newcomer landed on a contents page listing every document, every decision and every open item. The front door is a short summary generated from the ledger, the open-items register, the dependency map and the marked key blocks; each owner's page names their documents and sections, their decisions and open items, what binds them, and a reading path with cumulative word counts. Nothing on a generated page is written twice: the only hand-written prose is one capped frame per page, and every count is computed at build time. <b>Rejected:</b> hand-written role pages, because they drift; page-level ownership, because the two route documents would each be split between three owners; and including whole fragments in role pages, which would make each page a copy of the vault. <b>Makes harder:</b> a prose edit on a generated page is lost on the next build, so a frame lives in roles.json and everything else in the fragments; and ownership changes only through roles.json, never by editing a page. <a href="index.html">Summary</a></dd>
+</dl>
+

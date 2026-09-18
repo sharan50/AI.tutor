@@ -1,0 +1,22 @@
+<h2 id="trigger">The trigger that reverses it</h2>
+
+<p class="lede" data-key="05-safety-privacy-regulatory.trigger.1">Any one of the following converts the service into a user-to-user service, or makes the question genuinely arguable. <b>None of them ships without a completed Online Safety Act duties assessment signed off before the work starts</b>, and this list is a change-control gate in the engineering process, not a note in a design document.</p>
+
+<div class="tw" data-key="05-safety-privacy-regulatory.trigger.2">
+<table>
+<thead><tr><th class="id">#</th><th>Feature that flips the analysis</th></tr></thead>
+<tbody>
+<tr><td class="id">T1</td><td>Any way for a user to share tutor-generated content with another user inside the service.</td></tr>
+<tr><td class="id">T2</td><td>Any way for a user to <b>create, name, customise or publish a persona</b> that another user can access. This is the trigger Ofcom named directly.</td></tr>
+<tr><td class="id">T3</td><td>Group or class sessions in which learners can see each other's contributions.</td></tr>
+<tr><td class="id">T4</td><td>A gallery, feed, leaderboard or showcase that surfaces one user's work or identity to another.</td></tr>
+<tr><td class="id">T5</td><td>Messaging, comments, or any direct channel between users, including between a learner and a tutor who is a user.</td></tr>
+<tr><td class="id">T6</td><td>A referral or social mechanic that surfaces one user's content or identity to another.</td></tr>
+<tr><td class="id">T7</td><td>Search across other users' material.</td></tr>
+<tr><td class="id">T8</td><td>Any third-party integration that republishes session content to a platform where other users see it.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>T2 deserves particular attention because it is the feature most likely to be proposed on product merit. "Let students build their own tutor" is an obvious growth feature, it would be popular, and it would convert the service into precisely the category Ofcom described when it warned about virtual clones. The architectural invariant in <a href="02-style-engine.html#adjust">02</a>, that an adjusted style is visible only to the student who made it and cannot be named, published or shared, exists to hold this line in code rather than in policy.</p>
+

@@ -1,0 +1,37 @@
+<h2 id="turn">The turn pipeline</h2>
+
+<p class="lede" data-key="06-architecture.turn.1">The load-bearing property: <b>the model never retrieves.</b> The composer selects the permitted sources deterministically from the objective before generation begins. The model is given those sources and cannot reach outside them, so the set to check against is known in advance rather than reconstructed from whatever the model decided to look at.</p>
+
+<pre><code>session state
+      |
+      v
+[1] COMPOSER            deterministic, no model call
+      |  selects objective from the learner's mastery model
+      |  retrieves the objective's required item-bank nodes (k bounded)
+      |  renders the style card from the preset object  (cine.card/1.0.0)
+      |  assembles turn plan: objective + permitted sources + card + window
+      v
+[2] GENERATOR           model call, pinned version
+      |  produces a turn with an inline citation on every substantive assertion
+      v
+[3] VERIFIER            four checks, all blocking
+      |  a. citation presence   every substantive assertion cites a permitted node
+      |  b. claim support       the assertion is entailed by the node it cites
+      |  c. scope              nothing outside the declared specification scope
+      |  d. mathematics        every symbolically checkable step, checked by CAS
+      v
+[4] GATE
+      |-- pass --> render to learner --> log turn record
+      |-- fail --> fallback turn (validated item verbatim) --> log + adjudication queue
+      v
+[5] LOGGER              turn record: citations, verdicts, extracted style signatures
+</code></pre>
+
+<p>Three consequences worth making explicit, because each one is a property that would be lost by a more conventional design.</p>
+
+<ul>
+<li><b>Grounding is decided before generation, not inferred after it.</b> An architecture where the model calls a search tool cannot tell, afterwards, whether a claim came from a retrieved document or from the model's own weights. Ours can, because the permitted set is fixed at step 1.</li>
+<li><b>The fallback needs no model.</b> Step 4's failure path serves examiner-written material directly from the bank. That is why the item bank is authored as standalone readable material, per <a href="03-curriculum-and-content.html#below">03</a>: validated-item-only mode has to be a usable product, not a stub.</li>
+<li><b>Style cannot reach the content plane.</b> The style card is an input to step 2 only. It is not visible to step 1's retrieval or to step 3's checks. That is what makes T-STY-03, style changes the teaching and never the truth, an architectural property rather than a hope.</li>
+</ul>
+

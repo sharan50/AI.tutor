@@ -1,0 +1,20 @@
+<h2 id="conformance">Conformance testing</h2>
+
+<p class="lede" data-key="02-style-engine.conformance.1">A style that cannot be verified is a claim, not a feature. Four tests. None has been run.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th class="id">Test</th><th>What it establishes</th><th>Method</th><th>Pass condition</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td class="id">T-STY-01</td><td>The tutor actually teaches at the point in the space it was told to.</td><td>Run a fixed battery of objectives under a preset. Extract all twelve signatures from the transcripts automatically. Compare against the preset vector.</td><td>At least ten of twelve dimensions within the tolerance band, and no dimension outside twice the band.</td><td>Specified, not run</td></tr>
+<tr><td class="id">T-STY-02</td><td>The difference between presets is perceptible to a human who was not told what to look for.</td><td>Blind discrimination. A grader sees two transcripts of the same objective produced under two presets, plus the two style cards, and assigns which is which. Pre-registered sample size and binomial test.</td><td>Assignment accuracy significantly above chance at a pre-registered level.</td><td>Specified, not run</td></tr>
+<tr><td class="id">T-STY-03</td><td><b>Style changes the teaching and never the truth.</b></td><td>Same objective under all shipped presets. Compare cited item-bank nodes and correctness of every asserted step.</td><td>100% overlap on the objective's required nodes, and no difference in correctness rate beyond sampling noise.</td><td>Specified, not run</td></tr>
+<tr><td class="id">T-STY-04</td><td>No licensed exemplar is reproduced in output. <b>Applies only under D6</b>; not applicable at launch.</td><td>Longest-common-subsequence scan of every output against the licensed corpus.</td><td>No output contains a contiguous match above the threshold set in the licence.</td><td>Not applicable until D6 is triggered</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><b>T-STY-03 is the one that protects the business.</b> The failure it guards against is a tutor that, asked to be brisk and exam-facing, quietly starts cutting corners on correctness, or that under a concrete-first preset avoids the formal statement altogether and leaves the student unable to answer the examined question. Style is a presentation-layer variation over a fixed content plane, and T-STY-03 is what turns that sentence from an intention into a property.</p>
+
+<p><b>T-STY-02 is the one that tests the venture.</b> If a blind grader cannot tell two presets apart, then D4's wedge has no substance to sell, whatever students say in a survey. It is deliberately scheduled before any creator is signed, at M3 in <a href="11-roadmap.html">11 Roadmap</a>, so that a failure costs an engineering cycle rather than a contract.</p>
+

@@ -1,0 +1,30 @@
+<h2 id="preset">How a named educator becomes a point in the space</h2>
+
+<div class="claim" data-key="02-style-engine.preset.1">
+<p>The creator licenses <b>name and likeness only</b>. No creator material is ingested. The mapping below is therefore produced by people watching publicly available teaching and scoring a rubric. The material is <i>observed</i>, not <i>ingested</i>: nothing from it is stored, embedded, indexed or passed to a model.</p>
+<span class="tag verified">Constraint<span class="src">decision D5</span></span>
+</div>
+
+<p>That distinction is the whole ballgame and it is easy to blur under delivery pressure, so it is written as a procedure with a record rather than a principle.</p>
+
+<h3>The rating protocol</h3>
+
+<ol>
+<li><b>Material.</b> At least 120 minutes of publicly available teaching by the creator, spanning at least four distinct topics. Referenced by URL and timestamp in the provenance record. Not downloaded, not transcribed into the system, not retained.</li>
+<li><b>Raters.</b> Three independent raters, each qualified to teach the subject, each scoring all twelve dimensions against the published rubric, working without sight of each other's scores.</li>
+<li><b>Aggregation.</b> Per dimension, the median of the three scores.</li>
+<li><b>Reliability gate.</b> Per dimension, agreement is computed across raters. A dimension that fails the agreement threshold is <b>not guessed</b>; it is set to the nearest archetype's value and flagged in the provenance record as unfitted. A preset with more than three unfitted dimensions is not shipped.</li>
+<li><b>Creator review.</b> The creator is shown the resulting twelve numbers and the rendered card, and may object to any of them before the preset goes live. This is a term of the licence, not a courtesy; it is in the <a href="../contracts/creator-licence-term-sheet.md">term sheet</a>.</li>
+<li><b>Record.</b> Provenance stores: rater identities, date, material URLs and timestamps, per-dimension scores and agreement statistics, the aggregated vector, the renderer version, and the creator's sign-off. It stores no creator content.</li>
+</ol>
+
+<div class="claim" data-key="02-style-engine.preset.2">
+<p>The agreement threshold. Setting it needs pilot data from three raters scoring the same material, which does not exist. Writing a number here would be inventing one. The threshold is set at M3 in <a href="11-roadmap.html">11 Roadmap</a> from the pilot, and the pilot is the first place the rubric meets a real educator. <b>Cost of getting it wrong:</b> set too loose, presets are noise wearing a name; set too tight, no creator is fittable and the wedge cannot ship.</p>
+<span class="tag unknown">Unknown<span class="src">required input</span></span>
+</div>
+
+<div class="claim">
+<p>That a recognisable educator's teaching is stable enough across topics to be a <i>point</i> rather than a cloud. A creator who teaches an introductory topic concretely and a hard topic formally is not one vector; they are a function of difficulty. If the pilot shows large within-creator variance, the representation needs a difficulty conditioning term and the schema changes. This is the most likely technical reason for the preset design to need rework, and it is cheap to test early, which is why it sits at M3 rather than later.</p>
+<span class="tag assumed">Assumption<span class="src">not verified</span></span>
+</div>
+
