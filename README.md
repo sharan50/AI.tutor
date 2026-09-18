@@ -154,6 +154,7 @@ contracts/
   creator-licence-term-sheet.md      creator-facing, one page, plain English
   creator-licence-heads-of-terms.md  counsel-facing, with Schedules 2 and 3
 econ/                          the economics model and its outputs; not part of the site
+reviews/                       dated external reviews of the record; not part of the site
 ```
 
 ## Publishing
