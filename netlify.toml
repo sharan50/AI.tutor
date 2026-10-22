@@ -16,11 +16,15 @@
   publish = "_site"
   command = "python3 src/build.py"
 
-# Site root serves the contents page.
+# The site root redirects to the front page. It must be a redirect, not a
+# rewrite: a 200 rewrite served docs/index.html at "/", so the page's relative
+# stylesheet and links resolved against the root, the stylesheet 404'd and the
+# first page anyone opened rendered as unstyled text with broken links. A 302
+# rather than a 301, so that browsers do not cache it permanently.
 [[redirects]]
   from = "/"
   to = "/docs/index.html"
-  status = 200
+  status = 302
 
 # Headers are generated into _site/_headers by src/build.py, not written here.
 # The map at /map/ is the one page that runs a script, and its policy names the
