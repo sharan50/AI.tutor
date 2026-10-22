@@ -39,7 +39,7 @@ Foundations, the shared pages and the front page.
 |---|---|
 | Documents | 30 across the three ideas, the registers included, plus an evidence register |
 | Built | Nothing |
-| Tests specified | **25**, none run. There is nothing to run them against |
+| Tests specified | **26**, none run. There is nothing to run them against |
 | Counsel questions | **20** open, none answered. We proceed ahead of exactly one (OI-3), and it says so where it is applied |
 | Assumptions unverified | **34**, of which 15 are resolvable by reading or by asking rather than by building |
 | Decisions recorded | **58**, including three, taken on the owner's instruction, that reverse two earlier positions |
