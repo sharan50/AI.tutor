@@ -1,0 +1,152 @@
+<h1>Primer: thesis</h1>
+<p class="standfirst">The Primer is a tutor for a child's why-questions, for ages 8 to 13. It answers the factual part from explanations a person has checked, then helps the child think through the question underneath until they can state a view of their own. On the owner's reading it is the idea an AI can do best, because conversation is what current models do well. It is also the idea whose buyer, reputation and proof are least established, and this document says so before anything else.</p>
+<dl class="meta">
+<dt>Document</dt><dd>P1 of P6, the Primer</dd>
+<dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run.</dd>
+<dt>Maturity</dt><dd>First draft, revised once after an independent review. The Tutor's documents went through eight adversarial rounds; these have had one review.</dd>
+<dt>Written</dt><dd>22 October 2026</dd>
+<dt>Idea</dt><dd>The Primer, one of three; see the <a href="index.html">front page</a></dd>
+<dt>Read next</dt><dd><a href="p2-primer-product.html">P2 Primer: product</a></dd>
+</dl>
+
+<div class="brief" data-key="p1-primer-thesis.brief.1">
+<p class="brief-name">The Primer <span class="brief-ages">Ages 8 to 13</span></p>
+<p class="brief-line">A tutor for a child's why-questions, designed to ask what they think rather than tell them.</p>
+<p>A child asks why we sleep, or whether a robot can think, and the Primer takes the question seriously: a checked explanation first, then the bigger question underneath, explored the way a good tutor would, by asking rather than telling, until the child can say what they think and why. It draws on thinkers from many traditions and does not give its own view where people disagree. Parents choose which topics are switched on. Who pays is the open question: parents, with no exam to prepare for.</p>
+<p class="brief-state">Designed, not built. Nothing here has been tried with a child yet.</p>
+</div>
+
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#claim">The Primer in four sentences</a></li>
+<li><a href="#why">Why an AI can do this now, and why at eight to thirteen</a></li>
+<li><a href="#tutors">The tutors of history, and what the Primer takes from them</a></li>
+<li><a href="#yc">What Y Combinator asked for, and where the Primer parts from it</a></li>
+<li><a href="#different">What makes it different from free AI study tools</a></li>
+<li><a href="#weak">Where the case is weak</a></li>
+<li><a href="#gateway">How it relates to the Tutor and to page 13</a></li>
+</ol>
+</details>
+
+<h2 id="claim">The Primer in four sentences</h2>
+
+<div class="claim">
+<p class="lede">A child brings a question and the Primer takes it seriously. It answers the factual part from an explanation that a person has written and a different person has checked, and where no checked explanation exists it says "not yet" rather than guessing. Then it finds the question underneath, the kind philosophers have argued about for centuries, and explores it the way a good tutor would: by asking, by setting out what named thinkers from more than one tradition have argued, by testing the child's reasons against a counterexample, and by stopping when the child can say what they think and why. It does not give its own view on a question people disagree about, and it is tested for leading questions, so that a child who disagrees with it is free to.</p>
+<span class="tag decided">Decision<span class="src">D44 and D46, 22 October 2026</span></span>
+</div>
+
+<p>That is narrower than "an AI that answers children's questions", deliberately. A general assistant already answers a child's question. As far as this vault knows, none is built to refuse to go beyond what has been checked, to withhold its own conclusion as a rule, to give a parent control of the subjects and to keep no relationship with the child, all at once <span class="mark assumed">Assumed</span>; the category has not been surveyed (<a href="#weak">below</a>). Those refusals are the product.</p>
+
+<h2 id="why">Why an AI can do this now, and why at eight to thirteen</h2>
+
+<p><b>The Primer is built around what current AI does well; the Tutor is built around what it does badly.</b> The Tutor's case rests on general models being unreliable about correctness, so the item bank and the verifier are the product (<a href="06-architecture.html#verifier">06</a>). The Primer's rests on the opposite: holding a patient conversation, following a child's reasoning and asking the next good question is what language models do best. The owner's view is that this makes the Primer the lower-risk of the two new ideas on whether it can work at all.</p>
+
+<div class="claim">
+<p>That a child of 8 to 13 can hold a typed conversation on a screen long enough for an inquiry to work, and that this is something current AI does well. The youngest band is the least certain: a nine-year-old types slowly and tires quickly. The two halves are tested at different times: whether a child can sustain the conversation is observed in a human-run pilot at PM3, before anything is built; whether an AI can lead it well is tested only when a built Primer runs at PM4.</p>
+<span class="tag assumed">Assumed<span class="src">OA-23, the owner's view</span></span>
+</div>
+
+<p>The Primer still needs correctness. A child's why-question usually has a factual part before a philosophical one, and a confident wrong explanation to a nine-year-old is worse than none. So facts are held to the Tutor's rule: each cites a reviewed explanation and is blocked if unsupported (D44, T-PRM-01 in <a href="p3-primer-content.html#measure">P3</a>). Conversation is where the model is trusted; facts are where it is checked.</p>
+
+<p><b>Eight is where the band starts, not where the ambition stops.</b> Below about eight, the owner's view is that a screen alone cannot hold a child's attention or teach the physical side of reading and writing <span class="mark assumed">Assumed</span> (OA-28), which is why Foundations does not go first (D42). Above it, a child who can read and type a short sentence can bring their own questions. The band is a decision, not a finding: <span class="mark decided">Decision</span> D41 sets Foundations at 4 to 7, the Primer at 8 to 13 and the Tutor at 14 to 18.</p>
+
+<h2 id="tutors">The tutors of history, and what the Primer takes from them</h2>
+
+<p>The ambition is an old one: a tutor for every child, of the kind that, in the two stories below, was kept for future rulers. One pair is Greek and one Indian; the Primer takes the relationship from them and nothing else.</p>
+
+<div class="claim">
+<p>Aristotle taught Alexander, beginning when Alexander was about thirteen. Chanakya, traditionally identified with Kautilya and credited with the Arthashastra, a treatise on government, became counsellor and adviser to Chandragupta, who founded the Mauryan empire; legend makes him a teacher at Taxila. Not every historian accepts the identification of Chanakya with Kautilya, and the dating of the text is disputed.</p>
+<span class="tag assumed">Assumed<span class="src">CV-02 and CV-03, awaiting the owner's check</span></span>
+</div>
+
+<p>Two things follow, both constraints rather than decoration.</p>
+
+<ul>
+<li><b>The relationship, not the views:</b> one teacher, one learner, and a conversation that followed the learner's questions over years, which the Primer tries to make ordinary. Aristotle and Chanakya appear in it, if at all, as named thinkers in an inquiry pack, beside others who disagreed with them.</li>
+<li><b>The ambition, never the voice.</b> Putting words in a real person's mouth misattributes views, and a simulated historical figure talking to a child is the companion pattern 05 forbids (<a href="05-safety-privacy-regulatory.html#content">05</a>). It would make the most memorable demonstration, and it is ruled out.</li>
+</ul>
+
+<div class="claim">
+<p>The Primer names methods, never people: it may run a Socratic dialogue, a thought experiment or a story, and it never speaks as a real person.</p>
+<span class="tag decided">Decision<span class="src">D47, 22 October 2026</span></span>
+</div>
+
+<p>The age in the first pair is worth noticing. If the account is right, Aristotle began with a thirteen-year-old <span class="mark assumed">Assumed</span> (CV-02): the top of the Primer's band, not the bottom of Foundations'. The novel that gives the Primer its name makes a related point.</p>
+
+<div class="claim">
+<p>In <i>The Diamond Age</i>, Nell's Primer is voiced live by a human actor, Miranda, who becomes a mother figure to her; the novel leaves open how much of Nell's development comes from the machine and how much from Miranda.</p>
+<span class="tag assumed">Assumed<span class="src">CV-04, awaiting the owner's check</span></span>
+</div>
+
+<p>The design takes that as a warning rather than a plan. The Primer does not pretend to be a person (D47), does not form a relationship with the child (D49), and keeps the child's adults in the picture: they choose the subjects (D46) and see the questions (D48).</p>
+
+<h2 id="yc">What Y Combinator asked for, and where the Primer parts from it</h2>
+
+<div class="claim">
+<p>Y Combinator's Fall 2026 requests for startups include one called "The Primer". It opens by observing that the best education has always been one-to-one tutoring, that Aristotle taught Alexander, and that the privilege was reserved for the few. It names the Primer of <i>The Diamond Age</i> as the long-term goal, and asks for adaptive teaching of reading, writing and arithmetic to young children, close to the quality of a private tutor, at consumer scale, supplementing teachers rather than replacing them, and starting as something parents buy for basic skills. Secondary write-ups give the ages as 4 to 10. The page itself could not be opened from the build environment; this is a paraphrase from search summaries of it.</p>
+<span class="tag assumed">Assumed<span class="src">CV-01, awaiting the owner's check</span></span>
+</div>
+
+<p><b>Where the Primer agrees</b>, taking the request as CV-01 records it <span class="mark assumed">Assumed</span>. One-to-one tutoring is the standard to aim at. The tutor supplements teachers rather than replacing them. Parents are the first buyers. And the long-term goal the request names, a tutor that teaches a child not only to read but to think and reason, is the Primer's goal exactly.</p>
+
+<p><b>Where it parts, and why.</b> As CV-01 records it, the request starts with reading, writing and arithmetic for young children, bought by parents for basic skills, and names the thinking Primer as the long-term goal <span class="mark assumed">Assumed</span> (CV-01). The owner disagrees with that order. In the owner's view a five-year-old does not sit still to be taught by a screen, reading and writing are taught physically by a person guiding a finger along print and forming letters with the child, and at that age managing the child is half of teaching them <span class="mark assumed">Assumed</span> (OA-28). The thinking tutor for older children is, on that view, the part an AI on a screen can deliver now, so the Primer starts with what the request names as its long-term goal.</p>
+
+<div class="claim">
+<p>Foundations does not go first. Rejected: the order of YC's request as CV-01 records it <span class="mark assumed">Assumed</span>, which starts with basic skills bought by parents and names the thinking Primer as the long-term goal.</p>
+<span class="tag decided">Decision<span class="src">D42, 22 October 2026</span></span>
+</div>
+
+<p>This is a real risk, not a debating point: an application that argues with the request's sequence must do so openly, or it reads as not having read the request. The reasoning is in <a href="which-first.html#foundations">which idea goes first</a>, and the owner's view is itself an assumption (OA-28), cheap to test by asking Reception and Year 1 teachers.</p>
+
+<h2 id="different">What makes it different from free AI study tools</h2>
+
+<p>The free study modes already answer children's questions patiently and Socratically; the Tutor's thesis concedes that this behaviour is now a free toggle (<a href="00-thesis.html#dead">00</a>). The Primer does not compete on being a better conversationalist. It competes on five things a general assistant is not built to do, four of them refusals.</p>
+
+<div class="tw">
+<table>
+<caption>The middle column is reasoned, not surveyed; whether any assistant already offers some of these, family settings for example, has not been checked.</caption>
+<thead><tr><th>The Primer</th><th>Why a general assistant is not built to <span class="mark assumed">Assumed</span></th><th>Where it is specified</th></tr></thead>
+<tbody>
+<tr><td><b>Answers facts only from checked explanations</b>, and says "not yet" otherwise.</td><td>Its value is breadth; refusing to answer is a cost to it, not a feature.</td><td>D44; <a href="p3-primer-content.html#sources">P3</a></td></tr>
+<tr><td><b>Never states its own conclusion on a contested question</b>, and attributes every position to a named thinker or tradition.</td><td>It is built to be helpful, and the helpful-seeming answer to "what should I think?" is an answer.</td><td>T-PRM-02, T-PRM-03; <a href="p5-primer-architecture.html#checks">P5</a></td></tr>
+<tr><td><b>Gives a parent control of the subjects</b>, with sensitive subjects off until a parent switches them on, and no way for anyone to add their own views.</td><td>Its content is not written and reviewed module by module, whatever settings a parent has over access.</td><td>D46; <a href="p4-primer-safety.html#modules">P4</a></td></tr>
+<tr><td><b>Is not a companion.</b> No persona, no feelings, no memory of the child's life, no reason to keep them talking.</td><td>A consumer chat product is usually judged on use.</td><td>D25, D47, D49; <a href="p4-primer-safety.html#companion">P4</a></td></tr>
+<tr><td><b>Shows the parent what was asked.</b> An activity record, and for a child under 13 the conversation on request.</td><td>Its default user is an adult.</td><td>D48; <a href="p4-primer-safety.html#parent">P4</a></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p>Any one of these could be copied by a well-funded competitor in a quarter. What is harder to copy is the reviewed catalogue, written and checked by people, and whatever evidence accumulates from using it. That is the Tutor's argument about its item bank (<a href="00-thesis.html#shelf">00</a>), with the same weakness: a bet that the catalogue stays worth more than it costs, for long enough.</p>
+<span class="tag assumed">Assumed<span class="src">strategic hypothesis, not verified</span></span>
+</div>
+
+<h2 id="weak">Where the case is weak</h2>
+
+<p>Six places, in the order a sceptical investor would reach them.</p>
+
+<ol>
+<li><b>Nobody yet knows why a parent would pay.</b> The Tutor's strongest commercial argument is that a household already paying a human tutor before an exam is choosing between that hour and the product (<a href="00-thesis.html#pay">00</a>). The Primer has no exam, no deadline and no purchase it obviously replaces. Whether parents will pay at all is OA-22, the Primer's most load-bearing assumption. <span class="mark unknown">Unknown</span> the price, and what it would be compared with.</li>
+<li><b>The reputational risk is larger than the Tutor's.</b> An AI that discusses death, belief or right and wrong with a ten-year-old is a headline waiting for a writer, whatever the design says. Sensitive modules start switched off and the Primer never gives its own view, which reduces the risk without removing it (RP1, OA-26).</li>
+<li><b>There is no proof that it works.</b> The nearest human method, Philosophy for Children, was evaluated in the EEF's two trials: a smaller one found small positive effects, and a larger one found no evidence of an effect on attainment <span class="mark assumed">Assumed</span> (<a href="p3-primer-content.html#evidence">P3</a>, CV-05). "Thinks more critically" may be hard to measure at all (OA-24), and neither result may transfer to an AI-led version (OA-25). Nothing in this vault shows that an AI-led philosophical dialogue improves how children reason.</li>
+<li><b>The youngest children may not manage it.</b> If a nine-year-old cannot sustain a typed inquiry, the band starts later than designed and the market shrinks with it (OA-23).</li>
+<li><b>"Not yet" may dominate.</b> Children ask more questions than any catalogue can answer at launch. A Primer that declines too often stops being asked (OA-32, RP5), and the catalogue is a rate-limited human process.</li>
+<li><b>The category has not been surveyed.</b> The register holds no survey of the products that already talk with children, free or paid, or of the family settings the general assistants may now have. Until someone has read what they do and claim, the Primer's difference from them is asserted, not shown. That is a reading task at PM1.</li>
+</ol>
+
+<p>One more weakness belongs to the market. Almost every user is under 13, and in the US, which the owner wants to enter alongside the UK (D51), AI chatbots that talk with children are under active regulatory scrutiny <span class="mark assumed">Assumed</span> (<a href="p4-primer-safety.html#us">P4</a>, CV-10). Whether a design that refuses companionship keeps the Primer outside the new rules is <span class="mark open">Open</span> OI-15.</p>
+
+<h2 id="gateway">How it relates to the Tutor and to page 13</h2>
+
+<p><b>Two relationships are possible, and which one holds is deliberately not decided.</b> Page 13, the <a href="13-primer-gateway.html">Primer gateway</a>, describes the Primer as a gated mode that grows out of the Tutor once the Tutor has earned trust. D40 records the Primer and Foundations as separate products that may share one platform. Whether the three ideas are one product with versions, or three products, turns on whether a child would move from one to the next, and nothing in the vault can yet say. It is set out in <a href="which-first.html#one">which idea goes first</a>.</p>
+
+<p>Either way, page 13's principles and release gates bind the Primer: agency over persuasion, epistemic humility, adult accountability, a bounded relationship and developmental fit (<a href="13-primer-gateway.html#invariants">13</a>), and the six gates an independent review must pass before release (<a href="13-primer-gateway.html#gates">13</a>). Those gates are the Primer's milestone PM4.</p>
+
+<div class="note">
+<h3>Page 13's argument for older users, and the answer to it</h3>
+<p>Page 13 argued that the first Primer users should be older adolescents, who can say when they disagree, read their own transcript and opt out. At 8 to 13 those safeguards are supplied by design and by adults instead. Sensitive modules stay off until a parent switches them on (D46); the parent sees an activity record (D48); triage stops any inquiry about the child's own life (T-PRM-06); the Primer states no conclusion on a contested question (T-PRM-03); and it remembers nothing of the child's life (D49).</p>
+<p>What remains weaker is real. A nine-year-old is less able than a sixteen-year-old to notice being led, so T-PRM-04 has to be stricter, and the supervised pilot at PM4 is a condition of release. The full treatment is in <a href="p4-primer-safety.html#ages">P4</a>.</p>
+</div>
+
+<p>Nor does the Tutor's evidence transfer: the findings in <a href="00-thesis.html#evidence">00</a> are about AI supporting the teaching of a subject, and the Primer has to earn its own at PM4.</p>

@@ -1,0 +1,133 @@
+<h1>Foundations: architecture</h1>
+<p class="standfirst">Foundations runs no generative model in the product at all. Everything the adult sees, in a session or between sessions, is chosen by fixed rules from content written and reviewed in advance, and checked by rules that no model can override. A model is used only offline, to help writers draft, and its drafts pass the same rules and a reviewer before they enter the library. That makes Foundations the least "AI" of the three ideas, and that is deliberate.</p>
+<dl class="meta">
+<dt>Document</dt><dd>F5 of F6, Foundations</dd>
+<dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run.</dd>
+<dt>Maturity</dt><dd>First draft, revised once after an independent review. The Tutor's documents went through eight adversarial rounds; these have had one review.</dd>
+<dt>Written</dt><dd>22 October 2026</dd>
+<dt>Read with</dt><dd><a href="06-architecture.html">06 Architecture</a>, whose components this page reuses</dd>
+<dt>Read next</dt><dd><a href="f6-foundations-plan.html">F6 Foundations: plan</a></dd>
+</dl>
+
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#reuse">What it reuses from the Tutor</a></li>
+<li><a href="#guide">The adult's guide</a></li>
+<li><a href="#decodable">The decodability check</a></li>
+<li><a href="#arithmetic">Arithmetic checks</a></li>
+<li><a href="#listening">If listening is ever added</a></li>
+<li><a href="#cost">Cost</a></li>
+</ol>
+</details>
+
+<h2 id="reuse">What it reuses from the Tutor</h2>
+
+<p class="lede">Foundations is built on the same platform as the Tutor where the platform fits, and leaves out the parts that exist only because the Tutor talks to its learner. Foundations never talks to its learner.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Tutor component</th><th>Use in Foundations</th><th>Where specified</th></tr></thead>
+<tbody>
+<tr><td>Verified-adult account and onboarding.</td><td>Unchanged. The adult is the account holder and the only user.</td><td><a href="05-safety-privacy-regulatory.html#age">05</a></td></tr>
+<tr><td>Kill switch read path.</td><td>A flag on every text, word list, response, activity, explanation for adults and sequence version, re-read at every step. Pulling any of them takes effect at the next step of every session, on the same bounds the Tutor states.</td><td><a href="06-architecture.html#killswitch">06</a></td></tr>
+<tr><td>Computer algebra check.</td><td>Every number fact and expected answer (T-FND-03).</td><td><a href="06-architecture.html#verifier">06</a>, check (d)</td></tr>
+<tr><td>Composer, generator, verifier and gate.</td><td><b>Not used.</b> No model runs in the product, in a session or between sessions, so there is no turn to compose, generate, verify or gate (D54).</td><td><a href="06-architecture.html#turn">06</a></td></tr>
+<tr><td>Pinned model versions and zero-retention vendor terms.</td><td>For the model writers use offline to draft (D22, D24).</td><td><a href="06-architecture.html#model">06</a></td></tr>
+<tr><td>Data model and deletion.</td><td>The account, the child's display name and stage, and the reading record (<a href="f4-foundations-safety.html#data">F4</a>).</td><td><a href="06-architecture.html#data">06</a></td></tr>
+</tbody>
+</table>
+</div>
+
+<p><b>What it does not reuse.</b> The style engine, because the child never chooses a teacher and the adult's guidance has one house style. The scope classifier on learner input, because there is no learner input. The composer, generator, verifier and gate, because no model runs in the product: there is no conversation, and no box for anyone to type into.</p>
+
+<div class="claim">
+<p><b>No generative model in the product.</b> During a session, every instruction, word, text and response comes from content that was written, reviewed and checked before the session began, and is selected by inspectable rules from the reading record. Between sessions the adult can open explanations chosen from a written, reviewed set; no model answers the adult live, and there is no box to type a question into. A model may help a writer draft offline. It never composes anything the adult reads.</p>
+<span class="tag decided">Decision<span class="src">D54, 22 October 2026, taken while writing</span></span>
+</div>
+
+<p>The reasoning is the Tutor's, pushed one step further. The Tutor needs a model in the turn because it converses, and so it needs a verifier because the model can be wrong. Foundations does not converse, so it can remove the model from the product altogether, and with it the gate-fire rate, the latency, the cost per turn and the chance of an unsupported sentence reaching a five-year-old through an adult reading it aloud. What it gives up is flexibility: the guide can only say what someone wrote in advance, and an adult whose question the written explanations do not cover gets no answer from the product. For a sequence this structured, on the owner's view of how this age learns (OA-28), that is the right trade, and it is reversible if FM3 shows the written guidance is too rigid.</p>
+
+<h2 id="guide">The adult's guide</h2>
+
+<p>The guide is a state machine over the sequence and the reading record. It is the whole of Foundations during a session.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Part</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td><b>Inputs</b></td><td>The adult's taps: ready or not; for each word, read, read with help, or not yet; the mistake, from a short list written for each step; losing focus; stop. Plus the child's stage and, for a child in school, the sounds the class has covered.</td></tr>
+<tr><td><b>State</b></td><td>The reading record (<a href="f2-foundations-product.html#record">F2</a>).</td></tr>
+<tr><td><b>Library</b></td><td>Reviewed content for each step: what to show, what to say, what to do with the hands, what to listen for, what each listed mistake means and what to say about it, number activities with their specifications (<a href="f3-foundations-content.html#review">F3</a>).</td></tr>
+<tr><td><b>Rules</b></td><td>Which step comes next; which practice words return, so that a word read with help comes back next time; when a new sound may be introduced, by a mastery rule set with the reviewers rather than guessed here; how long the next session should be after an early stop.</td></tr>
+<tr><td><b>Outputs</b></td><td>The next instruction to the adult, and the print to show the child.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Every choice the guide makes can be explained in a sentence a teacher would accept: "sh again, because it was read with help twice". That matters for two readers. A teaching assistant needs to trust the step enough to follow it. And a school deciding whether to let a product near its Reception class needs to see that nothing in it is a black box.</p>
+
+<h3>Between sessions: explanations for the adult</h3>
+
+<p>Adults will want to know things the guide does not explain in the moment: why this sound comes now, what to do when a child cannot blend it yet, why a child keeps writing a letter backwards, whether to correct a guess, what to do when a child refuses. Between sessions the adult can open explanations chosen from a written, reviewed set, organised by the step and by the mistakes the guide lists, such as "Why this sound now?" and "What if they can't blend it yet?". They are written and checked like the rest of the library (<a href="f3-foundations-content.html#review">F3</a>), and pulled by the same kill switch.</p>
+
+<p>There is no box to type a question into, so there is nothing for a model to answer live and nowhere for an adult to type a disclosure or a child's health details: the reason <a href="f4-foundations-safety.html#escalation">F4</a> gives for having no chat, and D56 for having no notes field. A question the set does not cover goes unanswered by the product, and the set grows from what the field research and the pilots show adults need. Nothing in it is about a child's health or development beyond the static advice in F4.</p>
+
+<h2 id="decodable">The decodability check</h2>
+
+<p>T-FND-01 is enforced by a rule, not a judgement, on the pattern of the Tutor's computer algebra check: deterministic, local, no model call, and never overridden by anything that generated the text.</p>
+
+<ol>
+<li><b>Inputs.</b> The text; the correspondences the child has been taught, from the record and the sequence; the exception words listed for the child's stage; and a pronunciation lexicon that maps each word to its letters and their sounds, with the intended reading where a spelling has more than one. The lexicon is our own, written and reviewed in-house under the clean room in <a href="f3-foundations-content.html#cleanroom">F3</a>.</li>
+<li><b>The rule.</b> Split the text into words. A word on the stage's exception list passes. Any other word passes only if the lexicon has it and every letter-to-sound correspondence in its intended reading is in the taught set. A word the lexicon does not have fails. If any word fails, the text fails.</li>
+<li><b>When it runs.</b> Twice: when a text is admitted to the bank, against the set taught by its step; and again before the text is shown, against this child's actual record. The second run catches a child whose record differs from the step's assumption, which is the normal case for a child in school.</li>
+<li><b>What a failure does.</b> The text is not shown. The guide falls back to a stock text that passes for this child. A fallback that also fails ends the practice step, and the adult is told so plainly.</li>
+</ol>
+
+<p>The rule fails closed, and that has a cost: a perfectly readable new word stays out until a writer adds it to the lexicon through review. That is the right direction to fail, for the same reason the Tutor's gate blocks rather than guesses.</p>
+
+<p>The sequence rule, T-FND-02, sits beside it. A new correspondence may be introduced only if it is the next one in the progression after the child's taught set, and, for a child in school, only if the adult has reported the class has covered it. Both rules are tested on every release, and both tests are defined in <a href="f3-foundations-content.html#measure">F3</a>.</p>
+
+<h2 id="arithmetic">Arithmetic checks</h2>
+
+<p>Every number activity is stored as a specification, not as prose: the objects the adult sets out, the operation, and the question. The expected answer is computed from the specification by the computer algebra check the Tutor uses for its mathematics, check (d) in <a href="06-architecture.html#verifier">06</a>, or by plain integer arithmetic where that is all the activity needs. That is T-FND-03.</p>
+
+<ul>
+<li>A drafted activity whose stated answer disagrees with the computation is blocked, never corrected by a model.</li>
+<li>The "typical wrong answers" the guide explains to the adult are written and reviewed, not computed, because they are about children rather than numbers.</li>
+<li>The child never sees virtual objects. The specification tells the adult what real objects to set out (<a href="f3-foundations-content.html#number">F3</a>).</li>
+</ul>
+
+<h2 id="listening">If listening is ever added</h2>
+
+<div class="claim">
+<p>Listening to a child read is deferred, not designed. It may be added later only with separate consent and with no audio kept.</p>
+<span class="tag decided">Decision D50<span class="src">22 October 2026</span></span>
+</div>
+
+<p>If it is ever proposed, these are preconditions, not features, and any one of them failing keeps it off:</p>
+
+<ol>
+<li><b>Counsel has answered OI-17</b>, and OI-15 for the US, on what a child's voice and anything derived from it are in law.</li>
+<li><b>The parent gives separate, specific consent</b> for listening, distinct from the account.</li>
+<li><b>Audio is processed on the device</b>, and no audio is retained or transmitted. If the processing cannot be done on the device, the feature does not ship. T-FND-05 is redefined to prove that, not removed.</li>
+<li><b>No voiceprint, and no speaker identification.</b> The feature recognises words, not children.</li>
+<li><b>Accuracy for this age is measured before launch</b>, and the result shown to adults in plain terms. Recognition is weakest for the youngest children <span class="mark assumed">Assumed</span> CV-11; whether its errors also fall unevenly across accents is <span class="mark unknown">Unknown</span>.</li>
+<li><b>The adult stays the judge.</b> The machine suggests what it heard; the adult confirms. A suggestion the adult has not confirmed never enters the record.</li>
+</ol>
+
+<h2 id="cost">Cost</h2>
+
+<div class="claim">
+<p>Cost per session is <b>not known</b>. What can be said is where it falls.</p>
+<span class="tag unknown">Unknown<span class="src">measured at FM2 and FM3</span></span>
+</div>
+
+<ul>
+<li><b>In the session,</b> there is no model call, so the marginal cost is serving the pages and storing taps. Small by construction, and <span class="mark unknown">Unknown</span> as a number.</li>
+<li><b>Between sessions,</b> there is no model call either: the explanations are written in advance and served as pages, so their cost is writing and reviewing them, part of the content cost below.</li>
+<li><b>For the company,</b> the largest cost is content: writing and reviewing the sequence, texts, guidance, responses and the explanations for adults (<a href="f3-foundations-content.html#review">F3</a>). Like examiner validation for the Tutor, it does not fall when the next model ships. <span class="mark unknown">Unknown</span>, measured at FM2.</li>
+<li><b>For the family,</b> the largest cost is the adult's time. It appears in nobody's accounts and it is the binding constraint on use (OA-30).</li>
+</ul>
+
+<p>The consequence for the plan: engineering effort spent reducing cost per session is low-leverage for Foundations, even more than it is for the Tutor. The numbers that decide whether Foundations is viable are content cost, whether anyone pays, and whether adults keep sitting down, and all three are in <a href="f6-foundations-plan.html#economics">F6</a>.</p>

@@ -1,11 +1,23 @@
 # AI.tutor
 
-**Design and planning record for an AI tutor for UK secondary students.**
-Owner: Dhruv Sharan. Build base: Bengaluru. Market: the UK.
+**Design and planning record for three ideas for teaching children with AI.**
+Owner: Dhruv Sharan. Build base: Bengaluru. Markets: the UK, and for the two newer
+ideas the US as well.
 
-A student chooses **how** they are taught by naming an educator whose style they
-already recognise, and nothing reaches that student which cannot be traced to an
-examiner-validated item.
+- **The Tutor** (ages 14 to 18). A student chooses **how** they are taught by
+  naming an educator whose style they already recognise, and nothing reaches that
+  student which cannot be traced to an examiner-validated item. The most
+  developed of the three.
+- **The Primer** (ages 8 to 13). A child's why-questions taken seriously: a
+  checked explanation first, then the question underneath, explored by asking
+  rather than telling, until the child states a view of their own. Its subjects
+  come in modules the company writes; parents switch them on and off.
+- **Foundations** (ages 4 to 7). Early reading, writing and arithmetic, with an
+  adult beside the child in every session and the screen as the adult's guide.
+  The least certain of the three, and deliberately not the first.
+
+Which idea goes first between the Tutor and the Primer is open, and is decided by
+field research with teachers, professors and parents.
 
 ---
 
@@ -16,27 +28,34 @@ still unknown. It is **not** application code and it is not a product.
 
 **Nothing described here has been built. No test described here has been run.**
 
-The source instruction is [`BUILD_BRIEF.md`](BUILD_BRIEF.md) at the root. Where
-this repository and the brief disagree, the brief governs.
+The source instruction is [`BUILD_BRIEF.md`](BUILD_BRIEF.md) at the root, for the
+Tutor and for the vault's rules. Where this repository and the brief disagree, the
+brief governs. [`FACETS_BRIEF.md`](FACETS_BRIEF.md) governs the Primer,
+Foundations, the shared pages and the front page.
 
 ## Status
 
 | | |
 |---|---|
-| Documents | 16, plus an evidence register and a decision ledger |
+| Documents | 30 across the three ideas, the registers included, plus an evidence register |
 | Built | Nothing |
-| Tests specified | **13**, none run. There is nothing to run them against |
-| Counsel questions | **12** open, none answered. We proceed ahead of exactly one (OI-3), and it says so where it is applied |
-| Assumptions unverified | **21**, of which 8 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **39**, including 3 that reverse earlier positions |
-| External claims registered | **42**, each with source and date checked |
+| Tests specified | **26**, none run. There is nothing to run them against |
+| Counsel questions | **20** open, none answered. We proceed ahead of exactly one (OI-3), and it says so where it is applied |
+| Assumptions unverified | **34**, of which 15 are resolvable by reading or by asking rather than by building |
+| Decisions recorded | **58**, including three, taken on the owner's instruction, that reverse two earlier positions |
+| External claims registered | **42**, each with source and date checked, plus **12** candidates awaiting the owner's check |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at
 build time and governs where this table disagrees with it.
 
 ## How to read it
 
-Start at [`docs/index.html`](docs/index.html), the front door: the route, the
+Start at [`docs/index.html`](docs/index.html), the front page: a brief on each of
+the three ideas with a space for a short film of each, which idea goes first, what
+the three share, and where everything stands. It is written for a first-time
+reader: a former teacher, a prospective partner or co-founder, an accelerator.
+
+[`docs/tutor.html`](docs/tutor.html) is the Tutor's summary: the route, the
 settled decisions, the computed counts, the numbers that matter, what is not
 known, and a door for each owner. Each door, under [`docs/roles/`](docs/roles/),
 names what that owner holds: documents and sections, decisions, open items and
@@ -45,11 +64,14 @@ cumulative word counts. Every line on those pages is transcluded from the page
 that states it or computed at build time; the only hand-written text is one
 short frame per page, kept in [`roles.json`](roles.json).
 
-[`docs/contents.html`](docs/contents.html) carries the reading order and the
-four routes through the material for a lawyer, a creator, an investor or a
-curriculum specialist.
+[`docs/contents.html`](docs/contents.html) carries every document grouped by idea,
+and five routes through the material: for a lawyer, a creator, an investor, a
+curriculum specialist, and a teacher, partner or prospective co-founder.
+[`docs/which-first.html`](docs/which-first.html) sets out which idea goes first
+and why, and [`docs/field-research.html`](docs/field-research.html) is the guide
+for the conversations that decide it.
 
-If you only read three things:
+If you only read three things about the Tutor:
 
 1. [`docs/00-thesis.html`](docs/00-thesis.html): why the 2025 differentiation is
    dead and what replaced it.
@@ -82,6 +104,11 @@ Three rules follow, and they are the ones a contributor most easily breaks:
    is argued in [`docs/04-rights-dossier.html`](docs/04-rights-dossier.html) and
    recorded as decision D34, not slipped in.
 
+A claim found by research but not yet checked by the owner is registered as a
+**candidate** (CV-01 onwards) in its own section of the evidence register, with its
+source and the date found, and text relying on it carries an Assumed marker. Only
+the owner promotes a candidate to Verified (decision D53).
+
 ## Editing
 
 Pages are assembled from fragments. **Edit `src/content/`, never `docs/`,
@@ -109,19 +136,52 @@ open, in order. The map is `tools/depmap/graph.json`, and
 `python3 tools/depmap.py check` proves every node's locus resolves and that the
 served map agrees with it.
 
-The page manifest, the navigation order and the per-page legend live in
-[`src/build.py`](src/build.py). `docs/style.css` is hand-maintained and is not
-generated. [`CLAUDE.md`](CLAUDE.md) carries the working rules for a coding
-session.
+The page manifest, the grouping by idea, the navigation order and the per-page
+legend live in [`src/build.py`](src/build.py). `docs/style.css` is
+hand-maintained and is not generated. [`CLAUDE.md`](CLAUDE.md) carries the
+working rules for a coding session.
+
+### Adding a film to the front page
+
+Each idea's card on the front page has a space for a short film. In
+[`roles.json`](roles.json), under `front`, each idea has `"video": null`, which
+shows the placeholder. To fill it, either:
+
+- put the file under `docs/media/` (for example `docs/media/primer.mp4`, with an
+  optional poster image and captions file) and set
+  `"video": {"src": "media/primer.mp4", "poster": "media/primer.jpg", "captions": "media/primer.vtt"}`.
+  Keep the file small: GitHub refuses files over 100 MB; or
+- upload it to a video host and set
+  `"video": {"embed": "https://www.youtube-nocookie.com/embed/VIDEO_ID"}`. The
+  build adds that host, and only that host, to the site's content security
+  policy.
+
+Then run the build and the checks as above.
+
+Three rules for the films, because they show products that are not built and
+are seen by parents and teachers:
+
+- **Label them.** Each card captions its film as illustrative, saying that
+  nothing shown has been built; set your own wording with `"caption"` if
+  needed, but keep the point. If a film is AI-generated, say so in the film
+  itself.
+- **No real child without written consent.** Do not show a real child unless a
+  parent has consented in writing to this use, and never show a child's name,
+  school or face where it can be avoided.
+- **Show the design, not a promise.** A film may show how an idea would work;
+  it may not show an outcome the documents do not claim, such as a child
+  reading faster.
 
 ## Layout
 
 ```
-BUILD_BRIEF.md                 the source instruction
+BUILD_BRIEF.md                 the source instruction, for the Tutor and the vault's rules
 REBUILD_BRIEF.md               the brief for the tooling and the owner views
+FACETS_BRIEF.md                the brief for the Primer, Foundations and the front page
 RESTRUCTURE_REPORT.md          what the restructure changed, with its checks
 VIEWS_REPORT.md                what the views added, with the identity proof and the ownership table
-roles.json                     the five owners, what each owns and reads, the front door's picks
+FACETS_REPORT.md               what the facets brief changed, its checks and its independent review
+roles.json                     the five owners, what each owns and reads, the Tutor summary's and the front page's picks
 CLAUDE.md                      working rules for a coding session
 README.md                      this file
 netlify.toml                   static publish config
@@ -133,21 +193,26 @@ src/
     <slug>.html                a page in one file
     <slug>/                    a page in fragments, one per h2 section
   viz/dependency-map.html      the map's template; the build inlines graph.json
-  templates/                   summary.html, the front door and its frame; role.html
+  templates/                   front.html, the front page; summary.html, the Tutor summary; role.html
 tools/
   depmap.py                    check, impact <node>, list
   depmap/graph.json            the dependency map: nodes with a locus, and edges
   verify.py                    build freshness, links and anchors, the map
 docs/
-  index.html                   the front door, generated
-  contents.html                contents, reading order and the four reader routes
+  index.html                   the front page, generated: the three ideas
+  tutor.html                   the Tutor summary, generated
+  contents.html                contents grouped by idea, and the five reader routes
   roles/<id>.html              one generated page per owner
-  00-thesis.html .. 14-open-items.html
+  00-thesis.html .. 14-open-items.html     the Tutor, and the shared open-items register
+  p1-primer-thesis.html .. p6-primer-plan.html
+  f1-foundations-thesis.html .. f6-foundations-plan.html
+  which-first.html             which idea goes first
+  field-research.html          the guide for teachers, professors and parents
   decision-ledger.html
   status.html                  generated from the registers
   style.css                    hand-maintained
 evidence/
-  sources.html                 42 external claims, source and date checked
+  sources.html                 42 external claims, source and date checked, and 12 candidates
 viz/
   dependency-map.html          the served map, generated; published at /map/
 contracts/
@@ -158,10 +223,13 @@ econ/                          the economics model and its outputs; not part of 
 
 ## Publishing
 
-Static output. No framework, no JavaScript, no fonts or assets fetched over the
-network. Netlify publishes the **repository root**, not `docs/`, because
-`evidence/` is a sibling of `docs/` and every sourced claim links to it. `/`
-rewrites to `docs/index.html`. See [`netlify.toml`](netlify.toml).
+Static output. No framework, no JavaScript on the documents, no fonts or assets
+fetched over the network. Netlify publishes `_site/`, which the build assembles
+from `docs/`, `evidence/` and `contracts/`, because `evidence/` is a sibling of
+`docs/` and every sourced claim links to it. `/` redirects to
+`docs/index.html`; it must not rewrite, because a rewrite serves the page at the
+root, where its relative stylesheet and links fail (D52). See
+[`netlify.toml`](netlify.toml).
 
 The screen design is dark; the print stylesheet converts to light, because these
 documents get printed and sent to lawyers.
@@ -169,7 +237,8 @@ documents get printed and sent to lawyers.
 ## Conventions
 
 - **British English.**
-- **No em-dashes.** Commas and semicolons for clause separation.
+- **No em-dashes or en-dashes.** Commas and semicolons for clause separation;
+  "4 to 7" for a range.
 - Conclusions before the reasoning that supports them.
 - If something is weak, say it is weak.
 - New decisions go in the decision ledger, not only in the document they affect,

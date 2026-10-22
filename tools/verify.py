@@ -10,12 +10,12 @@ prints every failure as file:line message.
      register has no per-entry anchors, so "every Verified marker links a
      register entry" is not mechanical. Recorded in RESTRUCTURE_REPORT.md.
   5. the views: every section has one owner; every ledger entry has an
-     owner; every referenced key block exists and is transcluded verbatim; no
-     digit on the front door sits outside a key block, a computed count or a
-     transcluded register line; the front door is under 1,200 words and every
-     frame under its cap with no figure; no Verified marker on a generated
-     page; CODEOWNERS is what the build would write; the four reader routes
-     are on contents.html.
+     owner; the groups by idea partition the pages; every referenced key block exists and is transcluded verbatim; on
+     the front page and the Tutor summary, no digit sits outside a key block,
+     a computed count or a transcluded register line, each is under 1,200
+     words, and each template's frame is under its cap with no figure; no
+     Verified marker on a generated page; CODEOWNERS is what the build would
+     write; the five reader routes are on contents.html.
 """
 import re
 import subprocess
@@ -29,7 +29,11 @@ sys.path.insert(0, str(ROOT / "src"))
 import build  # noqa: E402
 
 READER_ROUTES = ("A UK media lawyer", "The first creator you want to sign", "An investor",
-                 "A curriculum specialist or examiner")
+                 "A curriculum specialist or examiner", "A teacher, partner or prospective co-founder")
+
+# The two generated summaries: the front page, introducing all three ideas,
+# and the Tutor's summary. Each has a hand-written frame in its template.
+SUMMARIES = (("index.html", "front.html"), ("tutor.html", "summary.html"))
 
 
 class DigitOutsideData(HTMLParser):
@@ -82,11 +86,24 @@ def check_views():
     for e in build.ledger_entries():
         if build.decision_owner(e) is None:
             problems.append(f"roles.json:1 ledger entry {e['id']} has no owner")
+    grouped = [slug for _g, _t, _b, slugs in build.GROUPS for slug in slugs]
+    pages = [p[0] for p in build.PAGES]
+    for slug in pages:
+        if grouped.count(slug) != 1:
+            problems.append(f"src/build.py:1 {slug} sits in {grouped.count(slug)} groups in GROUPS; it must sit in exactly one")
+    for slug in grouped:
+        if slug not in pages:
+            problems.append(f"src/build.py:1 GROUPS names {slug}, which is not in PAGES")
     blocks = build.key_blocks()
-    for k in [cfg["summary"]["route"]] + list(cfg["summary"]["keys"]):
+    front = cfg.get("front", {})
+    wanted = ([cfg["summary"]["route"]] + list(cfg["summary"]["keys"])
+              + [i["brief"] for i in front.get("ideas", [])]
+              + [front[k] for k in ("first", "share", "next") if k in front])
+    for k in wanted:
         if k not in blocks:
             problems.append(f"roles.json:1 key block {k} is not marked in any fragment")
-    generated = [build.DOCS / "index.html"] + sorted((build.DOCS / "roles").glob("*.html"))
+    generated = ([build.DOCS / page for page, _t in SUMMARIES]
+                 + sorted((build.DOCS / "roles").glob("*.html")))
     for f in generated:
         if not f.exists():
             problems.append(f"{f.relative_to(ROOT)}:1 missing; run python3 src/build.py")
@@ -107,23 +124,25 @@ def check_views():
         if marker:
             line = text[:main.start() + marker.start()].count("\n") + 1
             problems.append(f"{rel}:{line} a Verified marker on a generated page")
-    front = build.DOCS / "index.html"
-    if front.exists():
+    for page, template_name in SUMMARIES:
+        summary = build.DOCS / page
+        if not summary.exists():
+            continue
         p = DigitOutsideData()
-        p.feed(front.read_text(encoding="utf-8"))
+        p.feed(summary.read_text(encoding="utf-8"))
         for line, snippet in p.hits:
-            problems.append(f"docs/index.html:{line} digit outside a key block or computed count: {snippet}")
-        n = len(main_text(front).split())
+            problems.append(f"docs/{page}:{line} digit outside a key block or computed count: {snippet}")
+        n = len(main_text(summary).split())
         if n > build.FRONT_DOOR_WORDS:
-            problems.append(f"docs/index.html:1 front door is {n} words, over {build.FRONT_DOOR_WORDS}")
-        template = build.TEMPLATES / "summary.html"
+            problems.append(f"docs/{page}:1 page is {n} words, over {build.FRONT_DOOR_WORDS}")
+        template = build.TEMPLATES / template_name
         frame = build._plain(template.read_text(encoding="utf-8").split("<h2", 1)[0])
         if len(frame.split()) > 150:
-            problems.append(f"src/templates/summary.html:1 frame is {len(frame.split())} words, over 150")
+            problems.append(f"src/templates/{template_name}:1 frame is {len(frame.split())} words, over 150")
         if re.search(r"\d", frame):
-            problems.append("src/templates/summary.html:1 frame carries a figure")
-        if "has been built" not in frame and "been built" not in frame:
-            problems.append("src/templates/summary.html:1 frame does not carry the line that nothing has been built")
+            problems.append(f"src/templates/{template_name}:1 frame carries a figure")
+        if "been built" not in frame:
+            problems.append(f"src/templates/{template_name}:1 frame does not carry the line that nothing has been built")
     for r in roles:
         words = len(r["frame"].split())
         if words > 200:
