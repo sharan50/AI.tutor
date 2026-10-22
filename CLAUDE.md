@@ -1,7 +1,7 @@
 # AI.tutor
 
 ## What this is
-The design and planning record for three ideas for teaching children with AI, served as static HTML: the Tutor, for UK secondary students of 14 to 18 preparing for GCSE and A-level; the Primer, for children of 8 to 13; and Foundations, for children of 4 to 7 with an adult beside them. Each has its own documents; they share an evidence register, an open-items register and a decision ledger.
+The design and planning record for three ideas for teaching children with AI, served as static HTML: the Tutor, for students of 14 to 18, designed for GCSE and A-level in the UK and launching in the US alongside it where resources allow; the Primer, for children of 8 to 13; and Foundations, for children of 4 to 7 with an adult beside them. Each has its own documents; they share an evidence register, an open-items register and a decision ledger.
 Nothing described here has been built, and no test described here has been run.
 `BUILD_BRIEF.md` is the source instruction for the Tutor and for the vault's rules, and governs where the repository disagrees with it; its §7 house style (British English, no em-dashes or en-dashes, conclusions before reasoning) applies to everything you write. `FACETS_BRIEF.md` governs the Primer, Foundations, the shared pages and the front page.
 
@@ -57,9 +57,9 @@ A fragment over 3,000 words of prose, counted with tags stripped, is split at it
 Cut at line boundaries. Concatenating the directory in filename order must reproduce the page byte for byte; prove it before deleting the single file.
 
 ## Counsel questions
-Never resolve a counsel question (OI-1 to OI-20 in `docs/14-open-items.html`), and never write as if one were resolved.
+Never resolve a counsel question (OI-1 to OI-22 in `docs/14-open-items.html`), and never write as if one were resolved.
 OI-3 is the recorded exception: D34 proceeds ahead of it under a fixed convention, and says so where it is applied.
 
 ## Settled decisions
 D1 to D14 live in `BUILD_BRIEF.md` §2 and are not reopened. Open that section only when a task touches one of them.
-D1 governs the Tutor; D51 sets the markets for the Primer and Foundations.
+D1 is the recorded exception: on 22 October 2026 the owner amended it, overriding the ledger's rule for D1 alone, so the Tutor launches in the UK and the US together where resources allow, and in the UK first where they do not. D51 sets the same markets for the Primer and Foundations. The amendment is recorded in `BUILD_BRIEF.md` §2 and in the ledger's settled group.

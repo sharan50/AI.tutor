@@ -42,7 +42,8 @@ parents decides them, and the vault gains a guide for it.
 
 1. D1 to D14 stand and are not reopened. D15 to D39 stand; nothing here
    reverses one. D1 governs the Tutor; D51 covers the two ideas D1 did not
-   contemplate and says so.
+   contemplate and says so. Since this brief, on 22 October 2026, the owner
+   amended D1 to give the Tutor the same markets as D51 (`BUILD_BRIEF.md` §2).
 2. Counsel questions stay open: OI-1 to OI-12, and the eight this brief adds,
    OI-13 to OI-20. Nothing is written as though one were answered. OI-3 is the
    recorded exception under D34.
