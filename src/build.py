@@ -64,11 +64,55 @@ PAGES = [
      "The owner's ranking, and why engineering priority runs close to its reverse.", "done"),
     ("13-primer-gateway", "13", "Primer gateway",
      "A gated path from trusted exam practice to safe, independent inquiry.", "done"),
+    ("p1-primer-thesis", "P1", "Primer: thesis",
+     "What the Primer is, why an AI can do it for ages 8 to 13, and where the case is weak.", "first"),
+    ("p2-primer-product", "P2", "Primer: product",
+     "The child, a session, the promises, and one why-question explored end to end.", "first"),
+    ("p3-primer-content", "P3", "Primer: content and evidence",
+     "The explanation bank, the inquiry packs, the modules, who reviews them, and the evidence.", "first"),
+    ("p4-primer-safety", "P4", "Primer: safety, privacy and regulatory",
+     "Age bands, consent, the modules parents switch, what a parent sees, and escalation.", "first"),
+    ("p5-primer-architecture", "P5", "Primer: architecture",
+     "What it reuses from the Tutor's pipeline, the two new checks, and the module switch.", "first"),
+    ("p6-primer-plan", "P6", "Primer: plan",
+     "Who pays, routes in the UK and the US, economics, milestones and risks.", "first"),
+    ("f1-foundations-thesis", "F1", "Foundations: thesis",
+     "Early reading, writing and arithmetic with an adult beside the child, and why it does not go first.", "first"),
+    ("f2-foundations-product", "F2", "Foundations: product",
+     "The adult, the child, a session, and what the screen does and does not do.", "first"),
+    ("f3-foundations-content", "F3", "Foundations: content and evidence",
+     "The reading and number sequences, decodable practice, who checks it, and the evidence.", "first"),
+    ("f4-foundations-safety", "F4", "Foundations: safety, privacy and regulatory",
+     "Very young children, no microphone at launch, consent, and the data held.", "first"),
+    ("f5-foundations-architecture", "F5", "Foundations: architecture",
+     "The adult's guide, the decodability check, and what it reuses from the Tutor.", "first"),
+    ("f6-foundations-plan", "F6", "Foundations: plan",
+     "Who might pay, parents and schools, economics, milestones and risks.", "first"),
+    ("which-first", "", "Which idea goes first",
+     "Foundations does not; between the Tutor and the Primer, field research decides.", "first"),
+    ("field-research", "", "Field research guide",
+     "Questions for teachers, professors and parents, written to prove the plan wrong.", "first"),
     ("14-open-items", "14", "Open items",
-     "Twelve counsel questions and twenty-one assumptions, with what each unblocks.", "done"),
+     "Every counsel question and every assumption, with what each unblocks.", "done"),
     ("decision-ledger", "", "Decision ledger",
      "Every decision: what was chosen, what was rejected, what it forecloses.", "done"),
 ]
+
+# The three ideas, and the pages every idea shares. Each page in PAGES sits in
+# exactly one group; the switcher, the contents page and the Tutor summary
+# read the grouping from here.
+GROUPS = [
+    ("tutor", "Tutor", "GCSE and A-level, ages 14 to 18. The most developed of the three ideas.",
+     [p[0] for p in PAGES if re.match(r"\d\d-", p[0]) and p[0] != "14-open-items"]),
+    ("primer", "Primer", "Ages 8 to 13. A tutor for a child's why-questions, built to leave them thinking for themselves.",
+     [p[0] for p in PAGES if p[0].startswith("p")]),
+    ("foundations", "Foundations", "Ages 4 to 7. Early reading, writing and arithmetic, with an adult beside the child.",
+     [p[0] for p in PAGES if p[0].startswith("f") and p[0] != "field-research"]),
+    ("shared", "Across all three", "Which idea goes first, the field research guide, and the two registers every idea shares.",
+     ["which-first", "field-research", "14-open-items", "decision-ledger"]),
+]
+
+STATUS_LABELS = {"done": "drafted", "first": "first draft", "partial": "outline", "todo": "not written"}
 
 SHELL = """<!doctype html>
 <html lang="en-GB">
@@ -79,7 +123,7 @@ SHELL = """<!doctype html>
 <meta name="description" content="{desc}">
 <link rel="stylesheet" href="{css}">
 </head>
-<body>
+<body{body_class}>
 <a class="skip" href="#doc">Skip to the document</a>
 
 <header class="topbar">
@@ -124,6 +168,13 @@ SHELL = """<!doctype html>
 </body>
 </html>
 """
+
+
+def shell(**kw):
+    """SHELL with a body class only where a page asks for one, so every other
+    page's markup is unchanged by its existence."""
+    kw.setdefault("body_class", "")
+    return SHELL.format(**kw)
 
 
 # ------------------------------------------------------------------ sources
@@ -177,17 +228,45 @@ def switcher_for(current_slug, prefix=""):
     def entry(href, number, title, key):
         here = ' class="here"' if key == current_slug else ""
         return f'<a href="{prefix}{href}"{here}><span class="sw-no">{number}</span>{title}</a>'
-    out = ['<p class="rail-h">Doors</p>', entry("index.html", "", "Summary", "index")]
+    out = ['<p class="rail-h">Doors</p>', entry("index.html", "", "Front page", "index"),
+           entry("tutor.html", "", "Tutor summary", "tutor")]
     for role in load_roles()["roles"]:
         out.append(entry(f"roles/{role['id']}.html", "", role["title"], f"roles/{role['id']}"))
     out.append(entry("contents.html", "", "Contents", "contents"))
-    out.append('<p class="rail-h">Documents</p>')
-    for slug, number, title, _desc, _status in PAGES:
-        out.append(entry(f"{slug}.html", number or "", title, slug))
+    meta = {p[0]: p for p in PAGES}
+    for _gid, gtitle, _blurb, slugs in GROUPS:
+        out.append(f'<p class="rail-h">{gtitle}</p>')
+        for slug in slugs:
+            _s, number, title, _desc, _status = meta[slug]
+            out.append(entry(f"{slug}.html", number or "", title, slug))
+    out.append('<p class="rail-h">Status and evidence</p>')
     out.append(entry("status.html", "", "Status", "status"))
     out.append(entry("../map/", "", "Impact surface", "map"))
     out.append(entry("../evidence/sources.html", "", "Evidence register", "sources"))
     return "".join(out)
+
+
+def contents_rows(slugs):
+    """The contents-list rows for some pages, in the order given."""
+    meta = {p[0]: p for p in PAGES}
+    rows = []
+    for slug in slugs:
+        _s, number, title, desc, status = meta[slug]
+        rows.append(
+            f'  <li><span class="n">{number}</span>'
+            f'<span class="t"><a href="{slug}.html">{title}</a><span>{desc}</span></span>'
+            f'<span class="s {status}">{STATUS_LABELS[status]}</span></li>'
+        )
+    return rows
+
+
+def grouped_contents():
+    """The contents page's list: one heading and one list per idea, then the shared pages."""
+    parts = []
+    for gid, gtitle, blurb, slugs in GROUPS:
+        parts.append(f'<h3 class="group-h" id="{gid}">{gtitle}</h3>\n<p class="group-blurb">{blurb}</p>\n'
+                     '<ul class="contents">\n' + "\n".join(contents_rows(slugs)) + "\n</ul>")
+    return "\n\n".join(parts)
 
 
 # ------------------------------------------------------------------ render
@@ -208,7 +287,7 @@ def render():
         prev_label = "Contents" if prev_i < 0 else PAGES[prev_i][2]
         next_href = "contents.html" if next_i >= len(PAGES) else PAGES[next_i][0] + ".html"
         next_label = "Contents" if next_i >= len(PAGES) else PAGES[next_i][2]
-        html = SHELL.format(
+        html = shell(
             title=title, desc=desc, number=number or "&middot;", numlabel=(f'<span class="sw-no">{number}</span> ' if number else ""), revised=REVISED,
             css="style.css", home="index.html", status_href="status.html", map_href="../map/",
             contents_href="contents.html", evidence_href="../evidence/sources.html",
@@ -219,22 +298,14 @@ def render():
         )
         outputs[DOCS / f"{slug}.html"] = html
 
-    rows = []
-    for slug, number, title, desc, status in PAGES:
-        label = {"done": "drafted", "partial": "outline", "todo": "not written"}[status]
-        rows.append(
-            f'  <li><span class="n">{number}</span>'
-            f'<span class="t"><a href="{slug}.html">{title}</a><span>{desc}</span></span>'
-            f'<span class="s {status}">{label}</span></li>'
-        )
-    contents_body = apply_counts(read_source("contents").replace("<!--CONTENTS-->", "\n".join(rows)).strip(), counts)
-    outputs[DOCS / "contents.html"] = SHELL.format(
+    contents_body = apply_counts(read_source("contents").replace("<!--CONTENTS-->", grouped_contents()).strip(), counts)
+    outputs[DOCS / "contents.html"] = shell(
         title="Contents", desc="AI.tutor venture design vault", number="&middot;", numlabel="",
         revised=REVISED, css="style.css", home="index.html", status_href="status.html", map_href="../map/",
         contents_href="contents.html", evidence_href="../evidence/sources.html",
         switcher=switcher_for("contents"), outline=outline_for(contents_body),
         body=contents_body, built=built,
-        prev_href="index.html", prev_label="Summary",
+        prev_href="index.html", prev_label="Front page",
         next_href="00-thesis.html", next_label="Thesis",
     )
 
@@ -246,7 +317,7 @@ def render():
     body = read_source("sources")
     if body is not None:
         body = body.strip()
-        html = SHELL.format(
+        html = shell(
             title="Evidence register", number="&middot;", numlabel="",
             desc="Every external claim, with its source and the date it was checked.",
             revised=REVISED, css="../docs/style.css", home="../docs/index.html",
@@ -360,7 +431,7 @@ PUBLISHED = ["docs", "evidence", "contracts"]
 MAP_SRC = MAP_OUT
 
 STRICT_CSP = ("default-src 'none'; script-src 'none'; style-src 'self'; "
-              "img-src 'self' data:; font-src 'self'; base-uri 'none'; "
+              "img-src 'self' data:; media-src 'self'; font-src 'self'; base-uri 'none'; "
               "form-action 'none'")
 
 
@@ -403,8 +474,13 @@ def write_headers(map_hashes):
         lines.extend(extra)
         lines.append("")
 
-    for path in ("/", "/docs/*", "/evidence/*"):
-        block(path, ["  Content-Security-Policy: " + STRICT_CSP])
+    # A film embedded on the front page (roles.json, front) is the one thing
+    # the documents frame; only its origin is added, and only when one is set.
+    frames = video_origins(load_roles())
+    docs_csp = STRICT_CSP + ("; frame-src " + " ".join(frames) if frames else "")
+    for path in ("/", "/docs/*"):
+        block(path, ["  Content-Security-Policy: " + docs_csp])
+    block("/evidence/*", ["  Content-Security-Policy: " + STRICT_CSP])
     # The contracts are markdown by design; serve them as text so a creator
     # opens them in the browser instead of downloading a file.
     block("/contracts/*", ["  Content-Security-Policy: " + STRICT_CSP,
@@ -475,6 +551,8 @@ def build_status(built, counts):
     oa = _rows(openitems, "OA")
     acc = _rows(curric, "ACC")
     risks = _rows(risks_f, "R")
+    idea_risks = [("Primer", r) for r in _rows(read_source("p6-primer-plan") or "", "RP")]
+    idea_risks += [("Foundations", r) for r in _rows(read_source("f6-foundations-plan") or "", "RF")]
     conds = _rows(routes, "C")
     decisions = range(counts["decisions"])
     tests = counts["test_ids"]
@@ -519,6 +597,17 @@ def build_status(built, counts):
         f'<tr><td class="id">{i}</td><td>{_plain(c[0], 210)}</td><td>{_plain(c[1], 150)}</td></tr>'
         for i, c in risks)
 
+    idea_risk_rows = "".join(
+        f'<tr><td class="id">{i}</td><td>{idea}</td><td>{_plain(c[0], 210)}</td>'
+        f'<td>{_plain(c[1], 150) if len(c) > 1 else ""}</td></tr>'
+        for idea, (i, c) in idea_risks)
+
+    meta = {p[0]: p for p in PAGES}
+    idea_rows = "".join(
+        f'<tr><td><a href="contents.html#{gid}">{gtitle}</a></td><td class="num">{len(slugs)}</td>'
+        f'<td>{", ".join(sorted({STATUS_LABELS[meta[s][4]] for s in slugs}))}</td></tr>'
+        for gid, gtitle, _b, slugs in GROUPS)
+
     body = f"""<h1>Status</h1>
 <p class="standfirst">Everything in this vault that is open, unproven or waiting, on one page.
 Generated from the registers themselves at build time, so it cannot drift from the documents
@@ -534,7 +623,15 @@ else here in that light.</p>
 <span class="tag open">Unproven<span class="src">no pilot, no users, no revenue</span></span>
 </div>
 
-<h2 id="conditions">The three conditions that decide the route</h2>
+<h2 id="ideas">The three ideas</h2>
+<p>The Tutor has been through eight rounds of adversarial review. The Primer and Foundations
+are first drafts and have been through none. <a href="which-first.html">Which goes first</a>
+is still open.</p>
+<div class="tw"><table>
+<thead><tr><th>Idea</th><th class="num">Documents</th><th>State</th></tr></thead>
+<tbody>{idea_rows}</tbody></table></div>
+
+<h2 id="conditions">The Tutor: the three conditions that decide the route</h2>
 <p><a href="09-route-comparison.html">09</a> recommends Route A on three conditions. Two can be
 tested this quarter for almost nothing, and either can flip the decision on its own.</p>
 <div class="tw"><table>
@@ -567,14 +664,20 @@ a phone call, rather than by building anything, which is why
 <tbody>{test_rows}</tbody></table></div>
 
 <h2 id="risks">Risks</h2>
-<p>In the owner's ranking. <a href="12-risk-register.html#ordering">12</a> explains why the
-engineering priority runs close to the reverse of it.</p>
+<p>The Tutor's, in the owner's ranking. <a href="12-risk-register.html#ordering">12</a> explains
+why the engineering priority runs close to the reverse of it.</p>
 <div class="tw"><table>
 <thead><tr><th class="id">#</th><th>Risk</th><th>Leading indicator</th></tr></thead>
 <tbody>{risk_rows}</tbody></table></div>
+
+<p>The Primer's and Foundations', not yet ranked by the owner. Each is set out in its idea's
+plan, <a href="p6-primer-plan.html#risks">P6</a> and <a href="f6-foundations-plan.html#risks">F6</a>.</p>
+<div class="tw"><table>
+<thead><tr><th class="id">#</th><th>Idea</th><th>Risk</th><th>Leading indicator</th></tr></thead>
+<tbody>{idea_risk_rows}</tbody></table></div>
 """
 
-    return SHELL.format(
+    return shell(
         title="Status", desc="Everything open, unproven or waiting, on one page.",
         number="&middot;", numlabel="", revised=REVISED, css="style.css", home="index.html",
         status_href="status.html", evidence_href="../evidence/sources.html",
@@ -586,7 +689,13 @@ engineering priority runs close to the reverse of it.</p>
 
 
 def _test_blurb(everything, test_id):
-    """First sentence near a test's definition, for the status table."""
+    """First sentence near a test's definition, for the status table.
+
+    A test is defined in a table row whose first cell is its id; failing that,
+    after a bold "T-...:" label."""
+    m = re.search(r'<tr>\s*<td class="id">' + re.escape(test_id) + r"</td>\s*<td>(.*?)</td>", everything, re.S)
+    if m:
+        return m.group(1)
     m = re.search(re.escape(test_id) + r"[:<][^<]{0,40}</td><td>(.*?)</td>", everything, re.S)
     if m:
         return m.group(1)
@@ -646,12 +755,13 @@ def page_title(slug):
     for s, number, title, _d, _s in PAGES:
         if s == slug:
             return (number + " " if number else "") + title
-    return {"contents": "Contents", "sources": "Evidence register", "status": "Status"}.get(slug, slug)
+    return {"contents": "Contents", "sources": "Evidence register", "status": "Status",
+            "index": "Front page", "tutor": "Tutor summary"}.get(slug, slug)
 
 
 def page_sections(slug):
     """[(hid, heading text, html)]: the head first with hid None, then each h2 section."""
-    src = read_source(slug)
+    src = read_source(slug) or ""
     out = []
     for part in re.split(r'(?m)^(?=<h2 id=")', src):
         m = re.match(r'<h2 id="([^"]+)"[^>]*>(.*?)</h2>', part, re.S)
@@ -742,6 +852,7 @@ def compute_counts():
         counsel=sum(1 for i in items if i["marker"] == "open"),
         assumptions=sum(1 for i in items if i["marker"] == "assumed"),
         claims=len(re.findall(r'<td class="id">EV-\d+</td>', read_source("sources") or "")),
+        candidates=len(re.findall(r'<td class="id">CV-\d+</td>', read_source("sources") or "")),
         tests=len(tests), test_ids=tests,
         risks=len(_rows(read_source("12-risk-register"), "R")),
         cheap=cheap.group(1) if cheap else "several",
@@ -916,7 +1027,9 @@ def render_summary(built, counts, cfg, blocks, entries, owners, path_words):
         f'<div><h4><a href="roles/{r["id"]}.html">{r["title"]}</a></h4><p>{first_sentence(r["frame"])}</p>'
         f'<p data-count="path:{r["id"]}">Reading path: {path_words[r["id"]]:,} words</p></div>'
         for r in cfg["roles"]) + "</div>"
-    rows = [(number, f'<a href="{slug}.html">{title}</a>') for slug, number, title, _d, _s in PAGES]
+    meta = {p[0]: p for p in PAGES}
+    tutor_pages = next(g[3] for g in GROUPS if g[0] == "tutor") + ["14-open-items", "decision-ledger"]
+    rows = [(meta[slug][1], f'<a href="{slug}.html">{meta[slug][2]}</a>') for slug in tutor_pages]
     rows += [("", '<a href="status.html">Status</a>'), ("", '<a href="../evidence/sources.html">Evidence register</a>'),
              ("", '<a href="../map/">Impact surface</a>'), ("", '<a href="contents.html">Contents and reader routes</a>')]
     contents = '<ul class="contents">' + "".join(
@@ -927,15 +1040,107 @@ def render_summary(built, counts, cfg, blocks, entries, owners, path_words):
                .replace("<!--DOORS-->", doors).replace("<!--CONTENTS-->", contents)).strip()
     n = word_count(body)
     if n > FRONT_DOOR_WORDS:
-        print(f"  warning: the front door is {n} words, over {FRONT_DOOR_WORDS}")
-    return SHELL.format(
-        title="Summary", desc="AI.tutor design vault: the route, what is settled, where it stands, and who owns what.",
+        print(f"  warning: the Tutor summary is {n} words, over {FRONT_DOOR_WORDS}")
+    return shell(
+        title="Tutor summary", desc="The Tutor: the route, what is settled, where it stands, and who owns what.",
+        number="&middot;", numlabel="", revised=REVISED, css="style.css", home="index.html",
+        status_href="status.html", map_href="../map/", contents_href="contents.html",
+        evidence_href="../evidence/sources.html",
+        switcher=switcher_for("tutor"), outline=outline_for(body), body=body, built=built,
+        prev_href="index.html", prev_label="Front page",
+        next_href="00-thesis.html", next_label="Thesis",
+    )
+
+
+# ------------------------------------------------------------------ front page
+# The first page a teacher, a partner or an accelerator reviewer opens. Each
+# idea's brief is transcluded from the fragment that states it; the only
+# hand-written prose is the frame in src/templates/front.html.
+
+def video_html(idea):
+    """A card's film: a placeholder until roles.json names a file or an embed."""
+    v, name = idea.get("video"), idea["name"]
+    if not v:
+        return (f'<div class="video-slot" role="img" aria-label="Space for a short film of the {name}">'
+                f'<span class="play" aria-hidden="true"></span>'
+                f'<span class="video-note">A short film of the {name} in use will appear here</span></div>')
+    title = v.get("title", f"The {name} in use")
+    if v.get("embed"):
+        return (f'<iframe class="video" src="{v["embed"]}" title="{title}" loading="lazy" '
+                'allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen '
+                'referrerpolicy="strict-origin-when-cross-origin"></iframe>')
+    poster = f' poster="{v["poster"]}"' if v.get("poster") else ""
+    track = (f'<track kind="captions" src="{v["captions"]}" srclang="en" label="English" default>'
+             if v.get("captions") else "")
+    return (f'<video class="video" controls preload="none"{poster} aria-label="{title}">'
+            f'<source src="{v["src"]}" type="video/mp4">{track}</video>')
+
+
+def video_origins(cfg):
+    """Origins of any embedded films, for the frame-src of the generated policy."""
+    from urllib.parse import urlsplit
+    out = []
+    for idea in cfg.get("front", {}).get("ideas", []):
+        embed = (idea.get("video") or {}).get("embed")
+        if embed:
+            parts = urlsplit(embed)
+            origin = f"{parts.scheme}://{parts.netloc}"
+            if origin not in out:
+                out.append(origin)
+    return out
+
+
+def render_front(built, counts, cfg, blocks):
+    f = cfg["front"]
+    tpl = (TEMPLATES / "front.html").read_text(encoding="utf-8")
+    cards = []
+    for idea in f["ideas"]:
+        links = " ".join(
+            f'<a class="{"go" if i == 0 else "more"}" href="{link["href"]}">{link["label"]}</a>'
+            for i, link in enumerate(idea["links"]))
+        cards.append(
+            f'<article class="idea idea-{idea["id"]}" id="idea-{idea["id"]}" aria-label="{idea["name"]}">\n'
+            f'<div class="idea-media">{video_html(idea)}</div>\n'
+            f'<div class="idea-body">\n{transclude(idea["brief"], DOCS, blocks)}\n'
+            f'<p class="idea-links">{links}</p>\n</div>\n</article>')
+    ideas = '<div class="ideas">\n' + "\n".join(cards) + "\n</div>"
+
+    def card(name, label, note):
+        return (f'<div class="stat"><span class="stat-n" data-count="{name}">{counts[name]}</span>'
+                f'<span class="stat-l">{label}</span><span class="stat-note">{note}</span></div>')
+    standing = '<div class="stats">' + "".join([
+        card("documents", "documents", "across the three ideas"),
+        card("tests", "tests specified", "<b>none run</b>, because nothing is built"),
+        card("decisions", "decisions", "each with what it rules out"),
+        card("counsel", "questions for a lawyer", "open, none answered"),
+        card("assumptions", "assumptions", "reasoned, not yet checked"),
+        card("claims", "external claims", f'checked, with <span data-count="candidates">{counts["candidates"]}</span> more awaiting a check'),
+    ]) + "</div>"
+    roles = " ".join(f'<a href="roles/{r["id"]}.html">{r["title"]}</a>' for r in cfg["roles"])
+    deeper = ('<div class="deeper">'
+              '<div><h4>The documents</h4><p><a href="tutor.html">Tutor summary</a> '
+              '<a href="contents.html">Contents and reader routes</a> <a href="status.html">Status</a> '
+              '<a href="decision-ledger.html">Decision ledger</a> <a href="14-open-items.html">Open items</a> '
+              '<a href="../evidence/sources.html">Evidence register</a> <a href="../map/">Impact surface</a></p></div>'
+              f'<div><h4>For the team</h4><p>{roles}</p></div></div>')
+    body = (tpl.replace("<!--IDEAS-->", ideas)
+               .replace("<!--FIRST-->", transclude(f["first"], DOCS, blocks))
+               .replace("<!--SHARE-->", transclude(f["share"], DOCS, blocks))
+               .replace("<!--NEXT-->", transclude(f["next"], DOCS, blocks))
+               .replace("<!--STANDING-->", standing)
+               .replace("<!--DEEPER-->", deeper)).strip()
+    n = word_count(body)
+    if n > FRONT_DOOR_WORDS:
+        print(f"  warning: the front page is {n} words, over {FRONT_DOOR_WORDS}")
+    return shell(
+        title="Three ideas", desc="AI.tutor: three ideas for teaching children with AI, what each is, and where each stands.",
         number="&middot;", numlabel="", revised=REVISED, css="style.css", home="index.html",
         status_href="status.html", map_href="../map/", contents_href="contents.html",
         evidence_href="../evidence/sources.html",
         switcher=switcher_for("index"), outline=outline_for(body), body=body, built=built,
-        prev_href="status.html", prev_label="Status",
-        next_href="contents.html", next_label="Contents",
+        prev_href="contents.html", prev_label="Contents",
+        next_href="tutor.html", next_label="Tutor summary",
+        body_class=' class="front"',
     )
 
 
@@ -1005,13 +1210,13 @@ def render_role(role, built, cfg, blocks, entries, owners, graph):
                .replace("<!--OWN-ITEMS-->", own_items).replace("<!--OWN-NODES-->", own_nodes)
                .replace("<!--BINDS-->", bind_lines).replace("<!--PATH-->", path_html)
                .replace("<!--KEYS-->", keys_html)).strip()
-    html = SHELL.format(
+    html = shell(
         title=role["title"], desc=f"What the {role['title'].lower()} owns, what binds them, and their reading path.",
         number="&middot;", numlabel="", revised=REVISED, css="../style.css", home="../index.html",
         status_href="../status.html", map_href="../../map/", contents_href="../contents.html",
         evidence_href="../../evidence/sources.html",
         switcher=switcher_for(f"roles/{rid}", "../"), outline=outline_for(body), body=body, built=built,
-        prev_href="../index.html", prev_label="Summary",
+        prev_href="../index.html", prev_label="Front page",
         next_href="../contents.html", next_label="Contents",
     )
     return html, cum
@@ -1060,7 +1265,8 @@ def render_views(built, counts):
         outputs[ROLES_DIR / f"{role['id']}.html"] = html
         path_words[role["id"]] = words
         counts[f"path:{role['id']}"] = words
-    outputs[DOCS / "index.html"] = render_summary(built, counts, cfg, blocks, entries, owners, path_words)
+    outputs[DOCS / "tutor.html"] = render_summary(built, counts, cfg, blocks, entries, owners, path_words)
+    outputs[DOCS / "index.html"] = render_front(built, counts, cfg, blocks)
     outputs[CODEOWNERS] = render_codeowners(cfg)
     return outputs
 

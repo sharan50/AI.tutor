@@ -1,0 +1,184 @@
+<h1>Foundations: product</h1>
+<p class="standfirst">Two people and a screen. The adult teaches; the child learns; the screen tells the adult what to do next and why. This document shows one session end to end, so that what the screen does, and what it deliberately leaves to the person, can be judged rather than asserted.</p>
+<dl class="meta">
+<dt>Document</dt><dd>F2 of F6, Foundations</dd>
+<dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run. No session described here has ever been run.</dd>
+<dt>Written</dt><dd>22 October 2026</dd>
+<dt>Read next</dt><dd><a href="f3-foundations-content.html">F3 Foundations: content and evidence</a></dd>
+</dl>
+
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#who">The adult and the child</a></li>
+<li><a href="#promise">What is promised, and the test behind each promise</a></li>
+<li><a href="#session">The shape of a session</a></li>
+<li><a href="#worked">One session, end to end</a></li>
+<li><a href="#screen">What the screen does and does not do</a></li>
+<li><a href="#record">The reading record</a></li>
+<li><a href="#not">What Foundations does not do</a></li>
+</ol>
+</details>
+
+<h2 id="who">The adult and the child</h2>
+
+<div class="claim">
+<p>Foundations is designed for an adult beside the child in every session. <b>The adult is the user; the child is the learner.</b> Every screen in the product is written for the adult, except the print the child reads.</p>
+<span class="tag decided">Decision D43<span class="src">22 October 2026</span></span>
+</div>
+
+<p><b>The adult</b> is a parent or carer at home, or a teaching assistant in a school running a short session with one child or a very small group. They are not a trained early-years teacher and the product does not assume they are. They have a short stretch of time, a table, some paper, a pencil and a handful of small objects, and they want to know what to do tonight, not to read a manual.</p>
+
+<p><b>The child</b> is four to seven (D41). Foundations does not ask the child's date of birth, for the reason 05 gives for the Tutor (<a href="05-safety-privacy-regulatory.html#age">05</a>); the adult tells it the child's stage instead: not yet at school, or which school year, and which sounds the child has already been taught. The child has no account, no login and no screen of their own. They never type, never speak to the product and are never addressed by it.</p>
+
+<p>Three things follow, and they are the ones easiest to miss.</p>
+
+<ul>
+<li><b>The product succeeds only if the adult comes back.</b> Not the child. Every design choice that would make the child want more screen time is irrelevant at best, and the ones that would work on the child are ruled out by D25.</li>
+<li><b>The adult is the ears and the eyes.</b> The product knows only what the adult taps. If the adult misreads what happened, so does the record. That is a real limit and it is accepted (D50).</li>
+<li><b>The adult may also be the child's school.</b> Where a teaching assistant runs the session, the school's own safeguarding policy, data duties and phonics programme all apply, and Foundations has to fit around them rather than the reverse (<a href="f4-foundations-safety.html#schools">F4</a>).</li>
+</ul>
+
+<h2 id="promise">What is promised, and the test behind each promise</h2>
+
+<p>Five promises, each made to the adult, each with a test. None has been run, because nothing has been built.</p>
+
+<div class="tw">
+<table>
+<caption>The promises. Every floor here is a design choice, set high because the checks behind them are rules rather than judgements.</caption>
+<thead><tr><th>Promise, as an adult would read it</th><th>The claim underneath it</th><th>Test</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Every practice word uses only sounds your child has been taught.</td><td>Every word in a practice text decodes using only the correspondences recorded as taught, plus the exception words listed for the child's stage. Floor: 100%, as a design choice.</td><td class="id">T-FND-01</td><td>Specified, not run</td></tr>
+<tr><td>New sounds and number ideas come in a planned order, one at a time.</td><td>Nothing is introduced out of the order of the chosen progression, and never more than one new thing in a session.</td><td class="id">T-FND-02</td><td>Specified, not run</td></tr>
+<tr><td>The sums are right.</td><td>Every number fact and expected answer is computed, not generated. Floor: 100%, as a design choice.</td><td class="id">T-FND-03</td><td>Specified, not run</td></tr>
+<tr><td>You can run a session from the screen without any training.</td><td>An untrained parent or teaching assistant runs a session as designed from the on-screen guidance alone.</td><td class="id">T-FND-04</td><td>Specified, not run</td></tr>
+<tr><td>Nothing your child says is recorded.</td><td>No audio is captured, transmitted or stored, by any part of the product.</td><td class="id">T-FND-05</td><td>Specified, not run</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>There is no promise that the child will learn to read faster. That is the claim a parent most wants to hear and the one this vault has nothing to support. The first four promises say the guidance is correct; whether correct guidance from a screen, delivered by an untrained adult, helps a child more than the same adult without it is the question the evidence in <a href="f3-foundations-content.html#measure">F3</a> exists to answer.</p>
+
+<h2 id="session">The shape of a session</h2>
+
+<div class="claim">
+<p>A session is <b>about ten minutes</b> and introduces <b>one new thing</b>, a sound or a number idea, never more. The product never extends a session and always offers to end it early.</p>
+<span class="tag decided">Design choice<span class="src">this document; the owner's view that a person must manage the child (OA-28)</span></span>
+</div>
+
+<ol>
+<li><b>Ready.</b> The guide asks the adult whether the child is rested and willing, and whether they have paper, a pencil and a few small objects. If the answer is no, the session does not start, and the guide says tomorrow is fine. The decision is the adult's.</li>
+<li><b>Warm up.</b> Three to six sounds or number facts the child already knows, shown large and plain. The child says them; the adult taps what happened.</li>
+<li><b>One new thing.</b> The guide tells the adult what to say, what to show and what to do with their hands. The child traces or forms the new letter with the adult as they say its sound.</li>
+<li><b>Practise.</b> Words and short phrases built only from what the child knows. The adult points under each sound and slides their finger along as the child blends. The adult taps: read, read with help, or not yet.</li>
+<li><b>Stop.</b> At the end of the ten minutes, or earlier at the first sign of fatigue, ending on something the child has done well. The guide suggests one specific thing to praise.</li>
+</ol>
+
+<p>The shape borrows one idea from the Tutor and drops another. It borrows the single objective: one new thing, practised, rather than a tour. It drops the Tutor's unaided check from every session, because a test at the end of ten minutes with a five-year-old risks ending on failure. Instead, every few sessions the guide asks the adult to show the child words built from taught sounds that the child has never practised, and to tap without helping. That keeps the honesty of D15 without making every session end with a test.</p>
+
+<h2 id="worked">One session, end to end</h2>
+
+<p>The child, Maya, is five and in Reception. She has been taught the sounds for s, a, t, p, i, n, o, f and h. Today the sequence introduces <b>sh</b>: two letters that make one sound. Her father runs the session at the kitchen table. The transcript shows what the screen says to the adult, and what the adult and the child do. Nothing in it was produced by a system; it was written to illustrate the specification.</p>
+
+<div class="transcript">
+<div class="tr-head">Foundations &middot; reading &middot; new sound sh &middot; about ten minutes &middot; the adult taps, nothing listens</div>
+<div class="turn tutor"><span class="who">Guide, to the adult</span>
+<p>Today's new sound is <b>sh</b>. Before you start: is Maya rested, and does she want to? If not, stop here. Tomorrow is fine.</p>
+<div class="annot"><b>Ready.</b> The adult decides whether there is a session at all. The product never sends a reminder or counts missed days (D25).</div>
+</div>
+<div class="turn student"><span class="who">Adult and child</span>
+<p>Her father taps <i>ready</i>. Maya is at the table with a pencil.</p>
+</div>
+<div class="turn tutor"><span class="who">Guide, to the adult</span>
+<p>Warm up. Turn the screen to Maya and point to each letter in turn: <b>s &middot; h &middot; i &middot; p &middot; o &middot; f</b>. She says the sound. Tap each one she gets without help.</p>
+<div class="annot"><b>The adult is the ears.</b> No microphone is on. The six taps are the only record of what Maya said (D50, T-FND-05).</div>
+</div>
+<div class="turn student"><span class="who">Adult and child</span>
+<p>Maya says five straight away and pauses on o before getting it. Her father taps five, and one with a pause.</p>
+</div>
+<div class="turn tutor"><span class="who">Guide, to the adult</span>
+<p>New sound. Say: <i>"When these two letters sit together, they make one sound: sh. Like when we ask for quiet."</i> Then write s and h side by side on the paper, large, and trace them with her finger while you both say <b>sh</b>.</p>
+<p>How to form them: s starts at the top right and curls back; h starts at the top, down, back up halfway and over.</p>
+<div class="annot"><b>The physical side.</b> The screen tells the adult how to form the letters; the adult forms them with the child. The product never tries to see the child's writing; there is no camera (D50).</div>
+</div>
+<div class="turn student"><span class="who">Adult and child</span>
+<p>They trace it twice. Maya puts her finger to her lips and says <i>shh</i>, which is the point.</p>
+</div>
+<div class="turn tutor"><span class="who">Guide, to the adult</span>
+<p>Blend. Show her <b>ship</b>. Point under <b>sh</b>, then <b>i</b>, then <b>p</b>, then slide your finger along the whole word as she says it.</p>
+<div class="annot"><b>Decodable.</b> sh, i and p are all taught. The word was chosen from the sequence's word list and passed the decodability rule before it reached the screen (T-FND-01).</div>
+</div>
+<div class="turn student"><span class="who">Adult and child</span>
+<p>"sh... i... p... ship!" Her father taps <i>read</i>.</p>
+</div>
+<div class="turn tutor"><span class="who">Guide, to the adult</span>
+<p>Next: <b>shop</b>.</p>
+</div>
+<div class="turn student"><span class="who">Adult and child</span>
+<p>"s... h... op? ...shop." Her father taps <i>read with help</i>, and then <i>said s and h separately</i>.</p>
+</div>
+<div class="turn tutor"><span class="who">Guide, to the adult</span>
+<p>She read s and h as two sounds, which is the mistake today's step exists to catch. Cover the h with your finger, then uncover it and say: <i>"These two are a team. Together they say sh."</i> Then show her <b>fish</b>.</p>
+<div class="annot"><b>The response is written in advance.</b> The guide chose it from a reviewed set of responses for this error at this step (<a href="f3-foundations-content.html#review">F3</a>). Nothing in the session is generated while the child waits.</div>
+</div>
+<div class="turn student"><span class="who">Adult and child</span>
+<p>"f... i... sh. Fish." <i>Read.</i> Then Maya slides half off her chair and starts drawing a fish instead. Her father taps <i>losing focus</i>.</p>
+</div>
+<div class="turn tutor"><span class="who">Guide, to the adult</span>
+<p>Stop the reading here. She has read three words with a new sound, and that is a good session. One last thing, standing up, if she wants to: put five small objects in a row and ask how many. Then take two away while she watches, and ask again.</p>
+<div class="annot"><b>Stop early.</b> The guide ends the reading at the first sign the adult reports, without arguing. The number activity is optional, physical and short.</div>
+</div>
+<div class="turn student"><span class="who">Adult and child</span>
+<p>Her father lines up five buttons. Maya counts them, touching each: "one, two, three, four, five." He takes two away. She counts again: "three!" He taps <i>counted correctly</i>.</p>
+</div>
+<div class="turn tutor"><span class="who">Guide, to the adult</span>
+<p>Ask her how she knows. <i>"I counted"</i> is exactly right at this stage. Then finish by telling her one thing she did well: <i>"You read fish all by yourself."</i> Next time: sh again, then a new sound.</p>
+<div class="annot"><b>Computed, not generated.</b> Five take away two is checked by computation before the activity is offered (T-FND-03). <b>No reward on screen.</b> No stars, points or streak; the praise is the adult's, and the guide suggests making it specific.</div>
+</div>
+</div>
+
+<p>Three things in the transcript carry the design. First, the screen never addresses the child; even the warm-up letters are something the adult points to. Second, the hard part of the session, Maya's attention, was handled by the person, and the product's only contribution was to agree immediately. Third, the product learned that sh is fragile for Maya because her father told it, and it will bring sh back next time because of that tap, not because it heard anything.</p>
+
+<h2 id="screen">What the screen does and does not do</h2>
+
+<div class="tw">
+<table>
+<thead><tr><th>The screen does</th><th>The screen does not</th></tr></thead>
+<tbody>
+<tr><td>Tell the adult the next step, and what to say and do.</td><td>Speak to the child, or address them on screen.</td></tr>
+<tr><td>Show the child print to read: letters, words, short phrases, large and plain.</td><td>Animate, play sounds, show characters or offer games around the print.</td></tr>
+<tr><td>Explain to the adult what a mistake means and how to respond.</td><td>Listen to the child (no microphone) or watch them (no camera). D50.</td></tr>
+<tr><td>Suggest when to stop, and agree at once when the adult says so.</td><td>Extend a session, count streaks, or send reminders (D25).</td></tr>
+<tr><td>Keep the record, so the next session starts in the right place.</td><td>Grade the child, compare them with other children, or predict how they will do.</td></tr>
+<tr><td>Answer the adult's questions between sessions, from reviewed explanations (<a href="f5-foundations-architecture.html#guide">F5</a>).</td><td>Diagnose anything. If progress stalls over several sessions, the guide suggests talking to the child's teacher or a health professional, and goes no further.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The print can be shown on the screen, turned towards the child, or printed as cards from the same session. Printed cards suit the owner's view of how this age learns better than a screen does, and they cost nothing to support, so both are offered.</p>
+
+<h2 id="record">The reading record</h2>
+
+<p>The record is the whole of what Foundations knows about a child, and it is built only from what the adult taps.</p>
+
+<ul>
+<li>Which sounds and number ideas have been introduced, and when.</li>
+<li>For each practice word: read, read with help, or not yet; and the mistake the adult reported, if any.</li>
+<li>The occasional check on unpractised words, tapped without help.</li>
+<li>Whether a session ended early, so the guide can shorten the next one.</li>
+</ul>
+
+<p>The adult sees all of it, in plain language rather than scores: "sh: introduced on Tuesday; read fish and ship alone, shop with help." It is not shown to anyone else, is not used to rank the child, and is deleted on request under the same deletion commitment the Tutor makes (<a href="05-safety-privacy-regulatory.html#data">05</a>). In a school, the record belongs within the school's own records and its own retention rules; who controls it there is part of <a href="f4-foundations-safety.html#schools">F4</a>.</p>
+
+<p>The record holds no free-text notes about the child. A notes field is where an adult would write what they noticed about a child's home or health, and Foundations has no business holding that, so the field does not exist.</p>
+
+<h2 id="not">What Foundations does not do</h2>
+
+<ul>
+<li><b>It does not teach a child on their own.</b> There is no child-alone mode, now or later (D43).</li>
+<li><b>It does not listen or watch.</b> No microphone and no camera at launch. Listening to a child read is a possible later feature, with separate consent and no audio kept, and only after counsel has answered OI-17 (D50).</li>
+<li><b>It does not replace school.</b> For a child in school it practises what the school is teaching rather than racing ahead of it, and where the adult can tell it the school's order it follows that order (<a href="f3-foundations-content.html#sequence">F3</a>).</li>
+<li><b>It does not reward the child.</b> No stars, points, badges, streaks or characters (D25).</li>
+<li><b>It does not diagnose.</b> It never suggests that a child has a reading difficulty, a speech difficulty or a developmental condition. It suggests talking to people who can tell.</li>
+<li><b>It does not promise faster reading.</b> Nothing in this vault supports that promise, so it is not made.</li>
+</ul>
