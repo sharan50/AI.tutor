@@ -146,6 +146,10 @@ The nits were fixed:
 - the "For the team" heading, now "Owner views", with the owner named on the front page;
 - the remaining wording points on the Primer and Foundations pages.
 
+One point was left as it was, with the reason. F4's line on how the Children's code
+was read states the vault's own reading, not CV-06's content, so it needs no
+candidate marker. The working-position line earlier on F4 does carry one.
+
 ## 6. The brief's acceptance bar
 
 1. The build and the checks pass, with no warnings about the front page. **Met.**

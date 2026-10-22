@@ -28,7 +28,7 @@
   <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#posture">The position in one paragraph</a></li><li><a href="#ages">Age bands, consent, and page 13's argument</a></li><li><a href="#modules">Modules parents switch, and the request channel</a></li><li><a href="#parent">What a parent sees</a></li><li><a href="#memory">Memory of ideas, not of lives</a></li><li><a href="#voice">No child's voice at launch</a></li><li><a href="#escalation">Escalation, in the UK and the US</a></li><li><a href="#companion">Not a companion</a></li><li><a href="#us">The US position</a></li><li><a href="#gaps">Named gaps</a></li></ol></div></aside>
   <main class="sheet" id="doc">
 <h1>Primer: safety, privacy and regulatory</h1>
-<p class="standfirst">The Primer's users are 8 to 13, its subject invites the questions children find hardest, and one of its two launch markets is the US, where AI chatbots that talk with children are under active scrutiny. The design answers with adult control, a strict refusal to be a companion, no child's voice, and triage that stops an inquiry the moment a question is about the child's own life. Its new questions for counsel, OI-13 to OI-18 and OI-20, are open, and none is answered here.</p>
+<p class="standfirst">The Primer's users are 8 to 13, its subject invites the questions children find hardest, and one launch market is the US, where AI chatbots that talk with children are under scrutiny. The design answers with adult control, a strict refusal to be a companion, no child's voice, and triage that stops an inquiry the moment a question is about the child's own life. Its new counsel questions, OI-13 to OI-18 and OI-20, are open and none is answered here.</p>
 <dl class="meta">
 <dt>Document</dt><dd>P4 of P6, the Primer</dd>
 <dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run.</dd>
@@ -56,7 +56,7 @@
 
 <h2 id="posture">The position in one paragraph</h2>
 
-<p class="lede">The Primer is a one-to-one tutor: nothing one user writes reaches another, the condition on which the Tutor's Online Safety Act position rests (<a href="05-safety-privacy-regulatory.html#osa">05</a>, <span class="mark open">Open</span> OI-4), and the parent request channel is designed to keep it (<span class="mark open">Open</span> OI-18). The account belongs to a verified adult, on the Tutor's age assurance (<a href="05-safety-privacy-regulatory.html#age">05</a>, <span class="mark open">Open</span> OI-5), who creates the child's profile. Almost every user is under 13, so the rules on a child's consent to an online service are likely to bear on the design <span class="mark assumed">Assumed</span> (CV-07), and the lawful basis is <span class="mark open">Open</span> OI-13. The Primer keeps a record of ideas and nothing about the child's life (D49), collects no child's voice (D50), has no engagement objective (D25), and is not a companion. In the US, the amended COPPA Rule and new state laws on companion chatbots may apply <span class="mark assumed">Assumed</span> (CV-08, CV-10): <span class="mark open">Open</span> OI-15.</p>
+<p class="lede">The Primer is a one-to-one tutor: nothing one user writes reaches another, the condition the Tutor's Online Safety Act position rests on (<a href="05-safety-privacy-regulatory.html#osa">05</a>, <span class="mark open">Open</span> OI-4), and the parent request channel keeps it (<span class="mark open">Open</span> OI-18). A verified adult holds the account, on the Tutor's age assurance (<a href="05-safety-privacy-regulatory.html#age">05</a>, <span class="mark open">Open</span> OI-5), and creates the child's profile. Almost every user is under 13, so the rules on a child's consent to online services likely bear on the design <span class="mark assumed">Assumed</span> (CV-07), and the lawful basis is <span class="mark open">Open</span> OI-13. The Primer keeps a record of ideas and nothing about the child's life (D49), collects no child's voice (D50), has no engagement objective (D25), and is not a companion. In the US, the amended COPPA Rule and new state laws on companion chatbots may apply <span class="mark assumed">Assumed</span> (CV-08, CV-10): <span class="mark open">Open</span> OI-15.</p>
 
 <h2 id="ages">Age bands, consent, and page 13's argument</h2>
 
@@ -69,22 +69,22 @@
 
 <div class="tw">
 <table>
-<caption>What changes across the code's ranges within the Primer's band. Every row is a design choice except where marked.</caption>
+<caption>Settings across the code's ranges within the band; design choices except where marked.</caption>
 <thead><tr><th>Setting</th><th>8 and 9</th><th>10 to 12</th><th>13</th></tr></thead>
 <tbody>
 <tr><td>Modules offered</td><td>Only those written for the band; no sensitive module is offered at all (D57; <a href="p3-primer-content.html#modules">P3</a>)</td><td>Those written for the band; sensitive ones off until a parent switches them on</td><td>As 10 to 12</td></tr>
 <tr><td>Session cap</td><td colspan="3"><span class="mark unknown">Unknown</span> for every range. Set from PM3's observations, never extendable by the child.</td></tr>
 <tr><td>The Primer reads its words aloud</td><td>Available</td><td>Available</td><td>Available</td></tr>
-<tr><td>Privacy information and the explanation of the parent's record</td><td colspan="3">Written separately for each range, so a child can understand what is kept and who sees it.</td></tr>
+<tr><td>Privacy information and the explanation of the parent's record</td><td colspan="3">Written for each range, so a child understands what is kept and who sees it.</td></tr>
 <tr><td>Full conversation available to the parent on request</td><td>Yes</td><td>Yes</td><td>No; the activity record only (D48)</td></tr>
 </tbody>
 </table>
 </div>
 
-<p><b>How the band is set.</b> From the child's age in years, as the verified adult gives it when creating the profile; never a date of birth. That is a recorded departure from 05, which uses the school year for placement only, because school years do not map onto the code's ranges (D57). A parent who gives an older age can open modules written for older children, though sensitive ones still start switched off. The protection depends on that adult's word, the same trust 05 places in the school year, and it is recorded here as a limit, not solved.</p>
+<p><b>How the band is set.</b> From the child's age in years as the verified adult gives it, never a date of birth: a recorded departure from 05, which uses the school year for placement only, because school years do not map onto the code's ranges (D57). A parent who gives an older age can open modules written for older children. The protection depends on that adult's word, the same trust 05 places in the school year, and it is recorded here as a limit, not solved.</p>
 
 <div class="claim">
-<p>Under UK GDPR Article 8, a child can consent to an online service of this kind from 13; below that age, consent must be given or authorised by a holder of parental responsibility, and the provider must make reasonable efforts to verify it. The text has since been amended and the current version has not been checked.</p>
+<p>Under UK GDPR Article 8, a child can consent to an online service of this kind from 13; below that, a holder of parental responsibility must give or authorise consent, with reasonable efforts to verify it. The text has since been amended; the current version was not checked.</p>
 <span class="tag assumed">Assumed<span class="src">CV-07, awaiting the owner's check</span></span>
 </div>
 
@@ -98,36 +98,36 @@
 <table>
 <thead><tr><th>What an older teenager supplies</th><th>What replaces it at 8 to 13</th></tr></thead>
 <tbody>
-<tr><td>Notices being led, and says so.</td><td>The Primer never states a conclusion on a contested question (T-PRM-03), and blind raters check that a child who holds their ground is not pressed (T-PRM-04), with the stricter protocol at the younger end.</td></tr>
+<tr><td>Notices being led, and says so.</td><td>No conclusion on a contested question (T-PRM-03); blind raters check a child who holds their ground is not pressed (T-PRM-04), more strictly at the younger end.</td></tr>
 <tr><td>Reads their own transcript.</td><td>A parent reads the activity record, and for a child under 13 the conversation on request (D48).</td></tr>
-<tr><td>Opts out meaningfully.</td><td>Sensitive modules are off until a parent switches them on (D46); the child can stop any question at any point; sessions are capped.</td></tr>
+<tr><td>Opts out meaningfully.</td><td>Sensitive modules off until a parent switches them on (D46); the child can stop at any point; sessions are capped.</td></tr>
 <tr><td>Takes a worry to a trusted adult.</td><td>Triage stops any inquiry about the child's own life and points them to a person (T-PRM-06); a safety concern takes 05's three moves.</td></tr>
 </tbody>
 </table>
 </div>
 
-<p><b>What remains weaker is real.</b> A nine-year-old resists a persuasive voice less well than a sixteen-year-old, so at the younger end the protection is the design and the tests, not the child; and a parent's oversight assumes a parent who reads the record, who is sometimes the risk (D26). The departure is accepted only with PM4's supervised, independently evaluated pilot as a condition of release.</p>
+<p><b>What remains weaker is real.</b> A nine-year-old resists a persuasive voice less well than a sixteen-year-old, so at the younger end the design and the tests protect the child; and a parent's oversight assumes a parent who reads the record, who is sometimes the risk (D26). The departure stands only with PM4's supervised, independently evaluated pilot as a condition of release.</p>
 
 <h2 id="modules">Modules parents switch, and the request channel</h2>
 
 <div class="claim">
-<p>The Primer's subjects come in modules the company writes and reviews. Parents switch them on and off; sensitive ones start off; each is offered only in the band it is written for. Parents cannot add content or views; they may send ideas and requests, which go to review and are never shown to anyone else.</p>
+<p>The Primer's subjects come in modules the company writes and reviews. Parents switch modules on and off; modules on sensitive subjects start switched off; each module is written for an age band and offered only within it. Parents cannot add content or views. They may send ideas and requests, which go to the company's review and are never shown to anyone else.</p>
 <span class="tag decided">Decision<span class="src">D46, 22 October 2026</span></span>
 </div>
 
-<p>Before switching a module on, a parent sees its description, example questions, band and whether it is sensitive; a switch applies from the child's next turn (<a href="p5-primer-architecture.html#registry">P5</a>).</p>
+<p>A parent sees a module's description, example questions, band and sensitivity before switching it on; a switch applies from the child's next turn (<a href="p5-primer-architecture.html#registry">P5</a>).</p>
 
-<p><b>Why parents cannot add their own views.</b> The owner's reasoning is that a channel for a parent's views is a channel for extremism and other harm, introduced consciously or not. It would also make the company the host of whatever a parent wrote, delivered by a voice the child trusts, and anything one parent wrote that reached another family would be the user-to-user feature that makes a service a regulated platform (<a href="05-safety-privacy-regulatory.html#trigger">05</a>).</p>
+<p><b>Why parents cannot add their own views.</b> The owner's reasoning is that a channel for a parent's views is a channel for extremism and other harm, introduced consciously or not; and anything one parent wrote that reached another family would be the user-to-user feature that makes a service a regulated platform (<a href="05-safety-privacy-regulatory.html#trigger">05</a>).</p>
 
-<p><b>The request channel.</b> A parent can send an idea or a request in free text. It goes to review and is never shown to the child or any other user; it becomes a module only through the full writing and review process (<a href="p3-primer-content.html#review">P3</a>), as the company's content. Whether that keeps the Primer outside the user-to-user duties is <span class="mark open">Open</span> OI-18.</p>
+<p><b>The request channel.</b> A request, sent in free text, becomes a module only through the full writing and review process (<a href="p3-primer-content.html#review">P3</a>). Whether that keeps the Primer outside the user-to-user duties is <span class="mark open">Open</span> OI-18.</p>
 
-<p><b>The cost, stated in D46.</b> Every module is the company's editorial responsibility, so balance and reviewer capacity become the bottleneck (RP5), and a family the catalogue does not suit can only switch things off (OA-27). Whether these subjects engage duties beyond the code and the Online Safety Act is <span class="mark open">Open</span> OI-16.</p>
+<p><b>The cost, stated in D46.</b> Every module is the company's editorial responsibility, so balance and reviewer capacity are the bottleneck (RP5), and a family the catalogue does not suit can only switch things off (OA-27). Whether these subjects engage duties beyond the code and the Online Safety Act is <span class="mark open">Open</span> OI-16.</p>
 
 <h2 id="parent">What a parent sees</h2>
 
 <div class="claim">
-<p>A parent sees an activity record of their child's Primer use: modules used, questions asked and the views the child recorded. A question the Primer declined, or one in a switched-off module, appears by its category, not its words. For a child under 13 the full conversation is also available to the parent on request. The whole of an exchange flagged for safeguarding, including the Primer's own reply, is withheld from the record and from any transcript and routed to a trained reviewer, as D26 requires. The child is told before they start, in words for their age, what a parent can see. Taken while OI-8 and OI-14 are open; it answers neither.</p>
-<span class="tag decided">Decision<span class="src">D48, as amended 22 October 2026</span></span>
+<p>A parent sees an activity record: modules used, questions asked and the views the child recorded. A question the Primer declined, or one in a switched-off module, appears by its category, not its words. For a child under 13 the full conversation is also available on request. The whole of an exchange flagged for safeguarding, including the Primer's own reply, is withheld from the record and from any transcript and routed to a trained reviewer, as D26 requires. The child is told before they start, in words for their age, what a parent can see. Taken while OI-8 and OI-14 are open; it answers neither.</p>
+<span class="tag decided">Decision<span class="src">D48, 22 October 2026</span></span>
 </div>
 
 <div class="tw">
@@ -144,11 +144,11 @@
 </table>
 </div>
 
-<p>This is the opposite default from the Tutor's, where a teenager's transcripts stay private because a student who knows every word is reported will not admit confusion (D16). It is taken here because these users are younger and the subjects are ones families care about, and it does not answer OI-8.</p>
+<p>This reverses the Tutor's default, where a teenager's transcripts stay private (D16), because these users are younger.</p>
 
-<p><b>The record can itself expose a child.</b> A question about identity, belief or the body, asked in a household hostile to it, is not a safeguarding flag, yet D26's reasoning, that the parent is sometimes the risk, applies to it. Recording a declined question by its category reduces the risk in the record a parent reads routinely. It does not remove it: a category can say too much, and a requested conversation shows the words of any question the Primer explored. It is the quieter form of RP4, and how far the record should go, with what a child must be told, is <span class="mark open">Open</span> OI-14.</p>
+<p><b>The record can itself expose a child.</b> A question about identity, belief or the body, in a household hostile to it, is not a safeguarding flag, yet D26's reasoning, that the parent is sometimes the risk, applies. Recording declined questions by category reduces the risk in the record a parent reads routinely; it does not remove it, since a category can say too much and a requested conversation shows the words of any question explored. It is RP4's quieter form, and how far the record should go, with what a child must be told, is <span class="mark open">Open</span> OI-14.</p>
 
-<p><b>The withholding rule cannot be allowed to fail</b>, because a failure exposes a child to the person they were trying to tell about (RP4). The flag is applied to the whole exchange before anything is written where a parent can read it, and T-PRM-08, deterministic and blocking, tests it (<a href="p5-primer-architecture.html#checks">P5</a>).</p>
+<p><b>The withholding rule cannot be allowed to fail</b>, because a failure exposes a child to the person they were trying to tell about (RP4). The flag covers the whole exchange and is applied before anything is written where a parent can read it; T-PRM-08 tests it (<a href="p5-primer-architecture.html#checks">P5</a>).</p>
 
 <h2 id="memory">Memory of ideas, not of lives</h2>
 
@@ -157,21 +157,21 @@
 <span class="tag decided">Decision<span class="src">D49, 22 October 2026</span></span>
 </div>
 
-<p>Within a session the Primer holds a bounded running summary of the current question, as the Tutor does (D30). Across sessions it holds only the record of ideas: a child's mention of their family, a friend or their feelings is not carried forward. That is 05's rule, that the tutor remembers a student cannot yet factorise and not that their dog died (<a href="05-safety-privacy-regulatory.html#content">05</a>), applied to a subject that invites far more disclosure. The cost is that the Primer cannot connect a question to the child's circumstances, as a human tutor would; that is accepted.</p>
+<p>Within a session the Primer holds a bounded summary of the current question (D30). Across sessions it holds only the record of ideas: a child's mention of their family, a friend or their feelings is not carried forward, 05's rule applied to a subject that invites far more disclosure (<a href="05-safety-privacy-regulatory.html#content">05</a>). The cost, accepted, is that the Primer cannot connect a question to the child's circumstances.</p>
 
 <h3>What the Primer holds</h3>
 
 <div class="tw">
 <table>
-<caption>Retention is Unknown until the Primer's safeguarding policy, which does not yet exist, sets it.</caption>
+<caption>Retention is Unknown until the Primer's safeguarding policy sets it.</caption>
 <thead><tr><th>Held</th><th>Why</th><th>Who sees it</th><th>Kept for</th></tr></thead>
 <tbody>
 <tr><td>The parent's account: the verified adult, billing</td><td>Contract, payment, age assurance</td><td>The parent; finance staff</td><td>As <a href="05-safety-privacy-regulatory.html#data">05</a></td></tr>
 <tr><td>The child's profile: a display name, the age in years, the switches</td><td>The band (D57) and the switches (D46)</td><td>The parent</td><td>Until the account is closed</td></tr>
 <tr><td>The record of ideas, with declined questions by category</td><td>D49, and the parent's record (D48)</td><td>The parent; the child</td><td><span class="mark unknown">Unknown</span></td></tr>
-<tr><td>Transcripts</td><td>Adjudicating the checks; safety review; a parent's request for a child under 13</td><td>Reviewers, on a logged need; the parent on request, flagged exchanges withheld</td><td><span class="mark unknown">Unknown</span></td></tr>
+<tr><td>Transcripts</td><td>Adjudication; safety review; a parent's request for a child under 13</td><td>Reviewers, on a logged need; the parent on request, flagged exchanges withheld</td><td><span class="mark unknown">Unknown</span></td></tr>
 <tr><td>Safeguarding flags and escalation records</td><td>D26</td><td>The trained reviewer</td><td><span class="mark unknown">Unknown</span></td></tr>
-<tr><td>Parents' requests, in free text</td><td>Review for new modules (D46)</td><td>Reviewers</td><td><span class="mark unknown">Unknown</span></td></tr>
+<tr><td>Parents' requests, in free text</td><td>Review (D46)</td><td>Reviewers</td><td><span class="mark unknown">Unknown</span></td></tr>
 <tr><td>The writing queue</td><td>New content (D44)</td><td>Writers and reviewers</td><td>Holds no child's words and no link to an account (<a href="p3-primer-content.html#bank">P3</a>)</td></tr>
 </tbody>
 </table>
@@ -182,18 +182,18 @@
 <h2 id="voice">No child's voice at launch</h2>
 
 <div class="claim">
-<p>Neither the Primer nor Foundations collects a child's voice or image at launch. The Primer takes typed text; a child who dictates through their device's own keyboard sends text, never audio. Listening is a later feature, separately consented, with no audio retained.</p>
+<p>Neither the Primer nor Foundations collects a child's voice or image at launch. A child who dictates through their device's keyboard sends text, never audio; listening is a later, separately consented feature with no audio kept.</p>
 <span class="tag decided">Decision<span class="src">D50, 22 October 2026</span></span>
 </div>
 
-<p>The Primer may read its own words aloud for a child who reads slowly; no microphone is involved. Whether a child's voice, or anything derived from it, is biometric or special category data is part of <span class="mark open">Open</span> OI-17.</p>
+<p>The Primer may read its words aloud for a slow reader; no microphone is involved. Whether a child's voice, or anything derived from it, is biometric or special category data is part of <span class="mark open">Open</span> OI-17.</p>
 
 <div class="claim">
 <p>Speech recognition errs more on children's speech, more the younger the child, and fine-tuning has narrowed the gap without closing it. The amended COPPA Rule brings voiceprints into "personal information".</p>
 <span class="tag assumed">Assumed<span class="src">CV-11 and CV-08, awaiting the owner's check</span></span>
 </div>
 
-<p>The cost is that the Primer is harder for the youngest typists, which bears directly on its age floor (OA-23).</p>
+<p>The cost: the Primer is harder for the youngest typists, which bears on its age floor (OA-23).</p>
 
 <h2 id="escalation">Escalation, in the UK and the US</h2>
 
@@ -206,23 +206,23 @@
 <span class="tag assumed">Assumed<span class="src">CV-12, awaiting the owner's check</span></span>
 </div>
 
-<p><b>The honest limit 05 states applies with more force.</b> Human review on the next business day is not adequate for an acute disclosure, which is why signposting comes first, and a question about death or fairness can turn into something about home in one message. So the Primer must not present itself as a place to tell things to; the parent's terms and the child's first session both say it is a tutor for questions, not a safeguarding service.</p>
+<p><b>05's honest limit applies with more force.</b> Next-business-day review is not adequate for an acute disclosure, which is why signposting comes first, and a question about death can turn into something about home in one message. So the Primer never presents itself as a place to tell things to; the parent's terms and the child's first session say it is a tutor for questions, not a safeguarding service.</p>
 
 <h2 id="companion">Not a companion</h2>
 
 <p>05's four constraints apply unchanged (<a href="05-safety-privacy-regulatory.html#content">05</a>): no claimed feelings or life outside the session, no contact initiated, no social memory (D49), and a session cap the learner cannot extend. The Primer adds four of its own:</p>
 
 <ul class="tight">
-<li>it never calls itself the child's friend, and never says it understands them specially;</li>
+<li>it never calls itself the child's friend or claims to understand them specially;</li>
 <li>it never speaks as a person, historical or living (D47);</li>
-<li>in "Minds and machines" it discusses whether machines can think or feel without ever offering itself as the example;</li>
+<li>in "Minds and machines" it never offers itself as the example;</li>
 <li>it has no engagement objective and no reward for returning (D25).</li>
 </ul>
 
-<p>This matters more here: the users are younger, big questions invite intimacy, and in the US companion chatbots for children face regulatory action <span class="mark assumed">Assumed</span> (CV-10).</p>
+<p>It matters more here: younger users, big questions that invite intimacy, and regulatory action in the US against companion chatbots for children <span class="mark assumed">Assumed</span> (CV-10).</p>
 
 <div class="claim">
-<p>In September 2025 the US Federal Trade Commission opened an inquiry into consumer AI chatbots acting as companions, asking several companies how they measure and monitor harm to children and teens. California's SB 243, operative from 1 January 2026, imposes safeguards on companion chatbots with obligations aimed at minors, and other states have followed.</p>
+<p>In September 2025 the US Federal Trade Commission opened an inquiry into consumer AI chatbots acting as companions, asking how they measure and monitor harm to children and teens. California's SB 243, operative from 1 January 2026, imposes safeguards on companion chatbots aimed at minors; other states have followed.</p>
 <span class="tag assumed">Assumed<span class="src">CV-10, awaiting the owner's check</span></span>
 </div>
 
@@ -230,14 +230,17 @@
 
 <h2 id="us">The US position</h2>
 
-<p>The Primer launches in the UK and the US together where resources allow, and in the UK first where they do not <span class="mark decided">Decision</span> D51.</p>
+<div class="claim">
+<p>The Primer and Foundations launch in the UK and the US together where resources allow, and in the UK first where they do not. D1 continues to govern the Tutor.</p>
+<span class="tag decided">Decision<span class="src">D51, 22 October 2026</span></span>
+</div>
 
 <div class="claim">
 <p>The US Federal Trade Commission's amended COPPA Rule took effect in 2025, with most operators required to comply by April 2026. Verifiable parental consent applies to children under 13, and the amendments bring biometric identifiers, voiceprints among them, into "personal information" and require a written retention policy.</p>
 <span class="tag assumed">Assumed<span class="src">CV-08, awaiting the owner's check</span></span>
 </div>
 
-<p>Several of the Primer's choices point the way the amended rule does: no voice (D50), no advertising, no engagement objective (D25), a record of ideas rather than a profile (D49). Pointing the right way is not compliance. What COPPA requires of the Primer, which state laws add, and whether a tutor that declines companionship falls outside the companion-chatbot laws is <span class="mark open">Open</span> OI-15; state duties to report are <span class="mark open">Open</span> OI-20; and which entity contracts with a US parent adds to the Tutor's <span class="mark open">Open</span> OI-7.</p>
+<p>Several choices point the way the amended rule does: no voice (D50), no advertising, no engagement objective (D25), a record of ideas rather than a profile (D49). That is not compliance. What COPPA and state law require of the Primer is <span class="mark open">Open</span> OI-15; state duties to report, OI-20; and which entity contracts with a US parent adds to the Tutor's OI-7.</p>
 
 <h2 id="gaps">Named gaps</h2>
 
@@ -245,16 +248,16 @@
 <table>
 <thead><tr><th>Gap</th><th>What closes it</th></tr></thead>
 <tbody>
-<tr><td>No safeguarding policy for children under 13 exists; the one 05 names as missing comes first, with a higher bar.</td><td>A written policy, with child-safety expertise, before PM3 involves any child.</td></tr>
+<tr><td>No safeguarding policy for children under 13 exists.</td><td>A written policy, with child-safety expertise, before PM3 involves any child.</td></tr>
 <tr><td>Retention periods for transcripts, the record of ideas, requests and escalation records: <span class="mark unknown">Unknown</span>.</td><td>The safeguarding policy, which fills the retention column in <a href="#memory">What the Primer holds</a>.</td></tr>
-<tr><td>PM3, the first milestone with children, has preconditions not yet met.</td><td>Facilitators vetted to the standard required for work with children in each country; a parent present, or the session observed by a second adult; the child's own assent and a way to stop at any moment; a DPIA for the pilot; pilot records kept for a period <span class="mark unknown">Unknown</span> until the policy exists, and deleted at the pilot's end unless the parent consents otherwise.</td></tr>
-<tr><td>Replies to a bereaved or distressed child are placeholders (<a href="p2-primer-product.html#personal">P2</a>).</td><td>Wording written and reviewed with a specialist in children's bereavement and safeguarding, before PM3.</td></tr>
+<tr><td>PM3, the first milestone with children: its preconditions.</td><td>Facilitators vetted to the standard required for work with children in each country; a parent present, or the session observed by a second adult; the child's own assent and a way to stop at any moment; pilot records kept for a period <span class="mark unknown">Unknown</span> until the policy exists, and deleted at the pilot's end unless the parent consents otherwise.</td></tr>
+<tr><td>Replies to a bereaved or distressed child are placeholders (<a href="p2-primer-product.html#personal">P2</a>).</td><td>Wording written and reviewed with a specialist in bereavement and safeguarding, before PM3.</td></tr>
 <tr><td>The child-facing explanation of what a parent sees is not written.</td><td>OI-14, then writing for each of the code's ranges.</td></tr>
 <tr><td>No US counsel, and no US escalation route or analysis of state reporting duties.</td><td><span class="mark open">Open</span> OI-15 and OI-20, and US safeguarding advice, before a US launch.</td></tr>
 <tr><td>The standing review group does not exist.</td><td>Constituting it is part of PM2.</td></tr>
-<tr><td>No data protection impact assessment, for the pilot or for the product.</td><td>One for PM3 before it starts; one for the product after OI-13 is answered, a precondition of launch as for the Tutor (<a href="12-risk-register.html#ordering">12</a>).</td></tr>
+<tr><td>No DPIA, for the pilot or the product.</td><td>One for PM3 before it starts; one for the product after OI-13, a precondition of launch as for the Tutor (<a href="12-risk-register.html#ordering">12</a>).</td></tr>
 <tr><td>The age assurance method, which for the Primer verifies the parent, not the child.</td><td><span class="mark open">Open</span> OI-5.</td></tr>
-<tr><td>Whether one catalogue can serve families across the UK and the US.</td><td>OA-27, through cultural review and PM3.</td></tr>
+<tr><td>Whether one catalogue serves families in the UK and the US.</td><td>OA-27, through cultural review and PM3.</td></tr>
 </tbody>
 </table>
 </div>
