@@ -29,7 +29,8 @@ Counterpart plain-English summary: `creator-licence-term-sheet.md`
 
 Recitals should record, because they do work later in construction:
 
-1. The Licensee operates an AI tutoring service for UK secondary students.
+1. The Licensee operates an AI tutoring service for secondary students in the United
+   Kingdom and, if it launches there alongside the United Kingdom, the United States.
 2. The Licensee's tutoring content is authored independently and validated by
    qualified examiners, and is **not derived from the Licensor**.
 3. The licence is of **name and likeness only**. No work of the Licensor is
@@ -238,7 +239,7 @@ alternative:
 | OI-7 | Which entity contracts, and what follows for jurisdiction, UK representative obligations and VAT? | Clause 1, governing law, Schedule 2. |
 | OA-4 | Is the passing-off / trade mark / performers' rights / data protection framing correct, there being no statutory UK personality right? | Clauses 5 and 6. |
 | OA-9 | Are target creators US-resident, bringing state right-of-publicity law into scope? | Whether a US-law limb is needed at all. |
-| OI-22 | What must the licence add under US law when a creator's name and likeness market the Tutor to US families, which D1 now provides for, and which law should govern it? | Governing law, and any US limb. |
+| OI-22 | Does US law require anything to be added to the licence when a creator's name and likeness market the Tutor to US families, which D1 now provides for; if so, what; and which law should govern it? | Governing law, and any US limb. |
 | new | Should clause 9 carry a liquidated remedy? | Clause 9. |
 | new | Governing law and forum, noting that Indian personality-rights jurisprudence is currently the most aggressive on AI likeness and the operating base is in that jurisdiction. | Boilerplate, and the risk analysis behind it. |
 

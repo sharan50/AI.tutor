@@ -62,4 +62,4 @@ OI-3 is the recorded exception: D34 proceeds ahead of it under a fixed conventio
 
 ## Settled decisions
 D1 to D14 live in `BUILD_BRIEF.md` §2 and are not reopened. Open that section only when a task touches one of them.
-D1 is the recorded exception: the owner amended it on 22 October 2026, so the Tutor launches in the UK and the US together where resources allow, and in the UK first where they do not. D51 sets the same markets for the Primer and Foundations. Only the owner amends a settled decision, and the amendment is recorded in `BUILD_BRIEF.md` §2 and in the ledger's settled group.
+D1 is the recorded exception: on 22 October 2026 the owner amended it, overriding the ledger's rule for D1 alone, so the Tutor launches in the UK and the US together where resources allow, and in the UK first where they do not. D51 sets the same markets for the Primer and Foundations. The amendment is recorded in `BUILD_BRIEF.md` §2 and in the ledger's settled group.

@@ -14,7 +14,8 @@ Version 1.0, 14 September 2026
 ## What we are asking for
 
 Your **name** and your **face**, used to label one teaching style inside our
-tutoring product for UK students.
+tutoring product for UK students, and for US students if the product launches
+there alongside the UK.
 
 That is the whole of it.
 
