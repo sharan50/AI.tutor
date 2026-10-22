@@ -1,8 +1,9 @@
 # AI.tutor
 
 **Design and planning record for three ideas for teaching children with AI.**
-Owner: Dhruv Sharan. Build base: Bengaluru. Markets: the UK, and for the two newer
-ideas the US as well.
+Owner: Dhruv Sharan. Build base: Bengaluru. Markets: the UK and the US together
+where resources allow, the UK first where they do not (D1 for the Tutor, as
+amended by the owner on 22 October 2026; D51 for the other two).
 
 - **The Tutor** (ages 14 to 18). A student chooses **how** they are taught by
   naming an educator whose style they already recognise, and nothing reaches that
@@ -40,9 +41,9 @@ Foundations, the shared pages and the front page.
 | Documents | 30 across the three ideas, the registers included, plus an evidence register |
 | Built | Nothing |
 | Tests specified | **26**, none run. There is nothing to run them against |
-| Counsel questions | **20** open, none answered. We proceed ahead of exactly one (OI-3), and it says so where it is applied |
-| Assumptions unverified | **34**, of which 15 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **58**, including three, taken on the owner's instruction, that reverse two earlier positions |
+| Counsel questions | **22** open, none answered. We proceed ahead of exactly one (OI-3), and it says so where it is applied |
+| Assumptions unverified | **36**, of which 16 are resolvable by reading or by asking rather than by building |
+| Decisions recorded | **58**, including three, taken on the owner's instruction, that reverse two earlier positions, and D1, since amended by the owner |
 | External claims registered | **42**, each with source and date checked, plus **12** candidates awaiting the owner's check |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at

@@ -238,6 +238,7 @@ alternative:
 | OI-7 | Which entity contracts, and what follows for jurisdiction, UK representative obligations and VAT? | Clause 1, governing law, Schedule 2. |
 | OA-4 | Is the passing-off / trade mark / performers' rights / data protection framing correct, there being no statutory UK personality right? | Clauses 5 and 6. |
 | OA-9 | Are target creators US-resident, bringing state right-of-publicity law into scope? | Whether a US-law limb is needed at all. |
+| OI-22 | What must the licence add under US law when a creator's name and likeness market the Tutor to US families, which D1 now provides for, and which law should govern it? | Governing law, and any US limb. |
 | new | Should clause 9 carry a liquidated remedy? | Clause 9. |
 | new | Governing law and forum, noting that Indian personality-rights jurisprudence is currently the most aggressive on AI likeness and the operating base is in that jurisdiction. | Boilerplate, and the risk analysis behind it. |
 

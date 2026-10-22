@@ -38,7 +38,7 @@ Each of these was decided deliberately. If the design you write contradicts one,
 
 | # | Decision | Why |
 |---|---|---|
-| D1 | **UK first.** Bengaluru is the build base; the UK is the market. | Higher willingness to pay and to experiment; Indian edtech is crowded and Indian child-data law is categorically hostile to adaptive tutoring sold direct. |
+| D1 | **The UK and the US together, the UK first if resources are short.** Bengaluru is the build base. The Tutor launches in the UK and the US together where resources allow, and in the UK first where they do not. *Amended by the owner on 22 October 2026; see below the table.* | The UK: higher willingness to pay and to experiment, and the academic system the owner knows best, which is why it goes first when resources are short. The US: the owner's preference for launching both together, and the owner's view that the US has proven more receptive (OA-31). India: edtech is crowded and Indian child-data law is categorically hostile to adaptive tutoring sold direct. |
 | D2 | **Two routes planned in parallel:** Route A direct to parents, Route B through schools. Route A is the owner's current preference. | The owner wants to choose on evidence, not on either of our priors. |
 | D3 | **Shared core written once.** Roughly 80% of the design does not care who pays. Divergence is confined to pricing and unit economics, data and consent model, distribution motion, and compliance posture. | Avoids writing two full plans. |
 | D4 | **Named-educator personas are the wedge**, retained against advice to substitute institutional teachers. | A student cannot articulate a pedagogy but can name someone who teaches the way they like. The name is the handle; the style is the substance. |
@@ -52,6 +52,8 @@ Each of these was decided deliberately. If the design you write contradicts one,
 | D12 | **Clean-room content.** Original items written to the published specification, examiner-validated. No exam board material enters the system. | See §4; AQA has published a policy that forbids it. |
 | D13 | **No offshore litigation-evasion strategy.** The Indian operating company is retained for ordinary tax and capital reasons; the "fight it in India" rationale is dropped. | See §4.4. The theory runs the opposite way to how it was first read. |
 | D14 | **Ship named presets and unnamed archetypes simultaneously from day one**, and instrument return rate rather than satisfaction score. | Distinguishes "the wedge is weak" from "the fidelity is short", which have opposite fixes. |
+
+**D1 was amended by the owner on 22 October 2026.** It read: "**UK first.** Bengaluru is the build base; the UK is the market." It now gives the Tutor the markets D51 gives the Primer and Foundations. This is the owner changing this brief, not the design re-opening a settled decision, and the other thirteen stand. The decision ledger records what the amendment leaves open, beginning with what the Tutor teaches in the US, which is not decided.
 
 ---
 
