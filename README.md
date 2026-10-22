@@ -42,7 +42,7 @@ Foundations, the shared pages and the front page.
 | Tests specified | **25**, none run. There is nothing to run them against |
 | Counsel questions | **20** open, none answered. We proceed ahead of exactly one (OI-3), and it says so where it is applied |
 | Assumptions unverified | **34**, of which 15 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **58**, including 3 that reverse earlier positions |
+| Decisions recorded | **58**, including three, taken on the owner's instruction, that reverse two earlier positions |
 | External claims registered | **42**, each with source and date checked, plus **12** candidates awaiting the owner's check |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at
@@ -157,6 +157,20 @@ shows the placeholder. To fill it, either:
   policy.
 
 Then run the build and the checks as above.
+
+Three rules for the films, because they show products that are not built and
+are seen by parents and teachers:
+
+- **Label them.** Each card captions its film as illustrative, saying that
+  nothing shown has been built; set your own wording with `"caption"` if
+  needed, but keep the point. If a film is AI-generated, say so in the film
+  itself.
+- **No real child without written consent.** Do not show a real child unless a
+  parent has consented in writing to this use, and never show a child's name,
+  school or face where it can be avoided.
+- **Show the design, not a promise.** A film may show how an idea would work;
+  it may not show an outcome the documents do not claim, such as a child
+  reading faster.
 
 ## Layout
 

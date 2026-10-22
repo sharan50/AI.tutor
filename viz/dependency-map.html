@@ -294,6 +294,7 @@ const TESTS = {
   "T-FND-03":"Foundations: every number fact is checked by computation, not by a model.",
   "T-FND-04":"Foundations: an untrained adult can run a session from the guide alone.",
   "T-FND-05":"Foundations: no audio is captured, sent or stored.",
+  "T-PRM-08":"Primer: no exchange flagged for safeguarding reaches the parent's record or a transcript.",
 };
 
 const DECISIONS = {
@@ -326,6 +327,21 @@ const DECISIONS = {
   D34:"Name the board in public copy, under a fixed convention, ahead of counsel on OI-3.",
   D35:"Ship a provisional grade range, and gate nothing on it.",
   D36:"Every mark scheme in the product is named a CINE mark scheme.",
+  D25:"No engagement objective anywhere in the system.",
+  D26:"A safeguarding disclosure is not automatically reported to the parent.",
+  D43:"Foundations has an adult beside the child in every session.",
+  D44:"The Primer cites a reviewed explanation or inquiry pack for everything it says, or says not yet.",
+  D45:"The Primer is taught on its modules, not trained on them.",
+  D46:"Company-written modules; parents switch them; sensitive ones start off; no parent content.",
+  D47:"The Primer names methods, never people.",
+  D48:"Parents see an activity record; safeguarding turns are withheld under D26.",
+  D49:"The Primer remembers ideas, not lives.",
+  D50:"No child's voice or image is collected at launch by either new idea.",
+  D54:"Foundations has no generative model in the session path.",
+  D55:"For a child in school, Foundations follows the school's order and never teaches ahead of it.",
+  D56:"The Foundations record holds what the adult tapped: no free-text notes, no inferred conditions.",
+  D57:"The Primer's settings follow the Children's code's age ranges; no sensitive module below 10.",
+  D58:"The thresholds that decide whether the Primer goes first are written down before PM1.",
 };
 
 const OPEN = {
@@ -341,6 +357,21 @@ const OPEN = {
   "OI-10":"Is Article 6(1)(b) the right basis for a child's data under a contract held by the parent?",
   "OI-11":"If a grade range could inform a tier entry decision, does Article 22 engage?",
   "OI-12":"What exposure do consumer protection and advertising rules create for outcome claims?",
+  "OI-13":"Which lawful basis and consent flow apply to children under 13 on a parent's account?",
+  "OI-14":"Is the Primer's parent activity record, with safeguarding turns withheld, lawful?",
+  "OI-15":"What do COPPA and state companion-chatbot laws require of a US launch?",
+  "OI-16":"What duties attach to discussing philosophical, religious and moral questions with children?",
+  "OI-17":"Is a child's voice, if ever collected, biometric data or a voiceprint?",
+  "OI-18":"Do parent requests never shown to others keep the Primer outside the user-to-user duties?",
+  "OI-19":"In a school, who controls the child's record, the school or the company?",
+  "OI-20":"What reporting duties would a US launch place on the company or its reviewers?",
+  "OA-23":"That children of 8 to 13 can sustain a typed inquiry, and that AI can lead one well.",
+  "OA-26":"That parents accept an AI discussing big questions when modules are company-written and switchable.",
+  "OA-27":"That one catalogue can serve families across the UK's and the US's range of beliefs.",
+  "OA-28":"That children of 4 to 7 learn to read and write poorly from a screen without an adult.",
+  "OA-30":"That an adult will sit with the child for each Foundations session.",
+  "OA-32":"That the explanation bank can answer most of what children in a band ask.",
+  "OA-33":"That an adult can tell Foundations which sounds the class has covered.",
 };
 
 const RISKS = {
@@ -354,20 +385,6 @@ const RISKS = {
   R8:"D4 is wrong and the wedge has no substance.",
   R9:"A free tool ships validated, board-specific, warranted content.",
   R11:"An uncalibrated grade range is relied on as though it were a forecast.",
-  D25:"No engagement objective anywhere in the system.",
-  D26:"A safeguarding disclosure is not automatically reported to the parent.",
-  D43:"Foundations has an adult beside the child in every session.",
-  D44:"The Primer cites a reviewed explanation or inquiry pack for everything it says, or says not yet.",
-  D45:"The Primer is taught on its modules, not trained on them.",
-  D46:"Company-written modules; parents switch them; sensitive ones start off; no parent content.",
-  D47:"The Primer names methods, never people.",
-  D48:"Parents see an activity record; safeguarding turns are withheld under D26.",
-  D49:"The Primer remembers ideas, not lives.",
-  D50:"No child's voice or image is collected at launch by either new idea.",
-  D54:"Foundations has no generative model in the session path.",
-  D55:"For a child in school, Foundations follows the school's order and never teaches ahead of it.",
-  D56:"The Foundations record holds what the adult tapped: no free-text notes, no inferred conditions.",
-  D57:"The Primer's settings follow the Children's code's age ranges; no sensitive module below 10.",
   RP1:"A conversation about a big question is reported as indoctrinating a child.",
   RP4:"A safeguarding disclosure inside an inquiry is missed or reaches the wrong adult.",
   RP5:"Reviewers become the bottleneck and not yet dominates.",
@@ -455,7 +472,7 @@ const NODES = [
 {"id": "ui.primer", "st": "surface", "sec": "pipeline", "own": "own", "label": "Primer conversation", "note": "A why-question answered from a checked explanation, then the question underneath explored by asking rather than telling, ending in the child's own recorded view.", "t": ["T-PRM-01", "T-PRM-04"], "d": ["D44", "D47"], "o": ["OA-23"], "r": ["RP1"], "locus": "p2-primer-product#session"},
 {"id": "ui.modules", "st": "surface", "sec": "safety", "own": "own", "label": "Module switches", "note": "Parents switch the company's modules on and off; sensitive modules start off; nothing a parent writes reaches a child.", "t": ["T-PRM-05"], "d": ["D46", "D57"], "o": ["OI-16", "OA-26"], "locus": "p4-primer-safety#modules"},
 {"id": "ui.requests", "st": "surface", "sec": "safety", "own": "own", "label": "Idea and request channel", "note": "A parent may suggest a topic or a change. It goes to the company's review and is never shown to another user, which is what keeps the Online Safety Act position.", "d": ["D46"], "o": ["OI-18"], "locus": "p4-primer-safety#modules"},
-{"id": "ui.activity", "st": "surface", "sec": "assessment", "own": "own", "label": "Parent activity record", "note": "Modules used, questions asked and views recorded; the full conversation on request for a child under 13; safeguarding turns withheld under D26.", "d": ["D48", "D26"], "o": ["OI-14", "OI-8"], "r": ["RP4"], "locus": "p4-primer-safety#parent"},
+{"id": "ui.activity", "st": "surface", "sec": "assessment", "own": "own", "label": "Parent activity record", "note": "Modules used, questions asked and views recorded, with a declined question shown by its category, not its words; the full conversation on request for a child under 13. A flagged exchange never reaches it (D26, T-PRM-08).", "d": ["D48", "D26"], "o": ["OI-14", "OI-8"], "r": ["RP4"], "locus": "p4-primer-safety#parent", "t": ["T-PRM-08"]},
 {"id": "db.explanations", "st": "data", "sec": "content", "own": "own", "label": "Explanation bank", "note": "Reviewed answers to children's factual why-questions, by age band. A question it cannot answer gets an honest not yet and becomes a request.", "t": ["T-PRM-01"], "d": ["D44"], "o": ["OA-32"], "r": ["RP5"], "locus": "p3-primer-content#bank"},
 {"id": "db.packs", "st": "data", "sec": "content", "own": "own", "label": "Inquiry packs", "note": "Philosophical positions from several traditions, each attributed to a named thinker or tradition, never asserted as the Primer's own.", "t": ["T-PRM-02", "T-PRM-03"], "d": ["D44"], "o": ["OA-27"], "locus": "p3-primer-content#packs"},
 {"id": "db.modules", "st": "data", "sec": "content", "own": "own", "label": "Module registry", "note": "The one list the composer reads, filtered by switch state and age band before anything is retrieved. Pulling a module is one operation.", "t": ["T-PRM-05"], "d": ["D45", "D46"], "locus": "p5-primer-architecture#registry"},
@@ -624,7 +641,6 @@ const EDGES = [
 ["eng.killswitch", "db.modules", "reads"],
 ["eng.triage", "svc.escalation", "calls"],
 ["ui.activity", "db.ideas", "reads"],
-["ui.activity", "db.escalations", "reads"],
 ["gov.childrenscode", "ui.activity", "governs"],
 ["gov.osa", "ui.requests", "governs"],
 ["ui.guide", "db.sequences", "reads"],
@@ -1079,11 +1095,11 @@ function renderPanel(){
     '<div class="sect"><h3>Tests that would have to run again</h3>' +
       regList(TESTS, [...im.reg.t].sort(), "t") + '</div>' +
     '<div class="sect"><h3>Decisions you would be reopening</h3>' +
-      regList(DECISIONS, [...im.reg.d].sort((a,b) => (+a.slice(1)) - (+b.slice(1))), "d") + '</div>' +
+      regList(DECISIONS, [...im.reg.d].sort((a,b) => a.localeCompare(b, undefined, {numeric: true})), "d") + '</div>' +
     '<div class="sect"><h3>Unanswered questions in the path</h3>' +
-      regList(OPEN, [...im.reg.o].sort((a,b) => (+a.slice(3)) - (+b.slice(3))), "o") + '</div>' +
+      regList(OPEN, [...im.reg.o].sort((a,b) => a.localeCompare(b, undefined, {numeric: true})), "o") + '</div>' +
     '<div class="sect"><h3>Risks in the path</h3>' +
-      regList(RISKS, [...im.reg.r].sort((a,b) => (+a.slice(1)) - (+b.slice(1))), "r") + '</div>' +
+      regList(RISKS, [...im.reg.r].sort((a,b) => a.localeCompare(b, undefined, {numeric: true})), "r") + '</div>' +
     '<p class="pfoot">This change would reach <b>' + strataTouched + ' of the 6 strata</b> and ' +
       downIds.length + ' of the ' + (NODES.length - 1) + ' other components on the map. ' +
       'Nothing here has been built: the thirteen tests named across these documents are specified and none has been run, ' +

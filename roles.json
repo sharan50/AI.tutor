@@ -141,6 +141,7 @@
       {
         "id": "tutor",
         "name": "Tutor",
+        "phrase": "the Tutor",
         "brief": "00-thesis.brief.1",
         "video": null,
         "links": [
@@ -161,6 +162,7 @@
       {
         "id": "primer",
         "name": "Primer",
+        "phrase": "the Primer",
         "brief": "p1-primer-thesis.brief.1",
         "video": null,
         "links": [
@@ -181,6 +183,7 @@
       {
         "id": "foundations",
         "name": "Foundations",
+        "phrase": "Foundations",
         "brief": "f1-foundations-thesis.brief.1",
         "video": null,
         "links": [

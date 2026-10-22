@@ -32,7 +32,7 @@ MAP_TEMPLATE = ROOT / "src" / "viz" / "dependency-map.html"
 GRAPH = ROOT / "tools" / "depmap" / "graph.json"
 MAP_OUT = ROOT / "viz" / "dependency-map.html"
 
-REVISED = "September 2026"
+REVISED = "October 2026"
 
 # (slug, number, title, one-line contents description, status)
 PAGES = [
@@ -99,15 +99,20 @@ PAGES = [
 ]
 
 # The three ideas, and the pages every idea shares. Each page in PAGES sits in
-# exactly one group; the switcher, the contents page and the Tutor summary
-# read the grouping from here.
+# exactly one group, listed by slug so that a new page is placed on purpose;
+# tools/verify.py checks that the groups partition PAGES.
 GROUPS = [
     ("tutor", "Tutor", "GCSE and A-level, ages 14 to 18. The most developed of the three ideas.",
-     [p[0] for p in PAGES if re.match(r"\d\d-", p[0]) and p[0] != "14-open-items"]),
-    ("primer", "Primer", "Ages 8 to 13. A tutor for a child's why-questions, built to leave them thinking for themselves.",
-     [p[0] for p in PAGES if p[0].startswith("p")]),
+     ["00-thesis", "01-product", "02-style-engine", "03-curriculum-and-content", "04-rights-dossier",
+      "05-safety-privacy-regulatory", "06-architecture", "07-route-a-direct-to-parents",
+      "08-route-b-through-schools", "09-route-comparison", "10-economics", "11-roadmap",
+      "12-risk-register", "13-primer-gateway"]),
+    ("primer", "Primer", "Ages 8 to 13. A tutor for a child's why-questions, designed to ask what they think rather than tell them.",
+     ["p1-primer-thesis", "p2-primer-product", "p3-primer-content", "p4-primer-safety",
+      "p5-primer-architecture", "p6-primer-plan"]),
     ("foundations", "Foundations", "Ages 4 to 7. Early reading, writing and arithmetic, with an adult beside the child.",
-     [p[0] for p in PAGES if p[0].startswith("f") and p[0] != "field-research"]),
+     ["f1-foundations-thesis", "f2-foundations-product", "f3-foundations-content", "f4-foundations-safety",
+      "f5-foundations-architecture", "f6-foundations-plan"]),
     ("shared", "Across all three", "Which idea goes first, the field research guide, and the two registers every idea shares.",
      ["which-first", "field-research", "14-open-items", "decision-ledger"]),
 ]
@@ -568,7 +573,7 @@ def build_status(built, counts):
         card(len(oi), "questions for counsel", "none answered"),
         card(len(oa), "assumptions", f"{cheap_n} answerable by reading or asking"),
         card(len(decisions), "decisions", "each with what it forecloses"),
-        card(len(risks), "risks", "ordered by the owner's ranking"),
+        card(len(risks), "Tutor risks", "in the owner's ranking; the new ideas' follow"),
     ])
 
     cond_rows = "".join(
@@ -609,7 +614,8 @@ def build_status(built, counts):
         for gid, gtitle, _b, slugs in GROUPS)
 
     body = f"""<h1>Status</h1>
-<p class="standfirst">Everything in this vault that is open, unproven or waiting, on one page.
+<p class="standfirst">Everything in this vault that is open, unproven or waiting, on one page,
+across all three ideas.
 Generated from the registers themselves at build time, so it cannot drift from the documents
 the way a hand-maintained summary would.</p>
 
@@ -625,8 +631,8 @@ else here in that light.</p>
 
 <h2 id="ideas">The three ideas</h2>
 <p>The Tutor has been through eight rounds of adversarial review. The Primer and Foundations
-are first drafts and have been through none. <a href="which-first.html">Which goes first</a>
-is still open.</p>
+are first drafts, revised once after an independent review. Foundations does not go first;
+between the other two, <a href="which-first.html">which goes first</a> is still open.</p>
 <div class="tw"><table>
 <thead><tr><th>Idea</th><th class="num">Documents</th><th>State</th></tr></thead>
 <tbody>{idea_rows}</tbody></table></div>
@@ -1058,22 +1064,37 @@ def render_summary(built, counts, cfg, blocks, entries, owners, path_words):
 # hand-written prose is the frame in src/templates/front.html.
 
 def video_html(idea):
-    """A card's film: a placeholder until roles.json names a file or an embed."""
-    v, name = idea.get("video"), idea["name"]
+    """A card's film: a placeholder until roles.json names a file or an embed.
+
+    Every film is captioned as illustrative, because nothing it shows is built.
+    A bad setting stops the build rather than shipping a broken card."""
+    from html import escape
+    from urllib.parse import urlsplit
+    v, phrase = idea.get("video"), idea.get("phrase", idea["name"])
+    caption = escape((v or {}).get("caption", "An illustrative film. Nothing shown here has been built."))
     if not v:
-        return (f'<div class="video-slot" role="img" aria-label="Space for a short film of the {name}">'
-                f'<span class="play" aria-hidden="true"></span>'
-                f'<span class="video-note">A short film of the {name} in use will appear here</span></div>')
-    title = v.get("title", f"The {name} in use")
+        return (f'<div class="video-slot" role="img" aria-label="Space for a short film of {escape(phrase)}">'
+                f'<span class="video-pill">Film to come</span>'
+                f'<span class="film-mark" aria-hidden="true"></span>'
+                f'<span class="video-note">A short film showing how {escape(phrase)} would work will appear here. '
+                f'It will be illustrative: nothing is built yet.</span></div>')
+    title = escape(v.get("title", f"How {phrase} would work"))
     if v.get("embed"):
-        return (f'<iframe class="video" src="{v["embed"]}" title="{title}" loading="lazy" '
+        parts = urlsplit(v["embed"])
+        if parts.scheme != "https" or not parts.netloc:
+            raise SystemExit(f"roles.json: front film embed for {idea['id']} must be an https URL")
+        return (f'<iframe class="video" src="{escape(v["embed"])}" title="{title}" loading="lazy" '
                 'allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen '
-                'referrerpolicy="strict-origin-when-cross-origin"></iframe>')
-    poster = f' poster="{v["poster"]}"' if v.get("poster") else ""
-    track = (f'<track kind="captions" src="{v["captions"]}" srclang="en" label="English" default>'
+                f'referrerpolicy="strict-origin-when-cross-origin"></iframe><p class="video-cap">{caption}</p>')
+    types = {".mp4": "video/mp4", ".m4v": "video/mp4", ".webm": "video/webm"}
+    ext = os.path.splitext(v["src"])[1].lower()
+    if ext not in types:
+        raise SystemExit(f"roles.json: front film {v['src']} must be one of {', '.join(types)}")
+    poster = f' poster="{escape(v["poster"])}"' if v.get("poster") else ""
+    track = (f'<track kind="captions" src="{escape(v["captions"])}" srclang="en" label="English" default>'
              if v.get("captions") else "")
     return (f'<video class="video" controls preload="none"{poster} aria-label="{title}">'
-            f'<source src="{v["src"]}" type="video/mp4">{track}</video>')
+            f'<source src="{escape(v["src"])}" type="{types[ext]}">{track}</video><p class="video-cap">{caption}</p>')
 
 
 def video_origins(cfg):
@@ -1122,7 +1143,9 @@ def render_front(built, counts, cfg, blocks):
               '<a href="contents.html">Contents and reader routes</a> <a href="status.html">Status</a> '
               '<a href="decision-ledger.html">Decision ledger</a> <a href="14-open-items.html">Open items</a> '
               '<a href="../evidence/sources.html">Evidence register</a> <a href="../map/">Impact surface</a></p></div>'
-              f'<div><h4>For the team</h4><p>{roles}</p></div></div>')
+              '<div><h4>Owner views</h4><p class="deeper-note">One reading path per role a founding team would hold. '
+              'Each is a view of the vault, not a person.</p>'
+              f'<p>{roles}</p></div></div>')
     body = (tpl.replace("<!--IDEAS-->", ideas)
                .replace("<!--FIRST-->", transclude(f["first"], DOCS, blocks))
                .replace("<!--SHARE-->", transclude(f["share"], DOCS, blocks))

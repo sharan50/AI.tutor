@@ -32,6 +32,7 @@
 <dl class="meta">
 <dt>Document</dt><dd>F6 of F6, Foundations</dd>
 <dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run. No milestone has been started.</dd>
+<dt>Maturity</dt><dd>First draft, revised once after an independent review. The Tutor's documents went through eight adversarial rounds; these have had one review.</dd>
 <dt>Written</dt><dd>22 October 2026</dd>
 <dt>Ordering rule</dt><dd>Cheapest information first, with no dates, as D32 sets for the Tutor.</dd>
 <dt>Read next</dt><dd><a href="which-first.html">Which idea goes first</a></dd>
@@ -57,7 +58,7 @@
 
 <div class="claim">
 <p>One hypothesis is worth testing alongside it (OA-34): that urgency, where it exists, concentrates where a child is falling behind the school's sequence, for example around the Year 1 phonics check (CV-09). If so, Foundations is a product for some families at some moments, not for every family all the time, and both its price and its message would follow from that.</p>
-<span class="tag assumed">Hypothesis<span class="src">not evidenced; a question in the field research guide</span></span>
+<span class="tag assumed">Hypothesis<span class="src">OA-34, not evidenced; relies on CV-09, awaiting the owner's check</span></span>
 </div>
 
 <p><b>Schools.</b> A school could use Foundations for short sessions run by teaching assistants with children who need more practice than the class gives them. Who in a primary school would hold that budget, and whether it exists, is <span class="mark unknown">Unknown</span>. The register's only school data concerns the shrinking of tutoring offers, at secondary level, and its cause is itself unevidenced (<a href="08-route-b-through-schools.html#shrinking">08</a>, OA-17).</p>
@@ -102,9 +103,8 @@
 <tbody>
 <tr><td>Price a parent would pay, and what they would compare it with.</td><td><span class="mark unknown">Unknown</span></td><td>Parent conversations and a landing page at FM1 (OA-29).</td></tr>
 <tr><td>Whether a school would pay, who decides, and on what terms.</td><td><span class="mark unknown">Unknown</span></td><td>Conversations with Reception and Year 1 teachers, teaching assistants and heads at FM1.</td></tr>
-<tr><td>Content cost: writing and reviewing each step of the sequence, its texts, guidance and responses.</td><td><span class="mark unknown">Unknown</span></td><td>The paper prototype at FM2, which requires a few steps written and reviewed in full (<a href="f3-foundations-content.html#review">F3</a>).</td></tr>
+<tr><td>Content cost: writing and reviewing each step of the sequence, its texts, guidance and responses, and the explanations for adults.</td><td><span class="mark unknown">Unknown</span></td><td>The paper prototype at FM2, which requires a few steps written and reviewed in full (<a href="f3-foundations-content.html#review">F3</a>).</td></tr>
 <tr><td>Cost per session.</td><td><span class="mark unknown">Unknown</span>; small by construction, because no model runs in the session (<a href="f5-foundations-architecture.html#cost">F5</a>).</td><td>The built guide at FM3.</td></tr>
-<tr><td>Cost of the adult's questions between sessions.</td><td><span class="mark unknown">Unknown</span></td><td>How often adults ask, at FM3, priced on the Tutor's per-turn structure (<a href="06-architecture.html#cost">06</a>).</td></tr>
 <tr><td>Acquisition cost, by route.</td><td><span class="mark unknown">Unknown</span></td><td>The landing page at FM1 for parents; the school conversations for schools.</td></tr>
 <tr><td>How long a family stays.</td><td><span class="mark unknown">Unknown</span>, and bounded by design.</td><td>FM3. A child who reads independently has outgrown Foundations; success ends the relationship.</td></tr>
 </tbody>
@@ -121,12 +121,17 @@
 <table>
 <thead><tr><th class="id">#</th><th>Evidence obtained</th><th>Unblocks</th><th>What would end Foundations here</th></tr></thead>
 <tbody>
-<tr><td class="id">FM1</td><td><b>Asked, not built.</b> Conversations with Reception and Year 1 teachers, teaching assistants and parents, from the <a href="field-research.html#foundations">field research guide</a>. Reading: the published research on early reading and home reading support (<a href="f3-foundations-content.html#evidence">F3</a>), the Children's code text for the youngest ranges (<a href="f4-foundations-safety.html#gaps">F4</a>), and what the early-reading products already on sale do and claim. OI-13, OI-15 and OI-17 put to counsel with the Primer's questions.</td><td>OA-28 and OA-29; whether adults can report what the class has covered; the route conversation.</td><td>Teachers and parents agree the adult-present design is unwanted or unworkable, or nobody would pay for it on either route.</td></tr>
-<tr><td class="id">FM2</td><td><b>A paper prototype of the adult's guide.</b> A few steps of the sequence written and reviewed in full, printed as cards and a written guide, used by adults with their own children under the ethics protocol in <a href="f4-foundations-safety.html#gaps">F4</a>. What is observed and recorded is the adult: whether they can follow it, how long sessions last, whether they come back unprompted. Nothing about the child is recorded.</td><td>T-FND-04, first reading; content cost per step; OA-30.</td><td>Untrained adults cannot follow written guidance, or do not come back without being nudged.</td></tr>
-<tr><td class="id">FM3</td><td><b>An observed pilot of the built guide</b> with consenting families or one school, under the same protocol. T-FND-01 to T-FND-05 run on every release. Learning assessed by an independent assessor with an established measure (<a href="f3-foundations-content.html#measure">F3</a>).</td><td>RF1 to RF3 measured rather than assumed; the first honest signal on learning; cost per session.</td><td>Adults stop sitting down (RF1), or children with the guided adult do no better than children with the same adult time unguided.</td></tr>
+<tr><td class="id">FM1</td><td><b>Asked, not built.</b> Conversations with Reception and Year 1 teachers, teaching assistants and parents, from the <a href="field-research.html#foundations">field research guide</a>. Reading: the published research on early reading and home reading support (<a href="f3-foundations-content.html#evidence">F3</a>), the Children's code text for the youngest ranges (<a href="f4-foundations-safety.html#gaps">F4</a>), and what the early-reading products already on sale do and claim. OI-13, OI-15, OI-17, OI-19 and OI-20 put to counsel with the Primer's questions.</td><td>OA-28 and OA-29; whether adults can report what the class has covered; the route conversation.</td><td>Teachers and parents agree the adult-present design is unwanted or unworkable, or nobody would pay for it on either route.</td></tr>
+<tr><td class="id">FM2</td><td><b>A paper prototype of the adult's guide.</b> A few steps of the sequence written and reviewed in full, printed as cards and a written guide, used by adults with their own children under the ethics protocol in <a href="f4-foundations-safety.html#gaps">F4</a> and the preconditions below. What is observed and recorded is the adult: whether they can follow it, how long sessions last, whether they come back unprompted. Nothing about the child is recorded.</td><td>T-FND-04, first reading; content cost per step; OA-30.</td><td>Untrained adults cannot follow written guidance, or do not come back without being nudged.</td></tr>
+<tr><td class="id">FM3</td><td><b>An observed pilot of the built guide</b> with consenting families or one school, under the same protocol and preconditions. T-FND-01 to T-FND-05 run on every release. Learning assessed by an independent assessor with an established measure (<a href="f3-foundations-content.html#measure">F3</a>).</td><td>RF1 to RF3 measured rather than assumed; the first honest signal on learning; cost per session.</td><td>Adults stop sitting down (RF1), or children with the guided adult do no better than children with the same adult time unguided.</td></tr>
 <tr><td class="id">FM4</td><td><b>Decide whether to build further,</b> by the rule written below, in advance.</td><td>Whether Foundations becomes a product.</td><td>The rule below.</td></tr>
 </tbody>
 </table>
+</div>
+
+<div class="claim">
+<p><b>Before any milestone puts a child in a room with someone from the company.</b> FM2 brings an observer into sessions with young children, and FM3 an observer and an independent assessor. Neither starts until: everyone from the company or its evaluators who is present with a child has been vetted to the standard required for work with children in the country where the pilot runs; the ethics protocol in <a href="f4-foundations-safety.html#gaps">F4</a> exists, with informed parental consent and the child's own assent, asked in words a young child understands; the child can stop at any moment, for any reason, without being asked why; a DPIA is complete before FM3; and the protocol states how long pilot records are kept and when they are deleted, a period that is <span class="mark unknown">Unknown</span> until the protocol is written.</p>
+<span class="tag decided">Design choice<span class="src">a requirement of this plan, not a statement of law</span></span>
 </div>
 
 <p>Nothing in FM1 requires building, and it can run in parallel with the Tutor's M1 and the Primer's first milestone, because it is the same kind of work: conversations, reading and counsel. Foundations' later milestones wait behind whichever idea goes first (D42).</p>
@@ -163,7 +168,7 @@
 
 <p><b>What would end it,</b> any one of: adults do not sit (RF1); nobody pays on either route (RF2); counsel's answers to OI-13 or OI-15 make even the reading record costly to hold; or the research read at FM1 shows that guided practice at home by untrained adults adds little to what the same time unguided would do.</p>
 
-<p><b>What would reopen D42 instead.</b> If the conversations and the reading at FM1 show the owner's view to be wrong, and children of four to seven do learn early reading well from a screen without an adult (OA-28), then the case for YC's order grows and D42 should be revisited with a written reason. That outcome would not justify this design; it would call for a different one, aimed at the child, which these pages have deliberately not drawn.</p>
+<p><b>What would reopen D42 instead.</b> If the conversations and the reading at FM1 show the owner's view to be wrong, and children of four to seven do learn early reading well from a screen without an adult (OA-28), then the case for the order in YC's request <span class="mark assumed">Assumed</span> CV-01 grows, and D42 should be revisited with a written reason. That outcome would not justify this design; it would call for a different one, aimed at the child, which these pages have deliberately not drawn.</p>
 
 <p>If Foundations ends, the vault records why, in the ledger, as it records every decision. The work is not wasted: the reading record, the decodability rule and the adult's guide are small, and a school that wants them may still be the right customer for the Tutor or the Primer later. Ending Foundations on evidence is the plan working, not the plan failing.</p>
   </main>
@@ -183,7 +188,7 @@
     <span class="li"><span class="mark decided">Decision</span>a choice taken here</span>
   </div>
   <div class="meta-row">
-    <span>AI.tutor design vault, revised September 2026. Nothing here has been built.</span>
+    <span>AI.tutor design vault, revised October 2026. Nothing here has been built.</span>
     <span class="stamp">Built 22 October 2026</span>
   </div>
 </footer>

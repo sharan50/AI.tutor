@@ -28,10 +28,11 @@
   <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#reuse">What it reuses from the Tutor</a></li><li><a href="#guide">The adult's guide</a></li><li><a href="#decodable">The decodability check</a></li><li><a href="#arithmetic">Arithmetic checks</a></li><li><a href="#listening">If listening is ever added</a></li><li><a href="#cost">Cost</a></li></ol></div></aside>
   <main class="sheet" id="doc">
 <h1>Foundations: architecture</h1>
-<p class="standfirst">Foundations runs no generative model while a child is in the room. Everything the adult sees during a session is chosen by fixed rules from content written and reviewed in advance, and checked by rules that no model can override. Models are used before a session, to help writers draft, and between sessions, to answer the adult's questions through the Tutor's verified pipeline. That makes Foundations the least "AI" of the three ideas at the moment that matters most, and that is deliberate.</p>
+<p class="standfirst">Foundations runs no generative model in the product at all. Everything the adult sees, in a session or between sessions, is chosen by fixed rules from content written and reviewed in advance, and checked by rules that no model can override. A model is used only offline, to help writers draft, and its drafts pass the same rules and a reviewer before they enter the library. That makes Foundations the least "AI" of the three ideas, and that is deliberate.</p>
 <dl class="meta">
 <dt>Document</dt><dd>F5 of F6, Foundations</dd>
 <dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run.</dd>
+<dt>Maturity</dt><dd>First draft, revised once after an independent review. The Tutor's documents went through eight adversarial rounds; these have had one review.</dd>
 <dt>Written</dt><dd>22 October 2026</dd>
 <dt>Read with</dt><dd><a href="06-architecture.html">06 Architecture</a>, whose components this page reuses</dd>
 <dt>Read next</dt><dd><a href="f6-foundations-plan.html">F6 Foundations: plan</a></dd>
@@ -58,23 +59,23 @@
 <thead><tr><th>Tutor component</th><th>Use in Foundations</th><th>Where specified</th></tr></thead>
 <tbody>
 <tr><td>Verified-adult account and onboarding.</td><td>Unchanged. The adult is the account holder and the only user.</td><td><a href="05-safety-privacy-regulatory.html#age">05</a></td></tr>
-<tr><td>Kill switch read path.</td><td>A flag on every text, word list, response, activity and sequence version, re-read at every step. Pulling any of them takes effect at the next step of every session, on the same bounds the Tutor states.</td><td><a href="06-architecture.html#killswitch">06</a></td></tr>
+<tr><td>Kill switch read path.</td><td>A flag on every text, word list, response, activity, explanation for adults and sequence version, re-read at every step. Pulling any of them takes effect at the next step of every session, on the same bounds the Tutor states.</td><td><a href="06-architecture.html#killswitch">06</a></td></tr>
 <tr><td>Computer algebra check.</td><td>Every number fact and expected answer (T-FND-03).</td><td><a href="06-architecture.html#verifier">06</a>, check (d)</td></tr>
-<tr><td>Composer, generator, verifier and gate.</td><td><b>Between sessions only,</b> to answer the adult's questions from a reviewed set of explanations written for adults, refusing when the answer is not supported.</td><td><a href="06-architecture.html#turn">06</a></td></tr>
-<tr><td>Pinned model versions and zero-retention vendor terms.</td><td>Wherever a model is used, offline or between sessions (D22, D24).</td><td><a href="06-architecture.html#model">06</a></td></tr>
+<tr><td>Composer, generator, verifier and gate.</td><td><b>Not used.</b> No model runs in the product, in a session or between sessions, so there is no turn to compose, generate, verify or gate (D54).</td><td><a href="06-architecture.html#turn">06</a></td></tr>
+<tr><td>Pinned model versions and zero-retention vendor terms.</td><td>For the model writers use offline to draft (D22, D24).</td><td><a href="06-architecture.html#model">06</a></td></tr>
 <tr><td>Data model and deletion.</td><td>The account, the child's display name and stage, and the reading record (<a href="f4-foundations-safety.html#data">F4</a>).</td><td><a href="06-architecture.html#data">06</a></td></tr>
 </tbody>
 </table>
 </div>
 
-<p><b>What it does not reuse.</b> The style engine, because the child never chooses a teacher and the adult's guidance has one house style. The scope classifier on learner input, because there is no learner input. The generator in the session path, because there is no session path for a model to be in.</p>
+<p><b>What it does not reuse.</b> The style engine, because the child never chooses a teacher and the adult's guidance has one house style. The scope classifier on learner input, because there is no learner input. The composer, generator, verifier and gate, because no model runs in the product: there is no conversation, and no box for anyone to type into.</p>
 
 <div class="claim">
-<p><b>No generative model in the session path.</b> During a session, every instruction, word, text and response comes from content that was written, reviewed and checked before the session began, and is selected by inspectable rules from the reading record. A model may help a writer draft offline, and may answer the adult's questions through the verifier between sessions. It never composes what the adult reads while the child waits.</p>
+<p><b>No generative model in the product.</b> During a session, every instruction, word, text and response comes from content that was written, reviewed and checked before the session began, and is selected by inspectable rules from the reading record. Between sessions the adult can open explanations chosen from a written, reviewed set; no model answers the adult live, and there is no box to type a question into. A model may help a writer draft offline. It never composes anything the adult reads.</p>
 <span class="tag decided">Decision<span class="src">D54, 22 October 2026, taken while writing</span></span>
 </div>
 
-<p>The reasoning is the Tutor's, pushed one step further. The Tutor needs a model in the turn because it converses, and so it needs a verifier because the model can be wrong. Foundations does not converse, so it can remove the model from the moment of teaching altogether, and with it the gate-fire rate, the latency, the cost per turn and the chance of an unsupported sentence reaching a five-year-old through an adult reading it aloud. What it gives up is flexibility: the guide can only say what someone wrote in advance. For a sequence this structured, on the owner's view of how this age learns (OA-28), that is the right trade, and it is reversible if FM3 shows the written guidance is too rigid.</p>
+<p>The reasoning is the Tutor's, pushed one step further. The Tutor needs a model in the turn because it converses, and so it needs a verifier because the model can be wrong. Foundations does not converse, so it can remove the model from the product altogether, and with it the gate-fire rate, the latency, the cost per turn and the chance of an unsupported sentence reaching a five-year-old through an adult reading it aloud. What it gives up is flexibility: the guide can only say what someone wrote in advance, and an adult whose question the written explanations do not cover gets no answer from the product. For a sequence this structured, on the owner's view of how this age learns (OA-28), that is the right trade, and it is reversible if FM3 shows the written guidance is too rigid.</p>
 
 <h2 id="guide">The adult's guide</h2>
 
@@ -95,9 +96,11 @@
 
 <p>Every choice the guide makes can be explained in a sentence a teacher would accept: "sh again, because it was read with help twice". That matters for two readers. A teaching assistant needs to trust the step enough to follow it. And a school deciding whether to let a product near its Reception class needs to see that nothing in it is a black box.</p>
 
-<h3>Between sessions: the adult's questions</h3>
+<h3>Between sessions: explanations for the adult</h3>
 
-<p>Adults will ask things the guide does not cover: why a child keeps writing a letter backwards, whether to correct a guess, what to do when a child refuses. Those questions go through the Tutor's pipeline unchanged: the composer retrieves from a reviewed set of explanations written for adults, the generator drafts an answer, the verifier checks every substantive statement against what was retrieved, and the gate refuses when the answer is not supported (<a href="06-architecture.html#verifier">06</a>). This is the one place Foundations uses a model live, and it talks only to the adult. It never answers a question about a child's health or development beyond suggesting who to ask (<a href="f4-foundations-safety.html#escalation">F4</a>).</p>
+<p>Adults will want to know things the guide does not explain in the moment: why this sound comes now, what to do when a child cannot blend it yet, why a child keeps writing a letter backwards, whether to correct a guess, what to do when a child refuses. Between sessions the adult can open explanations chosen from a written, reviewed set, organised by the step and by the mistakes the guide lists, such as "Why this sound now?" and "What if they can't blend it yet?". They are written and checked like the rest of the library (<a href="f3-foundations-content.html#review">F3</a>), and pulled by the same kill switch.</p>
+
+<p>There is no box to type a question into, so there is nothing for a model to answer live and nowhere for an adult to type a disclosure or a child's health details: the reason <a href="f4-foundations-safety.html#escalation">F4</a> gives for having no chat, and D56 for having no notes field. A question the set does not cover goes unanswered by the product, and the set grows from what the field research and the pilots show adults need. Nothing in it is about a child's health or development beyond the static advice in F4.</p>
 
 <h2 id="decodable">The decodability check</h2>
 
@@ -136,7 +139,7 @@
 <ol>
 <li><b>Counsel has answered OI-17</b>, and OI-15 for the US, on what a child's voice and anything derived from it are in law.</li>
 <li><b>The parent gives separate, specific consent</b> for listening, distinct from the account.</li>
-<li><b>Audio is processed on the device</b> where that is possible, and no audio is retained or transmitted. T-FND-05 is redefined to prove that, not removed.</li>
+<li><b>Audio is processed on the device</b>, and no audio is retained or transmitted. If the processing cannot be done on the device, the feature does not ship. T-FND-05 is redefined to prove that, not removed.</li>
 <li><b>No voiceprint, and no speaker identification.</b> The feature recognises words, not children.</li>
 <li><b>Accuracy for this age is measured before launch</b>, and the result shown to adults in plain terms. Recognition is weakest for the youngest children <span class="mark assumed">Assumed</span> CV-11; whether its errors also fall unevenly across accents is <span class="mark unknown">Unknown</span>.</li>
 <li><b>The adult stays the judge.</b> The machine suggests what it heard; the adult confirms. A suggestion the adult has not confirmed never enters the record.</li>
@@ -151,8 +154,8 @@
 
 <ul>
 <li><b>In the session,</b> there is no model call, so the marginal cost is serving the pages and storing taps. Small by construction, and <span class="mark unknown">Unknown</span> as a number.</li>
-<li><b>Between sessions,</b> each adult question costs a turn through the Tutor's pipeline, whose cost structure is in <a href="06-architecture.html#cost">06</a>. How often adults ask is <span class="mark unknown">Unknown</span>.</li>
-<li><b>For the company,</b> the largest cost is content: writing and reviewing the sequence, texts, guidance and responses (<a href="f3-foundations-content.html#review">F3</a>). Like examiner validation for the Tutor, it does not fall when the next model ships. <span class="mark unknown">Unknown</span>, measured at FM2.</li>
+<li><b>Between sessions,</b> there is no model call either: the explanations are written in advance and served as pages, so their cost is writing and reviewing them, part of the content cost below.</li>
+<li><b>For the company,</b> the largest cost is content: writing and reviewing the sequence, texts, guidance, responses and the explanations for adults (<a href="f3-foundations-content.html#review">F3</a>). Like examiner validation for the Tutor, it does not fall when the next model ships. <span class="mark unknown">Unknown</span>, measured at FM2.</li>
 <li><b>For the family,</b> the largest cost is the adult's time. It appears in nobody's accounts and it is the binding constraint on use (OA-30).</li>
 </ul>
 
@@ -174,7 +177,7 @@
     <span class="li"><span class="mark decided">Decision</span>a choice taken here</span>
   </div>
   <div class="meta-row">
-    <span>AI.tutor design vault, revised September 2026. Nothing here has been built.</span>
+    <span>AI.tutor design vault, revised October 2026. Nothing here has been built.</span>
     <span class="stamp">Built 22 October 2026</span>
   </div>
 </footer>

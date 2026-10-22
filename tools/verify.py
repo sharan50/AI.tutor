@@ -10,7 +10,7 @@ prints every failure as file:line message.
      register has no per-entry anchors, so "every Verified marker links a
      register entry" is not mechanical. Recorded in RESTRUCTURE_REPORT.md.
   5. the views: every section has one owner; every ledger entry has an
-     owner; every referenced key block exists and is transcluded verbatim; on
+     owner; the groups by idea partition the pages; every referenced key block exists and is transcluded verbatim; on
      the front page and the Tutor summary, no digit sits outside a key block,
      a computed count or a transcluded register line, each is under 1,200
      words, and each template's frame is under its cap with no figure; no
@@ -86,6 +86,14 @@ def check_views():
     for e in build.ledger_entries():
         if build.decision_owner(e) is None:
             problems.append(f"roles.json:1 ledger entry {e['id']} has no owner")
+    grouped = [slug for _g, _t, _b, slugs in build.GROUPS for slug in slugs]
+    pages = [p[0] for p in build.PAGES]
+    for slug in pages:
+        if grouped.count(slug) != 1:
+            problems.append(f"src/build.py:1 {slug} sits in {grouped.count(slug)} groups in GROUPS; it must sit in exactly one")
+    for slug in grouped:
+        if slug not in pages:
+            problems.append(f"src/build.py:1 GROUPS names {slug}, which is not in PAGES")
     blocks = build.key_blocks()
     front = cfg.get("front", {})
     wanted = ([cfg["summary"]["route"]] + list(cfg["summary"]["keys"])

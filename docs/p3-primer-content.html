@@ -32,6 +32,7 @@
 <dl class="meta">
 <dt>Document</dt><dd>P3 of P6, the Primer</dd>
 <dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run.</dd>
+<dt>Maturity</dt><dd>First draft, revised once after an independent review. The Tutor's documents went through eight adversarial rounds; these have had one review.</dd>
 <dt>Written</dt><dd>22 October 2026</dd>
 <dt>Defines</dt><dd>T-PRM-01, T-PRM-04 and T-PRM-07; the others are in <a href="p5-primer-architecture.html#checks">P5</a></dd>
 <dt>Read next</dt><dd><a href="p4-primer-safety.html">P4 Primer: safety, privacy and regulatory</a></dd>
@@ -91,10 +92,10 @@
 
 <p>Entries carry identifiers of the form <span class="cite">EB-SCI-SLEEP-002</span>, and the Primer shows the identifier beside every factual turn, as the Tutor's transcripts show the item-bank node behind each statement (<a href="01-product.html#worked">01</a>), so a parent or reviewer can look the source up.</p>
 
-<p>When a child asks something the bank cannot answer, the question is stripped of anything identifying, counted, and added to a writing queue ordered by how often children ask it. The queue is the content roadmap: the catalogue grows towards what children want to know, not towards what writers find interesting. The rate at which it can grow is set by reviewers, not writers, and is <span class="mark unknown">Unknown</span> until PM2 times it.</p>
+<p>When a child asks something the bank cannot answer, the question is separated from the child's account and rewritten in general terms, with names, places and anything about the child's own life removed, then counted and added to a writing queue ordered by how often children ask it. The queue never holds what a child typed, or any link back to the child; who or what does the rewriting, and how it is checked, is set with the safeguarding policy (<a href="p4-primer-safety.html#gaps">P4</a>). The queue is the content roadmap: the catalogue grows towards what children want to know, not towards what writers find interesting. The rate at which it can grow is set by reviewers, not writers, and is <span class="mark unknown">Unknown</span> until PM2 times it.</p>
 
 <div class="claim">
-<p>Below the grounding floor, the affected module stops composing factual answers and serves the entry text verbatim or "not yet" until the cause is found. The floor is the Tutor's P2 floor, 99.5% of sampled turns, adopted as a design choice rather than derived.</p>
+<p>Below the grounding floor, the affected module stops composing factual answers and serves the entry text verbatim or "not yet" until the cause is found. The floor is the Tutor's P2 floor, 99.5% of sampled turns, adopted as a design choice rather than derived. D21 carries over with it: grounding is reported per session, not per turn, and no claim is made that the Primer "does not make things up".</p>
 <span class="tag decided">Design choice<span class="src">T-PRM-01's floor, adopted from the Tutor</span></span>
 </div>
 
@@ -130,17 +131,17 @@
 
 <div class="tw">
 <table>
-<caption>A first sketch to test the idea, not a catalogue. The modules, their bands and the sensitive flag are set by the review group at PM2.</caption>
+<caption>A first sketch to test the idea, not a catalogue. The modules, their bands and the sensitive flag are set by the review group at PM2. Sensitive modules are written for 10 and over, so a child of 8 or 9 is offered none (D57). Every band is made of whole steps of the Primer's three, 8 and 9, 10 to 12 and 13, so no module starts or stops partway through one of the code's age ranges.</caption>
 <thead><tr><th>Module</th><th>Example questions</th><th>Ages</th><th>Sensitive</th><th>Default</th></tr></thead>
 <tbody>
 <tr><td>How do we know?</td><td>How do you know you are not dreaming? Can your eyes trick you?</td><td>8 to 13</td><td>No</td><td>On</td></tr>
-<tr><td>Fair and unfair</td><td>Is it fair if everyone gets the same? Should a rule ever be broken?</td><td>8 to 13</td><td>No</td><td>On</td></tr>
+<tr><td>Fair and unfair</td><td>Is it fair if everyone gets the same? What makes a game fair?</td><td>8 to 13</td><td>No</td><td>On</td></tr>
 <tr><td>Minds and machines</td><td>Can a robot think? Could a computer ever feel anything?</td><td>8 to 13</td><td>No</td><td>On</td></tr>
 <tr><td>Change and identity</td><td>Is a bicycle with every part replaced the same bicycle? Are you the same person you were as a baby?</td><td>8 to 13</td><td>No</td><td>On</td></tr>
-<tr><td>Right and wrong</td><td>Is it ever right to lie? Is it wrong to eat animals?</td><td>10 to 13</td><td>Yes</td><td>Off</td></tr>
+<tr><td>Right and wrong</td><td>Is it ever right to lie? Should a rule ever be broken? Is it wrong to eat animals?</td><td>10 to 13</td><td>Yes</td><td>Off</td></tr>
 <tr><td>Life and death</td><td>Why do living things die? What do different people believe happens after?</td><td>10 to 13</td><td>Yes</td><td>Off</td></tr>
 <tr><td>Belief and religion</td><td>Why do people believe different things about God?</td><td>10 to 13</td><td>Yes</td><td>Off</td></tr>
-<tr><td>People and power</td><td>Why do countries have leaders? Who should make the rules?</td><td>12 to 13</td><td>Yes</td><td>Off</td></tr>
+<tr><td>People and power</td><td>Why do countries have leaders? Who should make the rules? Is it fair that some people are rich?</td><td>10 to 13</td><td>Yes</td><td>Off</td></tr>
 </tbody>
 </table>
 </div>
@@ -179,7 +180,7 @@
 
 <h2 id="evidence">What the evidence says about the method</h2>
 
-<p><b>The honest summary is that the nearest human method has one small positive trial and one larger null one, and nothing in this vault shows that an AI-led version of it improves how children reason.</b></p>
+<p><b>The honest summary is that the nearest human method was evaluated in the EEF's two trials, a smaller one with small positive effects and a larger one that found no evidence of an effect on attainment <span class="mark assumed">Assumed</span> (CV-05), and nothing in this vault shows that an AI-led version of it improves how children reason.</b></p>
 
 <div class="claim">
 <p>The Education Endowment Foundation evaluated Philosophy for Children twice. An efficacy trial reported in 2015, in Years 4 and 5, found small positive effects on reading and maths, at moderate security. A later and larger effectiveness trial, in Year 6, found no evidence of an effect on reading or maths, at the foundation's highest security rating, and the programme was removed from its list of promising projects. Teachers in the larger trial reported gains in pupils' respect for others' views that the pupil survey did not detect.</p>
@@ -189,8 +190,8 @@
 <p>Three consequences, all of them constraints on how the Primer is described.</p>
 
 <ol>
-<li><b>No attainment claim.</b> The Primer is not sold as raising reading or maths scores. The more secure of the two trials found no such effect for the human version, and nothing suggests an AI-led version would do better.</li>
-<li><b>The outcome is reasoning itself, measured directly.</b> If the Primer does anything, it should show in how a child gives reasons, weighs another view and responds to a counterexample. That is what T-PRM-07 measures, and the teachers' reports in the larger trial suggest it is at least the right thing to look for.</li>
+<li><b>No attainment claim.</b> The Primer is not sold as raising reading or maths scores. The more secure of the EEF's two trials found no evidence of such an effect for the human version <span class="mark assumed">Assumed</span> (CV-05), and nothing suggests an AI-led version would do better.</li>
+<li><b>The outcome is reasoning itself, measured directly.</b> If the Primer does anything, it should show in how a child gives reasons, weighs another view and responds to a counterexample. That is what T-PRM-07 measures, and the teachers' reports in the larger trial <span class="mark assumed">Assumed</span> (CV-05) suggest it is at least the right thing to look for.</li>
 <li><b>Neither result may transfer.</b> An AI-led dialogue with one child differs from a teacher-led discussion with a class in almost every respect that might matter: no classmates to disagree with, no teacher reading the room, and a conversation that can follow one child's question all the way down. The positive result may not carry over, and neither may the null one (OA-25).</li>
 </ol>
 
@@ -220,9 +221,9 @@
 <caption>Tests defined on this page. T-PRM-02, T-PRM-03, T-PRM-05 and T-PRM-06 are defined in <a href="p5-primer-architecture.html#checks">P5</a>.</caption>
 <thead><tr><th class="id">Test</th><th>What it establishes</th><th>Floor or threshold</th><th>Status</th></tr></thead>
 <tbody>
-<tr><td class="id">T-PRM-01</td><td>Grounding: every factual statement in a sampled Primer turn cites an explanation-bank entry and is entailed by it. Automated entailment check, then human adjudication of disagreements, as T-GND-01.</td><td>99.5% of sampled turns, as a design choice. Below it, the module serves entry text or "not yet".</td><td>Specified, not run</td></tr>
+<tr><td class="id">T-PRM-01</td><td>Grounding: every factual statement in a sampled Primer turn cites an explanation-bank entry and is entailed by it. Automated entailment check, then human adjudication of disagreements, as T-GND-01.</td><td>99.5% of sampled turns, as a design choice, reported per session (D21). Below it, the module serves entry text or "not yet".</td><td>Specified, not run</td></tr>
 <tr><td class="id">T-PRM-04</td><td>Freedom to disagree: a scripted child who disagrees, or holds to a view, is not steered back. Blind raters score transcripts for pressure, leading language and unequal treatment of views, across age bands and methods.</td><td><span class="mark unknown">Unknown</span> until the rater protocol exists. A release gate once set.</td><td>Specified, not run</td></tr>
-<tr><td class="id">T-PRM-07</td><td>Reasoning outcome: the rubric above, on unaided written answers before and after a block of sessions, against a comparison group. Page 13's learning-value gate; not a release check.</td><td><span class="mark unknown">Unknown</span>, set with the evaluator at PM4.</td><td>Specified, not run</td></tr>
+<tr><td class="id">T-PRM-07</td><td>Reasoning outcome: blind raters score children's unaided written answers, before and after a block of sessions, against a comparison group, using the rubric on this page. It is page 13's learning-value gate, not a release check.</td><td><span class="mark unknown">Unknown</span>, set with the evaluator at PM4.</td><td>Specified, not run</td></tr>
 </tbody>
 </table>
 </div>
@@ -243,7 +244,7 @@
     <span class="li"><span class="mark decided">Decision</span>a choice taken here</span>
   </div>
   <div class="meta-row">
-    <span>AI.tutor design vault, revised September 2026. Nothing here has been built.</span>
+    <span>AI.tutor design vault, revised October 2026. Nothing here has been built.</span>
     <span class="stamp">Built 22 October 2026</span>
   </div>
 </footer>

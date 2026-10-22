@@ -159,8 +159,8 @@ harder: at launch the Primer says "not yet" often, and how often is Unknown
 
 **D45. The Primer is taught on its modules, not trained on them.** Modules are
 retrieved when a turn needs them; no model is fine-tuned on them. Driven by:
-page 13's requirement that a harmful module or prompt pattern can be removed in
-one operation; D8's reasoning that weights cannot be cleanly revoked; and the
+page 13's requirement that a kill switch can remove a mode or a prompt pattern
+in one operation, which for the Primer means a module; D8's reasoning that weights cannot be cleanly revoked; and the
 vault's rule to buy the model and own the content. Rejected: fine-tuning on
 philosophical and critical-thinking material, which "trained on" first
 implied, and which would make a module impossible to withdraw. Makes harder:
@@ -194,11 +194,14 @@ memorable demonstration. Makes harder: the Primer gives up a handle comparable
 to D4's named educators. Link: `p2-primer-product.html#not`.
 
 **D48. A parent sees an activity record of their child's Primer use: modules
-used, questions asked and the views the child recorded. For a child under 13
-the full conversation is also available to the parent on request. A turn
-flagged for safeguarding is withheld from the parent and routed to a trained
-reviewer, as D26 requires. Taken while OI-8 and OI-14 are open; it answers
-neither.** Driven by: page 13's adult accountability principle; these users
+used, questions asked and the views the child recorded, except that a question
+the Primer declined, or one in a switched-off module, appears by its category,
+not its words. For a child under 13 the full conversation is also available to
+the parent on request. An exchange flagged for safeguarding, the Primer's own
+reply included, is withheld from the record and from any transcript and
+routed to a trained reviewer, as D26 requires; T-PRM-08 tests it. Taken while
+OI-8 and OI-14 are open; it answers neither.** (The category rule and T-PRM-08
+were added after the independent review.) Driven by: page 13's adult accountability principle; these users
 are younger than the Tutor's; and D26, because the parent is sometimes the
 risk. Rejected: applying D16's default to children under 13; and full
 transcripts by default at every age. Makes harder: a child may not ask what
@@ -222,8 +225,8 @@ camera. The Primer takes typed text; a child who dictates through their
 device's own keyboard sends text, never audio. Listening to a child read is a
 later feature, separately consented, with no audio retained. Driven by:
 speech recognition is least accurate for the youngest children (CV-11); a
-child's voice may be biometric data, and is a voiceprint under amended COPPA
-(CV-08), which is OI-17; and D43 already puts an adult in the room. Rejected:
+child's voice may be biometric data, and a voiceprint derived from it is
+personal information under amended COPPA (CV-08), which is OI-17; and D43 already puts an adult in the room. Rejected:
 listening to the child read from the first day, the feature reading apps are
 usually built around. Makes harder: Foundations cannot hear a mistake the adult
 misses; the Primer is harder for the youngest typists. Link:
@@ -268,11 +271,13 @@ claims, which would overstate what has been checked. Makes harder: a second
 list to keep; promotion is a manual step. Link:
 `../evidence/sources.html#candidates`.
 
-**D54. Foundations has no generative model in the session path.** Everything the
-adult reads during a session was written, reviewed and checked before it began,
-and is chosen by inspectable rules from the reading record; a model may help
-writers draft offline and answer the adult's questions between sessions through
-the verifier. D27's reasoning carried one step further. Link:
+**D54. Foundations has no generative model in front of the adult at all.**
+Everything the adult reads, in a session or between sessions, was written,
+reviewed and checked in advance and is chosen by inspectable rules from the
+reading record; there is no free-text box anywhere; a model may help writers
+draft offline. D27's reasoning carried one step further. (Narrowed after the
+independent review, which found a question box for the adult with no triage
+behind it.) Link:
 `f5-foundations-architecture.html#reuse`.
 
 **D55. For a child in school, Foundations practises what the school has taught
@@ -285,12 +290,17 @@ Link: `f4-foundations-safety.html#data`.
 
 **D57. Within its band, the Primer's settings follow the Children's code's age
 ranges: 8 and 9, 10 to 12, and 13.** Modules on sensitive subjects are written
-for 10 and over, so a child of 8 or 9 is offered none. Link:
+for 10 and over, so a child of 8 or 9 is offered none. The range is set from the
+child's age in years as the verified adult gives it, never a date of birth, a
+recorded departure from 05, which uses school year for placement only. It rests
+on that adult's word: a parent who gives an older age can open modules written
+for older children, a limit recorded rather than solved. Link:
 `p4-primer-safety.html#ages`.
 
 **D58. The thresholds that decide whether the Primer goes first are written down
 before PM1 begins**, as D37 wrote down the thresholds for the Tutor's route.
-Link: `p6-primer-plan.html#first`.
+There is one rule, on `which-first#open`; P6 points to it. Link:
+`which-first.html#open`.
 
 ## 4. Decisions deliberately not taken
 
@@ -332,7 +342,7 @@ and OA-34 were raised while writing F3 and F6.
 | # | Assumption | Shapes | Cost of being wrong | Cheap |
 |---|---|---|---|---|
 | OA-22 | That parents of 8 to 13 year olds will pay for the Primer with no exam to prepare for. What purchase, if any, it replaces is unknown. | The Primer's whole commercial case. | A product children use and nobody pays for. | Yes: asking parents, and a landing page. |
-| OA-23 | That a child of 8 to 13 can hold a typed conversation on a screen long enough for an inquiry to work, and that this is something current AI does well. The owner's view; the youngest band is least certain. | Session design and the age floor. | A floor that should have been higher, or sessions too short to reach the deeper question. | No: observed at PM3. |
+| OA-23 | That a child of 8 to 13 can hold a typed conversation on a screen long enough for an inquiry to work, and that current AI can lead such a conversation well. The owner's view; the youngest band is least certain. | Session design and the age floor. | A floor that should have been higher, or sessions too short to reach the deeper question. | No: the child's half is observed at PM3, the AI's at PM4. |
 | OA-24 | That a change in how a child reasons can be measured by a blind-rated rubric on unaided work, sensitively enough to show a difference in a pilot. | T-PRM-07 and the evidence claim. | No way to show the Primer works, the first thing an investor or a school asks. | No. |
 | OA-25 | That what is known about Philosophy for Children (CV-05) transfers to an AI-led version, in either direction. | How the evidence case is argued. | Borrowing a positive result that does not transfer, or being deterred by a null one that does not either. | No. |
 | OA-26 | That parents accept an AI discussing big questions with their child when every module is company-written and can be switched off. | D46, and whether sensitive modules exist at all. | A catalogue switched off wholesale, or a press story that ends the product. | Yes: asking parents. |
@@ -456,6 +466,7 @@ Floors stated here are design choices and are tagged as such.
 | T-PRM-05 | Module switch: a module switched off, or outside the child's band, contributes nothing to any turn. Deterministic, over the whole registry; blocks every release. |
 | T-PRM-06 | Triage: a question about the child's own life, safety or distress starts no inquiry and takes 05's path. Scripted battery across bands; blocking. |
 | T-PRM-07 | Reasoning outcome: a blind-rated rubric on unaided written answers before and after a block of sessions, against a comparison group. Page 13's learning-value gate; not a release check. |
+| T-PRM-08 | Withholding: no exchange flagged for safeguarding, the Primer's own reply included, appears in the parent's activity record or in an on-request transcript. Deterministic; blocks every release. Added after the independent review. |
 
 **Foundations** (defined once, in `f3-foundations-content#measure`; F5
 describes the mechanisms):

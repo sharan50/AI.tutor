@@ -1,8 +1,9 @@
 <h1>Foundations: safety, privacy and regulatory</h1>
-<p class="standfirst">Foundations holds less than either of the other ideas about the youngest children in the vault. The child never converses with it, has no account, and is never recorded, photographed or addressed; the user is a verified adult, and the only data about the child is a reading record built from what that adult taps. That design removes most of the hard questions. It does not answer the ones that remain, and three of them are for counsel.</p>
+<p class="standfirst">Foundations holds less than either of the other ideas about the youngest children in the vault. The child never converses with it, has no account, and is never recorded, photographed or addressed; nothing in the product converses with anyone, and there is nowhere to type. The user is a verified adult, and the only data about the child is a reading record built from what that adult taps. That design removes most of the hard questions. It does not answer the ones that remain, and five of them are for counsel.</p>
 <dl class="meta">
 <dt>Document</dt><dd>F4 of F6, Foundations</dd>
 <dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run. No counsel question raised here has been answered.</dd>
+<dt>Maturity</dt><dd>First draft, revised once after an independent review. The Tutor's documents went through eight adversarial rounds; these have had one review.</dd>
 <dt>Written</dt><dd>22 October 2026</dd>
 <dt>Read with</dt><dd><a href="05-safety-privacy-regulatory.html">05 Safety, privacy and regulatory</a>, whose positions this page applies to younger children</dd>
 <dt>Read next</dt><dd><a href="f5-foundations-architecture.html">F5 Foundations: architecture</a></dd>
@@ -24,7 +25,7 @@
 
 <h2 id="posture">The position in one paragraph</h2>
 
-<p class="lede">Foundations is a service for adults about children. A verified adult holds the account and uses the product; the child is taught by that adult and has no relationship with the product at all: no account, no conversation, no microphone, no camera, no rewards and no notifications. The Children's code applies, because the service is about and in front of children of four to seven, among the youngest the code contemplates. The Online Safety Act position in 05 carries over with less to defend, because nothing any user creates reaches any other user, and the child creates nothing. What is held about the child is a reading record: which sounds and number ideas have been introduced and what the adult reported. The questions left open are which lawful basis that record rests on (OI-13), what a US launch requires (OI-15), and, for a feature not being built, what listening to a child would engage (OI-17).</p>
+<p class="lede">Foundations is a service for adults about children. A verified adult holds the account and uses the product; the child is taught by that adult and has no relationship with the product at all: no account, no conversation, no microphone, no camera, no rewards and no notifications, and nothing to type into for the child or the adult. These pages work on the basis that the Children's code applies, because the service is about and in front of children of four to seven, among the youngest the code contemplates; that is the working position, not advice <span class="mark assumed">Assumed</span> CV-06. The Online Safety Act position in 05 carries over with less to defend, because nothing any user creates reaches any other user, and the child creates nothing. What is held about the child is a reading record: which sounds and number ideas have been introduced and what the adult reported. The questions left open are which lawful basis that record rests on (OI-13), who controls it in a school (OI-19), what a US launch requires (OI-15), what duties to report suspected abuse would fall on the company there (OI-20), and, for a feature not being built, what listening to a child would engage (OI-17).</p>
 
 <h2 id="ages">Age bands and consent</h2>
 
@@ -108,10 +109,11 @@
 <p>The adult is present in every session, and the product hears and sees nothing. So nearly everything that would trigger an escalation in the Tutor happens in front of an adult instead of in front of the product. That is the design working, and it has one hard edge.</p>
 
 <ul>
-<li><b>A child who says something worrying during a session says it to the adult.</b> The product does not hear it and does not pretend to. There is no chat, no free-text field and no affordance that invites a disclosure, for the reason 05 gives: a product that invites disclosure and cannot answer it is worse than one that does not invite it (<a href="05-safety-privacy-regulatory.html#content">05</a>).</li>
+<li><b>A child who says something worrying during a session says it to the adult.</b> The product does not hear it and does not pretend to. There is no chat and no free-text field anywhere in the product, for the child or for the adult: the explanations the adult can open between sessions are written in advance (<a href="f5-foundations-architecture.html#guide">F5</a>). Nothing invites a disclosure, for the reason 05 gives: a product that invites disclosure and cannot answer it is worse than one that does not invite it (<a href="05-safety-privacy-regulatory.html#content">05</a>).</li>
 <li><b>Where the present adult is the risk, Foundations cannot detect it,</b> and it must not claim to. This is the hard edge. It is stated in the terms the adult agrees to, so that nobody mistakes a reading product for a safeguarding service.</li>
 <li><b>Help for the adult.</b> The help pages point adults to staffed services: in the UK, those named in 05; in the US, the Childhelp National Child Abuse Hotline and the 988 Suicide and Crisis Lifeline <span class="mark assumed">Assumed</span> CV-12.</li>
-<li><b>Concerns about development.</b> If the record shows little progress over many sessions, the guide suggests the adult talks to the child's teacher or a health professional, and says nothing more. It never names a condition.</li>
+<li><b>Concerns about development.</b> The help pages carry static advice, the same for every adult and never triggered by anything tapped: if the adult has any worries about the child's hearing, speech or development, the school, a GP or a health visitor is the place to raise them. The product never draws that conclusion from the record and never names a condition (D56).</li>
+<li><b>Duties to report, in the US.</b> Which duties to report suspected abuse would fall on the company there, on support staff who learn something from an adult, for example, or on anyone observing a pilot, is <span class="mark open">Open</span> OI-20.</li>
 <li><b>In a school,</b> the school's designated safeguarding lead and the school's own policy apply, as for the Tutor's Route B.</li>
 </ul>
 
@@ -138,22 +140,23 @@
 <ul>
 <li>Because Foundations collects no audio at launch (D50), the voiceprint question does not arise until listening is considered, and then OI-17 and OI-15 must both be answered first.</li>
 <li>The reading record is still a child's information collected through an online service, with the parent as account holder. What consent method, notices and retention that requires is a question for US counsel.</li>
-<li>US states have begun regulating companion chatbots, with obligations aimed at minors <span class="mark assumed">Assumed</span> CV-10. The child never converses with Foundations, so on our reading it is not a chatbot at all. That is reasoning, not advice, and OI-15 asks counsel whether a tutor that declines companionship by design falls outside those laws.</li>
+<li>US states have begun regulating companion chatbots, with obligations aimed at minors <span class="mark assumed">Assumed</span> CV-10. Nothing in Foundations converses, with the child or with the adult, so on our reading it is not a chatbot at all. That is reasoning, not advice, and OI-15 asks counsel whether a tutor that declines companionship by design falls outside those laws.</li>
 <li>US schools bring their own student-privacy duties, which this vault has not examined.</li>
+<li>Duties to report suspected abuse differ from state to state. Which would fall on the company is a question put to counsel, OI-20, not answered here.</li>
 </ul>
 
 <div class="claim">
 <p>What COPPA as amended requires of Foundations, which state laws add to it, and whether any companion-chatbot law reaches a product the child never talks to: unanswered, and not guessed at here.</p>
-<span class="tag open">For counsel<span class="src">OI-15</span></span>
+<span class="tag open">For counsel<span class="src">OI-15 and OI-20</span></span>
 </div>
 
 <h2 id="gaps">Named gaps</h2>
 
 <ol>
-<li><b>Four counsel questions are open</b> and each could change this page: OI-13 (lawful basis and consent), OI-15 (the US), OI-17 (listening) and OI-19 (who controls the record in a school).</li>
+<li><b>Five counsel questions are open</b> and each could change this page: OI-13 (lawful basis and consent), OI-15 (the US), OI-17 (listening), OI-19 (who controls the record in a school) and OI-20 (duties to report in the US).</li>
 <li><b>The Children's code has been read for this age only through secondary summaries</b> (CV-06). Reading the code's own text for the 0 to 5 and 6 to 9 ranges is an hour of work and belongs in FM1.</li>
 <li><b>No safeguarding policy for Foundations exists.</b> The product cannot protect a child from the adult beside them, and the terms must say so plainly.</li>
-<li><b>No ethics protocol exists for any session with a child.</b> The field research is with adults only and collects no child's data. Before FM2 or FM3 puts a single child in front of the product, a protocol with informed parental consent, a way for the child to stop, and independent review must be written. Until it exists, no session with a child happens.</li>
+<li><b>No ethics protocol exists for any session with a child.</b> The field research is with adults only and collects no child's data. Before FM2 or FM3 puts a single child in front of the product, a protocol must be written with: informed parental consent; the child's own assent, asked in words a young child understands; a way for the child to stop at any moment, without being asked why; vetting, to the standard required for work with children in the country where the pilot runs, of anyone from the company or its evaluators present with a child; a DPIA before FM3; a stated retention period for pilot records; and independent review. Until it exists, no session with a child happens (<a href="f6-foundations-plan.html#milestones">F6</a>).</li>
 <li><b>Adults who do not read English easily are excluded</b> by a guide that must be read during a session. Reading the guidance aloud to the adult is possible, since it is the adult's audio and not the child's, but it has not been designed, and whether it is enough is <span class="mark unknown">Unknown</span>.</li>
 <li><b>US content, escalation services and school duties are unreviewed.</b> A US launch of Foundations waits on them, not just on OI-15.</li>
 </ol>
