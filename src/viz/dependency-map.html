@@ -295,6 +295,12 @@ const TESTS = {
   "T-FND-04":"Foundations: an untrained adult can run a session from the guide alone.",
   "T-FND-05":"Foundations: no audio is captured, sent or stored.",
   "T-PRM-08":"Primer: no exchange flagged for safeguarding reaches the parent's record or a transcript.",
+  "T-SLF-01":"Self-tutor: its effect on unaided performance and stated confidence, as D14's second factor.",
+  "T-SLF-02":"Self-tutor: replayed photographs, videos and recordings are refused at capture.",
+  "T-SLF-03":"Self-tutor: nothing is spoken or shown in the likeness that the gate did not pass.",
+  "T-SLF-04":"Self-tutor: deletion stops rendering at the next turn and empties primary stores within seven days.",
+  "T-SLF-05":"Self-tutor: no surface lets anyone but the learner see, hear or obtain it.",
+  "T-SLF-06":"Self-tutor: every rendered clip carries the synthetic label and provenance metadata.",
 };
 
 const DECISIONS = {
@@ -303,7 +309,7 @@ const DECISIONS = {
   D6:"The route to high-fidelity personas via exemplar conditioning is designed now, not built now.",
   D7:"Style is a structured parameter object, with a written style card generated from it.",
   D8:"No persona LoRAs or fine-tuned weights carrying creator style. Retrieval and prompting only.",
-  D9:"Voice cloning is off the launch path; a separate opt-in limb of the licence.",
+  D9:"Cloning a creator's voice, or anyone's but the learner's own, is off the launch path. Amended by the owner, 23 October 2026.",
   D10:"A creator selects a preset; the student may then move individual dimensions.",
   D11:"Zero-persona operation is a hard requirement. The product runs with no signed creator.",
   D12:"Clean-room content. Original items written to the published specification, examiner-validated.",
@@ -342,6 +348,17 @@ const DECISIONS = {
   D56:"The Foundations record holds what the adult tapped: no free-text notes, no inferred conditions.",
   D57:"The Primer's settings follow the Children's code's age ranges; no sensitive module below 10.",
   D58:"The thresholds that decide whether the Primer goes first are written down before PM1.",
+  D59:"The Tutor launches with a self-tutor in the learner's own face and voice, withdrawn only on counsel's categoric no.",
+  D60:"The self-tutor is the learner's alone: no one else sees or hears it, and nothing it renders leaves.",
+  D61:"A self-tutor is made only from a live capture with a liveness check; no upload, no full-body image.",
+  D62:"The verified adult and the learner each consent before capture; either can withdraw. Off by default.",
+  D63:"Deletion at any moment: rendering stops at the next turn; primary stores empty within seven days.",
+  D64:"The self-tutor speaks only gated text, always on screen too, and every clip is labelled synthetic.",
+  D65:"No weights are trained on a learner's face or voice; the likeness is conditioned at render time.",
+  D66:"Every archetype in the self-tutor; a named preset only where its creator has opted in.",
+  D67:"At launch the self-tutor is offered only to families buying directly, not through schools.",
+  D68:"In D14's experiment the self-tutor is a second factor, not a third arm.",
+  D69:"No style dimension reaches the self-tutor's voice: one neutral delivery under every preset.",
 };
 
 const OPEN = {
@@ -365,6 +382,11 @@ const OPEN = {
   "OI-18":"Do parent requests never shown to others keep the Primer outside the user-to-user duties?",
   "OI-19":"In a school, who controls the child's record, the school or the company?",
   "OI-20":"What reporting duties would a US launch place on the company or its reviewers?",
+  "OI-23":"Are a learner's face and voice samples biometric or special category data, and who may consent?",
+  "OI-24":"Does a self-tutor only its learner can access engage the Online Safety Act or Ofcom's clone concern?",
+  "OI-25":"Which US state biometric and minors' data laws apply to a learner's face and voice?",
+  "OI-26":"What labelling and provenance duties apply to synthetic media of a real person shown only to them?",
+  "OI-27":"What must the opt-in term say so a named preset in a learner's likeness implies no endorsement?",
   "OA-23":"That children of 8 to 13 can sustain a typed inquiry, and that AI can lead one well.",
   "OA-26":"That parents accept an AI discussing big questions when modules are company-written and switchable.",
   "OA-27":"That one catalogue can serve families across the UK's and the US's range of beliefs.",
@@ -372,6 +394,10 @@ const OPEN = {
   "OA-30":"That an adult will sit with the child for each Foundations session.",
   "OA-32":"That the explanation bank can answer most of what children in a band ask.",
   "OA-33":"That an adult can tell Foundations which sounds the class has covered.",
+  "OA-37":"That being taught in one's own face and voice helps a learner rather than distracting them.",
+  "OA-38":"That Ofcom's virtual-clone concern does not reach a private self-tutor with controlled output. The owner's view.",
+  "OA-39":"That live capture with a liveness check stops a self-tutor being made of anyone else often enough.",
+  "OA-40":"That parents will consent to their child's face and voice being used this way.",
 };
 
 const RISKS = {
@@ -385,6 +411,10 @@ const RISKS = {
   R8:"D4 is wrong and the wedge has no substance.",
   R9:"A free tool ships validated, board-specific, warranted content.",
   R11:"An uncalibrated grade range is relied on as though it were a forecast.",
+  R12:"A self-tutor is made of someone other than the learner.",
+  R13:"A breach of children's face and voice data.",
+  R14:"Harm to a learner from seeing and hearing themselves teach.",
+  R15:"A categoric no, or a regulator's action after launch, removes a launch feature.",
   RP1:"A conversation about a big question is reported as indoctrinating a child.",
   RP4:"A safeguarding disclosure inside an inquiry is missed or reaches the wrong adult.",
   RP5:"Reviewers become the bottleneck and not yet dominates.",

@@ -1,7 +1,7 @@
 # AI.tutor
 
 ## What this is
-The design and planning record for three ideas for teaching children with AI, served as static HTML: the Tutor, for students of 14 to 18, designed for GCSE and A-level in the UK and launching in the US alongside it where resources allow; the Primer, for children of 8 to 13; and Foundations, for children of 4 to 7 with an adult beside them. Each has its own documents; they share an evidence register, an open-items register and a decision ledger.
+The design and planning record for three ideas for teaching children with AI, served as static HTML: the Tutor, for students of 14 to 18, designed for GCSE and A-level in the UK and launching in the US alongside it where resources allow, with an optional self-tutor in the learner's own face and voice; the Primer, for children of 8 to 13; and Foundations, for children of 4 to 7 with an adult beside them. Each has its own documents; they share an evidence register, an open-items register and a decision ledger.
 Nothing described here has been built, and no test described here has been run.
 `BUILD_BRIEF.md` is the source instruction for the Tutor and for the vault's rules, and governs where the repository disagrees with it; its §7 house style (British English, no em-dashes or en-dashes, conclusions before reasoning) applies to everything you write. `FACETS_BRIEF.md` governs the Primer, Foundations, the shared pages and the front page.
 
@@ -11,6 +11,7 @@ Nothing described here has been built, and no test described here has been run.
 - `RESTRUCTURE_REPORT.md` and `VIEWS_REPORT.md`: what each phase of that brief changed, with the checks it passed.
 - `FACETS_BRIEF.md`: the brief for the Primer, Foundations and the front page; decisions D40 onwards, OI-13 onwards, OA-22 onwards, the candidate claims.
 - `FACETS_REPORT.md`: what that brief changed, the checks it passed and the independent review.
+- `SELF_TUTOR_BRIEF.md` and `SELF_TUTOR_REPORT.md`: the brief for the self-tutor (D59 to D69, OI-23 onwards, OA-37 onwards, T-SLF-01 onwards) and what it changed.
 - `roles.json`: the five owners, what each owns and reads, the ledger overrides, the Tutor summary's picks (`summary`), and the front page's ideas, briefs and films (`front`).
 - `README.md`: what the repository is, its status, how to read and edit it.
 - `CLAUDE.md`: this file.
@@ -57,9 +58,9 @@ A fragment over 3,000 words of prose, counted with tags stripped, is split at it
 Cut at line boundaries. Concatenating the directory in filename order must reproduce the page byte for byte; prove it before deleting the single file.
 
 ## Counsel questions
-Never resolve a counsel question (OI-1 to OI-22 in `docs/14-open-items.html`), and never write as if one were resolved.
-OI-3 is the recorded exception: D34 proceeds ahead of it under a fixed convention, and says so where it is applied.
+Never resolve a counsel question (OI-1 to OI-27 in `docs/14-open-items.html`), and never write as if one were resolved.
+OI-3 is the recorded exception: D34 proceeds ahead of it under a fixed convention, and says so where it is applied. The self-tutor is the second: D59 proceeds ahead of OI-23 to OI-27, is withdrawn in a market only if counsel's answer is a categoric no, and says so where it is applied.
 
 ## Settled decisions
 D1 to D14 live in `BUILD_BRIEF.md` §2 and are not reopened. Open that section only when a task touches one of them.
-D1 is the recorded exception: on 22 October 2026 the owner amended it, overriding the ledger's rule for D1 alone, so the Tutor launches in the UK and the US together where resources allow, and in the UK first where they do not. D51 sets the same markets for the Primer and Foundations. The amendment is recorded in `BUILD_BRIEF.md` §2 and in the ledger's settled group.
+D1 and D9 are the recorded exceptions, each amended by the owner and overriding the ledger's rule for that decision alone. On 22 October 2026 D1 changed so the Tutor launches in the UK and the US together where resources allow, and in the UK first where they do not; D51 sets the same markets for the Primer and Foundations. On 23 October 2026 D9 changed so the self-tutor (D59) can launch with the learner's own voice, while a creator's voice stays off the launch path. The amendments are recorded in `BUILD_BRIEF.md` §2 and in the ledger's settled group.

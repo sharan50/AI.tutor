@@ -57,6 +57,8 @@ than left to implication:
 - Any right to train, fine-tune, adapt or otherwise create a machine-learning
   artefact embodying the Licensor's style (see clause 8).
 - Any right to state or imply endorsement, authorship, review or approval.
+- Presentation of the Style Preset in a learner's self-tutor, unless the Licensor
+  opts in under Schedule 4.
 - **Merchandising** of any kind.
 - **Use in paid advertising**, which requires separate written consent from the
   Licensor per campaign. Organic description of the Style Preset's availability
@@ -240,6 +242,7 @@ alternative:
 | OA-4 | Is the passing-off / trade mark / performers' rights / data protection framing correct, there being no statutory UK personality right? | Clauses 5 and 6. |
 | OA-9 | Are target creators US-resident, bringing state right-of-publicity law into scope? | Whether a US-law limb is needed at all. |
 | OI-22 | Does US law require anything to be added to the licence when a creator's name and likeness market the Tutor to US families, which D1 now provides for; if so, what; and which law should govern it? | Governing law, and any US limb. |
+| OI-27 | What must the opt-in term say so that a named preset delivered in a learner's likeness implies no endorsement by the Licensor, and may the Licensor's name label it at all? | Schedule 4, and clause 5 as it applies there. |
 | new | Should clause 9 carry a liquidated remedy? | Clause 9. |
 | new | Governing law and forum, noting that Indian personality-rights jurisprudence is currently the most aggressive on AI likeness and the operating base is in that jurisdiction. | Boilerplate, and the risk analysis behind it. |
 
@@ -314,3 +317,44 @@ should not be offered at all.
 > voice cloning directly (*Arijit Singh*, Bombay High Court, 2024). If this
 > schedule is ever exercised, the Online Safety Act scoping decision in
 > `docs/05-safety-privacy-regulatory.html` must be re-run before, not after.
+
+---
+
+# Schedule 4: The self-tutor (D66)
+
+**Drafted. Offered at signing. Binds only a Licensor who opts in.**
+
+Opt-in limb permitting the Licensee to offer the Style Preset inside a learner's
+self-tutor: a tutor presented in that learner's own face and voice, captured live
+from the learner with their consent and a verified adult's, and seen or heard by no
+one else. Nothing of the Licensor's is added. The Licensor's name labels the style as
+it does under clause 5; the Licensor's image and voice are never used in a
+self-tutor, and Schedule 3 is not engaged.
+
+Terms to be drafted:
+
+- **Label.** Mandatory and persistent, in the form proposed below until counsel
+  settles it under OI-27, and not to be varied without the Licensor's written
+  consent, as clause 5:
+
+  > AI tutor, shown in your likeness. Style preset licensed from [Name]. [Name]
+  > does not appear, and does not write or check these answers.
+
+- **Withdrawal.** The Licensor may withdraw this schedule alone at any time, for any
+  reason or none, without ending the agreement. Withdrawal takes effect on the
+  service levels in clause 9: the preset leaves every self-tutor for new sessions
+  within fifteen minutes, and a session in progress falls back at its next turn to
+  the nearest unnamed archetype, still in the learner's own likeness.
+- **No artefact.** Clause 8 applies unchanged. Nothing is trained on the Licensor,
+  and nothing is trained on the learner either (D65).
+- **Consideration.** Not settled. Whether opting in carries its own fee is part of
+  clause 11.
+
+> **Drafting note.** A preset taught in a learner's face and voice is a use the
+> name-and-image grant in clause 2 does not obviously cover, which is why it is asked
+> for separately rather than read in. The label is the passing-off mitigation, as in
+> clause 5, but the fact pattern is new: the Licensor's name appears beside a
+> likeness that is not theirs. Whether a name may label it at all, and in what
+> words, is OI-27. The schedule proceeds ahead of the answer under D59's rule, as
+> D34 proceeds ahead of OI-3: a categoric no withdraws it, and the self-tutor
+> continues with archetypes only (D66).

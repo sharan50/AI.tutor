@@ -35,6 +35,10 @@ This list matters more than the one above, so it is longer.
 - **Not advertising.** We will not put your name in a paid advertising campaign
   without asking you first, separately, every time.
 - **Not merchandise.** Nothing physical, ever.
+- **Not your style in a student's own likeness, unless you opt in.** Students can
+  choose a tutor that looks and sounds like themselves. Your style is offered in it
+  only if you say yes, your face and voice are never used for it, and you can
+  withdraw that alone at any time without ending anything else.
 - **Not your endorsement of what the tutor says.** The product will state on
   screen that you do not write or check its answers, because you do not.
 

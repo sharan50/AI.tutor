@@ -1,0 +1,60 @@
+<h2 id="self">Rendering the self-tutor</h2>
+
+<p class="lede" data-key="06-architecture.self.1">The self-tutor adds steps after the gate and changes nothing before it. <b>The likeness is applied only to text that has already passed, so a renderer can fail to say a sentence but can never change one.</b> Everything in this section follows from keeping the likeness downstream of the verifier (D64).</p>
+
+<pre><code>[4] GATE
+      |-- pass --> on-screen text ------------------------------------> learner
+      |              |
+      |              v
+      |        [6] VOICE     the passed text, one sentence at a time, spoken in
+      |              |       the learner's voice; conditioned at render time
+      |              v
+      |        [7] FACE      the head-and-shoulders likeness animated to that
+      |              |       audio, or held still if animation misses the budget
+      |              v
+      |        synthetic label and provenance metadata on every clip --> learner
+      |-- fail --> fallback turn (validated item verbatim), shown and spoken
+                   exactly as written</code></pre>
+
+<div class="tw">
+<table>
+<thead><tr><th>Component</th><th>What it does</th><th>Rule or bound</th></tr></thead>
+<tbody>
+<tr><td><b>Capture</b></td><td>A live head-and-shoulders scan, and a voice sample read from sentences prompted on screen and chosen afresh for each capture. It runs only after both consents (D62).</td><td>D61. There is no upload endpoint, so no photograph, video or recording made elsewhere can enter. The liveness check refuses replays at a false-accept rate that is <span class="mark unknown">Unknown</span> until T-SLF-02 at M2, against a threshold written down before M2 begins.</td></tr>
+<tr><td><b>Likeness store</b></td><td>The face scan, the voice sample, and the render-time conditioning derived from them. Nothing else.</td><td>D65. A separate store, encrypted, read only by the two renderers. No routine human access, and every access logged. No learner record carries a likeness field, so nothing that reads a learner can return a face or a voice.</td></tr>
+<tr><td><b>Voice rendering</b></td><td>Speaks the passed text sentence by sentence, so the first sentence plays while the rest renders.</td><td>D64. The script of every clip equals the text on screen (T-SLF-03). Bought, behind the same abstraction as the model vendors.</td></tr>
+<tr><td><b>Face animation</b></td><td>Animates the likeness to the rendered audio.</td><td>Where it cannot meet the latency budget, which is <span class="mark unknown">Unknown</span> until M2, the learner sees a still likeness with speech rather than a lagging one. The text is never held back to wait for a clip.</td></tr>
+<tr><td><b>Labelling</b></td><td>A visible synthetic label on every clip, and provenance metadata in it.</td><td>D64, T-SLF-06. Which duties this meets in India, the UK and the US is OI-26; the label ships either way.</td></tr>
+<tr><td><b>Clips</b></td><td>Streamed to the learner and not stored.</td><td>No turn record holds audio or video. The transcript keeps the text, exactly as for any other session, and a cached clip is bound by the sixty-second ceiling below.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Deletion</h3>
+
+<p>Deletion reuses the kill switch's mechanics rather than inventing new ones (<a href="#killswitch">above</a>). The promise is that a learner who deletes their self-tutor stops hearing it at the next turn and is out of every primary store within seven days (D63).</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Where a likeness could persist</th><th>Bound</th><th>How it is enforced</th></tr></thead>
+<tbody>
+<tr><td>The deletion flag, set by the learner or the adult.</td><td>Immediate.</td><td>Single write. Either of them, at any moment, with no reason asked.</td></tr>
+<tr><td>A session in progress.</td><td>Next turn.</td><td>The flag is read at every turn under the same sixty-second cache ceiling as <code>Preset.enabled</code>. The session carries on with the standard tutor.</td></tr>
+<tr><td>Primary stores: the scan, the sample and the conditioning.</td><td>7 days.</td><td>Purged from the likeness store, with the pointers to them in <code>LikenessRef</code>. T-SLF-04 checks that nothing remains.</td></tr>
+<tr><td>Backups.</td><td>35 days.</td><td>The same retention cycle as a creator's likeness assets, stated rather than omitted.</td></tr>
+<tr><td>The vendor.</td><td>Nothing held.</td><td>D24's zero-retention terms and no training on anything sent; T-SLF-04 includes the vendor's confirmation.</td></tr>
+<tr><td><b>Model weights.</b></td><td><b>Not applicable.</b></td><td><b>D65.</b> Nothing is trained on a learner, so there is nothing to retrain.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The same deletion runs when the account closes, and after twelve months without a self-tutor session.</p>
+
+<h3>What it leans on</h3>
+
+<ul>
+<li><b>D8's reasoning, applied to learners.</b> Weights cannot be cleanly revoked, so none are trained on a face or a voice (D65). That is the only reason the seven-day line is credible.</li>
+<li><b>D24.</b> The speech and animation vendor is admitted on the same zero-retention terms as the model vendors (<a href="#model">below</a>).</li>
+<li><b>The gate.</b> Because the renderers sit after it, T-STY-03's property extends to the likeness: neither style nor face nor voice can change what is true. A rendering failure costs the clip, never the turn.</li>
+<li><b>Degradation, as D11 requires of personas.</b> Without the vendor, the flag or a likeness, the learner gets the standard tutor and the same text. No step in the turn pipeline depends on the self-tutor.</li>
+</ul>

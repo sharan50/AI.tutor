@@ -25,16 +25,16 @@
 </header>
 
 <div class="layout">
-  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#posture">The regulatory posture in one paragraph</a></li><li><a href="#age">Age assurance</a></li><li><a href="#data">The data model for a child user</a></li><li><a href="#basis">Lawful basis, and what is deliberately not inferred</a></li><li><a href="#line">The line that goes on the marketing site</a></li><li><a href="#code">Children's code, mapped point by point</a></li><li><a href="#osa">The Online Safety Act scoping decision</a></li><li><a href="#trigger">The trigger that reverses it</a></li><li><a href="#content">Content safety and escalation</a></li><li><a href="#gaps">Named gaps</a></li></ol></div></aside>
+  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#posture">The regulatory posture in one paragraph</a></li><li><a href="#age">Age assurance</a></li><li><a href="#data">The data model for a child user</a></li><li><a href="#basis">Lawful basis, and what is deliberately not inferred</a></li><li><a href="#line">The line that goes on the marketing site</a></li><li><a href="#code">Children's code, mapped point by point</a></li><li><a href="#osa">The Online Safety Act scoping decision</a></li><li><a href="#trigger">The trigger that reverses it</a></li><li><a href="#self">The self-tutor: a child's face and voice</a></li><li><a href="#content">Content safety and escalation</a></li><li><a href="#gaps">Named gaps</a></li></ol></div></aside>
   <main class="sheet" id="doc">
 <h1>Safety, privacy and regulatory</h1>
-<p class="standfirst">We never ask a child how old they are. We verify an adult and let them enrol a learner, and every learner account is treated as a child's account whatever anyone has typed. This document sets out the age assurance design, what is held about a child and for how long, the Online Safety Act scoping decision and the trigger that reverses it, and the one line about a child's data that is meant to go on the marketing site unedited.</p>
+<p class="standfirst">We never ask a child how old they are. We verify an adult and let them enrol a learner, and every learner account is treated as a child's account whatever anyone has typed. This document sets out the age assurance design, what is held about a child and for how long, the Online Safety Act scoping decision and the trigger that reverses it, the self-tutor, which is the one place a child's face and voice are held, and the one line about a child's data that is meant to go on the marketing site unedited.</p>
 <dl class="meta">
 <dt>Document</dt><dd>05 of 14</dd>
 <dt>Status</dt><dd>Specification. Not legal advice. No DPIA has been written; that is a named gap below.</dd>
 <dt>Written</dt><dd>14 September 2026</dd>
 <dt>Regulators in scope</dt><dd>ICO (UK GDPR, Children's code), Ofcom (Online Safety Act 2023)</dd>
-<dt>The US</dt><dd>Not covered. Which US laws and regulators a US launch under D1 would answer to is OI-21; nothing here answers it.</dd>
+<dt>The US</dt><dd>Not covered. Which US laws and regulators a US launch under D1 would answer to is OI-21, and for the self-tutor OI-25; nothing here answers either.</dd>
 <dt>Reverses</dt><dd>Nothing here is optional. The OSA trigger list is a change-control gate.</dd>
 </dl>
 
@@ -49,6 +49,7 @@
 <li><a href="#code">Children's code, mapped point by point</a></li>
 <li><a href="#osa">The Online Safety Act scoping decision</a></li>
 <li><a href="#trigger">The trigger that reverses it</a></li>
+<li><a href="#self">The self-tutor: a child's face and voice</a></li>
 <li><a href="#content">Content safety and escalation</a></li>
 <li><a href="#gaps">Named gaps</a></li>
 </ol>
@@ -79,7 +80,7 @@
 
 <ol>
 <li><b>The account holder must be a verified adult.</b> Verification is performed by a third-party age assurance provider certified to a recognised standard, before any learner profile can be created.</li>
-<li><b>The provider returns a result, not a document.</b> We receive a boolean, a method identifier, a provider reference and a timestamp. <b>We never receive or store an identity document, a facial image, or a biometric template.</b> The provider's own retention is bounded contractually.</li>
+<li><b>The provider returns a result, not a document.</b> We receive a boolean, a method identifier, a provider reference and a timestamp. <b>We never receive or store an identity document, a facial image, or a biometric template.</b> The provider's own retention is bounded contractually. The one face and voice the product ever holds are a learner's own, if they make a <a href="#self">self-tutor</a>, and they are never used to check anyone's age.</li>
 <li><b>Methods offered</b>, so that a parent without one route has another: facial age estimation, a digital identity wallet, open-banking based verification, or a credit-reference lookup on the account holder.</li>
 <li><b>A payment card alone is not sufficient.</b> It is recorded as a corroborating signal only. Card possession is a weak proxy for adulthood and treating it as assurance is close to the mistake the ICO has been fining.</li>
 <li><b>The child never self-declares.</b> The learner profile is created by the verified adult inside their verified account. The adult states the learner's school year, which is needed for curriculum placement, not for age gating.</li>
@@ -114,8 +115,12 @@
 <tr><td>Objective-level mastery: which objectives attempted, which passed the unaided check, on which date.</td><td>This is the adaptive model. It is the service.</td><td>Life of the account plus 12 months.</td><td>The learner and the parent.</td></tr>
 <tr><td>Provisional grade range, and the item results it was computed from.</td><td>A promised feature of the service. Derived from nothing but performance on validated items in the enrolled subject.</td><td>Recomputed on each session; history kept 12 months with transcripts.</td><td>The learner and the parent. Not gated on by any system (D35).</td></tr>
 <tr><td>Style preset and any student adjustments.</td><td>D10. Delivers the chosen teaching style.</td><td>Life of the account.</td><td>The learner only. Never shared, never publishable (see <a href="#trigger">the OSA trigger list</a>).</td></tr>
+<tr><td>The self-tutor's face scan and voice sample, if the learner makes one (D61): a head-and-shoulders scan and sentences read aloud, captured live.</td><td>The likeness the <a href="#self">self-tutor</a> is presented in, and nothing else. Never used to identify, age-check, profile or infer anything about the learner.</td><td>Until the learner or the adult deletes the self-tutor, the account closes, or <b>12 months</b> pass without a self-tutor session, whichever is first (D63). Then the deletion line below.</td><td><b>No routine human access</b>, the parent and staff included; any access is logged. Read by the rendering service only (D60).</td></tr>
+<tr><td>Conditioning derived from them: whatever the rendering vendor needs to present the likeness.</td><td>The likeness is conditioned at render time; no model is trained or fine-tuned on it (D65).</td><td>Deleted with the scan and sample. The vendor keeps nothing after a render, under D24's zero-retention terms.</td><td>No routine human access; any access is logged. The rendering service only.</td></tr>
+<tr><td>Rendered clips: the self-tutor's speech and animation for a turn.</td><td>What the learner sees and hears.</td><td><b>Not stored.</b> Streamed to the learner as they render. Transcripts keep the text of the turn, never audio or video.</td><td>The learner, as they play. No one else (D60).</td></tr>
+<tr><td>Two consent records for a self-tutor: the verified adult's and the learner's (D62), and any withdrawal.</td><td>Showing that both consented before capture, and when either withdrew.</td><td>Life of the account plus 12 months. They hold no face or voice.</td><td>The account holder, the learner, compliance staff.</td></tr>
 <tr><td>Account and billing details of the <b>adult</b>.</td><td>Contract and payment.</td><td>As required by tax law. <span class="mark assumed">Assumption</span> six years in the UK; standard position, not re-verified.</td><td>The account holder, finance staff.</td></tr>
-<tr><td>Age verification outcome: boolean, method, provider reference, timestamp.</td><td>Demonstrating age assurance to a regulator.</td><td>Life of the account.</td><td>Compliance staff. <b>No document, image or biometric is ever held.</b></td></tr>
+<tr><td>Age verification outcome: boolean, method, provider reference, timestamp.</td><td>Demonstrating age assurance to a regulator.</td><td>Life of the account.</td><td>Compliance staff. <b>No document, image or biometric is held for it.</b></td></tr>
 <tr><td>Safety escalation records.</td><td>Safeguarding, and the record of what we did.</td><td><span class="mark unknown">Unknown</span> Longer than transcripts, and <b>not yet set</b>, because the safeguarding policy that would set it does not exist. It is a named gap below, and until it is written this row is a commitment with no number behind it.</td><td>Named safeguarding role only.</td></tr>
 <tr><td>Operational telemetry: timestamps, error events, device class for rendering.</td><td>Running the service.</td><td>90 days.</td><td>Engineering, aggregated.</td></tr>
 </tbody>
@@ -156,7 +161,8 @@
 <tr><td>Accuracy adjudication on sampled turns.</td><td>Article 6(1)(f), legitimate interests.</td><td>Minimised: sampled, not bulk; adjudicators see the turn, not the learner.</td></tr>
 <tr><td>Product improvement.</td><td>Article 6(1)(f), on <b>aggregated and de-identified</b> data only.</td><td>Never on identifiable transcripts.</td></tr>
 <tr><td>Anything optional, such as notifications.</td><td>Consent, separately and revocably.</td><td>Off by default, per the Children's code default settings standard.</td></tr>
-<tr><td>Special category data.</td><td><b>None processed.</b></td><td>And the system is designed so that none can be inferred as a by-product; see below.</td></tr>
+<tr><td>The self-tutor: capturing and rendering a learner's face and voice.</td><td>Consent, separately and revocably, from the verified adult and from the learner (D62); explicit consent if the data is special category.</td><td>Off by default. Whether this is the right basis, whether the data is special category, and who may consent at 14 to 17 are OI-23.</td></tr>
+<tr><td>Special category data.</td><td><b>None processed by the tutoring.</b> Whether the self-tutor's face scan and voice sample are is OI-23, and the row above is built as if they were.</td><td>And the system is designed so that none can be inferred as a by-product; see below.</td></tr>
 </tbody>
 </table>
 </div>
@@ -177,6 +183,7 @@
 <li>Ethnicity, religion, nationality, or sexual orientation.</li>
 <li>Any characteristic of the learner beyond performance on validated items in the enrolled subject. The provisional grade range described below is inside that boundary and is derived from nothing else.</li>
 <li>Any behavioural profile used for marketing, pricing, or engagement optimisation.</li>
+<li>Anything at all from a self-tutor's face scan or voice sample, which are used to render the likeness and for nothing else.</li>
 </ul>
 
 <div class="claim">
@@ -257,7 +264,7 @@
 <h2 id="line">The line that goes on the marketing site</h2>
 
 <div class="claim">
-<p class="bigline"><b>We keep what your child types to the tutor and what the tutor says back, which topics they got right and wrong, the progress estimate we show you, the account and billing details you gave us, and a record that we checked you are an adult. If your child tells the tutor something that worries us, we keep a record of that too, and a trained person reads it.</b></p>
+<p class="bigline"><b>We keep what your child types to the tutor and what the tutor says back, which topics they got right and wrong, the progress estimate we show you, the account and billing details you gave us, and a record that we checked you are an adult. If your child tells the tutor something that worries us, we keep a record of that too, and a trained person reads it. If your child makes a self-tutor, we also keep the face scan and voice sample it was made from until it is deleted, and no one else ever sees or hears it.</b></p>
 <p class="bigline"><b>We do not sell any of it. We do not use it to train anyone's AI model. We do not use it to advertise to your child. We do not work anything out about your child beyond how they are doing in the subject they are studying.</b></p>
 <p class="bigline"><b>Our team is in India and in the UK, and your child's data is handled in both.</b></p>
 <p class="bigline"><b>You can delete it whenever you want. It goes from the product straight away, from our systems within seven days and from our backups within thirty-five. Two things we cannot delete: billing records, which we are required to keep for six years, and any safeguarding record, because deleting one could put a child at risk.</b></p>
@@ -271,10 +278,11 @@
 <thead><tr><th>Clause</th><th>What makes it true</th></tr></thead>
 <tbody>
 <tr><td>The list of what is kept</td><td>Every row of the data table above, including the tutor's own replies, the progress estimate, the age check record and safeguarding records. An earlier version of this line named three of eight rows and called itself complete; that was the single most misleading sentence in this vault and it is why the line is now four sentences rather than one.</td></tr>
+<tr><td>"If your child makes a self-tutor"</td><td>The self-tutor's rows in the data table, and D60 to D63. A face and a voice are what a parent most wants to know about, so they get their own sentence rather than a place in the list. "No one else ever sees or hears it" is D60, held by T9 and T-SLF-05, and it includes the parent, who should learn that here and not later.</td></tr>
 <tr><td>"handled in India and in the UK"</td><td>D1: the build base is Bengaluru, and this line is written for the UK. D1 now opens the US alongside it where resources allow; where a US family's data would be handled, and what a US line must say, are not yet written (OI-21). A parent asks where their child's data goes before they ask anything else, and the transfer mechanism is still an unresolved gap below. Saying it plainly is the minimum; it is not a substitute for resolving it.</td></tr>
 <tr><td>"Two things we cannot delete"</td><td>Billing retention (OA-13) and safeguarding records. Both are real exceptions to a deletion promise and both now sit <b>in the same breath as the promise</b> rather than in a table further down.</td></tr>
 <tr><td>"We do not sell it"</td><td>No data sale, no data sharing for consideration, no third-party analytics SDK in the learner surface.</td></tr>
-<tr><td>"not to train anyone's AI model"</td><td>Decision D24: zero-retention, no-training vendor terms as a procurement gate. This clause is false without that contract, which is why it is a gate and not a preference.</td></tr>
+<tr><td>"not to train anyone's AI model"</td><td>Decision D24: zero-retention, no-training vendor terms as a procurement gate. This clause is false without that contract, which is why it is a gate and not a preference. For the self-tutor it also rests on D65: no model is trained or fine-tuned on a learner's face or voice.</td></tr>
 <tr><td>"not to advertise to your child"</td><td>No advertising in the product and no ad-tech in the stack.</td></tr>
 <tr><td>"nothing beyond how they are doing in the subject"</td><td>The not-inferred list above, plus D25. The progress estimate sits inside this boundary because it is computed from performance on validated items in the enrolled subject and from nothing else; that is exactly why it is named in the first sentence rather than relied on to be covered by silence.</td></tr>
 <tr><td>"seven days, thirty-five days"</td><td>The deletion SLA. The backup figure is stated rather than omitted, because that is the clause an auditor checks.</td></tr>
@@ -293,21 +301,21 @@
 <table>
 <thead><tr><th>Standard</th><th>How this design meets it</th></tr></thead>
 <tbody>
-<tr><td>1. Best interests of the child</td><td>The primary consideration in the three decisions where it conflicts with commercial interest: no parental transcript access by default (D16), no engagement optimisation (D25), and an unaided check that reports honestly rather than flatteringly (D15).</td></tr>
-<tr><td>2. Data protection impact assessments</td><td><b>Required and not yet written.</b> Named as a gap below, with a trigger.</td></tr>
+<tr><td>1. Best interests of the child</td><td>The primary consideration in the three decisions where it conflicts with commercial interest: no parental transcript access by default (D16), no engagement optimisation (D25), and an unaided check that reports honestly rather than flatteringly (D15). The self-tutor's case rests on a benefit nobody has measured (OA-37), so it is weighed in the DPIA before launch, not assumed.</td></tr>
+<tr><td>2. Data protection impact assessments</td><td><b>Required and not yet written.</b> Named as a gap below, with a trigger. The self-tutor makes one unavoidable before it launches.</td></tr>
 <tr><td>3. Age appropriate application</td><td>Single audience, single age band. Every learner account is a child account by default whatever was entered.</td></tr>
-<tr><td>4. Transparency</td><td>The marketing-site line above, plus a learner-facing explanation written for a fifteen-year-old, not a parent-facing notice with a child-facing summary bolted on.</td></tr>
-<tr><td>5. Detrimental use of data</td><td>The not-inferred list, no engagement optimisation, no pricing or marketing use. The provisional grade range is the one output capable of discouraging a child, and it carries five specific safeguards set out <a href="#graderange">above</a>.</td></tr>
+<tr><td>4. Transparency</td><td>The marketing-site line above, plus a learner-facing explanation written for a fifteen-year-old, not a parent-facing notice with a child-facing summary bolted on. The self-tutor's consent screen is written the same way, for the learner (D62).</td></tr>
+<tr><td>5. Detrimental use of data</td><td>The not-inferred list, no engagement optimisation, no pricing or marketing use. The provisional grade range is the one output capable of discouraging a child, and it carries five specific safeguards set out <a href="#graderange">above</a>. The self-tutor never comments on a learner's face or voice and offers no filter or alteration of either (D64).</td></tr>
 <tr><td>6. Policies and community standards</td><td>The content safety policy below, and we uphold our own published terms rather than reserving discretion.</td></tr>
-<tr><td>7. Default settings</td><td>High privacy by default. Notifications off. Parental transcript access off. Nothing optional is pre-enabled.</td></tr>
-<tr><td>8. Data minimisation</td><td>The held list is short and each row has a necessity justification. No date of birth is collected at all.</td></tr>
-<tr><td>9. Data sharing</td><td>None, other than the age assurance provider (which receives the adult's data, not the child's) and the model vendor under D24 terms.</td></tr>
+<tr><td>7. Default settings</td><td>High privacy by default. Notifications off. Parental transcript access off. Nothing optional is pre-enabled. The self-tutor is off until the adult and the learner both turn it on (D62).</td></tr>
+<tr><td>8. Data minimisation</td><td>The held list is short and each row has a necessity justification. No date of birth is collected at all. The self-tutor adds a head-and-shoulders scan and a short prompted voice sample, taken only with both consents and kept only until deleted (D61, D63); no full-body image is taken.</td></tr>
+<tr><td>9. Data sharing</td><td>None, other than the age assurance provider (which receives the adult's data, not the child's) and the model vendor under D24 terms. For the self-tutor, the speech and animation vendor, under the same terms, with no training on a learner's face or voice (D65).</td></tr>
 <tr><td>10. Geolocation</td><td>Not collected. Not inferred. Not used.</td></tr>
-<tr><td>11. Parental controls</td><td>Parental controls exist and, where they would be visible to the child, <b>the child is told</b>. The default transcript position in D16 is itself a parental-control decision taken in the child's favour.</td></tr>
-<tr><td>12. Profiling</td><td>On, because it is the service, with a lawful basis proposed above and scoped to academic performance in the enrolled subject. The scope limit is the justification.</td></tr>
+<tr><td>11. Parental controls</td><td>Parental controls exist and, where they would be visible to the child, <b>the child is told</b>. The default transcript position in D16 is itself a parental-control decision taken in the child's favour. A self-tutor needs the adult's consent and the adult can delete it, but cannot see or hear it (D60), and the learner is told so before consenting.</td></tr>
+<tr><td>12. Profiling</td><td>On, because it is the service, with a lawful basis proposed above and scoped to academic performance in the enrolled subject. The scope limit is the justification. A self-tutor's face scan and voice sample are used to render the likeness and for nothing else.</td></tr>
 <tr><td>13. Nudge techniques</td><td>D25. No streaks, no badges, no loss aversion, no return notifications, no engagement objective.</td></tr>
-<tr><td>14. Connected toys and devices</td><td>Not applicable. No connected device, and no voice at launch (D9).</td></tr>
-<tr><td>15. Online tools</td><td>Deletion, access and objection routes are in the product, in plain language, reachable by the child as well as the adult.</td></tr>
+<tr><td>14. Connected toys and devices</td><td>Not applicable. No connected device. The product records a learner's voice once, when they make a self-tutor (D61), and never listens otherwise.</td></tr>
+<tr><td>15. Online tools</td><td>Deletion, access and objection routes are in the product, in plain language, reachable by the child as well as the adult. Deleting a self-tutor is one action, open to the learner and to the adult (D63).</td></tr>
 </tbody>
 </table>
 </div>
@@ -331,7 +339,7 @@
 
 <p>Note also the two things the decision does not claim. It does not claim the OSA is irrelevant to us: Ofcom has confirmed the Act reaches generative AI, and other duties can attach by other routes. And it does not claim that being built in India helps: <span class="mark verified">Verified</span> the Act reaches providers with links to the UK regardless of where they are established, and Ofcom has already penalised nine companies that were not UK-based or did not state their jurisdiction. The analysis of that is in <a href="04-rights-dossier.html#d13">04</a>.</p>
 
-<p>D9 belongs here as well as in the rights dossier. Voice cloning is off the launch path partly because virtual clones of real people were among the incidents that prompted Ofcom's letter. Shipping a cloned voice of a named educator would be volunteering for the category.</p>
+<p>D9 belongs here as well as in the rights dossier. Cloning a creator's voice is off the launch path partly because virtual clones of real people were among the incidents that prompted Ofcom's letter. Shipping a cloned voice of a named educator would be volunteering for the category. Since the owner amended D9 on 23 October 2026, one cloned voice is on the launch path: a learner's own, in a self-tutor no one else can see or hear. The vault's reading of that, the owner's view and the open question, OI-24, are set out in <a href="#self">the self-tutor</a>.</p>
 
 <h2 id="trigger">The trigger that reverses it</h2>
 
@@ -349,11 +357,64 @@
 <tr><td class="id">T6</td><td>A referral or social mechanic that surfaces one user's content or identity to another.</td></tr>
 <tr><td class="id">T7</td><td>Search across other users' material.</td></tr>
 <tr><td class="id">T8</td><td>Any third-party integration that republishes session content to a platform where other users see it.</td></tr>
+<tr><td class="id">T9</td><td>Any way for anyone but the learner to see or hear a learner's self-tutor, or to obtain anything it renders.</td></tr>
 </tbody>
 </table>
 </div>
 
-<p>T2 deserves particular attention because it is the feature most likely to be proposed on product merit. "Let students build their own tutor" is an obvious growth feature, it would be popular, and it would convert the service into precisely the category Ofcom described when it warned about virtual clones. The architectural invariant in <a href="02-style-engine.html#adjust">02</a>, that an adjusted style is visible only to the student who made it and cannot be named, published or shared, exists to hold this line in code rather than in policy.</p>
+<p>T2 deserves particular attention because it is the feature most likely to be proposed on product merit. "Let students build their own tutor" is an obvious growth feature, it would be popular, and it would convert the service into precisely the category Ofcom described when it warned about virtual clones. The architectural invariant in <a href="02-style-engine.html#adjust">02</a>, that an adjusted style is visible only to the student who made it and cannot be named, published or shared, exists to hold this line in code rather than in policy. The <a href="#self">self-tutor</a> (D59) is a version of that feature: a learner builds a tutor from their own face and voice. On the vault's reading it stays outside T2 only because D60 lets no one but the learner see or hear it, and T9 holds that line as a gate; counsel has not confirmed the reading (OI-4, OI-24).</p>
+
+<h2 id="self">The self-tutor: a child's face and voice</h2>
+
+<p class="lede" data-key="05-safety-privacy-regulatory.self.1">The self-tutor is the one place the product holds a child's face and voice. It is off by default, made only with two consents, seen and heard by no one but the learner, and switched off at the next turn when either consent is withdrawn. Whether that is enough is a set of questions for counsel that this document does not answer.</p>
+
+<p>D59 puts the self-tutor on the launch path ahead of those answers. It is withdrawn in a market only if counsel advises in writing that no form of it the design allows may launch there, and a conditional answer changes the design instead. It is the second recorded exception of its kind, after D34 on OI-3, and each part of this document that applies it says so.</p>
+
+<h3>What is held, and for what</h3>
+
+<p>A head-and-shoulders face scan and a voice sample read from sentences chosen afresh for each capture, both captured live in the product (D61); whatever conditioning the rendering vendor derives from them (D65); and the two consent records. The clips the self-tutor renders are streamed to the learner and never stored, and transcripts keep the text of a turn, never its audio or video. The rows are in <a href="#data">the data table</a>. No one has routine access to the likeness store, and any access is logged. They are used to present the tutor in the learner's likeness and for nothing else: never to identify the learner, check anyone's age, profile them or infer anything about them (<a href="#basis">the not-inferred list</a>). No full-body image is taken.</p>
+
+<p>Deletion follows <a href="#data">the line above</a>. When the learner or the adult deletes, a flag read at every turn stops the rendering at the next one (D63); primary stores are purged within seven days and backups age out within thirty-five. A self-tutor unused for twelve months, or on an account that closes, is deleted without anyone asking.</p>
+
+<h3>Two consents, and the question behind them</h3>
+
+<p>Before anything is captured, the verified adult and the learner each consent, separately and explicitly, after being told in plain words what is kept, that no one else will see or hear it, the adult included, and how to delete it (D62). The learner's words are written for a fifteen-year-old, as the transparency standard asks, not adapted from the adult's. Either can withdraw at any time, and withdrawal is deletion. A parent's subject access request for their child's data is the one route by which an adult could ask for the face scan and voice sample; how it meets D60 is part of OI-23.</p>
+
+<div class="claim">
+<p><b>OI-23:</b> Are a learner's face scan and voice sample, and anything derived from them, biometric or special category data under UK GDPR when used to present a tutor in their likeness rather than to identify them? What lawful basis applies? Can a learner of 14 to 17 give the consent, or must the verified adult, or both? What does the Children's code require of the feature? How does a subject access request by a parent for their child's data meet D60? Does a school-controlled version change any of it? <b>Unblocks:</b> D59, D62 and D67. <b>Cost of getting it wrong:</b> a child's face and voice processed on a basis that does not hold, the risk this document opens with.</p>
+<span class="tag open">For counsel<span class="src">open item OI-23</span></span>
+</div>
+
+<p>The proposed basis is in <a href="#basis">the lawful basis table</a>, built as if the data were special category, with explicit consent, until counsel says otherwise. A DPIA covering the self-tutor must be signed off before it launches (<a href="#gaps">named gaps</a>), and the standards it engages are marked in <a href="#code">the Children's code mapping</a>.</p>
+
+<h3>Ofcom</h3>
+
+<p>The vault's reading, set out <a href="#osa">above</a> and not confirmed by counsel (OI-4), is that a private one-to-one tutor with no sharing between users sits outside the Act's user-to-user duties. The self-tutor stays inside that reading only because no one but the learner can see or hear it (D60), which T9 in <a href="#trigger">the trigger list</a> makes a change-control gate.</p>
+
+<div class="claim">
+<p>That Ofcom's warning about virtual clones of real people was made in a child protection and safety context, and that a self-tutor only its learner can access, which says only what the company's gate has passed, is therefore not a concern. This is the owner's view, and the basis of launching with the learner's own voice under D9 as amended.</p>
+<span class="tag assumed">Assumed<span class="src">OA-38, the owner's view, not verified</span></span>
+</div>
+
+<p>Whether either reading holds is OI-24, which goes to counsel with OI-4. Nothing here treats it as answered.</p>
+
+<h3>The United States</h3>
+
+<p>D1 opens the US alongside the UK where resources allow. Which state laws on biometric identifiers and on minors' data reach a learner's face and voice used this way, and what consent, notice, retention and deletion duties follow, is OI-25, with OI-21. D59's rule applies market by market: a categoric no in one market does not withdraw the self-tutor from the other.</p>
+
+<h3>Safeguarding and wellbeing</h3>
+
+<p>Seeing and hearing oneself teach is new, and for a teenager it may not be benign: self-image, distress, or an attachment the anti-companionship constraints exist to prevent (R14). The design answers with rules rather than monitoring (D64):</p>
+
+<ul class="tight">
+<li>The self-tutor never claims to be the learner, and never speaks as though it were them.</li>
+<li>It never comments on the learner's face or voice, and no filter or alteration of either is offered.</li>
+<li>It is off by default, and the standard tutor is one tap away in every session.</li>
+<li>The <a href="#content">anti-companionship constraints</a> apply unchanged: no feelings, no contact it initiates, no social memory.</li>
+<li>Anything a learner says that suggests distress, about the self-tutor or anything else, takes D26's route like any other disclosure.</li>
+</ul>
+
+<p>Nothing here claims the self-tutor helps. That is OA-37, the owner's view, and T-SLF-01 is its test; until it reports, no benefit is claimed for the feature anywhere.</p>
 
 <h2 id="content">Content safety and escalation</h2>
 
@@ -409,13 +470,13 @@
 
 <h2 id="gaps">Named gaps</h2>
 
-<p data-key="05-safety-privacy-regulatory.gaps.1">Three, each with what it blocks and when it must be closed. None is a matter of opinion; all three are work that has not been done.</p>
+<p data-key="05-safety-privacy-regulatory.gaps.1">Four, each with what it blocks and when it must be closed. None is a matter of opinion; all four are work that has not been done.</p>
 
 <div class="tw">
 <table>
 <thead><tr><th>Gap</th><th>Status</th><th>Must be closed by</th></tr></thead>
 <tbody>
-<tr><td><b>Data protection impact assessment.</b> Mandatory here: large-scale processing of children's data combined with profiling.</td><td>Not written. Not started.</td><td>Before the first live child user. It is a precondition of launch, not a launch task.</td></tr>
+<tr><td><b>Data protection impact assessment.</b> Mandatory here: large-scale processing of children's data combined with profiling. The self-tutor (D59) adds the capture and rendering of children's faces and voices; the DPIA must cover it, and the self-tutor may not launch before the DPIA is signed off. Whether that data is special category is OI-23.</td><td>Not written. Not started.</td><td>Before the first live child user. It is a precondition of launch, not a launch task.</td></tr>
 <tr><td><b>The safeguarding policy itself.</b> D26 routes disclosures to "a written policy" that decides whether and whom to inform. Retention of escalation records depends on it too.</td><td><b>Referenced throughout this document. Not written. Not started.</b></td><td>Before the first live child user, alongside the DPIA. A disclosure route with no written decision policy behind it is an escalation into a vacuum, and it is worse than the signposting it sits on top of.</td></tr>
 <tr><td><b>International transfers.</b> <span class="mark assumed">Assumption</span> If the Indian operating company processes UK children's data, that is a restricted transfer requiring an IDTA or the UK Addendum to SCCs plus a transfer risk assessment. Standard position, not confirmed for this fact pattern.</td><td>Identified, not resolved.</td><td>Before any UK child data is processed in India. Interacts with OI-7, which entity contracts with the parent.</td></tr>
 <tr><td><b>UK representative.</b> <span class="mark assumed">Assumption</span> That UK GDPR Article 3(2) and the Article 27 UK representative requirement apply to an India-established controller serving UK children. Standard position, unconfirmed for this fact pattern.</td><td>Identified, not resolved.</td><td>Before launch. Cheap to fix, embarrassing to be caught without.</td></tr>
@@ -440,7 +501,7 @@
   </div>
   <div class="meta-row">
     <span>AI.tutor design vault, revised October 2026. Nothing here has been built.</span>
-    <span class="stamp">Built 22 October 2026</span>
+    <span class="stamp">Built 23 October 2026</span>
   </div>
 </footer>
 </body>

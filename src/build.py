@@ -1223,10 +1223,13 @@ def render_role(role, built, cfg, blocks, entries, owners, graph):
     shown = [transclude(k, to, blocks) for k in keys if in_place(k) is None]
     longer = [k for k in keys if in_place(k) is not None]
     keys_html = "\n".join(shown)
+    def where(k):
+        # A block above a page's first section, such as an idea's brief, links to the page itself.
+        slug, sec = blocks[k]["slug"], blocks[k]["section"]
+        label = page_title(slug) + (f": {_section_title(slug, sec)}" if sec else "")
+        return f'<a href="{locus_href(slug + (f"#{sec}" if sec else ""), to)}">{label}</a>'
     if longer:
-        keys_html += "\n" + _ul(("", f'<a href="{locus_href(blocks[k]["slug"] + "#" + blocks[k]["section"], to)}">'
-                                  f'{page_title(blocks[k]["slug"])}: {_section_title(blocks[k]["slug"], blocks[k]["section"])}</a> '
-                                  f'<span>{in_place(k)}, read in place</span>') for k in longer)
+        keys_html += "\n" + _ul(("", f'{where(k)} <span>{in_place(k)}, read in place</span>') for k in longer)
     body = (tpl.replace("<!--TITLE-->", role["title"])
                .replace("<!--FRAME-->", f'<p class="standfirst">{role["frame"]}</p>')
                .replace("<!--OWN-DOCS-->", own_docs).replace("<!--OWN-DECISIONS-->", own_dec)
