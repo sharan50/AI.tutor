@@ -25,7 +25,7 @@
 </header>
 
 <div class="layout">
-  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#why">Why a parameter object and not a prose description</a></li><li><a href="#set">The parameter set, version 1</a></li><li><a href="#card">From object to style card</a></li><li><a href="#preset">How a named educator becomes a point in the space</a></li><li><a href="#adjust">How a student moves an axis</a></li><li><a href="#conformance">Conformance testing</a></li><li><a href="#d6">The D6 boundary: where exemplar conditioning attaches</a></li><li><a href="#weak">Where this design is weak</a></li></ol></div></aside>
+  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#why">Why a parameter object and not a prose description</a></li><li><a href="#set">The parameter set, version 1</a></li><li><a href="#card">From object to style card</a></li><li><a href="#preset">How a named educator becomes a point in the space</a></li><li><a href="#adjust">How a student moves an axis</a></li><li><a href="#self">Style in the learner's own likeness</a></li><li><a href="#conformance">Conformance testing</a></li><li><a href="#d6">The D6 boundary: where exemplar conditioning attaches</a></li><li><a href="#weak">Where this design is weak</a></li></ol></div></aside>
   <main class="sheet" id="doc">
 <h1>Style engine</h1>
 <p class="standfirst">Teaching style is represented as twelve numbers, each of which can be counted in a transcript and none of which belongs to anybody. A named educator becomes a point in that space, a student can move any axis from where the name put them, and a style that cannot be measured is treated as a claim rather than a feature.</p>
@@ -33,7 +33,7 @@
 <dt>Document</dt><dd>02 of 14</dd>
 <dt>Status</dt><dd>Specification. The parameter set is version 1 and has never been fitted to a real educator.</dd>
 <dt>Written</dt><dd>14 September 2026</dd>
-<dt>Governs</dt><dd>D4, D5, D6, D7, D8, D10, D14</dd>
+<dt>Governs</dt><dd>D4, D5, D6, D7, D8, D10, D14, D66, D68</dd>
 <dt>Depends on</dt><dd><a href="04-rights-dossier.html">04 Rights dossier</a> for what a licence permits</dd>
 </dl>
 
@@ -45,6 +45,7 @@
 <li><a href="#card">From object to style card</a></li>
 <li><a href="#preset">How a named educator becomes a point in the space</a></li>
 <li><a href="#adjust">How a student moves an axis</a></li>
+<li><a href="#self">Style in the learner's own likeness</a></li>
 <li><a href="#conformance">Conformance testing</a></li>
 <li><a href="#d6">The D6 boundary: where exemplar conditioning attaches</a></li>
 <li><a href="#weak">Where this design is weak</a></li>
@@ -232,6 +233,7 @@
 <li><b>Scope.</b> Adjustments are per student, per subject. They persist between sessions and there is always a one-tap return to the preset as licensed.</li>
 <li><b>Privacy and the Online Safety Act.</b> An adjusted style is visible only to the student who made it. It cannot be named, published, shared or sent to another user. This is not a product preference; it is the architectural invariant that keeps the service outside user-to-user territory, and the trigger analysis is in <a href="05-safety-privacy-regulatory.html">05</a>.</li>
 <li><b>Attribution.</b> Once a student has moved an axis, the on-screen label changes from "Style preset licensed from [Name]" to "Style preset: [Name], adjusted by you". A creator should not be shown as the author of a configuration the student invented. This is a rights point as much as an honesty point.</li>
+<li><b>In a self-tutor.</b> Adjustments work the same way, and the likeness never moves an axis; see <a href="#self">style in the learner's own likeness</a>.</li>
 </ul>
 
 <h3>Acting on a creator objection within 14 days</h3>
@@ -262,6 +264,24 @@
 </table>
 </div>
 
+<h2 id="self">Style in the learner's own likeness</h2>
+
+<p class="lede" data-key="02-style-engine.self.1">The likeness carries no style. A self-tutor teaches from the same style object as any other tutor, and the learner's face and voice change only how its turns are presented. Style is still twelve numbers counted in a transcript, and the transcript is the same whether or not a self-tutor presents it (<a href="01-product.html#self">01</a>).</p>
+
+<div class="claim">
+<p><b>None of the twelve dimensions reaches speech.</b> Each is defined by what can be counted in a transcript, and the voice speaks that transcript verbatim (D64). Delivery is the same under every preset: the learner's own voice at one neutral delivery, with speaking rate, pitch and intonation set by the voice rendering, never by the preset, and the free-text register note does not reach the voice either. Tone was kept out of the weighted set on purpose (D17), and letting a preset vary delivery would bring it back through the voice. And style is defined, measured and tested on transcripts (T-STY-01, T-STY-02), so a style carried in the voice would be one that no test checks.</p>
+<span class="tag decided">Decision D69<span class="src">taken while writing, 23 October 2026; the owner's to keep or reverse</span></span>
+</div>
+
+<p>Everything else on this page applies unchanged. A learner's adjustments work as in <a href="#adjust">how a student moves an axis</a>, under the same clamps, and stay private to them. <code>visual_density</code> still governs figures, which render on screen beside the likeness. The style object gains no field for the likeness: the likeness is stored and deleted separately (<a href="06-architecture.html#self">06</a>), so deleting a self-tutor leaves the learner's style untouched, and moving an axis never changes the likeness.</p>
+
+<h3>Named presets, by the creator's opt-in</h3>
+
+<p>Every archetype is available in the self-tutor. A named educator's preset is available in it only where that creator has opted in by a new term in the licence (D66): D5 licenses a name and a likeness to label a style, not that style taught in another person's face and voice. A creator who has not opted in is not offered in the self-tutor's chooser. Withdrawing the opt-in, or the end of the licence, removes the preset from every self-tutor on the kill switch's lines: new sessions lose it within fifteen minutes, and a session in progress falls back to the nearest archetype at its next turn. The label says whose style it is and that the creator does not appear (<a href="01-product.html#label">01</a>). What the term must say is OI-27; the creator's continuing review right and the 14-day objection mechanism above apply unchanged.</p>
+
+<h3>The self-tutor in D14's experiment</h3>
+
+<p>D14's experiment compares named presets with unnamed archetypes on return rate. An uncontrolled self-tutor would confound it: a learner who comes back might be coming back for the likeness, not the style. So the self-tutor is a second factor, not a third arm (D68). Cohorts are given named presets or archetypes only, as D33 randomises availability, and separately the self-tutor on offer or not. The return-rate comparison reads the first factor and T-SLF-01 the second, with their interaction pre-registered: D66 offers only opted-in creators' presets inside the self-tutor, so the named-preset factor is weaker where the self-tutor is on. The sample this needs is <span class="mark unknown">Unknown</span> until the experiment is designed (<a href="11-roadmap.html#d14">11</a>).</p>
 <h2 id="conformance">Conformance testing</h2>
 
 <p class="lede" data-key="02-style-engine.conformance.1">A style that cannot be verified is a claim, not a feature. Four tests. None has been run.</p>
@@ -371,7 +391,7 @@
   </div>
   <div class="meta-row">
     <span>AI.tutor design vault, revised October 2026. Nothing here has been built.</span>
-    <span class="stamp">Built 22 October 2026</span>
+    <span class="stamp">Built 23 October 2026</span>
   </div>
 </footer>
 </body>

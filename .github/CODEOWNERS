@@ -16,7 +16,7 @@ src/content/10-economics.html @sharan50
 src/content/11-roadmap.html @sharan50
 src/content/12-risk-register.html @sharan50
 src/content/13-primer-gateway.html @sharan50
-src/content/14-open-items.html @sharan50
+src/content/14-open-items/ @sharan50
 src/content/contents.html @sharan50
 src/content/decision-ledger/ @sharan50
 src/content/f1-foundations-thesis.html @sharan50
@@ -32,5 +32,6 @@ src/content/p3-primer-content.html @sharan50
 src/content/p4-primer-safety.html @sharan50
 src/content/p5-primer-architecture.html @sharan50
 src/content/p6-primer-plan.html @sharan50
-src/content/sources.html @sharan50
+src/content/sources/ @sharan50
 src/content/which-first.html @sharan50
+src/content/14-open-items/010-counsel.html @sharan50

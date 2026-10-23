@@ -7,8 +7,9 @@ amended by the owner on 22 October 2026; D51 for the other two).
 
 - **The Tutor** (ages 14 to 18). A student chooses **how** they are taught by
   naming an educator whose style they already recognise, and nothing reaches that
-  student which cannot be traced to an examiner-validated item. The most
-  developed of the three.
+  student which cannot be traced to an examiner-validated item. A student can
+  also choose a self-tutor, taught in their own face and voice, which only they
+  can see. The most developed of the three.
 - **The Primer** (ages 8 to 13). A child's why-questions taken seriously: a
   checked explanation first, then the question underneath, explored by asking
   rather than telling, until the child states a view of their own. Its subjects
@@ -40,11 +41,11 @@ Foundations, the shared pages and the front page.
 |---|---|
 | Documents | 30 across the three ideas, the registers included, plus an evidence register |
 | Built | Nothing |
-| Tests specified | **26**, none run. There is nothing to run them against |
-| Counsel questions | **22** open, none answered. We proceed ahead of exactly one (OI-3), and it says so where it is applied |
-| Assumptions unverified | **36**, of which 16 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **58**, including three, taken on the owner's instruction, that reverse two earlier positions, and D1, since amended by the owner |
-| External claims registered | **42**, each with source and date checked, plus **12** candidates awaiting the owner's check |
+| Tests specified | **32**, none run. There is nothing to run them against |
+| Counsel questions | **27** open, none answered. We proceed ahead of OI-3 under D34 and of OI-23 to OI-27 under D59, and each says so where it is applied |
+| Assumptions unverified | **40**, of which 17 are resolvable by reading or by asking rather than by building |
+| Decisions recorded | **69**, including three, taken on the owner's instruction, that reverse two earlier positions, and D1 and D9, since amended by the owner |
+| External claims registered | **42**, each with source and date checked, plus **15** candidates awaiting the owner's check |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at
 build time and governs where this table disagrees with it.
@@ -100,10 +101,12 @@ Three rules follow, and they are the ones a contributor most easily breaks:
 1. **No invented figures.** Every number is from the evidence register, a stated
    design choice, or marked Unknown. There is no fourth kind.
 2. **A claim not in the evidence register may not carry a Verified marker.**
-3. **Counsel questions stay open.** The single exception is OI-3, board naming,
-   where waiting would mean a product that cannot describe itself. That exception
-   is argued in [`docs/04-rights-dossier.html`](docs/04-rights-dossier.html) and
-   recorded as decision D34, not slipped in.
+3. **Counsel questions stay open.** There are two exceptions. OI-3, board naming,
+   where waiting would mean a product that cannot describe itself, is argued in
+   [`docs/04-rights-dossier.html`](docs/04-rights-dossier.html) and recorded as
+   decision D34. The self-tutor proceeds ahead of OI-23 to OI-27 and is withdrawn
+   only if counsel's answer is a categoric no, recorded as decision D59. Neither
+   is slipped in.
 
 A claim found by research but not yet checked by the owner is registered as a
 **candidate** (CV-01 onwards) in its own section of the evidence register, with its
@@ -213,7 +216,7 @@ docs/
   status.html                  generated from the registers
   style.css                    hand-maintained
 evidence/
-  sources.html                 42 external claims, source and date checked, and 12 candidates
+  sources.html                 42 external claims, source and date checked, and 15 candidates
 viz/
   dependency-map.html          the served map, generated; published at /map/
 contracts/

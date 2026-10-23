@@ -7,6 +7,7 @@
             + verify(node_tokens + assertion_tokens) ]  // entailment call
   + figures x render_cost                               // ~0, deterministic (D28)
   + cas_checks x 0                                      // local, no vendor cost
+  + self_turns x render(spoken_length)                  // self-tutor on only (D59)
   + storage + telemetry                                 // negligible per session
 
 where, per turn:
@@ -33,6 +34,7 @@ where, per turn:
 <tr><td><code>system_fixed</code>, <code>style_card</code>, <code>k_nodes</code>, <code>window</code></td><td><b>Design-controlled.</b> Each is bounded by a decision we make, not by a vendor.</td><td>Countable as soon as the prompts and the card renderer exist. These are the only levers we hold.</td></tr>
 <tr><td><code>generate()</code>, <code>verify()</code> unit prices</td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>Gathered at M2 during model selection. Not written from memory.</td></tr>
 <tr><td>Gate-fire rate, which adds wasted generations</td><td><span class="mark unknown">Unknown</span></td><td>First frozen-battery run.</td></tr>
+<tr><td><code>render()</code>, the self-tutor's voice and face, per turn</td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>Measured at M2 during vendor selection (<a href="#model">above</a>). Incurred only on turns taken with the self-tutor on. It scales with how much is spoken rather than with context, so D30 does not bound it.</td></tr>
 <tr><td>Figure, CAS, storage costs</td><td><b>Approximately zero</b> by construction (D28).</td><td>Already settled by the architecture.</td></tr>
 </tbody>
 </table>

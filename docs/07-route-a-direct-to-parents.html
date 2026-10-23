@@ -116,6 +116,7 @@
 <li><b>Payment processing</b> on a low monthly ticket is a material percentage, not a rounding error.</li>
 <li><b>Variable session cost</b> is bounded per turn by D30, so it scales with usage rather than with session length. A heavy user is expensive linearly, not quadratically.</li>
 <li><b>CAC is entirely ours,</b> unlike Route B where a school contract amortises across a cohort.</li>
+<li><b>The self-tutor adds a render cost</b> to every turn it presents: speech, and animation where it runs (D59). <span class="mark unknown">Unknown</span> Its size, until the vendor is chosen at M2 (<a href="06-architecture.html#self">06</a>, <a href="10-economics.html">10</a>). Whether it is priced separately or included in the subscription is not decided.</li>
 </ul>
 
 <h2 id="data">Data and consent model</h2>
@@ -155,6 +156,8 @@
 <li><b>A signed creator's own audience.</b> Potentially the cheapest channel of all, and the subject of the next section.</li>
 </ol>
 
+<p><b>The self-tutor in marketing.</b> No benefit is claimed for it until T-SLF-01 reports (<a href="01-product.html#self">01</a>), and no real learner's self-tutor is ever shown, because no one but its learner may see it (D60). A demonstration is made outside the product, with a consenting adult, and labelled as synthetic, so T9 is never touched.</p>
+
 <h2 id="tension">The tension between the wedge and D11</h2>
 
 <div class="claim" data-key="07-route-a-direct-to-parents.tension.1">
@@ -174,6 +177,7 @@
 <tr><td>Age assurance</td><td>Ours to solve and ours to pay for. Open item OI-5. The hardest single compliance cost in this route.</td></tr>
 <tr><td>Lawful basis</td><td>Contract with the parent for the core service; the child-as-data-subject mismatch is OI-10.</td></tr>
 <tr><td>DPIA</td><td>Ours. Not written. A precondition of launch, not a launch task.</td></tr>
+<tr><td>Self-tutor</td><td>Two separate consents, the verified adult's and the learner's, before any capture, and off by default (D62); offered only in this route at launch (D67). The DPIA must cover it before launch. Its lawful basis, and who may consent at 14 to 17, are OI-23; the design proceeds ahead of OI-23 to OI-27 under D59's rule, as D34 does ahead of OI-3.</td></tr>
 <tr><td>Consumer law</td><td>Distance selling, cancellation rights, subscription auto-renewal rules. Interacts with OI-7, which entity contracts with the parent.</td></tr>
 <tr><td>Online Safety Act</td><td>As scoped in <a href="05-safety-privacy-regulatory.html#osa">05</a>. The trigger list applies identically in both routes.</td></tr>
 <tr><td>Safeguarding</td><td>Ours, with no designated safeguarding lead to escalate to. The weakest point in this route.</td></tr>
@@ -210,7 +214,7 @@
   </div>
   <div class="meta-row">
     <span>AI.tutor design vault, revised October 2026. Nothing here has been built.</span>
-    <span class="stamp">Built 22 October 2026</span>
+    <span class="stamp">Built 23 October 2026</span>
   </div>
 </footer>
 </body>

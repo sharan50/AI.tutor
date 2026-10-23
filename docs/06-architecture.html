@@ -25,7 +25,7 @@
 </header>
 
 <div class="layout">
-  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#planes">Five planes, and which ones we own</a></li><li><a href="#turn">The turn pipeline</a></li><li><a href="#verifier">The verifier, which is the product</a></li><li><a href="#figures">Figures are rendered, not generated</a></li><li><a href="#derived">Papers and grade ranges: deterministic, no model call</a></li><li><a href="#data">Data model</a></li><li><a href="#killswitch">Kill switch mechanics</a></li><li><a href="#model">Model choice and the vendor problem</a></li><li><a href="#cost">Cost per session, built up rather than assumed</a></li><li><a href="#harder">What each choice makes harder later</a></li></ol></div></aside>
+  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#planes">Five planes, and which ones we own</a></li><li><a href="#turn">The turn pipeline</a></li><li><a href="#verifier">The verifier, which is the product</a></li><li><a href="#figures">Figures are rendered, not generated</a></li><li><a href="#derived">Papers and grade ranges: deterministic, no model call</a></li><li><a href="#data">Data model</a></li><li><a href="#killswitch">Kill switch mechanics</a></li><li><a href="#self">Rendering the self-tutor</a></li><li><a href="#model">Model choice and the vendor problem</a></li><li><a href="#cost">Cost per session, built up rather than assumed</a></li><li><a href="#harder">What each choice makes harder later</a></li></ol></div></aside>
   <main class="sheet" id="doc">
 <h1>Architecture</h1>
 <p class="standfirst">Buy the model. Own the item bank and the verification layer. The single architectural commitment everything else follows from is that the model never chooses what it is grounded in: retrieval happens before generation, deterministically, so the set of permitted sources is known before a word is produced and can be checked against afterwards.</p>
@@ -47,6 +47,7 @@
 <li><a href="#derived">Papers and grade ranges: deterministic</a></li>
 <li><a href="#data">Data model</a></li>
 <li><a href="#killswitch">Kill switch mechanics</a></li>
+<li><a href="#self">Rendering the self-tutor</a></li>
 <li><a href="#model">Model choice and the vendor problem</a></li>
 <li><a href="#cost">Cost per session, built up rather than assumed</a></li>
 <li><a href="#harder">What each choice makes harder later</a></li>
@@ -188,15 +189,23 @@ Turn             id, session_id, role, text, citations[], verdicts{a,b,c,d},
 Escalation       session_id, category, raised_at, reviewed_by, reviewed_at, action
 
 Account          id, verification{bool, method, provider_ref, timestamp}, billing
+
+SelfTutor        learner_id, status(off|active|deleting), passcode_hash, created_at,
+                 last_session_at, delete_requested_at  // D63: the deletion flag
+Consent          id, account_id, learner_id, party(adult|learner),
+                 notice_version, given_at, withdrawn_at // D62: two, separately
+LikenessRef      learner_id, kind(face|voice|conditioning), store_ref
+                                     // the asset itself lives in the likeness store
 </code></pre>
 
-<p>Four details that are not obvious and are each doing work:</p>
+<p>Five details that are not obvious and are each doing work:</p>
 
 <ul data-key="06-architecture.data.1">
 <li><code>Preset.enabled</code> is the entire kill switch. One boolean, read per request.</li>
 <li><code>Session.preset_snapshot</code> records the style object as it was at session start, so a transcript can be explained after a preset changes. <b>For a licensed preset it is purged on the same seven-day line as the object itself</b>, and the transcript thereafter carries only the neutral preset identifier. An earlier draft had the snapshot surviving termination as company work product; that is the exact retention the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a> rejects, and a snapshot that outlived the licence would have made the deletion promise false while appearing to keep it.</li>
 <li><code>Turn.style_signatures</code> is written at logging time, which is what makes T-STY-01 a measurement over live traffic rather than a separate test harness.</li>
 <li><code>Account.verification</code> holds a boolean and a reference. There is no date of birth field in this schema, anywhere, by design.</li>
+<li><code>SelfTutor.status</code> is the self-tutor's deletion flag, read at every turn as <code>Preset.enabled</code> is. <code>SelfTutor.passcode_hash</code> is the learner's own passcode (D60): learners have no sign-in of their own, so it is what keeps the account holder from opening the self-tutor. The likeness itself is not in this schema: <code>LikenessRef</code> points into a separate encrypted store that only the two renderers read, so no query over learners can return a face or a voice, and no <code>Turn</code> field holds audio or video (<a href="#self">the self-tutor</a>).</li>
 </ul>
 
 <h2 id="killswitch">Kill switch mechanics</h2>
@@ -223,6 +232,67 @@ Account          id, verification{bool, method, provider_ref, timestamp}, billin
 <span class="tag decided">Decision D29<span class="src">14 September 2026</span></span>
 </div>
 
+<h2 id="self">Rendering the self-tutor</h2>
+
+<p class="lede" data-key="06-architecture.self.1">The self-tutor adds steps after the gate and changes nothing before it. <b>The likeness is applied only to text that has already passed, so a renderer can fail to say a sentence but can never change one.</b> Everything in this section follows from keeping the likeness downstream of the verifier (D64).</p>
+
+<pre><code>[4] GATE
+      |-- pass --> on-screen text ------------------------------------> learner
+      |              |
+      |              v
+      |        [6] VOICE     the passed text, one sentence at a time, spoken in
+      |              |       the learner's voice; conditioned at render time
+      |              v
+      |        [7] FACE      the head-and-shoulders likeness animated to that
+      |              |       audio, or held still if animation misses the budget
+      |              v
+      |        synthetic label and provenance metadata on every clip --> learner
+      |-- fail --> fallback turn (validated item verbatim), shown and spoken
+                   exactly as written</code></pre>
+
+<div class="tw">
+<table>
+<thead><tr><th>Component</th><th>What it does</th><th>Rule or bound</th></tr></thead>
+<tbody>
+<tr><td><b>Capture</b></td><td>A live head-and-shoulders scan, and a voice sample read from sentences prompted on screen and chosen afresh for each capture. It runs only after both consents (D62).</td><td>D61. There is no upload endpoint, so no photograph, video or recording made elsewhere can enter. The liveness check refuses replays at a false-accept rate that is <span class="mark unknown">Unknown</span> until T-SLF-02 at M2, against a threshold written down before M2 begins.</td></tr>
+<tr><td><b>Likeness store</b></td><td>The face scan, the voice sample, and the render-time conditioning derived from them. Nothing else.</td><td>D65. A separate store, encrypted, read only by the two renderers. No routine human access, and every access logged. No learner record carries a likeness field, so nothing that reads a learner can return a face or a voice.</td></tr>
+<tr><td><b>Voice rendering</b></td><td>Speaks the passed text sentence by sentence, so the first sentence plays while the rest renders.</td><td>D64. The script of every clip equals the text on screen (T-SLF-03). Bought, behind the same abstraction as the model vendors.</td></tr>
+<tr><td><b>Face animation</b></td><td>Animates the likeness to the rendered audio.</td><td>Where it cannot meet the latency budget, which is <span class="mark unknown">Unknown</span> until M2, the learner sees a still likeness with speech rather than a lagging one. The text is never held back to wait for a clip.</td></tr>
+<tr><td><b>Labelling</b></td><td>A visible synthetic label on every clip, and provenance metadata in it.</td><td>D64, T-SLF-06. Which duties this meets in India, the UK and the US is OI-26; the label ships either way.</td></tr>
+<tr><td><b>Safety turns</b></td><td>A turn the safety classifier flags, and every signposting or escalation reply.</td><td>D64. Shown as text from the standard tutor and never rendered in the likeness.</td></tr>
+<tr><td><b>Clips</b></td><td>Streamed to the learner and not stored.</td><td>No turn record holds audio or video. The transcript keeps the text, exactly as for any other session, and nothing is cached beyond the turn being played.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Deletion</h3>
+
+<p>Deletion reuses the kill switch's mechanics rather than inventing new ones (<a href="#killswitch">above</a>). The promise is that a learner who deletes their self-tutor stops hearing it at the next turn and is out of every primary store within seven days (D63).</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Where a likeness could persist</th><th>Bound</th><th>How it is enforced</th></tr></thead>
+<tbody>
+<tr><td>The deletion flag, set by the learner or the adult.</td><td>Immediate.</td><td>Single write. Either of them, at any moment, with no reason asked.</td></tr>
+<tr><td>A session in progress.</td><td>Next turn.</td><td>The deleting write clears the cached flag, so the next turn reads it; the same sixty-second cache ceiling as <code>Preset.enabled</code> bounds it if the clearing fails. The session carries on with the standard tutor.</td></tr>
+<tr><td>Primary stores: the scan, the sample and the conditioning.</td><td>7 days.</td><td>Purged from the likeness store, with the pointers to them in <code>LikenessRef</code>. T-SLF-04 checks that nothing remains.</td></tr>
+<tr><td>Backups.</td><td>35 days.</td><td>The same retention cycle as a creator's likeness assets, stated rather than omitted.</td></tr>
+<tr><td>The vendor.</td><td>Nothing held.</td><td>D24's zero-retention terms and no training on anything sent; T-SLF-04 includes the vendor's confirmation.</td></tr>
+<tr><td><b>Model weights.</b></td><td><b>Not applicable.</b></td><td><b>D65.</b> Nothing is trained on a learner, so there is nothing to retrain.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The same deletion runs when the account closes, and after twelve months without a self-tutor session.</p>
+
+<h3>What it leans on</h3>
+
+<ul>
+<li><b>D8's reasoning, applied to learners.</b> Weights cannot be cleanly revoked, so none are trained on a face or a voice (D65). That is the only reason the seven-day line is credible.</li>
+<li><b>D24.</b> The speech and animation vendor is admitted on the same zero-retention terms as the model vendors (<a href="#model">below</a>).</li>
+<li><b>The gate.</b> Because the renderers sit after it, T-STY-03's property extends to the likeness: neither style nor face nor voice can change what is true. A rendering failure costs the clip, never the turn.</li>
+<li><b>Degradation, as D11 requires of personas.</b> Without the vendor, the flag or a likeness, the learner gets the standard tutor and the same text. No step in the turn pipeline depends on the self-tutor.</li>
+</ul>
 <h2 id="model">Model choice and the vendor problem</h2>
 
 <p data-key="06-architecture.model.1"><b>Bought, pinned, abstracted, and qualified before use.</b> No specific vendor is named in this document, for a reason that is not evasion.</p>
@@ -244,6 +314,17 @@ Account          id, verification{bool, method, provider_ref, timestamp}, billin
 
 <p>Note the asymmetry the pinning creates, because it is a real cost. We will run behind the frontier, and we pay to qualify every upgrade. <span class="mark verified">Verified</span> The free tools are improving continuously and at no cost to the user, so running behind is a competitive expense as well as an operational one. It is accepted because the alternative is a vendor silently moving ACC-3 in the middle of exam term, which is the failure the entire correctness promise exists to prevent.</p>
 
+<h3>Speech and animation for the self-tutor</h3>
+
+<p>The self-tutor's renderers (<a href="#self">above</a>) are bought by the same procedure, with two gates before quality is considered:</p>
+
+<ol class="tight">
+<li><b>Render-time conditioning only (D65).</b> A vendor that can reproduce a face or a voice only by training or fine-tuning on it is excluded however good it sounds, because a trained likeness cannot be cleanly deleted.</li>
+<li><b>Zero retention of samples, conditioning and clips, and no training on any of them (D24).</b></li>
+</ol>
+
+<p>Latency to the first spoken sentence, and fidelity to the learner's own face and voice, are then measured at M2, and the chosen version is pinned for the generator's reason (D22): a vendor update can change how a learner sounds to themselves. No vendor is named here, because their prices, latencies and terms are not in the verified findings.</p>
+
 <h2 id="cost">Cost per session, built up rather than assumed</h2>
 
 <p>The structure first, then the honest statement of what is missing.</p>
@@ -253,6 +334,7 @@ Account          id, verification{bool, method, provider_ref, timestamp}, billin
             + verify(node_tokens + assertion_tokens) ]  // entailment call
   + figures x render_cost                               // ~0, deterministic (D28)
   + cas_checks x 0                                      // local, no vendor cost
+  + self_turns x render(spoken_length)                  // self-tutor on only (D59)
   + storage + telemetry                                 // negligible per session
 
 where, per turn:
@@ -279,6 +361,7 @@ where, per turn:
 <tr><td><code>system_fixed</code>, <code>style_card</code>, <code>k_nodes</code>, <code>window</code></td><td><b>Design-controlled.</b> Each is bounded by a decision we make, not by a vendor.</td><td>Countable as soon as the prompts and the card renderer exist. These are the only levers we hold.</td></tr>
 <tr><td><code>generate()</code>, <code>verify()</code> unit prices</td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>Gathered at M2 during model selection. Not written from memory.</td></tr>
 <tr><td>Gate-fire rate, which adds wasted generations</td><td><span class="mark unknown">Unknown</span></td><td>First frozen-battery run.</td></tr>
+<tr><td><code>render()</code>, the self-tutor's voice and face, per turn</td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>Measured at M2 during vendor selection (<a href="#model">above</a>). Incurred only on turns taken with the self-tutor on. It scales with how much is spoken rather than with context, so D30 does not bound it.</td></tr>
 <tr><td>Figure, CAS, storage costs</td><td><b>Approximately zero</b> by construction (D28).</td><td>Already settled by the architecture.</td></tr>
 </tbody>
 </table>
@@ -302,6 +385,10 @@ where, per turn:
 <tr><td>No fine-tuning, no adapters (D8).</td><td>Revocability, the kill switch.</td><td>Style fidelity is capped at what prompting achieves. If T-STY-02 fails and the diagnosis is fidelity, D8 forecloses the obvious fix and D6 exemplar conditioning is the only route left.</td></tr>
 <tr><td>Zero-retention vendor terms (D24).</td><td>The marketing-site line in <a href="05-safety-privacy-regulatory.html#line">05</a>.</td><td>Narrows the vendor set, possibly to more expensive tiers, and forecloses vendor-side caching optimisations that would have cut cost.</td></tr>
 <tr><td>Papers and grade ranges are computed, never generated (D28's principle, applied; D35 keeps the range ungated).</td><td>Verifiability and cost.</td><td>Item metadata (mark, command word, difficulty) must be right at authoring time, so a metadata error is now a paper defect rather than a cosmetic one. And a structural specification has to be written per board and per paper, which is the work that repeats if a second board is added.</td></tr>
+<tr><td>The self-tutor renders after the gate (D64).</td><td>D21, and a learner's own voice saying only what passed.</td><td>A render step on every self-tutor turn, so latency rises; and where animation cannot keep up, the likeness falls back to a still image, a visibly weaker feature.</td></tr>
+<tr><td>No weights trained on a learner (D65).</td><td>Revocability, D8's reasoning.</td><td>The likeness is only as faithful as render-time conditioning allows, and the vendor set narrows to those offering it.</td></tr>
+<tr><td>A separate likeness store, deleted within seven days (D63).</td><td>Children's face and voice data (<a href="05-safety-privacy-regulatory.html#self">05</a>).</td><td>A second deletion path to rehearse and test (T-SLF-04), backups that hold likenesses for their retention cycle, and the store whose breach would be the worst in the system (R13).</td></tr>
+<tr><td>Live capture only (D61).</td><td>No self-tutor of anyone but the learner.</td><td>No upload path even for a learner with a good reason, and a liveness check whose false-accept rate is unknown until M2.</td></tr>
 <tr><td>No persona-dependent code paths (D11, T-ZERO-01).</td><td>Zero-persona operation.</td><td>Every persona feature must degrade gracefully to an archetype, which is a constraint on every future style feature, not a one-time check.</td></tr>
 </tbody>
 </table>
@@ -326,7 +413,7 @@ where, per turn:
   </div>
   <div class="meta-row">
     <span>AI.tutor design vault, revised October 2026. Nothing here has been built.</span>
-    <span class="stamp">Built 22 October 2026</span>
+    <span class="stamp">Built 23 October 2026</span>
   </div>
 </footer>
 </body>
