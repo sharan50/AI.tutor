@@ -258,3 +258,31 @@ New sections are fragment files placed by filename. Each page's contents list in
 - No benefit is claimed for the self-tutor anywhere until T-SLF-01 reports.
 - Edit `src/content/`, never `docs/`, `evidence/` or `viz/`. Build and verify must
   pass.
+
+## 9. Changed after the independent review, 23 October 2026
+
+The ledger's text governs where it differs from sections 4 and 6 above. The review led
+to these changes:
+
+- **D60** now puts the self-tutor behind a passcode the learner sets, because learners
+  have no sign-in of their own and their sessions sit under the adult's account. Every
+  page promises only what the product shows. Whether a parent's subject access request
+  reaches the scan and sample is part of OI-23, including where the parent is the risk
+  (D26).
+- **D62**'s plain words say the product shows the self-tutor to no one else, not that
+  no one can ever see it.
+- **D63:** the deleting write clears the cached flag, so rendering stops at the next
+  turn, and the sixty-second ceiling bounds it if the clearing fails. Rendered clips are
+  never stored, so they are not in the seven-day list.
+- **D64:** a safeguarding reply, and any turn the safety classifier flags, is shown as
+  text from the standard tutor, never in the learner's likeness.
+- **D68:** cohorts, not learners, are randomised, as D33 requires, and the interaction
+  between the factors is pre-registered, because D66 offers only opted-in creators'
+  presets inside the self-tutor. T-SLF-01 also reads the return rate.
+- **D69:** the reason is that style is defined and tested on transcripts, not that a
+  grader could hear it.
+- **OI-27** also asks whether an archetype in a learner's own likeness engages anyone's
+  rights but the learner's. The claim that it does not is marked as the vault's reading.
+- **Online Safety Act:** the self-tutor makes the question arguable (OI-24), so under
+  the trigger list's own rule it needs the duties assessment signed off before its work
+  starts.

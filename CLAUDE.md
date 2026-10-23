@@ -21,7 +21,7 @@ Nothing described here has been built, and no test described here has been run.
 - `src/viz/dependency-map.html`: the map's template; the build inlines the graph into it.
 - `src/templates/`: `front.html` (the front page and its frame), `summary.html` (the Tutor summary and its frame) and `role.html`.
 - `docs/`: the served pages, generated. `index.html` is the front page, `tutor.html` the Tutor summary, `contents.html` the contents page, `roles/<id>.html` one page per owner. The Tutor's pages are `00` to `14`, the Primer's `p1` to `p6`, Foundations' `f1` to `f6`. `docs/style.css` is hand-maintained; a session edits it only when the owner asks for a design change (D52).
-- `evidence/sources.html`: the evidence register, generated from `src/content/sources.html`.
+- `evidence/sources.html`: the evidence register, generated from the fragments in `src/content/sources/`.
 - `viz/dependency-map.html`: the served map, generated; published at `/map/`.
 - `tools/depmap/graph.json`: the dependency map, nodes with a locus and edges.
 - `tools/depmap.py`: `check`, `impact <node>`, `list`. `tools/verify.py`: the checks.

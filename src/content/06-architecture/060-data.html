@@ -23,7 +23,7 @@ Escalation       session_id, category, raised_at, reviewed_by, reviewed_at, acti
 
 Account          id, verification{bool, method, provider_ref, timestamp}, billing
 
-SelfTutor        learner_id, status(off|active|deleting), created_at,
+SelfTutor        learner_id, status(off|active|deleting), passcode_hash, created_at,
                  last_session_at, delete_requested_at  // D63: the deletion flag
 Consent          id, account_id, learner_id, party(adult|learner),
                  notice_version, given_at, withdrawn_at // D62: two, separately
@@ -38,6 +38,6 @@ LikenessRef      learner_id, kind(face|voice|conditioning), store_ref
 <li><code>Session.preset_snapshot</code> records the style object as it was at session start, so a transcript can be explained after a preset changes. <b>For a licensed preset it is purged on the same seven-day line as the object itself</b>, and the transcript thereafter carries only the neutral preset identifier. An earlier draft had the snapshot surviving termination as company work product; that is the exact retention the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a> rejects, and a snapshot that outlived the licence would have made the deletion promise false while appearing to keep it.</li>
 <li><code>Turn.style_signatures</code> is written at logging time, which is what makes T-STY-01 a measurement over live traffic rather than a separate test harness.</li>
 <li><code>Account.verification</code> holds a boolean and a reference. There is no date of birth field in this schema, anywhere, by design.</li>
-<li><code>SelfTutor.status</code> is the self-tutor's deletion flag, read at every turn as <code>Preset.enabled</code> is. The likeness itself is not in this schema: <code>LikenessRef</code> points into a separate encrypted store that only the two renderers read, so no query over learners can return a face or a voice, and no <code>Turn</code> field holds audio or video (<a href="#self">the self-tutor</a>).</li>
+<li><code>SelfTutor.status</code> is the self-tutor's deletion flag, read at every turn as <code>Preset.enabled</code> is. <code>SelfTutor.passcode_hash</code> is the learner's own passcode (D60): learners have no sign-in of their own, so it is what keeps the account holder from opening the self-tutor. The likeness itself is not in this schema: <code>LikenessRef</code> points into a separate encrypted store that only the two renderers read, so no query over learners can return a face or a voice, and no <code>Turn</code> field holds audio or video (<a href="#self">the self-tutor</a>).</li>
 </ul>
 

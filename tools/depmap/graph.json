@@ -269,7 +269,7 @@
 ["ui.selfsetup", "db.likeness", "writes"],
 ["ui.selfsetup", "db.accounts", "reads"],
 ["ui.selfsetup", "gov.childrenscode", "governs"],
-["ui.selftutor", "eng.voice", "renders"],
+["ui.selftutor", "eng.voice", "renders"], ["eng.voice", "gov.provenance", "governs"], ["eng.face", "gov.provenance", "governs"], ["ui.selftutor", "gov.osa", "governs"],
 ["ui.selftutor", "eng.face", "renders"],
 ["ui.selftutor", "svc.gate", "renders"],
 ["ui.selftutor", "db.presets", "reads"],

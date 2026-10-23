@@ -50,14 +50,14 @@ Counts after this work, computed by the build:
 
 | | Decision |
 |---|---|
-| D60 | The self-tutor is the learner's alone: no parent, school, creator or other user sees or hears it, and nothing it renders can be shared, exported or downloaded |
+| D60 | The self-tutor is the learner's alone: it plays behind the learner's own passcode, no surface of the product shows it to anyone else, and nothing it renders can be shared, exported or downloaded |
 | D61 | Live capture only, head and shoulders and a prompted voice sample, with a liveness check; no uploads and no full-body image |
 | D62 | Separate, explicit consent from the verified adult and the learner; off by default |
-| D63 | Delete at any moment; rendering stops at the next turn; primary stores within seven days; also deleted when the account closes or after twelve months unused |
-| D64 | Speaks only gated text, rendered after the verifier from the on-screen text; every clip labelled as synthetic; no claim to be the learner, no comment on their face or voice, no filter |
+| D63 | Delete at any moment; rendering stops at the next turn; primary stores within seven days; clips never stored; also deleted when the account closes or after twelve months unused |
+| D64 | Speaks only gated text, rendered after the verifier from the on-screen text; every clip labelled as synthetic; no claim to be the learner, no comment on their face or voice, no filter; safeguarding replies only as text from the standard tutor |
 | D65 | No weights trained on a learner; render-time conditioning only |
 | D66 | Every archetype; a named educator's preset only where that creator opts in through a new licence term (Schedule 4) |
-| D67 | Families buying directly only (Route A) at launch; schools later |
+| D67 | Families buying directly only (Route A) at launch; through schools it stays off until counsel answers OI-23 for a school as controller |
 | D68 | A second factor in D14's experiment, not a third arm |
 | D69 | No style dimension reaches the voice: one neutral delivery under every preset |
 
@@ -96,12 +96,13 @@ Counts after this work, computed by the build:
 - **Shared pages.** The thesis and the front-page brief name the self-tutor. Which
   idea goes first and the field research guide gain a line each.
 - **Contracts.** Schedule 4 in the heads of terms, and a line in the term sheet.
-- **Dependency map.** Ten nodes and 25 edges. Five "governs" edges from the facets
+- **Dependency map.** Ten nodes and 28 edges. Five "governs" edges from the facets
   work were turned round to match the other 43.
 - **Tooling and structure:**
   - `14-open-items` was over the 3,000-word limit. It is now a directory whose
     fragments reproduce the old page byte for byte; the built page was unchanged by
-    the split.
+    the split. The evidence register was over the limit too, and is split the
+    same way.
   - `build.py` no longer crashes when a key block above a page's first section is
     too long to transclude on a role page; it links to the page instead. The Tutor's
     longer brief was the first block to reach that case.
@@ -111,7 +112,7 @@ Counts after this work, computed by the build:
 | Check | Result |
 |---|---|
 | `python3 src/build.py` | Exit 0 |
-| `python3 tools/verify.py` | All checks pass: build fresh, every link and anchor resolves, map loci resolve (100 nodes, 188 edges), no view or ownership problems |
+| `python3 tools/verify.py` | All checks pass: build fresh, every link and anchor resolves, map loci resolve (100 nodes, 191 edges), no view or ownership problems |
 | Existing markers | Every marker span in every edited source matches `main`, in order; the split register's Verified markers are 3 before and after |
 | Verified markers added | None |
 | Dashes and American spellings in anything new | None, apart from a source URL |
@@ -121,7 +122,35 @@ Counts after this work, computed by the build:
 
 ## 5. The independent review
 
-To be completed when the review returns.
+A fresh agent was given the rules and the change but none of the conversation, and
+read everything the work touched. It found 1 blocking problem, 9 that should be fixed
+and 5 nits. It also confirmed:
+- no Verified marker was added and no existing marker changed;
+- the 14 split reproduces the old page;
+- the build change is correct;
+- every new edge follows the direction used for its kind, and every id is defined.
+
+Every finding was checked in context, and all were fixed.
+
+| # | Finding | What was done |
+|---|---|---|
+| B1 | Pages promised that no one, the parent included, would ever see or hear the self-tutor, while a parent's subject access right is unconditional and its reach is OI-23. That wrote as if OI-23 were answered | Every page now promises only what the product shows. The parent-facing line keeps its clause on that basis and names what is kept. OI-23 asks how subject access meets D60, including where the parent is the risk (D26) |
+| S1 | Clips were "not stored" in one place, cached in another, and purged within seven days in a third | One rule: never stored. Clips are out of every seven-day list, and T-SLF-04 checks that none exists |
+| S2 | "At the next turn" sat beside a sixty-second cache | The deleting write clears the cached flag; the ceiling bounds a failed clearing; T-SLF-04 checks both |
+| S3 | Five places still said D34 was the only decision taken ahead of counsel; 05 said there was no user-created persona; 20 said no facial image is ever stored; two places said the other thirteen settled decisions stand | Dated sentences were added, leaving the decided claims as written. The age-check sentence is scoped to the age check. The self-tutor now needs the Online Safety Act duties assessment that the trigger list requires |
+| S4 | 04 said there is no endorsement to imply and no licence to take, against Schedule 4 and OI-27 | Confined to archetypes and marked as the vault's reading. OI-27 now asks the question |
+| S5 | D68 randomised learners, not cohorts; "stays clean" overclaimed; T-SLF-01's outcomes differed between pages | Cohort wording, as D33 requires. The interaction is pre-registered. Outcomes are aligned and include the return rate |
+| S6 | Safeguarding replies would be spoken in the child's own voice; learners have no sign-in, so D60 had no boundary against the account holder; subject access could reach a parent who is the risk | Safety turns are text from the standard tutor. A learner's passcode guards the self-tutor (D60), and T-SLF-05 tests the account holder's surfaces. D26 is in OI-23 |
+| S7 | `impact gov.provenance` and `impact gov.osa` reached no self-tutor node | Three "governs" edges added |
+| S8 | The Tutor brief was 170 words, which took it off the CEO page; the evidence register was over 3,000 words | The brief is trimmed to 149 words without losing the self-tutor. The register is split, and its built page is unchanged |
+| S9 | The parent-facing line omitted the derived conditioning and the consent records | Both are named |
+
+The nits were fixed:
+- D69's reason;
+- the creator opt-in timing in 02, now fifteen minutes for new sessions and the next turn for one in progress;
+- marketing demonstrations made outside the product;
+- CV-13's reading;
+- this report's wording on schools.
 
 ## 6. What is left for the owner
 

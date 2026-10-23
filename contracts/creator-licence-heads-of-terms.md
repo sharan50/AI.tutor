@@ -242,7 +242,7 @@ alternative:
 | OA-4 | Is the passing-off / trade mark / performers' rights / data protection framing correct, there being no statutory UK personality right? | Clauses 5 and 6. |
 | OA-9 | Are target creators US-resident, bringing state right-of-publicity law into scope? | Whether a US-law limb is needed at all. |
 | OI-22 | Does US law require anything to be added to the licence when a creator's name and likeness market the Tutor to US families, which D1 now provides for; if so, what; and which law should govern it? | Governing law, and any US limb. |
-| OI-27 | What must the opt-in term say so that a named preset delivered in a learner's likeness implies no endorsement by the Licensor, and may the Licensor's name label it at all? | Schedule 4, and clause 5 as it applies there. |
+| OI-27 | What must the opt-in term say so that a named preset delivered in a learner's likeness implies no endorsement by the Licensor; may the Licensor's name label it at all; and does an archetype in a learner's own likeness engage anyone's rights but the learner's? | Schedule 4, and clause 5 as it applies there. |
 | new | Should clause 9 carry a liquidated remedy? | Clause 9. |
 | new | Governing law and forum, noting that Indian personality-rights jurisprudence is currently the most aggressive on AI likeness and the operating base is in that jurisdiction. | Boilerplate, and the risk analysis behind it. |
 

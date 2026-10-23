@@ -190,7 +190,7 @@ Escalation       session_id, category, raised_at, reviewed_by, reviewed_at, acti
 
 Account          id, verification{bool, method, provider_ref, timestamp}, billing
 
-SelfTutor        learner_id, status(off|active|deleting), created_at,
+SelfTutor        learner_id, status(off|active|deleting), passcode_hash, created_at,
                  last_session_at, delete_requested_at  // D63: the deletion flag
 Consent          id, account_id, learner_id, party(adult|learner),
                  notice_version, given_at, withdrawn_at // D62: two, separately
@@ -205,7 +205,7 @@ LikenessRef      learner_id, kind(face|voice|conditioning), store_ref
 <li><code>Session.preset_snapshot</code> records the style object as it was at session start, so a transcript can be explained after a preset changes. <b>For a licensed preset it is purged on the same seven-day line as the object itself</b>, and the transcript thereafter carries only the neutral preset identifier. An earlier draft had the snapshot surviving termination as company work product; that is the exact retention the <a href="../contracts/creator-licence-heads-of-terms.md">heads of terms</a> rejects, and a snapshot that outlived the licence would have made the deletion promise false while appearing to keep it.</li>
 <li><code>Turn.style_signatures</code> is written at logging time, which is what makes T-STY-01 a measurement over live traffic rather than a separate test harness.</li>
 <li><code>Account.verification</code> holds a boolean and a reference. There is no date of birth field in this schema, anywhere, by design.</li>
-<li><code>SelfTutor.status</code> is the self-tutor's deletion flag, read at every turn as <code>Preset.enabled</code> is. The likeness itself is not in this schema: <code>LikenessRef</code> points into a separate encrypted store that only the two renderers read, so no query over learners can return a face or a voice, and no <code>Turn</code> field holds audio or video (<a href="#self">the self-tutor</a>).</li>
+<li><code>SelfTutor.status</code> is the self-tutor's deletion flag, read at every turn as <code>Preset.enabled</code> is. <code>SelfTutor.passcode_hash</code> is the learner's own passcode (D60): learners have no sign-in of their own, so it is what keeps the account holder from opening the self-tutor. The likeness itself is not in this schema: <code>LikenessRef</code> points into a separate encrypted store that only the two renderers read, so no query over learners can return a face or a voice, and no <code>Turn</code> field holds audio or video (<a href="#self">the self-tutor</a>).</li>
 </ul>
 
 <h2 id="killswitch">Kill switch mechanics</h2>
@@ -259,7 +259,8 @@ LikenessRef      learner_id, kind(face|voice|conditioning), store_ref
 <tr><td><b>Voice rendering</b></td><td>Speaks the passed text sentence by sentence, so the first sentence plays while the rest renders.</td><td>D64. The script of every clip equals the text on screen (T-SLF-03). Bought, behind the same abstraction as the model vendors.</td></tr>
 <tr><td><b>Face animation</b></td><td>Animates the likeness to the rendered audio.</td><td>Where it cannot meet the latency budget, which is <span class="mark unknown">Unknown</span> until M2, the learner sees a still likeness with speech rather than a lagging one. The text is never held back to wait for a clip.</td></tr>
 <tr><td><b>Labelling</b></td><td>A visible synthetic label on every clip, and provenance metadata in it.</td><td>D64, T-SLF-06. Which duties this meets in India, the UK and the US is OI-26; the label ships either way.</td></tr>
-<tr><td><b>Clips</b></td><td>Streamed to the learner and not stored.</td><td>No turn record holds audio or video. The transcript keeps the text, exactly as for any other session, and a cached clip is bound by the sixty-second ceiling below.</td></tr>
+<tr><td><b>Safety turns</b></td><td>A turn the safety classifier flags, and every signposting or escalation reply.</td><td>D64. Shown as text from the standard tutor and never rendered in the likeness.</td></tr>
+<tr><td><b>Clips</b></td><td>Streamed to the learner and not stored.</td><td>No turn record holds audio or video. The transcript keeps the text, exactly as for any other session, and nothing is cached beyond the turn being played.</td></tr>
 </tbody>
 </table>
 </div>
@@ -273,7 +274,7 @@ LikenessRef      learner_id, kind(face|voice|conditioning), store_ref
 <thead><tr><th>Where a likeness could persist</th><th>Bound</th><th>How it is enforced</th></tr></thead>
 <tbody>
 <tr><td>The deletion flag, set by the learner or the adult.</td><td>Immediate.</td><td>Single write. Either of them, at any moment, with no reason asked.</td></tr>
-<tr><td>A session in progress.</td><td>Next turn.</td><td>The flag is read at every turn under the same sixty-second cache ceiling as <code>Preset.enabled</code>. The session carries on with the standard tutor.</td></tr>
+<tr><td>A session in progress.</td><td>Next turn.</td><td>The deleting write clears the cached flag, so the next turn reads it; the same sixty-second cache ceiling as <code>Preset.enabled</code> bounds it if the clearing fails. The session carries on with the standard tutor.</td></tr>
 <tr><td>Primary stores: the scan, the sample and the conditioning.</td><td>7 days.</td><td>Purged from the likeness store, with the pointers to them in <code>LikenessRef</code>. T-SLF-04 checks that nothing remains.</td></tr>
 <tr><td>Backups.</td><td>35 days.</td><td>The same retention cycle as a creator's likeness assets, stated rather than omitted.</td></tr>
 <tr><td>The vendor.</td><td>Nothing held.</td><td>D24's zero-retention terms and no training on anything sent; T-SLF-04 includes the vendor's confirmation.</td></tr>

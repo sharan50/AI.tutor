@@ -25,7 +25,8 @@
 <tr><td><b>Voice rendering</b></td><td>Speaks the passed text sentence by sentence, so the first sentence plays while the rest renders.</td><td>D64. The script of every clip equals the text on screen (T-SLF-03). Bought, behind the same abstraction as the model vendors.</td></tr>
 <tr><td><b>Face animation</b></td><td>Animates the likeness to the rendered audio.</td><td>Where it cannot meet the latency budget, which is <span class="mark unknown">Unknown</span> until M2, the learner sees a still likeness with speech rather than a lagging one. The text is never held back to wait for a clip.</td></tr>
 <tr><td><b>Labelling</b></td><td>A visible synthetic label on every clip, and provenance metadata in it.</td><td>D64, T-SLF-06. Which duties this meets in India, the UK and the US is OI-26; the label ships either way.</td></tr>
-<tr><td><b>Clips</b></td><td>Streamed to the learner and not stored.</td><td>No turn record holds audio or video. The transcript keeps the text, exactly as for any other session, and a cached clip is bound by the sixty-second ceiling below.</td></tr>
+<tr><td><b>Safety turns</b></td><td>A turn the safety classifier flags, and every signposting or escalation reply.</td><td>D64. Shown as text from the standard tutor and never rendered in the likeness.</td></tr>
+<tr><td><b>Clips</b></td><td>Streamed to the learner and not stored.</td><td>No turn record holds audio or video. The transcript keeps the text, exactly as for any other session, and nothing is cached beyond the turn being played.</td></tr>
 </tbody>
 </table>
 </div>
@@ -39,7 +40,7 @@
 <thead><tr><th>Where a likeness could persist</th><th>Bound</th><th>How it is enforced</th></tr></thead>
 <tbody>
 <tr><td>The deletion flag, set by the learner or the adult.</td><td>Immediate.</td><td>Single write. Either of them, at any moment, with no reason asked.</td></tr>
-<tr><td>A session in progress.</td><td>Next turn.</td><td>The flag is read at every turn under the same sixty-second cache ceiling as <code>Preset.enabled</code>. The session carries on with the standard tutor.</td></tr>
+<tr><td>A session in progress.</td><td>Next turn.</td><td>The deleting write clears the cached flag, so the next turn reads it; the same sixty-second cache ceiling as <code>Preset.enabled</code> bounds it if the clearing fails. The session carries on with the standard tutor.</td></tr>
 <tr><td>Primary stores: the scan, the sample and the conditioning.</td><td>7 days.</td><td>Purged from the likeness store, with the pointers to them in <code>LikenessRef</code>. T-SLF-04 checks that nothing remains.</td></tr>
 <tr><td>Backups.</td><td>35 days.</td><td>The same retention cycle as a creator's likeness assets, stated rather than omitted.</td></tr>
 <tr><td>The vendor.</td><td>Nothing held.</td><td>D24's zero-retention terms and no training on anything sent; T-SLF-04 includes the vendor's confirmation.</td></tr>
