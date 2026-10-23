@@ -225,10 +225,14 @@ dl.meta dd { margin: 0; color: var(--ink-soft); }
 
 .claim {
   display: grid; grid-template-columns: minmax(0, var(--measure)) var(--margin-col);
-  gap: var(--gap); align-items: start; margin: 0 0 1.15rem;
+  column-gap: var(--gap); align-items: start; margin: 0 0 1.15rem;
 }
 .claim > :first-child { margin-bottom: 0; }
-.claim > p + p { margin-top: 0.8rem; }
+/* However many elements a claim holds, they stay in the measure column and its
+   marker sits in the margin beside the first. */
+.claim > :not(.tag) { grid-column: 1; margin-bottom: 0; }
+.claim > :not(.tag) ~ :not(.tag) { margin-top: 0.8rem; }
+.claim > .tag { grid-column: 2; grid-row: 1; }
 
 .tag {
   font-family: var(--grot); font-size: 0.6875rem; font-weight: 700; line-height: 1.35;
@@ -556,6 +560,7 @@ details.toc a:hover { color: var(--sky); text-decoration: underline; }
   .pager, .pagefoot { padding-left: 1.1rem; padding-right: 1.1rem; }
   .claim, .hero { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
   .claim > :first-child { margin-bottom: 0.35rem; }
+  .claim > :not(.tag), .claim > .tag { grid-column: auto; grid-row: auto; }
   .tag { border-top: none; border-left: 2px solid currentColor; padding: 0 0 0 0.55rem; margin-bottom: 1.1rem; }
   .tag .src { display: inline; margin-left: 0.35rem; }
   .system-flow, .signal-map { grid-template-columns: 1fr; }
@@ -600,6 +605,7 @@ details.toc a:hover { color: var(--sky); text-decoration: underline; }
   details > summary { list-style: none; }
   details:not([open]) > *:not(summary) { display: revert; }
   .claim, .hero { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; }
+  .claim > :not(.tag), .claim > .tag { grid-column: auto; grid-row: auto; }
   .tag { border-top: none; border-left: 2px solid currentColor; padding: 0 0 0 0.5rem; }
   .tag .src { display: inline; margin-left: 0.3rem; }
   .pagefoot { border-top: 1px solid #bbb; padding-left: 0; padding-right: 0; }
