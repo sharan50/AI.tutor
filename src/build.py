@@ -1263,8 +1263,8 @@ def render_codeowners(cfg):
     for r in cfg["roles"]:
         for item in r["owns"]:
             slug, _, hid = item.partition("#")
-            if slug == "contracts":
-                page_lines.setdefault("contracts/", []).append(handle(r))
+            if slug in ("contracts", "mvp"):
+                page_lines.setdefault(slug + "/", []).append(handle(r))
                 continue
             src = source_path(slug)
             if src is None:

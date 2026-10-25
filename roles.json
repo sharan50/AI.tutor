@@ -41,7 +41,8 @@
         "02-style-engine",
         "p5-primer-architecture",
         "f5-foundations-architecture",
-        "primer-mvp"
+        "primer-mvp",
+        "mvp"
       ],
       "reads": []
     },

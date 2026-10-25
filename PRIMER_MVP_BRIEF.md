@@ -75,31 +75,38 @@ D79 were taken while writing. The last link in each entry names its owner.
   editable text and not kept by the demo. Adults only, so D50 is untouched; whether
   the Primer itself should take a child's voice is a separate decision that waits on
   OI-17.
-- **D73.** The Primer is meant to explain with narrated video as well as words. In
+- **D73.** The Primer is meant to explain with narrated video as well as words,
+  because, in the owner's view, children of 8 to 13 do not read fast. In
   the product, D44 applies to a video as to text: it is part of a reviewed
   explanation, made in advance, never generated live for a child. Owner: the COO,
   through P3's explanation bank.
 - **D74.** In the demo, each building block's video is generated live from a prompt
-  drafted with the blocks, and all three start as soon as the safety check passes.
+  drafted with the blocks, and all three start as soon as the plan is ready and the
+  safety check has passed.
 - **D75.** No "I already know this" control: every building block is offered in full.
 - **D76.** The video rules: no words, numbers or people in the picture; the clip's own
   sound muted under the narration; one fixed style; one clip per block, eight
-  seconds at 720p in 16:9, looped; a cache by concept; a daily limit of sixty new
-  videos in the app; one retry, then a still picture with the narration; the
-  provider behind one interface.
+  seconds at 720p in 16:9, looped; a cache by concept; a daily limit of sixty video
+  generations in the app, retries included; one retry for a failed clip and none for
+  a slow one, then a still picture with the narration; the provider behind one
+  interface.
 - **D77.** Safety in the demo: a safety check before anything is shown; fixed replies
-  for a tester's own life, a death in their family, their safety and big subjects,
-  with nothing sent to video; Childline in the UK, and Childhelp and 988 in the US,
-  named in the reply about safety; adults only; a passcode on the site and on every paid call;
-  spending capped at each provider and in the app. Owner: counsel.
-- **D78.** The tools: Claude Opus 5.5 on Anthropic's API for every word; Google's
-  Gemini API for video (Gemini Omni Flash), transcription (Gemini 3.5 Transcribe)
-  and narration (Gemini 3.8 Flash-Lite TTS); Netlify for hosting, functions and
-  storage. The choice binds the demo only; the product's model vendor stays
-  deliberately undecided.
-- **D79.** The demo keeps no record of who asked what: no accounts, no audio, no
-  conversation logs; only generated material in its cache, by concept, and timings
-  and counts without content. Owner: counsel.
+  for a tester's own life, a death or serious illness close to them, their safety and
+  big subjects, with nothing sent to video; Childline and, for an adult, Samaritans in
+  the UK, and Childhelp and 988 in the US, named in the reply about safety; adults
+  only; a passcode on the site and on every paid call; spending capped at each
+  provider and in the app. Owner: counsel.
+- **D78.** The tools: Claude Opus 5.5 on Anthropic's API for every word, with
+  Anthropic's refusal fallback turned on; Google's Gemini API for video (Gemini Omni
+  Flash), transcription (Gemini 3.5 Transcribe) and narration (Gemini 3.8 Flash-Lite
+  TTS); Netlify for hosting, functions and storage. All on their standard terms,
+  without the zero retention D24 makes a gate for the Primer's vendors: a departure
+  for the demo alone. The choice binds the demo only; the product's model vendor
+  stays deliberately undecided.
+- **D79.** The demo keeps no record of who asked what: no accounts, no recordings,
+  no conversation logs; only generated material in its cache, by concept, each day's
+  short answers until the day ends, and timings and counts without content. Owner:
+  counsel.
 
 ## 5. Register entries
 
@@ -111,7 +118,7 @@ marked new:
 - **OA-42.** That the owner's paid Gemini API project allows the demo's daily limit
   of video generations. Resolvable by reading the project's limits in AI Studio.
 - **OA-43.** That audio sent to Google for transcription is held only as Google's
-  paid-tier terms describe, so that the landing page's account of a tester's voice
+  paid-tier terms describe, so that the welcome page's account of a tester's voice
   stays true end to end. Resolvable by reading the terms.
 - **OA-44.** That one person working with Claude Code can build the demo in four or
   five days. The owner's estimate and the guide's premise.
@@ -134,9 +141,10 @@ OA-42 and OA-43 among the readings.
   and the TTS model's WAV output.
 - **CV-20.** Gemini API billing: project spend caps that can be overshot; paid-tier
   data kept out of Google's product improvement; a prepayment to upgrade.
-- **CV-21.** Claude Opus 5.5's prices, and the Claude API's spend limits.
-- **CV-22.** Netlify's limits for functions, background functions and Blobs, and the
-  Free plan's credits.
+- **CV-21.** Claude Opus 5.5's prices, the Claude API's spend limits, and its refusal
+  fallback.
+- **CV-22.** Netlify's limits for functions, background functions and Blobs, Blobs'
+  consistency, rate limits on functions, and how credits are counted and spent.
 - **CV-23.** NotebookLM's Video Overviews have no public API.
 
 No counsel question is added. No test identifier is added: the demo's checks are
@@ -153,9 +161,13 @@ build checks, not tests of the Primer.
 - The design said Google's budgets warn without stopping spend. The Gemini API now
   has project spend caps, which can be overshot by billing lag (CV-20); the app's own
   daily limit is still the one that bites first.
-- The Gemini API, Netlify and OpenAI documentation could not be opened from the build
-  environment; their claims were read through search summaries of those pages.
-  Google Cloud's pricing page and Anthropic's documentation were opened directly.
+- Netlify's own coding context, read through its connector, showed that Blobs has no
+  concurrency control and that a failed background function is retried twice; the
+  daily limits are therefore kept as slots, and the background function never throws.
+- The Gemini API, Netlify and OpenAI documentation pages could not be opened from the
+  build environment; their claims were read through search summaries of those pages.
+  Google Cloud's pricing page and Anthropic's documentation were opened directly, and
+  Netlify's coding context through its connector.
 
 ## 7. Where each part goes
 
@@ -181,8 +193,9 @@ build checks, not tests of the Primer.
 
 ## 8. Rules for this work
 
-1. D1 to D69 stand. The demo departs from D44 and D50 for itself only and says so
-   wherever it does; the Primer's design changes only by D73.
+1. D1 to D69 stand. The demo departs from D24 and D44 for itself only and says so
+   wherever it does; D50 is untouched, because only adults use it; the Primer's
+   design changes only by D73.
 2. Counsel questions OI-1 to OI-27 stay open and none is written as answered. Taking
    adults' voices settles nothing about OI-17.
 3. House style is `BUILD_BRIEF.md` section 7: British English, no em-dashes or

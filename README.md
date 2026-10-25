@@ -33,7 +33,9 @@ still unknown. It is **not** application code and it is not a product.
 The source instruction is [`BUILD_BRIEF.md`](BUILD_BRIEF.md) at the root, for the
 Tutor and for the vault's rules. Where this repository and the brief disagree, the
 brief governs. [`FACETS_BRIEF.md`](FACETS_BRIEF.md) governs the Primer,
-Foundations, the shared pages and the front page.
+Foundations, the shared pages and the front page, and
+[`PRIMER_MVP_BRIEF.md`](PRIMER_MVP_BRIEF.md) the Primer's MVP build guide and its
+specification.
 
 ## Status
 
