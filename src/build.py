@@ -76,6 +76,8 @@ PAGES = [
      "What it reuses from the Tutor's pipeline, the two new checks, and the module switch.", "first"),
     ("p6-primer-plan", "P6", "Primer: plan",
      "Who pays, routes in the UK and the US, economics, milestones and risks.", "first"),
+    ("primer-mvp", "", "Primer: MVP build guide",
+     "A demonstration for adult testers, built in four or five days: what it does, its tools, safety, costs and the build.", "first"),
     ("f1-foundations-thesis", "F1", "Foundations: thesis",
      "Early reading, writing and arithmetic with an adult beside the child, and why it does not go first.", "first"),
     ("f2-foundations-product", "F2", "Foundations: product",
@@ -109,7 +111,7 @@ GROUPS = [
       "12-risk-register", "13-primer-gateway"]),
     ("primer", "Primer", "Ages 8 to 13. A tutor for a child's why-questions, designed to ask what they think rather than tell them.",
      ["p1-primer-thesis", "p2-primer-product", "p3-primer-content", "p4-primer-safety",
-      "p5-primer-architecture", "p6-primer-plan"]),
+      "p5-primer-architecture", "p6-primer-plan", "primer-mvp"]),
     ("foundations", "Foundations", "Ages 4 to 7. Early reading, writing and arithmetic, with an adult beside the child.",
      ["f1-foundations-thesis", "f2-foundations-product", "f3-foundations-content", "f4-foundations-safety",
       "f5-foundations-architecture", "f6-foundations-plan"]),
@@ -425,7 +427,7 @@ def check():
 # public URL. README.md is left out for the same reason; its links point at the
 # two things above and would dangle.
 PUBLISH_DIR = ROOT / "_site"
-PUBLISHED = ["docs", "evidence", "contracts"]
+PUBLISHED = ["docs", "evidence", "contracts", "mvp"]
 
 
 # viz/dependency-map.html is the one page here that runs a script. It goes to
@@ -490,6 +492,10 @@ def write_headers(map_hashes):
     # opens them in the browser instead of downloading a file.
     block("/contracts/*", ["  Content-Security-Policy: " + STRICT_CSP,
                            "  Content-Type: text/plain; charset=utf-8"])
+    # The Primer demo's build specification is markdown too, for the owner to save
+    # into the demo's own repository; it is served as text for the same reason.
+    block("/mvp/*", ["  Content-Security-Policy: " + STRICT_CSP,
+                     "  Content-Type: text/plain; charset=utf-8"])
     if map_hashes:
         scripts, styles = map_hashes
         csp = ("default-src 'none'; script-src " + " ".join(scripts)

@@ -3,7 +3,7 @@
 ## What this is
 The design and planning record for three ideas for teaching children with AI, served as static HTML: the Tutor, for students of 14 to 18, designed for GCSE and A-level in the UK and launching in the US alongside it where resources allow, with an optional self-tutor in the learner's own face and voice; the Primer, for children of 8 to 13; and Foundations, for children of 4 to 7 with an adult beside them. Each has its own documents; they share an evidence register, an open-items register and a decision ledger.
 Nothing described here has been built, and no test described here has been run.
-`BUILD_BRIEF.md` is the source instruction for the Tutor and for the vault's rules, and governs where the repository disagrees with it; its §7 house style (British English, no em-dashes or en-dashes, conclusions before reasoning) applies to everything you write. `FACETS_BRIEF.md` governs the Primer, Foundations, the shared pages and the front page.
+`BUILD_BRIEF.md` is the source instruction for the Tutor and for the vault's rules, and governs where the repository disagrees with it; its §7 house style (British English, no em-dashes or en-dashes, conclusions before reasoning) applies to everything you write. `FACETS_BRIEF.md` governs the Primer, Foundations, the shared pages and the front page; `PRIMER_MVP_BRIEF.md` governs the Primer's MVP build guide and its specification.
 
 ## Map
 - `BUILD_BRIEF.md`: the source instruction; §2 settled decisions, §5 counsel questions, §7 house style.
@@ -12,6 +12,7 @@ Nothing described here has been built, and no test described here has been run.
 - `FACETS_BRIEF.md`: the brief for the Primer, Foundations and the front page; decisions D40 onwards, OI-13 onwards, OA-22 onwards, the candidate claims.
 - `FACETS_REPORT.md`: what that brief changed, the checks it passed and the independent review.
 - `SELF_TUTOR_BRIEF.md` and `SELF_TUTOR_REPORT.md`: the brief for the self-tutor (D59 to D69, OI-23 onwards, OA-37 onwards, T-SLF-01 onwards) and what it changed.
+- `PRIMER_MVP_BRIEF.md` and `PRIMER_MVP_REPORT.md`: the brief for the Primer's MVP build guide, a demonstration for adult testers (D70 to D79, OA-41 onwards, CV-16 onwards), and what it changed.
 - `roles.json`: the five owners, what each owns and reads, the ledger overrides, the Tutor summary's picks (`summary`), and the front page's ideas, briefs and films (`front`).
 - `README.md`: what the repository is, its status, how to read and edit it.
 - `CLAUDE.md`: this file.
@@ -20,13 +21,14 @@ Nothing described here has been built, and no test described here has been run.
 - `src/content/`: the fragments you edit. A page is `<slug>.html`, or a directory `<slug>/` of fragments.
 - `src/viz/dependency-map.html`: the map's template; the build inlines the graph into it.
 - `src/templates/`: `front.html` (the front page and its frame), `summary.html` (the Tutor summary and its frame) and `role.html`.
-- `docs/`: the served pages, generated. `index.html` is the front page, `tutor.html` the Tutor summary, `contents.html` the contents page, `roles/<id>.html` one page per owner. The Tutor's pages are `00` to `14`, the Primer's `p1` to `p6`, Foundations' `f1` to `f6`. `docs/style.css` is hand-maintained; a session edits it only when the owner asks for a design change (D52).
+- `docs/`: the served pages, generated. `index.html` is the front page, `tutor.html` the Tutor summary, `contents.html` the contents page, `roles/<id>.html` one page per owner. The Tutor's pages are `00` to `14`, the Primer's `p1` to `p6` and its MVP build guide `primer-mvp`, Foundations' `f1` to `f6`. `docs/style.css` is hand-maintained; a session edits it only when the owner asks for a design change (D52).
 - `evidence/sources.html`: the evidence register, generated from the fragments in `src/content/sources/`.
 - `viz/dependency-map.html`: the served map, generated; published at `/map/`.
 - `tools/depmap/graph.json`: the dependency map, nodes with a locus and edges.
 - `tools/depmap.py`: `check`, `impact <node>`, `list`. `tools/verify.py`: the checks.
 - `.github/CODEOWNERS`: generated from `roles.json`.
 - `contracts/`: the creator licence term sheet and heads of terms, markdown, hand-maintained.
+- `mvp/`: the Primer demo's build specification for Claude Code, markdown, hand-maintained, published at `/mvp/` as text.
 - `econ/`: the economics model and its outputs; not part of the site build.
 - `.claude/commands/`: `/impact`, `/section`, `/verify`, `/role`.
 

@@ -1,12 +1,13 @@
 # AI.tutor design vault
 #
-# publish is _site, assembled by src/build.py from docs/, evidence/ and
-# contracts/.
+# publish is _site, assembled by src/build.py from docs/, evidence/,
+# contracts/ and mvp/.
 #
 # It cannot be docs/ alone: evidence/ is a sibling, and every claim carrying a
 # Verified marker links to the evidence register, so publishing docs/ makes that
 # register 404 and silently breaks the rule the whole vault rests on. contracts/
-# is linked from the documents for the same reason.
+# is linked from the documents for the same reason, and so is mvp/, which holds
+# the Primer demo's build specification.
 #
 # It is no longer the repository root either: that put BUILD_BRIEF.md and src/
 # on public URLs. Assembling an explicit directory means those are never
@@ -31,5 +32,5 @@
 # SHA-256 of each of that page's own inline blocks rather than allowing inline
 # script generally. Those hashes have to be computed from the file, so the whole
 # set of header rules is emitted by the build to keep one source of truth, and
-# to keep the strict policy on /docs/, /evidence/ and /contracts/ from
+# to keep the strict policy on /docs/, /evidence/, /contracts/ and /mvp/ from
 # overlapping the map's on any path.

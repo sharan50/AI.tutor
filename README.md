@@ -39,13 +39,13 @@ Foundations, the shared pages and the front page.
 
 | | |
 |---|---|
-| Documents | 30 across the three ideas, the registers included, plus an evidence register |
+| Documents | 31 across the three ideas, the registers included, plus an evidence register |
 | Built | Nothing |
 | Tests specified | **32**, none run. There is nothing to run them against |
 | Counsel questions | **27** open, none answered. We proceed ahead of OI-3 under D34 and of OI-23 to OI-27 under D59, and each says so where it is applied |
-| Assumptions unverified | **40**, of which 17 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **69**, including three, taken on the owner's instruction, that reverse two earlier positions, and D1 and D9, since amended by the owner |
-| External claims registered | **42**, each with source and date checked, plus **15** candidates awaiting the owner's check |
+| Assumptions unverified | **44**, of which 19 are resolvable by reading or by asking rather than by building |
+| Decisions recorded | **79**, including three, taken on the owner's instruction, that reverse two earlier positions, and D1 and D9, since amended by the owner |
+| External claims registered | **42**, each with source and date checked, plus **23** candidates awaiting the owner's check |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at
 build time and governs where this table disagrees with it.
@@ -185,6 +185,10 @@ FACETS_BRIEF.md                the brief for the Primer, Foundations and the fro
 RESTRUCTURE_REPORT.md          what the restructure changed, with its checks
 VIEWS_REPORT.md                what the views added, with the identity proof and the ownership table
 FACETS_REPORT.md               what the facets brief changed, its checks and its independent review
+SELF_TUTOR_BRIEF.md            the brief for the self-tutor
+SELF_TUTOR_REPORT.md           what the self-tutor brief changed, its checks and its review
+PRIMER_MVP_BRIEF.md            the brief for the Primer's MVP build guide
+PRIMER_MVP_REPORT.md           what that brief changed, its checks and its review
 roles.json                     the five owners, what each owns and reads, the Tutor summary's and the front page's picks
 CLAUDE.md                      working rules for a coding session
 README.md                      this file
@@ -209,6 +213,7 @@ docs/
   roles/<id>.html              one generated page per owner
   00-thesis.html .. 14-open-items.html     the Tutor, and the shared open-items register
   p1-primer-thesis.html .. p6-primer-plan.html
+  primer-mvp.html              the Primer's MVP build guide: a demonstration for adult testers
   f1-foundations-thesis.html .. f6-foundations-plan.html
   which-first.html             which idea goes first
   field-research.html          the guide for teachers, professors and parents
@@ -216,12 +221,14 @@ docs/
   status.html                  generated from the registers
   style.css                    hand-maintained
 evidence/
-  sources.html                 42 external claims, source and date checked, and 15 candidates
+  sources.html                 42 external claims, source and date checked, and 23 candidates
 viz/
   dependency-map.html          the served map, generated; published at /map/
 contracts/
   creator-licence-term-sheet.md      creator-facing, one page, plain English
   creator-licence-heads-of-terms.md  counsel-facing, with Schedules 2 and 3
+mvp/
+  primer-demo-spec.md          the Primer demo's build specification, saved as CLAUDE.md in the demo's own repository
 econ/                          the economics model and its outputs; not part of the site
 ```
 
@@ -229,7 +236,7 @@ econ/                          the economics model and its outputs; not part of 
 
 Static output. No framework, no JavaScript on the documents, no fonts or assets
 fetched over the network. Netlify publishes `_site/`, which the build assembles
-from `docs/`, `evidence/` and `contracts/`, because `evidence/` is a sibling of
+from `docs/`, `evidence/`, `contracts/` and `mvp/`, because `evidence/` is a sibling of
 `docs/` and every sourced claim links to it. `/` redirects to
 `docs/index.html`; it must not rewrite, because a rewrite serves the page at the
 root, where its relative stylesheet and links fail (D52). See
