@@ -427,7 +427,7 @@ def check():
 # public URL. README.md is left out for the same reason; its links point at the
 # two things above and would dangle.
 PUBLISH_DIR = ROOT / "_site"
-PUBLISHED = ["docs", "evidence", "contracts", "mvp"]
+PUBLISHED = ["docs", "evidence", "contracts", "mvp", "mockup"]
 
 
 # viz/dependency-map.html is the one page here that runs a script. It goes to
@@ -468,7 +468,21 @@ def publish_map():
     return scripts, styles
 
 
-def write_headers(map_hashes):
+# mockup/index.html is the Primer demo's design mock-up, hand-maintained, and the
+# second page here that runs a script. It has its own prefix, /mockup/, for the
+# reason the map has /map/.
+MOCKUP = ROOT / "mockup" / "index.html"
+
+
+def mockup_hashes():
+    if not MOCKUP.exists():
+        return None
+    scripts = _csp_hashes(MOCKUP.read_text(encoding="utf-8"), "script")
+    print(f"  published /mockup/: {len(scripts)} script, hashed")
+    return scripts
+
+
+def write_headers(map_hashes, mock_hashes=None):
     """One _headers file, generated, so the map's policy and the documents'
     policy cannot overlap on a path and be intersected by the browser."""
     lines = []
@@ -503,6 +517,16 @@ def write_headers(map_hashes):
                + "; font-src https://fonts.gstatic.com; img-src 'self' data:; "
                  "base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
         block("/map/*", ["  Content-Security-Policy: " + csp])
+    # The mock-up keeps the design canvas's markup, which is styled element by
+    # element, so its policy allows inline styles; its script is named by hash, as
+    # the map's are. It loads nothing but its fonts, so no style can send anything
+    # anywhere.
+    if mock_hashes:
+        csp = ("default-src 'none'; script-src " + " ".join(mock_hashes)
+               + "; style-src 'unsafe-inline' https://fonts.googleapis.com"
+               + "; font-src https://fonts.gstatic.com; img-src 'self' data:; "
+                 "base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
+        block("/mockup/*", ["  Content-Security-Policy: " + csp])
     (PUBLISH_DIR / "_headers").write_text("\n".join(lines), encoding="utf-8")
     print(f"  wrote _site/_headers: {sum(1 for l in lines if l and not l.startswith(' '))} path rules")
 
@@ -515,7 +539,7 @@ def assemble_publish_dir():
         src = ROOT / name
         if src.is_dir():
             shutil.copytree(src, PUBLISH_DIR / name)
-    write_headers(publish_map())
+    write_headers(publish_map(), mockup_hashes())
     n = sum(1 for _ in PUBLISH_DIR.rglob("*") if _.is_file())
     print(f"  assembled _site/ for publishing: {n} files from {', '.join(PUBLISHED)}, plus the map")
 
@@ -1263,7 +1287,7 @@ def render_codeowners(cfg):
     for r in cfg["roles"]:
         for item in r["owns"]:
             slug, _, hid = item.partition("#")
-            if slug in ("contracts", "mvp"):
+            if slug in ("contracts", "mvp", "mockup"):
                 page_lines.setdefault(slug + "/", []).append(handle(r))
                 continue
             src = source_path(slug)

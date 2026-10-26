@@ -25,10 +25,13 @@ asks a question out loud or by typing. The app:
 It is a demonstration for conversations with teachers, parents and accelerators. It
 is not the Primer: it answers from no reviewed material and no child uses it.
 
-The owner has a mock-up of every screen. Ask the owner for it before day 2: either
-shared from its Share menu, or exported as images into `design/` in this
-repository. Match its layout, type and colours; its words are the starting copy, and
-where this file gives words, this file's govern.
+A mock-up of every screen is published with the guide, at
+<https://aitutor-plan.netlify.app/mockup/>, and runs in the browser with written
+examples in place of generated answers. Its source is `mockup/index.html` in the
+vault's repository, `sharan50/AI.tutor`; before day 2, copy that file into `design/`
+in this repository, so that you can read it as well as open it. Match its layout,
+type and colours; its words are the starting copy, and where this file gives words,
+this file's govern.
 
 ## 2. Rules that never change
 

@@ -29,6 +29,7 @@ Nothing described here has been built, and no test described here has been run.
 - `.github/CODEOWNERS`: generated from `roles.json`.
 - `contracts/`: the creator licence term sheet and heads of terms, markdown, hand-maintained.
 - `mvp/`: the Primer demo's build specification for Claude Code, markdown, hand-maintained, published at `/mvp/` as text.
+- `mockup/`: the Primer demo's design mock-up, `index.html`, hand-maintained; it runs one script, and the build names that script by hash in the policy for `/mockup/`.
 - `econ/`: the economics model and its outputs; not part of the site build.
 - `.claude/commands/`: `/impact`, `/section`, `/verify`, `/role`.
 

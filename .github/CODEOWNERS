@@ -2,6 +2,7 @@
 # A section owned by another role inside a single-file page lists both handles.
 
 contracts/ @sharan50
+mockup/ @sharan50
 mvp/ @sharan50
 src/content/00-thesis.html @sharan50
 src/content/01-product/ @sharan50

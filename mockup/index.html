@@ -1,0 +1,1716 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Primer demo mock-up</title>
+<meta name="description" content="A design mock-up of the Primer's demonstration for adult testers: how it is meant to look and behave once built. Nothing here is built.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;700&amp;family=Bricolage+Grotesque:opsz,wght@12..96,500..800&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2347D6}a:hover{color:#14213D}
+*{box-sizing:border-box}
+button,input{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:default}
+a:focus-visible,input:focus-visible,button:focus-visible{outline:3px solid #F4B000;outline-offset:2px}
+@keyframes pmPulse{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes pmBar{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+@keyframes pmShimmer{0%{background-position:-480px 0}100%{background-position:480px 0}}
+@keyframes pmBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes pmSpin{to{transform:rotate(360deg)}}
+@keyframes pmRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes pmRing{0%{box-shadow:0 0 0 0 rgba(35,71,214,.4)}100%{box-shadow:0 0 0 26px rgba(35,71,214,0)}}
+.pm-rise{animation:pmRise .45s ease-out both}
+.pm-bars{display:flex;align-items:center;gap:5px}
+.pm-bars span{display:block;width:6px;border-radius:3px;background:currentColor;animation:pmBar .9s ease-in-out infinite}
+.pm-spin{animation:pmSpin .9s linear infinite}
+.pm-skel{background-color:#EEF2F8;background-image:linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.75) 50%,rgba(255,255,255,0) 100%);background-size:240px 100%;background-repeat:no-repeat;animation:pmShimmer 1.5s linear infinite}
+.pm-caret{display:inline-block;width:.45em;height:1em;margin-left:3px;vertical-align:-.12em;border-radius:2px;background:#2347D6;animation:pmBlink 1s step-end infinite}
+.pm-dots{display:flex;align-items:center;gap:6px}
+.pm-dots span{display:block;width:9px;height:9px;border-radius:50%;background:#46536F;animation:pmPulse 1.1s ease-in-out infinite}
+.pm-ring{animation:pmRing 1.4s ease-out infinite}
+.pm-scene *{transform-box:fill-box}
+@keyframes kBeam{0%{transform:scaleX(0)}12%,100%{transform:scaleX(1)}}
+@keyframes kInner{0%,12%{opacity:0}18%,94%{opacity:.85}100%{opacity:0}}
+@keyframes kBand{0%,18%{opacity:0;transform:scaleX(.05)}34%,94%{opacity:1;transform:scaleX(1)}100%{opacity:0;transform:scaleX(1)}}
+@keyframes kSpin{to{transform:rotate(360deg)}}
+.is-playing .k-beam{transform-origin:0% 50%;animation:kBeam 8s ease-out infinite both}
+.is-playing .k-inner{animation:kInner 8s linear infinite both}
+.is-playing .k-band{transform-origin:0% 50%;animation:kBand 8s ease-out infinite both}
+.is-playing .k-rays{transform-origin:50% 50%;animation:kSpin 16s linear infinite}
+@keyframes kRed{0%{transform:translate(-220px,0)}100%{transform:translate(140px,0)}}
+@keyframes kYellow{0%{transform:translate(-130px,0)}100%{transform:translate(230px,0)}}
+@keyframes kBlue1{0%{transform:translate(-200px,-30px)}22%{transform:translate(-98px,-30px)}36%{transform:translate(-58px,-78px)}57%{transform:translate(0,0)}74%{transform:translate(52px,-60px)}100%{transform:translate(140px,18px)}}
+@keyframes kBlue2{0%{transform:translate(-130px,-80px)}11%{transform:translate(-80px,-90px)}36%{transform:translate(0,0)}57%{transform:translate(95px,30px)}90%{transform:translate(180px,-100px)}100%{transform:translate(220px,-130px)}}
+@keyframes kBlue3{0%{transform:translate(-170px,55px)}18%{transform:translate(-100px,90px)}49%{transform:translate(0,0)}77%{transform:translate(120px,20px)}100%{transform:translate(170px,110px)}}
+@keyframes kTint{0%{opacity:0}70%,100%{opacity:.2}}
+.is-playing .k-red{animation:kRed 3s linear infinite}
+.is-playing .k-yellow{animation:kYellow 3.4s linear .9s infinite both}
+.is-playing .k-blue1{animation:kBlue1 4.4s linear infinite}
+.is-playing .k-blue2{animation:kBlue2 5s linear 1.2s infinite both}
+.is-playing .k-blue3{animation:kBlue3 4.6s linear 2.1s infinite both}
+.is-playing .k-tint{animation:kTint 8s ease-out infinite both}
+@keyframes kFlow{to{stroke-dashoffset:-32}}
+.is-playing .k-flow line{animation:kFlow 1.1s linear infinite}
+@keyframes kOut0{0%,7.5%{opacity:1}11%,90%{opacity:0}95%,100%{opacity:1}}
+@keyframes kOut1{0%,21%{opacity:1}24.5%,90%{opacity:0}95%,100%{opacity:1}}
+@keyframes kOut2{0%,35%{opacity:1}38.5%,90%{opacity:0}95%,100%{opacity:1}}
+@keyframes kOut3{0%,49%{opacity:1}52.5%,90%{opacity:0}95%,100%{opacity:1}}
+@keyframes kIn0{0%,7.5%{opacity:0;transform:scale(.2)}10%{opacity:1;transform:scale(1.18)}12%,90%{opacity:1;transform:scale(1)}95%,100%{opacity:0;transform:scale(1)}}
+@keyframes kIn1{0%,21%{opacity:0;transform:scale(.2)}23.5%{opacity:1;transform:scale(1.18)}25.5%,90%{opacity:1;transform:scale(1)}95%,100%{opacity:0;transform:scale(1)}}
+@keyframes kIn2{0%,35%{opacity:0;transform:scale(.2)}37.5%{opacity:1;transform:scale(1.18)}39.5%,90%{opacity:1;transform:scale(1)}95%,100%{opacity:0;transform:scale(1)}}
+@keyframes kIn3{0%,49%{opacity:0;transform:scale(.2)}51.5%{opacity:1;transform:scale(1.18)}53.5%,90%{opacity:1;transform:scale(1)}95%,100%{opacity:0;transform:scale(1)}}
+.is-playing .k-out0{animation:kOut0 8s linear infinite}
+.is-playing .k-out1{animation:kOut1 8s linear infinite}
+.is-playing .k-out2{animation:kOut2 8s linear infinite}
+.is-playing .k-out3{animation:kOut3 8s linear infinite}
+.is-playing .k-in0{transform-origin:50% 50%;animation:kIn0 8s ease-out infinite}
+.is-playing .k-in1{transform-origin:50% 50%;animation:kIn1 8s ease-out infinite}
+.is-playing .k-in2{transform-origin:50% 50%;animation:kIn2 8s ease-out infinite}
+.is-playing .k-in3{transform-origin:50% 50%;animation:kIn3 8s ease-out infinite}
+@keyframes kBout0{0%,10%{opacity:1}14%,90%{opacity:0}95%,100%{opacity:1}}
+@keyframes kBout1{0%,30%{opacity:1}34%,90%{opacity:0}95%,100%{opacity:1}}
+@keyframes kBout2{0%,50%{opacity:1}54%,90%{opacity:0}95%,100%{opacity:1}}
+@keyframes kRin0{0%,10%{opacity:0;transform:scale(.2)}13%{opacity:1;transform:scale(1.18)}15%,90%{opacity:1;transform:scale(1)}95%,100%{opacity:0;transform:scale(1)}}
+@keyframes kRin1{0%,30%{opacity:0;transform:scale(.2)}33%{opacity:1;transform:scale(1.18)}35%,90%{opacity:1;transform:scale(1)}95%,100%{opacity:0;transform:scale(1)}}
+@keyframes kRin2{0%,50%{opacity:0;transform:scale(.2)}53%{opacity:1;transform:scale(1.18)}55%,90%{opacity:1;transform:scale(1)}95%,100%{opacity:0;transform:scale(1)}}
+.is-playing .k-bout0{animation:kBout0 8s linear infinite}
+.is-playing .k-bout1{animation:kBout1 8s linear infinite}
+.is-playing .k-bout2{animation:kBout2 8s linear infinite}
+.is-playing .k-rin0{transform-origin:50% 50%;animation:kRin0 8s ease-out infinite}
+.is-playing .k-rin1{transform-origin:50% 50%;animation:kRin1 8s ease-out infinite}
+.is-playing .k-rin2{transform-origin:50% 50%;animation:kRin2 8s ease-out infinite}
+@keyframes kHop{0%,40%,100%{transform:translateY(0)}20%{transform:translateY(-12px)}}
+@keyframes kGhost{0%,100%{opacity:.6}50%{opacity:.1}}
+.is-playing .k-hop{animation:kHop 1.6s ease-in-out infinite both}
+.is-playing .k-ghost{animation:kGhost 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.pm-scene *,.pm-rise,.pm-skel,.pm-bars span,.pm-spin,.pm-caret,.pm-dots span,.pm-ring{animation:none !important}}
+html{-webkit-text-size-adjust:100%}
+body{background:#E9EEF6;color:#14213D;font-family:'Atkinson Hyperlegible Next','Atkinson Hyperlegible',Verdana,system-ui,sans-serif}
+select{font:inherit}
+select:focus-visible{outline:3px solid #F4B000;outline-offset:2px}
+.mk-page{max-width:1240px;margin:0 auto;padding:0 16px 48px}
+.mk-nav{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:18px 0 6px;font-size:15px;color:#46536F}
+.mk-nav a{color:#2347D6;text-underline-offset:3px}
+.mk-head{max-width:860px;padding:8px 0 4px}
+.mk-head h1{margin:0 0 12px;font-family:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;font-weight:750;font-size:clamp(32px,4.4vw,48px);line-height:1.05;letter-spacing:-.02em}
+.mk-lede{margin:0 0 10px;font-size:clamp(18px,1.8vw,20px);line-height:1.55}
+.mk-meta{margin:0;font-size:15px;line-height:1.5;color:#46536F}
+.mk-section{padding-top:32px}
+.mk-section>h2{margin:0 0 8px;font-family:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;font-weight:750;font-size:clamp(26px,3vw,34px);line-height:1.15;letter-spacing:-.015em}
+.mk-section>p{margin:0 0 16px;max-width:72ch;font-size:17px;line-height:1.55;color:#26324D}
+.mk-controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 22px;margin:0 0 16px;padding:14px 16px;border:1px solid #DCE3EF;border-radius:16px;background:#FFFFFF}
+.mk-field{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:700}
+.mk-field select{min-height:44px;max-width:100%;padding:0 10px;border:2px solid #C9D3E4;border-radius:10px;background:#FFFFFF;color:#14213D;font-size:16px;font-weight:500}
+.mk-check{display:flex;align-items:center;gap:8px;min-height:44px;font-size:16px}
+.mk-check input{width:20px;height:20px;margin:0}
+.mk-frame{overflow:hidden;border:1px solid #DCE3EF;border-radius:20px;background:#F6F8FC;box-shadow:0 1px 2px rgba(20,33,61,.05),0 18px 48px rgba(20,33,61,.1)}
+.mk-frame:focus{outline:none}
+@media (max-width:600px){.mk-frame{margin:0 -16px;border-left:0;border-right:0;border-radius:0}}
+.mk-phones{display:flex;flex-wrap:wrap;gap:28px 24px}
+.mk-fig{--s:.8;margin:0;display:flex;flex-direction:column;gap:10px;width:calc(390px*var(--s))}
+@media (min-width:1100px){.mk-fig{--s:.9}}
+@media (max-width:360px){.mk-fig{--s:.7}}
+.mk-phone{position:relative;width:calc(390px*var(--s));height:calc(844px*var(--s));overflow:hidden;border:1px solid #C9D3E4;border-radius:calc(34px*var(--s));background:#F6F8FC;box-shadow:0 1px 2px rgba(20,33,61,.05),0 14px 36px rgba(20,33,61,.12)}
+.mk-screen{position:absolute;left:0;top:0;width:390px;height:844px;transform:scale(var(--s));transform-origin:0 0}
+.mk-fig figcaption{font-size:16px;font-weight:700;line-height:1.35}
+.mk-foot{margin-top:44px;padding-top:18px;border-top:1px solid #C9D3E4;font-size:15px;line-height:1.55;color:#46536F}
+.mk-foot p{margin:0 0 6px;max-width:80ch}
+.mk-foot a,.mk-section>p a,.mk-head a{color:#2347D6;text-underline-offset:3px}
+</style>
+</head>
+<body>
+<div class="mk-page">
+
+<nav class="mk-nav" aria-label="Where you are">
+<a href="../docs/index.html">AI.tutor</a><span aria-hidden="true">/</span>
+<a href="../docs/primer-mvp.html">Primer: MVP build guide</a><span aria-hidden="true">/</span>
+<span aria-current="page">Mock-up</span>
+</nav>
+
+<header class="mk-head">
+<h1>Primer demo: the design mock-up</h1>
+<p class="mk-lede">This is how the demonstration in the <a href="../docs/primer-mvp.html">MVP build guide</a> is meant to look and behave once it is built. Nothing here is built. No AI runs: the answers and pictures are written examples, the microphone and the passcode are simulated, and the timings are design targets, not measurements.</p>
+<p class="mk-meta">Drawn on 25 October 2026 and reviewed by the owner, who removed one control (D75). Published here on 26 October 2026, with its words brought into line with the <a href="../mvp/primer-demo-spec.md">specification</a>, which governs where the two differ. The replies to sensitive questions are drafts the owner has still to approve.</p>
+</header>
+
+<section class="mk-section" aria-labelledby="mk-try">
+<h2 id="mk-try">Try it</h2>
+<p>Enter any passcode and press Start. Then ask out loud, type a question or tap an example. Two questions have written answers, why the sky is blue and why you cannot divide by zero. A question about someone's own life, a death or a big subject such as religion gets a careful reply instead.</p>
+<div class="mk-controls" role="group" aria-label="Mock-up controls">
+<label class="mk-field">Start at
+<select id="mk-start-at">
+<option>Welcome screen</option>
+<option>Ask screen</option>
+<option>Sky answer, finished</option>
+<option>Zero answer, finished</option>
+<option>Sensitive question</option>
+</select>
+</label>
+<label class="mk-field">Timing
+<select id="mk-timing">
+<option value="Quick preview">Quick preview</option>
+<option value="Design timing">Design targets</option>
+</select>
+</label>
+<label class="mk-check"><input type="checkbox" id="mk-fail"> Make the third video fail</label>
+<label class="mk-check"><input type="checkbox" id="mk-read" checked> Read aloud with this browser's voice</label>
+</div>
+<div class="mk-frame" id="mk-frame" tabindex="-1">
+<div id="mk-welcome">
+<div style="min-height: 100vh; font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif; color: #14213D; background-color: #F6F8FC; background-image: radial-gradient(#D9E0EC 1px, transparent 1.3px); background-size: 22px 22px">
+
+<div style="background: #14213D; color: #FFFFFF; font-size: 14px; line-height: 1.45; padding: 10px clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 12px; text-align: center">
+<strong style="font-weight: 700; letter-spacing: 0.03em">Design mock-up</strong>
+<span>This page shows how the Primer demo will look once it is built. Nothing here is built yet.</span>
+</div>
+
+<header style="max-width: 1160px; margin: 0 auto; padding: 20px clamp(16px, 4vw, 40px); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -0.01em">Primer</span>
+</div>
+<span style="display: inline-flex; align-items: center; padding: 8px 14px; border-radius: 999px; border: 2px solid #C9D3E4; background: #FFFFFF; font-size: 15px; font-weight: 700">Private demo</span>
+</header>
+
+<main style="max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px)">
+
+<section style="display: flex; flex-wrap: wrap; align-items: center; gap: 40px 56px; padding: clamp(16px, 4vw, 48px) 0 clamp(40px, 6vw, 72px)">
+<div style="flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 22px">
+<span style="display: inline-flex; align-items: center; padding: 8px 14px; border-radius: 999px; background: #FFF1C7; color: #6A4B00; font-size: 15px; font-weight: 700">For adult testers</span>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: clamp(40px, 5.4vw, 66px); line-height: 1.02; letter-spacing: -0.025em; text-wrap: balance">Ask the questions a curious ten-year-old would ask.</h1>
+<p style="margin: 0; font-size: clamp(18px, 1.9vw, 21px); line-height: 1.55; color: #46536F; max-width: 46ch; text-wrap: pretty">Primer answers any question straight away, then explains it in three building blocks, each with a short video made for that question. You play a child aged 8 to 13, and you can ask out loud or type.</p>
+<div style="width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 8px; padding-top: 6px">
+<label for="pm-pass" style="font-weight: 700; font-size: 16px">Passcode</label>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<input id="pm-pass" type="password" placeholder="From your invitation" autocomplete="off" style="flex: 1 1 220px; min-width: 0; height: 58px; padding: 0 18px; border-radius: 16px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-size: 18px" />
+<button type="button" id="mk-start" style="border: 0; flex: 0 0 auto; height: 58px; padding: 0 28px; border-radius: 16px; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 18px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 10px 24px rgba(35, 71, 214, 0.28)">Start<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg></button>
+</div>
+<span style="font-size: 15px; line-height: 1.45; color: #46536F">No account and no sign-in. In this mock-up, any passcode works.</span>
+</div>
+</div>
+
+<div aria-hidden="true" style="flex: 1 1 400px; min-width: 0; display: flex; justify-content: center">
+<div style="width: 100%; max-width: 500px; background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 28px; padding: 22px; box-shadow: 0 2px 4px rgba(20, 33, 61, 0.04), 0 24px 60px rgba(20, 33, 61, 0.14); transform: rotate(-1.5deg); display: flex; flex-direction: column; gap: 14px">
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #46536F"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>You asked out loud</span>
+<span style="font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 28px; line-height: 1.1; letter-spacing: -0.015em">Why is the sky blue?</span>
+<span style="font-size: 15px; line-height: 1.5; color: #46536F">Sunlight looks white, but it is really all the colours of the rainbow mixed together.</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #22305F">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%"><rect x="0" y="0" width="320" height="180" fill="#22305F"></rect><g stroke="#FFC93C" stroke-width="3" stroke-linecap="round"><line x1="62.4" y1="71.6" x2="67.3" y2="66.7"></line><line x1="44" y1="64" x2="44" y2="57"></line><line x1="25.6" y1="71.6" x2="20.7" y2="66.7"></line><line x1="18" y1="90" x2="11" y2="90"></line><line x1="25.6" y1="108.4" x2="20.7" y2="113.3"></line><line x1="44" y1="116" x2="44" y2="123"></line><line x1="62.4" y1="108.4" x2="67.3" y2="113.3"></line></g><circle cx="44" cy="90" r="20" fill="#FFC93C"></circle><polygon points="62,87 128,88.5 128,91.5 62,93" fill="#FFFFFF"></polygon><polygon points="127,88.5 174,91 177.6,98.8 127,91.5" fill="#FFFFFF" opacity="0.85"></polygon><polygon points="174,91 320,70 320,85 174.6,92.3" fill="#FF5D5D"></polygon><polygon points="174.6,92.3 320,85 320,100 175.2,93.6" fill="#FF9F2E"></polygon><polygon points="175.2,93.6 320,100 320,115 175.8,94.9" fill="#FFE04B"></polygon><polygon points="175.8,94.9 320,115 320,130 176.4,96.2" fill="#45CF7C"></polygon><polygon points="176.4,96.2 320,130 320,145 177,97.5" fill="#3D8BFF"></polygon><polygon points="177,97.5 320,145 320,160 177.6,98.8" fill="#A070FF"></polygon><polygon points="150,48 197,132 103,132" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"></polygon></svg>
+</div>
+<span style="font-size: 12px; font-weight: 700; color: #2347D6; letter-spacing: 0.04em; text-transform: uppercase">Block 1</span>
+<span style="font-size: 13px; line-height: 1.3; font-weight: 700">Sunlight is a mix of colours</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #A9DCFF">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%"><rect x="0" y="0" width="320" height="180" fill="#A9DCFF"></rect><polyline points="-10,70 92,70 132,22 190,100 242,40 330,118" fill="none" stroke="#2E6BFF" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round" opacity="0.6"></polyline><line x1="-10" y1="132" x2="330" y2="132" stroke="#E0484D" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round" opacity="0.6"></line><g fill="#FFFFFF" stroke="#6BAEEA" stroke-width="1.5"><circle cx="92" cy="70" r="5"></circle><circle cx="132" cy="22" r="5"></circle><circle cx="190" cy="100" r="5"></circle><circle cx="242" cy="40" r="5"></circle><circle cx="40" cy="30" r="5"></circle><circle cx="120" cy="120" r="5"></circle><circle cx="215" cy="150" r="5"></circle><circle cx="300" cy="20" r="5"></circle><circle cx="60" cy="150" r="5"></circle><circle cx="160" cy="60" r="5"></circle><circle cx="280" cy="80" r="5"></circle><circle cx="285" cy="145" r="5"></circle></g><circle cx="200" cy="132" r="6.5" fill="#FF5D5D"></circle><circle cx="110" cy="166" r="6.5" fill="#FFC21F"></circle><circle cx="190" cy="100" r="6.5" fill="#2E6BFF"></circle><circle cx="120" cy="120" r="6.5" fill="#2E6BFF"></circle><circle cx="160" cy="60" r="6.5" fill="#2E6BFF"></circle></svg>
+</div>
+<span style="font-size: 12px; font-weight: 700; color: #2347D6; letter-spacing: 0.04em; text-transform: uppercase">Block 2</span>
+<span style="font-size: 13px; line-height: 1.3; font-weight: 700">Air bounces blue light around</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #8CCBFF">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%"><rect x="0" y="0" width="320" height="180" fill="#8CCBFF"></rect><circle cx="276" cy="32" r="14" fill="#FFD447"></circle><g fill="none" stroke="#2E6BFF" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 10"><line x1="16" y1="40" x2="150" y2="121"></line><line x1="66" y1="10" x2="153" y2="117"></line><line x1="126" y1="6" x2="157" y2="115"></line><line x1="194" y1="8" x2="163" y2="115"></line><line x1="236" y1="66" x2="168" y2="118"></line><line x1="304" y1="88" x2="171" y2="124"></line><line x1="30" y1="104" x2="147" y2="127"></line></g><path d="M0,150 Q160,108 320,150 L320,180 L0,180 Z" fill="#5DBB72"></path><rect x="232" y="116" width="6" height="22" rx="2" fill="#7A4E2D"></rect><circle cx="235" cy="110" r="14" fill="#3E9C57"></circle><circle cx="160" cy="129" r="14" fill="#FFFFFF" stroke="#14213D" stroke-width="2"></circle><path d="M149,129 Q160,120 171,129 Q160,138 149,129 Z" fill="none" stroke="#14213D" stroke-width="2" stroke-linejoin="round"></path><circle cx="160" cy="129" r="3.4" fill="#14213D"></circle></svg>
+</div>
+<span style="font-size: 12px; font-weight: 700; color: #2347D6; letter-spacing: 0.04em; text-transform: uppercase">Block 3</span>
+<span style="font-size: 13px; line-height: 1.3; font-weight: 700">Blue reaches you from everywhere</span>
+</div>
+
+</div>
+<span style="font-size: 12px; font-weight: 700; color: #46536F">Videos are AI-generated and not checked</span>
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 16px; background: #FFF4D1">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6A4B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"></path></svg>
+<span style="font-size: 14px; font-weight: 700; color: #3D2B00">Your turn to think: why are sunsets orange?</span>
+</div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="pm-before" style="display: flex; flex-direction: column; gap: 18px; padding-bottom: 64px">
+<h2 id="pm-before" style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: clamp(28px, 3vw, 36px); letter-spacing: -0.015em">Before you start</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px">
+
+<div style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<span style="width: 48px; height: 48px; border-radius: 14px; background: #E7EDFF; color: #2347D6; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"></path></svg></span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.2">For adults only</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #46536F">You play a child aged 8 to 13. Please don't let a real child use this demo.</p>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<span style="width: 48px; height: 48px; border-radius: 14px; background: #E7EDFF; color: #2347D6; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path><path d="M3.5 3.5l17 17"></path></svg></span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.2">Where your words go</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #46536F">Your questions go to Anthropic, whose AI writes the answers. When you speak, your recording goes to Google to be turned into text. This demo keeps no recordings and no record of who asked what.</p>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<span style="width: 48px; height: 48px; border-radius: 14px; background: #E7EDFF; color: #2347D6; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><path d="M12 7.6v.4"></path></svg></span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.2">Nothing is checked yet</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #46536F">Answers and videos are made by AI for each question. Nobody checks them first, so they can be wrong.</p>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<span style="width: 48px; height: 48px; border-radius: 14px; background: #E7EDFF; color: #2347D6; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.6-3 8-7 9.5-4-1.5-7-4.9-7-9.5V6z"></path></svg></span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.2">Hard questions get careful replies</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #46536F">Questions about your own life, or big subjects like death or religion, get a reply written in advance, and no video.</p>
+</div>
+
+</div>
+</section>
+
+</main>
+
+<footer style="max-width: 1160px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 40px) 40px; border-top: 1px solid #DCE3EF; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; color: #46536F">
+<span>Primer private demo</span>
+<span>For adult testers only</span>
+<span>Answers and videos are made by AI and not checked</span>
+</footer>
+
+</div>
+</div>
+<div id="app" hidden></div>
+</div>
+</section>
+
+<section class="mk-section" aria-labelledby="mk-moments">
+<h2 id="mk-moments">One question, moment by moment</h2>
+<p>The sky question on a phone, at the times the design aims for. How long a video really takes is unknown until the first clips are made on the first day of the build (<a href="../docs/14-open-items.html#assumptions">OA-41</a>).</p>
+<div class="mk-phones">
+<figure class="mk-fig">
+<div class="mk-phone" role="img" aria-label="Phone screen: the demo listening to a spoken question">
+<div class="mk-screen" inert>
+<div style="width: 390px; height: 844px; overflow: hidden; position: relative; font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif; color: #14213D; background-color: #F6F8FC; background-image: radial-gradient(#D9E0EC 1px, transparent 1.3px); background-size: 22px 22px; display: flex; flex-direction: column">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em">Primer</span>
+</div>
+<span style="display: inline-flex; align-items: center; padding: 7px 12px; border-radius: 999px; background: #FFF1C7; color: #6A4B00; font-size: 14px; font-weight: 700">Tester demo</span>
+</header>
+
+<div style="flex: 1 1 auto; padding: 6px 16px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px">
+<span style="display: inline-flex; align-items: center; padding: 7px 12px; border-radius: 999px; background: #FFF1C7; color: #6A4B00; font-size: 14px; font-weight: 700">You are playing a child aged 8 to 13</span>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 38px; line-height: 1.04; letter-spacing: -0.025em">What do you want to know?</h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #46536F">Say it out loud or type it. You get a short answer first, then three building blocks to watch, hear or read.</p>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 14px 0 4px">
+<button type="button" aria-label="Stop listening" style="width: 108px; height: 108px; border-radius: 50%; border: 0; background: #14213D; color: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 12px rgba(35, 71, 214, 0.16), 0 0 0 26px rgba(35, 71, 214, 0.07)">
+<span style="display: flex; align-items: center; gap: 5px; height: 44px"><span style="display: block; width: 6px; height: 16px; border-radius: 3px; background: #FFFFFF"></span><span style="display: block; width: 6px; height: 32px; border-radius: 3px; background: #FFFFFF"></span><span style="display: block; width: 6px; height: 44px; border-radius: 3px; background: #FFFFFF"></span><span style="display: block; width: 6px; height: 28px; border-radius: 3px; background: #FFFFFF"></span><span style="display: block; width: 6px; height: 14px; border-radius: 3px; background: #FFFFFF"></span></span>
+</button>
+<span style="padding-top: 12px; font-weight: 700; font-size: 16px">Listening. Tap again when you have finished.</span>
+</div>
+
+<div style="width: 100%; display: flex; flex-direction: column; gap: 8px; text-align: left; padding-top: 4px">
+<label for="p1-question" style="font-weight: 700; font-size: 15px">Or type your question</label>
+<div style="display: flex; gap: 8px">
+<input id="p1-question" type="text" placeholder="Type any question" style="flex: 1 1 auto; min-width: 0; height: 56px; padding: 0 16px; border-radius: 14px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-size: 17px" />
+<button type="button" disabled style="flex: 0 0 auto; height: 56px; padding: 0 20px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 17px; opacity: 0.5">Ask</button>
+</div>
+<span style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #46536F"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>Your recording is turned into text. This demo does not keep it.</span>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding-top: 6px">
+<span style="font-size: 14px; font-weight: 700; color: #46536F">Try asking</span>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px">
+<button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 999px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-size: 16px; font-weight: 500">Why is the sky blue?</button>
+<button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 999px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-size: 16px; font-weight: 500">Why can't you divide by zero?</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<figcaption>1. Ask out loud</figcaption>
+</figure>
+<figure class="mk-fig">
+<div class="mk-phone" role="img" aria-label="Phone screen: the short answer appearing">
+<div class="mk-screen" inert>
+<div style="width: 390px; height: 844px; overflow: hidden; position: relative; font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif; color: #14213D; background-color: #F6F8FC; background-image: radial-gradient(#D9E0EC 1px, transparent 1.3px); background-size: 22px 22px; display: flex; flex-direction: column">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em">Primer</span>
+</div>
+<button type="button" style="min-height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>New question</button>
+</header>
+
+<div style="flex: 1 1 auto; padding: 4px 16px 24px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #46536F"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>You asked out loud</span>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 32px; line-height: 1.08; letter-spacing: -0.02em">Why is the sky blue?</h1>
+</div>
+
+<article aria-label="Short answer" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; padding: 18px; box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 19px">Short answer</h2>
+<span style="display: inline-flex; align-items: center; padding: 5px 10px; border-radius: 999px; background: #FFF1C7; color: #6A4B00; font-size: 13px; font-weight: 700">Not yet checked</span>
+</div>
+<p style="margin: 0; font-size: 19px; line-height: 1.55">Sunlight looks white, but it is really all the colours of the rainbow mixed together. When it reaches the air around the Earth, the tiny bits that make up the air bounce blue<span style="display: inline-block; width: 0.45em; height: 1em; margin-left: 3px; vertical-align: -0.12em; border-radius: 2px; background: #2347D6"></span></p>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<button type="button" disabled style="min-height: 48px; padding: 0 18px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; opacity: 0.5"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"></path><path d="M15.5 9a4 4 0 0 1 0 6"></path><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg>Listen</button>
+<span style="flex: 1 1 160px; font-size: 14px; line-height: 1.4; color: #46536F">Written by AI just now. Nobody has checked it yet.</span>
+</div>
+</article>
+
+<section aria-label="Three building blocks" style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 26px; letter-spacing: -0.015em">Three building blocks</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.45; color: #46536F">Working out what you need to understand first.</p>
+</div>
+<div aria-hidden="true" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; overflow: hidden">
+<div style="aspect-ratio: 16 / 9; background: #EEF2F8"></div>
+<div style="padding: 18px; display: flex; flex-direction: column; gap: 12px">
+<div style="height: 14px; width: 42%; border-radius: 7px; background: #EEF2F8"></div>
+<div style="height: 22px; width: 78%; border-radius: 8px; background: #EEF2F8"></div>
+<div style="height: 14px; width: 100%; border-radius: 7px; background: #EEF2F8"></div>
+<div style="height: 14px; width: 92%; border-radius: 7px; background: #EEF2F8"></div>
+</div>
+</div>
+</section>
+</div>
+
+</div>
+</div>
+</div>
+<figcaption>2. A few seconds: the short answer</figcaption>
+</figure>
+<figure class="mk-fig">
+<div class="mk-phone" role="img" aria-label="Phone screen: building blocks with their narration, videos being made">
+<div class="mk-screen" inert>
+<div style="width: 390px; height: 844px; overflow: hidden; position: relative; font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif; color: #14213D; background-color: #F6F8FC; background-image: radial-gradient(#D9E0EC 1px, transparent 1.3px); background-size: 22px 22px; display: flex; flex-direction: column">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em">Primer</span>
+</div>
+<button type="button" style="min-height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>New question</button>
+</header>
+
+<div style="flex: 1 1 auto; padding: 4px 16px 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 26px; letter-spacing: -0.015em">Three building blocks</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.45; color: #46536F">Videos are being made for your question. You can listen or read while you wait.</p>
+</div>
+
+<article aria-label="Building block 1: Sunlight is a mix of colours" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column">
+<div style="position: relative; aspect-ratio: 16 / 9; background: #EEF2F8; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 12px">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M3 9.5h18"></path><path d="M3 14.5h18"></path><path d="M8 5v4.5"></path><path d="M16 5v4.5"></path><path d="M8 14.5V19"></path><path d="M16 14.5V19"></path></svg>Making your video</span>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 15px">
+<li style="display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Script written</li>
+<li style="display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Narration ready to hear</li>
+<li style="display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2347D6" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"></path></svg>Video being made</li>
+</ul>
+</div>
+<div style="padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 700; color: #2347D6; letter-spacing: 0.05em; text-transform: uppercase">Building block 1</span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.2">Sunlight is a mix of colours</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.55; color: #26324D">Light from the Sun looks white, but it is every colour of the rainbow mixed together. You can see the colours spread apart when sunlight shines through a prism or through raindrops.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<button type="button" style="min-height: 48px; padding: 0 16px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"></path><path d="M15.5 9a4 4 0 0 1 0 6"></path><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg>Listen</button>
+</div>
+</div>
+</article>
+
+<article aria-label="Building block 2: Air bounces blue light around" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column">
+<div style="position: relative; aspect-ratio: 16 / 9; background: #EEF2F8; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 12px">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M3 9.5h18"></path><path d="M3 14.5h18"></path><path d="M8 5v4.5"></path><path d="M16 5v4.5"></path><path d="M8 14.5V19"></path><path d="M16 14.5V19"></path></svg>Making your video</span>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 15px">
+<li style="display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Script written</li>
+<li style="display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2347D6" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"></path></svg>Making the narration</li>
+<li style="display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2347D6" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"></path></svg>Video being made</li>
+</ul>
+</div>
+<div style="padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 700; color: #2347D6; letter-spacing: 0.05em; text-transform: uppercase">Building block 2</span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.2">Air bounces blue light around</h3>
+</div>
+</article>
+</div>
+
+</div>
+</div>
+</div>
+<figcaption>3. About 5 to 8 seconds: blocks and narration</figcaption>
+</figure>
+<figure class="mk-fig">
+<div class="mk-phone" role="img" aria-label="Phone screen: the building blocks with their videos ready">
+<div class="mk-screen" inert>
+<div style="width: 390px; height: 844px; overflow: hidden; position: relative; font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif; color: #14213D; background-color: #F6F8FC; background-image: radial-gradient(#D9E0EC 1px, transparent 1.3px); background-size: 22px 22px; display: flex; flex-direction: column">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em">Primer</span>
+</div>
+<button type="button" style="min-height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>New question</button>
+</header>
+
+<div style="flex: 1 1 auto; padding: 4px 16px 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 26px; letter-spacing: -0.015em">Three building blocks</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.45; color: #46536F">Watch, listen or read.</p>
+</div>
+
+<article aria-label="Building block 1: Sunlight is a mix of colours" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column">
+<div style="position: relative; aspect-ratio: 16 / 9; background: #22305F; overflow: hidden">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%" role="img" aria-label="Animation: a beam of sunlight passes through a glass prism and spreads into a rainbow."><rect x="0" y="0" width="320" height="180" fill="#22305F"></rect><g stroke="#FFC93C" stroke-width="3" stroke-linecap="round"><line x1="62.4" y1="71.6" x2="67.3" y2="66.7"></line><line x1="44" y1="64" x2="44" y2="57"></line><line x1="25.6" y1="71.6" x2="20.7" y2="66.7"></line><line x1="18" y1="90" x2="11" y2="90"></line><line x1="25.6" y1="108.4" x2="20.7" y2="113.3"></line><line x1="44" y1="116" x2="44" y2="123"></line><line x1="62.4" y1="108.4" x2="67.3" y2="113.3"></line></g><circle cx="44" cy="90" r="20" fill="#FFC93C"></circle><polygon points="62,87 128,88.5 128,91.5 62,93" fill="#FFFFFF"></polygon><polygon points="127,88.5 174,91 177.6,98.8 127,91.5" fill="#FFFFFF" opacity="0.85"></polygon><polygon points="174,91 320,70 320,85 174.6,92.3" fill="#FF5D5D"></polygon><polygon points="174.6,92.3 320,85 320,100 175.2,93.6" fill="#FF9F2E"></polygon><polygon points="175.2,93.6 320,100 320,115 175.8,94.9" fill="#FFE04B"></polygon><polygon points="175.8,94.9 320,115 320,130 176.4,96.2" fill="#45CF7C"></polygon><polygon points="176.4,96.2 320,130 320,145 177,97.5" fill="#3D8BFF"></polygon><polygon points="177,97.5 320,145 320,160 177.6,98.8" fill="#A070FF"></polygon><polygon points="150,48 197,132 103,132" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"></polygon></svg>
+<span style="position: absolute; left: 10px; top: 10px; padding: 5px 10px; border-radius: 999px; background: rgba(20, 33, 61, 0.82); color: #FFFFFF; font-size: 12px; font-weight: 700">AI-generated, not checked</span>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 8px 10px; display: flex; align-items: center; gap: 10px; background: rgba(20, 33, 61, 0.55)">
+<button type="button" aria-label="Stop the video for building block 1" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2.5" fill="#14213D"></rect></svg></button>
+<div role="progressbar" aria-label="Video progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45" style="flex: 1 1 auto; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.4); overflow: hidden"><div style="height: 100%; width: 45%; border-radius: 3px; background: #FFFFFF"></div></div>
+</div>
+</div>
+<div style="padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 700; color: #2347D6; letter-spacing: 0.05em; text-transform: uppercase">Building block 1</span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.2">Sunlight is a mix of colours</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.55; color: #26324D">Light from the Sun looks white, but it is every colour of the rainbow mixed together. You can see the colours spread apart when sunlight shines through a prism or through raindrops.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<button type="button" style="min-height: 48px; padding: 0 16px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"></path><path d="M15.5 9a4 4 0 0 1 0 6"></path><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg>Listen</button>
+</div>
+</div>
+</article>
+
+<article aria-label="Building block 2: Air bounces blue light around" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column">
+<div style="position: relative; aspect-ratio: 16 / 9; background: #A9DCFF; overflow: hidden">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%" role="img" aria-label="Animation: red and yellow dots of light travel straight across while blue dots bounce between tiny specks of air."><rect x="0" y="0" width="320" height="180" fill="#A9DCFF"></rect><polyline points="-10,70 92,70 132,22 190,100 242,40 330,118" fill="none" stroke="#2E6BFF" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round" opacity="0.6"></polyline><line x1="-10" y1="132" x2="330" y2="132" stroke="#E0484D" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round" opacity="0.6"></line><g fill="#FFFFFF" stroke="#6BAEEA" stroke-width="1.5"><circle cx="92" cy="70" r="5"></circle><circle cx="132" cy="22" r="5"></circle><circle cx="190" cy="100" r="5"></circle><circle cx="242" cy="40" r="5"></circle><circle cx="40" cy="30" r="5"></circle><circle cx="120" cy="120" r="5"></circle><circle cx="215" cy="150" r="5"></circle><circle cx="300" cy="20" r="5"></circle><circle cx="60" cy="150" r="5"></circle><circle cx="160" cy="60" r="5"></circle><circle cx="280" cy="80" r="5"></circle><circle cx="285" cy="145" r="5"></circle></g><circle cx="200" cy="132" r="6.5" fill="#FF5D5D"></circle><circle cx="110" cy="166" r="6.5" fill="#FFC21F"></circle><circle cx="190" cy="100" r="6.5" fill="#2E6BFF"></circle><circle cx="120" cy="120" r="6.5" fill="#2E6BFF"></circle><circle cx="160" cy="60" r="6.5" fill="#2E6BFF"></circle></svg>
+<button type="button" aria-label="Play the video for building block 2" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; background: rgba(20, 33, 61, 0.14); display: flex; align-items: center; justify-content: center"><span style="width: 64px; height: 64px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(20, 33, 61, 0.3)"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="#2347D6"></path></svg></span></button>
+<span style="position: absolute; left: 10px; top: 10px; padding: 5px 10px; border-radius: 999px; background: rgba(20, 33, 61, 0.82); color: #FFFFFF; font-size: 12px; font-weight: 700; pointer-events: none">AI-generated, not checked</span>
+</div>
+<div style="padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 700; color: #2347D6; letter-spacing: 0.05em; text-transform: uppercase">Building block 2</span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.2">Air bounces blue light around</h3>
+</div>
+</article>
+</div>
+
+</div>
+</div>
+</div>
+<figcaption>4. About 40 to 90 seconds: the videos</figcaption>
+</figure>
+<figure class="mk-fig">
+<div class="mk-phone" role="img" aria-label="Phone screen: the thinking turns ending in the child's own explanation">
+<div class="mk-screen" inert>
+<div style="width: 390px; height: 844px; overflow: hidden; position: relative; font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif; color: #14213D; background-color: #F6F8FC; background-image: radial-gradient(#D9E0EC 1px, transparent 1.3px); background-size: 22px 22px; display: flex; flex-direction: column">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em">Primer</span>
+</div>
+<button type="button" style="min-height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>New question</button>
+</header>
+
+<div style="flex: 1 1 auto; padding: 4px 16px 24px">
+<section aria-label="Your turn to think" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 24px; padding: 16px; box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 12px; background: #FFF1C7; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6A4B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"></path></svg></span>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 24px; letter-spacing: -0.015em">Your turn to think</h2>
+</div>
+
+<div style="display: flex; align-items: flex-end; gap: 8px">
+<svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true" style="flex: 0 0 auto"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<p style="margin: 0; padding: 10px 14px; border-radius: 16px 16px 16px 5px; background: #E9EEFF; font-size: 16px; line-height: 1.45">At sunset, sunlight travels through much more air before it reaches you. What do you think happens to the blue light on that long journey?</p>
+</div>
+<div style="display: flex; justify-content: flex-end">
+<p style="margin: 0; padding: 10px 14px; border-radius: 16px 16px 5px 16px; background: #14213D; color: #FFFFFF; font-size: 16px; line-height: 1.45">It gets bounced away</p>
+</div>
+<div style="display: flex; align-items: flex-end; gap: 8px">
+<svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true" style="flex: 0 0 auto"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<p style="margin: 0; padding: 10px 14px; border-radius: 16px 16px 16px 5px; background: #E9EEFF; font-size: 16px; line-height: 1.45">So if most of the blue is bounced away on the way, which colours are left to reach your eyes?</p>
+</div>
+<div style="display: flex; justify-content: flex-end">
+<p style="margin: 0; padding: 10px 14px; border-radius: 16px 16px 5px 16px; background: #14213D; color: #FFFFFF; font-size: 16px; line-height: 1.45">Red and orange</p>
+</div>
+<div style="display: flex; align-items: flex-end; gap: 8px">
+<svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true" style="flex: 0 0 auto"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<p style="margin: 0; padding: 10px 14px; border-radius: 16px 16px 16px 5px; background: #E9EEFF; font-size: 16px; line-height: 1.45">Now put it in your own words. Why do sunsets look orange?</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 18px; background: #FFF4D1">
+<span style="font-size: 13px; font-weight: 700; color: #6A4B00; letter-spacing: 0.05em; text-transform: uppercase">Your explanation</span>
+<p style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 600; font-size: 19px; line-height: 1.35">“The light goes through so much air that the blue gets bounced away, so mostly red and orange reach me.”</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.45; color: #3D2B00">That's your explanation, with your reason. It's also how scientists explain it.</p>
+</div>
+<button type="button" style="align-self: flex-start; min-height: 48px; padding: 0 20px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 16px">Ask another question</button>
+</section>
+</div>
+
+</div>
+</div>
+</div>
+<figcaption>5. The thinking loop</figcaption>
+</figure>
+</div>
+</section>
+
+<section class="mk-section" aria-labelledby="mk-safety">
+<h2 id="mk-safety">Safety and failure</h2>
+<p>A sensitive question gets a reply written in advance, and no video. A video that fails twice becomes a still picture, and its block can still be heard.</p>
+<div class="mk-phones">
+<figure class="mk-fig">
+<div class="mk-phone" role="img" aria-label="Phone screen: a careful reply written in advance">
+<div class="mk-screen" inert>
+<div style="width: 390px; height: 844px; overflow: hidden; position: relative; font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif; color: #14213D; background-color: #F6F8FC; background-image: radial-gradient(#D9E0EC 1px, transparent 1.3px); background-size: 22px 22px; display: flex; flex-direction: column">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em">Primer</span>
+</div>
+<button type="button" style="min-height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>New question</button>
+</header>
+
+<div style="flex: 1 1 auto; padding: 4px 16px 24px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #46536F"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>You asked out loud</span>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 32px; line-height: 1.08; letter-spacing: -0.02em">Why did my grandad die?</h1>
+</div>
+
+<article aria-label="Careful reply" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; padding: 18px; box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column; gap: 14px">
+<span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; background: #E7EDFF; color: #1B3297; font-size: 13px; font-weight: 700"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.6-3 8-7 9.5-4-1.5-7-4.9-7-9.5V6z"></path></svg>Careful reply, written in advance</span>
+<p style="margin: 0; font-size: 19px; line-height: 1.55">When someone you love is very ill or has died, it is a big thing, and your questions about it matter. The best people to ask are the grown-ups in your family, like a parent or carer. They can talk it through with you in a way I can't.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" style="min-height: 48px; padding: 0 16px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"></path><path d="M15.5 9a4 4 0 0 1 0 6"></path><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg>Listen</button>
+<button type="button" style="min-height: 48px; padding: 0 14px; border-radius: 14px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-weight: 700; font-size: 15px">Ask another question</button>
+</div>
+</article>
+
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #46536F">For testers: questions about someone's own life, or big subjects like death or religion, get a reply written and checked in advance. No building blocks or videos are made for them.</p>
+</div>
+
+</div>
+</div>
+</div>
+<figcaption>A sensitive question</figcaption>
+</figure>
+<figure class="mk-fig">
+<div class="mk-phone" role="img" aria-label="Phone screen: a still picture where a video failed">
+<div class="mk-screen" inert>
+<div style="width: 390px; height: 844px; overflow: hidden; position: relative; font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif; color: #14213D; background-color: #F6F8FC; background-image: radial-gradient(#D9E0EC 1px, transparent 1.3px); background-size: 22px 22px; display: flex; flex-direction: column">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em">Primer</span>
+</div>
+<button type="button" style="min-height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>New question</button>
+</header>
+
+<div style="flex: 1 1 auto; padding: 4px 16px 24px; display: flex; flex-direction: column; gap: 14px">
+
+<article aria-label="Building block 3: Blue reaches you from everywhere" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column">
+<div role="img" aria-label="Still picture for building block 3" style="position: relative; aspect-ratio: 16 / 9; overflow: hidden; padding-bottom: 52px; display: flex; align-items: center; justify-content: center; background-color: #E3F1EA; background-image: radial-gradient(#BFDCCD 2px, transparent 2.5px); background-size: 18px 18px">
+<span style="width: 76px; height: 76px; border-radius: 22px; display: flex; align-items: center; justify-content: center; background: #1D7A4F; color: #FFFFFF; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 40px">3</span>
+<span style="position: absolute; left: 10px; top: 10px; padding: 5px 10px; border-radius: 999px; background: rgba(20, 33, 61, 0.82); color: #FFFFFF; font-size: 12px; font-weight: 700">Picture only</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 8px; padding: 8px 10px; border-radius: 12px; background: rgba(255, 255, 255, 0.95); color: #14213D; font-size: 14px; line-height: 1.4">The video did not work this time, so here is a picture instead. You can still listen.</div>
+</div>
+<div style="padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 700; color: #2347D6; letter-spacing: 0.05em; text-transform: uppercase">Building block 3</span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.2">Blue reaches you from everywhere</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.55; color: #26324D">Because blue light is bounced all over the sky, some of it comes towards you from every direction you look, not just from the Sun. That is why the whole sky looks blue on a clear day.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px">
+<button type="button" style="min-height: 48px; padding: 0 16px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"></path><path d="M15.5 9a4 4 0 0 1 0 6"></path><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg>Listen</button>
+</div>
+</div>
+</article>
+</div>
+
+</div>
+</div>
+</div>
+<figcaption>A video that failed</figcaption>
+</figure>
+</div>
+</section>
+
+<footer class="mk-foot">
+<p>A design mock-up for the Primer's demonstration, decisions D70 to D79 in the <a href="../docs/decision-ledger.html#mvp">decision ledger</a>. Nothing here is evidence about children, and nothing in it has been checked.</p>
+<p>Part of the <a href="../docs/index.html">AI.tutor</a> planning record. Its source is <code>mockup/index.html</code> in the repository.</p>
+</footer>
+
+</div>
+
+<template id="app-tpl">
+<div style="min-height: 100vh; font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif; color: #14213D; background-color: #F6F8FC; background-image: radial-gradient(#D9E0EC 1px, transparent 1.3px); background-size: 22px 22px; display: flex; flex-direction: column">
+
+<div style="background: #14213D; color: #FFFFFF; font-size: 14px; line-height: 1.45; padding: 10px clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 12px; text-align: center">
+<strong style="font-weight: 700; letter-spacing: 0.03em">Design mock-up</strong>
+<span>This shows how the Primer demo will work once it is built. Nothing here is built yet, and the answers are written examples.</span>
+</div>
+
+<header style="width: 100%; max-width: 1160px; margin: 0 auto; padding: 20px clamp(16px, 4vw, 40px); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<span style="font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -0.01em">Primer</span>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<span style="display: inline-flex; align-items: center; padding: 8px 14px; border-radius: 999px; background: #FFF1C7; color: #6A4B00; font-size: 15px; font-weight: 700">Demo for adult testers</span>
+<sc-if value="{{ isAnswer }}">
+<button type="button" data-on-click="{{ onNew }}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>New question</button>
+</sc-if>
+</div>
+</header>
+
+<main style="flex: 1 0 auto; width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) 64px">
+
+<sc-if value="{{ isAsk }}">
+<section style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; padding: clamp(16px, 4vw, 40px) 0 8px">
+<span style="display: inline-flex; align-items: center; padding: 8px 14px; border-radius: 999px; background: #FFF1C7; color: #6A4B00; font-size: 15px; font-weight: 700">You are playing a child aged 8 to 13</span>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: clamp(40px, 6vw, 68px); line-height: 1.02; letter-spacing: -0.025em; text-wrap: balance">What do you want to know?</h1>
+<p style="margin: 0; max-width: 42ch; font-size: clamp(18px, 2vw, 21px); line-height: 1.5; color: #46536F; text-wrap: pretty">Say it out loud or type it. You get a short answer first, then three building blocks to watch, hear or read.</p>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 10px 0 4px">
+<sc-if value="{{ micIdle }}">
+<button type="button" data-on-click="{{ onMic }}" aria-label="Ask out loud" style="width: 116px; height: 116px; border-radius: 50%; border: 0; background: #2347D6; color: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 30px rgba(35, 71, 214, 0.35)"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg></button>
+<span style="font-weight: 700; font-size: 17px">Tap to ask out loud</span>
+</sc-if>
+<sc-if value="{{ isListening }}">
+<button type="button" class="pm-ring" data-on-click="{{ onMic }}" aria-label="Stop listening" style="width: 116px; height: 116px; border-radius: 50%; border: 0; background: #14213D; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><span class="pm-bars" style="height: 46px"><span style="height: 18px"></span><span style="height: 34px; animation-delay: 0.15s"></span><span style="height: 46px; animation-delay: 0.3s"></span><span style="height: 30px; animation-delay: 0.45s"></span><span style="height: 16px; animation-delay: 0.6s"></span></span></button>
+<span aria-live="polite" style="font-weight: 700; font-size: 17px">Listening. Tap again when you have finished.</span>
+</sc-if>
+</div>
+
+<div style="width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 8px; text-align: left">
+<label for="pm-question" style="font-weight: 700; font-size: 16px">Or type your question</label>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<input id="pm-question" type="text" value="{{ draft }}" data-on-input="{{ onDraft }}" data-on-keydown="{{ onKey }}" placeholder="Type any question" autocomplete="off" style="flex: 1 1 300px; min-width: 0; height: 60px; padding: 0 18px; border-radius: 16px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-size: 19px" />
+<button type="button" data-on-click="{{ onAsk }}" disabled="{{ askDisabled }}" style="flex: 0 0 auto; height: 60px; padding: 0 30px; border-radius: 16px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 19px; opacity: {{ askOpacity }}">Ask</button>
+</div>
+<sc-if value="{{ showDraftHint }}">
+<span style="font-size: 15px; color: #46536F">Check the words are right, then press Ask.</span>
+</sc-if>
+<span style="display: flex; align-items: center; gap: 8px; font-size: 15px; color: #46536F"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>Your recording is turned into text. This demo does not keep it.</span>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 8px">
+<span style="font-size: 15px; font-weight: 700; color: #46536F">Try asking</span>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px">
+<sc-for list="{{ chips }}" as="chip">
+<button type="button" data-on-click="{{ chip.pick }}" style="min-height: 48px; padding: 0 18px; border-radius: 999px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-size: 17px; font-weight: 500">{{ chip.label }}</button>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section aria-label="How Primer answers" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px; padding-top: 48px">
+<div style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 8px">
+<span style="width: 40px; height: 40px; border-radius: 12px; background: #2347D6; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 20px">1</span>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.2">A short answer, straight away</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #46536F">Primer can read it out to you, too.</p>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 8px">
+<span style="width: 40px; height: 40px; border-radius: 12px; background: #2347D6; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 20px">2</span>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.2">Three building blocks</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #46536F">The ideas you need first, each with its own video, made for your question.</p>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 8px">
+<span style="width: 40px; height: 40px; border-radius: 12px; background: #2347D6; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 20px">3</span>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.2">Your turn to think</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #46536F">A question that helps you work it out for yourself.</p>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isAnswer }}">
+<section style="display: flex; flex-direction: column; gap: 28px; padding-top: 8px">
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: #46536F"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>{{ askedHow }}</span>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: clamp(34px, 4.6vw, 56px); line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance">{{ qText }}</h1>
+</div>
+
+<sc-if value="{{ isScripted }}">
+<div style="display: flex; flex-direction: column; gap: 32px">
+
+<article aria-label="Short answer" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 24px; padding: clamp(20px, 3vw, 32px); box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 22px">Short answer</h2>
+<span style="display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 999px; background: #FFF1C7; color: #6A4B00; font-size: 14px; font-weight: 700">Not yet checked</span>
+</div>
+<sc-if value="{{ ansThinking }}">
+<div class="pm-dots" role="status" aria-label="Primer is thinking" style="height: 36px"><span></span><span style="animation-delay: 0.18s"></span><span style="animation-delay: 0.36s"></span></div>
+</sc-if>
+<sc-if value="{{ ansHasText }}">
+<p aria-live="polite" style="margin: 0; max-width: 64ch; font-size: clamp(20px, 2.1vw, 24px); line-height: 1.55; text-wrap: pretty">{{ ansShown }}<sc-if value="{{ ansStreaming }}"><span class="pm-caret" aria-hidden="true"></span></sc-if></p>
+</sc-if>
+<div style="display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap">
+<button type="button" data-on-click="{{ onAnsListen }}" disabled="{{ ansListenDisabled }}" style="min-height: 48px; padding: 0 20px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 17px; display: inline-flex; align-items: center; gap: 10px; opacity: {{ ansListenOpacity }}">
+<sc-if value="{{ ansNotPlaying }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"></path><path d="M15.5 9a4 4 0 0 1 0 6"></path><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg></sc-if>
+<sc-if value="{{ ansPlaying }}"><span class="pm-bars" style="height: 20px"><span style="height: 10px"></span><span style="height: 20px; animation-delay: 0.2s"></span><span style="height: 14px; animation-delay: 0.4s"></span></span></sc-if>
+<span>{{ ansListenLabel }}</span>
+</button>
+<span style="font-size: 15px; line-height: 1.4; color: #46536F">Written by AI just now. Nobody has checked it yet.</span>
+</div>
+</article>
+
+<sc-if value="{{ showBlocks }}">
+<section aria-label="Three building blocks" style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 10px 20px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: clamp(26px, 3vw, 34px); letter-spacing: -0.015em">Three building blocks</h2>
+<p aria-live="polite" style="margin: 0; font-size: 17px; line-height: 1.45; color: #46536F">{{ blocksLine }}</p>
+</div>
+<span style="display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 999px; background: #FFF1C7; color: #6A4B00; font-size: 14px; font-weight: 700">Not yet checked</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px; align-items: start">
+<sc-for list="{{ blocks }}" as="block">
+<div style="min-width: 0">
+
+<sc-if value="{{ block.hidden }}">
+<div aria-hidden="true" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 24px; overflow: hidden">
+<div class="pm-skel" style="aspect-ratio: 16 / 9"></div>
+<div style="padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 12px">
+<div class="pm-skel" style="height: 14px; width: 42%; border-radius: 7px"></div>
+<div class="pm-skel" style="height: 22px; width: 78%; border-radius: 8px"></div>
+<div class="pm-skel" style="height: 14px; width: 100%; border-radius: 7px"></div>
+<div class="pm-skel" style="height: 14px; width: 94%; border-radius: 7px"></div>
+<div class="pm-skel" style="height: 14px; width: 62%; border-radius: 7px"></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ block.open }}">
+<article class="pm-rise" aria-label="Building block {{ block.num }}: {{ block.title }}" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 24px; overflow: hidden; box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column">
+<div style="position: relative; aspect-ratio: 16 / 9; background: #EEF2F8; overflow: hidden">
+
+<sc-if value="{{ block.vMaking }}">
+<div class="pm-skel" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 14px; text-align: center">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M3 9.5h18"></path><path d="M3 14.5h18"></path><path d="M8 5v4.5"></path><path d="M16 5v4.5"></path><path d="M8 14.5V19"></path><path d="M16 14.5V19"></path></svg>Making your video</span>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 15px; text-align: left">
+<li style="display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Script written</li>
+<li style="display: flex; align-items: center; gap: 8px"><sc-if value="{{ block.narrReady }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D7A4F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if><sc-if value="{{ block.narrPending }}"><svg class="pm-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2347D6" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"></path></svg></sc-if>{{ block.narrLine }}</li>
+<li style="display: flex; align-items: center; gap: 8px"><svg class="pm-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2347D6" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"></path></svg>Video being made</li>
+</ul>
+</div>
+</sc-if>
+
+<sc-if value="{{ block.vScene }}">
+<div style="position: absolute; inset: 0">
+
+<sc-if value="{{ block.sPrism }}">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%" class="{{ block.sceneClass }}" role="img" aria-label="{{ block.sceneLabel }}">
+<rect x="0" y="0" width="320" height="180" fill="#22305F"></rect>
+<g class="k-rays" stroke="#FFC93C" stroke-width="3" stroke-linecap="round"><line x1="70" y1="90" x2="77" y2="90"></line><line x1="62.4" y1="71.6" x2="67.3" y2="66.7"></line><line x1="44" y1="64" x2="44" y2="57"></line><line x1="25.6" y1="71.6" x2="20.7" y2="66.7"></line><line x1="18" y1="90" x2="11" y2="90"></line><line x1="25.6" y1="108.4" x2="20.7" y2="113.3"></line><line x1="44" y1="116" x2="44" y2="123"></line><line x1="62.4" y1="108.4" x2="67.3" y2="113.3"></line></g>
+<circle cx="44" cy="90" r="20" fill="#FFC93C"></circle>
+<polygon class="k-beam" points="62,87 128,88.5 128,91.5 62,93" fill="#FFFFFF"></polygon>
+<polygon class="k-inner" points="127,88.5 174,91 177.6,98.8 127,91.5" fill="#FFFFFF" opacity="0.85"></polygon>
+<polygon class="k-band" points="174,91 320,70 320,85 174.6,92.3" fill="#FF5D5D"></polygon>
+<polygon class="k-band" style="animation-delay: 0.12s" points="174.6,92.3 320,85 320,100 175.2,93.6" fill="#FF9F2E"></polygon>
+<polygon class="k-band" style="animation-delay: 0.24s" points="175.2,93.6 320,100 320,115 175.8,94.9" fill="#FFE04B"></polygon>
+<polygon class="k-band" style="animation-delay: 0.36s" points="175.8,94.9 320,115 320,130 176.4,96.2" fill="#45CF7C"></polygon>
+<polygon class="k-band" style="animation-delay: 0.48s" points="176.4,96.2 320,130 320,145 177,97.5" fill="#3D8BFF"></polygon>
+<polygon class="k-band" style="animation-delay: 0.6s" points="177,97.5 320,145 320,160 177.6,98.8" fill="#A070FF"></polygon>
+<polygon points="150,48 197,132 103,132" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"></polygon>
+</svg>
+</sc-if>
+
+<sc-if value="{{ block.sScatter }}">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%" class="{{ block.sceneClass }}" role="img" aria-label="{{ block.sceneLabel }}">
+<rect x="0" y="0" width="320" height="180" fill="#A9DCFF"></rect>
+<rect class="k-tint" x="0" y="0" width="320" height="180" fill="#2E6BFF" opacity="0"></rect>
+<polyline points="-10,70 92,70 132,22 190,100 242,40 330,118" fill="none" stroke="#2E6BFF" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round" opacity="0.6"></polyline>
+<line x1="-10" y1="132" x2="330" y2="132" stroke="#E0484D" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round" opacity="0.6"></line>
+<g fill="#FFFFFF" stroke="#6BAEEA" stroke-width="1.5"><circle cx="92" cy="70" r="5"></circle><circle cx="132" cy="22" r="5"></circle><circle cx="190" cy="100" r="5"></circle><circle cx="242" cy="40" r="5"></circle><circle cx="40" cy="30" r="5"></circle><circle cx="120" cy="120" r="5"></circle><circle cx="215" cy="150" r="5"></circle><circle cx="300" cy="20" r="5"></circle><circle cx="60" cy="150" r="5"></circle><circle cx="160" cy="60" r="5"></circle><circle cx="280" cy="80" r="5"></circle><circle cx="285" cy="145" r="5"></circle></g>
+<circle class="k-red" cx="200" cy="132" r="6.5" fill="#FF5D5D"></circle>
+<circle class="k-yellow" cx="110" cy="166" r="6.5" fill="#FFC21F"></circle>
+<circle class="k-blue1" cx="190" cy="100" r="6.5" fill="#2E6BFF"></circle>
+<circle class="k-blue2" cx="120" cy="120" r="6.5" fill="#2E6BFF"></circle>
+<circle class="k-blue3" cx="160" cy="60" r="6.5" fill="#2E6BFF"></circle>
+</svg>
+</sc-if>
+
+<sc-if value="{{ block.sDome }}">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%" class="{{ block.sceneClass }}" role="img" aria-label="{{ block.sceneLabel }}">
+<rect x="0" y="0" width="320" height="180" fill="#8CCBFF"></rect>
+<rect class="k-tint" x="0" y="0" width="320" height="180" fill="#2E6BFF" opacity="0"></rect>
+<circle cx="276" cy="32" r="14" fill="#FFD447"></circle>
+<g class="k-flow" fill="none" stroke="#2E6BFF" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 10"><line x1="16" y1="40" x2="150" y2="121"></line><line x1="66" y1="10" x2="153" y2="117"></line><line x1="126" y1="6" x2="157" y2="115"></line><line x1="194" y1="8" x2="163" y2="115"></line><line x1="236" y1="66" x2="168" y2="118"></line><line x1="304" y1="88" x2="171" y2="124"></line><line x1="30" y1="104" x2="147" y2="127"></line></g>
+<path d="M0,150 Q160,108 320,150 L320,180 L0,180 Z" fill="#5DBB72"></path>
+<rect x="232" y="116" width="6" height="22" rx="2" fill="#7A4E2D"></rect>
+<circle cx="235" cy="110" r="14" fill="#3E9C57"></circle>
+<circle cx="160" cy="129" r="14" fill="#FFFFFF" stroke="#14213D" stroke-width="2"></circle>
+<path d="M149,129 Q160,120 171,129 Q160,138 149,129 Z" fill="none" stroke="#14213D" stroke-width="2" stroke-linejoin="round"></path>
+<circle cx="160" cy="129" r="3.4" fill="#14213D"></circle>
+</svg>
+</sc-if>
+
+<sc-if value="{{ block.sShare }}">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%" class="{{ block.sceneClass }}" role="img" aria-label="{{ block.sceneLabel }}">
+<rect x="0" y="0" width="320" height="180" fill="#FFF3D6"></rect>
+<rect x="0" y="150" width="320" height="30" fill="#F6DFAE"></rect>
+<circle class="k-out0" cx="34" cy="44" r="8" fill="#FF6B6B" opacity="0.22"></circle>
+<circle class="k-out0" cx="57.8" cy="44" r="8" fill="#FFB020" opacity="0.22"></circle>
+<circle class="k-out0" cx="81.6" cy="44" r="8" fill="#4C8DFF" opacity="0.22"></circle>
+<circle class="k-out1" cx="105.4" cy="44" r="8" fill="#2FB37A" opacity="0.22"></circle>
+<circle class="k-out1" cx="129.2" cy="44" r="8" fill="#FF6B6B" opacity="0.22"></circle>
+<circle class="k-out1" cx="153" cy="44" r="8" fill="#FFB020" opacity="0.22"></circle>
+<circle class="k-out2" cx="176.8" cy="44" r="8" fill="#4C8DFF" opacity="0.22"></circle>
+<circle class="k-out2" cx="200.6" cy="44" r="8" fill="#2FB37A" opacity="0.22"></circle>
+<circle class="k-out2" cx="224.4" cy="44" r="8" fill="#FF6B6B" opacity="0.22"></circle>
+<circle class="k-out3" cx="248.2" cy="44" r="8" fill="#FFB020" opacity="0.22"></circle>
+<circle class="k-out3" cx="272" cy="44" r="8" fill="#4C8DFF" opacity="0.22"></circle>
+<circle class="k-out3" cx="295.8" cy="44" r="8" fill="#2FB37A" opacity="0.22"></circle>
+<circle class="k-in0" cx="68" cy="124" r="7" fill="#FF6B6B"></circle>
+<circle class="k-in0" cx="148" cy="124" r="7" fill="#FFB020"></circle>
+<circle class="k-in0" cx="228" cy="124" r="7" fill="#4C8DFF"></circle>
+<circle class="k-in1" cx="92" cy="124" r="7" fill="#2FB37A"></circle>
+<circle class="k-in1" cx="172" cy="124" r="7" fill="#FF6B6B"></circle>
+<circle class="k-in1" cx="252" cy="124" r="7" fill="#FFB020"></circle>
+<circle class="k-in2" cx="80" cy="126" r="7" fill="#4C8DFF"></circle>
+<circle class="k-in2" cx="160" cy="126" r="7" fill="#2FB37A"></circle>
+<circle class="k-in2" cx="240" cy="126" r="7" fill="#FF6B6B"></circle>
+<circle class="k-in3" cx="80" cy="113" r="7" fill="#FFB020"></circle>
+<circle class="k-in3" cx="160" cy="113" r="7" fill="#4C8DFF"></circle>
+<circle class="k-in3" cx="240" cy="113" r="7" fill="#2FB37A"></circle>
+<path d="M53,128 Q80,168 107,128 Z" fill="#FFFFFF" stroke="#14213D" stroke-width="2" stroke-linejoin="round"></path>
+<path d="M133,128 Q160,168 187,128 Z" fill="#FFFFFF" stroke="#14213D" stroke-width="2" stroke-linejoin="round"></path>
+<path d="M213,128 Q240,168 267,128 Z" fill="#FFFFFF" stroke="#14213D" stroke-width="2" stroke-linejoin="round"></path>
+</svg>
+</sc-if>
+
+<sc-if value="{{ block.sCheck }}">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%" class="{{ block.sceneClass }}" role="img" aria-label="{{ block.sceneLabel }}">
+<rect x="0" y="0" width="320" height="180" fill="#FFF3D6"></rect>
+<rect x="0" y="158" width="320" height="22" fill="#F6DFAE"></rect>
+<circle class="k-bout0" cx="68" cy="66" r="7" fill="#FF6B6B" opacity="0.22"></circle>
+<circle class="k-bout0" cx="92" cy="66" r="7" fill="#2FB37A" opacity="0.22"></circle>
+<circle class="k-bout0" cx="80" cy="68" r="7" fill="#4C8DFF" opacity="0.22"></circle>
+<circle class="k-bout0" cx="80" cy="55" r="7" fill="#FFB020" opacity="0.22"></circle>
+<circle class="k-bout1" cx="148" cy="66" r="7" fill="#FFB020" opacity="0.22"></circle>
+<circle class="k-bout1" cx="172" cy="66" r="7" fill="#FF6B6B" opacity="0.22"></circle>
+<circle class="k-bout1" cx="160" cy="68" r="7" fill="#2FB37A" opacity="0.22"></circle>
+<circle class="k-bout1" cx="160" cy="55" r="7" fill="#4C8DFF" opacity="0.22"></circle>
+<circle class="k-bout2" cx="228" cy="66" r="7" fill="#4C8DFF" opacity="0.22"></circle>
+<circle class="k-bout2" cx="252" cy="66" r="7" fill="#FFB020" opacity="0.22"></circle>
+<circle class="k-bout2" cx="240" cy="68" r="7" fill="#FF6B6B" opacity="0.22"></circle>
+<circle class="k-bout2" cx="240" cy="55" r="7" fill="#2FB37A" opacity="0.22"></circle>
+<path d="M53,70 Q80,110 107,70 Z" fill="#FFFFFF" stroke="#14213D" stroke-width="2" stroke-linejoin="round"></path>
+<path d="M133,70 Q160,110 187,70 Z" fill="#FFFFFF" stroke="#14213D" stroke-width="2" stroke-linejoin="round"></path>
+<path d="M213,70 Q240,110 267,70 Z" fill="#FFFFFF" stroke="#14213D" stroke-width="2" stroke-linejoin="round"></path>
+<circle class="k-rin0" cx="34" cy="146" r="8" fill="#FF6B6B"></circle>
+<circle class="k-rin0" cx="57.8" cy="146" r="8" fill="#2FB37A"></circle>
+<circle class="k-rin0" cx="81.6" cy="146" r="8" fill="#4C8DFF"></circle>
+<circle class="k-rin0" cx="105.4" cy="146" r="8" fill="#FFB020"></circle>
+<circle class="k-rin1" cx="129.2" cy="146" r="8" fill="#FFB020"></circle>
+<circle class="k-rin1" cx="153" cy="146" r="8" fill="#FF6B6B"></circle>
+<circle class="k-rin1" cx="176.8" cy="146" r="8" fill="#2FB37A"></circle>
+<circle class="k-rin1" cx="200.6" cy="146" r="8" fill="#4C8DFF"></circle>
+<circle class="k-rin2" cx="224.4" cy="146" r="8" fill="#4C8DFF"></circle>
+<circle class="k-rin2" cx="248.2" cy="146" r="8" fill="#FFB020"></circle>
+<circle class="k-rin2" cx="272" cy="146" r="8" fill="#FF6B6B"></circle>
+<circle class="k-rin2" cx="295.8" cy="146" r="8" fill="#2FB37A"></circle>
+</svg>
+</sc-if>
+
+<sc-if value="{{ block.sNozero }}">
+<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display: block; width: 100%; height: 100%" class="{{ block.sceneClass }}" role="img" aria-label="{{ block.sceneLabel }}">
+<rect x="0" y="0" width="320" height="180" fill="#FFF3D6"></rect>
+<rect x="0" y="150" width="320" height="30" fill="#F6DFAE"></rect>
+<circle class="k-hop" cx="34" cy="64" r="8" fill="#FF6B6B"></circle>
+<circle class="k-hop" style="animation-delay: 0.11s" cx="57.8" cy="64" r="8" fill="#FFB020"></circle>
+<circle class="k-hop" style="animation-delay: 0.22s" cx="81.6" cy="64" r="8" fill="#4C8DFF"></circle>
+<circle class="k-hop" style="animation-delay: 0.33s" cx="105.4" cy="64" r="8" fill="#2FB37A"></circle>
+<circle class="k-hop" style="animation-delay: 0.44s" cx="129.2" cy="64" r="8" fill="#FF6B6B"></circle>
+<circle class="k-hop" style="animation-delay: 0.55s" cx="153" cy="64" r="8" fill="#FFB020"></circle>
+<circle class="k-hop" style="animation-delay: 0.66s" cx="176.8" cy="64" r="8" fill="#4C8DFF"></circle>
+<circle class="k-hop" style="animation-delay: 0.77s" cx="200.6" cy="64" r="8" fill="#2FB37A"></circle>
+<circle class="k-hop" style="animation-delay: 0.88s" cx="224.4" cy="64" r="8" fill="#FF6B6B"></circle>
+<circle class="k-hop" style="animation-delay: 0.99s" cx="248.2" cy="64" r="8" fill="#FFB020"></circle>
+<circle class="k-hop" style="animation-delay: 1.1s" cx="272" cy="64" r="8" fill="#4C8DFF"></circle>
+<circle class="k-hop" style="animation-delay: 1.21s" cx="295.8" cy="64" r="8" fill="#2FB37A"></circle>
+<g class="k-ghost" fill="none" stroke="#9C8A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6">
+<path d="M80,86 L80,110" stroke-dasharray="3 5"></path><path d="M74,104 L80,111 L86,104"></path>
+<path d="M160,86 L160,110" stroke-dasharray="3 5"></path><path d="M154,104 L160,111 L166,104"></path>
+<path d="M240,86 L240,110" stroke-dasharray="3 5"></path><path d="M234,104 L240,111 L246,104"></path>
+<path d="M53,128 Q80,168 107,128 Z" stroke-dasharray="5 5"></path>
+<path d="M133,128 Q160,168 187,128 Z" stroke-dasharray="5 5"></path>
+<path d="M213,128 Q240,168 267,128 Z" stroke-dasharray="5 5"></path>
+</g>
+</svg>
+</sc-if>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ block.vStill }}">
+<div role="img" aria-label="{{ block.stillLabel }}" style="position: absolute; inset: 0; padding-bottom: 64px; display: flex; align-items: center; justify-content: center; background-size: 18px 18px; {{ block.stillStyle }}">
+<span style="width: 72px; height: 72px; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: 38px; {{ block.badgeStyle }}">{{ block.num }}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ block.vPoster }}">
+<button type="button" data-on-click="{{ block.onPlay }}" aria-label="{{ block.playAria }}" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 0; background: rgba(20, 33, 61, 0.14); display: flex; align-items: center; justify-content: center">
+<span style="width: 72px; height: 72px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(20, 33, 61, 0.3)"><svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="#2347D6"></path></svg></span>
+</button>
+</sc-if>
+
+<sc-if value="{{ block.vPlaying }}">
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px; display: flex; align-items: center; gap: 12px; background: rgba(20, 33, 61, 0.55)">
+<button type="button" data-on-click="{{ block.onPlay }}" aria-label="{{ block.stopAria }}" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2.5" fill="#14213D"></rect></svg></button>
+<div role="progressbar" aria-label="Video progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ block.prog }}" style="flex: 1 1 auto; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.4); overflow: hidden"><div style="height: 100%; width: {{ block.prog }}%; border-radius: 3px; background: #FFFFFF"></div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ block.vFailed }}">
+<div style="position: absolute; left: 10px; right: 10px; bottom: 10px; padding: 10px 12px; border-radius: 14px; background: rgba(255, 255, 255, 0.95); color: #14213D; font-size: 15px; line-height: 1.4">The video did not work this time, so here is a picture instead. You can still listen.</div>
+<span style="position: absolute; left: 12px; top: 12px; padding: 5px 10px; border-radius: 999px; background: rgba(20, 33, 61, 0.82); color: #FFFFFF; font-size: 13px; font-weight: 700; pointer-events: none">Picture only</span>
+</sc-if>
+
+<sc-if value="{{ block.vLabel }}">
+<span style="position: absolute; left: 12px; top: 12px; padding: 5px 10px; border-radius: 999px; background: rgba(20, 33, 61, 0.82); color: #FFFFFF; font-size: 13px; font-weight: 700; pointer-events: none">AI-generated, not checked</span>
+</sc-if>
+
+</div>
+
+<div style="padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px; font-weight: 700; color: #2347D6; letter-spacing: 0.05em; text-transform: uppercase">Building block {{ block.num }}</span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 700; font-size: 23px; line-height: 1.2">{{ block.title }}</h3>
+<p style="margin: 0; font-size: 18px; line-height: 1.55; color: #26324D; text-wrap: pretty">{{ block.text }}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; padding-top: 6px">
+<button type="button" data-on-click="{{ block.onListen }}" disabled="{{ block.listenDisabled }}" aria-label="{{ block.listenAria }}" style="min-height: 48px; padding: 0 18px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 17px; display: inline-flex; align-items: center; gap: 8px; opacity: {{ block.listenOpacity }}">
+<sc-if value="{{ block.notPn }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"></path><path d="M15.5 9a4 4 0 0 1 0 6"></path><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg></sc-if>
+<sc-if value="{{ block.pn }}"><span class="pm-bars" style="height: 20px"><span style="height: 10px"></span><span style="height: 20px; animation-delay: 0.2s"></span><span style="height: 14px; animation-delay: 0.4s"></span></span></sc-if>
+<span>{{ block.listenLabel }}</span>
+</button>
+</div>
+</div>
+</article>
+</sc-if>
+
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{ showLoop }}">
+<section class="pm-rise" aria-label="Your turn to think" style="max-width: 880px; background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 28px; padding: clamp(20px, 3vw, 32px); box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="flex: 0 0 auto; width: 46px; height: 46px; border-radius: 14px; background: #FFF1C7; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6A4B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"></path></svg></span>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 750; font-size: clamp(26px, 3vw, 32px); letter-spacing: -0.015em">Your turn to think</h2>
+</div>
+<div aria-live="polite" style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{ turns }}" as="turn">
+<sc-if value="{{ turn.isPrimer }}">
+<div style="display: flex; align-items: flex-end; gap: 10px; max-width: 640px">
+<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" style="flex: 0 0 auto"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<p style="margin: 0; padding: 12px 16px; border-radius: 18px 18px 18px 6px; background: #E9EEFF; font-size: 19px; line-height: 1.5">{{ turn.text }}</p>
+</div>
+</sc-if>
+<sc-if value="{{ turn.isChild }}">
+<div style="display: flex; justify-content: flex-end">
+<p style="margin: 0; max-width: 560px; padding: 12px 16px; border-radius: 18px 18px 6px 18px; background: #14213D; color: #FFFFFF; font-size: 19px; line-height: 1.5">{{ turn.text }}</p>
+</div>
+</sc-if>
+</sc-for>
+<sc-if value="{{ showTyping }}">
+<div style="display: flex; align-items: flex-end; gap: 10px">
+<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" style="flex: 0 0 auto"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<div class="pm-dots" role="status" aria-label="Primer is writing" style="padding: 16px 18px; border-radius: 18px 18px 18px 6px; background: #E9EEFF"><span></span><span style="animation-delay: 0.18s"></span><span style="animation-delay: 0.36s"></span></div>
+</div>
+</sc-if>
+<sc-if value="{{ showPrompt }}">
+<div class="pm-rise" style="display: flex; align-items: flex-end; gap: 10px; max-width: 640px">
+<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" style="flex: 0 0 auto"><rect x="0" y="0" width="32" height="32" rx="9" fill="#2347D6"></rect><rect x="8.5" y="8" width="4.4" height="17" rx="2.2" fill="#FFFFFF"></rect><circle cx="16.6" cy="13.6" r="5.4" fill="none" stroke="#FFFFFF" stroke-width="4.2"></circle><circle cx="24.6" cy="24.4" r="2.6" fill="#F4B000"></circle></svg>
+<p style="margin: 0; padding: 12px 16px; border-radius: 18px 18px 18px 6px; background: #E9EEFF; font-size: 19px; line-height: 1.5">{{ loopPrompt }}</p>
+</div>
+</sc-if>
+</div>
+
+<sc-if value="{{ showOptions }}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding-top: 2px">
+<span style="font-size: 15px; font-weight: 700; color: #46536F">Say it, or tap an answer</span>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+<sc-if value="{{ loopIdle }}">
+<button type="button" data-on-click="{{ onLoopMic }}" aria-label="Say your answer out loud" style="flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: #2347D6; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg></button>
+</sc-if>
+<sc-if value="{{ loopListening }}">
+<button type="button" class="pm-ring" data-on-click="{{ onLoopMic }}" aria-label="Stop listening" style="flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: #14213D; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><span class="pm-bars" style="height: 22px"><span style="height: 10px"></span><span style="height: 22px; animation-delay: 0.2s"></span><span style="height: 14px; animation-delay: 0.4s"></span></span></button>
+</sc-if>
+<sc-for list="{{ options }}" as="opt">
+<button type="button" data-on-click="{{ opt.pick }}" style="min-height: 48px; padding: 10px 18px; border-radius: 16px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-size: 17px; font-weight: 500; line-height: 1.35; text-align: left">{{ opt.label }}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ loopDone }}">
+<div class="pm-rise" style="display: flex; flex-direction: column; gap: 10px; padding: 20px 22px; border-radius: 22px; background: #FFF4D1">
+<span style="font-size: 14px; font-weight: 700; color: #6A4B00; letter-spacing: 0.05em; text-transform: uppercase">Your explanation</span>
+<p style="margin: 0; font-family: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif; font-weight: 600; font-size: clamp(21px, 2.4vw, 26px); line-height: 1.35">“{{ viewText }}”</p>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #3D2B00">{{ doneText }}</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<button type="button" data-on-click="{{ onNew }}" style="min-height: 52px; padding: 0 22px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 17px">Ask another question</button>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isCareful }}">
+<div style="display: flex; flex-direction: column; gap: 16px; max-width: 840px">
+<article aria-label="Careful reply" style="background: #FFFFFF; border: 1px solid #DCE3EF; border-radius: 24px; padding: clamp(20px, 3vw, 32px); box-shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 12px 32px rgba(20, 33, 61, 0.07); display: flex; flex-direction: column; gap: 16px">
+<span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #E7EDFF; color: #1B3297; font-size: 14px; font-weight: 700"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.6-3 8-7 9.5-4-1.5-7-4.9-7-9.5V6z"></path></svg>Careful reply, written in advance</span>
+<p style="margin: 0; max-width: 60ch; font-size: clamp(20px, 2.1vw, 24px); line-height: 1.55; text-wrap: pretty">{{ carefulText }}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<button type="button" data-on-click="{{ onCarefulListen }}" style="min-height: 48px; padding: 0 20px; border-radius: 14px; border: 0; background: #2347D6; color: #FFFFFF; font-weight: 700; font-size: 17px; display: inline-flex; align-items: center; gap: 10px">
+<sc-if value="{{ carefulNotPlaying }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"></path><path d="M15.5 9a4 4 0 0 1 0 6"></path><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11"></path></svg></sc-if>
+<sc-if value="{{ carefulPlaying }}"><span class="pm-bars" style="height: 20px"><span style="height: 10px"></span><span style="height: 20px; animation-delay: 0.2s"></span><span style="height: 14px; animation-delay: 0.4s"></span></span></sc-if>
+<span>{{ carefulListenLabel }}</span>
+</button>
+<button type="button" data-on-click="{{ onNew }}" style="min-height: 48px; padding: 0 18px; border-radius: 14px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-weight: 700; font-size: 16px">Ask another question</button>
+</div>
+</article>
+<p style="margin: 0; max-width: 72ch; font-size: 15px; line-height: 1.5; color: #46536F">For testers: questions about someone's own life, or big subjects like death or religion, get a reply written and checked in advance. No building blocks or videos are made for them.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{ isOther }}">
+<article style="max-width: 840px; border: 2px dashed #B9C4D8; border-radius: 24px; padding: clamp(20px, 3vw, 32px); background: rgba(255, 255, 255, 0.8); display: flex; flex-direction: column; gap: 14px">
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #14213D; color: #FFFFFF; font-size: 14px; font-weight: 700">Mock-up only</span>
+<p style="margin: 0; max-width: 60ch; font-size: 20px; line-height: 1.55">This mock-up has written examples for two questions. In the built demo, any question gets the same treatment: a short answer, three building blocks with videos, and a question to think about.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{ chips }}" as="chip">
+<button type="button" data-on-click="{{ chip.pick }}" style="min-height: 48px; padding: 0 18px; border-radius: 999px; border: 2px solid #C9D3E4; background: #FFFFFF; color: #14213D; font-size: 17px; font-weight: 500">Try: {{ chip.label }}</button>
+</sc-for>
+</div>
+</article>
+</sc-if>
+
+</section>
+</sc-if>
+
+</main>
+
+<footer style="width: 100%; max-width: 1160px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 40px) 40px; border-top: 1px solid #DCE3EF; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; color: #46536F">
+<span>Primer demo for adult testers</span>
+<span>Answers and videos are made by AI and not checked</span>
+<span>Recordings are not kept</span>
+</footer>
+
+</div>
+</template>
+
+<script>
+'use strict';
+(() => {
+  // A small stand-in for the design canvas's runtime. The template above is the
+  // canvas's own markup: holes ({{ name }}), <sc-if> and <sc-for>. Each render
+  // builds fresh nodes from it and then updates the page in place, so running
+  // animations, focus and the text being typed survive every update.
+  const HOLE = /\{\{\s*([^}]+?)\s*\}\}/g;
+  const EXACT = /^\s*\{\{\s*([^}]+?)\s*\}\}\s*$/;
+  const EVENTS = { 'data-on-click': 'click', 'data-on-input': 'input', 'data-on-keydown': 'keydown' };
+  const BOOLEAN = { disabled: true, checked: true };
+  const tpl = document.getElementById('app-tpl');
+  const root = document.getElementById('app');
+  const welcome = document.getElementById('mk-welcome');
+  const frame = document.getElementById('mk-frame');
+  let handlers = [];
+  let queued = false;
+  let app = null;
+
+  function lookup(path, scope) {
+    if (path == null) return undefined;
+    if (path === 'true') return true;
+    if (path === 'false') return false;
+    const parts = path.split('.');
+    let v = scope[parts[0]];
+    for (let i = 1; i < parts.length && v != null; i += 1) v = v[parts[i]];
+    return v;
+  }
+
+  function exact(value) {
+    const m = EXACT.exec(value || '');
+    return m ? m[1] : null;
+  }
+
+  function interpolate(text, scope) {
+    return text.replace(HOLE, (whole, path) => {
+      const v = lookup(path, scope);
+      return v == null ? '' : String(v);
+    });
+  }
+
+  function build(parent, scope, out, fns) {
+    for (let n = parent.firstChild; n; n = n.nextSibling) {
+      if (n.nodeType === 3) {
+        const t = n.nodeValue;
+        out.appendChild(document.createTextNode(t.indexOf('{{') < 0 ? t : interpolate(t, scope)));
+      } else if (n.nodeType === 1) {
+        const tag = n.localName;
+        if (tag === 'sc-if') {
+          if (lookup(exact(n.getAttribute('value')), scope)) build(n, scope, out, fns);
+        } else if (tag === 'sc-for') {
+          const list = lookup(exact(n.getAttribute('list')), scope) || [];
+          const as = n.getAttribute('as');
+          list.forEach((item) => {
+            const inner = Object.create(scope);
+            inner[as] = item;
+            build(n, inner, out, fns);
+          });
+        } else {
+          const el = document.importNode(n, false);
+          for (const a of Array.from(n.attributes)) {
+            if (a.value.indexOf('{{') < 0) continue;
+            if (EVENTS[a.name]) {
+              const fn = lookup(exact(a.value), scope);
+              if (typeof fn === 'function') el.setAttribute(a.name, String(fns.push(fn) - 1));
+              else el.removeAttribute(a.name);
+            } else if (BOOLEAN[a.name]) {
+              if (lookup(exact(a.value), scope)) el.setAttribute(a.name, '');
+              else el.removeAttribute(a.name);
+            } else {
+              el.setAttribute(a.name, interpolate(a.value, scope));
+            }
+          }
+          build(n, scope, el, fns);
+          out.appendChild(el);
+        }
+      }
+    }
+  }
+
+  function syncAttributes(x, y) {
+    for (const at of Array.from(x.attributes)) {
+      if (!y.hasAttribute(at.name)) x.removeAttribute(at.name);
+    }
+    for (const at of Array.from(y.attributes)) {
+      if (x.getAttribute(at.name) !== at.value) x.setAttribute(at.name, at.value);
+    }
+    if (x.localName === 'input' && document.activeElement !== x) {
+      const v = y.getAttribute('value') || '';
+      if (x.value !== v) x.value = v;
+    }
+  }
+
+  function morph(live, next) {
+    const a = Array.from(live.childNodes);
+    const b = Array.from(next.childNodes);
+    for (let i = 0; i < b.length; i += 1) {
+      const x = a[i];
+      const y = b[i];
+      if (!x) { live.appendChild(y); continue; }
+      if (x.nodeType !== y.nodeType || (x.nodeType === 1 &&
+          (x.localName !== y.localName || x.namespaceURI !== y.namespaceURI))) {
+        live.replaceChild(y, x);
+        continue;
+      }
+      if (x.nodeType !== 1) {
+        if (x.nodeValue !== y.nodeValue) x.nodeValue = y.nodeValue;
+        continue;
+      }
+      syncAttributes(x, y);
+      morph(x, y);
+    }
+    for (let i = b.length; i < a.length; i += 1) live.removeChild(a[i]);
+  }
+
+  function render() {
+    if (!app || root.hidden) return;
+    const fns = [];
+    const out = document.createDocumentFragment();
+    build(tpl.content, app.renderVals(), out, fns);
+    morph(root, out);
+    handlers = fns;
+  }
+
+  function schedule() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; render(); });
+  }
+
+  for (const [attr, type] of Object.entries(EVENTS)) {
+    root.addEventListener(type, (ev) => {
+      const el = ev.target && ev.target.closest ? ev.target.closest('[' + attr + ']') : null;
+      if (!el || !root.contains(el)) return;
+      const fn = handlers[Number(el.getAttribute(attr))];
+      if (typeof fn === 'function') fn(ev);
+    });
+  }
+
+  class DCLogic {
+    constructor(props) { this.props = props || {}; this.state = {}; }
+    setState(patch) { Object.assign(this.state, patch); schedule(); }
+  }
+
+  class Component extends DCLogic {
+    constructor(...args) {
+      super(...args);
+      this.state = {
+        screen: 'ask', draft: '', draftByVoice: false,
+        listening: false, listenStart: 0, micCount: 0,
+        kind: '', qText: '', viaVoice: false, t0: 0, now: 0,
+        playing: '', playStart: 0, playDur: 0,
+        loopNode: '', turns: [], loopPendingUntil: 0,
+        loopListening: false, loopListenStart: 0
+      };
+      this._timer = null;
+      this._utter = null;
+      this._c = null;
+    }
+
+    componentDidMount() {
+      this._timer = setInterval(() => this._tick(), 60);
+      this._applyStart((this.props || {}).startAt);
+    }
+
+    componentDidUpdate(prevProps) {
+      const before = prevProps ? prevProps.startAt : undefined;
+      const after = (this.props || {}).startAt;
+      if (before !== after) this._applyStart(after);
+    }
+
+    componentWillUnmount() {
+      if (this._timer) clearInterval(this._timer);
+      this._stopSpeech();
+    }
+
+    _content() {
+      if (this._c) return this._c;
+      const sky = {
+        q: 'Why is the sky blue?',
+        answer: 'Sunlight looks white, but it is really all the colours of the rainbow mixed together. When it reaches the air around the Earth, the tiny bits that make up the air bounce blue light around much more than red or yellow light. That scattered blue comes at your eyes from every part of the sky, so the whole sky looks blue.',
+        blocks: [
+          { title: 'Sunlight is a mix of colours', scene: 'prism',
+            text: 'Light from the Sun looks white, but it is every colour of the rainbow mixed together. You can see the colours spread apart when sunlight shines through a prism or through raindrops.',
+            narr: 'Sunlight looks plain white. But hidden inside it are all the colours of the rainbow, mixed together. When sunlight passes through a prism, or through raindrops, the colours spread apart, and you can see each one.',
+            label: 'Animation: a beam of sunlight passes through a glass prism and spreads into a rainbow.' },
+          { title: 'Air bounces blue light around', scene: 'scatter',
+            text: 'Air is made of tiny bits, far too small to see. When sunlight hits them, blue light is bounced off in all directions, much more than red or yellow light, which mostly carries straight on.',
+            narr: 'Air is made of tiny bits, much too small to see. When sunlight hits them, the blue light gets bounced around, this way and that. The red and yellow light mostly carries straight on through.',
+            label: 'Animation: red and yellow dots of light travel straight across while blue dots bounce between tiny specks of air.' },
+          { title: 'Blue reaches you from everywhere', scene: 'dome',
+            text: 'Because blue light is bounced all over the sky, some of it comes towards you from every direction you look, not just from the Sun. That is why the whole sky looks blue on a clear day.',
+            narr: 'Because blue light is bounced all over the sky, some of it heads towards you from every direction. So wherever you look, blue light is coming to your eyes. That is why the whole sky looks blue.',
+            label: 'Animation: streaks of blue light travel from every part of the sky down to an eye on a hilltop.' }
+        ],
+        loop: {
+          ask: { say: "Can I ask you a harder question about the sky? You don't have to say yes.",
+            options: [ { label: 'Yes, ask me', next: 'q1' }, { label: 'Not now', next: 'later' } ] },
+          later: { say: "That's fine. The question will still be here if you change your mind.",
+            options: [ { label: 'Ask me after all', next: 'q1' }, { label: 'Ask a new question', action: 'new' } ] },
+          q1: { say: 'At sunset, sunlight travels through much more air before it reaches you. What do you think happens to the blue light on that long journey?',
+            options: [ { label: 'It gets bounced away', next: 'q2' }, { label: 'It gets stronger', next: 'q1b' }, { label: "I'm not sure", next: 'q1c' } ] },
+          q1b: { say: "Let's test that idea. In building block 2, what does air do to blue light? So does more air mean more blue reaching you, or less?",
+            options: [ { label: 'Less, because more of it gets bounced away', next: 'q2' }, { label: "I'm not sure", next: 'q1c' } ] },
+          q1c: { say: "Here's a clue. Air bounces blue light around. If the light goes through lots more air, what might happen to the blue before it gets to you?",
+            options: [ { label: 'It gets bounced away', next: 'q2' }, { label: 'Still not sure', next: 'rest' } ] },
+          rest: { say: "That's fine. Watch building block 2 again, then have another go. There's no rush.",
+            options: [ { label: 'Try again', next: 'q1' } ] },
+          q2: { say: 'So if most of the blue is bounced away on the way, which colours are left to reach your eyes?',
+            options: [ { label: 'Red and orange', next: 'own' }, { label: 'Blue', next: 'q2b' } ] },
+          q2b: { say: 'If the blue has been bounced away along the way, can much of it still reach you? Look at the colours in building block 1 again.',
+            options: [ { label: 'Red and orange are left', next: 'own' } ] },
+          own: { say: 'Now put it in your own words. Why do sunsets look orange?',
+            options: [ { label: 'The light goes through so much air that the blue gets bounced away, so mostly red and orange reach me.', next: 'done' } ] },
+          done: { final: true, say: "That's your explanation, with your reason. It's also how scientists explain it." }
+        }
+      };
+      const zero = {
+        q: "Why can't you divide by zero?",
+        answer: 'Dividing means sharing into equal groups. Twelve sweets shared between three friends gives four each, and you can check it, because three lots of four make twelve. Now try sharing twelve sweets between zero friends. Whatever answer you guess, zero lots of it is still zero, never twelve. So dividing by zero has no answer, and mathematicians call it undefined.',
+        blocks: [
+          { title: 'Dividing is fair sharing', scene: 'share',
+            text: 'Dividing splits an amount into equal groups. Twelve sweets shared fairly between three friends gives each friend four.',
+            narr: 'Dividing is fair sharing. Imagine twelve sweets and three friends. Hand the sweets out one at a time, round and round, until they are all gone. Each friend ends up with four.',
+            label: 'Animation: twelve sweets are dealt one at a time into three bowls until each bowl holds four.' },
+          { title: 'You can check by putting it back', scene: 'check',
+            text: 'Every sharing sum can be checked by multiplying back. Three groups of four make twelve again, so four each must be right.',
+            narr: 'Here is a neat trick. You can check a sharing sum by putting the groups back together. Three bowls of four sweets make twelve again, so the answer, four each, must be right.',
+            label: 'Animation: three bowls of four sweets are tipped back into one row of twelve.' },
+          { title: 'Zero friends never works', scene: 'nozero',
+            text: 'Sharing between zero friends would need an answer that, taken zero times, makes twelve. But zero lots of anything is zero, so no answer can work.',
+            narr: 'Now try sharing between zero friends. There are no bowls, so the sweets have nowhere to go. And the check cannot work either, because zero lots of anything is nothing. So there is no answer.',
+            label: 'Animation: twelve sweets hop in place above dotted outlines where bowls would be.' }
+        ],
+        loop: {
+          ask: { say: "Can I ask you a trickier question about zero? You don't have to say yes.",
+            options: [ { label: 'Yes, ask me', next: 'q1' }, { label: 'Not now', next: 'later' } ] },
+          later: { say: "That's fine. The question will still be here if you change your mind.",
+            options: [ { label: 'Ask me after all', next: 'q1' }, { label: 'Ask a new question', action: 'new' } ] },
+          q1: { say: 'What do you think zero divided by zero should be? Try the check from building block 2: which number, taken zero times, makes zero?',
+            options: [ { label: 'Zero', next: 'q1a' }, { label: 'Any number works', next: 'q2' }, { label: "I'm not sure", next: 'q1c' } ] },
+          q1a: { say: 'Zero works, because zero lots of zero is zero. What about five? What is zero lots of five?',
+            options: [ { label: 'Zero, so five works too', next: 'q2' }, { label: "I'm not sure", next: 'q1c' } ] },
+          q1c: { say: 'Pick any number, say seven. If you have zero lots of seven, how many do you have?',
+            options: [ { label: 'None, so seven works too', next: 'q2' } ] },
+          q2: { say: 'So which number is the answer to zero divided by zero?',
+            options: [ { label: "Every number works, so there isn't one answer", next: 'own' }, { label: 'Zero', next: 'q2b' } ] },
+          q2b: { say: 'Zero passes the check, but so do five and seven. Can a sum have lots of different answers at once?',
+            options: [ { label: "No, so there isn't one answer", next: 'own' } ] },
+          own: { say: 'Now put it in your own words. Why do mathematicians leave zero divided by zero without an answer?',
+            options: [ { label: "Every number passes the check, so there's no single answer to pick.", next: 'done' } ] },
+          done: { final: true, say: "That's your explanation, with your reason. It's the same reason mathematicians give." }
+        }
+      };
+      const careful = {
+        danger: 'Thank you for saying this. It matters, and you should be safe. Please tell a grown-up you trust today, like a parent, a carer or a teacher. In the UK you can also call Childline on 0800 1111, or, if you are an adult, Samaritans on 116 123. In the US you can call Childhelp on 1-800-422-4453, or call or text 988.',
+        loss: "When someone you love is very ill or has died, it is a big thing, and your questions about it matter. The best people to ask are the grown-ups in your family, like a parent or carer. They can talk it through with you in a way I can't.",
+        life: "That sounds like it's about your own life, and it matters. The best person to talk to about it is a grown-up you trust, like a parent, a carer or a teacher. They know you, and they can help in ways I can't.",
+        subject: "That's a big question, and families think about it in their own ways. It's a good one to talk about with the grown-ups at home."
+      };
+      this._c = { sky: sky, zero: zero, careful: careful };
+      return this._c;
+    }
+
+    _route(text) {
+      const t = ' ' + String(text || '').toLowerCase().replace(/[^a-z0-9' ]+/g, ' ') + ' ';
+      const fam = '(grandad|grandpa|grandma|granny|nan|nana|mum|mom|dad|brother|sister|auntie|aunt|uncle|cousin|friend|dog|cat|pet)';
+      const dies = '(die|died|dies|dead|dying|ill|sick|poorly)';
+      if (/\b(hurts? me|hit(s|ting)? me|hurt(ing)? myself|kill(ing)? myself|self harm|suicide|abuse[sd]?|not safe|unsafe|touch(es|ed)? me)\b/.test(t)) return 'danger';
+      if (new RegExp('\\b' + fam + '\\b.*\\b' + dies + '\\b').test(t) || new RegExp('\\b' + dies + '\\b.*\\b' + fam + '\\b').test(t)) return 'loss';
+      if (/\b(my (mum|mom|dad|parents|family|friends?|teacher)|i feel|i'm sad|im sad|i am sad|lonely|bullied|bully|bullying|divorce)\b/.test(t)) return 'life';
+      if (/\b(god|gods|heaven|hell|religion|religious|pray|praying|sex|death|die|dies|dying|dead)\b/.test(t)) return 'subject';
+      if (/\bsky\b/.test(t) && /\bblue\b/.test(t)) return 'sky';
+      if (/\b(zero|0)\b/.test(t) && /divid|divis/.test(t)) return 'zero';
+      return 'other';
+    }
+
+    _tl() {
+      const real = (this.props || {}).timing === 'Design timing';
+      return {
+        think: 900, cps: 120, skel: 1600,
+        blocks: [4400, 4800, 5200], narr: [6300, 7000, 7700], loop: 7000,
+        video: real ? [46000, 61000, 77000] : [13000, 16500, 20000],
+        end: real ? 78000 : 21000
+      };
+    }
+
+    _scrollTop() {
+      const frame = document.getElementById('mk-frame');
+      if (frame && frame.getBoundingClientRect().top < 0) frame.scrollIntoView({ block: 'start' });
+    }
+
+    _applyStart(where) {
+      const c = this._content();
+      if (where === 'Sky answer, finished') this._ask(c.sky.q, true, true);
+      else if (where === 'Zero answer, finished') this._ask(c.zero.q, false, true);
+      else if (where === 'Sensitive question') this._ask('Why did my grandad die?', true, true);
+      else if (where === 'Ask screen' && this.state.screen !== 'ask') this._new();
+    }
+
+    _ask(text, voice, finished) {
+      const q = String(text || '').trim();
+      if (!q) return;
+      this._stopSpeech();
+      const kind = this._route(q);
+      const now = Date.now();
+      this.setState({
+        screen: 'answer', kind: kind, qText: q, viaVoice: !!voice,
+        t0: finished ? now - 600000 : now, now: now,
+        playing: '', playStart: 0, playDur: 0,
+        loopNode: (kind === 'sky' || kind === 'zero') ? 'ask' : '', turns: [], loopPendingUntil: 0,
+        loopListening: false, listening: false, draft: '', draftByVoice: false
+      });
+      this._scrollTop();
+    }
+
+    _new() {
+      this._stopSpeech();
+      this.setState({
+        screen: 'ask', kind: '', qText: '', playing: '', listening: false, loopListening: false,
+        turns: [], loopNode: '', loopPendingUntil: 0, draft: '', draftByVoice: false
+      });
+      this._scrollTop();
+    }
+
+    _mic() {
+      if (this.state.listening) { this._finishListening(); return; }
+      this._stopSpeech();
+      const now = Date.now();
+      this.setState({ listening: true, listenStart: now, now: now, playing: '' });
+    }
+
+    _finishListening() {
+      const c = this._content();
+      const n = this.state.micCount || 0;
+      const q = n % 2 === 0 ? c.sky.q : c.zero.q;
+      this.setState({ listening: false, draft: q, draftByVoice: true, micCount: n + 1 });
+    }
+
+    _choose(opt) {
+      if (opt.action === 'new') { this._new(); return; }
+      const s = this.state;
+      const d = this._content()[s.kind];
+      const node = d && d.loop ? d.loop[s.loopNode] : null;
+      if (!node) return;
+      const now = Date.now();
+      this.setState({
+        turns: s.turns.concat([{ who: 'primer', text: node.say }, { who: 'child', text: opt.label }]),
+        loopNode: opt.next, loopPendingUntil: now + 900, now: now, loopListening: false
+      });
+    }
+
+    _loopMic() {
+      if (this.state.loopListening) { this._loopMicDone(); return; }
+      this._stopSpeech();
+      const now = Date.now();
+      this.setState({ loopListening: true, loopListenStart: now, now: now, playing: '' });
+    }
+
+    _loopMicDone() {
+      const s = this.state;
+      const d = this._content()[s.kind];
+      const node = d && d.loop ? d.loop[s.loopNode] : null;
+      if (node && node.options && node.options.length) this._choose(node.options[0]);
+      else this.setState({ loopListening: false });
+    }
+
+    _speak(text) {
+      try {
+        const ss = window.speechSynthesis;
+        if (!ss || typeof window.SpeechSynthesisUtterance !== 'function') return false;
+        const u = new window.SpeechSynthesisUtterance(String(text));
+        u.lang = 'en-GB';
+        u.rate = 0.95;
+        const voices = ss.getVoices ? ss.getVoices() : [];
+        let v = null;
+        for (let i = 0; i < voices.length; i += 1) {
+          if (voices[i].lang === 'en-GB' && voices[i].localService) { v = voices[i]; break; }
+        }
+        if (!v) {
+          for (let i = 0; i < voices.length; i += 1) {
+            if (String(voices[i].lang).indexOf('en') === 0 && voices[i].localService) { v = voices[i]; break; }
+          }
+        }
+        if (v) u.voice = v;
+        const finish = () => {
+          if (this._utter === u) { this._utter = null; this.setState({ playing: '' }); }
+        };
+        u.onend = finish;
+        // Without a voice the clip plays on, silently, for its narration's length.
+        u.onerror = () => { if (this._utter === u) this._utter = null; };
+        this._utter = u;
+        setTimeout(() => {
+          if (this._utter === u) { try { ss.speak(u); } catch (e) { finish(); } }
+        }, 80);
+        return true;
+      } catch (e) {
+        this._utter = null;
+        return false;
+      }
+    }
+
+    _stopSpeech() {
+      this._utter = null;
+      try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+    }
+
+    _play(key, text) {
+      if (this.state.playing === key) { this._stopSpeech(); this.setState({ playing: '' }); return; }
+      this._stopSpeech();
+      const words = String(text || '').split(/\s+/).filter(Boolean).length;
+      const dur = Math.max(4000, Math.round((words / 2.4) * 1000));
+      if ((this.props || {}).readAloud !== false) this._speak(text);
+      const now = Date.now();
+      this.setState({ playing: key, playStart: now, playDur: dur, now: now, listening: false, loopListening: false });
+    }
+
+    _tick() {
+      const s = this.state;
+      const now = Date.now();
+      if (s.listening && now - s.listenStart > 2600) { this._finishListening(); return; }
+      if (s.loopListening && now - s.loopListenStart > 2000) { this._loopMicDone(); return; }
+      if (s.playing) {
+        const over = now - s.playStart;
+        if ((!this._utter && over > s.playDur + 300) || over > s.playDur * 2 + 3000) {
+          this._stopSpeech();
+          this.setState({ playing: '', now: now });
+          return;
+        }
+      }
+      const tl = this._tl();
+      const busy = s.listening || s.loopListening || !!s.playing ||
+        (s.loopPendingUntil > 0 && now < s.loopPendingUntil + 150) ||
+        (s.screen === 'answer' && now - s.t0 < tl.end + 600);
+      if (busy) this.setState({ now: now });
+    }
+
+    renderVals() {
+      const s = this.state;
+      const p = this.props || {};
+      const c = this._content();
+      const tl = this._tl();
+      const now = s.now || Date.now();
+      const isAsk = s.screen === 'ask';
+      const isAnswer = s.screen === 'answer';
+      const e = isAnswer ? Math.max(0, now - s.t0) : 0;
+      const kind = s.kind;
+      const scripted = isAnswer && (kind === 'sky' || kind === 'zero');
+      const careful = isAnswer && !!c.careful[kind];
+      const other = isAnswer && !scripted && !careful;
+      const d = scripted ? c[kind] : null;
+
+      const chips = [c.sky, c.zero].map((x) => ({ label: x.q, pick: () => this._ask(x.q, false, false) }));
+
+      const full = d ? d.answer : '';
+      const shownN = d ? Math.max(0, Math.min(full.length, Math.floor(((e - tl.think) * tl.cps) / 1000))) : 0;
+      const ansThinking = scripted && e < tl.think;
+      const ansDone = scripted && shownN >= full.length;
+      const ansStreaming = scripted && !ansThinking && !ansDone;
+      const ansPlaying = s.playing === 'a';
+
+      const playFrac = s.playDur ? Math.min(1, (now - s.playStart) / s.playDur) : 0;
+      let making = 0;
+      let failedN = 0;
+      const blocks = (d ? d.blocks : []).map((b, i) => {
+        const visible = e >= tl.blocks[i];
+        const narrReady = e >= tl.narr[i];
+        const failed = visible && p.failThird === true && i === 2 && e >= tl.video[i];
+        const vReady = visible && !failed && e >= tl.video[i];
+        const pv = s.playing === 'v' + i;
+        const pn = s.playing === 'n' + i;
+        const num = i + 1;
+        const st = [['#E7EDFF', '#C9D6FF', '#2347D6', '#FFFFFF'], ['#FFF4D1', '#F3DB97', '#F4B000', '#14213D'],
+          ['#E3F1EA', '#BFDCCD', '#1D7A4F', '#FFFFFF']][i];
+        if (visible && !vReady && !failed) making += 1;
+        if (failed) failedN += 1;
+        return {
+          num: num, title: b.title, text: b.text, sceneLabel: b.label,
+          hidden: !visible, open: visible,
+          vMaking: visible && !vReady && !failed,
+          vScene: vReady,
+          vStill: failed,
+          stillLabel: 'Still picture for building block ' + num,
+          stillStyle: 'background-color: ' + st[0] + '; background-image: radial-gradient(' + st[1] + ' 2px, transparent 2.5px)',
+          badgeStyle: 'background: ' + st[2] + '; color: ' + st[3],
+          vPoster: vReady && !pv,
+          vPlaying: vReady && pv,
+          vLabel: vReady,
+          vFailed: failed,
+          sceneClass: pv ? 'pm-scene is-playing' : 'pm-scene',
+          sPrism: b.scene === 'prism', sScatter: b.scene === 'scatter', sDome: b.scene === 'dome',
+          sShare: b.scene === 'share', sCheck: b.scene === 'check', sNozero: b.scene === 'nozero',
+          narrReady: narrReady, narrPending: !narrReady,
+          narrLine: narrReady ? 'Narration ready to hear' : 'Making the narration',
+          listenLabel: !narrReady ? 'Narration coming' : (pn ? 'Stop' : 'Listen'),
+          listenAria: !narrReady ? 'Narration for building block ' + num + ' is on its way' : (pn ? 'Stop the narration for building block ' + num : 'Listen to building block ' + num),
+          listenDisabled: !narrReady,
+          listenOpacity: narrReady ? '1' : '0.5',
+          pn: pn, notPn: !pn,
+          prog: String(Math.round(pv ? playFrac * 100 : 0)),
+          playAria: 'Play the video for building block ' + num,
+          stopAria: 'Stop the video for building block ' + num,
+          onPlay: () => this._play('v' + i, b.narr),
+          onListen: () => this._play('n' + i, b.narr)
+        };
+      });
+
+      let blocksLine = 'Working out what you need to understand first.';
+      if (d && e >= tl.blocks[2]) {
+        if (making > 0) blocksLine = 'Videos are being made for your question. You can listen or read while you wait.';
+        else if (failedN > 0) blocksLine = 'Two videos are ready. One is a picture instead, and you can still listen to it.';
+        else blocksLine = 'Watch, listen or read.';
+      }
+
+      const loop = d ? d.loop : null;
+      const node = loop && s.loopNode ? loop[s.loopNode] : null;
+      const pending = s.loopPendingUntil > 0 && now < s.loopPendingUntil;
+      const done = !!(node && node.final) && !pending;
+      let turns = s.turns.map((t) => ({ isPrimer: t.who === 'primer', isChild: t.who === 'child', text: t.text }));
+      let viewText = '';
+      if (done && turns.length) {
+        viewText = turns[turns.length - 1].text;
+        turns = turns.slice(0, -1);
+      }
+      const options = (node && !node.final && !pending ? node.options : []).map((o) => ({ label: o.label, pick: () => this._choose(o) }));
+      const carefulText = careful ? c.careful[kind] : '';
+
+      return {
+        isAsk: isAsk, isAnswer: isAnswer,
+        micIdle: !s.listening, isListening: s.listening, onMic: () => this._mic(),
+        draft: s.draft,
+        onDraft: (ev) => {
+          const v = ev && ev.target ? ev.target.value : '';
+          this.setState({ draft: v, draftByVoice: v ? this.state.draftByVoice : false });
+        },
+        onKey: (ev) => { if (ev && ev.key === 'Enter') this._ask(this.state.draft, this.state.draftByVoice, false); },
+        onAsk: () => this._ask(this.state.draft, this.state.draftByVoice, false),
+        askDisabled: !s.draft.trim(), askOpacity: s.draft.trim() ? '1' : '0.5',
+        showDraftHint: s.draftByVoice && !!s.draft,
+        chips: chips,
+        onNew: () => this._new(),
+        qText: s.qText, askedHow: s.viaVoice ? 'You asked out loud' : 'You typed this',
+        isScripted: scripted, isCareful: careful, isOther: other,
+        ansThinking: ansThinking, ansHasText: scripted && !ansThinking,
+        ansShown: full.slice(0, shownN), ansStreaming: ansStreaming,
+        ansPlaying: ansPlaying, ansNotPlaying: !ansPlaying,
+        ansListenLabel: ansPlaying ? 'Stop' : 'Listen',
+        ansListenDisabled: !ansDone, ansListenOpacity: ansDone ? '1' : '0.5',
+        onAnsListen: () => this._play('a', full),
+        showBlocks: scripted && e >= tl.skel, blocksLine: blocksLine, blocks: blocks,
+        showLoop: scripted && e >= tl.loop,
+        turns: turns, showTyping: pending,
+        showPrompt: !!node && !pending && !node.final, loopPrompt: node ? node.say : '',
+        showOptions: options.length > 0, options: options,
+        loopIdle: !s.loopListening, loopListening: s.loopListening, onLoopMic: () => this._loopMic(),
+        loopDone: done, viewText: viewText, doneText: node && node.final ? node.say : '',
+        carefulText: carefulText,
+        carefulPlaying: s.playing === 'a', carefulNotPlaying: s.playing !== 'a',
+        carefulListenLabel: s.playing === 'a' ? 'Stop' : 'Listen',
+        onCarefulListen: () => this._play('a', carefulText)
+      };
+    }
+  }
+
+  app = new Component({ startAt: 'Ask screen', timing: 'Quick preview', failThird: false, readAloud: true });
+  app.componentDidMount();
+
+  const startAt = document.getElementById('mk-start-at');
+  function showApp(where) {
+    welcome.hidden = true;
+    root.hidden = false;
+    app._applyStart(where);
+    render();
+  }
+  function showWelcome() {
+    app._new();
+    app._stopSpeech();
+    root.hidden = true;
+    welcome.hidden = false;
+  }
+  function start() {
+    startAt.value = 'Ask screen';
+    showApp('Ask screen');
+    frame.focus({ preventScroll: true });
+    if (frame.getBoundingClientRect().top < 0) frame.scrollIntoView({ block: 'start' });
+  }
+  document.getElementById('mk-start').addEventListener('click', start);
+  document.getElementById('pm-pass').addEventListener('keydown', (ev) => {
+    if (ev.key === 'Enter') { ev.preventDefault(); start(); }
+  });
+  startAt.addEventListener('change', () => {
+    if (startAt.value === 'Welcome screen') showWelcome();
+    else showApp(startAt.value);
+  });
+  document.getElementById('mk-timing').addEventListener('change', (ev) => {
+    app.props.timing = ev.target.value;
+    schedule();
+  });
+  document.getElementById('mk-fail').addEventListener('change', (ev) => {
+    app.props.failThird = ev.target.checked;
+    schedule();
+  });
+  document.getElementById('mk-read').addEventListener('change', (ev) => {
+    app.props.readAloud = ev.target.checked;
+    if (!ev.target.checked) app._stopSpeech();
+  });
+})();
+</script>
+</body>
+</html>

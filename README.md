@@ -231,14 +231,18 @@ contracts/
   creator-licence-heads-of-terms.md  counsel-facing, with Schedules 2 and 3
 mvp/
   primer-demo-spec.md          the Primer demo's build specification, saved as CLAUDE.md in the demo's own repository
+mockup/
+  index.html                   the Primer demo's design mock-up, hand-maintained; runs one script; published at /mockup/
 econ/                          the economics model and its outputs; not part of the site
 ```
 
 ## Publishing
 
 Static output. No framework, no JavaScript on the documents, no fonts or assets
-fetched over the network. Netlify publishes `_site/`, which the build assembles
-from `docs/`, `evidence/`, `contracts/` and `mvp/`, because `evidence/` is a sibling of
+fetched over the network. The map and the Primer demo's mock-up are the two pages
+that run a script, each at its own path with its own policy. Netlify publishes
+`_site/`, which the build assembles from `docs/`, `evidence/`, `contracts/`, `mvp/`
+and `mockup/`, because `evidence/` is a sibling of
 `docs/` and every sourced claim links to it. `/` redirects to
 `docs/index.html`; it must not rewrite, because a rewrite serves the page at the
 root, where its relative stylesheet and links fail (D52). See
