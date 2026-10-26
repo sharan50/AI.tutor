@@ -1,0 +1,111 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make test)",
+      "Bash(make test-all)",
+      "Bash(make lint)",
+      "Bash(make check-content)",
+      "Bash(uv sync)",
+      "Bash(uv run pytest *)",
+      "Bash(uv run ruff *)",
+      "Bash(uv run mypy *)",
+      "Bash(uv run alembic *)",
+      "Bash(uv run python -m tutor.content.check *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git switch *)",
+      "Bash(git merge *)",
+      "Bash(git worktree *)",
+      "WebFetch(domain:code.claude.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:platform.claude.com)",
+      "WebFetch(domain:ai.google.dev)",
+      "WebFetch(domain:modal.com)",
+      "WebFetch(domain:neon.com)",
+      "WebFetch(domain:docs.sympy.org)",
+      "WebFetch(domain:developers.google.com)",
+      "WebFetch(domain:fastapi.tiangolo.com)",
+      "WebFetch(domain:docs.sqlalchemy.org)",
+      "WebFetch(domain:docs.astral.sh)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:pypi.org)",
+      "WebFetch(domain:huggingface.co)",
+      "WebFetch(domain:aitutor-plan.netlify.app)"
+    ],
+    "ask": [
+      "Edit(**/tutor/contracts/**)",
+      "Edit(**/tests/invariants/**)",
+      "Edit(**/tests/thresholds.toml)",
+      "Edit(**/PHASE)",
+      "Edit(**/CLAUDE.md)",
+      "Edit(**/SPEC.md)",
+      "Edit(**/.claude/settings.json)",
+      "Edit(**/.claude/agents/**)",
+      "Edit(**/.claude/hooks/**)",
+      "Bash(make battery)",
+      "Bash(modal deploy *)",
+      "Bash(git push *)"
+    ],
+    "deny": [
+      "Edit(**/content/sources/**)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(modal secret *)",
+      "WebFetch(domain:aqa.org.uk)",
+      "WebFetch(domain:pearson.com)",
+      "WebFetch(domain:ocr.org.uk)",
+      "WebFetch(domain:wjec.co.uk)",
+      "WebFetch(domain:eduqas.co.uk)",
+      "WebFetch(domain:ccea.org.uk)",
+      "WebFetch(domain:sqa.org.uk)",
+      "WebFetch(domain:cambridgeinternational.org)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {"type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session_start.sh"}
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/guard.py"}
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/after_edit.py", "timeout": 120}
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/before_stop.py", "timeout": 900}
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/before_stop.py", "timeout": 900}
+        ]
+      }
+    ]
+  }
+}

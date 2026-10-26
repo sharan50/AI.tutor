@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutor: MVP build guide, AI.tutor design vault</title>
+<meta name="description" content="The whole design for adult testers, built by agents on a harness: content, the self-tutor on open models, tools, costs and phases.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#doc">Skip to the document</a>
+
+<header class="topbar">
+  <a class="brand" href="index.html"><b>AI.tutor</b> <span>design vault</span></a>
+  <details class="switcher">
+    <summary>Tutor: MVP build guide</summary>
+    <div class="sw-panel"><p class="rail-h">Doors</p><a href="index.html"><span class="sw-no"></span>Front page</a><a href="tutor.html"><span class="sw-no"></span>Tutor summary</a><a href="roles/ceo.html"><span class="sw-no"></span>Chief executive</a><a href="roles/cto.html"><span class="sw-no"></span>Chief technology officer</a><a href="roles/coo.html"><span class="sw-no"></span>Chief operating officer</a><a href="roles/cfo.html"><span class="sw-no"></span>Chief financial officer</a><a href="roles/counsel.html"><span class="sw-no"></span>Counsel</a><a href="contents.html"><span class="sw-no"></span>Contents</a><p class="rail-h">Tutor</p><a href="00-thesis.html"><span class="sw-no">00</span>Thesis</a><a href="01-product.html"><span class="sw-no">01</span>Product</a><a href="02-style-engine.html"><span class="sw-no">02</span>Style engine</a><a href="03-curriculum-and-content.html"><span class="sw-no">03</span>Curriculum and content</a><a href="04-rights-dossier.html"><span class="sw-no">04</span>Rights dossier</a><a href="05-safety-privacy-regulatory.html"><span class="sw-no">05</span>Safety, privacy and regulatory</a><a href="06-architecture.html"><span class="sw-no">06</span>Architecture</a><a href="07-route-a-direct-to-parents.html"><span class="sw-no">07</span>Route A: direct to parents</a><a href="08-route-b-through-schools.html"><span class="sw-no">08</span>Route B: through schools</a><a href="09-route-comparison.html"><span class="sw-no">09</span>Route comparison</a><a href="10-economics.html"><span class="sw-no">10</span>Economics</a><a href="11-roadmap.html"><span class="sw-no">11</span>Roadmap</a><a href="12-risk-register.html"><span class="sw-no">12</span>Risk register</a><a href="13-primer-gateway.html"><span class="sw-no">13</span>Primer gateway</a><a href="tutor-mvp.html" class="here"><span class="sw-no"></span>Tutor: MVP build guide</a><p class="rail-h">Primer</p><a href="p1-primer-thesis.html"><span class="sw-no">P1</span>Primer: thesis</a><a href="p2-primer-product.html"><span class="sw-no">P2</span>Primer: product</a><a href="p3-primer-content.html"><span class="sw-no">P3</span>Primer: content and evidence</a><a href="p4-primer-safety.html"><span class="sw-no">P4</span>Primer: safety, privacy and regulatory</a><a href="p5-primer-architecture.html"><span class="sw-no">P5</span>Primer: architecture</a><a href="p6-primer-plan.html"><span class="sw-no">P6</span>Primer: plan</a><a href="primer-mvp.html"><span class="sw-no"></span>Primer: MVP build guide</a><p class="rail-h">Foundations</p><a href="f1-foundations-thesis.html"><span class="sw-no">F1</span>Foundations: thesis</a><a href="f2-foundations-product.html"><span class="sw-no">F2</span>Foundations: product</a><a href="f3-foundations-content.html"><span class="sw-no">F3</span>Foundations: content and evidence</a><a href="f4-foundations-safety.html"><span class="sw-no">F4</span>Foundations: safety, privacy and regulatory</a><a href="f5-foundations-architecture.html"><span class="sw-no">F5</span>Foundations: architecture</a><a href="f6-foundations-plan.html"><span class="sw-no">F6</span>Foundations: plan</a><p class="rail-h">Across all three</p><a href="which-first.html"><span class="sw-no"></span>Which idea goes first</a><a href="field-research.html"><span class="sw-no"></span>Field research guide</a><a href="14-open-items.html"><span class="sw-no">14</span>Open items</a><a href="decision-ledger.html"><span class="sw-no"></span>Decision ledger</a><p class="rail-h">Status and evidence</p><a href="status.html"><span class="sw-no"></span>Status</a><a href="../map/"><span class="sw-no"></span>Impact surface</a><a href="../evidence/sources.html"><span class="sw-no"></span>Evidence register</a></div>
+  </details>
+  <nav class="toplinks">
+    <a href="status.html">Status</a>
+    <a href="../map/">Map</a>
+    <a href="../evidence/sources.html">Evidence</a>
+    <a href="contents.html">Contents</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#what">What you are building</a></li><li><a href="#paths">Five ways to build it, and the one chosen</a></li><li><a href="#harness">The harness, before any build prompt</a></li><li><a href="#team">The agent team</a></li><li><a href="#content">The content</a></li><li><a href="#selftutor">The self-tutor on open models</a></li><li><a href="#stack">The tools, and why these</a></li><li><a href="#safety">Testers, safety and data</a></li><li><a href="#costs">What it costs, and the caps</a></li><li><a href="#phases">Phases, and when each is done</a></li><li><a href="#limits">What the MVP cannot show</a></li></ol></div></aside>
+  <main class="sheet" id="doc">
+<h1>Tutor: MVP build guide</h1>
+<p class="standfirst">The first build of the Tutor is an MVP that runs the whole design for adults who play learners of 14 to 18: one-objective sessions, the verified turn pipeline, the style engine, the self-tutor in the tester's own face and voice, and the parent report. It teaches the algebra of GCSE Maths, GCSE Further Maths and A-level Maths, drafted by agents and checked by a computer algebra system, and validated by no examiner. The owner builds it by directing a team of Claude Code agents on a harness built first. Speed of building and fidelity to the product come first; running cost and latency come last.</p>
+<dl class="meta">
+<dt>Document</dt><dd>The Tutor's MVP build guide. Not numbered: it plans a build and is not part of the Tutor's design, 00 to 14.</dd>
+<dt>Status</dt><dd>A plan to build. Nothing here has been built; no test here has been run.</dd>
+<dt>Maturity</dt><dd>First draft, reviewed once independently.</dd>
+<dt>Written</dt><dd>26 October 2026</dd>
+<dt>Builds from</dt><dd><a href="../mvp/tutor/README.md">The specification pack for Claude Code</a>, and pages <a href="01-product.html">01</a>, <a href="02-style-engine.html">02</a>, <a href="03-curriculum-and-content.html">03</a> and <a href="06-architecture.html">06</a>, which it builds.</dd>
+<dt>Decisions</dt><dd>D80 to D88, in the <a href="decision-ledger.html#tutor-mvp">decision ledger</a></dd>
+</dl>
+
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#what">What you are building</a></li>
+<li><a href="#paths">Five ways to build it, and the one chosen</a></li>
+<li><a href="#harness">The harness, before any build prompt</a></li>
+<li><a href="#team">The agent team</a></li>
+<li><a href="#content">The content</a></li>
+<li><a href="#selftutor">The self-tutor on open models</a></li>
+<li><a href="#stack">The tools, and why these</a></li>
+<li><a href="#safety">Testers, safety and data</a></li>
+<li><a href="#costs">What it costs, and the caps</a></li>
+<li><a href="#phases">Phases, and when each is done</a></li>
+<li><a href="#limits">What the MVP cannot show</a></li>
+</ol>
+</details>
+
+<h2 id="what">What you are building</h2>
+
+<p><b>The product as <a href="01-product.html">01</a> describes it, for adult testers.</b> A tester opens an invitation, plays a learner, picks an objective and is taught in a chosen style, then sits the unaided check and hears an honest close. Every turn goes through the pipeline of <a href="06-architecture.html#turn">06</a>: the composer picks the sources before any model is called, the generator cites them, the verifier runs its four checks, and a failed turn falls back to the item verbatim. Around the session sit figures rendered from data, practice papers, the provisional grade range, the self-tutor, the parent report, safety routing to a reviewer, and a console where an examiner would validate items.</p>
+
+<p><b>Three things are not real, and every screen says so.</b> No examiner has validated any item, so P1 is not kept and each item says it is not validated. No child uses it. No creator has signed, so one fictional licensed preset shows the machinery.</p>
+
+<div class="claim">
+<p>The Tutor is shown first by an MVP that matches the product's capabilities as closely as it can, built for speed, with running cost and latency deprioritised, by a harness first and then a team of Claude Code agents. It is not M2's release and decides nothing about the route or which idea goes first.</p>
+<span class="tag decided">Decision<span class="src">D80, the owner's, 26 October 2026</span></span>
+</div>
+
+<h2 id="paths">Five ways to build it, and the one chosen</h2>
+
+<p><b>Only a harness and an agent team are both fast and faithful.</b> The other four lose speed, lose the property that carries the business (P2), or put a likeness with vendors the design would refuse.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Path</th><th>For</th><th>Against</th></tr></thead>
+<tbody>
+<tr><td>One agent, plane by plane</td><td>Faithful and simple</td><td>The slowest faithful path; the owner reviews every step</td></tr>
+<tr><td><b>A harness, then an agent team</b></td><td>Fast and faithful; the tests hold it to the design</td><td>The most work before the first line of product code</td></tr>
+<tr><td>An agent-native tutor</td><td>Fluent sessions with little code</td><td>The model chooses its sources, which <a href="06-architecture.html#turn">06</a> rejects, so P2 becomes a hope</td></tr>
+<tr><td>Buy the visible layer</td><td>The quickest polished self-tutor</td><td>Likeness vendors that train on uploads or keep media fail D24, D61 and D65</td></tr>
+<tr><td>An AI app builder</td><td>The quickest first screens</td><td>Too little control to keep the invariants; usually rebuilt</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="harness">The harness, before any build prompt</h2>
+
+<p><b>The harness turns the vault into rules the agents cannot skip.</b> It is built in the first phase, with Claude Code, before anything is asked of the product.</p>
+
+<ul class="tight">
+<li><b>A CLAUDE.md of invariants,</b> read by every agent: the model never retrieves; nothing reaches the screen before the gate; style never reaches the content plane; the likeness comes only after the gate; no date of birth is stored; nothing can be uploaded; no board material is used.</li>
+<li><b>Contracts:</b> the turn plan, the verifier's verdict, the preset object, the style card and the likeness interfaces, as typed schemas shared by every plane.</li>
+<li><b>The vault's tests as failing tests:</b> T-GND-01, T-MTH-01, T-SCP-01, T-VAL-01, T-PAP-01, T-STY-01 to T-STY-03 and T-SLF-02 to T-SLF-06, each written as code before what it tests exists and marked with the phase by which it must pass. Where a test asks for a live item, the MVP accepts a draft one the algebra system has checked, because none is validated.</li>
+<li><b>A frozen battery</b> of objectives, as T-REG-01 specifies, run on every change to a model, prompt, renderer or retrieval rule, and again with no licensed preset, as T-ZERO-01 requires.</li>
+<li><b>Hooks</b> that check each file as it is edited and refuse to let a session or an agent finish while the fast tests fail, and <b>permissions</b> that ask the owner before a contract, a test or a threshold changes, and keep the exam boards' sites out of reach, <span class="mark assumed">Assumed</span> (CV-30).</li>
+<li><b>Six builders and a reviewer,</b> defined as files in the repository, each builder working in its own copy of it, so that every session starts with the same team, <span class="mark assumed">Assumed</span> (CV-30).</li>
+</ul>
+
+<div class="claim">
+<p>The harness comes before any build prompt: the invariants, the contracts, the vault's tests as failing tests, the frozen battery, the hooks, and the agents. Nothing merges while a test fails.</p>
+<span class="tag decided">Decision<span class="src">D84, taken while writing, 26 October 2026</span></span>
+</div>
+
+<h2 id="team">The agent team</h2>
+
+<p><b>A lead session plans each phase; the agents build in parallel, each in its own working copy; a reviewer reads every change; the tests decide what merges.</b> The owner approves each phase by trying it.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Agent</th><th>Builds</th><th>Never</th></tr></thead>
+<tbody>
+<tr><td>Content author</td><td>Objectives, items, worked solutions, misconceptions, figure specifications, provenance</td><td>Reads any board's material</td></tr>
+<tr><td>Pipeline engineer</td><td>Safety check, composer, generator, verifier, gate, fallback, logger, figures, the battery</td><td>Lets the model retrieve</td></tr>
+<tr><td>Style engineer</td><td>Presets, the card renderer, adjustments, labels, the kill switch, signature extraction</td><td>Lets style reach the content plane</td></tr>
+<tr><td>Likeness engineer</td><td>Consents, capture, liveness, the likeness store, voice and face rendering, labels, deletion</td><td>Renders text the gate has not passed</td></tr>
+<tr><td>App engineer</td><td>The learner's, parent's, reviewer's and validator's screens, phone first</td><td>Shows a self-tutor to anyone but its tester</td></tr>
+<tr><td>Platform engineer</td><td>Accounts, roles, data, sessions, the reviewer's queue, papers, the grade range, cohort flags, deployment</td><td>Stores a date of birth</td></tr>
+<tr><td>Reviewer</td><td>Nothing: reads each change against the invariants and the tests</td><td>Approves a change with a failing test</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Running several agents at once spends the owner's Claude Code allowance faster; by how much is <span class="mark unknown">Unknown</span> until the first phase.</p>
+
+<h2 id="content">The content</h2>
+
+<p><b>The algebra of three qualifications, drafted in full, checked by machine, validated by no one.</b> The content author decomposes each into objectives and writes ten items for each, the ratio <a href="03-curriculum-and-content.html#scope">03</a> plans with, across its four kinds, each with a worked solution, its misconceptions, a figure specification where one helps, and the provenance record of <a href="03-curriculum-and-content.html#provenance">03</a>, its status kept at draft. SymPy checks every checkable step, and an item it rejects is rewritten or dropped. How many objectives there are is <span class="mark unknown">Unknown</span> until the decomposition.</p>
+
+<ul class="tight">
+<li><b>GCSE Mathematics,</b> both tiers, from the algebra of the DfE subject content, <span class="mark assumed">Assumed</span> (CV-29).</li>
+<li><b>A-level Mathematics,</b> from the algebra and functions of the DfE subject content, <span class="mark assumed">Assumed</span> (CV-29).</li>
+<li><b>GCSE Further Mathematics.</b> No DfE content for it was found, and the qualification found is AQA's Level 2 certificate, <span class="mark assumed">Assumed</span> (CV-29), from the board whose policy bars its material from AI tools and from works made with them (EV-21). Its objectives are written from no board's material, and the owner approves the list before items are drafted.</li>
+</ul>
+
+<p>Practice papers follow the MVP's own structure, because an algebra-only paper cannot have a board's shape. The MVP serves draft items, which the product never would, and every one carries the label "Not yet validated by an examiner".</p>
+
+<div class="claim">
+<p>The content is the algebra of GCSE Mathematics, GCSE Further Mathematics and A-level Mathematics, drafted in full by agents under the clean-room rule, checked by the computer algebra system and labelled as not validated. A-level Further Mathematics and Additional Mathematics are out.</p>
+<span class="tag decided">Decision<span class="src">D82, the owner's, 26 October 2026</span></span>
+</div>
+
+<div class="claim">
+<p>Both GCSE tiers; GCSE and A-level objectives from the DfE subject content; Further Mathematics from no board's material, approved by the owner; papers of the MVP's own structure.</p>
+<span class="tag decided">Decision<span class="src">D85, taken while writing, 26 October 2026</span></span>
+</div>
+
+<h2 id="selftutor">The self-tutor on open models</h2>
+
+<p><b>Every part of the self-tutor in <a href="01-product.html#self">01</a> is built, and the likeness never leaves the MVP's own machines.</b> The voice and face models run on rented GPUs, so no speech or animation vendor holds a sample, and conditioning happens at render time, so nothing is trained on a tester.</p>
+
+<ul class="tight">
+<li><b>Turning it on:</b> both consents, then capture in the browser: a short head-and-shoulders clip and prompted sentences read aloud, chosen afresh each time. There is no upload route.</li>
+<li><b>Liveness:</b> head turns and blinks, in an order chosen afresh, checked by MediaPipe's face landmarker in the browser and again on the server; a passive anti-spoofing model on the server; and Whisper confirming the prompted sentences were spoken, <span class="mark assumed">Assumed</span> (CV-26).</li>
+<li><b>Rendering after the gate:</b> Chatterbox speaks each passed sentence in the tester's voice, and MuseTalk animates the captured clip to it, <span class="mark assumed">Assumed</span> (CV-24, CV-25). If the face is slow, a still likeness speaks; the text never waits.</li>
+<li><b>The store:</b> an encrypted volume that only the capture, the two renderers and the deletion job can reach, so nothing that reads a tester can return a face or a voice.</li>
+<li><b>Labels and deletion:</b> a visible synthetic label and provenance metadata on every clip, which is streamed and never stored; deletion stops the next turn and clears the store within seven days (D63).</li>
+</ul>
+
+<p>Many open face models depend on InsightFace's pretrained models, which are for non-commercial research only, <span class="mark assumed">Assumed</span> (CV-25), so the first phase audits the licence of every model and dependency before any is used (OA-45).</p>
+
+<div class="claim">
+<p>The self-tutor's voice and face run on open models the MVP hosts on rented GPUs, so no speech or animation vendor receives a likeness; for the likeness, D24 and D65 hold by construction.</p>
+<span class="tag decided">Decision<span class="src">D83, the owner's, 26 October 2026</span></span>
+</div>
+
+<h2 id="stack">The tools, and why these</h2>
+
+<p><b>Four accounts: Anthropic, Google, Modal and Neon.</b> The MVP does not use the Netlify team that hosts this site.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Job</th><th>Tool</th><th>Why this one</th></tr></thead>
+<tbody>
+<tr><td>Generating turns; classifying safety</td><td>Claude Opus 5.5</td><td>The most capable model on offer, with a spend limit the owner sets, <span class="mark assumed">Assumed</span> (CV-21)</td></tr>
+<tr><td>Entailment and scope checks</td><td>Gemini 4 Argon</td><td>A different family from the generator, as D27 requires, <span class="mark assumed">Assumed</span> (CV-28)</td></tr>
+<tr><td>Mathematics check</td><td>SymPy</td><td>Deterministic, local, no model call, as check (d) requires</td></tr>
+<tr><td>Voice, face and liveness</td><td>Chatterbox, MuseTalk, MediaPipe, Silent-Face-Anti-Spoofing, Whisper</td><td>Open, licensed for commercial use, run by the MVP itself, <span class="mark assumed">Assumed</span> (CV-24 to CV-26)</td></tr>
+<tr><td>App, workers, GPUs, likeness store</td><td>Modal</td><td>Python services and GPUs on one account, billed by the second, <span class="mark assumed">Assumed</span> (CV-27)</td></tr>
+<tr><td>Database</td><td>Neon</td><td>Managed Postgres for accounts, the item bank and the turn records</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p>The MVP's tools are those above. The text models are used on their standard terms, a departure from D24 for the MVP alone, which no child uses. The choice binds the MVP only; the Tutor's model vendor stays deliberately undecided.</p>
+<span class="tag decided">Decision<span class="src">D86, taken while writing, 26 October 2026</span></span>
+</div>
+
+<h2 id="safety">Testers, safety and data</h2>
+
+<p><b>Adults only, by invitation, and the safety design of <a href="05-safety-privacy-regulatory.html#content">05</a> runs as written.</b> A message outside academic scope gets the three moves: a brief acknowledgement, the signposts 05 names, and an escalation to a reviewer's queue, which the owner works. The tutor claims no feelings, never initiates contact and caps the session.</p>
+
+<p><b>Who sees what.</b> Anthropic and Google see turns and the text being checked. No vendor sees a face or a voice.</p>
+
+<div class="claim">
+<p>Only adults use the MVP, playing learners of 14 to 18. No child uses it, and it holds no child's data.</p>
+<span class="tag decided">Decision<span class="src">D81, the owner's, 26 October 2026</span></span>
+</div>
+
+<div class="claim">
+<p>Testers' data: accounts by invitation; transcripts and progress kept for the test period and deleted at its end, with everything else about testers except counts and timings; likenesses under D63's rules; nothing about a tester's life beyond what they type.</p>
+<span class="tag decided">Decision<span class="src">D87, taken while writing, 26 October 2026</span></span>
+</div>
+
+<h2 id="costs">What it costs, and the caps</h2>
+
+<p><b>The listed prices are known; what a session costs is <span class="mark unknown">Unknown</span> until the battery runs.</b> Cost was deprioritised, so the caps exist to stop a mistake, not to save money, and the window holds the whole session rather than D30's bounded summary.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Item</th><th>Listed price</th></tr></thead>
+<tbody>
+<tr><td>Claude Opus 5.5</td><td>$4 per million tokens in, $20 out, <span class="mark assumed">Assumed</span> (CV-21)</td></tr>
+<tr><td>Gemini 4 Argon</td><td>$2 in and $10 out to 30 November 2026, then $4 and $20, <span class="mark assumed">Assumed</span> (CV-28)</td></tr>
+<tr><td>GPUs on Modal</td><td>About $2 to $4 an hour, by type, billed by the second, <span class="mark assumed">Assumed</span> (CV-27)</td></tr>
+<tr><td>Neon</td><td><span class="mark unknown">Unknown</span> at the MVP's size</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Both text providers let the owner set a monthly limit, and Google's can be overshot, <span class="mark assumed">Assumed</span> (CV-20, CV-21).</p>
+
+<div class="claim">
+<p>A monthly spend limit of $500 at Anthropic and $300 at Google; GPUs that shut down after five idle minutes; and at most fifty turns a tester a day. The owner can raise any of them.</p>
+<span class="tag decided">Design choice<span class="src">Caps set by this guide</span></span>
+</div>
+
+<h2 id="phases">Phases, and when each is done</h2>
+
+<p><b>Each phase ends with something the owner can try and tests that pass.</b> The prompts for each are in the pack's <a href="../mvp/tutor/PROMPTS.md">PROMPTS.md</a>.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Phase</th><th>What is built</th><th>Done when</th></tr></thead>
+<tbody>
+<tr><td>0. Accounts and harness</td><td>The repository, the pack copied in, the contracts, the failing tests, the hooks, the agents, the deployment</td><td>The tests run and fail for the right reason; an empty app deploys</td></tr>
+<tr><td>1. Spikes and foundations</td><td>The licence audit; the voice, face and liveness spike; the schema; the objective lists; the card renderer; the app's shell</td><td>A likeness speaks a fixed sentence; the owner approves the Further Mathematics list</td></tr>
+<tr><td>2. The turn pipeline</td><td>The safety check, composer, generator, verifier, gate and fallback; the session's five steps; the first content</td><td>The battery runs and reports the gate-fire rate; a session ends in an honest close</td></tr>
+<tr><td>3. The self-tutor</td><td>Consents, capture, liveness, passcode, rendering after the gate, labels, deletion</td><td>T-SLF-02 to T-SLF-06 pass on the MVP</td></tr>
+<tr><td>4. Around the session</td><td>Figures, papers, the grade range, the parent report, the reviewer queue, the validator console, the kill switch, the rest of the content</td><td>T-PAP-01, T-STY-01 and T-STY-03 pass; T-STY-02's blind grading screen works; the kill switch is rehearsed</td></tr>
+<tr><td>5. Testers</td><td>Sessions with adult testers, their blind grading for T-STY-02, and the fixes they show</td><td>The pack's final checklist passes</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>How long each phase takes is <span class="mark unknown">Unknown</span>: the first phase's pace is the first measurement, and whether the owner can direct the team without a hired engineer is OA-47.</p>
+
+<h2 id="limits">What the MVP cannot show</h2>
+
+<ul class="tight">
+<li><b>Whether learners engage or learn.</b> Adults are playing them, and D14's experiment needs real cohorts.</li>
+<li><b>Whether the content is right to P1's standard.</b> No examiner has validated it; how many errors the algebra system misses is OA-46.</li>
+<li><b>The product's cost.</b> The MVP spends without restraint; the cost per session in <a href="10-economics.html">10</a> comes from M2's battery.</li>
+<li><b>The safety of a child's session.</b> No child, no age assurance and no safeguarding role beyond the owner.</li>
+</ul>
+
+<div class="claim">
+<p>Left out: payment; real age assurance, for which a simulated check stands in; real creators, for which one fictional licensed preset shows the machinery; Route B's school features; the US course; and D30's rolling summary, because a whole session fits in the window.</p>
+<span class="tag decided">Decision<span class="src">D88, taken while writing, 26 October 2026</span></span>
+</div>
+
+<p>Show it as an MVP, say that nothing in it has been validated, and never let a learner under 18 use it.</p>
+  </main>
+</div>
+
+<nav class="pager">
+  <a class="prev" href="13-primer-gateway.html"><span>Previous</span>Primer gateway</a>
+  <a class="next" href="p1-primer-thesis.html"><span>Next</span>Primer: thesis</a>
+</nav>
+
+<footer class="pagefoot">
+  <div class="legend-row">
+    <span class="li"><span class="mark verified">Verified</span>checked against a named source</span>
+    <span class="li"><span class="mark assumed">Assumed</span>reasoned, not checked</span>
+    <span class="li"><span class="mark open">Open</span>a question for a lawyer</span>
+    <span class="li"><span class="mark unknown">Unknown</span>a number we do not have</span>
+    <span class="li"><span class="mark decided">Decision</span>a choice taken here</span>
+  </div>
+  <div class="meta-row">
+    <span>AI.tutor design vault, revised October 2026. Nothing here has been built.</span>
+    <span class="stamp">Built 26 October 2026</span>
+  </div>
+</footer>
+</body>
+</html>

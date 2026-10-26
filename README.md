@@ -33,21 +33,22 @@ still unknown. It is **not** application code and it is not a product.
 The source instruction is [`BUILD_BRIEF.md`](BUILD_BRIEF.md) at the root, for the
 Tutor and for the vault's rules. Where this repository and the brief disagree, the
 brief governs. [`FACETS_BRIEF.md`](FACETS_BRIEF.md) governs the Primer,
-Foundations, the shared pages and the front page, and
+Foundations, the shared pages and the front page,
 [`PRIMER_MVP_BRIEF.md`](PRIMER_MVP_BRIEF.md) the Primer's MVP build guide and its
-specification.
+specification, and [`TUTOR_MVP_BRIEF.md`](TUTOR_MVP_BRIEF.md) the Tutor's MVP build
+guide and its specification pack.
 
 ## Status
 
 | | |
 |---|---|
-| Documents | 31 across the three ideas, the registers included, plus an evidence register |
+| Documents | 32 across the three ideas, the registers included, plus an evidence register |
 | Built | Nothing |
 | Tests specified | **32**, none run. There is nothing to run them against |
 | Counsel questions | **27** open, none answered. We proceed ahead of OI-3 under D34 and of OI-23 to OI-27 under D59, and each says so where it is applied |
-| Assumptions unverified | **44**, of which 19 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **79**, including three, taken on the owner's instruction, that reverse two earlier positions, and D1 and D9, since amended by the owner |
-| External claims registered | **42**, each with source and date checked, plus **23** candidates awaiting the owner's check |
+| Assumptions unverified | **47**, of which 19 are resolvable by reading or by asking rather than by building |
+| Decisions recorded | **88**, including three, taken on the owner's instruction, that reverse two earlier positions, and D1 and D9, since amended by the owner |
+| External claims registered | **42**, each with source and date checked, plus **30** candidates awaiting the owner's check |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at
 build time and governs where this table disagrees with it.
@@ -191,6 +192,8 @@ SELF_TUTOR_BRIEF.md            the brief for the self-tutor
 SELF_TUTOR_REPORT.md           what the self-tutor brief changed, its checks and its review
 PRIMER_MVP_BRIEF.md            the brief for the Primer's MVP build guide
 PRIMER_MVP_REPORT.md           what that brief changed, its checks and its review
+TUTOR_MVP_BRIEF.md             the brief for the Tutor's MVP build guide and its specification pack
+TUTOR_MVP_REPORT.md            what that brief changed, its checks and its review
 roles.json                     the five owners, what each owns and reads, the Tutor summary's and the front page's picks
 CLAUDE.md                      working rules for a coding session
 README.md                      this file
@@ -214,6 +217,7 @@ docs/
   contents.html                contents grouped by idea, and the five reader routes
   roles/<id>.html              one generated page per owner
   00-thesis.html .. 14-open-items.html     the Tutor, and the shared open-items register
+  tutor-mvp.html               the Tutor's MVP build guide: the whole design for adult testers
   p1-primer-thesis.html .. p6-primer-plan.html
   primer-mvp.html              the Primer's MVP build guide: a demonstration for adult testers
   f1-foundations-thesis.html .. f6-foundations-plan.html
@@ -223,7 +227,7 @@ docs/
   status.html                  generated from the registers
   style.css                    hand-maintained
 evidence/
-  sources.html                 42 external claims, source and date checked, and 23 candidates
+  sources.html                 42 external claims, source and date checked, and 30 candidates
 viz/
   dependency-map.html          the served map, generated; published at /map/
 contracts/
@@ -231,6 +235,7 @@ contracts/
   creator-licence-heads-of-terms.md  counsel-facing, with Schedules 2 and 3
 mvp/
   primer-demo-spec.md          the Primer demo's build specification, saved as CLAUDE.md in the demo's own repository
+  tutor/                       the Tutor MVP's specification pack: README, CLAUDE.md, SPEC.md, agents, settings, hooks, prompts
 mockup/
   index.html                   the Primer demo's design mock-up, hand-maintained; runs one script; published at /mockup/
 econ/                          the economics model and its outputs; not part of the site
