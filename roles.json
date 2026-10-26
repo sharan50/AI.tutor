@@ -35,12 +35,14 @@
       "id": "cto",
       "title": "Chief technology officer",
       "github": null,
-      "frame": "You own the architecture and the style engine: the turn pipeline, the verifier that is the product, deterministic retrieval, the kill switch and the read path that makes it a bound rather than a promise, the data model, the vendor position and cost per session; and the parameter object, the style card renderer, the conformance tests and the seam where exemplar conditioning would attach. Nothing here has been built. What you are held to is the set of tests specified in these pages and not yet run, and the invariants those tests protect: a claim the verifier cannot ground does not reach a learner, every persona feature degrades to an archetype, and a vendor update passes the frozen battery before a learner sees it. You also own the architecture of the Primer and of Foundations, which reuse the Tutor's pipeline and add the Primer's attribution and contested-question checks and Foundations' decodability check. Before you change a mechanism, run the impact command; most of what you own is stated on more than one page.",
+      "frame": "You own the architecture and the style engine: the turn pipeline, the verifier that is the product, deterministic retrieval, the kill switch and the read path that makes it a bound rather than a promise, the data model, the vendor position and cost per session; and the parameter object, the style card renderer, the conformance tests and the seam where exemplar conditioning would attach. Nothing here has been built. What you are held to is the set of tests specified in these pages and not yet run, and the invariants those tests protect: a claim the verifier cannot ground does not reach a learner, every persona feature degrades to an archetype, and a vendor update passes the frozen battery before a learner sees it. You also own the architecture of the Primer and of Foundations, which reuse the Tutor's pipeline and add the Primer's attribution and contested-question checks and Foundations' decodability check. You also own the build guide for the Primer's demonstration and its specification for Claude Code, which bind the demo and nothing else. Before you change a mechanism, run the impact command; most of what you own is stated on more than one page.",
       "owns": [
         "06-architecture",
         "02-style-engine",
         "p5-primer-architecture",
-        "f5-foundations-architecture"
+        "f5-foundations-architecture",
+        "primer-mvp",
+        "mvp"
       ],
       "reads": []
     },
@@ -48,7 +50,7 @@
       "id": "coo",
       "title": "Chief operating officer",
       "github": null,
-      "frame": "You own curriculum and content: the clean-room policy, provenance recorded per item, examiner validation and who performs it, the accuracy floor and the harness that measures it, behaviour below floor, practice papers and what launch validation costs. Nothing has been built and no item has been validated. The item bank is the moat and the slowest thing in the plan; the writers and the validators are a rate-limited human process that does not get cheaper when the next model ships, and the writer and the validator are never the same person. You also own the Primer's explanation bank, inquiry packs and module review, and Foundations' reading and number sequences; the same rule holds, that the writer and the reviewer are never the same person. You read, but do not own, the creator licence, because the licence sets what a creator's material may and may not touch in the bank.",
+      "frame": "You own curriculum and content: the clean-room policy, provenance recorded per item, examiner validation and who performs it, the accuracy floor and the harness that measures it, behaviour below floor, practice papers and what launch validation costs. Nothing has been built and no item has been validated. The item bank is the moat and the slowest thing in the plan; the writers and the validators are a rate-limited human process that does not get cheaper when the next model ships, and the writer and the validator are never the same person. You also own the Primer's explanation bank, with the narrated videos its entries may carry, inquiry packs and module review, and Foundations' reading and number sequences; the same rule holds, that the writer and the reviewer are never the same person. You read, but do not own, the creator licence, because the licence sets what a creator's material may and may not touch in the bank.",
       "owns": [
         "03-curriculum-and-content",
         "p3-primer-content",
@@ -62,13 +64,14 @@
       "id": "cfo",
       "title": "Chief financial officer",
       "github": null,
-      "frame": "You own the economics: cost per session built up from the architecture, the variable that dominates and why it is derived rather than assumed, the acquisition ceiling set by the examination calendar, sensitivity, examiner validation as a line item, price points, and the order in which the unknowns must be measured. You also own the pricing and unit economics sections of both routes, and the economics of the Primer and of Foundations, which are almost entirely unknown and say so. Nothing has been built and no price has been tested; the ledger records price as deliberately not decided. Every figure you inherit is from the evidence register, a stated design choice, or marked unknown, and the discipline you hold is that no fourth kind ever appears.",
+      "frame": "You own the economics: cost per session built up from the architecture, the variable that dominates and why it is derived rather than assumed, the acquisition ceiling set by the examination calendar, sensitivity, examiner validation as a line item, price points, and the order in which the unknowns must be measured. You also own the pricing and unit economics sections of both routes, and the economics of the Primer and of Foundations, which are almost entirely unknown and say so, and the costs and spending caps of the Primer's demonstration. Nothing has been built and no price has been tested; the ledger records price as deliberately not decided. Every figure you inherit is from the evidence register, a stated design choice, or marked unknown, and the discipline you hold is that no fourth kind ever appears.",
       "owns": [
         "10-economics",
         "07-route-a-direct-to-parents#pricing",
         "08-route-b-through-schools#pricing",
         "p6-primer-plan#economics",
-        "f6-foundations-plan#economics"
+        "f6-foundations-plan#economics",
+        "primer-mvp#costs"
       ],
       "reads": []
     },
@@ -76,14 +79,15 @@
       "id": "counsel",
       "title": "Counsel",
       "github": null,
-      "frame": "You own the rights dossier, the safety, privacy and regulatory chapter, the contracts, the counsel questions in the open-items register, and the safety documents of the Primer and of Foundations, whose users are almost all under thirteen and which raise questions of their own. A launch in the United States, which all three ideas now plan alongside the UK where resources allow, adds questions under US law. Nothing has been built. The questions are deliberately unanswered and stay open until you answer them; the two exceptions, naming the board and the self-tutor, are recorded as decisions taken ahead of your advice with their containment written down, and each says so wherever it is applied. You read the data and consent sections and the compliance sections of both routes, because they apply your positions rather than set them. Where a page says a marker is Assumed, the reasoning is visible and could be wrong; where it says Open, the vault is waiting on you.",
+      "frame": "You own the rights dossier, the safety, privacy and regulatory chapter, the contracts, the counsel questions in the open-items register, and the safety documents of the Primer and of Foundations, whose users are almost all under thirteen and which raise questions of their own, as well as the safety and privacy of the Primer's demonstration, which only adults use. A launch in the United States, which all three ideas now plan alongside the UK where resources allow, adds questions under US law. Nothing has been built. The questions are deliberately unanswered and stay open until you answer them; the two exceptions, naming the board and the self-tutor, are recorded as decisions taken ahead of your advice with their containment written down, and each says so wherever it is applied. You read the data and consent sections and the compliance sections of both routes, because they apply your positions rather than set them. Where a page says a marker is Assumed, the reasoning is visible and could be wrong; where it says Open, the vault is waiting on you.",
       "owns": [
         "04-rights-dossier",
         "05-safety-privacy-regulatory",
         "contracts",
         "14-open-items#counsel",
         "p4-primer-safety",
-        "f4-foundations-safety"
+        "f4-foundations-safety",
+        "primer-mvp#safety"
       ],
       "reads": [
         "07-route-a-direct-to-parents#data",
@@ -173,6 +177,10 @@
           {
             "href": "p2-primer-product.html#worked",
             "label": "See a conversation"
+          },
+          {
+            "href": "primer-mvp.html",
+            "label": "MVP build guide"
           },
           {
             "href": "contents.html#primer",

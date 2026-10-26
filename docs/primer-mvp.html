@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Primer: MVP build guide, AI.tutor design vault</title>
+<meta name="description" content="A demonstration for adult testers, built in four or five days: what it does, its tools, safety, costs and the build.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#doc">Skip to the document</a>
+
+<header class="topbar">
+  <a class="brand" href="index.html"><b>AI.tutor</b> <span>design vault</span></a>
+  <details class="switcher">
+    <summary>Primer: MVP build guide</summary>
+    <div class="sw-panel"><p class="rail-h">Doors</p><a href="index.html"><span class="sw-no"></span>Front page</a><a href="tutor.html"><span class="sw-no"></span>Tutor summary</a><a href="roles/ceo.html"><span class="sw-no"></span>Chief executive</a><a href="roles/cto.html"><span class="sw-no"></span>Chief technology officer</a><a href="roles/coo.html"><span class="sw-no"></span>Chief operating officer</a><a href="roles/cfo.html"><span class="sw-no"></span>Chief financial officer</a><a href="roles/counsel.html"><span class="sw-no"></span>Counsel</a><a href="contents.html"><span class="sw-no"></span>Contents</a><p class="rail-h">Tutor</p><a href="00-thesis.html"><span class="sw-no">00</span>Thesis</a><a href="01-product.html"><span class="sw-no">01</span>Product</a><a href="02-style-engine.html"><span class="sw-no">02</span>Style engine</a><a href="03-curriculum-and-content.html"><span class="sw-no">03</span>Curriculum and content</a><a href="04-rights-dossier.html"><span class="sw-no">04</span>Rights dossier</a><a href="05-safety-privacy-regulatory.html"><span class="sw-no">05</span>Safety, privacy and regulatory</a><a href="06-architecture.html"><span class="sw-no">06</span>Architecture</a><a href="07-route-a-direct-to-parents.html"><span class="sw-no">07</span>Route A: direct to parents</a><a href="08-route-b-through-schools.html"><span class="sw-no">08</span>Route B: through schools</a><a href="09-route-comparison.html"><span class="sw-no">09</span>Route comparison</a><a href="10-economics.html"><span class="sw-no">10</span>Economics</a><a href="11-roadmap.html"><span class="sw-no">11</span>Roadmap</a><a href="12-risk-register.html"><span class="sw-no">12</span>Risk register</a><a href="13-primer-gateway.html"><span class="sw-no">13</span>Primer gateway</a><p class="rail-h">Primer</p><a href="p1-primer-thesis.html"><span class="sw-no">P1</span>Primer: thesis</a><a href="p2-primer-product.html"><span class="sw-no">P2</span>Primer: product</a><a href="p3-primer-content.html"><span class="sw-no">P3</span>Primer: content and evidence</a><a href="p4-primer-safety.html"><span class="sw-no">P4</span>Primer: safety, privacy and regulatory</a><a href="p5-primer-architecture.html"><span class="sw-no">P5</span>Primer: architecture</a><a href="p6-primer-plan.html"><span class="sw-no">P6</span>Primer: plan</a><a href="primer-mvp.html" class="here"><span class="sw-no"></span>Primer: MVP build guide</a><p class="rail-h">Foundations</p><a href="f1-foundations-thesis.html"><span class="sw-no">F1</span>Foundations: thesis</a><a href="f2-foundations-product.html"><span class="sw-no">F2</span>Foundations: product</a><a href="f3-foundations-content.html"><span class="sw-no">F3</span>Foundations: content and evidence</a><a href="f4-foundations-safety.html"><span class="sw-no">F4</span>Foundations: safety, privacy and regulatory</a><a href="f5-foundations-architecture.html"><span class="sw-no">F5</span>Foundations: architecture</a><a href="f6-foundations-plan.html"><span class="sw-no">F6</span>Foundations: plan</a><p class="rail-h">Across all three</p><a href="which-first.html"><span class="sw-no"></span>Which idea goes first</a><a href="field-research.html"><span class="sw-no"></span>Field research guide</a><a href="14-open-items.html"><span class="sw-no">14</span>Open items</a><a href="decision-ledger.html"><span class="sw-no"></span>Decision ledger</a><p class="rail-h">Status and evidence</p><a href="status.html"><span class="sw-no"></span>Status</a><a href="../map/"><span class="sw-no"></span>Impact surface</a><a href="../evidence/sources.html"><span class="sw-no"></span>Evidence register</a></div>
+  </details>
+  <nav class="toplinks">
+    <a href="status.html">Status</a>
+    <a href="../map/">Map</a>
+    <a href="../evidence/sources.html">Evidence</a>
+    <a href="contents.html">Contents</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#what">What you are building</a></li><li><a href="#flow">One question, start to finish</a></li><li><a href="#video">The videos</a></li><li><a href="#stack">The tools, and why these</a></li><li><a href="#safety">Safety, privacy and the testers</a></li><li><a href="#costs">What it costs, and the caps</a></li><li><a href="#before">Before day one</a></li><li><a href="#days">Day by day</a></li><li><a href="#testing">Running the role-play sessions</a></li><li><a href="#limits">What the demo cannot show</a></li></ol></div></aside>
+  <main class="sheet" id="doc">
+<h1>Primer: MVP build guide</h1>
+<p class="standfirst">The first thing built for the Primer is a demonstration, not the Primer: a web app that adults use while playing a child of 8 to 13. It answers any question within seconds, explains the answer in three building blocks, each with narration and a short video made for the question, and then asks the child what they think. The owner builds it with Claude Code in four or five days, from a specification published beside this page. It supports conversations with teachers, parents and accelerators. It shows nothing about how children engage or learn, and everything it generates is labelled as not checked.</p>
+<dl class="meta">
+<dt>Document</dt><dd>The Primer's MVP build guide. Not numbered: it plans a demonstration and is not part of the Primer's design, P1 to P6.</dd>
+<dt>Status</dt><dd>A plan to build. Nothing here has been built; no test here has been run.</dd>
+<dt>Maturity</dt><dd>First draft, reviewed once independently.</dd>
+<dt>Written</dt><dd>25 October 2026</dd>
+<dt>Builds from</dt><dd><a href="../mvp/primer-demo-spec.md">The specification for Claude Code</a>, and the <a href="https://claude.ai/artifact/TFkTFz4RzJrM7UJsLJkZmP">mock-up</a>, which is private until the owner shares it.</dd>
+<dt>Decisions</dt><dd>D70 to D79, in the <a href="decision-ledger.html#mvp">decision ledger</a></dd>
+</dl>
+
+<details class="toc" open>
+<summary>Contents</summary>
+<ol>
+<li><a href="#what">What you are building</a></li>
+<li><a href="#flow">One question, start to finish</a></li>
+<li><a href="#video">The videos</a></li>
+<li><a href="#stack">The tools, and why these</a></li>
+<li><a href="#safety">Safety, privacy and the testers</a></li>
+<li><a href="#costs">What it costs, and the caps</a></li>
+<li><a href="#before">Before day one</a></li>
+<li><a href="#days">Day by day</a></li>
+<li><a href="#testing">Running the role-play sessions</a></li>
+<li><a href="#limits">What the demo cannot show</a></li>
+</ol>
+</details>
+
+<h2 id="what">What you are building</h2>
+
+<p><b>A tester opens an unlisted address, enters a passcode, and plays a child.</b> They speak or type a question. A short answer starts to appear within seconds. Three building blocks follow, the ideas a child needs first to understand the answer, each with its text, its narration and, once made, its video. Then the demo offers a harder question and asks what the child thinks, a few turns at a time, until they say the answer in their own words. A question about the child's own life, their safety or a big subject gets a careful reply written in advance, and no video.</p>
+
+<p>The <a href="https://claude.ai/artifact/TFkTFz4RzJrM7UJsLJkZmP">mock-up</a> shows every screen and each moment of a question. The <a href="../mvp/primer-demo-spec.md">specification</a> says how to build them, and is written to be saved as <code>CLAUDE.md</code> in the demo's own repository, where Claude Code reads it first.</p>
+
+<div class="claim">
+<p>The Primer is shown first by a demonstration, used only by adults who play a child. It supports the conversations of PM1 and decides nothing about which idea goes first; it is not the built Primer of PM4, and no child uses it.</p>
+<span class="tag decided">Decision<span class="src">D70, the owner's, 25 October 2026</span></span>
+</div>
+
+<div class="claim">
+<p>The demo answers any question, with no list of topics: flexibility over accuracy. Every answer, block and video says on screen that it is not checked. The Primer itself still says only what a reviewed explanation supports (D44).</p>
+<span class="tag decided">Decision<span class="src">D71, the owner's, 25 October 2026</span></span>
+</div>
+
+<div class="claim">
+<p>No block can be skipped with an "I already know this" button. Every block is offered in full, and the child moves on by scrolling.</p>
+<span class="tag decided">Decision<span class="src">D75, the owner's, 25 October 2026</span></span>
+</div>
+
+<h2 id="flow">One question, start to finish</h2>
+
+<p><b>The words come first and the videos last, so the child always has something to read, hear or think about.</b> The safety check, the short answer and the plan for the blocks start together; nothing is shown, and no video starts, until the safety check has passed.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>When</th><th>What the tester sees</th><th>What runs behind it</th></tr></thead>
+<tbody>
+<tr><td>At once</td><td>Their question as text. A spoken question is transcribed and can be corrected before it is sent.</td><td>The safety check, the short answer and the plan begin in parallel.</td></tr>
+<tr><td>A few seconds</td><td>The short answer appearing, with a Listen button.</td><td>The answer streams once the safety check passes.</td></tr>
+<tr><td>About 5 to 8 seconds</td><td>Three blocks as text, each showing its video being made.</td><td>The plan returns three titles and three video prompts; the three videos start; each block's text and narration are written in parallel.</td></tr>
+<tr><td>Seconds later</td><td>Listen works on every block.</td><td>Each narration is spoken by the speech model and stored.</td></tr>
+<tr><td>About 40 to 90 seconds</td><td>Each video plays, its own sound muted, under the narration.</td><td>The video is stored and cached under the question's concept.</td></tr>
+<tr><td>Meanwhile</td><td>"Your turn to think": an offer of a harder question, which the child may decline.</td><td>The plan's opening question; each reply is checked, then answered.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p>The times are targets, not measurements. The real ones are <span class="mark unknown">Unknown</span> until the demo's timings page records them, and the video's until the first clips are made on day one (OA-41).</p>
+<span class="tag decided">Design choice<span class="src">Targets set by this guide</span></span>
+</div>
+
+<div class="claim">
+<p>Each block's video is generated live, from a prompt drafted in the same request that plans the blocks, and all three start as soon as the plan is ready and the safety check has passed, while the short answer is still arriving.</p>
+<span class="tag decided">Decision<span class="src">D74, the owner's, 25 October 2026</span></span>
+</div>
+
+<h2 id="video">The videos</h2>
+
+<p><b>Video models cannot be trusted with words, so the pictures carry the idea and the narration carries the words.</b> The owner made video the key part of the demo because, in the owner's view, children of this age do not read fast; but a model that draws a label wrongly or mouths a sentence badly teaches the wrong thing.</p>
+
+<ul class="tight">
+<li><b>Pictures only.</b> No words, letters, numbers or people in the picture; animals are allowed, never with human features. The clip's own sound is muted and the narration plays over it.</li>
+<li><b>One style.</b> Every prompt ends with the same instructions: bright, simple, flat animation, one continuous scene, a calm camera. The clips then look like one product.</li>
+<li><b>One clip per block,</b> eight seconds at 720p in 16:9, looping under narration that runs a little longer.</li>
+<li><b>Made once.</b> Clips are cached under the question's concept, so a repeated question plays at once and costs nothing. Before a pitch, ask your favourite questions to fill the cache.</li>
+<li><b>A daily limit</b> of sixty video generations, retries included, enforced by the app, because a provider's own cap can be overshot, <span class="mark assumed">Assumed</span> (CV-20).</li>
+<li><b>A graceful failure.</b> A failed clip is retried once and a slow one never, because it may still finish; then the card shows a still picture drawn by the app, says the video did not work, and still speaks.</li>
+<li><b>One interface.</b> The video provider sits behind one function, so a different model can replace it in a day.</li>
+</ul>
+
+<div class="claim">
+<p>These rules bind the demo's videos: pictures only, one style, one clip per block, a cache by concept, a daily limit, one retry and a still picture, and the provider behind one interface.</p>
+<span class="tag decided">Decision<span class="src">D76, taken while writing, 25 October 2026</span></span>
+</div>
+
+<div class="claim">
+<p>The Primer itself is meant to explain with narrated video as well as words. There a video is part of a reviewed explanation, made in advance, and never generated live for a child (<a href="p3-primer-content.html#bank">P3</a>).</p>
+<span class="tag decided">Decision<span class="src">D73, the owner's, 25 October 2026</span></span>
+</div>
+
+<h2 id="stack">The tools, and why these</h2>
+
+<p><b>Three accounts: Anthropic for every word, Google for video and speech, Netlify to host it.</b></p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Job</th><th>Tool</th><th>Why this one</th></tr></thead>
+<tbody>
+<tr><td>Every word: the safety check, the answer, the plan, the blocks, the thinking</td><td>Claude Opus 5.5, on Anthropic's API</td><td>One model for every text step, with a spend limit the owner sets; a request its safety classifiers decline is retried on the Claude model Anthropic recommends, <span class="mark assumed">Assumed</span> (CV-21).</td></tr>
+<tr><td>Video</td><td>Gemini Omni Flash, on Google's Gemini API</td><td>Google's video model there, generally available, making clips of 3 to 10 seconds, <span class="mark assumed">Assumed</span> (CV-17).</td></tr>
+<tr><td>Speech to text</td><td>Gemini 3.5 Transcribe</td><td>The job the owner named Whisper for, on the same Google account, <span class="mark assumed">Assumed</span> (CV-19).</td></tr>
+<tr><td>Narration and reading aloud</td><td>Gemini 3.8 Flash-Lite TTS</td><td>Speech on the same account, but still a preview, as the withdrawn Veo models were; if it goes, the browser's own voice reads instead, <span class="mark assumed">Assumed</span> (CV-16 and CV-19).</td></tr>
+<tr><td>Hosting, functions and storage</td><td>Netlify</td><td>The owner's existing account, the demo ideally on a team of its own (<a href="#before">before day one</a>). Functions keep the keys off the page; Blobs stores the clips, <span class="mark assumed">Assumed</span> (CV-22).</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p><b>Why not Veo or NotebookLM.</b> The design first named Veo 3.1 Fast on the Gemini API. Google had shut down its preview models there three days before, on 22 October 2026, which the research behind the design missed; Google recommends Omni Flash instead, and the generally available Veo models on Google Cloud are the fallback behind the same interface. NotebookLM's video overviews have no public API, so nothing can call them.</p>
+<span class="tag assumed">Assumed<span class="src">CV-16 and CV-23, awaiting the owner's check</span></span>
+</div>
+
+<p>Every model's page is to be read again on day one, because the APIs change at short notice, as Veo's did. The Primer's own model vendor stays deliberately undecided (<a href="decision-ledger.html#unresolved">ledger</a>).</p>
+
+<div class="claim">
+<p>Testers can speak their question. The recording is transcribed, shown as text they can correct, and not kept by the demo. Only adults use it, so D50, no child's voice at launch, is untouched; whether the Primer should ever take a child's voice waits on <span class="mark open">Open</span> OI-17.</p>
+<span class="tag decided">Decision<span class="src">D72, the owner's, 25 October 2026</span></span>
+</div>
+
+<div class="claim">
+<p>The demo's tools are Claude Opus 5.5 for every word, Google's Gemini API for video, transcription and narration, and Netlify for hosting, on their standard terms. They bind the demo only.</p>
+<span class="tag decided">Decision<span class="src">D78, taken while writing, 25 October 2026</span></span>
+</div>
+
+<h2 id="safety">Safety, privacy and the testers</h2>
+
+<p><b>Testers ask the hardest questions first, so the safety check runs before anything is shown.</b> It sorts each message, and every later reply in the thinking turns, into one of six kinds. Five get a reply written in advance and nothing else, and none reaches the video model:</p>
+
+<ul class="tight">
+<li><b>The child's own life,</b> their family, friends or feelings: a pointer to a grown-up they trust.</li>
+<li><b>A death or serious illness</b> of someone they know, or of a pet: the same, said gently.</li>
+<li><b>Their safety:</b> tell a trusted adult today, and call a staffed service: Childline in the UK, or Samaritans for an adult, both named in <a href="05-safety-privacy-regulatory.html#content">05</a>; in the US, the Childhelp hotline or the 988 lifeline, which <a href="p4-primer-safety.html#escalation">P4</a> names, <span class="mark assumed">Assumed</span> (CV-12).</li>
+<li><b>A big subject,</b> such as religion or sex: a suggestion to ask the grown-ups at home.</li>
+<li><b>Anything unsuitable:</b> a plain refusal and an invitation to ask about how the world works.</li>
+</ul>
+
+<p>A request the model declines is treated as the last kind, and anything already shown for it is replaced. The owner approves every reply, and checks every number in it, before the first tester; the specification carries them as drafts.</p>
+
+<p><b>Adults only.</b> The welcome page says so before the passcode, and says what happens to a tester's voice and words. If a child does use the demo, stop the session: the conditions for a child in any Primer session are PM3's (<a href="p6-primer-plan.html#milestones">P6</a>), and the demo meets none of them.</p>
+
+<p><b>Who sees what.</b> Anthropic sees every question and everything written. Google sees spoken questions, the text it reads aloud and the video prompts; on the paid tier it does not use them to improve its products, <span class="mark assumed">Assumed</span> (CV-20), and how long it keeps the audio is OA-43. Neither is held to the zero retention the Primer requires of its vendors (D24), a departure the demo makes because no child uses it.</p>
+
+<div class="claim">
+<p>Safety in the demo: a safety check before anything is shown; replies written in advance for the kinds above, with nothing sent to video; adults only; a passcode on the site and on every paid call; and spending capped at each provider and in the app.</p>
+<span class="tag decided">Decision<span class="src">D77, taken while writing, 25 October 2026</span></span>
+</div>
+
+<div class="claim">
+<p>The demo keeps no record of who asked what: no accounts, no recordings and no conversation logs. It keeps the generated material in its cache, by concept, the day's short answers until the day ends, and timings and counts without content.</p>
+<span class="tag decided">Decision<span class="src">D79, taken while writing, 25 October 2026</span></span>
+</div>
+
+<p>What it does not have is as important: no modules or parent's switches (D46), no activity record for a parent and no trained reviewer behind a disclosure (D48).</p>
+
+<h2 id="costs">What it costs, and the caps</h2>
+
+<p><b>The cost that can be named is the video's: about $2.40 for each new question,</b> three clips of eight seconds at about $0.10 a second at 720p, <span class="mark assumed">Assumed</span> (CV-18). The other costs are <span class="mark unknown">Unknown</span> until they are measured. A repeated question costs nothing, because its clips are cached.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Item</th><th>Listed price</th><th>Per new question</th></tr></thead>
+<tbody>
+<tr><td>Video, Gemini Omni Flash, 720p</td><td>About $0.10 a second, <span class="mark assumed">Assumed</span> (CV-18)</td><td>About $2.40</td></tr>
+<tr><td>Words, Claude Opus 5.5</td><td>$4 per million tokens in, $20 per million out, <span class="mark assumed">Assumed</span> (CV-21)</td><td><span class="mark unknown">Unknown</span> until the timings page counts tokens</td></tr>
+<tr><td>Transcription, Gemini 3.5 Transcribe</td><td>About half a cent a minute of audio, <span class="mark assumed">Assumed</span> (CV-19)</td><td><span class="mark unknown">Unknown</span></td></tr>
+<tr><td>Narration, Gemini 3.8 Flash-Lite TTS</td><td>$6 per million audio tokens to the end of 2026, then $12, <span class="mark assumed">Assumed</span> (CV-19)</td><td><span class="mark unknown">Unknown</span></td></tr>
+<tr><td>Hosting, Netlify</td><td>Credits by team: 300 a month on the Free plan and 1,000 on Personal, 15 for each production deploy; a team that runs out has its projects paused, <span class="mark assumed">Assumed</span> (CV-22)</td><td><span class="mark unknown">Unknown</span> whether the demo fits within them</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="claim">
+<p>Three caps, so that no mistake costs much: a monthly spend limit of $50 on Anthropic's console; a monthly spend cap of $200 on the Google project, enough for about eighty new questions with video at the price above, <span class="mark assumed">Assumed</span> (CV-18); and the app's own limit of sixty video generations a day, retries included, at most about $49 at that price, <span class="mark assumed">Assumed</span> (CV-18). The owner can raise any of them.</p>
+<span class="tag decided">Design choice<span class="src">Caps set by this guide, D77</span></span>
+</div>
+
+<p>Claude Code is the owner's own subscription and is not counted. The figures above are arithmetic on listed prices; the real ones come from the timings page.</p>
+
+<h2 id="before">Before day one</h2>
+
+<p><b>Accounts and settings, done before any code is written.</b></p>
+
+<ol>
+<li><b>GitHub:</b> a new private repository for the demo, with the <a href="../mvp/primer-demo-spec.md">specification</a> saved in it as <code>CLAUDE.md</code>.</li>
+<li><b>Anthropic:</b> a Claude Console account, an API key, credits, and the spend limit above, which the console lets an organisation set, <span class="mark assumed">Assumed</span> (CV-21).</li>
+<li><b>Google:</b> an AI Studio project on the paid tier, which needs a linked billing account and a prepayment, <span class="mark assumed">Assumed</span> (CV-20); an API key; the spend cap above; and the video model's daily limit for the project, read from its limits page (OA-42).</li>
+<li><b>Netlify:</b> a new site from the repository, on a team of its own if the account allows: credits are counted by team, and running out pauses every project on it, this site included, <span class="mark assumed">Assumed</span> (CV-22). Otherwise turn on auto recharge, with a limit. The plan must be credit-based for background functions, and Claude Code should merge to production once a day, testing on deploy previews in between, which cost no credits, <span class="mark assumed">Assumed</span> (CV-22). Add the two keys, the passcode, a long random signing secret and the limits as secret environment variables, under the names the specification gives.</li>
+<li><b>The testers:</b> a passcode of four or more random words, three to six adults, and a time with each.</li>
+</ol>
+
+<p>If you use Claude Code on the web, its environment needs network access to the package registry. The providers are called from Netlify's functions, so test on the deployed site.</p>
+
+<h2 id="days">Day by day</h2>
+
+<p><b>Each day starts with one instruction to Claude Code and ends with checks you can see for yourself.</b> The specification holds the detail.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Day</th><th>Say to Claude Code</th><th>What it builds</th><th>Done when</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>"Read CLAUDE.md, then do day 1."</td><td>The app's shell and passcode, deployed; a typed question answered as a stream; and a test of the video model on its own.</td><td>The address asks for the passcode; a typed question streams an answer; a note records how long one clip took, whether it can run in the background, and the project's daily limit.</td></tr>
+<tr><td>2</td><td>"Do day 2."</td><td>The safety check and the written replies; the plan and the blocks; the answer screen as in the mock-up; spoken questions.</td><td>Twenty prepared questions, five of them sensitive, each go the right way; a spoken question appears as text in Chrome and Safari.</td></tr>
+<tr><td>3</td><td>"Do day 3."</td><td>The video jobs, storage, cache, daily limit and still picture; the narration and the player.</td><td>A new question's three videos arrive and play under narration; asked again, they play at once; with the limit at zero, every block still speaks.</td></tr>
+<tr><td>4</td><td>"Do day 4."</td><td>The thinking turns, the labels, the phone layout, error handling and the timings page.</td><td>A thinking exchange ends in the tester's own words within four turns; every answer and video carries its label; the timings page shows the waits.</td></tr>
+<tr><td>5</td><td>"Do day 5."</td><td>The sessions below, the fixes they show, and the final checks.</td><td>The specification's final checklist passes, and the testers' notes are written up.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Four or five days is the owner's estimate and this guide's premise, not a measurement (OA-44). Day 1's test of the video model is first because it is the part most likely to change the plan.</p>
+
+<h2 id="testing">Running the role-play sessions</h2>
+
+<p><b>The sessions test the demo, not the Primer.</b> Three to six adults, each for about half an hour: a parent, a teacher, and at least one person who has not seen the design. Hold at most four a day at the default limit, because each tester's five questions can need fifteen new videos.</p>
+
+<ul class="tight">
+<li><b>The brief:</b> play a child of a stated age, and ask five questions such a child would ask: two about the world, one about the past, one about numbers, and one hard one.</li>
+<li><b>What to watch:</b> how long until the first words; whether they read, listened or watched; whether the videos arrived before they moved on; what the thinking turns drew out; anything wrong, odd or unsafe.</li>
+<li><b>Afterwards,</b> three questions: what would you show a child, what felt like any chatbot, and what did you not trust?</li>
+</ul>
+
+<p>Write the answers up with the <a href="field-research.html">field research</a>, as views of adults about a demonstration, never as evidence about children.</p>
+
+<h2 id="limits">What the demo cannot show</h2>
+
+<ul class="tight">
+<li><b>Whether children engage, persist or learn.</b> Adults are playing them. That is OA-23's question, for PM3 and PM4.</li>
+<li><b>Whether the answers are right.</b> Nothing in it is checked (D71), and the Primer's reviewed bank (D44) is not in it.</li>
+<li><b>Whether what it writes is safe.</b> The safety check reads what testers send, not what Claude writes; only each prompt's instructions and the labels stand between a careless answer and the screen.</li>
+<li><b>The Primer's safety in full.</b> No modules, no parent's record, no reviewer behind a disclosure.</li>
+<li><b>The Primer's cost.</b> Its cost per session is <a href="p5-primer-architecture.html#cost">P5</a>'s, <span class="mark unknown">Unknown</span> until PM4.</li>
+</ul>
+
+<p>Show it as a demonstration, read the labels out to whoever is watching, and never let a child use it.</p>
+  </main>
+</div>
+
+<nav class="pager">
+  <a class="prev" href="p6-primer-plan.html"><span>Previous</span>Primer: plan</a>
+  <a class="next" href="f1-foundations-thesis.html"><span>Next</span>Foundations: thesis</a>
+</nav>
+
+<footer class="pagefoot">
+  <div class="legend-row">
+    <span class="li"><span class="mark verified">Verified</span>checked against a named source</span>
+    <span class="li"><span class="mark assumed">Assumed</span>reasoned, not checked</span>
+    <span class="li"><span class="mark open">Open</span>a question for a lawyer</span>
+    <span class="li"><span class="mark unknown">Unknown</span>a number we do not have</span>
+    <span class="li"><span class="mark decided">Decision</span>a choice taken here</span>
+  </div>
+  <div class="meta-row">
+    <span>AI.tutor design vault, revised October 2026. Nothing here has been built.</span>
+    <span class="stamp">Built 25 October 2026</span>
+  </div>
+</footer>
+</body>
+</html>
