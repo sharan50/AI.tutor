@@ -24,6 +24,7 @@ Rules:
   named, shared or published.
 - Signatures that need tagging are tagged by Gemini from a fixed rubric, never by the
   generator.
+- Commit your work on your branch before you finish, with a message naming the task.
 
 When you finish, report what you built, the rendered Spine and fictional cards, and
 what the tests show.

@@ -38,20 +38,32 @@ whatever else it does.
 14. No turn's text, learner's message or bank node is written to a log or the console.
 15. Safety replies are written in advance, and shown as text from the standard tutor,
     never in a likeness.
+16. Only the learner's and the parent's reporting views read `GradeRange`; nothing
+    else is decided or gated on it.
 
 ## How to work
 
 - Write the test first, and see it fail for the right reason before writing the code.
-- Every test is marked with the phase by which it must pass. `make test` runs the
-  current phase's and the earlier phases'; `PHASE` holds the number, and only the
-  owner changes it.
+- Every test in `tests/invariants/` is marked with the phase by which it must pass.
+  `PHASE` holds the phase being built; only the owner changes it, and commits the
+  change.
+  - `make test`: the unit tests, and the invariant tests of finished phases. It must
+    pass at every stop and every merge.
+  - `make test-phase`: the current phase's own tests, the lead's check that a phase is
+    done. They fail until the phase's work is merged.
+  - `make test-all`: everything.
 - Never skip, weaken or delete a test, or mark one as expected to fail. If you think a
   test is wrong, stop and say why.
-- Before you finish, `make test` must pass. The hooks run it when you stop, and will
-  not let you finish while it fails.
-- The contracts in `tutor/contracts/` and the tests in `tests/invariants/` change only
-  in a lead session, with the reviewer; editing either asks the owner first.
-- Stay inside the directories your agent definition gives you.
+- When you stop, a hook runs `make test` and refuses, up to five times in a row, to
+  let you finish while it fails; after that it lets you stop, and you must say in your
+  report that the tests fail. A git hook refuses any merge that makes it fail.
+- The contracts in `tutor/contracts/`, `tutor/config.py` and the tests in
+  `tests/invariants/` change only in a lead session, with the reviewer; editing them
+  asks the owner first.
+- Stay inside the directories your agent definition gives you, and commit your work
+  on your branch before you finish.
+- Never read, and never ask for, a tester's image, clip, recording or screenshot.
+  What a tester found is described in words.
 - Before writing the integration for any model, SDK or platform feature, read its
   current documentation.
 - Claude: the model id comes from `tutor/config.py`; send no temperature, top_p, top_k
@@ -77,19 +89,22 @@ whatever else it does.
   reports.
 - `tutor/web/`: routes, templates, static files. `tutor/modal_app.py`: the deployment.
 - `content/`: objectives, items, presets, paper specifications, the DfE sources.
-- `tests/invariants/`, `tests/battery/`, `tests/thresholds.toml`.
-- `docs/licences.md`, `docs/retention.md`, `reports/`.
+- `tests/invariants/`, `tests/unit/`, `tests/battery/`, `tests/thresholds.toml`.
+- `docs/licences.md`, `docs/retention.md`, `docs/reviewer-policy.md`, `reports/`.
+- `.claude/`: the agents, settings and hooks. `.githooks/`: the merge gate.
 
 ## Commands
 
 - `uv sync`: install.
-- `make test`: the fast tests, up to the current phase.
+- `make test`: the unit tests and the tests of finished phases.
+- `make test-phase`: the current phase's tests.
 - `make test-all`: every test, including later phases'.
 - `make lint`: ruff and mypy.
 - `make check-content`: the checks on every item file.
 - `make battery`: the slow tests. It calls paid models; run it only when asked.
 - `modal serve tutor/modal_app.py`: run it against Modal, for trying.
-- `modal deploy tutor/modal_app.py`: deploy, from `main`, with the tests passing.
+- `make deploy`: deploy from `main`, refused unless the tests pass and the latest
+  battery ran on the current models, prompts, renderer and composer.
 
 ## The design
 

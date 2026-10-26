@@ -44,7 +44,8 @@ The owner then took the three decisions it needed and chose no other path:
 - **Content:** the full algebra strand for ages 14 to 18 in three qualifications, GCSE
   Mathematics, GCSE Further Mathematics and A-level Mathematics; A-level Further
   Mathematics and Additional Mathematics are left out (D82). The owner confirmed the
-  three when asked.
+  three when asked. The second is recorded as Level 2 Further Mathematics, the name
+  of the qualification found (CV-29).
 - **The self-tutor's voice and face:** open models, run by the MVP itself (D83).
 
 D80 records the path.
@@ -74,17 +75,17 @@ Driven by, Rejected and Makes harder. The last link in each entry names its owne
   rule (D12), checked by the computer algebra system, and labelled as not validated by
   an examiner. Owner: the COO.
 - **D83.** The self-tutor's voice and face run on open models the MVP hosts on rented
-  GPUs, so no speech or animation vendor receives a likeness; for the likeness, D24
-  and D65 hold by construction. Owner: the CTO.
+  GPUs, so no speech or animation vendor receives a likeness, and nothing is trained
+  on one (D65). Owner: the CTO.
 - **D84.** The harness is built before any build prompt: a CLAUDE.md of the design's
   invariants, the contracts between the planes, the vault's tests as failing tests, a
-  frozen battery, hooks that run the tests, one subagent per plane and a reviewer
-  agent; nothing merges with a failing test. Owner: the CTO.
+  frozen battery, hooks that run the tests, six builder agents and a reviewer; nothing
+  merges while the tests of finished phases fail. Owner: the CTO.
 - **D85.** Both GCSE tiers. GCSE and A-level objectives are written from the DfE
   subject content. No DfE content for Level 2 Further Mathematics was found, and
   AQA's certificate, the one found, comes from the board whose AI policy EV-21
-  records, so its objectives are written from no board's material and approved by
-  the owner.
+  records, so each of its objectives is written from the DfE GCSE or A-level content
+  it extends, and the owner approves the list.
   Practice papers follow the MVP's own structure, not a board's. Owner: the COO.
 - **D86.** The tools: Claude Opus 5.5 generates turns and classifies safety; Gemini 4
   Argon checks entailment and scope, a different family as D27 requires; SymPy checks
@@ -99,8 +100,8 @@ Driven by, Rejected and Makes harder. The last link in each entry names its owne
   beyond what they type. Owner: counsel.
 - **D88.** Left out: payment, real age assurance (a simulated check stands in), real
   creators (one fictional licensed preset shows the machinery), Route B's school
-  features, the US course, and D30's rolling summary, because a whole session fits
-  in the window. Owner: the CTO.
+  features, the US course, D29's quarterly rehearsal (one rehearsal stands in), and
+  D30's rolling summary, because a whole session fits in the window. Owner: the CTO.
 
 ## 5. Register entries
 
@@ -142,7 +143,7 @@ it does not define new ones.
 
 ## 6. What the research found
 
-- Many open face-animation pipelines depend on InsightFace's pretrained models, which
+- Some open face-animation pipelines depend on InsightFace's pretrained models, which
   are for non-commercial research only. That excludes them for a venture's MVP, and it
   is why the guide names MuseTalk and requires a licence audit of every dependency on
   the first day.
@@ -164,8 +165,8 @@ it does not define new ones.
 - **The specification pack,** `mvp/tutor/`, hand-maintained and published as text at
   `/mvp/tutor/`: a README, the MVP repository's `CLAUDE.md`, `SPEC.md`, the subagent
   definitions in `agents/`, a `settings.json` with hooks and permissions, the scripts
-  those hooks run in `hooks/`, and `PROMPTS.md` with the phase prompts and the
-  checklist before testers.
+  those hooks run in `hooks/`, the git hooks that gate merges in `githooks/`, and
+  `PROMPTS.md` with the phase prompts and the checklist before testers.
 - **The build:** `PAGES` and `GROUPS` gain the page.
 - **Registers:** the ledger section and its head; the open items; the candidates and
   their note.
@@ -176,9 +177,10 @@ it does not define new ones.
 
 ## 8. Rules for this work
 
-1. D1 to D79 stand. The MVP departs from D24 for its text models, from P1's
-   validation and from D30's rolling summary for itself only, and says so wherever it
-   does; the Tutor's design does not change.
+1. D1 to D79 stand. For itself only, the MVP departs from D24 for its text models,
+   from P1's validation, from D19's board alignment, from 06's bought speech and
+   animation, and from D29's quarterly rehearsal and D30's rolling summary, and says
+   so wherever it does; the Tutor's design does not change.
 2. Counsel questions OI-1 to OI-27 stay open and none is written as answered.
 3. House style is `BUILD_BRIEF.md` section 7: British English, no em-dashes or
    en-dashes, conclusions before reasoning, and weak things called weak.

@@ -1,7 +1,11 @@
 {
+  "worktree": {
+    "baseRef": "head"
+  },
   "permissions": {
     "allow": [
       "Bash(make test)",
+      "Bash(make test-phase)",
       "Bash(make test-all)",
       "Bash(make lint)",
       "Bash(make check-content)",
@@ -39,6 +43,7 @@
     ],
     "ask": [
       "Edit(**/tutor/contracts/**)",
+      "Edit(**/tutor/config.py)",
       "Edit(**/tests/invariants/**)",
       "Edit(**/tests/thresholds.toml)",
       "Edit(**/PHASE)",
@@ -47,7 +52,9 @@
       "Edit(**/.claude/settings.json)",
       "Edit(**/.claude/agents/**)",
       "Edit(**/.claude/hooks/**)",
+      "Edit(**/.githooks/**)",
       "Bash(make battery)",
+      "Bash(make deploy)",
       "Bash(modal deploy *)",
       "Bash(git push *)"
     ],
@@ -55,17 +62,46 @@
       "Edit(**/content/sources/**)",
       "Read(./.env)",
       "Read(./.env.*)",
+      "Read(**/*.mp4)",
+      "Read(**/*.webm)",
+      "Read(**/*.mov)",
+      "Read(**/*.wav)",
+      "Read(**/*.mp3)",
+      "Read(**/*.m4a)",
+      "Read(**/*.ogg)",
       "Bash(curl *)",
       "Bash(wget *)",
       "Bash(modal secret *)",
       "WebFetch(domain:aqa.org.uk)",
+      "WebFetch(domain:*.aqa.org.uk)",
       "WebFetch(domain:pearson.com)",
+      "WebFetch(domain:*.pearson.com)",
+      "WebFetch(domain:edexcel.com)",
+      "WebFetch(domain:*.edexcel.com)",
       "WebFetch(domain:ocr.org.uk)",
+      "WebFetch(domain:*.ocr.org.uk)",
       "WebFetch(domain:wjec.co.uk)",
+      "WebFetch(domain:*.wjec.co.uk)",
       "WebFetch(domain:eduqas.co.uk)",
+      "WebFetch(domain:*.eduqas.co.uk)",
       "WebFetch(domain:ccea.org.uk)",
+      "WebFetch(domain:*.ccea.org.uk)",
       "WebFetch(domain:sqa.org.uk)",
-      "WebFetch(domain:cambridgeinternational.org)"
+      "WebFetch(domain:*.sqa.org.uk)",
+      "WebFetch(domain:cambridgeinternational.org)",
+      "WebFetch(domain:*.cambridgeinternational.org)",
+      "WebFetch(domain:cambridgeassessment.org.uk)",
+      "WebFetch(domain:*.cambridgeassessment.org.uk)",
+      "WebFetch(domain:physicsandmathstutor.com)",
+      "WebFetch(domain:*.physicsandmathstutor.com)",
+      "WebFetch(domain:savemyexams.com)",
+      "WebFetch(domain:*.savemyexams.com)",
+      "WebFetch(domain:mathsgenie.co.uk)",
+      "WebFetch(domain:*.mathsgenie.co.uk)",
+      "WebFetch(domain:mathsmadeeasy.co.uk)",
+      "WebFetch(domain:*.mathsmadeeasy.co.uk)",
+      "WebFetch(domain:onmaths.com)",
+      "WebFetch(domain:*.onmaths.com)"
     ]
   },
   "hooks": {
@@ -73,15 +109,30 @@
       {
         "matcher": "startup|resume",
         "hooks": [
-          {"type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session_start.sh"}
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session_start.sh"
+          }
         ]
       }
     ],
     "PreToolUse": [
       {
-        "matcher": "Edit|Write",
+        "matcher": "Edit|Write|Bash",
         "hooks": [
-          {"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/guard.py"}
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/guard.py"
+          }
+        ]
+      },
+      {
+        "matcher": "WebFetch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/fetch_guard.py"
+          }
         ]
       }
     ],
@@ -89,21 +140,34 @@
       {
         "matcher": "Edit|Write",
         "hooks": [
-          {"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/after_edit.py", "timeout": 120}
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/after_edit.py",
+            "timeout": 120
+          }
         ]
       }
     ],
     "Stop": [
       {
         "hooks": [
-          {"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/before_stop.py", "timeout": 900}
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/before_stop.py",
+            "timeout": 900
+          }
         ]
       }
     ],
     "SubagentStop": [
       {
+        "matcher": "content-author|pipeline-engineer|style-engineer|likeness-engineer|app-engineer|platform-engineer",
         "hooks": [
-          {"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/before_stop.py", "timeout": 900}
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/before_stop.py",
+            "timeout": 900
+          }
         ]
       }
     ]

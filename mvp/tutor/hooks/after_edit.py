@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """PostToolUse hook for Edit and Write: lint the file just changed, and run the
 content checks on an item file. Reports a failure back to Claude as a block."""
+from __future__ import annotations
+
 import json
 import shutil
 import subprocess

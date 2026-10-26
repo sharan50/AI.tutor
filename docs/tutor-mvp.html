@@ -28,13 +28,13 @@
   <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#what">What you are building</a></li><li><a href="#paths">Five ways to build it, and the one chosen</a></li><li><a href="#harness">The harness, before any build prompt</a></li><li><a href="#team">The agent team</a></li><li><a href="#content">The content</a></li><li><a href="#selftutor">The self-tutor on open models</a></li><li><a href="#stack">The tools, and why these</a></li><li><a href="#safety">Testers, safety and data</a></li><li><a href="#costs">What it costs, and the caps</a></li><li><a href="#phases">Phases, and when each is done</a></li><li><a href="#limits">What the MVP cannot show</a></li></ol></div></aside>
   <main class="sheet" id="doc">
 <h1>Tutor: MVP build guide</h1>
-<p class="standfirst">The first build of the Tutor is an MVP that runs the whole design for adults who play learners of 14 to 18: one-objective sessions, the verified turn pipeline, the style engine, the self-tutor in the tester's own face and voice, and the parent report. It teaches the algebra of GCSE Maths, GCSE Further Maths and A-level Maths, drafted by agents and checked by a computer algebra system, and validated by no examiner. The owner builds it by directing a team of Claude Code agents on a harness built first. Speed of building and fidelity to the product come first; running cost and latency come last.</p>
+<p class="standfirst">The first build of the Tutor is an MVP that runs the whole design for adults who play learners of 14 to 18: one-objective sessions, the verified turn pipeline, the style engine, the self-tutor in the tester's own face and voice, and the parent report. It teaches the algebra of GCSE Maths, Level 2 Further Maths and A-level Maths, drafted by agents and checked by a computer algebra system, and validated by no examiner. The owner builds it by directing a team of Claude Code agents on a harness built first. Speed of building and fidelity to the product come first; running cost and latency come last.</p>
 <dl class="meta">
 <dt>Document</dt><dd>The Tutor's MVP build guide. Not numbered: it plans a build and is not part of the Tutor's design, 00 to 14.</dd>
 <dt>Status</dt><dd>A plan to build. Nothing here has been built; no test here has been run.</dd>
 <dt>Maturity</dt><dd>First draft, reviewed once independently.</dd>
 <dt>Written</dt><dd>26 October 2026</dd>
-<dt>Builds from</dt><dd><a href="../mvp/tutor/README.md">The specification pack for Claude Code</a>, and pages <a href="01-product.html">01</a>, <a href="02-style-engine.html">02</a>, <a href="03-curriculum-and-content.html">03</a> and <a href="06-architecture.html">06</a>, which it builds.</dd>
+<dt>Builds from</dt><dd><a href="../mvp/tutor/README.md">The specification pack for Claude Code</a>, and pages <a href="01-product.html">01</a>, <a href="02-style-engine.html">02</a>, <a href="03-curriculum-and-content.html">03</a>, <a href="05-safety-privacy-regulatory.html">05</a> and <a href="06-architecture.html">06</a>, which it builds.</dd>
 <dt>Decisions</dt><dd>D80 to D88, in the <a href="decision-ledger.html#tutor-mvp">decision ledger</a></dd>
 </dl>
 
@@ -57,7 +57,7 @@
 
 <h2 id="what">What you are building</h2>
 
-<p><b>The product as <a href="01-product.html">01</a> describes it, for adult testers.</b> A tester opens an invitation, plays a learner, picks an objective and is taught in a chosen style, then sits the unaided check and hears an honest close. Every turn goes through the pipeline of <a href="06-architecture.html#turn">06</a>: the composer picks the sources before any model is called, the generator cites them, the verifier runs its four checks, and a failed turn falls back to the item verbatim. Around the session sit figures rendered from data, practice papers, the provisional grade range, the self-tutor, the parent report, safety routing to a reviewer, and a console where an examiner would validate items.</p>
+<p><b>The product as <a href="01-product.html">01</a> describes it, for adult testers.</b> A tester opens an invitation, plays a learner, picks an objective and is taught in a chosen style, then sits the unaided check and hears an honest close. Every turn goes through the pipeline of <a href="06-architecture.html#turn">06</a>: the composer picks the sources before the generator is called, the generator cites them, the verifier runs its four checks, and a failed turn falls back to the item verbatim. Around the session sit figures rendered from data, practice papers, the provisional grade range, the self-tutor, the parent report, safety routing to a reviewer, and a console where an examiner would validate items.</p>
 
 <p><b>Three things are not real, and every screen says so.</b> No examiner has validated any item, so P1 is not kept and each item says it is not validated. No child uses it. No creator has signed, so one fictional licensed preset shows the machinery.</p>
 
@@ -90,14 +90,14 @@
 <ul class="tight">
 <li><b>A CLAUDE.md of invariants,</b> read by every agent: the model never retrieves; nothing reaches the screen before the gate; style never reaches the content plane; the likeness comes only after the gate; no date of birth is stored; nothing can be uploaded; no board material is used.</li>
 <li><b>Contracts:</b> the turn plan, the verifier's verdict, the preset object, the style card and the likeness interfaces, as typed schemas shared by every plane.</li>
-<li><b>The vault's tests as failing tests:</b> T-GND-01, T-MTH-01, T-SCP-01, T-VAL-01, T-PAP-01, T-STY-01 to T-STY-03 and T-SLF-02 to T-SLF-06, each written as code before what it tests exists and marked with the phase by which it must pass. Where a test asks for a live item, the MVP accepts a draft one the algebra system has checked, because none is validated.</li>
+<li><b>The vault's tests as failing tests:</b> T-GND-01, T-MTH-01, T-SCP-01, T-VAL-01, T-PAP-01, T-GATE-01, T-STY-01 to T-STY-03 and T-SLF-02 to T-SLF-06, each written as code before what it tests exists and marked with the phase by which it must pass. Where a test asks for a live item, the MVP accepts a draft one the algebra system has checked, because none is validated.</li>
 <li><b>A frozen battery</b> of objectives, as T-REG-01 specifies, run on every change to a model, prompt, renderer or retrieval rule, and again with no licensed preset, as T-ZERO-01 requires.</li>
-<li><b>Hooks</b> that check each file as it is edited and refuse to let a session or an agent finish while the fast tests fail, and <b>permissions</b> that ask the owner before a contract, a test or a threshold changes, and keep the exam boards' sites out of reach, <span class="mark assumed">Assumed</span> (CV-30).</li>
+<li><b>Hooks</b> that check each file as it is edited, refuse five times over to let a session or an agent finish while the tests of finished phases fail, and refuse any fetch from an exam board's site; a git hook that refuses a merge which breaks those tests; and <b>permissions</b> that ask the owner before a contract, a test or a threshold changes, <span class="mark assumed">Assumed</span> (CV-30).</li>
 <li><b>Six builders and a reviewer,</b> defined as files in the repository, each builder working in its own copy of it, so that every session starts with the same team, <span class="mark assumed">Assumed</span> (CV-30).</li>
 </ul>
 
 <div class="claim">
-<p>The harness comes before any build prompt: the invariants, the contracts, the vault's tests as failing tests, the frozen battery, the hooks, and the agents. Nothing merges while a test fails.</p>
+<p>The harness comes before any build prompt: the invariants, the contracts, the vault's tests as failing tests, the frozen battery, the hooks, and the agents. Nothing merges while the tests of finished phases fail.</p>
 <span class="tag decided">Decision<span class="src">D84, taken while writing, 26 October 2026</span></span>
 </div>
 
@@ -110,7 +110,7 @@
 <thead><tr><th>Agent</th><th>Builds</th><th>Never</th></tr></thead>
 <tbody>
 <tr><td>Content author</td><td>Objectives, items, worked solutions, misconceptions, figure specifications, provenance</td><td>Reads any board's material</td></tr>
-<tr><td>Pipeline engineer</td><td>Safety check, composer, generator, verifier, gate, fallback, logger, figures, the battery</td><td>Lets the model retrieve</td></tr>
+<tr><td>Pipeline engineer</td><td>Safety check, composer, generator, verifier, gate, fallback, logger, the mathematics and content checks, figures, the battery</td><td>Lets the model retrieve</td></tr>
 <tr><td>Style engineer</td><td>Presets, the card renderer, adjustments, labels, the kill switch, signature extraction</td><td>Lets style reach the content plane</td></tr>
 <tr><td>Likeness engineer</td><td>Consents, capture, liveness, the likeness store, voice and face rendering, labels, deletion</td><td>Renders text the gate has not passed</td></tr>
 <tr><td>App engineer</td><td>The learner's, parent's, reviewer's and validator's screens, phone first</td><td>Shows a self-tutor to anyone but its tester</td></tr>
@@ -120,7 +120,7 @@
 </table>
 </div>
 
-<p>Running several agents at once spends the owner's Claude Code allowance faster; by how much is <span class="mark unknown">Unknown</span> until the first phase.</p>
+<p>How much of the owner's Claude Code allowance a phase uses is <span class="mark unknown">Unknown</span> until the first one.</p>
 
 <h2 id="content">The content</h2>
 
@@ -129,37 +129,37 @@
 <ul class="tight">
 <li><b>GCSE Mathematics,</b> both tiers, from the algebra of the DfE subject content, <span class="mark assumed">Assumed</span> (CV-29).</li>
 <li><b>A-level Mathematics,</b> from the algebra and functions of the DfE subject content, <span class="mark assumed">Assumed</span> (CV-29).</li>
-<li><b>GCSE Further Mathematics.</b> No DfE content for it was found, and the qualification found is AQA's Level 2 certificate, <span class="mark assumed">Assumed</span> (CV-29), from the board whose policy bars its material from AI tools and from works made with them (EV-21). Its objectives are written from no board's material, and the owner approves the list before items are drafted.</li>
+<li><b>Level 2 Further Mathematics,</b> which the owner called GCSE Further Maths. No DfE content for it was found, and the qualification found is AQA's Level 2 certificate, <span class="mark assumed">Assumed</span> (CV-29), from the board whose policy bars the use of its material in training AI tools and in any work produced with AI (EV-21). Each objective is written from the DfE GCSE or A-level content it extends, never from a board's material, and the owner approves the list before items are drafted. This is weak: the agents' sense of what such a course covers may echo the one course found.</li>
 </ul>
 
 <p>Practice papers follow the MVP's own structure, because an algebra-only paper cannot have a board's shape. The MVP serves draft items, which the product never would, and every one carries the label "Not yet validated by an examiner".</p>
 
 <div class="claim">
-<p>The content is the algebra of GCSE Mathematics, GCSE Further Mathematics and A-level Mathematics, drafted in full by agents under the clean-room rule, checked by the computer algebra system and labelled as not validated. A-level Further Mathematics and Additional Mathematics are out.</p>
+<p>The content is the algebra of GCSE Mathematics, Level 2 Further Mathematics and A-level Mathematics, drafted in full by agents under the clean-room rule, checked by the computer algebra system and labelled as not validated. A-level Further Mathematics and Additional Mathematics are out.</p>
 <span class="tag decided">Decision<span class="src">D82, the owner's, 26 October 2026</span></span>
 </div>
 
 <div class="claim">
-<p>Both GCSE tiers; GCSE and A-level objectives from the DfE subject content; Further Mathematics from no board's material, approved by the owner; papers of the MVP's own structure.</p>
+<p>Both GCSE tiers; GCSE and A-level objectives from the DfE subject content; Further Mathematics objectives from the DfE content each extends, approved by the owner; papers of the MVP's own structure.</p>
 <span class="tag decided">Decision<span class="src">D85, taken while writing, 26 October 2026</span></span>
 </div>
 
 <h2 id="selftutor">The self-tutor on open models</h2>
 
-<p><b>Every part of the self-tutor in <a href="01-product.html#self">01</a> is built, and the likeness never leaves the MVP's own machines.</b> The voice and face models run on rented GPUs, so no speech or animation vendor holds a sample, and conditioning happens at render time, so nothing is trained on a tester.</p>
+<p><b>Every part of the self-tutor in <a href="01-product.html#self">01</a> is built, and no speech or animation vendor receives a likeness.</b> The voice and face models run on GPUs rented from Modal, which also holds the encrypted likeness store, and conditioning happens at render time, so nothing is trained on a tester.</p>
 
 <ul class="tight">
-<li><b>Turning it on:</b> both consents, then capture in the browser: a short head-and-shoulders clip and prompted sentences read aloud, chosen afresh each time. There is no upload route.</li>
+<li><b>Turning it on:</b> both consents, the tester's confirmation that the face and voice are their own and that they are 18 or over, then capture in the browser: a short head-and-shoulders clip and prompted sentences read aloud, chosen afresh each time. There is no upload route.</li>
 <li><b>Liveness:</b> head turns and blinks, in an order chosen afresh, checked by MediaPipe's face landmarker in the browser and again on the server; a passive anti-spoofing model on the server; and Whisper confirming the prompted sentences were spoken, <span class="mark assumed">Assumed</span> (CV-26).</li>
 <li><b>Rendering after the gate:</b> Chatterbox speaks each passed sentence in the tester's voice, and MuseTalk animates the captured clip to it, <span class="mark assumed">Assumed</span> (CV-24, CV-25). If the face is slow, a still likeness speaks; the text never waits.</li>
 <li><b>The store:</b> an encrypted volume that only the capture, the two renderers and the deletion job can reach, so nothing that reads a tester can return a face or a voice.</li>
 <li><b>Labels and deletion:</b> a visible synthetic label and provenance metadata on every clip, which is streamed and never stored; deletion stops the next turn and clears the store within seven days (D63).</li>
 </ul>
 
-<p>Many open face models depend on InsightFace's pretrained models, which are for non-commercial research only, <span class="mark assumed">Assumed</span> (CV-25), so the first phase audits the licence of every model and dependency before any is used (OA-45).</p>
+<p>Some open face pipelines depend on InsightFace's pretrained models, which are for non-commercial research only, <span class="mark assumed">Assumed</span> (CV-25), so the first phase audits the licence of every model and dependency before any is used (OA-45).</p>
 
 <div class="claim">
-<p>The self-tutor's voice and face run on open models the MVP hosts on rented GPUs, so no speech or animation vendor receives a likeness; for the likeness, D24 and D65 hold by construction.</p>
+<p>The self-tutor's voice and face run on open models the MVP hosts on rented GPUs, so no speech or animation vendor receives a likeness, and nothing is trained on one (D65).</p>
 <span class="tag decided">Decision<span class="src">D83, the owner's, 26 October 2026</span></span>
 </div>
 
@@ -171,7 +171,7 @@
 <table>
 <thead><tr><th>Job</th><th>Tool</th><th>Why this one</th></tr></thead>
 <tbody>
-<tr><td>Generating turns; classifying safety</td><td>Claude Opus 5.5</td><td>The most capable model on offer, with a spend limit the owner sets, <span class="mark assumed">Assumed</span> (CV-21)</td></tr>
+<tr><td>Generating turns; classifying safety</td><td>Claude Opus 5.5</td><td>The model the Primer's demonstration uses (D78), with a spend limit the owner sets, <span class="mark assumed">Assumed</span> (CV-21)</td></tr>
 <tr><td>Entailment and scope checks</td><td>Gemini 4 Argon</td><td>A different family from the generator, as D27 requires, <span class="mark assumed">Assumed</span> (CV-28)</td></tr>
 <tr><td>Mathematics check</td><td>SymPy</td><td>Deterministic, local, no model call, as check (d) requires</td></tr>
 <tr><td>Voice, face and liveness</td><td>Chatterbox, MuseTalk, MediaPipe, Silent-Face-Anti-Spoofing, Whisper</td><td>Open, licensed for commercial use, run by the MVP itself, <span class="mark assumed">Assumed</span> (CV-24 to CV-26)</td></tr>
@@ -188,9 +188,9 @@
 
 <h2 id="safety">Testers, safety and data</h2>
 
-<p><b>Adults only, by invitation, and the safety design of <a href="05-safety-privacy-regulatory.html#content">05</a> runs as written.</b> A message outside academic scope gets the three moves: a brief acknowledgement, the signposts 05 names, and an escalation to a reviewer's queue, which the owner works. The tutor claims no feelings, never initiates contact and caps the session.</p>
+<p><b>Adults only, by invitation, and the safety design of <a href="05-safety-privacy-regulatory.html#content">05</a> runs as written.</b> A message about the tester's own life, feelings or safety gets 05's three moves: a brief acknowledgement, the signposts 05 names, and an escalation to a reviewer's queue, which the owner works to a written policy. Any other message outside the work gets a fixed reply that returns to it. The tutor claims no feelings, never initiates contact and caps the session.</p>
 
-<p><b>Who sees what.</b> Anthropic and Google see turns and the text being checked. No vendor sees a face or a voice.</p>
+<p><b>Who sees what.</b> Anthropic and Google see what testers type and the turns being written and checked. Modal runs the app and the open models and holds the encrypted likeness store; Neon holds accounts, transcripts and progress. No speech or animation vendor sees a face or a voice.</p>
 
 <div class="claim">
 <p>Only adults use the MVP, playing learners of 14 to 18. No child uses it, and it holds no child's data.</p>
@@ -204,7 +204,7 @@
 
 <h2 id="costs">What it costs, and the caps</h2>
 
-<p><b>The listed prices are known; what a session costs is <span class="mark unknown">Unknown</span> until the battery runs.</b> Cost was deprioritised, so the caps exist to stop a mistake, not to save money, and the window holds the whole session rather than D30's bounded summary.</p>
+<p><b>The listed prices are candidates; what a session costs is <span class="mark unknown">Unknown</span> until the battery runs.</b> Cost was deprioritised, so the caps exist to stop a mistake, not to save money, and the window holds the whole session rather than D30's bounded summary.</p>
 
 <div class="tw">
 <table>
@@ -212,7 +212,7 @@
 <tbody>
 <tr><td>Claude Opus 5.5</td><td>$4 per million tokens in, $20 out, <span class="mark assumed">Assumed</span> (CV-21)</td></tr>
 <tr><td>Gemini 4 Argon</td><td>$2 in and $10 out to 30 November 2026, then $4 and $20, <span class="mark assumed">Assumed</span> (CV-28)</td></tr>
-<tr><td>GPUs on Modal</td><td>About $2 to $4 an hour, by type, billed by the second, <span class="mark assumed">Assumed</span> (CV-27)</td></tr>
+<tr><td>GPUs on Modal</td><td>About $2 to $4 an hour, by type, billed by the second, with CPU and memory on top, <span class="mark assumed">Assumed</span> (CV-27)</td></tr>
 <tr><td>Neon</td><td><span class="mark unknown">Unknown</span> at the MVP's size</td></tr>
 </tbody>
 </table>
@@ -233,11 +233,11 @@
 <table>
 <thead><tr><th>Phase</th><th>What is built</th><th>Done when</th></tr></thead>
 <tbody>
-<tr><td>0. Accounts and harness</td><td>The repository, the pack copied in, the contracts, the failing tests, the hooks, the agents, the deployment</td><td>The tests run and fail for the right reason; an empty app deploys</td></tr>
-<tr><td>1. Spikes and foundations</td><td>The licence audit; the voice, face and liveness spike; the schema; the objective lists; the card renderer; the app's shell</td><td>A likeness speaks a fixed sentence; the owner approves the Further Mathematics list</td></tr>
-<tr><td>2. The turn pipeline</td><td>The safety check, composer, generator, verifier, gate and fallback; the session's five steps; the first content</td><td>The battery runs and reports the gate-fire rate; a session ends in an honest close</td></tr>
+<tr><td>0. Accounts and harness</td><td>The repository, the pack copied in, the contracts, the failing tests, the hooks and the merge gate, the agents, the deployment</td><td>The harness's own tests pass and every hook and rule has been tried; the other tests fail for the right reason; an empty app deploys</td></tr>
+<tr><td>1. Spikes and foundations</td><td>The licence audit; the voice, face and liveness spike; the schema; the mathematics, the content checks and figures; the objective lists; the card renderer; the app's shell</td><td>A likeness speaks a fixed sentence; liveness scores are recorded for live and replayed attempts; the owner approves the Further Mathematics list</td></tr>
+<tr><td>2. The turn pipeline</td><td>The safety check, composer, generator, verifier, gate and fallback; the session's five steps; the first content</td><td>The battery runs and reports each measured rate and the gate-fire rate; a session ends in an honest close</td></tr>
 <tr><td>3. The self-tutor</td><td>Consents, capture, liveness, passcode, rendering after the gate, labels, deletion</td><td>T-SLF-02 to T-SLF-06 pass on the MVP</td></tr>
-<tr><td>4. Around the session</td><td>Figures, papers, the grade range, the parent report, the reviewer queue, the validator console, the kill switch, the rest of the content</td><td>T-PAP-01, T-STY-01 and T-STY-03 pass; T-STY-02's blind grading screen works; the kill switch is rehearsed</td></tr>
+<tr><td>4. Around the session</td><td>Papers, the grade range, the parent report, the reviewer queue and its policy, the validator console, the kill switch, the rest of the content</td><td>T-PAP-01, T-GATE-01, T-STY-01 and T-STY-03 pass; T-STY-02's blind grading screen works; the kill switch is rehearsed</td></tr>
 <tr><td>5. Testers</td><td>Sessions with adult testers, their blind grading for T-STY-02, and the fixes they show</td><td>The pack's final checklist passes</td></tr>
 </tbody>
 </table>
@@ -250,16 +250,16 @@
 <ul class="tight">
 <li><b>Whether learners engage or learn.</b> Adults are playing them, and D14's experiment needs real cohorts.</li>
 <li><b>Whether the content is right to P1's standard.</b> No examiner has validated it; how many errors the algebra system misses is OA-46.</li>
-<li><b>The product's cost.</b> The MVP spends without restraint; the cost per session in <a href="10-economics.html">10</a> comes from M2's battery.</li>
+<li><b>The product's cost.</b> The MVP is not built to save money, and keeps whole sessions in its window; the cost per session in <a href="10-economics.html">10</a> comes from M2's battery.</li>
 <li><b>The safety of a child's session.</b> No child, no age assurance and no safeguarding role beyond the owner.</li>
 </ul>
 
 <div class="claim">
-<p>Left out: payment; real age assurance, for which a simulated check stands in; real creators, for which one fictional licensed preset shows the machinery; Route B's school features; the US course; and D30's rolling summary, because a whole session fits in the window.</p>
+<p>Left out: payment; real age assurance, for which a simulated check stands in; real creators, for which one fictional licensed preset shows the machinery; Route B's school features; the US course; D29's quarterly rehearsal, for which one rehearsal stands in; and D30's rolling summary, because a whole session fits in the window.</p>
 <span class="tag decided">Decision<span class="src">D88, taken while writing, 26 October 2026</span></span>
 </div>
 
-<p>Show it as an MVP, say that nothing in it has been validated, and never let a learner under 18 use it.</p>
+<p>Show it as an MVP, say that nothing in it has been validated, and never let anyone under 18 use it.</p>
   </main>
 </div>
 

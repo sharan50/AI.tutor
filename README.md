@@ -235,7 +235,7 @@ contracts/
   creator-licence-heads-of-terms.md  counsel-facing, with Schedules 2 and 3
 mvp/
   primer-demo-spec.md          the Primer demo's build specification, saved as CLAUDE.md in the demo's own repository
-  tutor/                       the Tutor MVP's specification pack: README, CLAUDE.md, SPEC.md, agents, settings, hooks, prompts
+  tutor/                       the Tutor MVP's specification pack: README, CLAUDE.md, SPEC.md, agents, settings, hooks, git hooks, prompts
 mockup/
   index.html                   the Primer demo's design mock-up, hand-maintained; runs one script; published at /mockup/
 econ/                          the economics model and its outputs; not part of the site

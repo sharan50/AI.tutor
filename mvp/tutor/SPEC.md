@@ -55,14 +55,19 @@ changes the Tutor's design.
 | Learners of 14 to 18 | Adults who play them; no child, and no child's data | D81 |
 | Every live item validated by a named examiner (P1, 03) | Items drafted by agents, checked by SymPy, served at status `draft` and labelled "Not yet validated by an examiner" | D82 |
 | The algebra of GCSE Higher, aligned to Pearson Edexcel (D19) | The algebra of GCSE Mathematics, both tiers, Level 2 Further Mathematics and A-level Mathematics, aligned to no board; papers of the MVP's own structure | D82, D85 |
-| Speech and animation bought from a vendor under D24 | Open models run by the MVP on its own GPUs; no vendor receives a likeness | D83 |
+| Speech and animation bought from a vendor under D24 (06) | Open models run by the MVP on GPUs rented from Modal; no speech or animation vendor receives a likeness | D83 |
+| Check (a) a deterministic parse (06) | The parse, and a model pass over the sentences the generator did not mark as assertions, because the generator labels its own sentences | D86 |
+| Check (b) on a pinned, cheaper model (06) | Gemini 4 Argon, because cost comes last and D27 needs another family | D86 |
 | Model vendors under zero retention (D24) | Claude Opus 5.5 and Gemini 4 Argon on their standard terms | D86 |
 | Transcripts kept twelve months (05) | Kept for the test period, then deleted with everything else about testers | D87 |
 | Age assurance from a certified provider (05) | A simulated check, which says it is simulated | D88 |
 | Named educators under licence (D5) | One fictional licensed preset; the rating protocol is not built | D88 |
+| The kill switch rehearsed quarterly (D29) | Rehearsed once, in phase 4, and again before testers if the preset changes | D88 |
 | Payment, Route B's school features, the US course | Not built | D88 |
 | A rolling summary of bounded size as the window (D30) | The current session's turns, verbatim: a whole session fits, and D30 exists to bound cost | D88 |
-| A named safeguarding role | The owner works the reviewer queue | the guide |
+| A trained reviewer, against a written policy (D26) | The owner works the reviewer queue, against `docs/reviewer-policy.md` | D81 |
+| Validation by named examiners (03) | The validation workflow runs on a fixture bank only; no MVP item changes status | D82 |
+| The synthetic label's form, which waits on OI-26 (01) | The MVP's own label, which answers nothing about OI-26 | D83 |
 
 Where a vault test asks for a live item, the MVP accepts a draft one that SymPy has
 checked, because none is validated.
@@ -98,12 +103,14 @@ overrides the documentation on how to call them.
 | Google AI Studio | Gemini 4 Argon | a monthly spend limit of $300 |
 | Modal | everything that runs | nothing; scale-down is set in code |
 | Neon | Postgres | nothing; the cost is Unknown |
-| GitHub | the private repository | branch protection: the fast tests must pass before a merge |
+| GitHub | the private repository | CI on every push and pull request, with a secret scan |
 
 ### 3.3 Secrets and configuration
 
 Secrets are Modal secrets, each attached only to the functions named. None is in the
-repository, in an environment file that is committed, or in the browser.
+repository, in an environment file that is committed, or in the browser. The
+`capture`, `voice`, `face` and `purge` functions are internal Modal functions, never
+web endpoints: the web app authenticates every request and calls them.
 
 | Variable | Modal secret | Attached to | For |
 |---|---|---|---|
@@ -129,7 +136,7 @@ about learners.
 | Session length | teaching ends by 20 minutes; the session ends at 30, within 01's fifteen to thirty |
 | The unaided check | three check items (01 says two or three); a pass needs all three right on first commit |
 | Return after the close | 7 days after a pass, 2 days after a fail |
-| The window | the current session's turns, at most 20 |
+| The window | every turn of the current session |
 | Permitted nodes | the objective's own, and at most 3 explanation nodes of its prerequisites |
 | GPU scale-down | after 300 seconds idle |
 | GPU containers | at most 2 for each renderer |
@@ -137,8 +144,12 @@ about learners.
 | Self-tutor passcode | at least 6 digits; 5 wrong tries lock it for 15 minutes |
 | Face wait | if a sentence's face clip is not ready 2 seconds after its audio, the still likeness speaks it |
 | Adjustment positions | five, mapped to 10, 30, 50, 70 and 90 |
+| Card bands | five: 0 to 19, 20 to 39, 40 to 59, 60 to 79 and 80 to 100 |
 | Clamps | `worked_completeness` at least 40; `digression_tolerance` at most 50; `visual_density` at most 80; must-warn misconceptions always named |
 | Papers | no item the learner has seen in the last 14 days |
+| Learners | year groups 10 to 13 |
+| Screens | every layout works at 390 px wide and at desktop width; touch targets at least 44 px; text at least 18 px on a phone |
+| Spend limits | $500 a month at Anthropic and $300 at Google, set at the providers |
 | The battery | 12 objectives, 4 for each qualification, under every shipped preset |
 | The reviewer queue | read by the owner at least once a day during the test period |
 | The kill switch's cache | 60 seconds, from 06 |
@@ -150,12 +161,15 @@ about learners.
 ```
 CLAUDE.md               the invariants and how to work, from the pack
 SPEC.md                 this file
-PHASE                   the current phase, a single digit; only the owner changes it
-Makefile                test, test-all, lint, check-content, battery
+PHASE                   the phase being built, a single digit; only the owner changes it
+Makefile                test, test-phase, test-all, lint, check-content, battery, deploy
+.gitignore              .env*, .claude/worktrees/, .venv/, caches, and audio and video files
 .claude/agents/         the team, from the pack
 .claude/settings.json   hooks and permissions, from the pack
 .claude/hooks/          the scripts the hooks run, from the pack
-.github/workflows/      the fast tests on every pull request
+.githooks/              the merge gate, from the pack
+.github/workflows/      the fast tests and a secret scan, on every push and pull request
+spikes/                 phase 1's spike, kept apart from the product
 content/
   sources/dfe/          the DfE subject content, as the owner downloaded it
   objectives/           one file per qualification
@@ -172,7 +186,7 @@ tutor/
   style/                presets, card renderer, adjustments, signatures, kill switch
   likeness/             consents, capture, liveness, store, voice, face, labels, deletion
   platform/             accounts, roles, sessions, scheduler, papers, grade range, reports
-  web/                  routes, templates and static files
+  web/                  routes, templates and static files; static/capture/ holds the capture code
   modal_app.py          the deployment
 migrations/             Alembic's migrations
 tests/
@@ -184,8 +198,25 @@ tests/
 docs/
   licences.md           the licence audit
   retention.md          where each kind of data lives, and how it is deleted
+  reviewer-policy.md    what the reviewer does with an escalation
 reports/                one report per battery run
 ```
+
+Who changes what:
+
+| Path | Changed by |
+|---|---|
+| `PHASE`, `tests/thresholds.toml`, `.claude/`, `.githooks/` | the owner |
+| `tutor/contracts/`, `tutor/config.py`, `tests/invariants/`, `docs/reviewer-policy.md` | a lead session, with the reviewer and the owner's approval |
+| `content/` except presets and sources | the content author |
+| `tutor/pipeline/`, `tutor/maths/`, `tutor/figures/`, `tutor/content/`, `tests/battery/` | the pipeline engineer |
+| `tutor/style/`, `content/presets/` | the style engineer |
+| `tutor/likeness/`, `tutor/web/static/capture/`, `spikes/`, `docs/licences.md` | the likeness engineer |
+| `tutor/web/` except the capture code | the app engineer |
+| `tutor/platform/`, `tutor/modal_app.py`, `migrations/`, `.github/workflows/`, `docs/retention.md` | the platform engineer |
+
+Each builder also owns its own folder under `tests/unit/`. The likeness functions are
+defined in `tutor/likeness/` and registered in `tutor/modal_app.py`.
 
 ### 4.1 The contracts
 
@@ -243,8 +274,8 @@ Consent          id, account_id, learner_id, party(adult|learner),
 LikenessRef      learner_id, kind(face|voice|conditioning), store_ref
 ```
 
-The MVP adds these, and adds `nickname`, `qualification`, `tier` and `learner_says`
-to `Learner`, and `cohort` to `Account`:
+The MVP adds these, and adds `nickname`, `qualification` and `tier` to `Learner`,
+`learner_view(can|cannot|null)` to `MasteryState`, and `cohort` to `Account`:
 
 ```
 User             id, account_id, email, password_hash, roles[], created_at
@@ -278,7 +309,10 @@ report or mark scheme, whether from a board or from a site that copies one (D12,
 EV-21). The only source documents are the DfE subject content for GCSE Mathematics
 and for A-level Mathematics, which the owner downloads from gov.uk into
 `content/sources/dfe/` before phase 1. The content author has no web access, and
-writes everything else from its own knowledge of mathematics.
+writes everything else from its own knowledge of mathematics. An agent that notices
+it is recalling a board's question, or a board's specification, its topic list, its
+order or its wording, stops and writes something of its own. No tester's material
+reaches an agent either: what a tester found is described in words.
 
 ### 6.2 Objectives
 
@@ -288,17 +322,20 @@ Three qualifications (D82, D85):
   tiers. Each objective records its tier.
 - `a-level-maths`: the algebra and functions of the DfE subject content for A-level
   Mathematics.
-- `l2-further-maths`: the algebra of a Level 2 Further Mathematics course, written
-  from no board's material. No DfE subject content for it was found, and the
-  qualification found, AQA's certificate, comes from the board whose policy EV-21
-  records. The content author drafts the list from its own knowledge of what follows
-  Higher algebra and precedes A-level, and the owner approves it before any item is
-  drafted.
+- `l2-further-maths`: the algebra of Level 2 Further Mathematics, the qualification
+  the owner called GCSE Further Maths, written from no board's material. No DfE
+  subject content for it was found, and the qualification found, AQA's certificate,
+  comes from the board whose policy EV-21 records. Each objective is written from the
+  DfE GCSE or A-level content it extends, which its `dfe_content_ref` names, so that
+  the list rests on statutory content and not on the one course found. The owner
+  approves the list, checking that each objective names its reference, before any
+  item is drafted. This is weak: an agent's sense of what such a course covers may
+  still echo that course.
 
 An objective is one item-bank node, taught in one session (01). It has an id of the
 form `OBJ-GCSE-QUAD-03`, a title in plain words, its qualification and tier,
-`dfe_content_ref` (or `original`, for Further Mathematics), its prerequisites, its
-must-warn misconception nodes, and its place in the qualification's order. How many
+`dfe_content_ref`, its prerequisites, its must-warn misconception nodes, and its
+place in the qualification's order. How many
 objectives there are is Unknown until the decomposition.
 
 ### 6.3 Items
@@ -325,7 +362,7 @@ practice or explanation items only. **Check items never enter a turn plan.**
 ### 6.4 Provenance in the MVP
 
 The record of 03, with these values: `written_by` is `agent:content-author` and the
-session's id; `derived_from` is the DfE content reference, or `original`;
+session's id; `derived_from` is the objective's DfE content reference;
 `structure_basis` is `authored`; `board_alignment` is `none`; `tier` is the
 objective's; `attestation` is `no awarding-body material consulted`;
 `similarity_check` is all null, because no screening service is procured;
@@ -334,8 +371,10 @@ objective's; `attestation` is `no awarding-body material consulted`;
 
 ### 6.5 Checking items
 
-`uv run python -m tutor.content.check` runs on every item file, and a commit that
-fails it does not merge:
+`uv run python -m tutor.content.check` runs on every item file. The pipeline engineer
+builds it in phase 1, before any item is drafted; the after-edit hook runs it on each
+item file, and `make test` runs it on the whole bank, so the merge gate refuses a bank
+that fails it:
 
 - the file validates against the contracts;
 - every worked step passes the step check of section 7;
@@ -404,8 +443,9 @@ Learners type in the same syntax, with a live preview of how their answer was re
 
 1. **Pick up.** One sentence from `MasteryState`, written by a template, not a model:
    what the learner last worked on and what the last check showed, then "Is that
-   still right?" The learner can say it is not; that goes into `learner_says`, and the
-   objective becomes due.
+   still right?" The learner can answer "Yes", "I can do it now" or "I still can't";
+   the answer goes into `learner_view`, a fixed choice and never free text, and either
+   of the last two makes the objective due.
 2. **One objective.** The scheduler proposes the due objective with the earliest due
    date, or else the first in the qualification's order whose prerequisites have
    passed. The learner may pick another. Never more than one.
@@ -456,7 +496,8 @@ TurnPlan`:
   its prerequisites, in a fixed order; never a check item;
 - the card is rendered from the session's preset, with the learner's adjustments and
   the clamps (section 11);
-- the window is the current session's turns, at most twenty;
+- the window is every turn of the current session, verbatim (D30's rolling summary is
+  left out, by D88);
 - `must_warn` is the objective's must-warn misconception nodes.
 
 The same inputs give the same plan, byte for byte, and a test proves it.
@@ -468,7 +509,7 @@ Claude Opus 5.5, with the model id from `tutor/config.py`, called:
 - with no tools, because the model never retrieves (06);
 - with structured output to the `GeneratedTurn` schema;
 - at effort `high`;
-- with no temperature, top_p, top_k or prefill, which current Claude models reject;
+- with no temperature, top_p, top_k or prefill;
 - with no server-side model fallback, so every turn comes from the pinned model; a
   refusal (`stop_reason` `refusal`) or an error fails the gate;
 - with prompt caching on the system prompt and the permitted nodes, which do not
@@ -477,10 +518,12 @@ Claude Opus 5.5, with the model id from `tutor/config.py`, called:
 The system prompt, in `tutor/pipeline/prompts/generator.md`, says: you are a
 mathematics tutor; teach this one objective; say nothing of substance that the
 permitted nodes do not support, and cite the node for every assertion and every step;
-write all mathematics in the syntax; follow the card; claim no feelings, preferences
-or life outside the session; do not invite personal disclosure; never mention the
-learner's face or voice; write in British English without dashes. The card, the nodes
-and the window follow it, in that order.
+set only questions taken from a permitted node, as written or with its numbers
+changed, and never write a new exam-style question; write all mathematics in the
+syntax; follow the card; claim no feelings, preferences or life outside the session;
+do not invite personal disclosure; never mention the learner's face or voice; write
+in British English without dashes. The card, the nodes and the window follow it, in
+that order.
 
 ```json
 {
@@ -509,7 +552,7 @@ model.
 
 | Check | In the MVP | Fails when |
 |---|---|---|
-| a. Citation presence | In code, every assertion and step cites at least one permitted node. Then Gemini reads each other sentence, with the one before it, and says whether it makes a curricular assertion | an assertion or a step has no permitted citation, or Gemini finds an assertion under another role |
+| a. Citation presence | In code, every assertion, every step and every sentence that holds mathematics, whatever its role, cites at least one permitted node. Then Gemini reads each other sentence, with the one before it, and says whether it makes a curricular assertion | any of those has no permitted citation, or Gemini finds an assertion under another role |
 | b. Claim support | Gemini, once for each assertion, given only that sentence and the text of the nodes it cites, says whether they entail it | any assertion is not entailed; each failure goes to the adjudication queue |
 | c. Scope | Gemini, given the turn and the titles of the qualification's objectives, says whether everything in it lies inside them | anything lies outside |
 | d. Mathematics | SymPy on every step and every inline expression (section 7) | a step is wrong, or an expression does not parse |
@@ -585,7 +628,7 @@ The rating protocol of 02 is not built: there is no creator to rate (D88).
 
 `render(style_object, "cine.card/1.0.0") -> str`: deterministic, versioned, and the
 only way a card comes into existence (02). Each dimension falls in one of five bands,
-0 to 19, 20 to 39, 40 to 59, 60 to 79 and 80 to 100, and each band gives one
+0 to 19, 20 to 39, 40 to 59, 60 to 79 and 80 to 100 (3.4), and each band gives one
 instruction. The card opens "Teaching style for this session.", gives the lines in
 the order of 02's card, then the `constraints` verbatim, then "Register: " and the
 register note.
@@ -625,7 +668,8 @@ one cache with a sixty-second lifetime, set in one place and asserted by a test.
 the first turn that reads it as false, a session uses `fallback_archetype_id`. The
 owner's console sets it in one write. A rehearsal script disables the fictional
 preset while a session runs, and records how long a new session and the running one
-took to lose it (D29).
+took to lose it. D29 rehearses the product's switch quarterly; the MVP rehearses once,
+in phase 4, and again before testers if the preset changes.
 
 When the fictional licence ends, the preset, its style object, every card and every
 `Session.preset_snapshot` that refers to it are purged within seven days, and the
@@ -662,16 +706,20 @@ says (01, D64).
 
 1. **Two consents.** The adult's, then the learner's, on separate screens, each after
    01's plain statement: what is kept (a face scan, a voice sample and what is derived
-   from them), that the product shows it to no one else, the adult included, and how
-   to delete it. The learner's words are written for a fifteen-year-old, not adapted
-   from the adult's. Each makes a `Consent` row with its notice version (D62). In the
-   MVP one tester gives both, and the screens say so.
-2. **Live capture.** The browser asks for the camera and the microphone, and the
-   server issues a `CaptureChallenge`. The browser records a head-and-shoulders clip
+   from them), where it is kept (encrypted, on Modal, which hosts the MVP; no speech
+   or animation company receives it), that the product shows it to no one else, the
+   adult included, and how to delete it. The learner's words are written for a
+   fifteen-year-old, not adapted from the adult's. Each makes a `Consent` row with its
+   notice version (D62). In the MVP one tester gives both, and the screens say so.
+2. **Live capture.** The tester first confirms that the face and the voice will be
+   their own and that they are 18 or over; a self-tutor of anyone else, a child above
+   all, is never made. The browser asks for the camera and the microphone, and the
+   web app issues a `CaptureChallenge`. The browser records a head-and-shoulders clip
    while the learner follows the head movements, then the learner reads the sentences
-   aloud. The recording goes to the capture function with the challenge's id. There
-   is no file input anywhere in the app, and capture accepts nothing but the answer to
-   a challenge it issued (D61).
+   aloud, and sends the recording to the web app with the challenge's id. The web app
+   accepts it only within the challenge's lifetime and only once, marks the challenge
+   used, and passes the recording, held in memory and written nowhere, to the capture
+   function. There is no file input anywhere in the app (D61).
 3. **Liveness.** MediaPipe's face landmarker guides the movements and blinks in the
    browser and checks them again on the server; Silent-Face-Anti-Spoofing scores the
    frames on the server; Whisper transcribes the audio, which must match the
@@ -689,7 +737,8 @@ says (01, D64).
 A Modal volume, `likeness`, holding the face clip, the voice sample and anything
 derived from them, each file encrypted with `LIKENESS_KEY`. Only the `capture`,
 `voice`, `face` and `purge` functions have the key or the volume; the web app has
-neither. `LikenessRef` rows hold only opaque references. Every read or write of the
+neither. The capture function returns opaque references, which the web app writes
+into `LikenessRef`; the rows hold nothing else. Every read or write of the
 store is logged with the function, the learner's id and the reason. Nothing is
 trained on a likeness: conditioning happens at render time and is dropped when the
 render ends (D65).
@@ -707,8 +756,9 @@ After the gate, never before (D64). For each sentence of a passed turn:
 4. the label "AI-generated in your likeness" is drawn into the frames, and provenance
    metadata, saying the clip is synthetic and giving the turn's id, the time, and the
    models and their versions, is written into the file (T-SLF-06);
-5. the clip streams to the browser and is not stored: responses carry `Cache-Control:
-   no-store`, and the player offers no download, share or export.
+5. the web app streams the clip to the browser, behind the learner's session and
+   passcode, and stores it nowhere: responses carry `Cache-Control: no-store`, and the
+   player offers no download, share or export.
 
 The first sentence plays while the rest render. If a sentence's face clip is late,
 by the face wait in 3.4, the still likeness speaks it; if the voice fails, the turn
@@ -739,14 +789,17 @@ the files at once, the `jobs` function then removes the `LikenessRef` rows, and 
 daily run retries anything left, so that nothing remains after seven days (D63). The
 same runs when an account closes, after twelve months without a self-tutor session,
 and when the test period ends. Record in `docs/retention.md` whether Modal backs up
-volumes, and for how long.
+volumes, and for how long; how long Neon's history and any branch made from `main`
+keep testers' rows; and what Modal's logs keep, which must never include a learner's
+words. At the end of the test period, delete those copies too, or record why one
+cannot be.
 
 ### 12.6 The licence audit, first
 
 Before any model or library in this section is used, phase 1 records in
 `docs/licences.md`, for each model, its weights and every dependency they bring:
 the licence, where it was read, and whether it permits commercial use. Anything that
-does not, or is unclear, is replaced or left out. Many open face pipelines depend on
+does not, or is unclear, is replaced or left out. Some open face pipelines depend on
 InsightFace's pretrained models, which are for non-commercial research only; none of
 those is used (OA-45).
 
@@ -766,19 +819,34 @@ called "CINE mark scheme" wherever a tester sees it (D36), with the label. The C
 marks final answers; the tester marks the rest against the mark scheme.
 
 **The grade range.** For the algebra strand alone, and saying so: an arithmetic
-mapping from the learner's unaided-check results to a band, shown only when the
-evidence is sufficient, and always marked "Provisional, and not calibrated against
-any examination" (`calibrated` is false). The mapping and its sufficiency gate, a
-least number of check items and a least share of the qualification's objectives, are
-design choices written in `tutor/platform/grade.py`, approved by the owner in phase 4
-and explained on the screen that shows the range. Nothing gates on it (D35).
+mapping from the learner's unaided-check results to a band, recomputed every session
+and built as 05 sets out:
+
+- always a range, never a point, and worded as a current performance band on the
+  MVP's own items, never a forecast; the word "prediction" appears nowhere;
+- shown with the evidence it rests on (how many items, over what period, covering
+  what share of the strand) and with the objectives that would move it;
+- never comparative: no learner is shown against another;
+- not shown below the sufficiency gate, a least number of check items and a least
+  share of the qualification's objectives;
+- hideable by the learner from their own view, with a plain note that the parent's
+  report still shows it;
+- open to challenge, answered by showing the item results behind it;
+- marked "Provisional, and not calibrated against any examination" (`calibrated` is
+  false).
+
+The mapping and the gate are design choices written in `tutor/platform/grade.py`,
+approved by the owner in phase 4 and explained on the screen that shows the range.
+Only the learner's and the parent's reporting views read `GradeRange`, and nothing
+is decided or gated on it (D35, T-GATE-01).
 
 ## 14. Safety
 
 05 runs as written, with the owner as the reviewer.
 
-**The three moves,** for every `wellbeing` message, as text from the standard tutor,
-written in advance in `tutor/pipeline/replies.py`:
+**The three moves,** for every `wellbeing` message, a message about the learner's own
+life, feelings or safety, as text from the standard tutor, written in advance in
+`tutor/pipeline/replies.py`:
 
 > Thank you for telling me. If you want to talk to someone now, you can call Childline
 > free on 0800 1111, or Samaritans on 116 123, at any time. I am passing this on so
@@ -786,9 +854,12 @@ written in advance in `tutor/pipeline/replies.py`:
 
 The session then offers "Carry on" and "Stop here". The tutor asks nothing about what
 was said. An `Escalation` row goes to the reviewer's queue with its category; the
-reviewer sees that session's transcript, and the access is logged with its reason. If
-testers outside the UK are invited, add their country's services to the reply before
-they start.
+reviewer sees that session's transcript, and the access is logged with its reason.
+The reviewer works to `docs/reviewer-policy.md`, which a lead session drafts in phase
+4 and the owner approves: how soon the queue is read, what the reviewer does when a
+tester may really be at risk, and that nothing from an escalation goes to anyone
+else. If testers outside the UK are invited, add their country's services to the
+reply before they start.
 
 **Fixed replies,** for `off_topic`: "That is outside what I can help with here.
 Shall we carry on with [objective]?"; and for `unsuitable`: "I cannot help with that.
@@ -803,9 +874,11 @@ aversion or reminders to come back (D25).
 **The welcome page says,** before anyone signs in: this is for adults, who play a
 learner of 14 to 18, and never for a child; nothing in it is validated by an
 examiner; Anthropic and Google receive what testers type and what the tutor writes,
-on their standard terms; a tester's face and voice, if they make a self-tutor, stay on
-the MVP's own machines and are shown to no one else; and this is a tutoring test, not
-a place to seek help, with the services to call.
+on their standard terms; Modal runs the MVP and the open models, and Neon holds
+accounts, transcripts and progress until the test ends; a tester's face and voice, if
+they make a self-tutor, are stored encrypted on Modal, go to no speech or animation
+company, and are shown to no one else; and this is a tutoring test, not a place to
+seek help, with the services to call.
 
 **Staff access** (05): nobody browses transcripts. The reviewer sees an escalated
 session; the validator sees turns drawn for adjudication; the admin sees a session a
@@ -820,7 +893,7 @@ cookie, and every form carries a CSRF token. The simulated age check is one scre
 "A real product would check your age with a certified provider here. This test only
 records that you are an adult.", and a box to confirm it (D88). The tester then makes
 one or more learners, each with a nickname, a year group from 10 to 13, a
-qualification and a tier.
+qualification and a tier, and plays each of them themselves.
 
 **Roles:** `tester` (the adult on an account, and the learners they play),
 `reviewer`, `validator` and `admin`. The owner holds all four. Nobody else holds more
@@ -838,7 +911,7 @@ control is a real button, link or input with a label; touch targets are at least
 | Session | the learner | the always-on line, turns with their mathematics and figures, the waiting steps, the answer box and its preview, the check, the close, the self-tutor and the standard-tutor switch |
 | Paper | the learner | a timed paper, the answers, the results, the CINE mark scheme |
 | Reviewer | `reviewer` | the escalation queue, each session's access logged |
-| Validator console | `validator` | the adjudication queues for T-GND-01 and T-MTH-01, T-SCP-01's sample, and 03's validation workflow |
+| Validator console | `validator` | the adjudication queues for T-GND-01 and T-MTH-01, T-SCP-01's sample, and 03's validation workflow on the fixture bank |
 | Owner's console | `admin` | invitations, testers and cohorts, presets and the kill switch, the fictional creator's controls, counters and caps, battery runs and reports, the test period, deletions |
 
 **The parent report** (01) shows objectives attempted, objectives passed on the
@@ -848,8 +921,9 @@ self-tutor (D60). "Request the full record" makes a request the owner fulfils by
 export. The export holds no likeness, which the web app cannot reach; whether the
 product's subject access route must reach it is OI-23, which the MVP does not answer.
 
-**Validation.** 03's workflow is built and works, but no item is validated unless a
-person who meets 03's definition validates it. With none, every item stays draft.
+**Validation.** 03's workflow is built and shown working on a fixture bank kept apart
+from the MVP's own. No MVP item changes status: every one stays draft, and keeps its
+label (D82).
 
 **The always-on line** (01), at the top of every session screen and never behind a
 menu: "AI tutor. Style preset: Groundwork.", or "AI tutor. Style preset licensed from
@@ -878,43 +952,63 @@ One Modal app, `tutor-mvp`, defined in `tutor/modal_app.py`:
 | `battery` | T-REG-01 and the measured tests | `anthropic`, `gemini`, `neon` |
 
 The GPU functions scale down after their idle time and run at most their number of
-containers (3.4); the phase 1 spike chooses the GPU type by measured render time.
-Neon has one project, with a `main` branch for the MVP and a branch for each test
-run, named by `TEST_DATABASE_URL`. A deploy is `modal deploy tutor/modal_app.py`,
-from a commit on `main` whose tests pass.
+containers (3.4); the phase 1 spike chooses the GPU type by measured render time. The
+likeness functions are called by the web app and are never web endpoints. Neon has
+one project, whose `main` branch holds the MVP's data; no branch is made from it while
+testers' data is there. `make deploy` runs `modal deploy tutor/modal_app.py` from a
+commit on `main`, and refuses unless `make test` passes and the latest `BatteryRun`
+ran on the current models, prompts, card renderer and composer, by its
+`config_hash`.
 
-GitHub Actions runs `make test` on every pull request, and branch protection requires
-it. The battery runs on demand, from the console or with `modal run`, never in CI,
-because it calls paid models.
+GitHub Actions runs `make test` and a secret scan on every push and every pull
+request, against a Postgres service. The battery runs on demand, from the console or
+with `make battery`, never in CI, because it calls paid models.
 
 ## 17. Tests
 
-Written before the code they test, in `tests/invariants/`, one file each, each
-marked with the phase by which it must pass. `make test` runs every test of the
-current phase and the phases before it, as `PHASE` records; `make test-all` runs them
-all. A test is never skipped, weakened or marked as expected to fail to get a change
-through. A test that is wrong is changed in a lead session, with the reviewer, and
-the reason goes in the commit message.
+Written before the code they test. Each plane's own tests are in `tests/unit/`; the
+vault's tests and the invariants' are in `tests/invariants/`, one file each, each
+marked with the phase by which it must pass. `PHASE` holds the phase being built:
 
-**The vault's tests, as the MVP runs them:**
+- `make test`: the unit tests, the content checks on the whole bank, and the
+  invariant tests of finished phases, those marked lower than `PHASE`. It must pass
+  at every stop and every merge; when nothing is collected, as in phase 0, it passes.
+- `make test-phase`: the invariant tests marked with the current phase. They fail
+  until the phase's work is merged, and the lead runs them to know a phase is done.
+- `make test-all`: every test, the later phases' included.
 
-| Test | The MVP's version | Kind | Phase |
-|---|---|---|---|
-| T-VAL-01 | The census: no item is live without a complete validation record within its date, and a failure takes items out of live. No item is live in the MVP, so the test also proves on fixtures that it would catch one | fast, and nightly | 1 |
-| T-GND-01 | Automated entailment of every assertion in the battery; then the owner adjudicates a sample, and every failure, in the console; reported for each turn and each session | slow | 2 |
-| T-MTH-01 | SymPy on every checkable step; the owner adjudicates a sample of the unchecked ones | fast for the checker, slow for the rate | 2 |
-| T-SCP-01 | The scope check on the battery, and the owner's sample | slow | 2 |
-| T-REG-01 | The frozen battery, under every shipped preset, with all the measured tests, on every change to a model, a prompt, the renderer or the composer's rules | slow | 2 |
-| T-ZERO-01 | The same battery with the persona registry empty, so that only the archetypes remain; it must pass as T-REG-01 does (D11, D23) | slow | 2 |
-| T-SLF-02 | Photographs, videos and recordings replayed by the owner are refused; the false-accept rate is judged against a threshold written before phase 3 | slow, with the owner | 3 |
-| T-SLF-03 | Every clip's script equals the spoken form of the gated text | fast, and in every render | 3 |
-| T-SLF-04 | After deletion the next turn has no likeness, and none within sixty seconds even if the cache is not cleared; the store and `LikenessRef` hold nothing; no clip exists; no GPU container wrote to disk | fast with fakes, slow end to end | 3 |
-| T-SLF-05 | No surface lets anyone but the learner see or hear a self-tutor, or obtain anything it renders: every route is listed and tried with every role, and without the passcode | fast | 3 |
-| T-SLF-06 | Every clip carries the visible label and the provenance metadata | fast, and in every render | 3 |
-| T-PAP-01 | At assembly: every item a CAS-checked draft; the mark total, the coverage, the command-word mix and the difficulty within tolerance; no item twice in a paper or in the learner's recent history | fast | 4 |
-| T-STY-01 | The signatures of the battery's transcripts against each preset's vector: at least ten of twelve within the band, and none outside twice it | slow | 4 |
-| T-STY-03 | One objective under every shipped preset: the objective's required nodes cited under each, and no difference in correctness | slow | 4 |
-| T-STY-02 | Blind discrimination: a grader sees two transcripts of one objective under two presets, and the two cards, and says which is which; the sample size and the test are written down first | built in 4, graded by testers in 5 | 5 |
+A test is never skipped, weakened or marked as expected to fail to get a change
+through. A test that is wrong is changed in a lead session, with the reviewer, and the
+reason goes in the commit message.
+
+**Phase 0's own tests** hold the harness: the contracts load, and the vault's two
+style vectors and its provenance example validate against them; `.claude/settings.json`
+parses; every hook script runs on Python 3.9 and later; the Makefile has its targets;
+the git hooks are installed; and every invariant test is marked with a phase.
+
+**The vault's tests, as the MVP runs them.** A test that gates must pass, or meet its
+threshold, before its phase is done. A test that reports runs, and the owner reads it
+against its floor; the battery is too small to show that a floor is met with
+confidence, which is M2's work, and every report says so.
+
+| Test | The MVP's version | Kind | Phase | Gates |
+|---|---|---|---|---|
+| T-VAL-01 | The census: no item is live without a complete validation record within its date, and a failure takes items out of live. No MVP item is live, so the test also proves, on the fixture bank, that it would catch one | fast, and nightly | 1 | yes |
+| T-MTH-01 | SymPy on every checkable step, against 03's floor of 99.0 per cent; the owner adjudicates a sample of the unchecked steps | the checker fast, the rate slow | 2 | the checker |
+| T-GND-01 | Automated entailment of every assertion in the battery, against 03's floor of 99.5 per cent; the owner adjudicates a sample, and every failure; reported for each turn and each session | slow | 2 | no |
+| T-SCP-01 | The scope check on the battery, against 03's floor of 99.5 per cent, and the owner's sample | slow | 2 | no |
+| T-REG-01 | The frozen battery, under every shipped preset, with the measured tests above, on every change to a model, a prompt, the card renderer or the composer's rules | slow | 2 | it must run |
+| T-ZERO-01 | The same battery with the persona registry empty, so that only the archetypes remain (D11, D23) | slow | 2 | it must run |
+| T-SLF-02 | Photographs, videos and recordings replayed by the owner are refused; the false-accept rate is judged against a threshold the owner writes before phase 3 | slow, with the owner | 3 | yes |
+| T-SLF-03 | Every clip's script equals the spoken form of the gated text | fast, and in every render | 3 | yes |
+| T-SLF-04 | After deletion the next turn has no likeness, and none within sixty seconds even if the cache is not cleared; the store and `LikenessRef` hold nothing; no clip exists; no GPU container wrote to disk | fast with fakes, slow end to end | 3 | yes |
+| T-SLF-05 | No surface lets anyone but the learner see or hear a self-tutor, or obtain anything it renders: every route is listed and tried with every role, and without the passcode | fast | 3 | yes |
+| T-SLF-06 | Every clip carries the visible label and the provenance metadata | fast, and in every render | 3 | yes |
+| T-PAP-01 | At assembly: every item a CAS-checked draft; the mark total, the coverage, the command-word mix and the difficulty within tolerance; no item twice in a paper or in the learner's recent history | fast | 4 | yes |
+| T-GATE-01 | No component outside the learner's and the parent's reporting views reads `GradeRange`: not the scheduler, the composer or any experiment (D35) | fast | 4 | yes |
+| T-STY-01 | The signatures of the battery's transcripts against each preset's vector: at least ten of twelve within the band, and none outside twice it | slow | 4 | yes |
+| T-STY-03 | One objective under every shipped preset: the objective's required nodes cited under each, and no difference in correctness | slow | 4 | yes |
+| T-STY-02 | Blind discrimination: a grader sees two battery transcripts of one objective under two presets, and the two cards, and says which is which; the sample size and the test are written down first. Graders see battery transcripts only, never a tester's session (T1 in 05) | built in 4, graded by testers in 5 | 5 | no |
 
 T-SLF-01, T-CAL-01 and T-STY-04 do not run: the first two need real learners and real
 examinations, and the third applies only under D6.
@@ -922,43 +1016,41 @@ examinations, and the third applies only under D6.
 The battery's simulated learner is Gemini 4 Argon, following a fixed script for each
 objective: answer correctly once, make the objective's first known misconception, ask
 for the rule, go off the topic once, ask about something beyond the objective, ask for
-the check, and answer the check from scripted answers, some of them wrong. The
-measured tests take the vault's floors as their thresholds: 99.5 per cent for T-GND-01
-and T-SCP-01, and 99.0 per cent for T-MTH-01 (03). The battery is too small to show
-that a floor is met with confidence; that is M2's work, and every report says so.
-Each report also gives the gate-fire rate, the time of each step and the tokens used.
+the check, and answer the check from scripted answers, some of them wrong. Each report
+gives every measured rate against its floor, the gate-fire rate, the time of each step
+and the tokens used.
 
-**The invariants' own tests,** all fast:
+**The invariants' own tests,** all fast, each marked with the phase that builds what
+it tests:
 
-- no field anywhere holds a date of birth, an age, a school or an address;
-- no route accepts a file, and no template has a file input;
-- no learner, user or turn table has a column for a likeness, audio or video;
-- the generator is called with no tools;
-- no check item ever appears in a `TurnPlan`;
-- the card is not an input to the composer's choice of sources or to any check;
-- the composer gives the same plan for the same inputs;
-- nothing about a turn reaches the browser before its verdict;
-- the voice accepts scripts only from stored turns;
-- the cache's lifetime is sixty seconds, tested with a fake clock;
-- every served item, paper and mark scheme carries the label;
-- no turn text, message or node is written to a log;
-- every route needs a signed-in user, except the welcome, sign-in and invitation
-  pages;
-- the Groundwork card's golden test.
+| Phase | Tests |
+|---|---|
+| 0 | no field anywhere holds a date of birth, an age, a school or an address; no learner, user or turn table has a column for a likeness, audio or video; no route accepts a file, and no template has a file input; every route needs a signed-in user, except the welcome, sign-in and invitation pages |
+| 1 | the Groundwork card's golden test; no content file names an exam board or a past paper, and `content/sources/` holds only the DfE's documents (invariant 12) |
+| 2 | the generator is called with no tools; no check item ever appears in a `TurnPlan`; the card is not an input to the composer's choice of sources or to any check; the composer gives the same plan for the same inputs; nothing about a turn reaches the browser before its verdict; the checks use another model family from the generator's, and a SymPy failure always fails the gate (invariant 5); every expression on screen is rendered from its parsed form (invariant 6); every served item carries its label; no turn's text, message or node is written to a log; safety replies come only from `replies.py` (invariant 15) |
+| 3 | the web app builds every script from a stored turn, and the likeness functions are not web endpoints; `SelfTutor.status` is read through a cache of sixty seconds, tested with a fake clock; no turn after a message the safety check did not class `academic` is rendered in a likeness (invariant 15) |
+| 4 | `Preset.enabled` is read through a cache of sixty seconds, tested with a fake clock; every paper and mark scheme carries its label |
 
 Fast tests use no network, no GPU and no paid call. The models sit behind interfaces
-with fakes for these tests, and the suite finishes in minutes. They need a local
-Postgres, named by `TEST_DATABASE_URL`.
+with fakes, and the suite finishes in minutes. Each run makes its own database on a
+local Postgres server, which the Makefile names by `TEST_DATABASE_URL`, and drops it
+after, so that runs in different worktrees do not meet.
 
 ## 18. Build order
 
-Six phases, each ending in something the owner can try and tests that pass:
+Six phases, each ending in something the owner can try and `make test-phase` passing:
 
 0. accounts and the harness;
-1. spikes and foundations;
-2. the turn pipeline;
+1. spikes and foundations: the licence audit and the likeness spike, liveness
+   included; the database and accounts; the mathematics, the content checks and the
+   figure renderer; the objective lists; the presets and the card renderer; the
+   T-VAL-01 census; the app's shell;
+2. the turn pipeline: the safety check, the composer, generator, verifier, gate and
+   fallback; the session's five steps; the battery; the first content;
 3. the self-tutor;
-4. around the session;
+4. around the session: papers, the grade range, the parent report, the reviewer's
+   queue and its policy, the validator console, the kill switch and the creator's
+   controls, and the rest of the content;
 5. testers.
 
 The prompts for each, and the checklist before anyone else uses the MVP, are in
