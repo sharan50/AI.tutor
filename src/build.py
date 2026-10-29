@@ -80,20 +80,20 @@ PAGES = [
      "Who pays, routes in the UK and the US, economics, milestones and risks.", "first"),
     ("primer-mvp", "", "Primer: MVP build guide",
      "A demonstration for adult testers, built in four or five days: what it does, its tools, safety, costs and the build.", "first"),
-    ("f1-foundations-thesis", "F1", "Foundations: thesis",
-     "Early reading, writing and arithmetic with an adult beside the child, and why it does not go first.", "first"),
-    ("f2-foundations-product", "F2", "Foundations: product",
-     "The adult, the child, a session, and what the screen does and does not do.", "first"),
-    ("f3-foundations-content", "F3", "Foundations: content and evidence",
-     "The reading and number sequences, decodable practice, who checks it, and the evidence.", "first"),
-    ("f4-foundations-safety", "F4", "Foundations: safety, privacy and regulatory",
-     "Very young children, no microphone at launch, consent, and the data held.", "first"),
-    ("f5-foundations-architecture", "F5", "Foundations: architecture",
-     "The adult's guide, the decodability check, and what it reuses from the Tutor.", "first"),
-    ("f6-foundations-plan", "F6", "Foundations: plan",
-     "Who might pay, parents and schools, economics, milestones and risks.", "first"),
+    ("f1-foundations-thesis", "F1", "Foundation: thesis",
+     "A classroom instrument that tells the teacher which child needs help, and with what; and why it does not go first.", "first"),
+    ("f2-foundations-product", "F2", "Foundation: product",
+     "The teacher, the desk unit, a lesson, the class view and the term summary.", "first"),
+    ("f3-foundations-content", "F3", "Foundation: content and evidence",
+     "Maths, writing, reasoning and grip; the error catalogue, who checks it, and the evidence.", "first"),
+    ("f4-foundations-safety", "F4", "Foundation: safety, privacy and regulatory",
+     "A camera on the page and the hand, never the face; nothing kept; the data held; counsel's questions.", "first"),
+    ("f5-foundations-architecture", "F5", "Foundation: architecture",
+     "Where it runs, the page and hand reader, computed checks and the alert rules.", "first"),
+    ("f6-foundations-plan", "F6", "Foundation: plan",
+     "Schools as the customer, routes, economics, milestones and risks.", "first"),
     ("which-first", "", "Which idea goes first",
-     "Foundations does not; between the Tutor and the Primer, field research decides.", "first"),
+     "Foundation does not, by the owner's order; between the Tutor and the Primer, field research decides.", "first"),
     ("field-research", "", "Field research guide",
      "Questions for teachers, professors and parents, written to prove the plan wrong.", "first"),
     ("14-open-items", "14", "Open items",
@@ -114,7 +114,7 @@ GROUPS = [
     ("primer", "Primer", "Ages 8 to 13. A tutor for a child's why-questions, designed to ask what they think rather than tell them.",
      ["p1-primer-thesis", "p2-primer-product", "p3-primer-content", "p4-primer-safety",
       "p5-primer-architecture", "p6-primer-plan", "primer-mvp"]),
-    ("foundations", "Foundations", "Ages 4 to 7. Early reading, writing and arithmetic, with an adult beside the child.",
+    ("foundations", "Foundation", "Ages 4 to 7. A classroom instrument that tells the teacher which child needs help, and with what.",
      ["f1-foundations-thesis", "f2-foundations-product", "f3-foundations-content", "f4-foundations-safety",
       "f5-foundations-architecture", "f6-foundations-plan"]),
     ("shared", "Across all three", "Which idea goes first, the field research guide, and the two registers every idea shares.",
@@ -589,7 +589,7 @@ def build_status(built, counts):
     acc = _rows(curric, "ACC")
     risks = _rows(risks_f, "R")
     idea_risks = [("Primer", r) for r in _rows(read_source("p6-primer-plan") or "", "RP")]
-    idea_risks += [("Foundations", r) for r in _rows(read_source("f6-foundations-plan") or "", "RF")]
+    idea_risks += [("Foundation", r) for r in _rows(read_source("f6-foundations-plan") or "", "RF")]
     conds = _rows(routes, "C")
     decisions = range(counts["decisions"])
     tests = counts["test_ids"]
@@ -662,8 +662,9 @@ else here in that light.</p>
 </div>
 
 <h2 id="ideas">The three ideas</h2>
-<p>The Tutor has been through eight rounds of adversarial review. The Primer and Foundations
-are first drafts, revised once after an independent review. Foundations does not go first;
+<p>The Tutor has been through eight rounds of adversarial review. The Primer is a first draft,
+revised once after an independent review; Foundation is a first draft of its classroom design,
+reviewed once independently. Foundation does not go first, by the owner's order;
 between the other two, <a href="which-first.html">which goes first</a> is still open.</p>
 <div class="tw"><table>
 <thead><tr><th>Idea</th><th class="num">Documents</th><th>State</th></tr></thead>
@@ -708,7 +709,7 @@ why the engineering priority runs close to the reverse of it.</p>
 <thead><tr><th class="id">#</th><th>Risk</th><th>Leading indicator</th></tr></thead>
 <tbody>{risk_rows}</tbody></table></div>
 
-<p>The Primer's and Foundations', not yet ranked by the owner. Each is set out in its idea's
+<p>The Primer's and Foundation's, not yet ranked by the owner. Each is set out in its idea's
 plan, <a href="p6-primer-plan.html#risks">P6</a> and <a href="f6-foundations-plan.html#risks">F6</a>.</p>
 <div class="tw"><table>
 <thead><tr><th class="id">#</th><th>Idea</th><th>Risk</th><th>Leading indicator</th></tr></thead>

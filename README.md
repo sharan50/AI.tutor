@@ -14,9 +14,11 @@ amended by the owner on 22 October 2026; D51 for the other two).
   checked explanation first, then the question underneath, explored by asking
   rather than telling, until the child states a view of their own. Its subjects
   come in modules the company writes; parents switch them on and off.
-- **Foundations** (ages 4 to 7). Early reading, writing and arithmetic, with an
-  adult beside the child in every session and the screen as the adult's guide.
-  The least certain of the three, and deliberately not the first.
+- **Foundation** (ages 4 to 7). A classroom instrument for the teacher: a small
+  camera over each desk watches the page and the hand, never the face, and the
+  teacher's screen says which child needs help and what to try. The child is
+  shown nothing. Sold to schools, and not the first of the three, by the
+  owner's order.
 
 Which idea goes first between the Tutor and the Primer is open, and is decided by
 field research with teachers, professors and parents.
@@ -33,10 +35,12 @@ still unknown. It is **not** application code and it is not a product.
 The source instruction is [`BUILD_BRIEF.md`](BUILD_BRIEF.md) at the root, for the
 Tutor and for the vault's rules. Where this repository and the brief disagree, the
 brief governs. [`FACETS_BRIEF.md`](FACETS_BRIEF.md) governs the Primer,
-Foundations, the shared pages and the front page,
+Foundation, the shared pages and the front page,
 [`PRIMER_MVP_BRIEF.md`](PRIMER_MVP_BRIEF.md) the Primer's MVP build guide and its
-specification, and [`TUTOR_MVP_BRIEF.md`](TUTOR_MVP_BRIEF.md) the Tutor's MVP build
-guide and its specification pack.
+specification, [`TUTOR_MVP_BRIEF.md`](TUTOR_MVP_BRIEF.md) the Tutor's MVP build
+guide and its specification pack, and
+[`FOUNDATION_CLASSROOM_BRIEF.md`](FOUNDATION_CLASSROOM_BRIEF.md) Foundation's six
+documents since the owner redesigned it for the classroom, and its film.
 
 ## Status
 
@@ -44,10 +48,10 @@ guide and its specification pack.
 |---|---|
 | Documents | 32 across the three ideas, the registers included, plus an evidence register |
 | Built | Nothing |
-| Tests specified | **32**, none run. There is nothing to run them against |
-| Counsel questions | **27** open, none answered. We proceed ahead of OI-3 under D34 and of OI-23 to OI-27 under D59, and each says so where it is applied |
-| Assumptions unverified | **47**, of which 19 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **88**, including three, taken on the owner's instruction, that reverse two earlier positions, and D1 and D9, since amended by the owner |
+| Tests specified | **33**, none run. There is nothing to run them against |
+| Counsel questions | **29** open, none answered. We proceed ahead of OI-3 under D34 and of OI-23 to OI-27 under D59, and each says so where it is applied |
+| Assumptions unverified | **48**, of which 18 are resolvable by reading or by asking rather than by building |
+| Decisions recorded | **100**, including three, taken on the owner's instruction, that reverse two earlier positions; D1 and D9, since amended by the owner; and six superseded for Foundation alone when the owner redesigned it |
 | External claims registered | **42**, each with source and date checked, plus **30** candidates awaiting the owner's check |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at
@@ -151,8 +155,9 @@ working rules for a coding session.
 ### Adding a film to the front page
 
 Each idea's card on the front page has a space for a short film. In
-[`roles.json`](roles.json), under `front`, each idea has `"video": null`, which
-shows the placeholder. To fill it, either:
+[`roles.json`](roles.json), under `front`, an idea with `"video": null` shows the
+placeholder; Foundation's card carries the owner's film. To fill a placeholder,
+either:
 
 - put the file under `docs/media/` (for example `docs/media/primer.mp4`, with an
   optional poster image and captions file) and set
@@ -184,7 +189,7 @@ are seen by parents and teachers:
 ```
 BUILD_BRIEF.md                 the source instruction, for the Tutor and the vault's rules
 REBUILD_BRIEF.md               the brief for the tooling and the owner views
-FACETS_BRIEF.md                the brief for the Primer, Foundations and the front page
+FACETS_BRIEF.md                the brief for the Primer, Foundation and the front page
 RESTRUCTURE_REPORT.md          what the restructure changed, with its checks
 VIEWS_REPORT.md                what the views added, with the identity proof and the ownership table
 FACETS_REPORT.md               what the facets brief changed, its checks and its independent review
@@ -194,6 +199,8 @@ PRIMER_MVP_BRIEF.md            the brief for the Primer's MVP build guide
 PRIMER_MVP_REPORT.md           what that brief changed, its checks and its review
 TUTOR_MVP_BRIEF.md             the brief for the Tutor's MVP build guide and its specification pack
 TUTOR_MVP_REPORT.md            what that brief changed, its checks and its review
+FOUNDATION_CLASSROOM_BRIEF.md  the brief for Foundation's classroom design and its film
+FOUNDATION_CLASSROOM_REPORT.md what that brief changed, its checks and its review
 roles.json                     the five owners, what each owns and reads, the Tutor summary's and the front page's picks
 CLAUDE.md                      working rules for a coding session
 README.md                      this file
