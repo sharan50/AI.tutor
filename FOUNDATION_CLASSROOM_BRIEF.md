@@ -72,8 +72,10 @@ Tutor's MVP and before the decisions not taken.
   of errors and next steps, chosen by rules; every answer is checked by computation,
   never by a model. This keeps D54's reason and supersedes its letter for Foundation.
 - **D97.** Nothing seen is kept. Frames are processed as they arrive and discarded;
-  no image, video or audio is stored or sent anywhere beyond the processing service. A
-  frame in which a face appears is discarded unread. The desk unit has no microphone.
+  no image, video or audio is stored or sent anywhere beyond the processing service. The
+  arm is set at installation and then locked, and a frame in which a face appears is
+  discarded by the face check before anything else reads it. The desk unit has no
+  microphone.
 - **D98.** What is held and never inferred. Foundation holds, for each child, what it
   read in each lesson and the term summary built from it, as the school's record, kept
   for the school year and deleted when the child leaves the class. It never infers or
@@ -95,7 +97,8 @@ Tutor's MVP and before the decisions not taken.
 - **OI-28.** In England, what lawful basis lets a school, or Foundation for it, run a
   camera over every pupil's desk that reads their hand and their work but never their
   face; whether a hand's pose, a grip, handwriting or pressure, read this way, is
-  biometric or special category data; whether the rules on processing pupils'
+  biometric or special category data, and whether the check that detects a face only
+  to discard the frame is itself such processing; whether the rules on processing pupils'
   biometric information in schools reach it; what the Children's code requires of
   transparency to children of 4 to 7 when the unit shows no light; and whether a DPIA
   is required before any classroom pilot.

@@ -3,7 +3,7 @@
 <dl class="meta">
 <dt>Document</dt><dd>F2 of F6, Foundation</dd>
 <dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run. No lesson described here has ever taken place.</dd>
-<dt>Maturity</dt><dd>First draft of the classroom design, reviewed once independently.</dd>
+<dt>Maturity</dt><dd>First draft of the classroom design, revised once after an independent review.</dd>
 <dt>Written</dt><dd>22 October 2026; rewritten on 29 October 2026 for the classroom design</dd>
 <dt>Read next</dt><dd><a href="f3-foundations-content.html">F3 Foundation: content and evidence</a></dd>
 </dl>
@@ -43,13 +43,13 @@
 
 <div class="tw">
 <table>
-<caption>The promises. Floors are design choices; the two accuracy thresholds are written down before any pilot, and are Unknown today.</caption>
+<caption>The promises. Floors are design choices; the two thresholds are written down before they are first used, and are Unknown today.</caption>
 <thead><tr><th>Promise, as a head teacher would read it</th><th>The claim underneath it</th><th>Test</th><th>Status</th></tr></thead>
 <tbody>
-<tr><td>It never sees a child's face.</td><td>Each unit's view is set to the desk surface at installation; any frame in which a face is detected is discarded before anything else reads it. Floor: 100%, as a design choice.</td><td>T-FND-01</td><td>Specified, not run</td></tr>
+<tr><td>It never reads or keeps a child's face.</td><td>Each unit's view is set to the desk surface at installation; any frame in which a face is detected is discarded before anything else reads it. Floor: 100%, as a design choice.</td><td>T-FND-01</td><td>Specified, not run</td></tr>
 <tr><td>It keeps nothing it sees.</td><td>No image, video or audio is stored, or leaves the service that reads it. What is kept is what was read, as text.</td><td>T-FND-02</td><td>Specified, not run</td></tr>
 <tr><td>The sums are marked right.</td><td>Every verdict on an answer, and every expected answer, is computed, never generated. Floor: 100%, as a design choice.</td><td>T-FND-03</td><td>Specified, not run</td></tr>
-<tr><td>It reads the work accurately enough to trust.</td><td>What it reads agrees with a teacher reading the same page and watching the same hand, at a threshold written down before the first pilot.</td><td>T-FND-04</td><td>Specified, not run</td></tr>
+<tr><td>It reads the work accurately enough to trust.</td><td>What it reads agrees with a teacher reading the same page and watching the same hand, at a threshold written down before the bench test at FM2.</td><td>T-FND-04</td><td>Specified, not run</td></tr>
 <tr><td>An alert is worth walking over for.</td><td>In an observed pilot, teachers judge alerts right and useful, at a threshold written down before it starts.</td><td>T-FND-05</td><td>Specified, not run</td></tr>
 <tr><td>It shows the child nothing.</td><td>The desk unit has no screen, speaker, light or microphone, and nothing Foundation does reaches the desk.</td><td>T-FND-06</td><td>Specified, not run</td></tr>
 </tbody>
@@ -67,7 +67,7 @@
 <span class="tag decided">Decision D90<span class="src">the owner's, 29 October 2026; supersedes D50's "no camera" for Foundation</span></span>
 </div>
 
-<p>Three consequences of where the arm sits. It rises from the far edge of the desk, so the camera looks back towards the child's hands and down at the page, away from the face. It is fixed, so a child cannot turn it towards a classmate. And it is the same on every desk, so no child is singled out by having one.</p>
+<p>Three consequences of where the arm sits. It rises from the far edge of the desk, so the camera looks back towards the child's hands and down at the page, away from the face. It is flexible so that it can be set to each desk at installation, and is then locked, so a child cannot turn it towards a classmate or their own face; the view is checked at installation (T-FND-01, D97). And it is the same on every desk, so no child is singled out by having one.</p>
 
 <p>The unit has no microphone. Nothing in the design needs to hear a child, and a child's voice raises the questions D50 deferred for the Primer (OI-17). That is a choice taken while writing, recorded with what is kept and not kept as D97.</p>
 
@@ -110,7 +110,7 @@
 <p>Molly crosses out 16 and writes 24. Checking answer: right. The tile goes quiet.</p>
 </div>
 <div class="turn tutor"><span class="who">Desk 7, later in the week</span>
-<p>Checking writing. Molly writes <b>i love my dog spike</b>. Capitals missed on "I" and "Spike"; comma and full stop missed; spelling right. Hand tracking: tripod grip.</p>
+<p>Checking writing. Molly writes <b>i love my dog spike</b>. Capitals missed on "I" and "Spike"; the comma before "Spike" and the full stop missed; spelling right. Hand tracking: tripod grip.</p>
 <div class="annot"><b>Noted, not alerted.</b> A sentence with its marks missing goes to the term summary and shows on the tile in normal type; it does not call the teacher over (<a href="f3-foundations-content.html#writing">F3</a>).</div>
 </div>
 <div class="turn tutor"><span class="who">Desk 7, a column sum</span>
@@ -118,7 +118,7 @@
 <div class="annot"><b>Where the working went wrong.</b> Foundation points at the step, not just the answer, so the teacher knows what to ask before reaching the desk.</div>
 </div>
 <div class="turn student"><span class="who">Parents' evening</span>
-<p>Molly's parents sit with Miss Smith at the classroom PC. She opens Molly's term summary: times tables mostly secure, 4 &times; 6 once answered by adding; carrying secure when adding two numbers, but with three she has carried 1 where the units made more than 19; capitals and full stops often missed; tripod grip throughout.</p>
+<p>Molly's parents sit with Miss Smith at the classroom PC. She opens Molly's term summary: times tables mostly secure, 4 &times; 6 once answered 16, which adding can give; carrying secure when adding two numbers, but with three she has carried 1 where the units made more than 19; capitals and full stops often missed; tripod grip throughout.</p>
 <div class="annot"><b>The teacher's record, in plain words.</b> It describes Molly's own work, never ranks her against her class, and names no condition (D98).</div>
 </div>
 </div>
@@ -141,6 +141,7 @@
 <tr><td>Ping once, with a notice that says only "Foundation", so a child's name is not shown in the corner of a screen the class can see.</td><td>Rank the class, show league tables, or compare children.</td></tr>
 <tr><td>Keep each child's term summary for the teacher to open.</td><td>Send anything to parents, or to the child.</td></tr>
 <tr><td>Show a desk whose parent has objected as off, with its camera off (D99).</td><td>Watch that desk.</td></tr>
+<tr><td>Open one child's term summary at a time, at parents' evening.</td><td>Appear on a projected board, or any screen the class can see (<a href="f4-foundations-safety.html#data">F4</a>).</td></tr>
 </tbody>
 </table>
 </div>
@@ -162,7 +163,7 @@
 <ul>
 <li><b>It does not teach.</b> It tells the teacher where to look; the teacher teaches.</li>
 <li><b>It does not address the child.</b> No screen, no sound, no light on the desk (D90, D93).</li>
-<li><b>It does not see faces.</b> A frame with a face in it is discarded unread (D97).</li>
+<li><b>It does not read faces.</b> A frame with a face in it is discarded by the face check before anything else reads it (D97).</li>
 <li><b>It does not keep what it sees.</b> No image, video or audio is stored (D97).</li>
 <li><b>It does not reward.</b> No stars, streaks, badges or confetti (D25, D93).</li>
 <li><b>It does not diagnose, rank or predict.</b> It never names a condition and never compares a child with their classmates (D98).</li>

@@ -28,11 +28,11 @@
   <aside class="rail"><div class="rail-inner"><p class="rail-h">On this page</p><ol class="rail-nav"><li><a href="#reuse">What it reuses from the Tutor</a></li><li><a href="#deploy">Where it runs</a></li><li><a href="#reader">The page and hand reader</a></li><li><a href="#arithmetic">Arithmetic checks and wrong procedures</a></li><li><a href="#guide">The alert rules and the class view</a></li><li><a href="#cost">Cost</a></li></ol></div></aside>
   <main class="sheet" id="doc">
 <h1>Foundation: architecture</h1>
-<p class="standfirst">Foundation is a reader and a set of rules. Models recognise what is on the page and how the hand holds the pencil; none generates a word. Every answer is checked by computation, every diagnosis is a wrong procedure that reproduces the child's answer, and every sentence the teacher reads is a template or a reviewed entry chosen by rules. Frames are read and thrown away. The hard engineering is not language but vision: reading a five-year-old's page from above, and nobody yet knows how well that can be done.</p>
+<p class="standfirst">Foundation is a reader and a set of rules. Models recognise what is on the page and how the hand holds the pencil; none generates a word. Every answer is checked by computation, every diagnosis of a wrong answer is computed, and every sentence the teacher reads is a template or a reviewed entry chosen by rules. Frames are read and thrown away. The hard engineering is not language but vision: reading a five-year-old's page from above, and nobody yet knows how well that can be done.</p>
 <dl class="meta">
 <dt>Document</dt><dd>F5 of F6, Foundation</dd>
 <dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run.</dd>
-<dt>Maturity</dt><dd>First draft of the classroom design, reviewed once independently. The Tutor's documents went through eight adversarial rounds.</dd>
+<dt>Maturity</dt><dd>First draft of the classroom design, revised once after an independent review. The Tutor's documents went through eight adversarial rounds.</dd>
 <dt>Written</dt><dd>22 October 2026; rewritten on 29 October 2026 for the classroom design</dd>
 <dt>Read with</dt><dd><a href="06-architecture.html">06 Architecture</a>, whose components this page reuses</dd>
 <dt>Read next</dt><dd><a href="f6-foundations-plan.html">F6 Foundation: plan</a></dd>
@@ -83,7 +83,7 @@
 <table>
 <thead><tr><th>Part</th><th>What it does</th><th>What it holds</th></tr></thead>
 <tbody>
-<tr><td><b>Desk unit</b></td><td>A camera on a fixed arm, angled at the desk, sending frames over the school's network, encrypted, to the processing service. No screen, speaker, light or microphone (D90, T-FND-06).</td><td>Nothing. It does not store frames.</td></tr>
+<tr><td><b>Desk unit</b></td><td>A camera on a flexible arm, set at installation and locked, angled at the desk, sending frames over the school's network, encrypted, to the processing service. No screen, speaker, light or microphone (D90, T-FND-06).</td><td>Nothing. It does not store frames.</td></tr>
 <tr><td><b>Processing service</b></td><td>Runs the face check, the reader, the checks and the rules, and sends readings and alerts to the teacher's PC.</td><td>Frames only while they are read (D97); readings and term summaries as text (D98).</td></tr>
 <tr><td><b>Teacher's PC</b></td><td>A Windows desktop app showing the class view and the term summaries (D92).</td><td>Nothing on its disk: what it shows is fetched from the service and cleared when the app closes, so a shared or stolen PC holds no record.</td></tr>
 </tbody>
@@ -103,7 +103,7 @@
 <p class="lede">The reader turns each frame into text and throws the frame away. It runs in a fixed order, and the first step can stop it.</p>
 
 <ol>
-<li><b>Face check.</b> Before anything else reads the frame, a face detector runs. A frame with any face in it is discarded unread, whoever's face it is (T-FND-01). The detector is set to discard when unsure: a hand mistaken for a face costs a frame; a face mistaken for a hand would break a promise.</li>
+<li><b>Face check.</b> Before anything else reads the frame, a face detector runs. A frame with any face in it is discarded before anything else reads it, whoever's face it is (T-FND-01). The detector is set to discard when unsure: a hand mistaken for a face costs a frame; a face mistaken for a hand would break a promise.</li>
 <li><b>The page.</b> The reader finds the page and compares the frame with the last to find new strokes. It recognises them as characters: digits, letters, the operation signs, the equals sign, and the small carried digits of column working, each with its position on the page. Character by character, as it is written.</li>
 <li><b>The hand.</b> A hand model places a skeleton of joints on the hand, as the film shows, and from it the reader records which fingers are on the pencil, the grip (tripod, fist or another listed form) and the pressure as far as it can be estimated, from the line and the posture of the fingers (OA-49).</li>
 <li><b>The reading.</b> What survives is text: the desk, the time, the characters and their positions, the grip. The frame is then discarded (T-FND-02).</li>
@@ -117,7 +117,7 @@
 
 <h2 id="arithmetic">Arithmetic checks and wrong procedures</h2>
 
-<p class="lede">Every verdict on an answer is computed, and so is every diagnosis: a mistake is explained only by a wrong procedure that, run on the question, reproduces the child's answer.</p>
+<p class="lede">Every verdict on an answer is computed, and so is every diagnosis of a wrong answer: either the step where recomputing the working disagrees, or a wrong procedure that, run on the question, reproduces the child's answer.</p>
 
 <ul>
 <li><b>The question comes from the page.</b> For sums from the board, the child writes the question as well as the answer, and Foundation computes the answer to the question as written; it does not need to see the board. The teacher may type the board's sums when setting the lesson (D100), so that a miscopied question is noticed. For a task from the library, the task's specification holds the question.</li>

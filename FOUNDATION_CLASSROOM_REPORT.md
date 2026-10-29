@@ -77,11 +77,19 @@ withdrawn, because they described the home design.
 100. The status page computes them and agrees.
 
 **Markers.** No Verified marker was added and no marker on a surviving claim was
-changed. Markers went only with claims the owner's replacement deleted: two Assumed
-markers in "which idea goes first" on D42's withdrawn reasons, one Unknown in F3 on
-the old reading sequence, and one Unknown in F4 on adults who read English with
-difficulty, a gap of the home design. Claim tags were rewritten where their claims
-were.
+changed. Markers went only with claims the owner's replacement deleted:
+
+- in F1, six: the Assumed markers on CV-04 (the novel), on CV-01 twice (D42's order
+  and the condition for revisiting it), and on CV-09 twice (the phonics sequence), and
+  one Unknown on what families spend on early reading;
+- in "which idea goes first", three Assumed markers on D42's withdrawn reasons;
+- one Unknown each in F3 (the old reading sequence) and in F4 (adults who read English
+  with difficulty, a gap of the home design).
+
+One claim survived and lost its marker in the first commit: F1's description of YC's
+request. The review caught it, and its Assumed CV-01 marker is back. Claim tags were
+rewritten where their claims were. P1's claim box on the order keeps its tag, D42,
+because D94 keeps D42's order; the paragraph after it now cites D94.
 
 ## 4. The film
 
@@ -116,17 +124,102 @@ should be 2, and as the mistake in the working that Foundation points to.
 | `python3 tools/verify.py` | All checks pass: build fresh; links and anchors, 0 broken; the map, every locus resolves; the views, 0 problems. |
 | Markers against `origin/main` | No Verified added; removals only with deleted claims, listed above. |
 | House style | No em-dashes or en-dashes, no American spellings in the new text. |
-| Word counts | F1 2,078; F2 2,352; F3 2,190; F4 2,970; F5 2,213; F6 2,217. |
+| Word counts | F1 2,151; F2 2,428; F3 2,238; F4 2,990; F5 2,229; F6 2,249, after the review's fixes. |
 | Rendering | The front page, F1 to F6, which idea goes first, the field research guide, the ledger, the open items, status and contents at 390 and 1280 pixels: no horizontal overflow and no failed request. The film card screenshotted at both widths. The film's type, size and policy checked as served; the test browser has no H.264 decoder, so playback itself was not tested here. |
 
 ## 6. The independent review
 
-To be completed when the review reports.
+A fresh agent reviewed the whole change without the conversation, reading CLAUDE.md,
+the brief, every Foundation fragment and the diffs of every other file touched. It
+found no dashes, American spellings, invented figures or Verified markers, no counsel
+question written as answered, no broken anchors, and the arithmetic right throughout.
+It found 7 blocking problems and 30 others. All are fixed in the second commit unless
+stated.
+
+**Blocking, all fixed:**
+
+1. **The map's glosses described the home design.** The dependency map's tests, risks
+   and D43 to D56 glosses still had the old text, and D89 to D100, OI-28, OI-29,
+   OA-48 to OA-52, T-FND-06 and the new RF rows had none. All are rewritten or added
+   in `src/viz/dependency-map.html`, and the withdrawn OA-30 and OA-33 glosses are
+   removed.
+2. **The front page's opening sentence** still said one idea "helps an adult teach a
+   young child". It now says one tells the teacher of a young class which child needs
+   help, and with what, and the shared rule no longer calls every idea a tutor.
+3. **The brief promised an outcome.** "No one gets left behind" is the film's closing
+   line, so it stays, framed as the aim; "Foundation can" is now "Foundation is
+   designed to".
+4. **F1's description of YC's request had lost its CV-01 marker**, and attributed to
+   the request a point it does not make. The marker is restored and the sentence
+   reworded.
+5. **The arm was called fixed**, though D90 and the film make it flexible. The pages
+   now say it is set at installation and then locked, and D97 records that as a design
+   choice.
+6. **Faces were said never to be processed**, though the face check reads every frame
+   to discard those with a face. The pages now say a face is discarded by the check
+   before anything else reads it, and OI-28 asks whether that check is itself
+   biometric processing.
+7. **The pattern line** still said "those nineteen" and "M1 and PM1". It says eighteen,
+   names OA-51, and adds FM1.
+
+**Other findings, fixed:**
+
+- P1's paragraph on the order separates the owner's view (OA-28) from the order
+  (D94).
+- F1 says six superseded decisions, not five; and it no longer says the owner intends
+  to build Foundation regardless of F6's rule.
+- F4's standfirst names the three counsel answers the pilot waits on, matching FM3;
+  its DPIA gap now covers FM2's collection as well as the pilot.
+- The term summary says 4 &times; 6 was "once answered 16, which adding can give", not
+  that the child added.
+- The film's sentence: all three pages now list the comma before "Spike" with the
+  capitals and the full stop, as the film's verdict panel does.
+- F3's domains lede now matches the owner's four domains and explains the table's
+  rows.
+- F5 says every diagnosis of a wrong answer is computed, by recomputing the working
+  or reproducing the answer, not that every diagnosis is a reproduced procedure.
+- T-FND-04's threshold is written before FM2 on every page.
+- The field research guide: a question tests OA-28 again; the closing question no
+  longer tests D42; the log example cites OA-51.
+- Which idea goes first: the case for one product no longer assumes families buy
+  Foundation; "included for completeness" and "designed as fully as the Primer" are
+  replaced.
+- OI-17 limits Foundation to a microphone ever being added. OA-28's cost of being
+  wrong no longer describes an adult's time. Counsel's frame describes Foundation's
+  camera rather than its users' ages.
+- F4: the class view is never shown on a screen the class can see, and parents'
+  evening opens one child's summary at a time; readings belong to a desk, so a child
+  who moves is misattributed until the teacher changes the seating; "the contract
+  must say so"; age assurance "largely falls away", as 05 says of Route B; the
+  escalation section rests on D89 and no longer counts its bullets; the leftover
+  "one set of settings" is gone.
+- The candidates register's "used in" columns for CV-01, CV-04, CV-09 and CV-11 no
+  longer name pages that stopped citing them.
+- D90 and D92 in the ledger now use the owner's words.
+- The open items' head says FM1 puts Foundation's questions to counsel, not that it
+  answers them. The unresolved table says Foundation "does not go first" rather than
+  "is ruled out", and lists where Foundation runs as a decision not taken.
+- F6 says D51's exclusion of India covers ideas sold to families, and that offering
+  Foundation to schools in India is not considered.
+- F3 no longer claims what Year 2 covers.
+- The pages' maturity line said "reviewed once" before the review reported; it now
+  says "revised once after an independent review".
+- This report's marker list undercounted the removals; it is corrected above.
+
+**Kept, with the reason:**
+
+- **P1's claim tag, D42.** Changing a claim's tag on a surviving claim is close to
+  changing its marker, and D94 keeps D42's order, so the tag still holds. The
+  paragraph after it cites D94.
 
 ## 7. What is left for the owner
 
 - **Keep or reverse D96 to D100.** D99 goes slightly beyond your words: it lets a
-  child's own request turn their desk off, as well as a parent's objection.
+  child's own request turn their desk off, as well as a parent's objection. D97 now
+  also locks the arm after installation.
+- **Two rules the review prompted,** both design choices in F4 and F2: the class view
+  never appears on a screen the class can see, and a desk's readings follow the desk,
+  so the teacher updates the seating when a child moves.
 - **The film's AI label and captions**, above.
 - **Where Foundation runs.** D90 allows the school's servers or the cloud. The
   documents do not choose; FM2 measures what each costs.

@@ -664,7 +664,7 @@ else here in that light.</p>
 <h2 id="ideas">The three ideas</h2>
 <p>The Tutor has been through eight rounds of adversarial review. The Primer is a first draft,
 revised once after an independent review; Foundation is a first draft of its classroom design,
-reviewed once independently. Foundation does not go first, by the owner's order;
+revised once after an independent review. Foundation does not go first, by the owner's order;
 between the other two, <a href="which-first.html">which goes first</a> is still open.</p>
 <div class="tw"><table>
 <thead><tr><th>Idea</th><th class="num">Documents</th><th>State</th></tr></thead>

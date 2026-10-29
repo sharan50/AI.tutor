@@ -1,9 +1,9 @@
 <h1>Foundation: safety, privacy and regulatory</h1>
-<p class="standfirst">Foundation puts a camera over the desk of every child in a class of four to seven year olds, and that is the hardest question in this vault's three ideas. The design answers what it can by construction: the camera sees the page and the hand and never the face, nothing it sees is kept, there is no microphone, and the child is never addressed. It cannot answer what the law makes of a camera in a Year 1 classroom, and it does not try: two new counsel questions ask it, and four older ones still apply. No classroom pilot happens until they are answered and a DPIA and an ethics protocol exist.</p>
+<p class="standfirst">Foundation puts a camera over the desk of every child in a class of four to seven year olds, and that is the hardest question in this vault's three ideas. The design answers what it can by construction: the camera is aimed at the page and the hand, never the face, nothing it sees is kept, there is no microphone, and the child is never addressed. It cannot answer what the law makes of a camera in a Year 1 classroom, and it does not try: two new counsel questions ask it, and four older ones still apply. No classroom pilot happens until counsel has answered the three that bear on it, OI-28, OI-13 and OI-19, and a DPIA and an ethics protocol exist.</p>
 <dl class="meta">
 <dt>Document</dt><dd>F4 of F6, Foundation</dd>
 <dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run. No counsel question raised here has been answered.</dd>
-<dt>Maturity</dt><dd>First draft of the classroom design, reviewed once independently. The Tutor's documents went through eight adversarial rounds.</dd>
+<dt>Maturity</dt><dd>First draft of the classroom design, revised once after an independent review. The Tutor's documents went through eight adversarial rounds.</dd>
 <dt>Written</dt><dd>22 October 2026; rewritten on 29 October 2026 for the classroom design</dd>
 <dt>Read with</dt><dd><a href="05-safety-privacy-regulatory.html">05 Safety, privacy and regulatory</a>, whose school route (Route B) this page applies to younger children</dd>
 <dt>Read next</dt><dd><a href="f5-foundations-architecture.html">F5 Foundation: architecture</a></dd>
@@ -34,12 +34,12 @@
 <span class="tag assumed">Assumed<span class="src">CV-06, from secondary summaries; the code's text not yet read for this age</span></span>
 </div>
 
-<p>Foundation's band, four to seven (D41), spans both of those ranges. It applies one set of settings across the band, chosen for the younger range. The child never operates the product, so the code's question changes: not what the child is shown, which is nothing, but what they are told about a camera watching their hand.</p>
+<p>Foundation's band, four to seven (D41), spans both of those ranges. The child never operates the product, so there are no settings to grade by age, and the code's question changes: not what the child is shown, which is nothing, but what they are told about a camera watching their hand.</p>
 
 <h3>Who uses it, and who is told</h3>
 
 <ul>
-<li><b>Staff sign in through the school's identity provider,</b> as in the Tutor's Route B (<a href="05-safety-privacy-regulatory.html#age">05</a>). There is no consumer or parent account, and no child ever signs in, so age assurance does not arise.</li>
+<li><b>Staff sign in through the school's identity provider,</b> as in the Tutor's Route B (<a href="05-safety-privacy-regulatory.html#age">05</a>). There is no consumer or parent account, and no child ever signs in, so age assurance largely falls away, as 05 says of Route B.</li>
 <li><b>The school enrols its class:</b> the teacher gives each desk the name the class uses for the child there, and nothing else.</li>
 <li><b>The children are told</b> what the arm does, by the school, in words they understand, before it is switched on (D99). The unit shows no light, so a child cannot tell whether it is on; what the code then requires is part of OI-28.</li>
 <li><b>Parents are told</b> by the school first, and a parent who objects has their child's desk turned off (D99, <a href="#camera">below</a>).</li>
@@ -57,22 +57,22 @@
 
 <h2 id="camera">A camera on the page and the hand, and no microphone</h2>
 
-<p class="lede">Foundation's camera is pointed at the desk, discards any frame with a face in it unread, and keeps no frame at all. There is no microphone. Each of those is a design choice with a test behind it; none of them answers what the law makes of the camera.</p>
+<p class="lede">Foundation's camera is pointed at the desk, discards any frame with a face in it before anything reads it, and keeps no frame at all. There is no microphone. Each of those is a design choice with a test behind it; none of them answers what the law makes of the camera.</p>
 
 <div class="claim">
-<p>Nothing seen is kept. Frames are processed as they arrive and discarded; no image, video or audio is stored or sent anywhere beyond the processing service. A frame in which a face appears is discarded unread. The desk unit has no microphone.</p>
+<p>Nothing seen is kept. Frames are processed as they arrive and discarded; no image, video or audio is stored or sent anywhere beyond the processing service. The arm is set at installation and then locked, and a frame in which a face appears is discarded by the face check before anything else reads it. The desk unit has no microphone.</p>
 <span class="tag decided">Decision D97<span class="src">taken while writing, 29 October 2026; the owner's to keep or reverse</span></span>
 </div>
 
 <p>D50 kept a camera and a microphone out of Foundation's earlier design. D90 supersedes its camera half for Foundation, D97 keeps its microphone half, and D50 still governs the Primer.</p>
 
 <ol>
-<li><b>Never a face.</b> The unit is fixed at the far edge of the desk and angled down, so the face is outside its view (D90). Before anything reads a frame, a check for a face runs, and a frame with one is thrown away, whether it is the child's, a classmate's or the teacher's. The floor is 100%, as a design choice, tested by T-FND-01 (<a href="f3-foundations-content.html#measure">F3</a>).</li>
+<li><b>Never a face.</b> The arm rises from the far edge of the desk and is set at installation to look down at the page, then locked, so the face is outside its view (D90, D97). Before anything reads a frame, a check for a face runs, and a frame with one is thrown away, whether it is the child's, a classmate's or the teacher's. The floor is 100%, as a design choice, tested by T-FND-01 (<a href="f3-foundations-content.html#measure">F3</a>).</li>
 <li><b>Nothing kept.</b> What survives a frame is what was read from it, as text: the characters, the verdict on an answer, the grip. Nobody, including the school, can later ask Foundation what a desk or a hand looked like, because no picture exists. Tested by T-FND-02.</li>
 <li><b>No microphone.</b> Nothing in the design needs to hear a child. A child's voice raises the questions in OI-17, and automatic speech recognition makes more errors on children's speech than on adults', and more the younger the child; fine-tuning narrows the gap but has not closed it. <span class="mark assumed">Assumed</span> CV-11. Tested by T-FND-06, with the screen, speaker and light.</li>
 </ol>
 
-<p><b>What the design does not settle.</b> A hand's pose, a grip, the pressure of a pencil and handwriting are each measurements of a body, read by a machine. Whether any of them, kept only as text, is biometric or special category data in UK law is <span class="mark open">Open</span> OI-28, and so is whether the rules on processing pupils' biometric information in schools reach it. In the US, the amended COPPA Rule brings biometric identifiers, including voiceprints, into the definition of personal information <span class="mark assumed">Assumed</span> CV-08; what that and state law make of the unit is OI-29. If the answer is that grip or pressure needs a basis the school cannot give, Foundation stops reading it.</p>
+<p><b>What the design does not settle.</b> A hand's pose, a grip, the pressure of a pencil and handwriting are each measurements of a body, read by a machine. Whether any of them, kept only as text, is biometric or special category data in UK law, and whether the face check that discards frames is itself such processing, is <span class="mark open">Open</span> OI-28, and so is whether the rules on processing pupils' biometric information in schools reach it. In the US, the amended COPPA Rule brings biometric identifiers, including voiceprints, into the definition of personal information <span class="mark assumed">Assumed</span> CV-08; what that and state law make of the unit is OI-29. If the answer is that grip or pressure needs a basis the school cannot give, Foundation stops reading it.</p>
 
 <h3>A child who is not watched</h3>
 
@@ -105,30 +105,31 @@
 <span class="tag decided">Decision D98<span class="src">taken while writing, 29 October 2026; keeps D56's second half</span></span>
 </div>
 
+<p><b>Two limits of the record.</b> The class view names children and their mistakes, so it is never shown on a screen the class can see, such as a projected board, and at parents' evening it opens one child's summary at a time. And readings belong to a desk, not a face: Foundation does not recognise children, so a child who moves desk is misattributed until the teacher changes the seating in the class view.</p>
+
 <h3>What is not held, and what is never inferred</h3>
 
 <ul>
 <li><b>No image, video or audio</b> of any child, desk or page (D97; T-FND-02).</li>
-<li><b>No face,</b> read or kept (D97; T-FND-01).</li>
+<li><b>No face kept,</b> and none read beyond the check that discards it (D97; T-FND-01).</li>
 <li><b>No date of birth, surname, address or school record number.</b> The school's own systems hold those; Foundation needs a name for a tile.</li>
-<li><b>No notes typed about the child,</b> and no field for them: a notes field is where an adult records a child's health or home, which Foundation has no business holding, as D56 said for the earlier design.</li>
+<li><b>No notes typed about the child,</b> and no field for them: that is where an adult records a child's health or home, as D56 said for the earlier design.</li>
 <li><b>No inference of a difficulty or condition</b> (D98). A child who grips in a fist all term, or reverses the same letters for months, is described as doing exactly that; Foundation never suggests why or names a condition. A concerned teacher goes to the school's special educational needs coordinator, as without Foundation.</li>
 <li><b>No ranking</b> of a child against the class in anything a parent sees (D98), and no league table anywhere (<a href="f2-foundations-product.html#screen">F2</a>).</li>
 <li><b>No use of a classroom frame to train any model</b> (<a href="f3-foundations-content.html#cleanroom">F3</a>), stated so that keeping frames is never proposed for that reason.</li>
 </ul>
 
-<p>Where the frames are read is the largest privacy difference within the design. D90 allows the school's own servers or the cloud. On the school's servers, no picture of a child leaves the building; in the cloud, frames travel to the processing service and are discarded there, and where it runs becomes a question: processing UK pupils' data in India is expected to be raised in school due diligence whatever the legal position (<span class="mark assumed">Assumed</span> OA-14). The design does not choose between the two; <a href="f5-foundations-architecture.html#deploy">F5</a> sets out what each costs.</p>
+<p>Where the frames are read is the largest privacy difference within the design (D90). On the school's servers, no picture of a child leaves the building; in the cloud, where the service runs becomes a due-diligence question, and processing UK pupils' data in India is expected to be raised whatever the legal position (<span class="mark assumed">Assumed</span> OA-14). <a href="f5-foundations-architecture.html#deploy">F5</a> sets out both; neither is chosen.</p>
 
 <h2 id="escalation">Escalation</h2>
 
-<p>A teacher is present for every moment Foundation runs, and it shows the child nothing and hears nothing, so the child confides in their teacher, not in Foundation. Two edges remain.</p>
+<p>Foundation runs only in lessons, with the teacher in the room (D89), and it shows the child nothing and hears nothing, so the child confides in their teacher, not in Foundation. What remains is below.</p>
 
 <ul>
 <li><b>A child may write something worrying.</b> Foundation reads writing for its letters, spelling and punctuation, not for what it means: it does not look for disclosures or alert on content. The child's book is where the teacher reads it, as before. But the characters Foundation read are in that lesson's record, so the record falls within the school's safeguarding policy, and who may see it is the school's rule.</li>
-<li><b>Foundation sees a hand and does not look at it for harm.</b> It does not look for injuries, and since nothing seen is kept, it cannot later be asked what a hand looked like. It is not a safeguarding service and must not be sold as one; the contract says so.</li>
+<li><b>Foundation sees a hand and does not look at it for harm.</b> It does not look for injuries, and since nothing seen is kept, it cannot later be asked what a hand looked like. It is not a safeguarding service and must not be sold as one; the contract must say so.</li>
 <li><b>The school's designated safeguarding lead and policy apply,</b> as for the Tutor's Route B.</li>
-<li><b>Concerns about development</b> stay with the teacher and the school's special educational needs coordinator. Foundation never draws that conclusion from the record and never names a condition (D98).</li>
-<li><b>Duties to report, in the US.</b> Which duties to report suspected abuse would fall on the company there, on support staff who learn something from a school, for example, or on anyone observing a pilot, is <span class="mark open">Open</span> OI-20. The help pages for staff point to the services 05 names in the UK and, in the US, to the Childhelp National Child Abuse Hotline and the 988 Suicide and Crisis Lifeline <span class="mark assumed">Assumed</span> CV-12.</li>
+<li><b>Duties to report, in the US.</b> Which would fall on the company, its support staff or a pilot's observers is <span class="mark open">Open</span> OI-20. The help pages for staff point to the services 05 names in the UK and, in the US, to the Childhelp National Child Abuse Hotline and the 988 Suicide and Crisis Lifeline <span class="mark assumed">Assumed</span> CV-12.</li>
 </ul>
 
 <h2 id="schools">The school's part</h2>
@@ -138,8 +139,8 @@
 <ul>
 <li><b>Who controls the record</b>, the school or the company, and on what terms, is <span class="mark open">Open</span> OI-19, to be asked with OI-13 and OI-28. D98 designs the record as the school's; that is an intent, not an answer.</li>
 <li><b>A DPIA before any classroom pilot.</b> Whether one is legally required is part of OI-28; the design plans for one regardless, written with the school before FM3 (<a href="f6-foundations-plan.html#milestones">F6</a>).</li>
-<li><b>The statutory school frame</b>, Keeping Children Safe in Education, filtering and monitoring expectations and any supplier standard, has not been read against this design. OA-20 applies to Foundation as it does to the Tutor, and more sharply, because the school is being asked to fit cameras.</li>
-<li><b>Staff.</b> A class view that records alerts during a lesson could be read as a record of the teacher's teaching. Foundation reports on children's work, never on the teacher, and holds nothing about how quickly an alert was answered. Whether staff accept the units is part of <span class="mark assumed">Assumed</span> OA-52.</li>
+<li><b>The statutory school frame</b>, Keeping Children Safe in Education, filtering and monitoring expectations and any supplier standard, has not been read against this design. OA-20 applies to Foundation, and more sharply, because the school is asked to fit cameras.</li>
+<li><b>Staff.</b> Alerts recorded during a lesson could be read as a record of the teacher's teaching. Foundation reports on children's work, never on the teacher, and holds nothing about how quickly an alert was answered. Whether staff accept the units is part of <span class="mark assumed">Assumed</span> OA-52.</li>
 </ul>
 
 <h2 id="us">The US position</h2>
@@ -155,7 +156,6 @@
 <li>Foundation collects no audio, so the voiceprint question does not arise. Whether a hand's pose, a grip or handwriting read by a camera is a biometric identifier under COPPA as amended, or under a state's biometric privacy law, does arise, and is <span class="mark open">Open</span> OI-29.</li>
 <li>US schools bring student records laws and rules on cameras in classrooms, which differ by state and which this vault has not examined. Which apply, and what they require, is also OI-29.</li>
 <li>US states have begun regulating companion chatbots, with obligations aimed at minors <span class="mark assumed">Assumed</span> CV-10. Nothing in Foundation converses with anyone, so on our reading it is not a chatbot at all. That is reasoning, not advice, and OI-15 asks counsel whether a product that declines companionship by design falls outside those laws.</li>
-<li>Duties to report suspected abuse differ from state to state. Which would fall on the company is a question put to counsel, OI-20, not answered here.</li>
 </ul>
 
 <div class="claim">
@@ -169,8 +169,8 @@
 <li><b>Six counsel questions are open</b> and each could change this page: OI-28, OI-29, OI-13, OI-15, OI-19 and OI-20. OI-17 would join them if a microphone were ever proposed.</li>
 <li><b>Parents and staff may refuse it however it is designed.</b> A camera in a room of five-year-olds is a camera, whatever it is pointed at (OA-52, tested by asking at FM1).</li>
 <li><b>The Children's code has been read for this age only through secondary summaries</b> (CV-06). Reading the code's own text for the 0 to 5 and 6 to 9 ranges, and the ICO's guidance on cameras and biometric data in schools, is reading, not research, and belongs in FM1.</li>
-<li><b>No DPIA exists,</b> and none can be written until a school and a deployment are chosen.</li>
-<li><b>No ethics protocol exists for any work with a child,</b> and Foundation needs one twice: to collect the children's writing and hands its models learn from (<a href="f3-foundations-content.html#cleanroom">F3</a>), and for the observed pilot. It must have: informed parental consent; the child's own assent, asked in words a young child understands; a way for the child to stop at any moment, without being asked why; vetting, to the standard required for work with children in the country where it runs, of anyone from the company or its evaluators present with a child; a DPIA; a stated retention period; and independent review. Until it exists, no child's writing or hand is collected and no unit runs in a classroom (<a href="f6-foundations-plan.html#milestones">F6</a>).</li>
+<li><b>No DPIA exists.</b> The collection of children's writing and hands at FM2 needs its own; the classroom pilot needs one written with the school once a deployment is chosen.</li>
+<li><b>No ethics protocol exists for any work with a child,</b> and Foundation needs one twice: to collect the children's writing and hands its models learn from (<a href="f3-foundations-content.html#cleanroom">F3</a>), and for the observed pilot. It must have informed parental consent; the child's own assent, in words a young child understands; a way to stop at any moment without being asked why; vetting of anyone from the company present with a child; a DPIA; a stated retention period; and independent review. Until it exists, no child's writing or hand is collected and no unit runs in a classroom (<a href="f6-foundations-plan.html#milestones">F6</a>).</li>
 <li><b>No safeguarding policy for Foundation exists.</b> The contract must say plainly that Foundation is not a safeguarding service, and the school's policy must cover the record of what children wrote.</li>
 <li><b>US content, escalation services and school duties are unreviewed.</b> A US launch of Foundation waits on them, not just on OI-29.</li>
 </ol>
