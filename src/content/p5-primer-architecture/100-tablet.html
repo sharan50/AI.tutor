@@ -1,0 +1,31 @@
+<h2 id="tablet">The tablet</h2>
+
+<p class="lede"><b>The Primer is its own tablet, one per child, with nothing else on it (D105).</b> It starts in the Primer, has no browser, no other apps and no notifications, and keeps no conversation. The dedicated tablet is designed alongside PM4 and made only after PM4's evidence; PM4 itself runs on a stand-in (<a href="p6-primer-plan.html#hardware">P6</a>).</p>
+
+<div class="claim">
+<p>The tablet has no camera, and its microphone listens only while the child holds the talk key, with the screen showing plainly that it is listening: no wake word, and nothing listening in the background. The ICO's guidance on connected devices points the same way, <span class="mark assumed">Assumed</span> (CV-37).</p>
+<span class="tag decided">Decision D116<span class="src">taken while writing, confirmed by the owner, 31 October 2026</span></span>
+</div>
+
+<div class="tw">
+<table>
+<thead><tr><th>Part</th><th>Design</th><th>Rule or test</th></tr></thead>
+<tbody>
+<tr><td><b>Locked to the Primer</b></td><td>It starts in the Primer and runs nothing else: no browser, no app store, no other app, and no way out to a home screen.</td><td>D105.</td></tr>
+<tr><td><b>Nothing calls the child back</b></td><td>No notifications, reminders, streaks or badges; it wakes only when the child wakes it.</td><td>D105, D25.</td></tr>
+<tr><td><b>No camera</b></td><td>None is fitted, so no image of a child can be taken.</td><td>D116, and D50's image half, which still governs the Primer. T-PRM-13, by hardware inspection on every hardware revision.</td></tr>
+<tr><td><b>Microphone</b></td><td>Live only while the talk key is held, with the screen showing it; the keyboard has no dictation of its own.</td><td>D116; D102, ahead of OI-17. T-PRM-13, by hardware inspection and a software check of every path that can open the microphone. The ICO's guidance recommends that a device collect no personal data in listening mode and show clearly when that mode is on, <span class="mark assumed">Assumed</span> (CV-37); the talk key is the only listening the tablet does, and the screen shows it.</td></tr>
+<tr><td><b>One per child</b></td><td>A verified adult sets it up and pairs it to the account and to one child's profile. It cannot tell who is holding it and does not try, so a sibling who picks it up meets that child's band and summaries (<a href="p4-primer-safety.html#device">P4</a>). The adult can wipe it remotely, and closing the account wipes it.</td><td>D105.</td></tr>
+<tr><td><b>The parent's screen</b></td><td>On the parent's own phone or computer, behind the verified adult's sign-in, never on the child's tablet, so nothing the child can reach opens the switches or the record.</td><td>D46, D105.</td></tr>
+<tr><td><b>What it holds</b></td><td>The profile it serves, its identifier, its software version and its error events, with reviewed explainer specifications and fixed speech, cached. Nothing of a conversation outlasts its close, and the record lives in the service, so a lost tablet carries none. After a safety reply or a stop, its screen follows the rule for the close (<a href="#turn">above</a>), and does not sleep on its own while a stop or a safety reply is shown, before the idle period has passed; on the stand-ins the device management sets this. Once the conversation closes, nothing of the exchange is on it, and, woken, it shows the wake screen. It needs a connection to answer, because generation and checking run in the service.</td><td>D104, T-PRM-10 and T-PRM-12; <a href="#killswitch">above</a>.</td></tr>
+<tr><td><b>Without a connection</b></td><td>One fixed, reviewed screen, shown and never spoken, that answers nothing, keeps nothing typed or heard, and points the child to a trusted adult as a stop does.</td><td>T-PRM-10 and T-PRM-12 cover it.</td></tr>
+<tr><td><b>Updates</b></td><td>Signed by the company, staged, and run against the Primer's battery before they reach a child. On PM4's stand-ins, the system's own updates are held by the device management until T-PRM-13's software check has passed on them.</td><td>D22's rule for model updates, applied to the tablet's software.</td></tr>
+<tr><td><b>Security</b></td><td>A password unique to each tablet or set by the adult, a published point of contact for security reports, and a published minimum period of security updates.</td><td>What the UK's rules for connectable consumer products require, <span class="mark assumed">Assumed</span> (CV-36); the design assumes they apply. Whether they do, and what else a connected tablet for children must meet in the UK and the US, is <span class="mark open">Open</span> OI-31 (<a href="p4-primer-safety.html#device">P4</a>).</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><b>PM4 runs on a stand-in, which is weaker.</b> The built Primer is first run on a tablet already on sale, one per pilot child, locked to the Primer by its operating system's single-app controls, while the dedicated tablet is designed in parallel (<a href="p6-primer-plan.html#hardware">P6</a>). The Primer draws its own keyboard there, so the system's dictation never opens, and the lock switches off the system's own voice assistant and wake word. T-PRM-13 adds a software check of every path that can open the microphone, run on each stand-in before any child uses it and on every software release, the stand-in's own system updates included, because the talk key there is software and a release can change what opens the microphone. A stand-in without a camera is chosen for PM4. If none suits, the owner chooses between one whose camera is switched off and covered, which T-PRM-13 would not pass, and pilot units of the dedicated design (<a href="p4-primer-safety.html#gaps">P4</a>). The stand-in is a step towards the tablet the films show, not that tablet.</p>
+
+<p>What making the tablet costs, who makes it, and how it is supplied, repaired and certified are <a href="p6-primer-plan.html#hardware">P6</a>'s; RP7 is the risk that families will not pay for it.</p>
+

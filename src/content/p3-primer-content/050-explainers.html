@@ -1,0 +1,28 @@
+<h2 id="explainers">Drawn explainers</h2>
+
+<div class="claim">
+<p>Each answer is drawn as it is spoken: an explainer that builds on the screen in time with the voice. It is made in advance as part of a reviewed explanation, as D73 requires, and drawn by code from its reviewed specification, so that a child sees the same drawing every time and nothing is generated live by an image or video model.</p>
+<span class="tag decided">Decision D111<span class="src">from the films, confirmed by the owner, 31 October 2026</span></span>
+</div>
+
+<p>Every drawing is content, and its specification holds:</p>
+
+<ul class="tight">
+<li><b>Steps</b>, each keyed to a reviewed sentence of its entry or pack and drawn when the voice reaches that sentence, which is spoken word for word; a sentence the generator composes, a question or the read-back draws nothing. Each age version of an entry has its own steps.</li>
+<li><b>Only what the entry holds.</b> Every figure, name and label comes from its entry or pack, which a script checks before review, so a number the entry does not hold can no more be drawn than said.</li>
+<li><b>Columns drawn alike</b> on a contested pack, in an order the balance reviewer has checked.</li>
+<li><b>No likeness.</b> No photograph, crest or logo, and no likeness of a real person: a named person appears as a plain figure with a name, and whether even the name may be shown is part of OI-30.</li>
+<li><b>Its own provenance and live flag</b>, re-read at every turn (<a href="p5-primer-architecture.html#killswitch">P5</a>). An answer is served with its drawing or not at all, so pulling an explainer takes its answer out of service, and the child hears "not yet", until a corrected specification is reviewed.</li>
+</ul>
+
+<p>An explainer designer writes the specification in the vocabulary the code can draw, and the reviewers of its entry or pack check it (<a href="#review">review</a>). At every release T-PRM-11 checks that what is drawn matches the specification, that every explained stage consists of placed reviewed sentences, that every reviewed sentence a turn places matches its entry word for word, and that the text sent to the voice is the text shown; the voice's output is checked by sampling, transcribed and compared with the text, when the voice is chosen at PM4 and at every voice update. How it is rendered is in <a href="p5-primer-architecture.html#explainers">P5</a>. Nothing goes live without its explainer.</p>
+
+<p><b>Two limits are real.</b> Code draws only what its vocabulary holds, D28's cost for the Tutor's figures (<a href="06-architecture.html#figures">06</a>): a picture outside it needs engineering first, and the football film's pictures (dots that thin out to show the odds, three columns, a staircase, a grid of players, a stack) are its first test. And a drawing exists only for a question a module anticipated: the film's drawings follow the child's own question, and a drawing built from a child's own words cannot be made in advance, so the product never draws one.</p>
+
+<div class="claim">
+<p>That a drawn explainer can be specified and reviewed at the rate the catalogue needs.</p>
+<span class="tag assumed">Assumed<span class="src">OA-59, measured at PM2</span></span>
+</div>
+
+<p>The demonstration generates an eight-second clip live for each of its three building blocks, unchecked (D74, D76). Those rules are its alone: the product's explainers show words, numbers and people, under the rules above (<a href="p2-primer-product.html#demo">P2</a>).</p>
+

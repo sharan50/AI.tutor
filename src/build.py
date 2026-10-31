@@ -64,34 +64,36 @@ PAGES = [
      "The owner's ranking, and why engineering priority runs close to its reverse.", "done"),
     ("13-primer-gateway", "13", "Primer gateway",
      "A gated path from trusted exam practice to safe, independent inquiry.", "done"),
+    ("tutor-mvp", "", "Tutor: MVP build guide",
+     "The whole design for adult testers, built by agents on a harness: content, the self-tutor on open models, tools, costs and phases.", "first"),
     ("p1-primer-thesis", "P1", "Primer: thesis",
-     "What the Primer is, why an AI can do it for ages 8 to 13, and where the case is weak.", "first"),
+     "The Primer the owner's films show: the case from time, why an AI can do it for ages 8 to 13, and where the case is weak.", "first"),
     ("p2-primer-product", "P2", "Primer: product",
-     "The child, a session, the promises, and one why-question explored end to end.", "first"),
+     "The child and their tablet, the shape of an answer, the football question end to end, the parent's screen, and where the demonstration differs.", "first"),
     ("p3-primer-content", "P3", "Primer: content and evidence",
-     "The explanation bank, the inquiry packs, the modules, who reviews them, and the evidence.", "first"),
+     "The explanation bank with its figures and named people, drawn explainers, packs of three positions, the modules, and who reviews them.", "first"),
     ("p4-primer-safety", "P4", "Primer: safety, privacy and regulatory",
-     "Age bands, consent, the modules parents switch, what a parent sees, and escalation.", "first"),
+     "A child's voice ahead of counsel, summaries not records, a child's own future, named people, the tablet, and escalation.", "first"),
     ("p5-primer-architecture", "P5", "Primer: architecture",
-     "What it reuses from the Tutor's pipeline, the two new checks, and the module switch.", "first"),
+     "A turn from the talk key to the read-back: speech, drawn explainers, summaries, the tablet, the checks and the kill switch.", "first"),
     ("p6-primer-plan", "P6", "Primer: plan",
-     "Who pays, routes in the UK and the US, economics, milestones and risks.", "first"),
+     "Parents buying a tablet and the service, routes in the UK and the US, making the tablet, economics, milestones and risks.", "first"),
     ("primer-mvp", "", "Primer: MVP build guide",
      "A demonstration for adult testers, built in four or five days: what it does, its tools, safety, costs and the build.", "first"),
-    ("f1-foundations-thesis", "F1", "Foundations: thesis",
-     "Early reading, writing and arithmetic with an adult beside the child, and why it does not go first.", "first"),
-    ("f2-foundations-product", "F2", "Foundations: product",
-     "The adult, the child, a session, and what the screen does and does not do.", "first"),
-    ("f3-foundations-content", "F3", "Foundations: content and evidence",
-     "The reading and number sequences, decodable practice, who checks it, and the evidence.", "first"),
-    ("f4-foundations-safety", "F4", "Foundations: safety, privacy and regulatory",
-     "Very young children, no microphone at launch, consent, and the data held.", "first"),
-    ("f5-foundations-architecture", "F5", "Foundations: architecture",
-     "The adult's guide, the decodability check, and what it reuses from the Tutor.", "first"),
-    ("f6-foundations-plan", "F6", "Foundations: plan",
-     "Who might pay, parents and schools, economics, milestones and risks.", "first"),
+    ("f1-foundations-thesis", "F1", "Foundation: thesis",
+     "A classroom instrument that tells the teacher which child needs help, and with what; and why it does not go first.", "first"),
+    ("f2-foundations-product", "F2", "Foundation: product",
+     "The teacher, the desk unit, a lesson, the class view and the term summary.", "first"),
+    ("f3-foundations-content", "F3", "Foundation: content and evidence",
+     "Maths, writing, reasoning and grip; the error catalogue, who checks it, and the evidence.", "first"),
+    ("f4-foundations-safety", "F4", "Foundation: safety, privacy and regulatory",
+     "A camera on the page and the hand, never the face; nothing kept; the data held; counsel's questions.", "first"),
+    ("f5-foundations-architecture", "F5", "Foundation: architecture",
+     "Where it runs, the page and hand reader, computed checks and the alert rules.", "first"),
+    ("f6-foundations-plan", "F6", "Foundation: plan",
+     "Schools as the customer, routes, economics, milestones and risks.", "first"),
     ("which-first", "", "Which idea goes first",
-     "Foundations does not; between the Tutor and the Primer, field research decides.", "first"),
+     "Foundation does not, by the owner's order; between the Tutor and the Primer, field research decides.", "first"),
     ("field-research", "", "Field research guide",
      "Questions for teachers, professors and parents, written to prove the plan wrong.", "first"),
     ("14-open-items", "14", "Open items",
@@ -108,11 +110,11 @@ GROUPS = [
      ["00-thesis", "01-product", "02-style-engine", "03-curriculum-and-content", "04-rights-dossier",
       "05-safety-privacy-regulatory", "06-architecture", "07-route-a-direct-to-parents",
       "08-route-b-through-schools", "09-route-comparison", "10-economics", "11-roadmap",
-      "12-risk-register", "13-primer-gateway"]),
-    ("primer", "Primer", "Ages 8 to 13. A tutor for a child's why-questions, designed to ask what they think rather than tell them.",
+      "12-risk-register", "13-primer-gateway", "tutor-mvp"]),
+    ("primer", "Primer", "Ages 8 to 13. A tutor for a child's why-questions, on a tablet of its own, designed to ask what they think rather than tell them.",
      ["p1-primer-thesis", "p2-primer-product", "p3-primer-content", "p4-primer-safety",
       "p5-primer-architecture", "p6-primer-plan", "primer-mvp"]),
-    ("foundations", "Foundations", "Ages 4 to 7. Early reading, writing and arithmetic, with an adult beside the child.",
+    ("foundations", "Foundation", "Ages 4 to 7. A classroom instrument that tells the teacher which child needs help, and with what.",
      ["f1-foundations-thesis", "f2-foundations-product", "f3-foundations-content", "f4-foundations-safety",
       "f5-foundations-architecture", "f6-foundations-plan"]),
     ("shared", "Across all three", "Which idea goes first, the field research guide, and the two registers every idea shares.",
@@ -427,7 +429,7 @@ def check():
 # public URL. README.md is left out for the same reason; its links point at the
 # two things above and would dangle.
 PUBLISH_DIR = ROOT / "_site"
-PUBLISHED = ["docs", "evidence", "contracts", "mvp"]
+PUBLISHED = ["docs", "evidence", "contracts", "mvp", "mockup"]
 
 
 # viz/dependency-map.html is the one page here that runs a script. It goes to
@@ -468,7 +470,21 @@ def publish_map():
     return scripts, styles
 
 
-def write_headers(map_hashes):
+# mockup/index.html is the Primer demo's design mock-up, hand-maintained, and the
+# second page here that runs a script. It has its own prefix, /mockup/, for the
+# reason the map has /map/.
+MOCKUP = ROOT / "mockup" / "index.html"
+
+
+def mockup_hashes():
+    if not MOCKUP.exists():
+        return None
+    scripts = _csp_hashes(MOCKUP.read_text(encoding="utf-8"), "script")
+    print(f"  published /mockup/: {len(scripts)} script, hashed")
+    return scripts
+
+
+def write_headers(map_hashes, mock_hashes=None):
     """One _headers file, generated, so the map's policy and the documents'
     policy cannot overlap on a path and be intersected by the browser."""
     lines = []
@@ -503,6 +519,16 @@ def write_headers(map_hashes):
                + "; font-src https://fonts.gstatic.com; img-src 'self' data:; "
                  "base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
         block("/map/*", ["  Content-Security-Policy: " + csp])
+    # The mock-up keeps the design canvas's markup, which is styled element by
+    # element, so its policy allows inline styles; its script is named by hash, as
+    # the map's are. It loads nothing but its fonts, so no style can send anything
+    # anywhere.
+    if mock_hashes:
+        csp = ("default-src 'none'; script-src " + " ".join(mock_hashes)
+               + "; style-src 'unsafe-inline' https://fonts.googleapis.com"
+               + "; font-src https://fonts.gstatic.com; img-src 'self' data:; "
+                 "base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
+        block("/mockup/*", ["  Content-Security-Policy: " + csp])
     (PUBLISH_DIR / "_headers").write_text("\n".join(lines), encoding="utf-8")
     print(f"  wrote _site/_headers: {sum(1 for l in lines if l and not l.startswith(' '))} path rules")
 
@@ -515,7 +541,7 @@ def assemble_publish_dir():
         src = ROOT / name
         if src.is_dir():
             shutil.copytree(src, PUBLISH_DIR / name)
-    write_headers(publish_map())
+    write_headers(publish_map(), mockup_hashes())
     n = sum(1 for _ in PUBLISH_DIR.rglob("*") if _.is_file())
     print(f"  assembled _site/ for publishing: {n} files from {', '.join(PUBLISHED)}, plus the map")
 
@@ -563,7 +589,7 @@ def build_status(built, counts):
     acc = _rows(curric, "ACC")
     risks = _rows(risks_f, "R")
     idea_risks = [("Primer", r) for r in _rows(read_source("p6-primer-plan") or "", "RP")]
-    idea_risks += [("Foundations", r) for r in _rows(read_source("f6-foundations-plan") or "", "RF")]
+    idea_risks += [("Foundation", r) for r in _rows(read_source("f6-foundations-plan") or "", "RF")]
     conds = _rows(routes, "C")
     decisions = range(counts["decisions"])
     tests = counts["test_ids"]
@@ -636,8 +662,10 @@ else here in that light.</p>
 </div>
 
 <h2 id="ideas">The three ideas</h2>
-<p>The Tutor has been through eight rounds of adversarial review. The Primer and Foundations
-are first drafts, revised once after an independent review. Foundations does not go first;
+<p>The Tutor has been through eight rounds of adversarial review. The Primer is a first draft of
+the design the owner's films show, rewritten to them on 31 October 2026 and revised once after an
+independent review; Foundation is a first draft of its classroom design,
+revised once after an independent review. Foundation does not go first, by the owner's order;
 between the other two, <a href="which-first.html">which goes first</a> is still open.</p>
 <div class="tw"><table>
 <thead><tr><th>Idea</th><th class="num">Documents</th><th>State</th></tr></thead>
@@ -651,8 +679,8 @@ tested this quarter for almost nothing, and either can flip the decision on its 
 <tbody>{cond_rows}</tbody></table></div>
 
 <h2 id="counsel">Questions for counsel</h2>
-<p>Deliberately unanswered. One, OI-3, we are proceeding ahead of under D34, and it says so
-where it is applied. Full text in <a href="14-open-items.html">14</a>.</p>
+<p>Deliberately unanswered. We are proceeding ahead of OI-3 under D34, of OI-23 to OI-27 under D59
+and, for the Primer, of OI-17 under D102, and each says so where it is applied. Full text in <a href="14-open-items.html">14</a>.</p>
 <div class="tw"><table>
 <thead><tr><th class="id">#</th><th>Question</th><th>Unblocks</th></tr></thead>
 <tbody>{oi_rows}</tbody></table></div>
@@ -682,7 +710,7 @@ why the engineering priority runs close to the reverse of it.</p>
 <thead><tr><th class="id">#</th><th>Risk</th><th>Leading indicator</th></tr></thead>
 <tbody>{risk_rows}</tbody></table></div>
 
-<p>The Primer's and Foundations', not yet ranked by the owner. Each is set out in its idea's
+<p>The Primer's and Foundation's, not yet ranked by the owner. Each is set out in its idea's
 plan, <a href="p6-primer-plan.html#risks">P6</a> and <a href="f6-foundations-plan.html#risks">F6</a>.</p>
 <div class="tw"><table>
 <thead><tr><th class="id">#</th><th>Idea</th><th>Risk</th><th>Leading indicator</th></tr></thead>
@@ -855,7 +883,7 @@ def compute_counts():
     everything = "\n".join(read_source(p[0]) for p in PAGES if read_source(p[0]) is not None)
     tests = sorted(set(re.findall(r"\bT-[A-Z]+-\d+\b", everything)))
     openitems = read_source("14-open-items")
-    cheap = re.search(r"<b>(\w+) of the [\w-]+ assumptions are resolvable", openitems)
+    cheap = re.search(r"<b>([\w-]+) of the [\w-]+ assumptions are resolvable", openitems)
     return dict(
         documents=len(PAGES),
         decisions=len(entries),
@@ -1263,7 +1291,7 @@ def render_codeowners(cfg):
     for r in cfg["roles"]:
         for item in r["owns"]:
             slug, _, hid = item.partition("#")
-            if slug in ("contracts", "mvp"):
+            if slug in ("contracts", "mvp", "mockup"):
                 page_lines.setdefault(slug + "/", []).append(handle(r))
                 continue
             src = source_path(slug)

@@ -3,7 +3,7 @@
 prints every failure as file:line message.
 
   1. build freshness: what a build would write matches docs/, evidence/ and viz/
-  2. every internal link and anchor under docs/, evidence/ and viz/ resolves
+  2. every internal link and anchor under docs/, evidence/, viz/ and mockup/ resolves
   3. the dependency map: python3 tools/depmap.py check
   4. not run. A Verified marker is a bare <span class="mark verified"> that
      carries no reference to an entry in evidence/sources.html, and the
@@ -24,7 +24,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SITE_DIRS = ["docs", "evidence", "viz"]
+SITE_DIRS = ["docs", "evidence", "viz", "mockup"]
 sys.path.insert(0, str(ROOT / "src"))
 import build  # noqa: E402
 

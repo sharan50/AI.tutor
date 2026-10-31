@@ -1,0 +1,30 @@
+<h2 id="reuse">What it reuses from the Tutor</h2>
+
+<p class="lede"><b>Most of the Primer's service exists once the Tutor's platform does; its tablet, its speech and its drawings do not.</b> The service's pieces are the ones specified in <a href="06-architecture.html">06</a>, re-aimed at questions instead of objectives and at the Primer the owner's films show (D101). The films are illustrative and made with AI; this page is the design they describe. None of 06's five planes holds a device, so the tablet is a sixth.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Component</th><th>In the Tutor</th><th>In the Primer</th></tr></thead>
+<tbody>
+<tr><td>Account, age assurance, billing</td><td>A verified adult holds the account (<a href="05-safety-privacy-regulatory.html#age">05</a>).</td><td>The same. The child is a profile under the parent's account, and each tablet is paired to one child (<a href="#tablet">below</a>).</td></tr>
+<tr><td>Device</td><td>None; no plane in 06 holds one.</td><td>The Primer's own tablet, one per child, locked to the Primer (D105, D116).</td></tr>
+<tr><td>Speech</td><td>Out only, for the self-tutor, in the learner's own voice (<a href="06-architecture.html#self">06</a>).</td><td>In and out from launch: the child's speech becomes text and the audio is thrown away, ahead of OI-17 (D102); the Primer answers in a stock voice (<a href="#speech">below</a>).</td></tr>
+<tr><td>Composer</td><td>Selects item-bank nodes for one objective, deterministically (<a href="06-architecture.html#turn">06</a>).</td><td>Holds the stage of the answer's one shape (D110) and selects each stage's bank and pack entries from enabled modules only; matches again when the question shifts.</td></tr>
+<tr><td>Generator</td><td>A pinned, bought model (D22).</td><td>The same, given a wording card in place of a style card, and never the child's name or age. It places the entries' reviewed sentences and writes what the conversation composes around them.</td></tr>
+<tr><td>Verifier</td><td>Four blocking checks, on a different pinned model (D27; <a href="06-architecture.html#verifier">06</a>).</td><td>Citation presence, claim support and scope, re-aimed, plus attribution, the contested question, manner and no direction: seven checks (<a href="#checks">below</a>). The mathematics check is not used: every figure and ratio the Primer states is stored in its entry, so generation does no arithmetic.</td></tr>
+<tr><td>Figure renderer</td><td>Figures drawn from a specification in the item, never generated (D28; <a href="06-architecture.html#figures">06</a>).</td><td>Explainers drawn by code from a reviewed specification, in time with the voice (D111; <a href="#explainers">below</a>).</td></tr>
+<tr><td>Gate and fallback</td><td>A validated item, verbatim.</td><td>A reviewed entry, verbatim, with its drawing, or "not yet".</td></tr>
+<tr><td>Close</td><td>None.</td><td>The read-back, then "Leave it there, or keep going?" (D103, D117).</td></tr>
+<tr><td>Logger</td><td>The turn record.</td><td>Identifiers, verdicts and timings, and the kept summary. No turn record holds audio or video, and a conversation's words are deleted at its close (D104; <a href="#summaries">below</a>).</td></tr>
+<tr><td>Safety plane</td><td>Classification, escalation routing and session caps (<a href="06-architecture.html#planes">06</a>).</td><td>The same, with triage on every turn, a review at the close of each conversation (D107) and the time cap on "Keep going".</td></tr>
+<tr><td>Kill switch</td><td>A registry flag re-read at every turn (<a href="06-architecture.html#killswitch">06</a>).</td><td>A live flag on every module, pack, entry, explainer and named person, re-read at every turn, reaching what the tablet caches.</td></tr>
+<tr><td>Mastery model</td><td>Objective-level mastery.</td><td>Not used. There is no mastery of philosophy, only summaries of a child's questions and positions (D104).</td></tr>
+<tr><td>Style engine</td><td>A parameter object, presets and a style card (<a href="02-style-engine.html#card">02</a>).</td><td>A wording card: plain, brisk and pitched for the band (D112). No presets, and the Primer never speaks as a real person (D47).</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The new engineering is the tablet; speech in and out; the explainer renderer; triage with the own-future fence; the registry filter; matching a child's question to catalogue entries, more than once a conversation; the composer that holds the answer's shape; four new checks; and the read-back. That is an argument for building the ideas on one platform (D40). It is not an argument for which goes first, which is set out in <a href="which-first.html#tests">which idea goes first</a>.</p>
+
+<p><b>The demonstration differs.</b> The MVP demonstration was built to an earlier design and does not change: it generates its clips live, corrects an adult's speech before sending it, keeps nothing at all, and stops the football thread as a question about the asker's own life. Each is a difference from this page, listed in <a href="p2-primer-product.html#demo">P2</a>.</p>
+

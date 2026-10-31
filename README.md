@@ -10,13 +10,21 @@ amended by the owner on 22 October 2026; D51 for the other two).
   student which cannot be traced to an examiner-validated item. A student can
   also choose a self-tutor, taught in their own face and voice, which only they
   can see. The most developed of the three.
-- **The Primer** (ages 8 to 13). A child's why-questions taken seriously: a
-  checked explanation first, then the question underneath, explored by asking
-  rather than telling, until the child states a view of their own. Its subjects
-  come in modules the company writes; parents switch them on and off.
-- **Foundations** (ages 4 to 7). Early reading, writing and arithmetic, with an
-  adult beside the child in every session and the screen as the adult's guide.
-  The least certain of the three, and deliberately not the first.
+- **The Primer** (ages 8 to 13). A tutor for a child's why-questions, on a
+  tablet of its own, as the owner's three films show it. A child asks aloud or
+  by typing, and the Primer answers aloud while a drawing builds on the screen:
+  a checked fact with its source, then the harder question underneath, set out
+  as three positions from named traditions, until the child states a view of
+  their own. It may reason with a child about a choice in their own future,
+  setting out the reality and what the schools of thought say, and neither
+  encourages nor discourages. Its subjects come in modules the company writes;
+  parents switch them on and off. Spoken questions go ahead of counsel's
+  answer on OI-17 (D102).
+- **Foundation** (ages 4 to 7). A classroom instrument for the teacher: a small
+  camera over each desk watches the page and the hand, never the face, and the
+  teacher's screen says which child needs help and what to try. The child is
+  shown nothing. Sold to schools, and not the first of the three, by the
+  owner's order.
 
 Which idea goes first between the Tutor and the Primer is open, and is decided by
 field research with teachers, professors and parents.
@@ -33,21 +41,27 @@ still unknown. It is **not** application code and it is not a product.
 The source instruction is [`BUILD_BRIEF.md`](BUILD_BRIEF.md) at the root, for the
 Tutor and for the vault's rules. Where this repository and the brief disagree, the
 brief governs. [`FACETS_BRIEF.md`](FACETS_BRIEF.md) governs the Primer,
-Foundations, the shared pages and the front page, and
+Foundation, the shared pages and the front page;
 [`PRIMER_MVP_BRIEF.md`](PRIMER_MVP_BRIEF.md) the Primer's MVP build guide and its
-specification.
+specification; [`TUTOR_MVP_BRIEF.md`](TUTOR_MVP_BRIEF.md) the Tutor's MVP build
+guide and its specification pack;
+[`FOUNDATION_CLASSROOM_BRIEF.md`](FOUNDATION_CLASSROOM_BRIEF.md) Foundation's six
+documents and its film since the owner redesigned it for the classroom; and
+[`PRIMER_VISION_BRIEF.md`](PRIMER_VISION_BRIEF.md) the Primer's six documents,
+its card and its film since 31 October 2026, when the owner's three films
+became its design.
 
 ## Status
 
 | | |
 |---|---|
-| Documents | 31 across the three ideas, the registers included, plus an evidence register |
+| Documents | 32 across the three ideas, the registers included, plus an evidence register |
 | Built | Nothing |
-| Tests specified | **32**, none run. There is nothing to run them against |
-| Counsel questions | **27** open, none answered. We proceed ahead of OI-3 under D34 and of OI-23 to OI-27 under D59, and each says so where it is applied |
-| Assumptions unverified | **44**, of which 19 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **79**, including three, taken on the owner's instruction, that reverse two earlier positions, and D1 and D9, since amended by the owner |
-| External claims registered | **42**, each with source and date checked, plus **23** candidates awaiting the owner's check |
+| Tests specified | **39**, none run. There is nothing to run them against |
+| Counsel questions | **32** open, none answered. We proceed ahead of OI-3 under D34, of OI-23 to OI-27 under D59 and, for the Primer's spoken questions, of OI-17 under D102, and each says so where it is applied |
+| Assumptions unverified | **56**, of which 22 are resolvable by reading or by asking rather than by building |
+| Decisions recorded | **117**, including three, taken on the owner's instruction, that reverse two earlier positions; D1 and D9, since amended by the owner; six superseded for Foundation alone when the owner redesigned it; and three superseded in part for the Primer when the owner's films became its design |
+| External claims registered | **42**, each with source and date checked, plus **40** candidates awaiting the owner's check |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at
 build time and governs where this table disagrees with it.
@@ -55,8 +69,8 @@ build time and governs where this table disagrees with it.
 ## How to read it
 
 Start at [`docs/index.html`](docs/index.html), the front page: a brief on each of
-the three ideas with a space for a short film of each, which idea goes first, what
-the three share, and where everything stands. It is written for a first-time
+the three ideas, each with its film or a space for one, which idea goes first,
+what the three share, and where everything stands. It is written for a first-time
 reader: a former teacher, a prospective partner or co-founder, an accelerator.
 
 [`docs/tutor.html`](docs/tutor.html) is the Tutor's summary: the route, the
@@ -103,12 +117,14 @@ Three rules follow, and they are the ones a contributor most easily breaks:
 1. **No invented figures.** Every number is from the evidence register, a stated
    design choice, or marked Unknown. There is no fourth kind.
 2. **A claim not in the evidence register may not carry a Verified marker.**
-3. **Counsel questions stay open.** There are two exceptions. OI-3, board naming,
+3. **Counsel questions stay open.** There are three exceptions. OI-3, board naming,
    where waiting would mean a product that cannot describe itself, is argued in
    [`docs/04-rights-dossier.html`](docs/04-rights-dossier.html) and recorded as
    decision D34. The self-tutor proceeds ahead of OI-23 to OI-27 and is withdrawn
-   only if counsel's answer is a categoric no, recorded as decision D59. Neither
-   is slipped in.
+   only if counsel's answer is a categoric no, recorded as decision D59. The
+   Primer takes a child's spoken questions ahead of OI-17, on whether a child's
+   voice is biometric data, and withdraws them only if counsel's answer is a
+   categoric no, recorded as decision D102. None is slipped in.
 
 A claim found by research but not yet checked by the owner is registered as a
 **candidate** (CV-01 onwards) in its own section of the evidence register, with its
@@ -150,12 +166,14 @@ working rules for a coding session.
 ### Adding a film to the front page
 
 Each idea's card on the front page has a space for a short film. In
-[`roles.json`](roles.json), under `front`, each idea has `"video": null`, which
-shows the placeholder. To fill it, either:
+[`roles.json`](roles.json), under `front`, an idea with `"video": null` shows the
+placeholder. Foundation's and the Primer's cards carry the owner's films, the
+Primer's a rough cut labelled as a draft, and only the Tutor's shows the
+placeholder. To fill it, either:
 
-- put the file under `docs/media/` (for example `docs/media/primer.mp4`, with an
+- put the file under `docs/media/` (for example `docs/media/tutor.mp4`, with an
   optional poster image and captions file) and set
-  `"video": {"src": "media/primer.mp4", "poster": "media/primer.jpg", "captions": "media/primer.vtt"}`.
+  `"video": {"src": "media/tutor.mp4", "poster": "media/tutor.jpg", "captions": "media/tutor.vtt"}`.
   Keep the file small: GitHub refuses files over 100 MB; or
 - upload it to a video host and set
   `"video": {"embed": "https://www.youtube-nocookie.com/embed/VIDEO_ID"}`. The
@@ -170,7 +188,7 @@ are seen by parents and teachers:
 - **Label them.** Each card captions its film as illustrative, saying that
   nothing shown has been built; set your own wording with `"caption"` if
   needed, but keep the point. If a film is AI-generated, say so in the film
-  itself.
+  itself. A rough cut says that it is one.
 - **No real child without written consent.** Do not show a real child unless a
   parent has consented in writing to this use, and never show a child's name,
   school or face where it can be avoided.
@@ -183,7 +201,7 @@ are seen by parents and teachers:
 ```
 BUILD_BRIEF.md                 the source instruction, for the Tutor and the vault's rules
 REBUILD_BRIEF.md               the brief for the tooling and the owner views
-FACETS_BRIEF.md                the brief for the Primer, Foundations and the front page
+FACETS_BRIEF.md                the brief for the Primer, Foundation and the front page
 RESTRUCTURE_REPORT.md          what the restructure changed, with its checks
 VIEWS_REPORT.md                what the views added, with the identity proof and the ownership table
 FACETS_REPORT.md               what the facets brief changed, its checks and its independent review
@@ -191,6 +209,12 @@ SELF_TUTOR_BRIEF.md            the brief for the self-tutor
 SELF_TUTOR_REPORT.md           what the self-tutor brief changed, its checks and its review
 PRIMER_MVP_BRIEF.md            the brief for the Primer's MVP build guide
 PRIMER_MVP_REPORT.md           what that brief changed, its checks and its review
+TUTOR_MVP_BRIEF.md             the brief for the Tutor's MVP build guide and its specification pack
+TUTOR_MVP_REPORT.md            what that brief changed, its checks and its review
+FOUNDATION_CLASSROOM_BRIEF.md  the brief for Foundation's classroom design and its film
+FOUNDATION_CLASSROOM_REPORT.md what that brief changed, its checks and its review
+PRIMER_VISION_BRIEF.md         the brief for the Primer as the owner's three films show it
+PRIMER_VISION_REPORT.md        what that brief changed, its checks and its review
 roles.json                     the five owners, what each owns and reads, the Tutor summary's and the front page's picks
 CLAUDE.md                      working rules for a coding session
 README.md                      this file
@@ -214,8 +238,9 @@ docs/
   contents.html                contents grouped by idea, and the five reader routes
   roles/<id>.html              one generated page per owner
   00-thesis.html .. 14-open-items.html     the Tutor, and the shared open-items register
+  tutor-mvp.html               the Tutor's MVP build guide: the whole design for adult testers
   p1-primer-thesis.html .. p6-primer-plan.html
-  primer-mvp.html              the Primer's MVP build guide: a demonstration for adult testers
+  primer-mvp.html              the Primer's MVP build guide: a demonstration for adult testers, to a design earlier than the films
   f1-foundations-thesis.html .. f6-foundations-plan.html
   which-first.html             which idea goes first
   field-research.html          the guide for teachers, professors and parents
@@ -223,7 +248,7 @@ docs/
   status.html                  generated from the registers
   style.css                    hand-maintained
 evidence/
-  sources.html                 42 external claims, source and date checked, and 23 candidates
+  sources.html                 42 external claims, source and date checked, and 40 candidates
 viz/
   dependency-map.html          the served map, generated; published at /map/
 contracts/
@@ -231,14 +256,19 @@ contracts/
   creator-licence-heads-of-terms.md  counsel-facing, with Schedules 2 and 3
 mvp/
   primer-demo-spec.md          the Primer demo's build specification, saved as CLAUDE.md in the demo's own repository
+  tutor/                       the Tutor MVP's specification pack: README, CLAUDE.md, SPEC.md, agents, settings, hooks, git hooks, prompts
+mockup/
+  index.html                   the Primer demo's design mock-up, hand-maintained; runs one script; published at /mockup/
 econ/                          the economics model and its outputs; not part of the site
 ```
 
 ## Publishing
 
 Static output. No framework, no JavaScript on the documents, no fonts or assets
-fetched over the network. Netlify publishes `_site/`, which the build assembles
-from `docs/`, `evidence/`, `contracts/` and `mvp/`, because `evidence/` is a sibling of
+fetched over the network. The map and the Primer demo's mock-up are the two pages
+that run a script, each at its own path with its own policy. Netlify publishes
+`_site/`, which the build assembles from `docs/`, `evidence/`, `contracts/`, `mvp/`
+and `mockup/`, because `evidence/` is a sibling of
 `docs/` and every sourced claim links to it. `/` redirects to
 `docs/index.html`; it must not rewrite, because a rewrite serves the page at the
 root, where its relative stylesheet and links fail (D52). See
