@@ -1,0 +1,44 @@
+<h2 id="cost">Cost per session</h2>
+
+<div class="claim">
+<p>Cost per session is not known and is not estimated here. It depends on how many turns a session has, which is not known: one question is a design target of three to six minutes (D112), "Keep going" extends it within the time cap set from PM3's pilot (D103), and the pace sets how many turns fit. It depends on the calls each turn makes, which for the Primer are recognition when the child speaks, triage, matching, the generator, up to seven verifier checks and the voice. And it depends on the review at the close.</p>
+<span class="tag unknown">Unknown<span class="src">measured at PM4, not estimated</span></span>
+</div>
+
+<pre><code>cost_per_session
+  = turns x [ recognise(spoken_length)     // spoken turns only (D102, ahead of OI-17)
+            + triage + match               // classifier calls
+            + generate(ctx_tokens, out)    // pinned generator
+            + verify(checks)               // up to seven, a to g
+            + speak(spoken_length) ]       // the voice; D30 does not bound it
+  + review                                 // once, at the close (D107)
+  + explainers x draw                      // ~0, drawn on the tablet (D28, D111)
+  + storage                                // the summaries, the per-turn log, the queues,
+                                           // the flagged hold, the safeguarding count and
+                                           // the escalation records; no turn of the child's,
+                                           // whole or in part, after the close outside the
+                                           // read-back, except a flagged exchange until
+                                           // its review closes (D104, D107)
+
+where, per turn:
+  ctx_tokens = system_fixed + wording_card + entries + summaries
+             + child_words                 // this conversation, whole, until the close
+             + window                      // the Primer's earlier turns, summarised (D30)</code></pre>
+
+<p><b>D30's bounded summary does not cover the child's words.</b> The read-back and its check need what the child actually said, so the child's words stay whole in the window until the close, bounded by the time cap, and only the Primer's own earlier turns are summarised, as <a href="decision-ledger.html#taken">the ledger's note on D30</a> records. Cost per turn therefore grows with what the child has said, up to the bound the time cap sets; how large the child's words grow is <span class="mark unknown">Unknown</span> until PM4.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Term</th><th>Status</th><th>How it gets filled in</th></tr></thead>
+<tbody>
+<tr><td><code>turns</code> per session</td><td><span class="mark unknown">Unknown</span></td><td>PM3's pilot sets the cap; PM4 measures turns on the built Primer.</td></tr>
+<tr><td><code>recognise()</code>, <code>speak()</code></td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>PM4, when the recogniser and the voice are chosen. Both grow with how much is spoken, which D30 does not bound.</td></tr>
+<tr><td><code>triage</code>, <code>match</code>, <code>generate()</code>, <code>verify()</code></td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>PM4, on the Primer's battery.</td></tr>
+<tr><td>Gate-fire rate, which adds wasted generations</td><td><span class="mark unknown">Unknown</span></td><td>The first battery run.</td></tr>
+<tr><td><code>draw</code></td><td><b>Approximately zero</b> by construction (D28, D111).</td><td>Settled by the architecture. Writing and reviewing the specifications is a content cost (OA-59).</td></tr>
+<tr><td>The tablet</td><td>Outside cost per session.</td><td><a href="p6-primer-plan.html#hardware">P6</a>: making, shipping, supporting and certifying it.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>The figure is measured the way 06 measures the Tutor's: on a frozen battery, with the chosen models, at the milestone where there is something to run (<a href="06-architecture.html#cost">06</a>, <a href="10-economics.html#cost">10</a>). Two things are already clear without a number: each Primer turn makes more calls than a Tutor turn, and speech adds a cost that grows with how much is said, while drawing costs almost nothing. Neither tells you which idea costs more per session.</p>

@@ -1,0 +1,72 @@
+<h2 id="voice">Speech from launch, and no recording kept</h2>
+
+<p>A child speaks or types each question from launch, ahead of counsel's answer to <span class="mark open">Open</span> OI-17, whether a child's voice or anything derived from it is biometric data, and speech is withdrawn only if that answer is a categoric no (D102). The audio is thrown away once it is text, the tablet listens only while the talk key is held (D116), and a safety reply is shown, never spoken (D115). Nothing here answers OI-17 or OI-15.</p>
+
+<div class="claim">
+<p>Children speak or type their questions from launch, as Version C shows. Their speech becomes text at once and the audio is thrown away. The Primer goes ahead of counsel's answer on whether a child's voice is biometric data (OI-17), as the self-tutor does on its own questions, and is withdrawn only if counsel's answer is a categoric no.</p>
+<span class="tag decided">Decision<span class="src">D102, the owner's, 31 October 2026</span></span>
+</div>
+
+<div class="claim">
+<p>The tablet has no camera, and its microphone listens only while the child holds the talk key, with the screen showing plainly that it is listening: no wake word, and nothing listening in the background.</p>
+<span class="tag decided">Decision<span class="src">D116, taken while writing, confirmed by the owner, 31 October 2026</span></span>
+</div>
+
+<p>The ICO's guidance on connected devices points the same way as D116 <span class="mark assumed">Assumed</span> (CV-37, in <a href="#device">the tablet</a>).</p>
+
+<div class="claim">
+<p>A safety reply is shown and never spoken, and "Keep going" never follows a safety reply, a stop or a decline.</p>
+<span class="tag decided">Decision<span class="src">D115, taken while writing, confirmed by the owner, 31 October 2026</span></span>
+</div>
+
+<p>D115 is driven by D26: the films are set in a kitchen, and the parent can be the risk, so a safety reply spoken aloud would reach whoever is in the room. T-PRM-12 tests that no safety reply is spoken, none is followed by "Keep going", the child's own turn leaves the screen at once after a stop or a safety reply, and nothing of a stopped exchange stays on the screen once the conversation closes.</p>
+
+<h3>How a child's speech is handled</h3>
+
+<ol>
+<li><b>The adult switches it on.</b> Speech is optional, since typing is always there, so 05's rule for anything optional applies: it is off until the verified adult consents, separately and revocably, and switches it on (<a href="05-safety-privacy-regulatory.html#basis">05</a>). It cannot be switched on before T-PRM-06's spoken battery has passed (<a href="p5-primer-architecture.html#speech">P5</a>), and it is first switched on for children only in a supervised pilot, PM4's or one held to its conditions, so no child at home has speech before recognition of children's speech has been observed there (OA-55). Whether parents will is <span class="mark assumed">Assumed</span> OA-60. Version C shows a household where it is on. What that consent must be is part of OI-13 and OI-17.</li>
+<li><b>Text at once, the audio thrown away.</b> The audio exists only while it becomes text, a design choice: it is never stored, replayed or used for anything else, which T-PRM-10's audit checks (<a href="p5-primer-architecture.html#speech">P5</a>).</li>
+<li><b>Vendors under D24.</b> Wherever recognition runs, a vendor is held to D24's gate as a model vendor is: zero retention of audio and text, and no training on them; so is the vendor that voices the checked text.</li>
+<li><b>Shown, and correctable.</b> What was heard appears on screen at once as the child's words, and a child who was misheard can say so, or type it instead. Triage reads the whole turn before any reply is spoken (<a href="#escalation">below</a>).</li>
+<li><b>Nothing inferred from the voice:</b> not mood, distress, identity or age. The words are used and the sound is not; 05's list of what is never inferred, written for the Tutor, is applied to the Primer's audio (<a href="05-safety-privacy-regulatory.html#basis">05</a>).</li>
+</ol>
+
+<h3>What the Primer says aloud</h3>
+
+<p>The Primer's voice is a stock synthetic voice, chosen from vendors at PM4 (<a href="p5-primer-architecture.html#model">P5</a>) and cloned from no real person, the reasoning of D9 and of Ofcom's concern with virtual clones of real people (<a href="05-safety-privacy-regulatory.html#osa">05</a>). It is one voice for every position: the others ask back as positions, never in a voice per thinker (D110, D47). It speaks the checked text on screen and nothing else, and its drawings come from reviewed specifications, never generated live (D111); T-PRM-11 checks that what is spoken and drawn is what was checked. It speaks briskly (D112), and because a spoken reply cannot be reread, the same words arrive whole on screen (D109); whether the youngest need a slower rate is for PM3 to show.</p>
+
+<p><b>A shared room hears what is said.</b> A child can always type a question they would not want heard, but the answer to a typed question is still spoken, and so reveals its subject to the room (<a href="#gaps">named gaps</a>). A safety reply or a stop is shown, never spoken (D115), and a decline never says aloud what the question was about. What a child must be told about being heard in the room belongs with <span class="mark open">Open</span> OI-14.</p>
+
+<h3>Children's audio in the US</h3>
+
+<div class="claim">
+<p>The FTC's enforcement policy statement of October 2017 (82 FR 58076) said it would not act against an operator that collects an audio file of a child's voice without parental consent where the file is collected only as a replacement for written words and kept only for the brief time necessary, with notice of how audio is used and deleted, and no other use. A policy of non-enforcement, not a change to the Rule.</p>
+<span class="tag assumed">Assumed<span class="src">CV-34, read through search summaries, awaiting the owner's check</span></span>
+</div>
+
+<div class="claim">
+<p>The FTC's amended COPPA Rule, published on 22 April 2025, codifies an audio file exception (section 312.5(c)(9)): an audio file containing a child's voice and no other personal information, used only to respond to the child's specific request, not disclosed, and deleted immediately after responding, with notice under section 312.4(d).</p>
+<span class="tag assumed">Assumed<span class="src">CV-35, read through search summaries, awaiting the owner's check</span></span>
+</div>
+
+<p><b>Neither answers OI-15 or OI-17.</b> They are how the FTC has treated a child's audio, not what counsel will say of the Primer. D102's handling follows the pattern they describe: speech taken only in place of typing, kept no longer than it takes to become text, and used for nothing else. Whether it meets them, what notice it needs, and what UK law makes of a child's voice are counsel's questions.</p>
+
+<h3>The cost</h3>
+
+<div class="claim">
+<p>Speech recognition errs more on children's speech, more the younger the child, and fine-tuning has narrowed the gap without closing it. The amended COPPA Rule brings voiceprints into "personal information".</p>
+<span class="tag assumed">Assumed<span class="src">CV-11 and CV-08, awaiting the owner's check</span></span>
+</div>
+
+<p>The cost has moved. The Primer no longer asks the youngest to type well, but it mishears them most, so a question can stall, or pass triage as something it is not. The correction on screen and triage on the whole turn are the answer. OA-23 now reads "a typed or spoken conversation" and counts recognition errors in its cost; OA-55 and RP8 carry the risk, tested at PM3 and PM4.</p>
+
+<h3>What remains of D50</h3>
+
+<div class="claim">
+<p><b>Superseded for the Primer's voice on 31 October 2026 by D102;</b> its image half still governs the Primer, and D116 keeps a camera off the tablet. <b>Superseded for Foundation on 29 October 2026 by D90,</b> which puts a camera on the page and the hand; D97 keeps the microphone out.</p>
+<p>Neither the Primer nor Foundation collects a child's voice or image at launch. A child who dictates through their device's keyboard sends text, never audio; listening is a later, separately consented feature with no audio kept.</p>
+<span class="tag decided">Decision<span class="src">D50, 22 October 2026</span></span>
+</div>
+
+<p>The dictation route has gone with it: on the Primer's own tablet the keyboard is the Primer's, and any speech is taken under D102 and D116. Foundation is unchanged (<a href="f4-foundations-safety.html#camera">F4</a>). The demonstration differs: adult testers' speech is corrected before sending and its answers are read aloud only on request; D72's "waits on OI-17", written for adult testers, is overtaken for the product by D102, and the demonstration itself does not change (<a href="p2-primer-product.html#demo">P2</a>).</p>
+

@@ -67,17 +67,17 @@ PAGES = [
     ("tutor-mvp", "", "Tutor: MVP build guide",
      "The whole design for adult testers, built by agents on a harness: content, the self-tutor on open models, tools, costs and phases.", "first"),
     ("p1-primer-thesis", "P1", "Primer: thesis",
-     "What the Primer is, why an AI can do it for ages 8 to 13, and where the case is weak.", "first"),
+     "The Primer the owner's films show: the case from time, why an AI can do it for ages 8 to 13, and where the case is weak.", "first"),
     ("p2-primer-product", "P2", "Primer: product",
-     "The child, a session, the promises, and one why-question explored end to end.", "first"),
+     "The child and their tablet, the shape of an answer, the football question end to end, the parent's screen, and where the demonstration differs.", "first"),
     ("p3-primer-content", "P3", "Primer: content and evidence",
-     "The explanation bank, the inquiry packs, the modules, who reviews them, and the evidence.", "first"),
+     "The explanation bank with its figures and named people, drawn explainers, packs of three positions, the modules, and who reviews them.", "first"),
     ("p4-primer-safety", "P4", "Primer: safety, privacy and regulatory",
-     "Age bands, consent, the modules parents switch, what a parent sees, and escalation.", "first"),
+     "A child's voice ahead of counsel, summaries not records, a child's own future, named people, the tablet, and escalation.", "first"),
     ("p5-primer-architecture", "P5", "Primer: architecture",
-     "What it reuses from the Tutor's pipeline, the two new checks, and the module switch.", "first"),
+     "A turn from the talk key to the read-back: speech, drawn explainers, summaries, the tablet, the checks and the kill switch.", "first"),
     ("p6-primer-plan", "P6", "Primer: plan",
-     "Who pays, routes in the UK and the US, economics, milestones and risks.", "first"),
+     "Parents buying a tablet and the service, routes in the UK and the US, making the tablet, economics, milestones and risks.", "first"),
     ("primer-mvp", "", "Primer: MVP build guide",
      "A demonstration for adult testers, built in four or five days: what it does, its tools, safety, costs and the build.", "first"),
     ("f1-foundations-thesis", "F1", "Foundation: thesis",
@@ -111,7 +111,7 @@ GROUPS = [
       "05-safety-privacy-regulatory", "06-architecture", "07-route-a-direct-to-parents",
       "08-route-b-through-schools", "09-route-comparison", "10-economics", "11-roadmap",
       "12-risk-register", "13-primer-gateway", "tutor-mvp"]),
-    ("primer", "Primer", "Ages 8 to 13. A tutor for a child's why-questions, designed to ask what they think rather than tell them.",
+    ("primer", "Primer", "Ages 8 to 13. A tutor for a child's why-questions, on a tablet of its own, designed to ask what they think rather than tell them.",
      ["p1-primer-thesis", "p2-primer-product", "p3-primer-content", "p4-primer-safety",
       "p5-primer-architecture", "p6-primer-plan", "primer-mvp"]),
     ("foundations", "Foundation", "Ages 4 to 7. A classroom instrument that tells the teacher which child needs help, and with what.",
@@ -662,8 +662,9 @@ else here in that light.</p>
 </div>
 
 <h2 id="ideas">The three ideas</h2>
-<p>The Tutor has been through eight rounds of adversarial review. The Primer is a first draft,
-revised once after an independent review; Foundation is a first draft of its classroom design,
+<p>The Tutor has been through eight rounds of adversarial review. The Primer is a first draft of
+the design the owner's films show, rewritten to them on 31 October 2026 and revised once after an
+independent review; Foundation is a first draft of its classroom design,
 revised once after an independent review. Foundation does not go first, by the owner's order;
 between the other two, <a href="which-first.html">which goes first</a> is still open.</p>
 <div class="tw"><table>
@@ -678,8 +679,8 @@ tested this quarter for almost nothing, and either can flip the decision on its 
 <tbody>{cond_rows}</tbody></table></div>
 
 <h2 id="counsel">Questions for counsel</h2>
-<p>Deliberately unanswered. One, OI-3, we are proceeding ahead of under D34, and it says so
-where it is applied. Full text in <a href="14-open-items.html">14</a>.</p>
+<p>Deliberately unanswered. We are proceeding ahead of OI-3 under D34, of OI-23 to OI-27 under D59
+and, for the Primer, of OI-17 under D102, and each says so where it is applied. Full text in <a href="14-open-items.html">14</a>.</p>
 <div class="tw"><table>
 <thead><tr><th class="id">#</th><th>Question</th><th>Unblocks</th></tr></thead>
 <tbody>{oi_rows}</tbody></table></div>
@@ -882,7 +883,7 @@ def compute_counts():
     everything = "\n".join(read_source(p[0]) for p in PAGES if read_source(p[0]) is not None)
     tests = sorted(set(re.findall(r"\bT-[A-Z]+-\d+\b", everything)))
     openitems = read_source("14-open-items")
-    cheap = re.search(r"<b>(\w+) of the [\w-]+ assumptions are resolvable", openitems)
+    cheap = re.search(r"<b>([\w-]+) of the [\w-]+ assumptions are resolvable", openitems)
     return dict(
         documents=len(PAGES),
         decisions=len(entries),
