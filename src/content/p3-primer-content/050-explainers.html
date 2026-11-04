@@ -1,28 +1,33 @@
-<h2 id="explainers">Drawn explainers</h2>
+<h2 id="explainers">Explainer videos, generated live</h2>
+
+<p><b>While the Primer speaks its short answer, it writes the script for each explainer, each on one specific concept, checks the script, and has a video model generate the video from it; each video plays when its checks pass (D122).</b> The answer the child hears does not wait for a video, and the conversation goes on through the harder bit, the three positions, the child's real question and the evidence, to the child's own view, read back (D110).</p>
 
 <div class="claim">
 <p>Each answer is drawn as it is spoken: an explainer that builds on the screen in time with the voice. It is made in advance as part of a reviewed explanation, as D73 requires, and drawn by code from its reviewed specification, so that a child sees the same drawing every time and nothing is generated live by an image or video model.</p>
 <span class="tag decided">Decision D111<span class="src">from the films, confirmed by the owner, 31 October 2026</span></span>
 </div>
 
-<p>Every drawing is content, and its specification holds:</p>
+<p><b>D111 is superseded for the product on 4 November 2026 by D122 and D126:</b> explainers are videos generated live from a checked script; nothing is drawn by code from a reviewed specification. The product half of D73 goes with it (<a href="#bank">bank</a>).</p>
+
+<p>Every video is content, and is held to these rules (D126):</p>
 
 <ul class="tight">
-<li><b>Steps</b>, each keyed to a reviewed sentence of its entry or pack and drawn when the voice reaches that sentence, which is spoken word for word; a sentence the generator composes, a question or the read-back draws nothing. Each age version of an entry has its own steps.</li>
-<li><b>Only what the entry holds.</b> Every figure, name and label comes from its entry or pack, which a script checks before review, so a number the entry does not hold can no more be drawn than said.</li>
-<li><b>Columns drawn alike</b> on a contested pack, in an order the balance reviewer has checked.</li>
-<li><b>No likeness.</b> No photograph, crest or logo, and no likeness of a real person: a named person appears as a plain figure with a name, and whether even the name may be shown is part of OI-30.</li>
-<li><b>Its own provenance and live flag</b>, re-read at every turn (<a href="p5-primer-architecture.html#killswitch">P5</a>). An answer is served with its drawing or not at all, so pulling an explainer takes its answer out of service, and the child hears "not yet", until a corrected specification is reviewed.</li>
+<li><b>A checked script first.</b> Each script is written only from the concept, named in general terms, and the turn's retrieved sources, never from the turn's text. It is checked as any sentence is, for claim support against the turn's sources and for manner, before a frame is generated (<a href="#sources">sources</a>).</li>
+<li><b>Only what the script says.</b> The video model is given a visual brief with no words and no figures. Every word and figure on a video is laid over it on the tablet from the checked script, compared deterministically as on any turn; the video model's own audio is never played, and the voice-over is the Primer's own voice reading the script. T-PRM-11 compares the laid-over words and the voice-over text with the script, so a number no source holds can no more be shown than said.</li>
+<li><b>No real person and no child.</b> A named person, such as a thinker, appears only as a name in the words laid over a video. A living person never appears in a generated video, by name or by likeness (D127), and a turn that D127 holds to reviewed content shows no generated video, cached or new. Whether anything the Primer shows may carry a living person's name is part of OI-30.</li>
+<li><b>An image check before it plays.</b> Every frame passes an automatic check for a real person, a child, or anything unsuitable for the child's age range (T-PRM-15), and the image check blocks any frame in which the model has drawn text or numerals; the script itself has passed the suitability check for that range (<a href="p5-primer-architecture.html#checks">P5</a>). A video that fails is not shown, and the spoken answer stands.</li>
+<li><b>Labelled as made by AI</b>, on screen, and carrying provenance metadata.</li>
+<li><b>None of the child's words.</b> Before a video is generated or cached, the script's checks add a deterministic block on any name, place or uncommon phrase from the child's turns, and the read-back's block on any detail of family, friends, body or feelings. Scripts and videos hold none of the child's words, so a video may be cached by concept and reused; the kill switch reaches every cached copy (<a href="p5-primer-architecture.html#killswitch">P5</a>).</li>
 </ul>
 
-<p>An explainer designer writes the specification in the vocabulary the code can draw, and the reviewers of its entry or pack check it (<a href="#review">review</a>). At every release T-PRM-11 checks that what is drawn matches the specification, that every explained stage consists of placed reviewed sentences, that every reviewed sentence a turn places matches its entry word for word, and that the text sent to the voice is the text shown; the voice's output is checked by sampling, transcribed and compared with the text, when the voice is chosen at PM4 and at every voice update. How it is rendered is in <a href="p5-primer-architecture.html#explainers">P5</a>. Nothing goes live without its explainer.</p>
+<p>How a video is generated, checked and cached is in <a href="p5-primer-architecture.html#explainers">P5</a>, and what it may show is in <a href="p4-primer-safety.html#imagery">P4</a>.</p>
 
-<p><b>Two limits are real.</b> Code draws only what its vocabulary holds, D28's cost for the Tutor's figures (<a href="06-architecture.html#figures">06</a>): a picture outside it needs engineering first, and the football film's pictures (dots that thin out to show the odds, three columns, a staircase, a grid of players, a stack) are its first test. And a drawing exists only for a question a module anticipated: the film's drawings follow the child's own question, and a drawing built from a child's own words cannot be made in advance, so the product never draws one.</p>
+<p><b>Two limits are real.</b> No person sees most videos before a child does (D122). The image check is a classifier with a residual error rate, <span class="mark unknown">Unknown</span>, so people review a sample afterwards, cached videos first, since one shown to many children multiplies any error, and every video a child or parent reports (D128; <a href="#review">review</a>); RP10 carries the risk that a video shows a child something false or unsuitable. And the cost and speed of generating video are <span class="mark unknown">Unknown</span>: a video that arrives after the conversation has moved on explains nothing, and T-PRM-14 times the spoken answer against its threshold but only observes the time to the first video.</p>
 
 <div class="claim">
-<p>That a drawn explainer can be specified and reviewed at the rate the catalogue needs.</p>
-<span class="tag assumed">Assumed<span class="src">OA-59, measured at PM2</span></span>
+<p>That explainer videos can be generated fast enough for a conversation in real time, at a cost families will pay for, and that the automatic checks catch what is wrong or unsuitable for children of 8 to 13.</p>
+<span class="tag assumed">Assumed<span class="src">OA-62, measured at PM4 with T-PRM-14 and T-PRM-15</span></span>
 </div>
 
-<p>The demonstration generates an eight-second clip live for each of its three building blocks, unchecked (D74, D76). Those rules are its alone: the product's explainers show words, numbers and people, under the rules above (<a href="p2-primer-product.html#demo">P2</a>).</p>
+<p>The demonstration generates an eight-second clip live for each of its three building blocks, unchecked (D74, D76). The product generates its videos live too, but from a checked script, checks each before it plays, labels it as made by AI and shows no real person (<a href="p2-primer-product.html#demo">P2</a>).</p>
 

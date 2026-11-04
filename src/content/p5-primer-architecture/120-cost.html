@@ -1,27 +1,32 @@
 <h2 id="cost">Cost per session</h2>
 
 <div class="claim">
-<p>Cost per session is not known and is not estimated here. It depends on how many turns a session has, which is not known: one question is a design target of three to six minutes (D112), "Keep going" extends it within the time cap set from PM3's pilot (D103), and the pace sets how many turns fit. It depends on the calls each turn makes, which for the Primer are recognition when the child speaks, triage, matching, the generator, up to seven verifier checks and the voice. And it depends on the review at the close.</p>
+<p>Cost per session is not known and is not estimated here. It depends on how many turns a session has, which is not known: one question is a design target of three to six minutes (D112), "Keep going" extends it within the time cap set from PM3's pilot (D103), and the pace sets how many turns fit. It depends on the calls each turn makes, which for the Primer are recognition when the child speaks, triage, retrieval, the generator, up to eight verifier checks, the selection model and the voice. It depends on the explainers: for each, a script and its checks, video generation and the image check, unless a cached video serves. And it depends on the review at the close.</p>
 <span class="tag unknown">Unknown<span class="src">measured at PM4, not estimated</span></span>
 </div>
 
 <pre><code>cost_per_session
-  = turns x [ recognise(spoken_length)     // spoken turns only (D102, ahead of OI-17)
-            + triage + match               // classifier calls
+  = turns x [ recognise(spoken_length)     // spoken turns only (D102, D123)
+            + triage + retrieve            // classifier calls; the allow-list search
             + generate(ctx_tokens, out)    // pinned generator
-            + verify(checks)               // up to seven, a to g
+            + verify(checks)               // up to eight, a to h
+            + select                       // the selection model (D124)
             + speak(spoken_length) ]       // the voice; D30 does not bound it
+  + explainers x [ script + verify(checks) // written and checked like a turn
+                 + video                   // generated live, unless cached (D122)
+                 + image_check             // every video, before it plays (D126)
+                 + speak(voice_over) ]     // the video's voice-over
   + review                                 // once, at the close (D107)
-  + explainers x draw                      // ~0, drawn on the tablet (D28, D111)
   + storage                                // the summaries, the per-turn log, the queues,
-                                           // the flagged hold, the safeguarding count and
-                                           // the escalation records; no turn of the child's,
-                                           // whole or in part, after the close outside the
-                                           // read-back, except a flagged exchange until
-                                           // its review closes (D104, D107)
+                                           // the flagged hold, the safeguarding count,
+                                           // the escalation records and the video cache;
+                                           // no turn of the child's, whole or in part,
+                                           // after the close outside the read-back and
+                                           // the kept question, except a flagged
+                                           // exchange until its review closes (D104, D107)
 
 where, per turn:
-  ctx_tokens = system_fixed + wording_card + entries + summaries
+  ctx_tokens = system_fixed + wording_card + sources + summaries
              + child_words                 // this conversation, whole, until the close
              + window                      // the Primer's earlier turns, summarised (D30)</code></pre>
 
@@ -32,13 +37,15 @@ where, per turn:
 <thead><tr><th>Term</th><th>Status</th><th>How it gets filled in</th></tr></thead>
 <tbody>
 <tr><td><code>turns</code> per session</td><td><span class="mark unknown">Unknown</span></td><td>PM3's pilot sets the cap; PM4 measures turns on the built Primer.</td></tr>
-<tr><td><code>recognise()</code>, <code>speak()</code></td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>PM4, when the recogniser and the voice are chosen. Both grow with how much is spoken, which D30 does not bound.</td></tr>
-<tr><td><code>triage</code>, <code>match</code>, <code>generate()</code>, <code>verify()</code></td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>PM4, on the Primer's battery.</td></tr>
-<tr><td>Gate-fire rate, which adds wasted generations</td><td><span class="mark unknown">Unknown</span></td><td>The first battery run.</td></tr>
-<tr><td><code>draw</code></td><td><b>Approximately zero</b> by construction (D28, D111).</td><td>Settled by the architecture. Writing and reviewing the specifications is a content cost (OA-59).</td></tr>
+<tr><td><code>recognise()</code>, <code>speak()</code></td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>PM4, when the recogniser and the voice are chosen. Both grow with how much is spoken, which D30 does not bound, and about three in four questions are expected to be spoken (D123), <span class="mark assumed">Assumed</span> (OA-61).</td></tr>
+<tr><td><code>triage</code>, <code>retrieve</code>, <code>generate()</code>, <code>verify()</code></td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>PM4, on the Primer's battery.</td></tr>
+<tr><td><code>select</code></td><td><span class="mark unknown">Unknown</span></td><td>PM4, when the selection model is chosen.</td></tr>
+<tr><td><code>explainers</code> per session, and the share a cached video serves</td><td><span class="mark unknown">Unknown</span></td><td>PM4 measures both on the built Primer.</td></tr>
+<tr><td><code>video</code>, <code>image_check</code></td><td><span class="mark unknown">Unknown</span>, vendor-controlled</td><td>PM4, when the video model is chosen. The cost and speed of video generation are not known, and whether they suit a conversation in real time at a price families will pay is OA-62.</td></tr>
+<tr><td>Gate-fire rate, which adds wasted generations</td><td><span class="mark unknown">Unknown</span></td><td>The first battery run. A video that fails its checks is wasted too.</td></tr>
 <tr><td>The tablet</td><td>Outside cost per session.</td><td><a href="p6-primer-plan.html#hardware">P6</a>: making, shipping, supporting and certifying it.</td></tr>
 </tbody>
 </table>
 </div>
 
-<p>The figure is measured the way 06 measures the Tutor's: on a frozen battery, with the chosen models, at the milestone where there is something to run (<a href="06-architecture.html#cost">06</a>, <a href="10-economics.html#cost">10</a>). Two things are already clear without a number: each Primer turn makes more calls than a Tutor turn, and speech adds a cost that grows with how much is said, while drawing costs almost nothing. Neither tells you which idea costs more per session.</p>
+<p>The figure is measured the way 06 measures the Tutor's: on a frozen battery, with the chosen models, at the milestone where there is something to run (<a href="06-architecture.html#cost">06</a>, <a href="10-economics.html#cost">10</a>). Two things are already clear without a number: each Primer turn makes more calls than a Tutor turn, and speech and live video each add a cost that grows with use, video's with every explainer a cached copy does not serve. Neither tells you which idea costs more per session.</p>

@@ -319,8 +319,8 @@ which a hyphenated number defeats, so the pattern becomes `<b>([\w-]+) of the`.
   release's battery, the fixed lines included; blocking.
 - **T-PRM-10.** Nothing kept word for word: after a conversation closes, no audio, no
   video and no turn of the child's, whole or in part, remains anywhere, backups included,
-  outside the read-back the child accepted, except a flagged exchange awaiting its review,
-  which is deleted when the review closes. The read-back is the Primer's sentence and may
+  outside the read-back the child accepted and the kept question (C13), except a flagged
+  exchange awaiting its review, which is deleted when the review closes. The read-back is the Primer's sentence and may
   repeat a short phrase of the child's where it states their position, never more, and a
   deterministic check blocks any run of the child's words longer than a short phrase. No kept summary holds any detail of the child's family, friends, body or
   feelings. A storage and network audit, with each vendor's confirmation under D24, that
@@ -543,3 +543,250 @@ The product pages say plainly where the demonstration differs from the films:
 8. The independent review's resolutions refine this brief where the pages had to say more
    than it did, and they hold with it. Each is applied on the pages and listed, one line
    apiece, in the appendix to `PRIMER_VISION_REPORT.md`.
+
+## 12. The owner's decisions of 4 November 2026
+
+Before merging, the owner settled the questions the review had left open. Where this
+section and an earlier one disagree, this section holds. The owner's decisions are
+D118 to D124, in the owner's words; D125 to D129 were taken while writing, to apply
+them, and are the owner's to keep or reverse. Nothing here changes the demonstration
+(section 10): its files stay byte for byte as they are.
+
+### The owner's decisions
+
+- **D118. Counsel's go-ahead.** "I have spoken to counsel and they have given the go
+  ahead." The owner confirmed its scope: a child may speak to the Primer, and children's
+  speech may be recorded, with consent, for testing, in the UK and the US.
+  - Applied as: OI-17 is answered for the Primer, in both markets, as the owner reports;
+    it stays open for Foundation should a microphone ever be added. OI-13 is answered as
+    it bears on the test recordings, and stays open for the rest of the consent flow and
+    for every hold that "goes to counsel with OI-13 and OI-14". D102 no longer goes ahead
+    of counsel, and its "withdrawn only on a categoric no" lapses. The vault holds no copy
+    of counsel's advice: it records the owner's report.
+- **D119. When children are recorded.** "We don't need to record kids for testing for the
+  MVP, we can do that later before full launch."
+  - Applied as: no child is recorded for the MVP demonstration, which adults use (D70).
+    The test recordings are made later, before any child speaks to the built Primer,
+    which in the plan is before PM4's supervised pilot switches speech on, and so before
+    launch.
+- **D120. The count and a new setup.** "Since the tablet will be dedicated to Primer, we
+  don't need to worry about it getting set up again."
+  - Applied as: the safeguarding count is not linked across setups or accounts. A tablet
+    set up again starts a new count, a limit the owner accepts because the tablet is the
+    Primer's alone; P4 keeps it among the named gaps.
+- **D121. A notice to parents.** "We should keep flagged questions for parents." The
+  owner chose: the parent's record shows that a question was flagged and is being
+  handled; the trained reviewer decides whether to tell the parent more, and tells a
+  parent who may be the risk nothing.
+  - Applied as canonical text C5 below. D26 stands: nothing is reported to a parent
+    automatically. D107 stands: the words are deleted when the review closes.
+- **D122. Instant answers and live explainer videos.** "The primer will fire an 'instant'
+  response addressing the question at a high level whilst generating the explainer videos
+  which will be explaining specific concepts and that continues as we nudge the child to
+  think independently and come up with their own views whilst understanding the facts and
+  figures as well as both sides of the argument." The owner chose: the videos are
+  generated live, while the child waits, for any question, with automatic checks only.
+  - Applied as canonical texts C6 to C9 and C12. It supersedes D111 for the product, D73's
+    product half (a video "never generated live for a child"), and D44 for the Primer in
+    part. D73 sits in the frozen demonstration's ledger file, so its supersession is
+    recorded in D122's entry, not as a note on D73.
+  - "Both sides of the argument" is read as the positions of D110, which keeps three.
+- **D123. Mostly spoken.** "The rough cut is that primer will actually be 75% speech
+  input rather than kids typing out their questions."
+  - Applied as: speech is the main way in, and typing is always there. That about three in
+    four questions are spoken is the owner's expectation, Assumed (OA-61), measured at PM3
+    and PM4. The rough cut shows a child typing; the pages say so and give the owner's
+    expectation beside it.
+- **D124. What is spoken and what is shown.** "The details of the content would actually
+  be generated prior to the videos so they can just be leveraged as opposed to captions.
+  We would need to train a model on how to select what is spoken and what is shown as
+  text on the primer tablet."
+  - Applied as canonical text C11. It supersedes in part D109's text "arriving whole" on a
+    card, and T-PRM-11's equality of the text spoken and the text shown.
+
+### Taken while writing, the owner's to keep or reverse
+
+- **D125. Live answers are grounded.** Canonical text C12. Why: the films' "Based on:"
+  line (D109) stays true only if every fact has a source the child can see.
+- **D126. What a generated video may show.** Canonical text C8. Why: a child of 8 to 13
+  cannot tell a generated picture from a real one, and the generator can invent; Ofcom's
+  concern with virtual clones of real people (D9) applies to pictures too.
+- **D127. Some content is never generated live.** Canonical text C9. Why: a wrong
+  sentence about a living person is a different harm (OI-30), and the sensitive modules
+  are where D46 and D57 put their caution.
+- **D128. People look afterwards.** Canonical text C7, second sentence. Why: automatic
+  checks have residual errors no one would otherwise find; this is assurance, not a gate
+  before the child sees anything.
+- **D129. Speech agreed at setup.** Canonical text C10. It replaces the earlier design
+  call that speech stays off until the adult switches it on, since the owner expects most
+  questions to be spoken.
+
+### Canonical texts
+
+Use these positions everywhere, adapted only for grammar; a page may say less, never
+something different.
+
+- **C1 (counsel).** Counsel has cleared a child speaking to the Primer, and the recording
+  of children's speech with consent for testing, in the UK and the US, as the owner
+  reported on 4 November 2026 (D118).
+- **C2 (recordings).** No child is recorded for the MVP demonstration, which adults use.
+  The test recordings are made, with consent, under their own research protocol and DPIA,
+  before any child speaks to the built Primer, and so before launch (D119). Everything
+  round 5 settled about them stands: they are the one exception to recording nothing of a
+  child, never written to backups, and anything a child says of their own is cut out.
+- **C3 (the speech gate).** No child speaks to the Primer until T-PRM-06's spoken battery
+  has passed on the test recordings, and speech is first switched on for children in a
+  supervised pilot, PM4's or one held to its conditions.
+- **C4 (the count).** The safeguarding count is not linked across setups; a tablet set up
+  again starts a new count, a limit the owner accepts because the tablet is the Primer's
+  alone (D120).
+- **C5 (the notice).** Once the trained reviewer has judged it safe to tell this parent,
+  the parent's record shows a notice: a question was flagged for safety and a trained
+  reviewer is handling it. The notice holds no words, no subject and no reply. Until
+  then, and wherever the reviewer judges the parent may be the risk, nothing of the
+  exchange appears, not even the notice. The reviewer decides, against the written
+  policy, whether to tell the parent more (D26, D121). The words are held only for the
+  reviewer and deleted when the review closes (D107).
+- **C6 (the answer).** The Primer speaks a short answer at once, at a high level, from
+  sources it retrieves for the question (C12), checked automatically before it is spoken.
+  While it speaks, it writes the script for each explainer, each on one specific concept,
+  checks the script, and has a video model generate the video from it; each video plays
+  when its checks pass. The conversation goes on through the harder bit, three positions,
+  the child's real question and the evidence, to the child's own view, read back
+  (D110, D122).
+- **C7 (who checks).** Nothing reaches a child that has not passed the automatic checks,
+  but most of it is never seen by a person first (D122). People review a sample of
+  generated scripts and videos after the fact, and every one a child or parent reports
+  (D128).
+- **C8 (generated video).** Every generated video is labelled on screen as made by AI and
+  carries provenance metadata; it shows no real person and no child; its voice-over and
+  on-screen words come from its checked script; its frames pass an automatic image check
+  before it plays; a video that fails is not shown, and the spoken answer stands (D126).
+  Scripts and videos hold none of the child's words. A video may be cached by concept and
+  reused, and the kill switch reaches every cached copy.
+- **C9 (reviewed only).** Facts and stories about named living people, and every
+  sensitive module, come only from reviewed entries and packs, never from live
+  generation (D127).
+- **C10 (speech at setup).** The verified adult agrees to speech when they set the tablet
+  up, and it is on from the start once the spoken safety test has passed and the first
+  supervised pilot has run; typing is always there, and the adult can turn speech off
+  (D129). The owner expects about three in four questions to be spoken (D123),
+  Assumed (OA-61).
+- **C11 (spoken and shown).** The Primer writes its content first; the voice, the video
+  and the words on the screen are all drawn from it, so no captions are needed. A
+  selection model, trained for the purpose, chooses for each checked sentence whether it
+  is spoken, shown or both; it writes nothing, and the whole text is a tap away. Figures
+  and the "Based on:" line are always shown. A safety reply is shown and never spoken
+  (D115, D124).
+- **C12 (grounding).** Every factual sentence cites a source the Primer retrieved for the
+  turn from a reviewed allow-list of reference sources, or a reviewed entry where one
+  exists, and is entailed by it; the "Based on:" line is built from those sources; a
+  sentence no source supports is cut, and a turn left with nothing to say gets "not yet"
+  (D125). A reviewed entry is used first wherever it exists.
+- **C13 (the question kept).** A summary keeps the question as the catalogue question
+  where a reviewed entry answers it; otherwise as the Primer's own rewrite of it in
+  general terms, held to the read-back's checks: no run of the child's words longer than
+  a short phrase, and no detail of their family, friends, body or feelings (D104, D117).
+- **C14 (the test recordings).** They are made, with consent, in sessions of their own
+  held to the conditions for any child in a Primer session; licensing a corpus instead is
+  no longer offered. They are kept apart from every account and never written to backups,
+  and anything a child says of their own is cut out (C2).
+
+### Canonical texts added by the first review
+
+The first review of this section's changes added these positions; the report's appendix
+lists every resolution, X1 to X32.
+
+- **C15 (suitability).** A blocking suitability check runs on every generated sentence and
+  script against the child's range of the Children's code, 8 and 9, 10 to 12, or 13; each
+  allow-listed source is reviewed for the ranges it suits, and the composer retrieves only
+  sources reviewed for the child's range.
+- **C16 (pending generation).** A stop, a safety reply, a decline or the close cancels every
+  script and video still pending, and a flag pulls every script and video of the flagged
+  exchange from the cache and sends them to the sample review.
+- **C17 (scripts).** A script is written only from the concept, named in general terms, and
+  the turn's retrieved sources, never from the turn's text, and its checks block any name,
+  place or uncommon phrase from the child's turns.
+- **C18 (words on a video).** The video model is given a visual brief with no words and no
+  figures; every word and figure is laid over the video on the tablet from the checked
+  script; the voice-over is the Primer's own voice; the image check blocks drawn text or
+  numerals, and any photorealistic face, since people are drawn only as plain figures.
+- **C19 (where no video plays).** A turn D127 holds to reviewed content shows no generated
+  video, cached or new; the cache is keyed by module and sensitivity as well as concept,
+  band and market; a cached video records which checks its script passed, and is served
+  into a contested or own-future conversation only if it passed them there.
+- **C20 (own-future videos).** In a conversation about a choice in the child's own future, a
+  video uses the diagram style only, charts and shapes, no people, scenes or faces, and
+  T-PRM-06 (b)'s raters score it.
+- **C21 (reporting).** Beside every generated video, a one-tap, wordless report that records
+  only the video's identifier and the time; a parent reports against a conversation; a
+  reported video leaves every cache until a reviewer has looked at it.
+- **C22 (training).** The selection model learns from the facilitators' choices in PM3's
+  sessions, which PM3's protocol and consent cover; no model is trained on anything a
+  child said, or on a child's voice.
+
+### What lapses
+
+- The drawn explainers built by code from reviewed specifications (D111), their
+  vocabulary, the drawing keyed to reviewed sentences (S19, T15, U10), and the timing of
+  PM2's hand-made drawings (R18): explainers are generated videos now.
+- The "not yet" that waited for reviewed content, the writing queue's role as the only
+  way a question gets answered, and RP5's drawing bottleneck: "not yet" now comes only
+  when no source supports an answer or a check fails.
+- Speech going ahead of counsel (D102's exception), the speech that "waits on counsel",
+  and the two routes the report offered to speech sooner.
+- The design call that speech stays off until the adult switches it on.
+
+### What stands
+
+D44's spirit stands where it can: a fact still has a source the child can see, and
+reviewed content is used first. D47, D104, D106, D107, D108, D110, D113 for living
+people, D115, D116 and D117 stand unchanged. The fence (section 6), triage on every turn,
+the review at the close, the safeguarding count, the flagged hold, the read-back and its
+checks all stand.
+
+### Register entries
+
+- **OI-17.** Answered for the Primer, in the UK and the US, as the owner reported on
+  4 November 2026 (D118): a child may speak to the Primer as D102 designs it. Open for
+  Foundation should a microphone ever be added.
+- **OI-13.** Answered as it bears on the test recordings (D118). Open for the Primer's
+  consent flow and for the holds that outlast a deletion request.
+- **OA-32**, redefined: that the reviewed allow-list and the reviewed content can support
+  an answer to most questions a child asks, so that "not yet" is rare.
+- **OA-58**, redefined: that three positions, each at its strongest, can be generated and
+  attributed correctly for most questions, and written and reviewed for the sensitive
+  modules.
+- **OA-59**, withdrawn: explainers are generated live (D122).
+- **OA-61**, new: that about three in four questions are spoken (D123). The owner's view;
+  PM3 and PM4 measure it.
+- **OA-62**, new: that explainer videos can be generated fast enough for a conversation in
+  real time, at a cost families will pay for, and that the automatic checks catch what is
+  wrong or unsuitable for children of 8 to 13. Measured at PM4 with T-PRM-14 and T-PRM-15.
+- **OA-63**, new: that children understand an answer split between what is spoken and
+  what is shown as well as one shown whole (D124). Measured at PM4.
+- **Tests.** T-PRM-01 (claim support against the turn's retrieved sources or a reviewed
+  entry), T-PRM-02 (attribution likewise), T-PRM-05 (the module switch reaches generated
+  content through topic classification, a weaker hold than an entry filter), T-PRM-08
+  (the notice: none before the reviewer's judgement, none where the parent may be the
+  risk, never words, subject or reply), T-PRM-11 (everything spoken or shown is checked
+  content, the selector adds nothing, the whole text is a tap away, and each video's
+  voice-over and words match its checked script) and T-PRM-14 (the time to the spoken
+  answer; the time to the first video is observed, Unknown) are redefined. **T-PRM-15**,
+  new: generated imagery. No generated frame shows a real person or a child, violence,
+  sexual content or anything unsuitable for 8 to 13, and every video carries its AI
+  label; an automatic check on every video, and a red-team battery on every release of a
+  model or a prompt; any failure in the battery blocks the release. A gate, not a
+  guarantee.
+- **Risks.** RP5 restated: reviewers of the sensitive modules, the allow-list and the
+  sample become the bottleneck. RP8 restated: a child's voice is misheard (OA-55); its
+  counsel half lapses. **RP10**, new: a live answer or video tells or shows a child
+  something false or unsuitable (OA-62); mitigations C7, C8, C12 and the kill switch; the
+  weakness is plain: no person sees it first.
+- **No new candidate claims.** The cost and speed of video generation are Unknown.
+- **New section:** P4 #imagery, "What a generated video may show", holding D126 and
+  T-PRM-15's purpose.
+- **Owner documents** (the last link of each entry): D118 P4 #voice; D119 P6 #milestones;
+  D120 P4 #escalation; D121 P4 #parent; D122 P5 #explainers; D123 P2 #session; D124 P2
+  #screen; D125 P3 #sources; D126 P4 #imagery; D127 P4 #people; D128 P3 #review; D129 P4
+  #voice.

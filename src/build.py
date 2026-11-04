@@ -71,11 +71,11 @@ PAGES = [
     ("p2-primer-product", "P2", "Primer: product",
      "The child and their tablet, the shape of an answer, the football question end to end, the parent's screen, and where the demonstration differs.", "first"),
     ("p3-primer-content", "P3", "Primer: content and evidence",
-     "The explanation bank with its figures and named people, drawn explainers, packs of three positions, the modules, and who reviews them.", "first"),
+     "The sources answers are drawn from, the reviewed bank with its figures and named people, explainer videos, packs of three positions, the modules, and who reviews them.", "first"),
     ("p4-primer-safety", "P4", "Primer: safety, privacy and regulatory",
-     "A child's voice ahead of counsel, summaries not records, a child's own future, named people, the tablet, and escalation.", "first"),
+     "A child's voice, cleared by counsel, summaries not records, a child's own future, named people, what a generated video may show, the tablet, and escalation.", "first"),
     ("p5-primer-architecture", "P5", "Primer: architecture",
-     "A turn from the talk key to the read-back: speech, drawn explainers, summaries, the tablet, the checks and the kill switch.", "first"),
+     "A turn from the talk key to the read-back: speech, the instant answer, live explainer videos, summaries, the tablet, the checks and the kill switch.", "first"),
     ("p6-primer-plan", "P6", "Primer: plan",
      "Parents buying a tablet and the service, routes in the UK and the US, making the tablet, economics, milestones and risks.", "first"),
     ("primer-mvp", "", "Primer: MVP build guide",
@@ -602,7 +602,7 @@ def build_status(built, counts):
     stats = "".join([
         card(len(PAGES), "documents", "drafted, none built"),
         card(len(tests), "tests specified", "<b>none run</b>"),
-        card(len(oi), "questions for counsel", "none answered"),
+        card(len(oi), "questions for counsel", "one answered, for the Primer"),
         card(len(oa), "assumptions", f"{cheap_n} answerable by reading or asking"),
         card(len(decisions), "decisions", "each with what it forecloses"),
         card(len(risks), "Tutor risks", "in the owner's ranking; the new ideas' follow"),
@@ -679,8 +679,7 @@ tested this quarter for almost nothing, and either can flip the decision on its 
 <tbody>{cond_rows}</tbody></table></div>
 
 <h2 id="counsel">Questions for counsel</h2>
-<p>Deliberately unanswered. We are proceeding ahead of OI-3 under D34, of OI-23 to OI-27 under D59
-and, for the Primer, of OI-17 under D102, and each says so where it is applied. Full text in <a href="14-open-items.html">14</a>.</p>
+<p>Deliberately unanswered, except OI-17 for the Primer and OI-13 in part, which the owner reported counsel had answered on 4 November 2026 (D118). We are proceeding ahead of OI-3 under D34 and of OI-23 to OI-27 under D59, and each says so where it is applied. Full text in <a href="14-open-items.html">14</a>.</p>
 <div class="tw"><table>
 <thead><tr><th class="id">#</th><th>Question</th><th>Unblocks</th></tr></thead>
 <tbody>{oi_rows}</tbody></table></div>
@@ -1052,7 +1051,7 @@ def render_summary(built, counts, cfg, blocks, entries, owners, path_words):
         card("decisions", "decisions",
              f'<span data-count="settled">{counts["settled"]}</span> settled, '
              f'<span data-count="taken">{counts["taken"]}</span> taken'),
-        card("counsel", "counsel questions", "open, none answered"),
+        card("counsel", "counsel questions", "one answered, for the Primer"),
         card("assumptions", "assumptions", "unverified"),
         card("claims", "external claims", "registered, source and date checked"),
         card("tests", "tests specified", "<b>none run</b>"),
@@ -1167,7 +1166,7 @@ def render_front(built, counts, cfg, blocks):
         card("documents", "documents", "across the three ideas"),
         card("tests", "tests specified", "<b>none run</b>, because nothing is built"),
         card("decisions", "decisions", "each with what it rules out"),
-        card("counsel", "questions for a lawyer", "open, none answered"),
+        card("counsel", "questions for a lawyer", "one answered, for the Primer"),
         card("assumptions", "assumptions", "reasoned, not yet checked"),
         card("claims", "external claims", f'checked, with <span data-count="candidates">{counts["candidates"]}</span> more awaiting a check'),
     ]) + "</div>"
@@ -1201,6 +1200,24 @@ def render_front(built, counts, cfg, blocks):
     )
 
 
+# D73 sits in the demonstration's frozen ledger section, so its supersession is
+# recorded in D122's entry rather than as a note on D73 itself.
+SUPERSEDED_ELSEWHERE = {"D73": "its product half superseded by D122"}
+
+
+def _ledger_status(entry):
+    """A short flag for an owner view: a ledger entry whose text opens with a note
+    has been superseded or changed since; the note itself is in the ledger."""
+    rest = entry["rest"].lstrip()
+    if entry["id"] in SUPERSEDED_ELSEWHERE:
+        return f' <span>({SUPERSEDED_ELSEWHERE[entry["id"]]})</span>'
+    if rest.startswith("<b>Superseded"):
+        return " <span>(superseded in whole or part; see its note)</span>"
+    if rest.startswith("<b>Since") or rest.startswith("<b>As for"):
+        return " <span>(changed since; see its note)</span>"
+    return ""
+
+
 def render_role(role, built, cfg, blocks, entries, owners, graph):
     rid, to = role["id"], ROLES_DIR
     tpl = (TEMPLATES / "role.html").read_text(encoding="utf-8")
@@ -1208,7 +1225,8 @@ def render_role(role, built, cfg, blocks, entries, owners, graph):
     own_lines = path_lines(owned, to)
     own_docs = _ul(("", f"{link} <span>{words:,} words</span>") for link, words in own_lines)
     mine = [e for e in entries if owners[e["id"]] == rid]
-    own_dec = _ul(("", f'<a href="../decision-ledger.html#{e["section"]}">{e["id"]}</a> ' + _plain(e["text"]))
+    own_dec = _ul(("", f'<a href="../decision-ledger.html#{e["section"]}">{e["id"]}</a> ' + _plain(e["text"])
+                   + _ledger_status(e))
                   for e in mine)
     nodes = [n for n in graph["nodes"] if node_owner(n) == rid]
     item_ids = set()

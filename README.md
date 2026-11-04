@@ -12,14 +12,15 @@ amended by the owner on 22 October 2026; D51 for the other two).
   can see. The most developed of the three.
 - **The Primer** (ages 8 to 13). A tutor for a child's why-questions, on a
   tablet of its own, as the owner's three films show it. A child asks aloud or
-  by typing, and the Primer answers aloud while a drawing builds on the screen:
+  by typing, and the Primer answers aloud at once while explainer videos are made:
   a checked fact with its source, then the harder question underneath, set out
   as three positions from named traditions, until the child states a view of
   their own. It may reason with a child about a choice in their own future,
   setting out the reality and what the schools of thought say, and neither
   encourages nor discourages. Its subjects come in modules the company writes;
-  parents switch them on and off. Spoken questions go ahead of counsel's
-  answer on OI-17 (D102).
+  parents switch them on and off. Counsel has cleared its spoken questions, as
+  the owner reports (D118), and its explainer videos are generated live, with
+  automatic checks (D122).
 - **Foundation** (ages 4 to 7). A classroom instrument for the teacher: a small
   camera over each desk watches the page and the hand, never the face, and the
   teacher's screen says which child needs help and what to try. The child is
@@ -57,10 +58,10 @@ became its design.
 |---|---|
 | Documents | 32 across the three ideas, the registers included, plus an evidence register |
 | Built | Nothing |
-| Tests specified | **39**, none run. There is nothing to run them against |
-| Counsel questions | **32** open, none answered. We proceed ahead of OI-3 under D34, of OI-23 to OI-27 under D59 and, for the Primer's spoken questions, of OI-17 under D102, and each says so where it is applied |
-| Assumptions unverified | **56**, of which 22 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **117**, including three, taken on the owner's instruction, that reverse two earlier positions; D1 and D9, since amended by the owner; six superseded for Foundation alone when the owner redesigned it; and three superseded in part for the Primer when the owner's films became its design |
+| Tests specified | **40**, none run. There is nothing to run them against |
+| Counsel questions | **32**, one answered for the Primer: OI-17, with OI-13 in part, as the owner reported counsel's advice (D118). We proceed ahead of OI-3 under D34 and of OI-23 to OI-27 under D59, and each says so where it is applied |
+| Assumptions unverified | **58**, of which 22 are resolvable by reading or by asking rather than by building |
+| Decisions recorded | **129**, including three, taken on the owner's instruction, that reverse two earlier positions; D1 and D9, since amended by the owner; six superseded for Foundation alone when the owner redesigned it; three superseded in part for the Primer when the owner's films became its design; and D111 and parts of D44, D48 and D109, superseded for the Primer by the owner's decisions of 4 November 2026 |
 | External claims registered | **42**, each with source and date checked, plus **40** candidates awaiting the owner's check |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at
@@ -117,14 +118,16 @@ Three rules follow, and they are the ones a contributor most easily breaks:
 1. **No invented figures.** Every number is from the evidence register, a stated
    design choice, or marked Unknown. There is no fourth kind.
 2. **A claim not in the evidence register may not carry a Verified marker.**
-3. **Counsel questions stay open.** There are three exceptions. OI-3, board naming,
+3. **Counsel questions stay open** until the owner reports counsel's answer, which
+   the ledger records: on 4 November 2026 the owner reported counsel's answer to
+   OI-17 for the Primer, and to OI-13 as it bears on test recordings (D118).
+   There are two exceptions. OI-3, board naming,
    where waiting would mean a product that cannot describe itself, is argued in
    [`docs/04-rights-dossier.html`](docs/04-rights-dossier.html) and recorded as
    decision D34. The self-tutor proceeds ahead of OI-23 to OI-27 and is withdrawn
    only if counsel's answer is a categoric no, recorded as decision D59. The
-   Primer takes a child's spoken questions ahead of OI-17, on whether a child's
-   voice is biometric data, and withdraws them only if counsel's answer is a
-   categoric no, recorded as decision D102. None is slipped in.
+   Primer took a child's spoken questions ahead of OI-17 under D102 until counsel
+   answered it. None is slipped in.
 
 A claim found by research but not yet checked by the owner is registered as a
 **candidate** (CV-01 onwards) in its own section of the evidence register, with its

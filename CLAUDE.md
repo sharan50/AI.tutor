@@ -15,7 +15,7 @@ Nothing described here has been built, and no test described here has been run.
 - `PRIMER_MVP_BRIEF.md` and `PRIMER_MVP_REPORT.md`: the brief for the Primer's MVP build guide, a demonstration for adult testers (D70 to D79, OA-41 onwards, CV-16 onwards), and what it changed.
 - `TUTOR_MVP_BRIEF.md` and `TUTOR_MVP_REPORT.md`: the brief for the Tutor's MVP build guide, the whole design for adult testers built by an agent team (D80 to D88, OA-45 onwards, CV-24 onwards), and what it changed.
 - `FOUNDATION_CLASSROOM_BRIEF.md` and `FOUNDATION_CLASSROOM_REPORT.md`: the brief for Foundation's classroom design and its film (D89 to D100, OI-28 and OI-29, OA-48 to OA-52, T-FND-06), and what it changed.
-- `PRIMER_VISION_BRIEF.md` and `PRIMER_VISION_REPORT.md`: the brief for the Primer as the owner's three films show it, a tablet of its own that a child speaks or types to (D101 to D117, OI-30 to OI-32, OA-53 to OA-60, T-PRM-09 to T-PRM-14, CV-31 to CV-40), and what it changed.
+- `PRIMER_VISION_BRIEF.md` and `PRIMER_VISION_REPORT.md`: the brief for the Primer as the owner's three films show it, a tablet of its own that a child speaks or types to (D101 to D117, OI-30 to OI-32, OA-53 to OA-60, T-PRM-09 to T-PRM-14, CV-31 to CV-40), with the owner's decisions of 4 November 2026 in its section 12 (D118 to D129, OA-61 to OA-63, T-PRM-15), and what it changed.
 - `roles.json`: the five owners, what each owns and reads, the ledger overrides, the Tutor summary's picks (`summary`), and the front page's ideas, briefs and films (`front`).
 - `README.md`: what the repository is, its status, how to read and edit it.
 - `CLAUDE.md`: this file.
@@ -64,8 +64,8 @@ A fragment over 3,000 words of prose, counted with tags stripped, is split at it
 Cut at line boundaries. Concatenating the directory in filename order must reproduce the page byte for byte; prove it before deleting the single file.
 
 ## Counsel questions
-Never resolve a counsel question (OI-1 to OI-32 in `docs/14-open-items.html`), and never write as if one were resolved.
-OI-3 is the recorded exception: D34 proceeds ahead of it under a fixed convention, and says so where it is applied. The self-tutor is the second: D59 proceeds ahead of OI-23 to OI-27, is withdrawn in a market only if counsel's answer is a categoric no, and says so where it is applied. The Primer's voice is the third: D102 lets a child speak their questions ahead of OI-17, is withdrawn only if counsel's answer is a categoric no, and says so where it is applied.
+Never resolve a counsel question (OI-1 to OI-32 in `docs/14-open-items.html`), and never write as if one were resolved. Only the owner reports counsel's answer, and the ledger records it: on 4 November 2026 the owner reported counsel's answer to OI-17 for the Primer, and to OI-13 as it bears on recording children's speech for testing (D118). Write those as answered, as far as D118 goes, and nothing else.
+OI-3 is the recorded exception: D34 proceeds ahead of it under a fixed convention, and says so where it is applied. The self-tutor is the second: D59 proceeds ahead of OI-23 to OI-27, is withdrawn in a market only if counsel's answer is a categoric no, and says so where it is applied. The Primer's voice was the third: D102 let a child speak their questions ahead of OI-17 from 31 October 2026 until counsel answered it (D118).
 
 ## Settled decisions
 D1 to D14 live in `BUILD_BRIEF.md` §2 and are not reopened. Open that section only when a task touches one of them.
