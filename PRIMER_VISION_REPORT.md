@@ -477,8 +477,8 @@ uses.
 |---|---|
 | P1 to P6 | Rewritten wherever the new decisions bear: the instant answer and live videos, grounding in the allow-list, reviewed-only content, the notice, speech cleared and agreed at setup, the selection model, and the new costs, unknowns and weak points. P4 gains a section, #imagery, on what a generated video may show. |
 | Ledger | A new section, D118 to D129. Notes on D44, D48, D102, D107, D109, D111 and D113. The head's breakdown, the reversals and the decisions not taken (the video and selection models) updated. |
-| Registers | OI-17 answered for the Primer and OI-13 in part. OA-32 and OA-58 redefined, OA-59 withdrawn, OA-61 to OA-63 new. T-PRM-01, -02, -03, -05, -08, -10, -11 and -14 redefined, T-PRM-15 new. RP5 and RP8 restated, RP10 new. |
-| Map | 140 nodes and 328 edges: the video vendor, the image check, what a generated video may show, the selection model and the allow-list, with notes and glosses brought into line. |
+| Registers | OI-17 answered for the Primer and OI-13 in part. OA-32 and OA-58 redefined, OA-59 withdrawn, OA-61 to OA-63 new. T-PRM-01, -02, -03, -05, -06, -08, -10, -11, -12 and -14 redefined, T-PRM-15 new. RP5 and RP8 restated, RP10 new. |
+| Map | 141 nodes and 332 edges: the video vendor, the image check, what a generated video may show, the selection model, the allow-list and the suitability check, with notes and glosses brought into line. |
 | Shared pages and root files | Which idea goes first, the field research guide, page 13, the contents page, the rights dossier's lede and one sentence in F4; `CLAUDE.md`, the README, the build's status text and two owner frames. |
 
 **Counts, before and after this round:** decisions 117 and 129; tests 39 and 40;
@@ -498,18 +498,24 @@ overflows at 390 or 1280 pixels.
   as by machine before any session, since children are present.
 - T-PRM-03 also covers generated positions, and T-PRM-10's "no video" now means no video
   of the child, since explainer videos are cached.
-- Videos are cached in the service by concept, band and market, and the tablet keeps none
-  past the close. A video's voice-over is read in the Primer's stock voice, and no video
-  gives the Primer a face or a character.
+- Videos are cached in the service, keyed by module and sensitivity as well as concept,
+  band and market, and the tablet keeps none past the close. A video's voice-over is read
+  in the Primer's stock voice, and no video gives the Primer a face or a character.
 - Which idea goes first: the proposed rule's third condition no longer names OI-17. The
   rule is yours to approve before PM1.
-- P2's box for D123 states the decision without your figure; the figure sits beside it,
-  marked Assumed.
-- The selection model learns from examples gathered in PM3's sessions, which hold none
-  of a child's words.
+- D123 quotes your sentence whole, in the ledger and in P2's box, with its figure marked
+  Assumed (OA-61) until PM3 and PM4 measure it.
+- The selection model learns from the facilitators' choices in PM3's sessions, under
+  PM3's research protocol and parental consent; no model is trained on anything a child
+  said, or on a child's voice.
 - The test recordings are made with consent only; licensing a corpus instead is no
   longer offered.
-- How a child or a parent reports a video is not yet designed.
+- A one-tap report sits beside every generated video, wordless, recording only the video
+  and the time; a parent reports from the parent's screen. Whether families whose child
+  saw a video later pulled are told is not decided.
+- From the review: own-future videos are diagrams only; people in a video are drawn as
+  plain figures, never photorealistic; and the suitability check judges against the
+  Children's code's ranges, 8 and 9, 10 to 12, and 13.
 
 **The independent review of this round.** Fresh agents reviewed these changes on four
 lenses, as before: fidelity to your decisions, the vault's rules, children's safety and
