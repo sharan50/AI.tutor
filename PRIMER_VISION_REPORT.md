@@ -479,7 +479,7 @@ uses.
 | Ledger | A new section, D118 to D129. Notes on D44, D48, D102, D107, D109, D111 and D113. The head's breakdown, the reversals and the decisions not taken (the video and selection models) updated. |
 | Registers | OI-17 answered for the Primer and OI-13 in part. OA-32 and OA-58 redefined, OA-59 withdrawn, OA-61 to OA-63 new. T-PRM-01, -02, -03, -05, -06, -08, -10, -11, -12 and -14 redefined, T-PRM-15 new. RP5 and RP8 restated, RP10 new. |
 | Map | 141 nodes and 332 edges: the video vendor, the image check, what a generated video may show, the selection model, the allow-list and the suitability check, with notes and glosses brought into line. |
-| Shared pages and root files | Which idea goes first, the field research guide, page 13, the contents page, the rights dossier's lede and one sentence in F4; `CLAUDE.md`, the README, the build's status text and two owner frames. |
+| Shared pages and root files | Which idea goes first, the field research guide, page 13, the contents page, one sentence in the rights dossier and one in F4; `CLAUDE.md`, the README, the build's status text, three owner frames and the owner views, which now mark a superseded decision. |
 
 **Counts, before and after this round:** decisions 117 and 129; tests 39 and 40;
 assumptions 56 and 58, of which 22 and 22 are resolvable by reading or asking; counsel
