@@ -1,10 +1,10 @@
 <h1>Foundation: architecture</h1>
 <p class="standfirst">Foundation is a reader and a set of rules. Models recognise what is on the page and how the hand holds the pencil; none generates a word. Every answer is checked by computation, every diagnosis of a wrong answer is computed, and every sentence the teacher reads is a template or a reviewed entry chosen by rules. Frames are read and thrown away. The hard engineering is not language but vision: reading a five-year-old's page from above, and nobody yet knows how well that can be done.</p>
 <dl class="meta">
-<dt>Document</dt><dd>F5 of F6, Foundation</dd>
+<dt>Document</dt><dd>F5 of F7, Foundation</dd>
 <dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run.</dd>
 <dt>Maturity</dt><dd>First draft of the classroom design, revised once after an independent review. The Tutor's documents went through eight adversarial rounds.</dd>
-<dt>Written</dt><dd>22 October 2026; rewritten on 29 October 2026 for the classroom design</dd>
+<dt>Written</dt><dd>22 October 2026; rewritten on 29 October 2026 for the classroom design; revised on 5 November 2026 for Foundation vision</dd>
 <dt>Read with</dt><dd><a href="06-architecture.html">06 Architecture</a>, whose components this page reuses</dd>
 <dt>Read next</dt><dd><a href="f6-foundations-plan.html">F6 Foundation: plan</a></dd>
 </dl>
@@ -29,7 +29,7 @@
 <table>
 <thead><tr><th>Tutor component</th><th>Use in Foundation</th><th>Where specified</th></tr></thead>
 <tbody>
-<tr><td>Staff sign-in through the school's identity provider (Route B).</td><td>The only sign-in. There is no consumer or parent account, and no child signs in.</td><td><a href="05-safety-privacy-regulatory.html#age">05</a></td></tr>
+<tr><td>Staff sign-in through the school's identity provider (Route B).</td><td>The only sign-in in schools: no consumer or parent account, and no child signs in. The home version's app is <a href="f7-foundation-vision.html#home">F7</a>'s (D134, D137).</td><td><a href="05-safety-privacy-regulatory.html#age">05</a></td></tr>
 <tr><td>Kill switch read path.</td><td>A flag on every catalogue entry, template, task and rule version, re-read for every alert. Pulling an entry takes effect at the next alert in every classroom, on the bounds the Tutor states.</td><td><a href="06-architecture.html#killswitch">06</a></td></tr>
 <tr><td>Computer algebra check.</td><td>Every verdict on an answer, every step of the working and every wrong procedure (T-FND-03).</td><td><a href="06-architecture.html#verifier">06</a>, check (d)</td></tr>
 <tr><td>Composer, generator, verifier and gate.</td><td><b>Not used.</b> No model generates text, so there is no turn to compose, verify or gate (D96).</td><td><a href="06-architecture.html#turn">06</a></td></tr>
@@ -48,7 +48,7 @@
 
 <h2 id="deploy">Where it runs</h2>
 
-<p class="lede">Three things are in the room: the desk units, the school's network and the teacher's PC. Foundation itself is software on the school's servers or in the cloud (D90), and the choice between them is the largest privacy difference in the design.</p>
+<p class="lede">Three things are in the room: the desk units, the school's network and the teacher's PC. Foundation runs on the school's own servers (D135), so no picture of a child leaves the building; the choice this page had left open is settled.</p>
 
 <div class="tw">
 <table>
@@ -62,12 +62,12 @@
 </div>
 
 <ul>
-<li><b>On the school's servers,</b> the processing service is a machine in the school, and no picture of a child leaves the building. The school then houses and powers it, and the company must support hardware it cannot reach.</li>
-<li><b>In the cloud,</b> frames cross the school's internet connection to the company's service and are discarded there. Support is simpler, and a school will ask where the service runs (<span class="mark assumed">Assumed</span> OA-14).</li>
+<li><b>On the school's own servers,</b> the processing service is a machine in the school. The school houses and powers it, and the company must support hardware it cannot reach. A school will ask where the service runs (<span class="mark assumed">Assumed</span> OA-14); it runs in the school.</li>
+<li><b>At home,</b> Foundation vision's home version runs in Foundation's cloud service instead, where its frames are read and discarded (D131, D137, <a href="f7-foundation-vision.html#home">F7</a>).</li>
 <li><b>Either way,</b> the recognition models run inside Foundation's own service. No frame is sent to a third-party model vendor, whatever its retention terms, because D97 allows a frame no further than the service that reads it.</li>
 </ul>
 
-<p>Which deployment comes first is not decided. How many frames a second are needed to follow a pencil stroke, and so the network and processing a whole class of desks needs, is <span class="mark unknown">Unknown</span> until FM2 measures it; it may decide the question for most schools.</p>
+<p>How many frames a second are needed to follow a pencil stroke, and so the network and processing a whole class of desks needs, is <span class="mark unknown">Unknown</span> until FM2 measures it, and it sizes the school's machine and how many desks one machine can serve.</p>
 
 <h2 id="reader">The page and hand reader</h2>
 
@@ -129,7 +129,7 @@
 
 <ul>
 <li><b>Hardware,</b> on every desk: the arm, the camera, and the fitting, so one unit for every child in the class, plus the teacher's PC if the school has none. <span class="mark unknown">Unknown</span> per unit (OA-51).</li>
-<li><b>Processing,</b> continuously, for every desk with its camera on, for every lesson Foundation runs: either a machine in the school or a running cost in the cloud. Vision is far heavier than serving pages, and it is the cost the old design did not have. <span class="mark unknown">Unknown</span>, measured at FM2.</li>
+<li><b>Processing,</b> continuously, for every desk with its camera on, for every lesson Foundation runs: a machine in the school (D135). Vision is far heavier than serving pages, and it is the cost the old design did not have. <span class="mark unknown">Unknown</span>, measured at FM2.</li>
 <li><b>Content:</b> writing and reviewing the error catalogue and the task library (<a href="f3-foundations-content.html#review">F3</a>). Like the Tutor's examiner validation, it does not fall when the next model ships. <span class="mark unknown">Unknown</span>, measured at FM2.</li>
 <li><b>Training data:</b> collecting children's writing and hands with consent, under the ethics protocol in <a href="f4-foundations-safety.html#gaps">F4</a>. <span class="mark unknown">Unknown</span>.</li>
 <li><b>Installation and support:</b> fitting units to desks, keeping them working, and the school's network. <span class="mark unknown">Unknown</span>.</li>

@@ -1,10 +1,10 @@
 <h1>Foundation: content and evidence</h1>
 <p class="standfirst">Foundation's content is not lessons. It is what Foundation needs to read a young child's work and say something useful about it: the tasks a teacher can set, the rules that decide when a child needs help, and a catalogue of the mistakes children of this age make, with what each suggests and what to try. All of it is written by teachers and checked by other teachers; where computation can check it, computation does. Whether any of it helps a child learn is a separate question, on which the evidence register is silent.</p>
 <dl class="meta">
-<dt>Document</dt><dd>F3 of F6, Foundation</dd>
+<dt>Document</dt><dd>F3 of F7, Foundation</dd>
 <dt>Status</dt><dd>Design. Nothing here has been built; no test here has been run.</dd>
 <dt>Maturity</dt><dd>First draft of the classroom design, revised once after an independent review.</dd>
-<dt>Written</dt><dd>22 October 2026; rewritten on 29 October 2026 for the classroom design</dd>
+<dt>Written</dt><dd>22 October 2026; rewritten on 29 October 2026 for the classroom design; revised on 5 November 2026 for Foundation vision</dd>
 <dt>Read next</dt><dd><a href="f4-foundations-safety.html">F4 Foundation: safety, privacy and regulatory</a></dd>
 </dl>
 
@@ -134,9 +134,10 @@
 <tr><td class="id">T-FND-01</td><td>Never a face: each unit's view is set to the desk at installation and checked; any frame in which a face is detected is discarded before anything else reads it. Floor: 100%.</td><td>Blocking, every release and every installation</td><td>Specified, not run</td></tr>
 <tr><td class="id">T-FND-02</td><td>Nothing seen is kept: no image, video or audio is stored, or leaves the service that reads it, shown by a network and storage audit.</td><td>Blocking, every release</td><td>Specified, not run</td></tr>
 <tr><td class="id">T-FND-03</td><td>Answers computed: every verdict on a maths answer, and every expected answer, comes from computation, using the Tutor's computer algebra check. Floor: 100%.</td><td>Blocking, deterministic</td><td>Specified, not run</td></tr>
-<tr><td class="id">T-FND-04</td><td>Reading accuracy: characters, answers, the step where working went wrong, and grip, read from the camera, agree with a teacher reading the same work, on a labelled set of children's work at this age, at thresholds written before FM2. A domain that misses its threshold is not reported.</td><td>Gating, before any pilot class</td><td>Specified, not run</td></tr>
+<tr><td class="id">T-FND-04</td><td>Reading accuracy: characters, answers, the step where working went wrong, and grip, read from the camera, agree with a teacher reading the same work, on a labelled set of children's work at this age, at thresholds written before FM2. A domain that misses its threshold is not reported. For Foundation vision, each new skill and age range has its own labelled set and thresholds, written down before its bench test (D136).</td><td>Gating, before any pilot class</td><td>Specified, not run</td></tr>
 <tr><td class="id">T-FND-05</td><td>The teacher's alerts: in an observed pilot, teachers judge each alert right and worth acting on; alerts per lesson and the share acted on are recorded against thresholds written before FM3.</td><td>Observed, at FM3</td><td>Specified, not run</td></tr>
 <tr><td class="id">T-FND-06</td><td>Nothing to the child: the desk unit has no screen, speaker, light or microphone, shown by inspection of the hardware, and no feature sends anything to the desk.</td><td>Blocking, every hardware revision and release</td><td>Specified, not run</td></tr>
+<tr><td class="id">T-FND-07</td><td>Nothing to a child under 13, at home: the home unit has no screen, speaker, light or microphone, and the home app shows its feedback only to a verified adult, or, for what is read as their own work only, to a learner of 13 or over whose adult allows it; shown by inspection of the hardware, an audit of every account that can see feedback and of whose feedback each sees, and a check of every path by which the app could open the phone's microphone or camera.</td><td>Blocking, every hardware revision and every release of the home version</td><td>Specified, not run</td></tr>
 </tbody>
 </table>
 </div>

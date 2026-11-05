@@ -21,11 +21,16 @@ amended by the owner on 22 October 2026; D51 for the other two).
   parents switch them on and off. Counsel has cleared its spoken questions, as
   the owner reports (D118), and its explainer videos are generated live, with
   automatic checks (D122).
-- **Foundation** (ages 4 to 7). A classroom instrument for the teacher: a small
-  camera over each desk watches the page and the hand, never the face, and the
-  teacher's screen says which child needs help and what to try. The child is
+- **Foundation** (ages 4 to 7 first). A classroom instrument for the teacher: a
+  small camera over each desk watches the page and the hand, never the face, and
+  the teacher's screen says which child needs help and what to try. The child is
   shown nothing. Sold to schools, and not the first of the three, by the
-  owner's order.
+  owner's order. Its expanded scope, Foundation vision, would follow the first
+  version's pilot: the same instrument would judge other skills practised at a
+  fixed station, such as cooking at a counter and playing the piano or keyboard,
+  for pupils of 4 to 18 in schools and, in parallel, in a home version for
+  families, whose app shows its feedback to adults and to a learner of 13 or
+  over.
 
 Which idea goes first between the Tutor and the Primer is open, and is decided by
 field research with teachers, professors and parents.
@@ -47,22 +52,23 @@ Foundation, the shared pages and the front page;
 specification; [`TUTOR_MVP_BRIEF.md`](TUTOR_MVP_BRIEF.md) the Tutor's MVP build
 guide and its specification pack;
 [`FOUNDATION_CLASSROOM_BRIEF.md`](FOUNDATION_CLASSROOM_BRIEF.md) Foundation's six
-documents and its film since the owner redesigned it for the classroom; and
+documents and its film since the owner redesigned it for the classroom;
 [`PRIMER_VISION_BRIEF.md`](PRIMER_VISION_BRIEF.md) the Primer's six documents,
 its card and its film since 31 October 2026, when the owner's three films
-became its design.
+became its design; and [`FOUNDATION_VISION_BRIEF.md`](FOUNDATION_VISION_BRIEF.md)
+Foundation vision, its page F7 and the entries it adds since 5 November 2026.
 
 ## Status
 
 | | |
 |---|---|
-| Documents | 32 across the three ideas, the registers included, plus an evidence register |
+| Documents | 33 across the three ideas, the registers included, plus an evidence register |
 | Built | Nothing |
-| Tests specified | **40**, none run. There is nothing to run them against |
-| Counsel questions | **32**, one answered for the Primer: OI-17, with OI-13 in part, as the owner reported counsel's advice (D118). We proceed ahead of OI-3 under D34 and of OI-23 to OI-27 under D59, and each says so where it is applied |
-| Assumptions unverified | **58**, of which 22 are resolvable by reading or by asking rather than by building |
-| Decisions recorded | **129**, including three, taken on the owner's instruction, that reverse two earlier positions; D1 and D9, since amended by the owner; six superseded for Foundation alone when the owner redesigned it; three superseded in part for the Primer when the owner's films became its design; and D111 and parts of D44, D48 and D109, superseded for the Primer by the owner's decisions of 4 November 2026 |
-| External claims registered | **42**, each with source and date checked, plus **40** candidates awaiting the owner's check |
+| Tests specified | **41**, none run. There is nothing to run them against |
+| Counsel questions | **33**, one answered for the Primer: OI-17, with OI-13 in part, as the owner reported counsel's advice (D118). We proceed ahead of OI-3 under D34 and of OI-23 to OI-27 under D59, and each says so where it is applied |
+| Assumptions unverified | **62**, of which 25 are resolvable by reading or by asking rather than by building |
+| Decisions recorded | **138**, including three, taken on the owner's instruction, that reverse two earlier positions; D1 and D9, since amended by the owner; six superseded for Foundation alone when the owner redesigned it; three superseded in part for the Primer when the owner's films became its design; D111 and parts of D44, D48 and D109, superseded for the Primer by the owner's decisions of 4 November 2026; and parts of D41, D89, D90 and D93, superseded for Foundation by the owner's decisions on Foundation vision of 5 November 2026 |
+| External claims registered | **42**, each with source and date checked, plus **45** candidates awaiting the owner's check |
 
 [`docs/status.html`](docs/status.html) computes these counts from the registers at
 build time and governs where this table disagrees with it.
@@ -218,6 +224,8 @@ FOUNDATION_CLASSROOM_BRIEF.md  the brief for Foundation's classroom design and i
 FOUNDATION_CLASSROOM_REPORT.md what that brief changed, its checks and its review
 PRIMER_VISION_BRIEF.md         the brief for the Primer as the owner's three films show it
 PRIMER_VISION_REPORT.md        what that brief changed, its checks and its review
+FOUNDATION_VISION_BRIEF.md     the brief for Foundation vision, Foundation's expanded scope
+FOUNDATION_VISION_REPORT.md    what that brief changed, its checks and its review
 roles.json                     the five owners, what each owns and reads, the Tutor summary's and the front page's picks
 CLAUDE.md                      working rules for a coding session
 README.md                      this file
@@ -244,14 +252,14 @@ docs/
   tutor-mvp.html               the Tutor's MVP build guide: the whole design for adult testers
   p1-primer-thesis.html .. p6-primer-plan.html
   primer-mvp.html              the Primer's MVP build guide: a demonstration for adult testers, to a design earlier than the films
-  f1-foundations-thesis.html .. f6-foundations-plan.html
+  f1-foundations-thesis.html .. f7-foundation-vision.html
   which-first.html             which idea goes first
   field-research.html          the guide for teachers, professors and parents
   decision-ledger.html
   status.html                  generated from the registers
   style.css                    hand-maintained
 evidence/
-  sources.html                 42 external claims, source and date checked, and 40 candidates
+  sources.html                 42 external claims, source and date checked, and 45 candidates
 viz/
   dependency-map.html          the served map, generated; published at /map/
 contracts/

@@ -92,6 +92,8 @@ PAGES = [
      "Where it runs, the page and hand reader, computed checks and the alert rules.", "first"),
     ("f6-foundations-plan", "F6", "Foundation: plan",
      "Schools as the customer, routes, economics, milestones and risks.", "first"),
+    ("f7-foundation-vision", "F7", "Foundation vision",
+     "The same instrument for other skills at a fixed station, such as cooking and the keyboard: older pupils in schools, and a home version.", "first"),
     ("which-first", "", "Which idea goes first",
      "Foundation does not, by the owner's order; between the Tutor and the Primer, field research decides.", "first"),
     ("field-research", "", "Field research guide",
@@ -114,9 +116,9 @@ GROUPS = [
     ("primer", "Primer", "Ages 8 to 13. A tutor for a child's why-questions, on a tablet of its own, designed to ask what they think rather than tell them.",
      ["p1-primer-thesis", "p2-primer-product", "p3-primer-content", "p4-primer-safety",
       "p5-primer-architecture", "p6-primer-plan", "primer-mvp"]),
-    ("foundations", "Foundation", "Ages 4 to 7. A classroom instrument that tells the teacher which child needs help, and with what.",
+    ("foundations", "Foundation", "Ages 4 to 7 first, then 4 to 18 and a home version in Foundation vision. A classroom instrument that tells the teacher which child needs help, and with what.",
      ["f1-foundations-thesis", "f2-foundations-product", "f3-foundations-content", "f4-foundations-safety",
-      "f5-foundations-architecture", "f6-foundations-plan"]),
+      "f5-foundations-architecture", "f6-foundations-plan", "f7-foundation-vision"]),
     ("shared", "Across all three", "Which idea goes first, the field research guide, and the two registers every idea shares.",
      ["which-first", "field-research", "14-open-items", "decision-ledger"]),
 ]
@@ -663,9 +665,10 @@ else here in that light.</p>
 
 <h2 id="ideas">The three ideas</h2>
 <p>The Tutor has been through eight rounds of adversarial review. The Primer is a first draft of
-the design the owner's films show, rewritten to them on 31 October 2026 and revised once after an
-independent review; Foundation is a first draft of its classroom design,
-revised once after an independent review. Foundation does not go first, by the owner's order;
+the design the owner's films show, rewritten to them on 31 October 2026 and revised after rounds
+of independent review; Foundation is a first draft of its classroom design,
+revised once after an independent review, and of Foundation vision (F7), written on
+5 November 2026 and revised after an independent review. Foundation does not go first, by the owner's order;
 between the other two, <a href="which-first.html">which goes first</a> is still open.</p>
 <div class="tw"><table>
 <thead><tr><th>Idea</th><th class="num">Documents</th><th>State</th></tr></thead>

@@ -26,6 +26,7 @@
         "f1-foundations-thesis",
         "f2-foundations-product",
         "f6-foundations-plan",
+        "f7-foundation-vision",
         "which-first",
         "field-research"
       ],
@@ -41,6 +42,7 @@
         "02-style-engine",
         "p5-primer-architecture",
         "f5-foundations-architecture",
+        "f7-foundation-vision#reading",
         "primer-mvp",
         "tutor-mvp",
         "mvp",
@@ -57,6 +59,7 @@
         "03-curriculum-and-content",
         "p3-primer-content",
         "f3-foundations-content",
+        "f7-foundation-vision#content",
         "tutor-mvp#content"
       ],
       "reads": [
@@ -74,6 +77,7 @@
         "08-route-b-through-schools#pricing",
         "p6-primer-plan#economics",
         "f6-foundations-plan#economics",
+        "f7-foundation-vision#economics",
         "primer-mvp#costs",
         "tutor-mvp#costs"
       ],
@@ -83,14 +87,16 @@
       "id": "counsel",
       "title": "Counsel",
       "github": null,
-      "frame": "You own the rights dossier, the safety, privacy and regulatory chapter, the contracts, the counsel questions in the open-items register, the safety documents of the Primer and Foundation, and the safety of the Primer's demonstration and the Tutor's MVP, which only adults use. The Primer's users are almost all under thirteen; its tablet hears a child but keeps no audio, keeps summaries, not records, generates explainer videos live, names living people and reasons with a child about their own future. Foundation's desk cameras watch children of four to seven. A US launch beside the UK adds questions under US law. Nothing has been built. The questions stay open until you answer them; two exceptions, the board's naming and the self-tutor, are recorded as decisions taken ahead of your advice, with their containment written down where they apply. A child's voice in the Primer went ahead of your advice until you cleared it, as the owner reports. You read the data, consent and compliance sections of both routes, which apply your positions rather than set them. Where a page says Assumed, the reasoning is visible and could be wrong; where it says Open, the vault is waiting on you.",
+      "frame": "You own the rights dossier, the safety, privacy and regulatory chapter, the contracts, the counsel questions in the open-items register, the safety documents of the Primer and Foundation, and the safety of the Primer's demonstration and the Tutor's MVP, which only adults use. The Primer's users are almost all under thirteen; its tablet hears a child but keeps no audio, keeps summaries, not records, generates explainer videos live, names living people and reasons with a child about their own future. Foundation's cameras watch pupils from four, and children at home. A US launch beside the UK adds questions under US law. Nothing has been built. The questions stay open until you answer them; two exceptions, the board's naming and the self-tutor, are recorded as decisions taken ahead of your advice, with their containment written down where they apply. A child's voice in the Primer went ahead of your advice until you cleared it, as the owner reports. You read the data, consent and compliance sections of both routes, which apply your positions rather than set them. Where a page says Assumed, the reasoning is visible and could be wrong; where it says Open, the vault is waiting on you.",
       "owns": [
         "04-rights-dossier",
         "05-safety-privacy-regulatory",
         "contracts",
         "14-open-items#counsel",
+        "14-open-items#counsel-more",
         "p4-primer-safety",
         "f4-foundations-safety",
+        "f7-foundation-vision#safety",
         "primer-mvp#safety",
         "tutor-mvp#safety"
       ],
@@ -225,6 +231,10 @@
           {
             "href": "f2-foundations-product.html#worked",
             "label": "See a lesson"
+          },
+          {
+            "href": "f7-foundation-vision.html",
+            "label": "Foundation vision"
           },
           {
             "href": "contents.html#foundations",

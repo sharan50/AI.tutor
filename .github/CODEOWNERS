@@ -27,6 +27,7 @@ src/content/f3-foundations-content.html @sharan50
 src/content/f4-foundations-safety.html @sharan50
 src/content/f5-foundations-architecture.html @sharan50
 src/content/f6-foundations-plan.html @sharan50
+src/content/f7-foundation-vision/ @sharan50
 src/content/field-research.html @sharan50
 src/content/p1-primer-thesis/ @sharan50
 src/content/p2-primer-product/ @sharan50
@@ -39,4 +40,9 @@ src/content/sources/ @sharan50
 src/content/tutor-mvp.html @sharan50
 src/content/which-first.html @sharan50
 src/content/14-open-items/010-counsel.html @sharan50
+src/content/14-open-items/015-counsel-more.html @sharan50
+src/content/f7-foundation-vision/060-reading.html @sharan50
+src/content/f7-foundation-vision/070-content.html @sharan50
+src/content/f7-foundation-vision/080-safety.html @sharan50
+src/content/f7-foundation-vision/090-economics.html @sharan50
 src/content/p6-primer-plan/030-economics.html @sharan50

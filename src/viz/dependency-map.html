@@ -246,7 +246,7 @@ select{
    vault: document 06 for the planes, the pipeline, the data model and
    the kill switch; 02 for the style engine; 03 for the content
    pipeline; 05 for safety and identity; 01 for the surfaces; P1 to P6
-   and F1 to F6 for the Primer and Foundation, which reuse the same
+   and F1 to F7 for the Primer and Foundation, which reuse the same
    pipeline and add their own checks.
 ------------------------------------------------------------------- */
 
@@ -292,9 +292,10 @@ const TESTS = {
   "T-FND-01":"Foundation: any frame with a face is discarded by the face check before anything else reads it. Floor 100 per cent.",
   "T-FND-02":"Foundation: no image, video or audio is stored, or leaves the service that reads it.",
   "T-FND-03":"Foundation: every verdict on an answer, and every expected answer, is computed, never generated.",
-  "T-FND-04":"Foundation: what the camera reads agrees with a teacher, at thresholds written before FM2.",
+  "T-FND-04":"Foundation: what the camera reads agrees with a teacher, at thresholds written before FM2, and for each new skill and age range before its own bench test.",
   "T-FND-05":"Foundation: in an observed pilot, teachers judge the alerts right and worth acting on.",
   "T-FND-06":"Foundation: the desk unit has no screen, speaker, light or microphone; nothing reaches the child.",
+  "T-FND-07":"Foundation: nothing reaches a child under 13 at home; the home unit has no screen, speaker, light or microphone; the app shows its feedback only to a verified adult, or, for what is read as their own work only, to a learner of 13 or over whose adult allows it, and never opens the phone's microphone or camera.",
   "T-PRM-08":"Primer: no flagged exchange's words, subject or reply reach the parent; a notice appears only once a trained reviewer judges it safe, and never where the parent may be the risk.",
   "T-PRM-09":"Primer: no output says “I”, “me”, “my” or “let's”, uses the child's name, praises, or uses a “we” that joins it to the child; automated over every release's battery.",
   "T-PRM-10":"Primer: once a conversation closes, no audio, no video of the child and no turn of the child's, whole or in part, remains outside the read-back and the kept question, except a flagged exchange until its review closes; no script holds the child's words.",
@@ -343,6 +344,7 @@ const DECISIONS = {
   D36:"Every mark scheme in the product is named a CINE mark scheme.",
   D25:"No engagement objective anywhere in the system.",
   D26:"A safeguarding disclosure is not automatically reported to the parent.",
+  D41:"Age bands: Foundation 4 to 7, the Primer 8 to 13, the Tutor 14 to 18; superseded in part by D133, which takes Foundation's later phases to pupils of 4 to 18.",
   D43:"Foundation's earlier design put an adult beside the child; superseded for Foundation by D89.",
   D44:"The Primer cites a reviewed explanation or inquiry pack for everything it says, or says not yet.",
   D45:"The Primer is taught on its modules, not trained on them.",
@@ -368,11 +370,11 @@ const DECISIONS = {
   D68:"In D14's experiment the self-tutor is a second factor, not a third arm.",
   D69:"No style dimension reaches the self-tutor's voice: one neutral delivery under every preset.",
   D73:"The Primer explains with pictures as well as words; its product half, that a picture is never generated live for a child, is superseded by D122.",
-  D89:"Foundation is a classroom tool for the teacher, sold to schools, running in the background of a lesson.",
-  D90:"A camera on an arm over each desk watches the page and the hand, never the face; nothing on the desk shows the child anything.",
+  D89:"Foundation is a classroom tool for the teacher, sold to schools, running in the background of a lesson; D131 and D133 supersede its “not to parents and not for home use” for Foundation vision's home version only.",
+  D90:"A camera on an arm over each desk watches the page and the hand, never the face, and nothing on the desk shows the child anything; D135 supersedes its “or in the cloud” for every school.",
   D91:"Foundation reads writing as it is written, whether answers are right, where working went wrong, and the grip.",
   D92:"The teacher's PC shows a quiet class view; a tile turns amber with plain words and a first triage.",
-  D93:"Foundation never talks to, shows or rewards the child, never points a camera at a face, never replaces the teacher.",
+  D93:"Foundation never talks to, shows or rewards the child, never points a camera at a face, never replaces the teacher; D134 supersedes its “never shows the child anything” for a learner of 13 or over in the home version only.",
   D94:"Foundation does not go first, by the owner's order; it is not the lesser idea.",
   D95:"The idea is named Foundation; page addresses keep the old spelling.",
   D96:"Recognition, not generation: no model writes anything the teacher reads; every verdict is computed.",
@@ -409,6 +411,15 @@ const DECISIONS = {
   D127:"Named living people and the sensitive modules come only from reviewed content, never from live generation.",
   D128:"People review a sample of generated scripts and videos afterwards, and every one reported.",
   D129:"The adult agrees to speech at setup; it is on once the spoken safety test has passed and the first supervised pilot has run.",
+  D130:"Foundation vision: after the first version's pilot, the same instrument would judge other skills practised at a fixed station, such as cooking and the piano or keyboard.",
+  D131:"Two versions: sold to schools and run on the school's own servers, and a home version for families, connected to Foundation's cloud service, with feedback through an app.",
+  D132:"Foundation vision judges by camera only, with no microphone and no data from the instrument, so only what can be seen.",
+  D133:"Foundation goes to market first for Reception to Year 2; later phases reach pupils of 4 to 18, and a home version runs in parallel, its skills the owner's to scope.",
+  D134:"In the home version the app shows its feedback to adults and to a learner of 13 or over; a child under 13 is shown nothing.",
+  D135:"Everything Foundation does in schools runs on the school's own servers, so no picture of a child leaves the building.",
+  D136:"Nothing of Foundation vision is built before FM4; each new skill, age range and the home version passes its own bench test and observed pilot before it is offered.",
+  D137:"The home unit keeps the desk unit's guarantees: a camera with no microphone, screen, speaker or light, aimed at the work by an adult, though on a mount a family can still move, its frames read in the cloud and discarded.",
+  D138:"Foundation never supervises: it watches technique, never safety, and where a skill can hurt, an adult in the room is responsible for the learner.",
 };
 
 const OPEN = {
@@ -442,6 +453,7 @@ const OPEN = {
   "OI-30":"What duties apply when content for children of 8 to 13 tells the documented stories of named living people and shows their names?",
   "OI-31":"What must a connected tablet sold to families as a child's learning device meet before sale, in the UK and the US?",
   "OI-32":"Does reasoning with a child about their own future, on by default from 8, engage duties beyond OI-16's?",
+  "OI-33":"For Foundation vision's home version, in the UK and the US, what lawful basis, consent and notice let a camera at home read a child's hands and work, may a learner of 13 or over hold the app, and what must the home unit meet before sale?",
   "OA-23":"That children of 8 to 13 can sustain a typed or spoken inquiry, and that AI can lead one well.",
   "OA-26":"That parents accept an AI discussing big questions when modules are company-written and switchable.",
   "OA-27":"That one catalogue can serve families across the UK's and the US's range of beliefs.",
@@ -467,6 +479,10 @@ const OPEN = {
   "OA-61":"That about three in four questions are spoken rather than typed.",
   "OA-62":"That explainer videos can be generated fast and cheaply enough, and that the automatic checks catch what is unsuitable.",
   "OA-63":"That children understand an answer split between what is spoken and what is shown.",
+  "OA-64":"That one fixed camera, with nothing heard, can judge technique at a keyboard or a counter well enough to trust, and whether it can see which keys are pressed, and when.",
+  "OA-65":"That teachers of food and of music, with a class at fixed stations, want alerts during a practical lesson and act on them.",
+  "OA-66":"That families will buy a home unit and pay for the service, for lessons and home practice, at a price that covers both.",
+  "OA-67":"That parents, and learners of 13 or over, accept a camera at home that sees the hands and the work, never the face, its frames read in the cloud and discarded.",
 };
 
 const RISKS = {
@@ -497,6 +513,10 @@ const RISKS = {
   RF3:"Nobody pays for hardware on every desk.",
   RF4:"A school's due diligence fails it.",
   RF5:"The alerts become a burden, too many or too often wrong.",
+  RF6:"Camera only misses what matters most in a skill, such as the sound of playing, and families prefer practice apps that listen.",
+  RF7:"Foundation is relied on for a learner's safety at a knife or a hob.",
+  RF8:"A home unit sees what it should not: a face, a room, or another member of the household.",
+  RF9:"Foundation vision draws the team off the first version before the first version has proved itself.",
 };
 </script>
 
@@ -954,7 +974,7 @@ function renderPanel(){
       regList(RISKS, [...im.reg.r].sort((a,b) => a.localeCompare(b, undefined, {numeric: true})), "r") + '</div>' +
     '<p class="pfoot">This change would reach <b>' + strataTouched + ' of the 6 strata</b> and ' +
       downIds.length + ' of the ' + (NODES.length - 1) + ' other components on the map. ' +
-      'Nothing here has been built: the thirteen tests named across these documents are specified and none has been run, ' +
+      'Nothing here has been built: the tests named across these documents are specified and none has been run, ' +
       'so the map shows what a change would reach, not what it would break.</p>';
 
   document.getElementById("pick").addEventListener("change", e => select(e.target.value));
