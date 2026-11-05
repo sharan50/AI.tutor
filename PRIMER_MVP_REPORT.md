@@ -95,7 +95,8 @@ Counts after this work, computed by the build:
   `netlify.toml` (comments).
 
 The mock-up the owner reviewed is a design canvas, private until the owner shares it,
-at <https://claude.ai/artifact/TFkTFz4RzJrM7UJsLJkZmP>. It is not in the repository.
+at <https://claude.ai/artifact/TFkTFz4RzJrM7UJsLJkZmP>. Since 26 October it is also on
+the site, at `/mockup/` (section 8).
 
 ## 4. What the research changed
 
@@ -200,7 +201,45 @@ context:
   account, of type Personal, and it hosts this site. Credits are counted by team, and
   a team that runs out pauses every project on it (CV-22). Give the demo a team of its
   own if the account allows, or turn on auto recharge with a limit while it is in use.
-- **Share the mock-up or export its screens,** so that Claude Code can match it from
-  day 2.
+- **Point Claude Code at the mock-up** before day 2: the specification tells it to copy
+  `mockup/index.html` from this repository into the demo's own.
 - **Day one answers OA-41,** how long a video takes, and decides which path the video
   jobs use.
+
+## 8. The mock-up on the site, 26 October 2026
+
+The owner asked for the mock-up on the site. It is at `/mockup/`, linked from the
+guide and from the front page's Primer card. It runs in the browser with written
+examples in place of generated answers, and says so before anything else.
+
+**How it was ported.** The design canvas runs only inside claude.ai, so the page keeps
+the canvas's markup, styles and component logic and adds a small renderer. The
+renderer draws the canvas's template and then updates the page in place, so running
+animations, focus and the text being typed survive each update. Inline event
+handlers became data attributes served by one listener, so the policy for `/mockup/`
+can name the page's one script by hash, as the map's does. Inline styles are allowed
+on that path alone, because the canvas's markup is styled element by element; the
+page loads nothing but its fonts, so no style can send anything anywhere. The canvas's
+Tweaks became a panel of controls, the welcome screen leads into the demo, and the
+seven phone screens sit below as pictures that cannot be clicked.
+
+**What changed from the canvas.**
+- The words follow the specification: the line about recordings, the welcome card on
+  where a tester's words go, the replies about safety and loss, the footer, and the
+  short answer's target, now "a few seconds".
+- A failed video shows the app's own still picture, the block's number on a pattern
+  in the block's colour, as the specification says, instead of a drawing.
+- Reading aloud plays on silently when the browser has no voice, instead of stopping
+  at once, and a serious illness gets the reply about loss.
+
+The canvas itself was not changed; the copy on the site is the one to use.
+
+**Checks.**
+
+| Check | Result |
+|---|---|
+| `python3 src/build.py` | Exit 0; `/mockup/` published with its own policy |
+| `python3 tools/verify.py` | All checks pass, and the link check now covers `mockup/` |
+| The demo in Chromium, at 390 px and 1280 px, under the page's real policy | 64 checks pass: the welcome and passcode, the simulated microphone, typing across updates, the streamed answer, the blocks, the videos and their animation, the thinking turns to the child's own words, the careful replies, the still picture, and the controls |
+| Console errors and policy violations | None |
+| Horizontal overflow | None, on the welcome, ask and answer screens |

@@ -1,0 +1,5 @@
+#!/bin/sh
+# A merge that stopped on a conflict is finished with `git commit`, which git's
+# pre-merge-commit hook does not see, so test that commit here. Other commits pass.
+[ -f "$(git rev-parse --git-path MERGE_HEAD)" ] || exit 0
+exec "$(git rev-parse --show-toplevel)/.githooks/pre-merge-commit"

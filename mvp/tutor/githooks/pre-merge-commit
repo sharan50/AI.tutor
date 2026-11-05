@@ -1,0 +1,10 @@
+#!/bin/sh
+# Refuse a merge that would make `make test` fail: the unit tests and the tests of
+# finished phases. Runs on the merged tree, before the merge commit is made.
+[ -f Makefile ] || exit 0
+log="$(git rev-parse --git-dir)/merge-test.log"
+if ! make test >"$log" 2>&1; then
+  tail -n 30 "$log" >&2
+  echo "Merge refused: make test fails on the merged tree. Run git merge --abort, fix the branch, then merge again." >&2
+  exit 1
+fi

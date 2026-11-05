@@ -1,0 +1,135 @@
+<h2 id="turn">A Primer turn, from the talk key to the read-back</h2>
+
+<p class="lede"><b>The generator never retrieves; the composer does, before a word is written.</b> As in the Tutor, the set a turn is checked against is fixed before generation: the reviewed entries that match, and the passages the composer retrieves from the reviewed allow-list (D125), rather than whatever the model chose to look at. A session is one question: a conversation of one or more exchanges, each taken through the answer's shape to a read-back and the close. A turn is one pass through the pipeline below, and its explainers are made while it is spoken.</p>
+
+<pre><code>the child holds the talk key and speaks, or types and presses return
+      |
+      v
+[0] SPEECH IN           the talk key, on the tablet; agreed at setup (D129)
+      |  the microphone is live only while the key is held (D116)
+      |  speech becomes text at once; the audio is thrown away
+      |  the text appears as the child's turn, as heard or as typed
+      v
+[1] TRIAGE              every turn, before anything else
+      |  the topic classified against the modules and their switches
+      |  a safeguarding signal              --&gt; stop; 05's three moves; flag
+      |  family, the body, feelings, safety --&gt; stop; a trusted adult
+      |  switched off, or outside the band  --&gt; decline; category noted
+      |    a stop is shown, never spoken; after any of the three,
+      |    "Leave it there" alone (D115)
+      |    any of the three cancels every script and video still pending
+      |    in the conversation, and none is named to the tablet afterwards;
+      |    a flag pulls the flagged exchange's scripts and videos from the
+      |    cache and sends them to the sample review
+      |  a choice in the child's own future --&gt; inquiry under the fence
+      v  any other why-question             --&gt; inquiry
+[2] COMPOSER            the generator cannot reach outside what this retrieves
+      |  reads the registry: live, switched on, in band, in the child's market;
+      |    a source only if reviewed for the child's range
+      |  holds the stage of the shape (D110)
+      |  retrieves for the stage: a reviewed entry or pack first, where one
+      |    exists; otherwise passages from the reviewed allow-list (D125)
+      |  a named living person or a sensitive module: reviewed entries and
+      |    packs only, never live generation (D127)
+      |  retrieves again when the question shifts
+      |  nothing to support an answer --&gt; "not yet"; the question, in
+      |    general terms, joins the writing queue
+      |  assembles: sources + wording card + the child's earlier summaries
+      |             + the child's words, whole until the close (time cap)
+      |             + the Primer's own turns, summarised (D30, as noted)
+      |             never the name or the age
+      v
+[3] GENERATOR           pinned model
+      |  the instant answer: short, at a high level (D122); then each
+      |    later stage, its links and questions, and the read-back
+      |  names each concept to explain, in general terms
+      |  every fact, figure and attribution cites a retrieved source
+      v
+[4] VERIFIER            all blocking, on a different pinned model
+      |  a. citation presence   every fact and attribution cites a source
+      |  b. claim support       entailed by its source; numbers only from it;
+      |                         an estimate said "roughly"; a sentence no
+      |                         source supports is cut                   T-PRM-01
+      |  c. attribution         views, questions and words of any named
+      |                         person, entailed by their source         T-PRM-02
+      |  d. contested question  no conclusion as the Primer's; no weaker
+      |                         case; no one-sided evidence              T-PRM-03
+      |  e. scope               nothing outside the retrieved set; reviewed
+      |                         content only, where D127 requires it     T-PRM-05
+      |  f. manner              no "I", no name, no praise               T-PRM-09
+      |  g. no direction        a choice in the child's own future only  T-PRM-06
+      |  h. suitability         fit for the child's range: 8 and 9,
+      |                         10 to 12, or 13                          T-PRM-15
+      v
+[5] GATE
+      |-- pass --&gt; [6] SPEAK AND SHOW, on the tablet, at once
+      |                the selection model marks each checked sentence
+      |                spoken, shown or both, and writes nothing (D124)
+      |                figures and "Based on:" always shown; the whole
+      |                text a tap away                                   T-PRM-11
+      |-- fail --&gt; the check's fallback: a reviewed entry or pack verbatim
+      |            where one exists, else a fixed question or "not yet",
+      |            shown and spoken exactly as reviewed --&gt; adjudication
+      |            a read-back: a fixed line asks the child once more where
+      |            they stand; blocked again, the close comes without one
+      v
+[7] EXPLAINERS          while the answer is spoken, one per concept (D122)
+      |  none where D127 holds the turn to reviewed content, cached or new
+      |  a cached video, if not pulled: the cache keyed by module,
+      |    sensitivity, concept, band and market, and read only after the
+      |    switches and D127; only for the range it was checked for; in a
+      |    contested or own-future conversation, only if its script passed
+      |    d and g there, or passes them again before it plays
+      |  or a script, only from the concept, in general terms, and the
+      |    turn's retrieved sources, never the turn's text, through checks
+      |    a to h, with a block on any name, place or uncommon phrase of
+      |    the child's and on any personal detail; then the video model
+      |    makes the video from a visual brief with no words and no figures
+      |  own future: the diagram style only, no people, scenes or faces
+      |  every word and figure laid over it on the tablet from the checked
+      |    script; the video model's own audio never played; the voice-over
+      |    the Primer's own voice reading the script (D126)              T-PRM-11
+      |  an image check on its frames, which blocks drawn text or numerals;
+      |    labelled as made by AI                                        T-PRM-15
+      |  plays when its checks pass; a video that fails is not shown,
+      |    and the spoken answer stands; no turn waits for a video
+      |  a stop, a safety reply, a decline or the close cancels every one
+      |    still pending; none is named to the tablet afterwards         T-PRM-12
+      v
+[8] CLOSE               at the end of the shape, or when the child stops
+      |  "You started with... Where are you now?"; the position read back
+      |  the child may correct it; then "Leave it there, or keep going?"
+      |  "Keep going" only within the time cap (D103)
+      v
+[9] LOGGER              per turn: sources cited, videos by identifier,
+                        verdicts, timings; triage's outcome only as inquiry,
+                        decline or stop, a flagged turn logged as a stop,
+                        never which of family, the body, feelings or safety;
+                        the flag itself kept only with the safeguarding
+                        review: in the hold, the escalation record and the
+                        safeguarding count; none of the child's words, no
+                        audio; never read by the parent's screen, and no
+                        triage outcome read by the composer
+                        at the close: the review (D107); the topic, the
+                        question in general terms and the read-back kept;
+                        the words deleted (D104)                         T-PRM-10
+</code></pre>
+
+<p><b>The shape is the composer's, not the generator's.</b> The composer holds the stage of D110's shape for the conversation and retrieves what each stage needs: sources for a short answer at a high level; for "the harder bit", three positions, each at its strongest, from a pack where one exists and otherwise from retrieved sources, each attributed (OA-58); the two the child did not choose, to ask back as positions; and, once the child's real question is out, the evidence for it. The owner's "both sides of the argument" is read as these three positions (D122). No answer skips a stage: when no source supports a stage for the child's band and market, the child meets "not yet" there, at the start or part way through (OA-32), and the question, in general terms, joins the writing queue (<a href="p3-primer-content.html#bank">P3</a>). The wording card is an input to generation only, as the style card is in the Tutor: it shapes how a sentence sounds, never which sources are permitted or what the verifier checks, so the property the Tutor tests as T-STY-03 holds. It replaces the earlier method card, since one shape leaves no menu of methods to choose from.</p>
+
+<p><b>The answer comes at once, and the videos while it is spoken.</b> The first stage is a short answer, at a high level, from the sources retrieved for the question, checked automatically before it is spoken. While it is spoken, the generator writes the script for each explainer, each on one specific concept; the script is checked, and a video model generates the video from it. Each video plays when its checks pass (D122; <a href="#explainers">below</a>). The conversation goes on through the harder bit, three positions, the child's real question and the evidence, to the child's own view, read back, and each later stage may carry explainers the same way. Each script is written only from the concept, named in general terms, and the turn's retrieved sources, never from the turn's text. Before a video is generated or cached, the script's checks add a deterministic block on any name, place or uncommon phrase from the child's turns, and the read-back's block on any detail of family, friends, body or feelings, so no script and no video holds the child's words (D126). The video model is given a visual brief with no words and no figures, and every word and figure on a video is laid over it on the tablet from the checked script. A turn that D127 holds to reviewed content shows no generated video, cached or new, and a cached video plays in a contested or own-future conversation only if its script passed the contested-question and no-direction checks (d and g) there, or passes them again (<a href="#explainers">below</a>).</p>
+
+<p><b>What is spoken and what is shown are chosen, never written.</b> The Primer writes its content first; the voice, the videos and the words on the screen are all drawn from it, so no captions are needed. A selection model, trained for the purpose, chooses for each checked sentence whether it is spoken, shown or both; it writes nothing, and the whole text is a tap away. Figures and the "Based on:" line are always shown, and a safety reply is shown and never spoken (D115, D124). The "Based on:" line is built from the sources the turn and its scripts cite, never from generated text, and the child's own words appear as heard or as typed, in their own spelling, and nothing rewrites them (D109). Whether children follow an answer split this way as well as one shown whole is OA-63, measured at PM4.</p>
+
+<p><b>Retrieval runs more than once.</b> A child's question arrives in free text. The composer matches it to the reviewed entries first, since a reviewed entry is used first wherever one exists, and otherwise retrieves passages from the reviewed allow-list, from sources reviewed for the child's range only (<a href="p3-primer-content.html#sources">P3</a>; <a href="#registry">below</a>). A classifier or similarity search may do either, but its output is a list of identifiers, of entries and of passages, logged with the turn, and the generator sees only what they name. In the films the child's real question surfaces part way through and moves the thread to new evidence, so retrieval runs again at that stage and whenever a turn moves to a question the current sources do not cover. A fact or story about a named living person, or anything in a sensitive module, comes only from reviewed entries and packs, never from live generation (D127), so there the child meets "not yet" wherever no reviewed entry exists (OA-32). <span class="mark unknown">Unknown</span> the thresholds for a match and for a passage to count; they are set at PM3 and err towards "not yet", because a wrong match produces a confident answer to a different question.</p>
+
+<p><b>No profile fact reaches the generator.</b> It is never given the child's display name (D108), which labels the parent's screen, nor their age. The composer holds the name only to mask it if the child says it, and the manner check only to block it (<a href="#checks">below</a>). The band, the switches and the market are settings the verified adult makes, read at every session (D117); they act only through what the composer retrieves and permits, and through the band's wording card. From earlier sessions only the child's own summaries reach a turn (<a href="#summaries">below</a>).</p>
+
+<p><b>Within a conversation the child's words stay whole until the close</b>, bounded by the time cap, because D104 and D117 need them for the read-back; D30's bounded summary covers the Primer's own turns, as <a href="decision-ledger.html#taken">the ledger's note on D30</a> records. What that does to cost is set out in <a href="#cost">cost per session</a>.</p>
+
+<p><b>The close ends every exchange the same way.</b> At the end of the shape, or as soon as the child says they want to stop, the Primer asks "You started with... Where are you now?", reads back whatever position the child has given, in plain words, and lets the child correct it (<a href="#summaries">below</a>). The tablet then shows "Leave it there, or keep going?" with two buttons, a fixed text reviewed like any other (<a href="p2-primer-product.html#session">P2</a>). "Keep going" carries the conversation on within the time cap, which the child cannot extend (D103); at the cap the read-back comes and "Leave it there" stands alone, as it does after a safety reply, a stop or a decline (D115). "Leave it there" closes the conversation. After a stop or a safety reply, the child's own turn leaves the screen at once, and the reply stays on it until the child taps "Leave it there", turns the screen off, or a short idle period passes, whichever comes first; the screen does not sleep on its own before then (<a href="#tablet">below</a>). The idle period is a design choice, its length <span class="mark unknown">Unknown</span>, set with the specialist who writes the replies and weighed against the child's need to read the services named. Then the conversation closes, the review at the close runs as at any close, and the screen returns to the wake screen with nothing of the exchange on it; woken, the tablet shows the wake screen.</p>
+
+<p><b>The per-turn log never reaches the parent.</b> The logger keeps, for each turn, the sources cited, the videos played by their identifiers, the checks' verdicts and the timings, with none of the child's words, for engineering, the composer and reviewers tracing a report to read. The per-turn log records triage's outcome only as an inquiry, a decline or a stop, a flagged turn being logged as a stop, and never which of family, the body, feelings or safety it was. The flag itself is kept only with the safeguarding review: in the hold, the escalation record and the safeguarding count (<a href="#triage">below</a>). The composer reads no triage outcome from any log. The parent's screen reads only the summaries, the topics, the switches and the categories of stopped and declined questions: never per-turn verdicts, and of a flagged exchange only a notice that a question was flagged for safety and a trained reviewer is handling it, once the reviewer has judged it safe to tell this parent, holding no words, no subject and no reply (D121, T-PRM-08; <a href="#summaries">below</a>).</p>
+
+<p><b>Pace is the risk this pipeline carries.</b> The films show a conversation in real time, at a brisk rate (D112), and every turn runs recognition, triage, retrieval, generation and up to eight checks before anything is spoken. Checks that do not depend on each other run in parallel; retrieval may run beside triage, because it shows nothing and calls no generator, but the generator is never called before triage has cleared the turn. The videos add a script, its checks, generation and an image check after the answer has begun, so they hold up no answer, but a video may come after the stage it explains. A stop, a safety reply, a decline or the close cancels every script and video still pending in the conversation, and the service names none of them to the tablet afterwards, so no late video follows a stop. A flag, raised by triage or by the review at the close, pulls every script and video generated in the flagged exchange from the cache and sends them to the sample review. Every blocked turn and every failed video is a wasted generation, at a rate that is <span class="mark unknown">Unknown</span> (<a href="06-architecture.html#verifier">06</a>). The budget for each step is <span class="mark unknown">Unknown</span> until PM4. T-PRM-14 holds the time to the spoken answer against a threshold written down before PM4 begins; the time to the first video is observed, and is <span class="mark unknown">Unknown</span> (OA-62).</p>
+

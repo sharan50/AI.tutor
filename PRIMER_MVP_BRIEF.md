@@ -29,7 +29,10 @@ goes first.
 
 The owner reviewed a mock-up of it on 25 October 2026, a design canvas at
 <https://claude.ai/artifact/TFkTFz4RzJrM7UJsLJkZmP>, private until the owner shares
-it, and removed one control from it (D75).
+it, and removed one control from it (D75). On 26 October 2026 the owner asked for the
+mock-up on the site. It is published at `/mockup/` from `mockup/index.html`, a
+hand-maintained port of the canvas whose words follow the specification; where the
+two differ, the specification governs.
 
 ## 2. The owner's decisions, 25 October 2026
 
@@ -178,6 +181,11 @@ build checks, not tests of the Primer.
 - **The specification,** `mvp/primer-demo-spec.md`, hand-maintained, published at
   `/mvp/` as text, as the contracts are. The owner saves it as `CLAUDE.md` in the
   demo's own repository.
+- **The mock-up,** `mockup/index.html`, hand-maintained, published at `/mockup/`.
+  It runs one script, which its own policy names by hash, as the map's does, and
+  loads nothing but its fonts. It is owned by the CTO, and linked from the guide and
+  the front page's Primer card. Nothing on it may suggest that anything is built,
+  generated or checked.
 - **The build:** `PAGES` and `GROUPS` gain the page; `PUBLISHED` gains `mvp`; the
   headers serve `/mvp/*` as text.
 - **Design pages:** P2 `#session` and P3 `#bank` gain D73's video; P6 `#milestones`
